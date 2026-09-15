@@ -216,7 +216,6 @@
     <string name="widget_name_notes">Muistiinpano</string>
     <string name="widget_name_unknown">Tuntematon pienoisohjelma</string>
     <string name="widget_add_widget">Lisää pienoisohjelma</string>
-    <!-- Add a third party widget (=a standard Android app widget) -->
     <string name="notes_widget_placeholder">Kirjoita muistiinpano…</string>
     <string name="notes_widget_action_new">Uusi muistiinpano</string>
     <!-- Save / export the current note content as markdown file -->
@@ -365,7 +364,7 @@
     <string name="missing_permission_calendar_search_settings">Kalenterin käyttöoikeus tarvitaan tapahtumien hakuun</string>
     <!-- Missing calendar permission in calendar widget settings screen -->
     <string name="missing_permission_calendar_widget_settings">Tämä pienoisohjelma vaatii kalenterin käyttöoikeuden</string>
-    <string name="widget_config_calendar_missing_calendars_hint">Etkö löydy kalentereitasi\?</string>
+    <string name="widget_config_calendar_missing_calendars_hint">Etkö löydä kalentereitasi?</string>
     <!-- Missing permission app shortcuts permission in search settings screen. %1$s: app name -->
     <string name="missing_permission_appshortcuts_search_settings">%1$s on asetettava aloitusnäyttösovellukseksi sovellusoikoteiden hakua varten</string>
     <!-- Missing file permission in search settings screen -->
@@ -441,7 +440,7 @@
     <string name="preference_cards_summary">Mukauta korttien ulkoasua</string>
     <string name="preference_cards_corner_radius">Kulman säde</string>
     <string name="preference_cards_stroke_width">Lyönnin leveys</string>
-    <string name="preference_cards_opacity">Läpinäkymättömyys</string>
+    <string name="preference_cards_opacity">Läpikuultavuus</string>
     <string name="preference_cards_shape">Muoto</string>
     <string name="preference_cards_shape_rounded">Pyöristetty</string>
     <string name="preference_cards_shape_cut">Leikattu</string>
@@ -536,7 +535,6 @@
     <string name="preference_clockwidget_favorites_part_summary">Näytä ensimmäinen rivi kiinnitettyjä kohteita</string>
     <string name="preference_clockwidget_music_part_summary">Näytä mediaohjaimet, kun mediaa on aktiivisena</string>
     <string name="preference_clockwidget_battery_part">Akku</string>
-    <string name="preference_clockwidget_battery_part_summary">Näytä akun varaustaso, kun akku on vähissä tai latauksessa</string>
     <string name="preference_clockwidget_alarm_part">Hälytykset</string>
     <string name="preference_clockwidget_alarm_part_summary">Näytä seuraavan 15 minuutin hälytykset</string>
     <string name="preference_screen_backup">Varmuuskopioi ja palauta</string>
@@ -550,6 +548,7 @@
     <string name="preference_logs">Lokit</string>
     <string name="preference_logs_summary">Näytä tai vie sovelluksen lokit</string>
     <string name="preference_screen_search">Haku</string>
+    <string name="preference_screen_search_summary">Haku, avainsanat, piilotetut kohteet</string>
     <string name="preference_search_favorites">Suosikit</string>
     <string name="preference_search_favorites_summary">Näytä kiinnitetyt ja usein käytetyt kohteet sovellusruudukon yläpuolella</string>
     <string name="preference_search_files">Tiedostot</string>
@@ -582,7 +581,10 @@
     <string name="preference_search_bar_auto_focus_summary">Näytä näppäimistö automaattisesti avattaessa sovelluslaatikko</string>
     <string name="preference_search_bar_launch_on_enter">Käynnistä enterillä</string>
     <string name="preference_search_bar_launch_on_enter_summary">Käynnistä korostettu osuma tai pikatoiminto enter-painikkeella</string>
+    <string name="preference_hidden_items">Piilotetut hakutulokset</string>
+    <string name="preference_hidden_items_summary">Hallitse piilotettuja sovelluksia ja hakutuloksia</string>
     <string name="preference_hidden_items_reveal_button">Näytä \"paljasta\"-painike</string>
+    <string name="preference_hidden_items_reveal_button_summary">Näytä painike piilotettujen hakutulosten paljastamiseksi</string>
     <string name="preference_screen_tags">Avainsanat</string>
     <string name="preference_screen_tags_summary">Hallitse avainsanoja ja merkittyjä kohteita</string>
     <string name="preference_wikipedia_customurl">Wikipedian osoite</string>
@@ -726,7 +728,7 @@
     <string name="note_widget_file_write_error">Virhe tallennettaessa muistiinpanoa</string>
     <string name="note_widget_file_write_error_description">Muistiinpanoa ei voitu kirjoittaa yhdistettyyn tiedostoon. Se on saatettu siirtää tai poistaa. Kopio on tallennettu käynnistyssovelluksen omaan tallennustilaan.</string>
     <string name="confirmation_delete_color_scheme">Haluatko varmasti poistaa värikaavion %1$s\?</string>
-    <string name="theme_color_scheme_system_default">Käytä järjestelmän oletusta</string>
+    <string name="preference_use_system_default">Käytä järjestelmän oletusta</string>
     <string name="theme_color_scheme_autogenerate">Luo pääväristä</string>
     <string name="theme_color_scheme_palette_color">Paletti</string>
     <string name="theme_color_scheme_custom_color">Mukautettu</string>
