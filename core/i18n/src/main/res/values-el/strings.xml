@@ -209,7 +209,6 @@
     <string name="widget_name_notes">Ένα γραφικό στοιχείο που αποθηκεύει μία μόνο σημείωση</string>
     <string name="widget_name_unknown">Ετικέτα που χρησιμοποιείται για μη έγκυρα γραφικά στοιχεία εφαρμογών</string>
     <string name="widget_add_widget">Προσθήκη γραφικού στοιχείου</string>
-    <!-- Add a third party widget (=a standard Android app widget) -->
     <string name="notes_widget_placeholder">Γράψε μια σημείωση…</string>
     <string name="notes_widget_action_new">Νέα σημείωση</string>
     <!-- Save / export the current note content as markdown file -->
@@ -528,7 +527,6 @@
     <string name="preference_clockwidget_music_part">Πολυμέσα</string>
     <string name="preference_clockwidget_music_part_summary">Εμφάνιση ελέγχου πολυμέσων όταν υπάρχει ενεργή περίοδος λειτουργίας</string>
     <string name="preference_clockwidget_battery_part">Μπαταρία</string>
-    <string name="preference_clockwidget_battery_part_summary">Εμφάνιση του τρέχοντος επιπέδου μπαταρίας όταν είναι χαμηλή ή φορτίζει</string>
     <string name="preference_clockwidget_alarm_part">Ξυπνητήρια</string>
     <string name="preference_clockwidget_alarm_part_summary">Εμφάνιση ξυπνητηριών που θα χτυπήσουν μέσα στα επόμενα 15 λεπτά</string>
     <string name="preference_screen_backup">Αντίγραφα ασφαλείας &amp; Επαναφορά</string>
@@ -542,6 +540,7 @@
     <string name="preference_logs">Αρχεία καταγραφής</string>
     <string name="preference_logs_summary">Προβολή και εξαγωγή αρχείων καταγραφής</string>
     <string name="preference_screen_search">Αναζήτηση</string>
+    <string name="preference_screen_search_summary">Αναζήτηση, ετικέτες, κρυφά στοιχεία</string>
     <string name="preference_search_favorites">Αγαπημένα</string>
     <string name="preference_search_favorites_summary">Εμφάνιση καρφιτσωμένων και συχνά χρησιμοποιούμενων στοιχείων πάνω από το πλέγμα εφαρμογών</string>
     <string name="preference_search_files">Αρχεία</string>
@@ -572,7 +571,10 @@
     <string name="preference_search_bar_color">Χρώμα</string>
     <string name="preference_search_bar_auto_focus">Άνοιγμα πληκτρολογίου</string>
     <string name="preference_search_bar_auto_focus_summary">Αυτόματη εμφάνιση του πληκτρολογίου κατά το άνοιγμα του μενού εφαρμογών</string>
+    <string name="preference_hidden_items">Κρυφά αποτελέσματα αναζήτησης</string>
+    <string name="preference_hidden_items_summary">Διαχείριση κρυφών εφαρμογών και αποτελεσμάτων αναζήτησης</string>
     <string name="preference_hidden_items_reveal_button">Εμφάνιση κουμπιού αποκάλυψης</string>
+    <string name="preference_hidden_items_reveal_button_summary">Εμφάνιση ενός κουμπιού για την αποκάλυψη κρυφών αποτελεσμάτων αναζήτησης</string>
     <string name="preference_screen_tags">Ετικέτες</string>
     <string name="preference_screen_tags_summary">Διαχείριση ετικετών και στοιχείων με ετικέτα</string>
     <string name="preference_edit_favorites_summary">Αλλαγή της σειράς των καρφιτσωμένων στοιχείων</string>
