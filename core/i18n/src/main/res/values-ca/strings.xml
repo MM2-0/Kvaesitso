@@ -220,7 +220,6 @@
     <string name="widget_name_unknown">Desconegut</string>
     <string name="widget_add_widget">Afegeix un giny</string>
     <string name="widget_removed">S\'ha eliminat el widget</string>
-    <!-- Add a third party widget (=a standard Android app widget) -->
     <string name="notes_widget_placeholder">Escriu una nota</string>
     <string name="notes_widget_action_new">Crea una nota nova</string>
     <!-- Save / export the current note content as markdown file -->
@@ -580,7 +579,6 @@
     <string name="preference_clockwidget_favorites_part_summary">Mostra la primera fila d\'elements fixats</string>
     <string name="preference_clockwidget_music_part_summary">Mostra els controls multimèdia quan hi ha una sessió multimèdia activa</string>
     <string name="preference_clockwidget_battery_part">Bateria</string>
-    <string name="preference_clockwidget_battery_part_summary">Mostra el nivell actual de la bateria quan la bateria està baixa o s\'està carregant</string>
     <string name="preference_clockwidget_alarm_part">Alarmes</string>
     <string name="preference_clockwidget_alarm_part_summary">Mostra les alarmes que sonaran en les properes 8 hores</string>
     <string name="preference_screen_backup">Fes una còpia de seguretat i restaura</string>
@@ -594,6 +592,7 @@
     <string name="preference_logs">Registres</string>
     <string name="preference_logs_summary">Veure i exportar els registres d\'aplicacions</string>
     <string name="preference_screen_search">Cerca</string>
+    <string name="preference_screen_search_summary">Cerca, etiquetes, elements ocults</string>
     <string name="preference_search_favorites">Preferits</string>
     <string name="preference_search_favorites_summary">Mostra els elements fixats i utilitzats freqüentment a sobre de la graella de les aplicacions</string>
     <string name="preference_search_apps">Aplicacions</string>
@@ -636,7 +635,10 @@
     <string name="preference_search_bar_auto_focus_summary">Mostra automàticament el teclat en obrir el calaix d\'aplicacions</string>
     <string name="preference_search_bar_launch_on_enter">Llançar a l\'entrar</string>
     <string name="preference_search_bar_launch_on_enter_summary">Llança el resultat de la cerca o executa un acció ràpida prement \"go\"</string>
+    <string name="preference_hidden_items">Resultats de cerca ocults</string>
+    <string name="preference_hidden_items_summary">Gestioneu les aplicacions ocultes i els resultats de la cerca</string>
     <string name="preference_hidden_items_reveal_button">Mostra el botó \"reveal\"</string>
+    <string name="preference_hidden_items_reveal_button_summary">Mostra un botó per mostrar els resultats de la cerca ocults</string>
     <string name="preference_screen_tags">Etiquetes</string>
     <string name="preference_screen_tags_summary">Gestioneu les etiquetes i els elements etiquetats</string>
     <string name="preference_wikipedia_customurl">URL de la Wikipedia</string>
@@ -710,6 +712,7 @@
     <string name="search_action_contact">Afegir a contactes</string>
     <string name="search_action_open_url">Veure lloc web</string>
     <string name="search_action_event">Programar esdeveniment</string>
+    <string name="search_action_private_space_lock">Tanca l\'espai privat</string>
     <string name="create_search_action_type">Quin tipus d\'acció voleu crear?</string>
     <string name="create_search_action_type_web">Cerca en un lloc web</string>
     <string name="create_search_action_type_app">Cerca en una aplicació</string>
@@ -725,7 +728,6 @@
     <string name="tag_exists_error">Ja existeix una etiqueta amb aquest nom</string>
     <string name="tag_exists_message">Ja existeix una etiqueta amb aquest nom. Si continueu, les dues etiquetes es fusionaran</string>
     <string name="tag_no_items_message">No s\'ha assignat cap element a aquesta etiqueta. Si continueu, l\'etiqueta se suprimirà</string>
-    <string name="tag_empty_name">Una etiqueta no pot existir sense un nom. Si continueu, l\'etiqueta se suprimirà</string>
     <string name="tag_select_items">Seleccioneu elements:</string>
     <string name="tag_name">Nom de l\'etiqueta</string>
     <plurals name="tag_selected_items">
@@ -799,7 +801,7 @@
     <string name="confirmation_delete_typography_scheme">De veritat voleu suprimir l\'esquema tipogràfic %1$s?</string>
     <string name="confirmation_delete_transparencies_scheme">De veritat voleu suprimir l\'esquema de transparència %1$s?</string>
     <string name="new_theme_name">(sense títol)</string>
-    <string name="theme_color_scheme_system_default">Sistema predeterminat</string>
+    <string name="preference_use_system_default">Sistema predeterminat</string>
     <string name="theme_color_scheme_autogenerate">Colors primaris</string>
     <string name="theme_color_scheme_palette_color">Paleta</string>
     <string name="theme_color_scheme_custom_color">Personalitzat</string>
@@ -1006,9 +1008,11 @@
     <string name="theme_import_title">Importa el tema</string>
     <string name="theme_bundle_name">Nom</string>
     <string name="theme_bundle_author">Autor</string>
+    <string name="preference_typography_fonts">Fonts</string>
     <string name="font_category_device_default">Dispositiu per defecte</string>
     <string name="font_name_device_headline">Font predeterminada del títol</string>
     <string name="font_name_device_body">Font del text del dispositiu</string>
     <string name="font_category_generic">Genèric</string>
     <string name="preference_measurement_system_metric">Mètric</string>
+    <string name="preference_currencies">Moneda</string>
 </resources>
