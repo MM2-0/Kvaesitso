@@ -38,6 +38,7 @@
     <string name="action_more_actions">Diğer eylemler</string>
     <string name="action_clear">Temizle</string>
     <string name="action_install">Yükle</string>
+    <string name="action_quit">Çık</string>
     <!-- Delete something (a file or a web search shortcut) -->
     <string name="menu_delete">Sil</string>
     <string name="menu_remove">Kaldır</string>
@@ -221,7 +222,6 @@
     <string name="widget_name_unknown">Bilinmeyen</string>
     <string name="widget_add_widget">Araç ekle</string>
     <string name="widget_removed">Araç kaldırıldı</string>
-    <!-- Add a third party widget (=a standard Android app widget) -->
     <string name="notes_widget_placeholder">Bir not yazın</string>
     <string name="notes_widget_action_new">Yeni not</string>
     <!-- Save / export the current note content as markdown file -->
@@ -419,6 +419,7 @@
     <string name="preference_theme_light">Gündüz</string>
     <string name="preference_theme_dark">Gece</string>
     <string name="preference_screen_colors">Renk şeması</string>
+    <string name="preference_create_colors">Yeni renk şeması</string>
     <string name="preference_colors_default">Varsayılan</string>
     <string name="preference_colors_high_contrast">Yüksek kontrast</string>
     <string name="preference_colors_bw">Siyah ve beyaz</string>
@@ -427,12 +428,15 @@
     <string name="preference_mdy_color_source_system">Sistem</string>
     <string name="preference_mdy_color_source_wallpaper">Duvar Kağıdı</string>
     <string name="preference_screen_shapes">Şekiller</string>
+    <string name="preference_create_shapes">Yeni şekil temaları</string>
     <string name="preference_shapes_default">Varsayılan</string>
     <string name="preference_shapes_extra_round">Ekstra yuvarlak</string>
     <string name="preference_shapes_rect">Dikdörtgen</string>
     <string name="preference_shapes_base">Temel şekil</string>
     <string name="preference_screen_typography">Tipografi</string>
+    <string name="preference_create_typography">Yeni yazım şemaları</string>
     <string name="preference_screen_transparencies">Şeffaflık</string>
+    <string name="preference_create_transparency">Yeni şeffaflık şeması</string>
     <string name="preference_transparencies_default">Varsayılan</string>
     <string name="preference_transparencies_semi_transparent">Yarı şeffaf</string>
     <string name="preference_font">Yazı Tipi</string>
@@ -589,7 +593,6 @@
     <string name="preference_clockwidget_music_part">Medya</string>
     <string name="preference_clockwidget_music_part_summary">Aktif bir medya oturumu olduğunda medya kontrollerini göster</string>
     <string name="preference_clockwidget_battery_part">Pil</string>
-    <string name="preference_clockwidget_battery_part_summary">Pil azaldığında veya şarj olurken mevcut pil seviyesini göster</string>
     <string name="preference_clockwidget_alarm_part">Alarmlar</string>
     <string name="preference_clockwidget_alarm_part_summary">Sonraki 8 saat içinde çalacak alarmları göster</string>
     <string name="preference_screen_backup">Yedekle ve geri yükle</string>
@@ -735,6 +738,9 @@
     <string name="search_action_contact">Kişilere ekle</string>
     <string name="search_action_open_url">Web sitesini görüntüle</string>
     <string name="search_action_event">Etkinlik planla</string>
+    <string name="search_action_private_space_lock">Özel alanı kilitle</string>
+    <string name="create_search_action_title">Yeni hızlı hareket</string>
+    <string name="edit_search_action_title">hızlı hareketi düzenle</string>
     <string name="create_search_action_type">Ne tür bir eylem oluşturmak istersiniz?</string>
     <string name="create_search_action_type_web">Bir web sitesinde ara</string>
     <string name="create_search_action_type_app">Bir uygulamada ara</string>
@@ -749,10 +755,10 @@
     <string name="more_information">Daha fazla bilgi</string>
     <string name="experimental_feature">Deneysel</string>
     <string name="tag_exists_error">Bu ada sahip bir etiket zaten var</string>
+    <string name="tag_name_empty_error">İsim bölümü boş kalamaz</string>
     <string name="tag_exists_message">Bu ada sahip bir etiket zaten var. Devam ederseniz, iki etiket birleştirilecektir</string>
     <string name="tag_no_items_message">Bu etikete atanmış öğe yok. Devam ederseniz, etiket silinecektir</string>
-    <string name="tag_empty_name">Bir etiket isimsiz olamaz. Devam ederseniz, etiket silinecektir</string>
-    <string name="tag_select_items">Öğeleri seçin:</string>
+    <string name="tag_select_items">Öğeleri seçin</string>
     <string name="tag_name">Etiket adı</string>
     <string name="tag_icon_customicon">Simge</string>
     <plurals name="tag_selected_items">
@@ -783,9 +789,16 @@
     <string name="preference_gesture_long_press">Uzun basma</string>
     <string name="preference_gesture_home_button">Ana ekran düğmesi/hareketi</string>
     <string name="gesture_action_none">Hiçbir şey yapma</string>
-    <string name="gesture_action_open_search">Aramayı aç</string>
+    <string name="gesture_action_category_launcher">Başlatıcı sayfaları</string>
+    <string name="gesture_action_category_system">Sistem eylemleri</string>
+    <string name="gesture_action_category_apps">Uygulamalar ve kısayollar</string>
+    <string name="gesture_action_open_search">Arama / uygulama çekmecesi</string>
     <string name="gesture_action_widgets">Widgetlar</string>
-    <string name="gesture_action_launch_app">Uygulama başlat</string>
+    <string name="gesture_action_widgets_new">Yeni widget sayfası</string>
+    <string name="gesture_action_widgets_empty">Boş</string>
+    <string name="gesture_action_widgets_indexed">%1$d Widgetları</string>
+    <string name="gesture_action_launch_app">Uygulamayı başlat</string>
+    <string name="gesture_action_launch_select_app">Uygulama veya kısayol seç</string>
     <string name="gesture_action_notifications">Bildirim çekmecesini aç</string>
     <string name="gesture_action_lock_screen">Ekranı kapat</string>
     <string name="gesture_action_quick_settings">Hızlı ayarları aç</string>
@@ -828,7 +841,7 @@
     <string name="confirmation_delete_typography_scheme">%1$s tipografi şemasını gerçekten silmek istiyor musunuz?</string>
     <string name="confirmation_delete_transparencies_scheme">%1$s şeffaflık şemasını gerçekten silmek istiyor musunuz?</string>
     <string name="new_theme_name">(isimsiz)</string>
-    <string name="theme_color_scheme_system_default">Sistem varsayılanını kullan</string>
+    <string name="preference_use_system_default">Sistem varsayılanını kullan</string>
     <string name="theme_color_scheme_autogenerate">Ana renkten</string>
     <string name="theme_color_scheme_palette_color">Palet</string>
     <string name="theme_color_scheme_custom_color">Özel</string>
@@ -858,7 +871,7 @@
     <string name="menu_bugreport">Hata Bildir</string>
     <string name="location_open_24_7">7/24 Açık</string>
     <string name="plugin_state_error">Bu eklenti düzgün çalışmıyor</string>
-    <string name="plugin_state_setup_required">Önce bu eklentiyi kurmanız gerekiyor</string>
+    <string name="plugin_state_setup_required">Öncelikle bu eklentiyi kurmanız gerekiyor</string>
     <string name="plugin_action_setup">Kur</string>
     <string name="plugin_type_filesearch">Dosyalar</string>
     <string name="plugin_type_contacts">Kişiler</string>
@@ -923,7 +936,7 @@
     <string name="poi_category_furniture">Mobilya mağazası</string>
     <string name="poi_category_alcohol">İçki dükkanı</string>
     <string name="poi_category_florist">Çiçekçi</string>
-    <string name="poi_category_mall">AVM</string>
+    <string name="poi_category_mall">Alışveriş merkezi</string>
     <string name="poi_category_optician">Gözlükçü</string>
     <string name="poi_category_jewelry">Kuyumcu</string>
     <string name="poi_category_laundry">Çamaşırhane</string>
@@ -1040,7 +1053,9 @@
     <string name="theme_import_title">Temayı içe aktar</string>
     <string name="theme_bundle_name">Ad</string>
     <string name="theme_bundle_author">Yazar</string>
-    <string name="preference_typography_fonts">Yazı Tipleri</string>
+    <string name="preference_typography_fonts">Font şekilleri</string>
+    <string name="add_font_style">yeni bir font ekle</string>
+    <string name="remove_font_style">bu fontu kaldır</string>
     <string name="font_category_device_default">Cihaz varsayılanı</string>
     <string name="font_name_device_headline">Varsayılan başlık yazı tipi</string>
     <string name="font_name_device_body">Cihaz metin yazı tipi</string>
@@ -1049,6 +1064,7 @@
     <string name="preference_screen_locale_summary">Dil, birimler, zaman formatı</string>
     <string name="preference_language">Dil</string>
     <string name="preference_value_system_default">Sistem varsayılanı</string>
+    <string name="preference_value_disabled">Devre dışı</string>
     <string name="preference_form_of_address">Hitap şekli</string>
     <string name="preference_form_of_address_neutral">Nötr</string>
     <string name="preference_form_of_address_fem">Kadın</string>
@@ -1059,6 +1075,19 @@
     <string name="preference_measurement_system_us">Amerika Birleşik Devletleri</string>
     <string name="preference_transliteration">Tercih edilen tercüme</string>
     <string name="preference_transliteration_auto">Otomatik</string>
-    <string name="preference_transliteration_disabled">Devre dışı</string>
+    <string name="preference_calendar_system">Takvim sistemi</string>
+    <string name="preference_calendar_system_primary">Birincil takvim</string>
+    <string name="preference_calendar_system_secondary">İkincil takvim</string>
+    <string name="preference_currencies">Para birimi</string>
+    <string name="preference_add_currency">Para birimi ekle</string>
     <string name="select_tag">Etiket seçin</string>
+    <string name="create_tag_title">Yeni etiket</string>
+    <string name="edit_tag_title">Etiketi düzenle</string>
+    <string name="dialog_discard_unsaved">Kaydetmeden çıkılsın mı?</string>
+    <string name="typo_preview_short1">Ağaç</string>
+    <string name="typo_preview_short2">Yazı</string>
+    <string name="typo_preview_medium1">İçli köfte</string>
+    <string name="typo_preview_medium2">Önizleme</string>
+    <string name="typo_preview_long">Çevik kahverenkli tilki\n123456789\'un üstünden atlar</string>
+    <string name="preference_category_donate">Geliştirmeyi destekle</string>
 </resources>
