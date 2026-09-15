@@ -224,7 +224,6 @@
     <string name="widget_name_notes">নোট</string>
     <string name="widget_name_unknown">অজানা অ্যাপের উইজেট</string>
     <string name="widget_add_widget">উইজেট যোগ করুন</string>
-    <!-- Add a third party widget (=a standard Android app widget) -->
     <string name="notes_widget_placeholder">একটি নোট লিখুন…</string>
     <string name="notes_widget_action_new">নতুন নোট</string>
     <!-- Save / export the current note content as markdown file -->
