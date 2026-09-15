@@ -38,6 +38,7 @@
     <string name="action_more_actions">Weitere Aktionen</string>
     <string name="action_clear">Leeren</string>
     <string name="action_install">Installieren</string>
+    <string name="action_quit">Verlassen</string>
     <!-- Delete something (a file or a web search shortcut) -->
     <string name="menu_delete">Löschen</string>
     <string name="menu_remove">Entfernen</string>
@@ -217,7 +218,6 @@
     <string name="widget_name_unknown">Unbekannt</string>
     <string name="widget_add_widget">Widget hinzufügen</string>
     <string name="widget_removed">Widget entfernt</string>
-    <!-- Add a third party widget (=a standard Android app widget) -->
     <string name="notes_widget_placeholder">Notiz schreiben</string>
     <string name="notes_widget_action_new">Neue Notiz</string>
     <!-- Save / export the current note content as markdown file -->
@@ -413,6 +413,7 @@
     <string name="preference_theme_light">Hell</string>
     <string name="preference_theme_dark">Dunkel</string>
     <string name="preference_screen_colors">Farbschema</string>
+    <string name="preference_create_colors">Neues Farbschema</string>
     <string name="preference_colors_default">Standard</string>
     <string name="preference_colors_high_contrast">Hoher Kontrast</string>
     <string name="preference_colors_bw">Schwarz-Weiß</string>
@@ -420,12 +421,15 @@
     <string name="preference_mdy_color_source">Quelle für dynamische Farben</string>
     <string name="preference_mdy_color_source_wallpaper">Hintergrundbild</string>
     <string name="preference_screen_shapes">Formen</string>
+    <string name="preference_create_shapes">Neues Formenschema</string>
     <string name="preference_shapes_default">Standard</string>
     <string name="preference_shapes_extra_round">Extra rund</string>
     <string name="preference_shapes_rect">Rechteckig</string>
     <string name="preference_shapes_base">Grundform</string>
     <string name="preference_screen_typography">Typografie</string>
+    <string name="preference_create_typography">Neues Typografieschema</string>
     <string name="preference_screen_transparencies">Transparenz</string>
+    <string name="preference_create_transparency">Neues Transparenzschema</string>
     <string name="preference_transparencies_default">Standard</string>
     <string name="preference_transparencies_semi_transparent">Halbtransparent</string>
     <string name="preference_font">Schriftart</string>
@@ -571,7 +575,9 @@
     <string name="preference_clockwidget_music_part">Medien</string>
     <string name="preference_clockwidget_music_part_summary">Mediensteuerung anzeigen, wenn Medien wiedergegeben werden</string>
     <string name="preference_clockwidget_battery_part">Akku</string>
-    <string name="preference_clockwidget_battery_part_summary">Den Akkustand anzeigen, wenn der Akku fast leer ist oder geladen wird</string>
+    <string name="preference_clockwidget_battery_part_always_show">Immer anzeigen</string>
+    <string name="preference_clockwidget_battery_part_show">Wenn niedrig und beim Laden</string>
+    <string name="preference_clockwidget_battery_part_hide">Aus</string>
     <string name="preference_clockwidget_alarm_part">Wecker</string>
     <string name="preference_clockwidget_alarm_part_summary">Wecker anzeigen, wenn diese in den nächsten 8 Stunden klingeln werden</string>
     <string name="preference_screen_backup">Sichern und Wiederherstellen</string>
@@ -588,6 +594,8 @@
     <string name="preference_search_favorites">Favoriten</string>
     <string name="preference_search_favorites_summary">Angepinnte und häufig genutzte Elemente über dem App-Raster anzeigen</string>
     <string name="preference_search_apps_summary">Alle Apps anzeigen, wenn das Suchfeld leer ist</string>
+    <string name="preference_search_apps_show_details">App-Informationen anzeigen</string>
+    <string name="preference_search_apps_show_details_summary">Version und Paketnamen einer App in ihrem Kontext-Menü anzeigen</string>
     <string name="preference_search_files">Dateien</string>
     <string name="preference_search_files_summary">Lokale Dateien und Cloud-Dateien durchsuchen</string>
     <string name="preference_search_contacts">Kontakte</string>
@@ -606,6 +614,7 @@
     <string name="preference_search_currencyconverter">Währungsrechner</string>
     <string name="preference_search_currencyconverter_summary">Regelmäßig Wechselkurse herunterladen, um Währungen umzurechnen</string>
     <string name="preference_search_supportedunits">Unterstützte Einheiten</string>
+    <string name="preference_currency_settings">Währungseinstellungen</string>
     <string name="preference_search_wikipedia_summary">Die freie Enzyklopädie durchsuchen</string>
     <string name="preference_search_websites">Webseiten</string>
     <string name="preference_search_locations">Orte</string>
@@ -661,6 +670,9 @@
     <string name="preference_smartspacer_integration_description">Smartspacer ist ein freies und quelloffenes At a Glance-Widget. Wenn es installiert ist, kann es in die dynamische Zone des Uhren-Widgets integriert werden</string>
     <string name="preference_smartspacer_enable">Smartspacer-Integration aktivieren</string>
     <string name="preference_launch_smartspacer_app">Smartspacer öffnen</string>
+    <string name="preference_category_feed_provider">Feedanbieter</string>
+    <string name="preference_feed_enable_summary">Auf dem Startbildschirm nach rechts wischen, um das Feed zu öffnen</string>
+    <string name="no_feed_providers">Keine Feedanbieter installiert</string>
     <string name="preference_contacts_call_on_tap">Zum Anrufen tippen</string>
     <string name="preference_contacts_call_on_tap_summary">Beim Antippen einer Telefonnummer ohne Bestätigung einen Anruf starten</string>
     <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
@@ -696,6 +708,7 @@
     <string name="favorites_empty_tag">Es gibt keine Elemente mit diesem Tag</string>
     <string name="frequently_used_show_in_favorites">In Favoriten anzeigen</string>
     <string name="frequently_used_rows">Anzahl Zeilen</string>
+    <string name="favorites_skip_rows">Zeilen überspringen</string>
     <string name="preference_screen_search_actions">Schnellaktionen</string>
     <string name="preference_search_search_actions_summary">Schnellaktionen und Such-Shortcuts bearbeiten</string>
     <string name="search_action_call">Anrufen</string>
@@ -708,6 +721,11 @@
     <string name="search_action_contact">Neuer Kontakt</string>
     <string name="search_action_open_url">Website öffnen</string>
     <string name="search_action_event">Termin planen</string>
+    <string name="search_query_private_space">Vertrauliches Profil</string>
+    <string name="search_action_private_space_lock">Vertrauliches Profil sperren</string>
+    <string name="search_action_private_space_unlock">Vertrauliches Profil entsperren</string>
+    <string name="create_search_action_title">Neue Schnellaktion</string>
+    <string name="edit_search_action_title">Schnellaktion bearbeiten</string>
     <string name="create_search_action_type">Welche Art von Aktion möchten Sie erstellen?</string>
     <string name="create_search_action_type_web">Auf einer Webseite suchen</string>
     <string name="create_search_action_type_app">In einer App suchen</string>
@@ -720,10 +738,10 @@
     <string name="more_information">Mehr Informationen</string>
     <string name="experimental_feature">Experimentell</string>
     <string name="tag_exists_error">Ein Tag mit diesem Namen existiert bereits</string>
+    <string name="tag_name_empty_error">Name kann nicht leer sein</string>
     <string name="tag_exists_message">Ein Tag mit diesem Namen existiert bereits. Wenn Sie fortfahren, werden die beiden Tags zusammengeführt</string>
-    <string name="tag_no_items_message">Diesem Tag sind keine Elemente zugeordnet. Wenn Sie fortfahren, wird der Tag gelöscht</string>
-    <string name="tag_empty_name">Unbenannte Tags werden nicht unterstützt. Wenn Sie fortfahren, wird der Tag gelöscht</string>
-    <string name="tag_select_items">Elemente auswählen:</string>
+    <string name="tag_no_items_message">Diesem Tag sind keine Elemente zugeordnet. Wenn Sie fortfahren, wird das Tag gelöscht</string>
+    <string name="tag_select_items">Elemente auswählen</string>
     <string name="tag_name">Tag-Name</string>
     <plurals name="tag_selected_items">
         <item quantity="one">%1$d Element ausgewählt</item>
@@ -753,13 +771,19 @@
     <string name="preference_gesture_long_press">Lange drücken</string>
     <string name="preference_gesture_home_button">Start-Button/-Geste</string>
     <string name="gesture_action_none">Nichts tun</string>
-    <string name="gesture_action_open_search">Suche öffnen</string>
+    <string name="gesture_action_category_launcher">Launcherseiten</string>
+    <string name="gesture_action_category_system">Systemaktionen</string>
+    <string name="gesture_action_category_apps">Apps und Shortcuts</string>
+    <string name="gesture_action_open_search">Suche / App-Übersicht</string>
+    <string name="gesture_action_widgets_new">Neue Widget-Seite</string>
+    <string name="gesture_action_widgets_empty">Leer</string>
     <string name="gesture_action_launch_app">App starten</string>
-    <string name="gesture_action_notifications">Benachrichtigungen öffnen</string>
+    <string name="gesture_action_launch_select_app">App oder Shortcut auswählen</string>
+    <string name="gesture_action_notifications">Benachrichtigungen</string>
     <string name="gesture_action_lock_screen">Bildschirm ausschalten</string>
-    <string name="gesture_action_quick_settings">Schnelleinstellungen öffnen</string>
-    <string name="gesture_action_power_menu">Power-Menü anzeigen</string>
-    <string name="gesture_action_recents">Zuletzt verwendete Apps anzeigen</string>
+    <string name="gesture_action_quick_settings">Schnelleinstellungen</string>
+    <string name="gesture_action_power_menu">Ein/Aus-Menü</string>
+    <string name="gesture_action_recents">Letzte Apps</string>
     <string name="gesture_failed_message">Sie haben eine „%1$s“-Geste ausgeführt. Diese Geste ist momentan konfiguriert, eine „%2$s“-Aktion auszulösen. Diese Aktion konnte aus dem folgenden Grund nicht durchgeführt werden:</string>
     <string name="missing_permission_accessibility_gesture_failed">Der Launcher muss als Bedienungshilfe eingestellt werden, um diese Aktion ausführen zu können.</string>
     <string name="missing_permission_accessibility_gesture_settings">Diese Aktion erfordert, dass der Launcher als Bedienungshilfe eingestellt ist.</string>
@@ -796,7 +820,7 @@
     <string name="confirmation_delete_typography_scheme">Möchten Sie das Typografie-Schema %1$s wirklich löschen?</string>
     <string name="confirmation_delete_transparencies_scheme">Möchten Sie das Transparenzschema %1$s wirklich löschen?</string>
     <string name="new_theme_name">(unbenannt)</string>
-    <string name="theme_color_scheme_system_default">Systemstandard verwenden</string>
+    <string name="preference_use_system_default">Systemstandard verwenden</string>
     <string name="theme_color_scheme_autogenerate">Aus Primärfarbe</string>
     <string name="theme_color_scheme_custom_color">Benutzerdefiniert</string>
     <string name="preference_restore_default">Standard wiederherstellen</string>
@@ -995,7 +1019,9 @@
     <string name="theme_export_title">Design exportieren</string>
     <string name="theme_import_title">Design importieren</string>
     <string name="theme_bundle_author">Autor</string>
-    <string name="preference_typography_fonts">Schriften</string>
+    <string name="preference_typography_fonts">Schriftstile</string>
+    <string name="add_font_style">Schriftstil hinzufügen</string>
+    <string name="remove_font_style">Diesen Schriftstil entfernen</string>
     <string name="font_category_device_default">Gerätestandard</string>
     <string name="font_name_device_headline">Standard-Überschriften-Schrift</string>
     <string name="font_name_device_body">Standard-Text-Schrift</string>
@@ -1004,6 +1030,7 @@
     <string name="preference_screen_locale_summary">Sprache, Einheiten, Zeitformat</string>
     <string name="preference_language">Sprache</string>
     <string name="preference_value_system_default">Systemstandard</string>
+    <string name="preference_value_disabled">Deaktiviert</string>
     <string name="preference_form_of_address">Anredeform</string>
     <string name="preference_form_of_address_fem">Feminin</string>
     <string name="preference_form_of_address_masc">Maskulin</string>
@@ -1013,6 +1040,18 @@
     <string name="preference_measurement_system_us">Vereinigte Staaten</string>
     <string name="preference_transliteration">Bevorzugte Transliteration</string>
     <string name="preference_transliteration_auto">Automatisch</string>
-    <string name="preference_transliteration_disabled">Deaktiviert</string>
+    <string name="preference_calendar_system">Kalendersystem</string>
+    <string name="preference_calendar_system_primary">Primärer Kalender</string>
+    <string name="preference_calendar_system_secondary">Sekundärer Kalender</string>
+    <string name="preference_currencies">Währung</string>
+    <string name="preference_add_currency">Währung hinzufügen</string>
     <string name="select_tag">Tag auswählen</string>
+    <string name="create_tag_title">Neues Tag</string>
+    <string name="edit_tag_title">Tag bearbeiten</string>
+    <string name="dialog_discard_unsaved">Verlassen, ohne zu speichern?</string>
+    <string name="typo_preview_short1">Typ</string>
+    <string name="typo_preview_short2">Äöü</string>
+    <string name="typo_preview_medium2">Größe</string>
+    <string name="typo_preview_long">Fußgänger überqueren\ndie Straße mit 1234790</string>
+    <string name="preference_category_donate">Entwicklung unterstützen</string>
 </resources>
