@@ -80,6 +80,14 @@
         <item quantity="other">jaren</item>
     </plurals>
     <!-- UNITS OF DATA SIZES -->
+    <plurals name="unit_mebibyte">
+        <item quantity="one">mebibyte</item>
+        <item quantity="other">mebibyte</item>
+    </plurals>
+    <plurals name="unit_gibibyte">
+        <item quantity="one">gibibyte</item>
+        <item quantity="other">gibibyte</item>
+    </plurals>
     <plurals name="unit_tebibyte">
         <item quantity="one">tebiyte</item>
         <item quantity="other">tebiytes</item>
@@ -108,7 +116,15 @@
     </plurals>
     <plurals name="unit_long_ton">
         <item quantity="one">Engelse ton</item>
-        <item quantity="other">Engelse ton</item>
+        <item quantity="other">long ton</item>
+    </plurals>
+    <plurals name="unit_pound">
+        <item quantity="one">pond</item>
+        <item quantity="other">pond</item>
+    </plurals>
+    <plurals name="unit_ounce">
+        <item quantity="one">ons</item>
+        <item quantity="other">ons</item>
     </plurals>
     <!-- UNITS OF TEMPERATURE -->
     <plurals name="unit_degree_celsius">
@@ -145,6 +161,34 @@
     <plurals name="unit_cubic_yard">
         <item quantity="one">kubieke yard</item>
         <item quantity="other">kubieke yards</item>
+    </plurals>
+    <plurals name="unit_gallon_us">
+        <item quantity="one">gallon (VS)</item>
+        <item quantity="other">gallon (VS)</item>
+    </plurals>
+    <plurals name="unit_gallon_imp">
+        <item quantity="one">gallon (imperiaal)</item>
+        <item quantity="other">gallon (imperiaal)</item>
+    </plurals>
+    <plurals name="unit_pint_us">
+        <item quantity="one">pint (VS)</item>
+        <item quantity="other">pint (VS)</item>
+    </plurals>
+    <plurals name="unit_pint_imp">
+        <item quantity="one">pint (imperiaal)</item>
+        <item quantity="other">pint (imperiaal)</item>
+    </plurals>
+    <plurals name="unit_fluid_ounce_us">
+        <item quantity="one">fluid ounce (VS)</item>
+        <item quantity="other">fluid ounce (VS)</item>
+    </plurals>
+    <plurals name="unit_fluid_ounce_imp">
+        <item quantity="one">fluid ounce (imperiaal)</item>
+        <item quantity="other">fluid ounce (imperiaal)</item>
+    </plurals>
+    <plurals name="unit_cup">
+        <item quantity="one">cup (VS)</item>
+        <item quantity="other">cup (VS)</item>
     </plurals>
     <plurals name="unit_tablespoon">
         <item quantity="one">eetlepel</item>
