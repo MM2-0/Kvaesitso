@@ -117,7 +117,6 @@
         Usually Google Play, but can be substituted with something else if Google Play is not available in
         the region of the language or not commonly used.
        -->
-    <!-- Add a third party widget (=a standard Android app widget) -->
     <!-- Save / export the current note content as markdown file -->
     <!-- Default filename for exported files. %1$s: the current date and time. File extension is appended automatically. -->
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
