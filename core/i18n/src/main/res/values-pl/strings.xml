@@ -217,7 +217,6 @@
     <string name="widget_name_notes">Widżet przechowujący pojedynczą notatkę</string>
     <string name="widget_name_unknown">Nieznany widżet</string>
     <string name="widget_add_widget">Dodaj widżet</string>
-    <!-- Add a third party widget (=a standard Android app widget) -->
     <string name="notes_widget_placeholder">Napisz notatkę…</string>
     <string name="notes_widget_action_new">Nowa notatka</string>
     <!-- Save / export the current note content as markdown file -->
@@ -546,7 +545,6 @@
     <string name="preference_clockwidget_favorites_part_summary">Pokaż pierwszy rząd przypiętych rzeczy</string>
     <string name="preference_clockwidget_music_part_summary">Pokaż elementy sterujące mediów, gdy jest aktywna sesja multimedialna</string>
     <string name="preference_clockwidget_battery_part">Bateria</string>
-    <string name="preference_clockwidget_battery_part_summary">Pokaż aktualny poziom baterii kiedy jest bliska wyczerpaniu lub gdy się ładuje</string>
     <string name="preference_clockwidget_alarm_part">Alarmy</string>
     <string name="preference_clockwidget_alarm_part_summary">Pokaż alarmy które zadzwonią w ciągu 15 minut</string>
     <string name="preference_screen_backup">Kopia zapasowa i przywracanie</string>
@@ -560,6 +558,7 @@
     <string name="preference_logs">Dzienniki zdarzeń</string>
     <string name="preference_logs_summary">Wyświetlanie i eksportowanie dzienników zdarzeń aplikacji</string>
     <string name="preference_screen_search">Wyszukiwanie</string>
+    <string name="preference_screen_search_summary">Wyszukiwanie, tagi, ukryte elementy</string>
     <string name="preference_search_favorites">Ulubione</string>
     <string name="preference_search_favorites_summary">Pokazuje przypięte oraz często używane rzeczy nad listą aplikacji</string>
     <string name="preference_search_apps">Aplikacje</string>
@@ -596,7 +595,10 @@
     <string name="preference_search_bar_auto_focus_summary">Automatyczne wyświetlanie klawiatury po otwarciu szuflady aplikacji</string>
     <string name="preference_search_bar_launch_on_enter">Uruchom na starcie</string>
     <string name="preference_search_bar_launch_on_enter_summary">Uruchamianie podświetlonego dopasowania lub szybkiej akcji po dotknięciu przycisku Go</string>
+    <string name="preference_hidden_items">Ukryte elementy</string>
+    <string name="preference_hidden_items_summary">Zarządzaj ukrytymi aplikacjami i wynikami wyszukiwania</string>
     <string name="preference_hidden_items_reveal_button">Pokaż przycisk ujawniania</string>
+    <string name="preference_hidden_items_reveal_button_summary">Pokaż przycisk, aby ujawnić ukryte wyniki wyszukiwania</string>
     <string name="preference_screen_tags">Tagi</string>
     <string name="preference_screen_tags_summary">Zarządzaj tagami i oznaczonymi elementami</string>
     <string name="preference_wikipedia_customurl">Adres URL Wikipedii</string>
@@ -745,7 +747,7 @@
     <string name="note_widget_file_write_error">Błąd zapisu notatki</string>
     <string name="note_widget_file_write_error_description">Notatka nie mogła zostać zapisana w połączonym pliku. Możliwe, że została przeniesiona lub usunięta. Kopia została zapisana w pamięci wewnętrznej programu uruchamiającego.</string>
     <string name="confirmation_delete_color_scheme">Czy naprawdę chcesz usunąć schemat kolorów %1$s?</string>
-    <string name="theme_color_scheme_system_default">Użyj domyślnych ustawień systemowych</string>
+    <string name="preference_use_system_default">Użyj domyślnych ustawień systemowych</string>
     <string name="theme_color_scheme_autogenerate">Z koloru podstawowego</string>
     <string name="theme_color_scheme_palette_color">Paleta</string>
     <string name="theme_color_scheme_custom_color">Własny</string>
@@ -855,4 +857,5 @@
     <string name="weather_forecast_wind">Wiatr</string>
     <string name="theme_bundle_name">Nazwa</string>
     <string name="preference_measurement_system_metric">Metryczne</string>
+    <string name="preference_currencies">Waluta</string>
 </resources>
