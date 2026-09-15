@@ -225,7 +225,6 @@
     <string name="widget_name_unknown">ابزارک برنامه ناشناخته</string>
     <string name="widget_add_widget">افزودن ابزارک</string>
     <string name="widget_removed">ابزارک پاک شد</string>
-    <!-- Add a third party widget (=a standard Android app widget) -->
     <string name="notes_widget_placeholder">چیزی بنویسید…</string>
     <string name="notes_widget_action_new">یادداشت جدید</string>
     <!-- Save / export the current note content as markdown file -->
@@ -566,7 +565,6 @@
     <string name="preference_clockwidget_music_part">رسانه</string>
     <string name="preference_clockwidget_music_part_summary">هنگامی که جلسه رسانه‌ای فعال است، نمایش کنترل‌های رسانه‌ای</string>
     <string name="preference_clockwidget_battery_part">باتری</string>
-    <string name="preference_clockwidget_battery_part_summary">نمایش سطح کنونی باتری هنگامی که باتری ضعیف است یا در حال شارژ است</string>
     <string name="preference_clockwidget_alarm_part">آلارم‌ها</string>
     <string name="preference_clockwidget_alarm_part_summary">نمایش آلارم‌هایی که در ۸ ساعت آینده به صدا درمی‌آیند</string>
     <string name="preference_screen_backup">پشتیبان‌گیری و بازیابی</string>
@@ -580,6 +578,7 @@
     <string name="preference_logs">گزارش‌ها</string>
     <string name="preference_logs_summary">مشاهده و صدور گزارش‌های برنامه</string>
     <string name="preference_screen_search">جستجو</string>
+    <string name="preference_screen_search_summary">جستجو، برچسب‌ها، موارد مخفی</string>
     <string name="preference_search_favorites">موارد دلخواه</string>
     <string name="preference_search_favorites_summary">نمایش موارد دلخواه و مورد استفاده بالا بالای شبکه برنامه‌ها</string>
     <string name="preference_search_apps">برنامه‌ها</string>
@@ -622,7 +621,10 @@
     <string name="preference_search_bar_auto_focus_summary">به شیوه خودکار هنگام بازکردن کشوی برنامه‌ها، صفحه‌کلید نمایش داده شود</string>
     <string name="preference_search_bar_launch_on_enter">اجرایی شدن با ورود</string>
     <string name="preference_search_bar_launch_on_enter_summary">اجرای مورد برجسته یا کنش سریع هنگام فشار دادن دکمه \'برو\'</string>
+    <string name="preference_hidden_items">یافته‌های جستجوی مخفی</string>
+    <string name="preference_hidden_items_summary">مدیریت برنامه‌ها و یافته‌های جستجوی مخفی</string>
     <string name="preference_hidden_items_reveal_button">نمایش دکمه آشکارسازی</string>
+    <string name="preference_hidden_items_reveal_button_summary">نمایش دکمه‌ای برای آشکار کردن یافته‌های جستجوی پنهان</string>
     <string name="preference_screen_tags">برچسب‌ها</string>
     <string name="preference_screen_tags_summary">مدیریت برچسب‌ها و موارد برچسب‌گذاری شده</string>
     <string name="preference_wikipedia_customurl">نشانی وبگاه ویکی‌پدیا</string>
@@ -688,6 +690,7 @@
     <string name="search_action_contact">افزودن به مخاطبین</string>
     <string name="search_action_open_url">مشاهده وبگاه</string>
     <string name="search_action_event">برنامه‌ریزی رویداد</string>
+    <string name="search_action_private_space_lock">قفل کردن فضای شخصی</string>
     <string name="create_search_action_type">چه سبک کنشی می‌خواهید ایجاد کنید؟</string>
     <string name="create_search_action_type_web">جستجو در یک وبگاه</string>
     <string name="create_search_action_type_app">جستجو در یک برنامه</string>
@@ -704,7 +707,6 @@
     <string name="tag_exists_error">برچسبی با این نام از پیش دارید.</string>
     <string name="tag_exists_message">برچسبی با این نام از پیش دارید. اگر ادامه دهید، دو برچسب یکی خواهند شد.</string>
     <string name="tag_no_items_message">هیچ موردی به این برچسب واگذار نشده. اگر ادامه دهید، برچسب پاک خواهد شد.</string>
-    <string name="tag_empty_name">یک برچسب بدون نام نمی‌توانید داشته باشید. اگر ادامه دهید، برچسب پاک خواهد شد.</string>
     <string name="tag_select_items">انتخاب موارد:</string>
     <string name="tag_name">نام برچسب</string>
     <plurals name="tag_selected_items">
@@ -774,7 +776,7 @@
     <string name="note_widget_file_write_error">خطا در نگه‌داری یادداشت</string>
     <string name="note_widget_file_write_error_description">یادداشت نتوانست به پرونده پیوند داده‌شده نوشته شود. گمان می‌رود جابجا یا پاک‌شده باشد. یک نگارش در حافظه داخلی برنامه راه‌انداز نگه‌داری شده است.</string>
     <string name="confirmation_delete_color_scheme">آیا واقعاً می‌خواهید طرح رنگی %1$s را پاک کنید؟</string>
-    <string name="theme_color_scheme_system_default">به‌کار بردن پیش‌گزیده سامانه</string>
+    <string name="preference_use_system_default">به‌کار بردن پیش‌گزیده سامانه</string>
     <string name="theme_color_scheme_autogenerate">از رنگ اصلی</string>
     <string name="theme_color_scheme_palette_color">پالت</string>
     <string name="theme_color_scheme_custom_color">سفارشی</string>
@@ -983,4 +985,5 @@
     <string name="departure_time_departed">جدا شده</string>
     <string name="theme_bundle_name">نام</string>
     <string name="preference_measurement_system_metric">متریک</string>
+    <string name="preference_currencies">ارز</string>
 </resources>
