@@ -32,7 +32,10 @@
     <!-- Shown in a snackbar after an item has been hidden. %1$s: label of the item -->
     <string name="action_undo">元に戻す</string>
     <string name="action_import">インポート</string>
+    <string name="action_done">完了</string>
     <string name="action_clear">削除</string>
+    <string name="action_install">インストール</string>
+    <string name="action_quit">閉じる</string>
     <!-- Delete something (a file or a web search shortcut) -->
     <string name="menu_delete">削除</string>
     <string name="menu_remove">削除</string>
@@ -217,7 +220,6 @@
     <string name="widget_name_notes">メモ</string>
     <string name="widget_name_unknown">不明なアプリウィジェット</string>
     <string name="widget_add_widget">ウィジェットを追加</string>
-    <!-- Add a third party widget (=a standard Android app widget) -->
     <string name="notes_widget_placeholder">メモを書く…</string>
     <string name="notes_widget_action_new">新しいメモ</string>
     <!-- Save / export the current note content as markdown file -->
@@ -435,6 +437,7 @@
     <string name="preference_backup_summary">設定とランチャーのデータをエクスポートします</string>
     <string name="preference_restore_summary">以前に作成されたバックアップをインポートします</string>
     <string name="preference_screen_search">検索</string>
+    <string name="preference_screen_search_summary">検索、タグ、非表示のアイテム</string>
     <string name="preference_search_favorites">お気に入り</string>
     <string name="preference_search_calendar">カレンダー</string>
     <string name="preference_screen_buildinfo">ビルド情報</string>
@@ -461,8 +464,9 @@
     <string name="preference_screen_search_actions">クイックアクション</string>
     <string name="search_action_email">メール</string>
     <string name="search_action_share">共有</string>
+    <string name="search_action_private_space_lock">プライベートスペースをロック</string>
     <string name="preference_screen_gestures">ジェスチャー</string>
-    <string name="theme_color_scheme_system_default">システムのデフォルトを使用</string>
+    <string name="preference_use_system_default">システムのデフォルトを使用</string>
     <string name="preference_restore_default">デフォルトに復元</string>
     <!-- %1$s: app name -->
     <string name="plugin_type_calendar">カレンダー</string>
@@ -485,4 +489,5 @@
         <item quantity="other">%1$s個のリストが選択されました</item>
     </plurals>
     <string name="weather_forecast_wind">風</string>
+    <string name="preference_currencies">通貨</string>
 </resources>
