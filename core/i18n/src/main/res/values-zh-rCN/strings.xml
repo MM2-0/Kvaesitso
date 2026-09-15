@@ -38,6 +38,7 @@
     <string name="action_more_actions">更多行动</string>
     <string name="action_clear">清除</string>
     <string name="action_install">安装</string>
+    <string name="action_quit">退出</string>
     <!-- Delete something (a file or a web search shortcut) -->
     <string name="menu_delete">删除</string>
     <string name="menu_remove">移除</string>
@@ -223,7 +224,6 @@
     <string name="widget_name_unknown">未知</string>
     <string name="widget_add_widget">添加组件</string>
     <string name="widget_removed">组件已删除</string>
-    <!-- Add a third party widget (=a standard Android app widget) -->
     <string name="notes_widget_placeholder">写个笔记</string>
     <string name="notes_widget_action_new">新建笔记</string>
     <!-- Save / export the current note content as markdown file -->
@@ -419,6 +419,7 @@
     <string name="preference_theme_light">浅色</string>
     <string name="preference_theme_dark">深色</string>
     <string name="preference_screen_colors">配色方案</string>
+    <string name="preference_create_colors">新建配色方案</string>
     <string name="preference_colors_default">默认</string>
     <string name="preference_colors_high_contrast">高对比度</string>
     <string name="preference_colors_bw">黑白</string>
@@ -427,12 +428,15 @@
     <string name="preference_mdy_color_source_system">系统</string>
     <string name="preference_mdy_color_source_wallpaper">壁纸</string>
     <string name="preference_screen_shapes">形状</string>
+    <string name="preference_create_shapes">新建形状方案</string>
     <string name="preference_shapes_default">默认</string>
     <string name="preference_shapes_extra_round">大圆角</string>
     <string name="preference_shapes_rect">直角</string>
     <string name="preference_shapes_base">基础形状</string>
     <string name="preference_screen_typography">文字</string>
+    <string name="preference_create_typography">新建排版方案</string>
     <string name="preference_screen_transparencies">透明度</string>
+    <string name="preference_create_transparency">新建透明度方案</string>
     <string name="preference_transparencies_default">默认</string>
     <string name="preference_transparencies_semi_transparent">半透明</string>
     <string name="preference_font">字体</string>
@@ -580,6 +584,7 @@
     <string name="preference_clock_widget_alignment_center">中间</string>
     <string name="preference_clock_widget_alignment_bottom">底部</string>
     <string name="preference_clockwidget_dynamic_zone">动态区域</string>
+    <string name="preference_clockwidget_smartspacer">由 Smartspacer 主管</string>
     <string name="preference_clockwidget_date_part">日期</string>
     <string name="preference_clockwidget_date_part_summary">显示当前日期</string>
     <string name="preference_clockwidget_favorites_part_summary">在 Dock 中显示已固定项目</string>
@@ -587,7 +592,9 @@
     <string name="preference_clockwidget_music_part">媒体</string>
     <string name="preference_clockwidget_music_part_summary">在有活动媒体会话时显示媒体控件</string>
     <string name="preference_clockwidget_battery_part">电池</string>
-    <string name="preference_clockwidget_battery_part_summary">在电池电量不足或正在充电时显示当前电池电量</string>
+    <string name="preference_clockwidget_battery_part_always_show">总是显示</string>
+    <string name="preference_clockwidget_battery_part_show">低电量或充电时显示</string>
+    <string name="preference_clockwidget_battery_part_hide">关闭</string>
     <string name="preference_clockwidget_alarm_part">闹钟</string>
     <string name="preference_clockwidget_alarm_part_summary">显示将在接下来的 8 小时内响起的闹钟</string>
     <string name="preference_screen_backup">备份与恢复</string>
@@ -601,11 +608,13 @@
     <string name="preference_logs">日志</string>
     <string name="preference_logs_summary">查看和导出应用日志</string>
     <string name="preference_screen_search">搜索</string>
-    <string name="preference_screen_search_summary">搜索, 标签, 隐藏项目</string>
+    <string name="preference_screen_search_summary">搜索, 标签, 不包括的项目</string>
     <string name="preference_search_favorites">收藏夹</string>
     <string name="preference_search_favorites_summary">在应用抽屉上方显示固定和常用项目</string>
     <string name="preference_search_apps">应用</string>
     <string name="preference_search_apps_summary">搜索栏为空时显示所有应用</string>
+    <string name="preference_search_apps_show_details">显示应用信息</string>
+    <string name="preference_search_apps_show_details_summary">在上下文菜单中显示应用的版本与包名</string>
     <string name="preference_search_files">文件</string>
     <string name="preference_search_files_summary">搜索本地文件和云服务器文件</string>
     <string name="preference_search_contacts">联系人</string>
@@ -648,10 +657,10 @@
     <string name="preference_search_bar_auto_focus_summary">打开搜索时自动显示键盘</string>
     <string name="preference_search_bar_launch_on_enter">按下回车键以启动</string>
     <string name="preference_search_bar_launch_on_enter_summary">点击go时启动高亮的匹配或快捷操作</string>
-    <string name="preference_hidden_items">隐藏搜索结果</string>
-    <string name="preference_hidden_items_summary">管理隐藏应用和搜索结果</string>
+    <string name="preference_hidden_items">未包含的搜索结果</string>
+    <string name="preference_hidden_items_summary">管理未包含的应用和搜索结果</string>
     <string name="preference_hidden_items_reveal_button">显示揭示按钮</string>
-    <string name="preference_hidden_items_reveal_button_summary">显示一个按钮展示隐藏搜索结果</string>
+    <string name="preference_hidden_items_reveal_button_summary">显示一个按钮展示未包含的搜索结果</string>
     <string name="preference_screen_tags">标签</string>
     <string name="preference_screen_tags_summary">管理标签与标记项目</string>
     <string name="preference_wikipedia_customurl">维基百科网址</string>
@@ -679,6 +688,13 @@
     <string name="preference_breezyweather_integration_description">Breezy Weather 是一款免费的开源天气应用。安装后 %1$s 可将其作为天气数据的数据源。</string>
     <string name="preference_breezyweather_integration_instructions">要使用 Breezy Weather 作为天气数据源：\n\n1. 启用 Breezy Weather &gt; 设置 &gt; 微件与动态壁纸 &gt; 发送天气数据到 Gadgetbridge 中的 %1$s\n\n2. 在 %1$s 中将 Breezy Weather 设为天气数据源</string>
     <string name="preference_launch_breezyweather_app">打开 Breezy Weather</string>
+    <string name="preference_smartspacer_integration_description">Smartspacer 是一个免费且开源的直观小部件。如果安装了它，它可以被集成到时钟小部件的动态区域中</string>
+    <string name="preference_smartspacer_enable">集成</string>
+    <string name="preference_launch_smartspacer_app">打开 Smartspacer</string>
+    <string name="preference_feed_integration">推送</string>
+    <string name="preference_category_feed_provider">推送者</string>
+    <string name="preference_feed_enable_summary">滑动</string>
+    <string name="no_feed_providers">未安装任何推送提供者</string>
     <string name="preference_contacts_call_on_tap">点击呼叫</string>
     <string name="preference_contacts_call_on_tap_summary">点击电话号码即可立即拨打电话，无需确认</string>
     <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
@@ -725,6 +741,11 @@
     <string name="search_action_contact">新建联系人</string>
     <string name="search_action_open_url">浏览网站</string>
     <string name="search_action_event">日程事件</string>
+    <string name="search_query_private_space">私密空间</string>
+    <string name="search_action_private_space_lock">锁定私密空间</string>
+    <string name="search_action_private_space_unlock">解锁私密空间</string>
+    <string name="create_search_action_title">新建快捷操作</string>
+    <string name="edit_search_action_title">修改快捷操作</string>
     <string name="create_search_action_type">你想创建哪种操作?</string>
     <string name="create_search_action_type_web">在网站上搜索</string>
     <string name="create_search_action_type_app">在应用程序中搜索</string>
@@ -738,10 +759,10 @@
     <string name="more_information">更多信息</string>
     <string name="experimental_feature">实验性的</string>
     <string name="tag_exists_error">以此命名的标签已经存在</string>
+    <string name="tag_name_empty_error">姓名不可以为空</string>
     <string name="tag_exists_message">以此命名的标签已经存在。如果你执意而为，两个标签将会被合并</string>
     <string name="tag_no_items_message">没有项目被分配给此标签。如果你执意而为，此标签将会被删除</string>
-    <string name="tag_empty_name">标签必须拥有一个名字。如果继续设为空，这个标签会被删除</string>
-    <string name="tag_select_items">选择项目:</string>
+    <string name="tag_select_items">选择项目：</string>
     <string name="tag_name">标签名字</string>
     <string name="tag_icon_customicon">图标</string>
     <string name="tag_icon_emoji">表情符号</string>
@@ -772,14 +793,22 @@
     <string name="preference_gesture_long_press">长按</string>
     <string name="preference_gesture_home_button">首页建/手势</string>
     <string name="gesture_action_none">无</string>
-    <string name="gesture_action_open_search">打开搜索</string>
+    <string name="gesture_action_category_launcher">启动器页面</string>
+    <string name="gesture_action_category_system">系统动作</string>
+    <string name="gesture_action_category_apps">应用与快捷方式</string>
+    <string name="gesture_action_open_search">搜索 / 应用抽屉</string>
     <string name="gesture_action_widgets">组件页</string>
+    <string name="gesture_action_widgets_new">新建组件页面</string>
+    <string name="gesture_action_widgets_empty">没有组件</string>
+    <string name="gesture_action_widgets_indexed">组件（第  %1$d 页）</string>
     <string name="gesture_action_launch_app">打开应用</string>
-    <string name="gesture_action_notifications">打开通知栏</string>
+    <string name="gesture_action_launch_select_app">选择应用或快捷方式</string>
+    <string name="gesture_action_notifications">通知中心</string>
     <string name="gesture_action_lock_screen">关闭屏幕</string>
-    <string name="gesture_action_quick_settings">打开快速设置</string>
-    <string name="gesture_action_power_menu">显示电源菜单</string>
-    <string name="gesture_action_recents">打开最近任务</string>
+    <string name="gesture_action_quick_settings">快速设置</string>
+    <string name="gesture_action_power_menu">电源菜单</string>
+    <string name="gesture_action_recents">最近任务</string>
+    <string name="gesture_action_feed">推送</string>
     <string name="gesture_failed_message">您已执行“%1$s”手势. 此手势当前设置为触发“%2$s”操作. 然而, 由于以下原因, 无法执行该操作:</string>
     <string name="missing_permission_accessibility_gesture_failed">需要启用启动器的无障碍服务才能执行此操作.</string>
     <string name="missing_permission_accessibility_gesture_settings">这个动作要求开启无障碍服务.</string>
@@ -816,7 +845,7 @@
     <string name="confirmation_delete_typography_scheme">删除字体预设“%1$s”吗？</string>
     <string name="confirmation_delete_transparencies_scheme">删除透明度预设“%1$s”吗？</string>
     <string name="new_theme_name">(新建)</string>
-    <string name="theme_color_scheme_system_default">使用系统默认</string>
+    <string name="preference_use_system_default">使用系统默认</string>
     <string name="theme_color_scheme_autogenerate">从原色开始</string>
     <string name="theme_color_scheme_palette_color">调色板</string>
     <string name="theme_color_scheme_custom_color">自定义</string>
@@ -1028,7 +1057,9 @@
     <string name="theme_import_title">导入样式</string>
     <string name="theme_bundle_name">名称</string>
     <string name="theme_bundle_author">作者</string>
-    <string name="preference_typography_fonts">字体</string>
+    <string name="preference_typography_fonts">字体样式</string>
+    <string name="add_font_style">添加字体样式</string>
+    <string name="remove_font_style">移除此字体样式</string>
     <string name="font_category_device_default">设备默认的</string>
     <string name="font_name_device_headline">标题字体</string>
     <string name="font_name_device_body">正文字体</string>
@@ -1037,6 +1068,7 @@
     <string name="preference_screen_locale_summary">语言、单位、时间格式</string>
     <string name="preference_language">语言</string>
     <string name="preference_value_system_default">系统默认</string>
+    <string name="preference_value_disabled">禁用</string>
     <string name="preference_form_of_address">地址格式</string>
     <string name="preference_form_of_address_neutral">中性</string>
     <string name="preference_form_of_address_fem">女性</string>
@@ -1047,6 +1079,18 @@
     <string name="preference_measurement_system_us">美制</string>
     <string name="preference_transliteration">翻译语言偏好</string>
     <string name="preference_transliteration_auto">自动</string>
-    <string name="preference_transliteration_disabled">禁用</string>
+    <string name="preference_calendar_system">历制</string>
+    <string name="preference_calendar_system_primary">主历制</string>
+    <string name="preference_calendar_system_secondary">第二历制</string>
+    <string name="preference_currencies">货币</string>
     <string name="select_tag">选择标签</string>
+    <string name="create_tag_title">新建标签</string>
+    <string name="edit_tag_title">修改标签</string>
+    <string name="dialog_discard_unsaved">是否退出并舍弃你的内容？</string>
+    <string name="typo_preview_short1">文A</string>
+    <string name="typo_preview_short2">永p</string>
+    <string name="typo_preview_medium1">永字八法</string>
+    <string name="typo_preview_medium2">预览文本</string>
+    <string name="typo_preview_long">汉字笔画结构多样\n1234567890，。！？</string>
+    <string name="preference_category_donate">支持开发</string>
 </resources>
