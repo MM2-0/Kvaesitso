@@ -23,7 +23,7 @@
     <string name="menu_favorites_pin">Kitűzés a kedvencekhez</string>
     <string name="menu_favorites_unpin">Kitűzés megszüntetése</string>
     <string name="menu_back">Vissza</string>
-    <string name="menu_app_info">Információ az alkalmazásról</string>
+    <string name="menu_app_info">Alkalmazásadatok</string>
     <!-- Launch an app -->
     <string name="menu_launch">Futtatás</string>
     <string name="menu_customize">Testreszabás</string>
@@ -88,6 +88,7 @@
     <string name="wind_north_west">Északnyugat</string>
     <!-- Wind direction, used in weather widget -->
     <string name="wind_north_north_west">Észak-északnyugat</string>
+    <string name="uv_index">UV: %1$d</string>
     <!-- No rain or snow, used in weather widget -->
     <!-- The URL of the Wikipedia instance that is used per default. Can be overridden by user.
      This should point to the Wikipedia in the given language. If no such Wikipedia exists,
@@ -222,7 +223,6 @@
     <string name="widget_name_unknown">Érvénytelen alkalmazásmodulokhoz használt címke</string>
     <string name="widget_add_widget">Modul hozzáadása</string>
     <string name="widget_removed">Modul törölve</string>
-    <!-- Add a third party widget (=a standard Android app widget) -->
     <string name="notes_widget_placeholder">Jegyzet írása</string>
     <string name="notes_widget_action_new">Új jegyzet</string>
     <!-- Save / export the current note content as markdown file -->
@@ -282,9 +282,7 @@
     <string name="login_flow_login">Bejelentkezés</string>
     <string name="disclaimer">Jogi nyilatkozat</string>
     <!-- Info and disclaimer for currency conversions. %1$s: formatted date of last currency data update  -->
-    <string name="disclaimer_currency_converter">Az Európai Központi Bank által naponta egyszer közzétett árfolyamok. Az összes információ „úgy, ahogy van”, mindenféle garancia nélkül. Ezen információkért semmilyen felelősséget nem vállalunk.
-\n
-\nUtoljára frissítve: %1$s</string>
+    <string name="disclaimer_currency_converter">Az Európai Központi Bank által naponta egyszer közzétett árfolyamok. Az összes adat „úgy, ahogy van”, mindenféle garancia nélkül. Ezen adakoért semmilyen felelősséget nem vállalunk. \n \nUtoljára frissítve: %1$s</string>
     <string name="show_all">Összes megjelenítése</string>
     <!-- Used in calendar widget date selector. -->
     <string name="date_today">Ma</string>
@@ -420,6 +418,7 @@
     <string name="preference_theme_light">Világos</string>
     <string name="preference_theme_dark">Sötét</string>
     <string name="preference_screen_colors">Színösszeállítás</string>
+    <string name="preference_create_colors">Új színséma</string>
     <string name="preference_colors_default">Alapértelmezett</string>
     <string name="preference_colors_high_contrast">Nagy kontraszt</string>
     <string name="preference_colors_bw">Fekete-fehér</string>
@@ -428,12 +427,15 @@
     <string name="preference_mdy_color_source_system">Rendszer</string>
     <string name="preference_mdy_color_source_wallpaper">Háttérkép</string>
     <string name="preference_screen_shapes">Alakzatok</string>
+    <string name="preference_create_shapes">Új alakzatséma</string>
     <string name="preference_shapes_default">Alapértelmezett</string>
     <string name="preference_shapes_extra_round">Nagyon lekerekített</string>
     <string name="preference_shapes_rect">Négyszögletes</string>
     <string name="preference_shapes_base">Alap alakzat</string>
     <string name="preference_screen_typography">Tipográfia</string>
+    <string name="preference_create_typography">Új tipográfiai séma</string>
     <string name="preference_screen_transparencies">Átlátszóság</string>
+    <string name="preference_create_transparency">Új átlátszósági séma</string>
     <string name="preference_transparencies_default">Alapértelmezett</string>
     <string name="preference_transparencies_semi_transparent">Félig átlátszó</string>
     <string name="preference_font">Betűtípus</string>
@@ -444,7 +446,7 @@
     <string name="preference_category_advanced">Haladó</string>
     <!-- Open website of an open source library -->
     <string name="open_webpage">Weboldal megnyitása</string>
-    <string name="preference_screen_about_summary">Alkalmazás- és licencinformációk</string>
+    <string name="preference_screen_about_summary">Alkalmazás- és licencadatok</string>
     <string name="preference_screen_appearance_summary">Megjelenés testreszabása</string>
     <string name="preference_weather_provider">Szolgáltató</string>
     <string name="provider_brightsky">Deutscher Wetterdienst (csak Németország)</string>
@@ -588,7 +590,9 @@
     <string name="preference_clockwidget_music_part">Média</string>
     <string name="preference_clockwidget_music_part_summary">Médiavezérlők megjelenítése, ha aktív médiamunkamenet van</string>
     <string name="preference_clockwidget_battery_part">Akkumulátor</string>
-    <string name="preference_clockwidget_battery_part_summary">Akkumulátor jelenlegi töltöttségi szintjének megjelenítése, amikor az akkumulátor lemerült vagy töltődik</string>
+    <string name="preference_clockwidget_battery_part_always_show">Megjelenítés mindig</string>
+    <string name="preference_clockwidget_battery_part_show">Megjelenítés csak akkor, amikor alacsony vagy töltődik</string>
+    <string name="preference_clockwidget_battery_part_hide">Kikapcsolás</string>
     <string name="preference_clockwidget_alarm_part">Riasztások</string>
     <string name="preference_clockwidget_alarm_part_summary">Azon riasztások megjelenítése, amelyek a következő 8 órán belül megszólalnak</string>
     <string name="preference_screen_backup">Biztonsági mentés és visszaállítás</string>
@@ -607,6 +611,8 @@
     <string name="preference_search_favorites_summary">Kitűzött és gyakran használt elemek megjelenítése az alkalmazásrács felett</string>
     <string name="preference_search_apps">Alkalmazások</string>
     <string name="preference_search_apps_summary">Összes alkalmazás megjelenítése, ha a keresőmező üres</string>
+    <string name="preference_search_apps_show_details">Alkalmazás adatainak megjelenítése</string>
+    <string name="preference_search_apps_show_details_summary">Az alkalmazás verziójának és csomagjának megjelenítése a helyi menüben</string>
     <string name="preference_search_files">Fájlok</string>
     <string name="preference_search_files_summary">Keresés helyi- és felhőfájlok között</string>
     <string name="preference_search_contacts">Névjegyek</string>
@@ -625,6 +631,7 @@
     <string name="preference_search_currencyconverter">Valutaváltó</string>
     <string name="preference_search_currencyconverter_summary">Rendszeresen töltse le az árfolyamokat a valuták átváltásához</string>
     <string name="preference_search_supportedunits">Támogatott mértékegységek</string>
+    <string name="preference_currency_settings">Pénznem-beállítások</string>
     <string name="preference_search_wikipedia">Wikipédia</string>
     <string name="preference_search_wikipedia_summary">Keresés a Wikipédián</string>
     <string name="preference_search_websites">Weboldalak</string>
@@ -637,8 +644,8 @@
     <string name="preference_search_cloud_summary">Keresés a(z) %1$s fájljai között</string>
     <string name="preference_calendar_calendars">Naptárak</string>
     <string name="preference_calendar_hide_completed">Befejezett események elrejtése</string>
-    <string name="preference_screen_buildinfo">Összeállítási információk</string>
-    <string name="preference_screen_buildinfo_summary">További információ az alkalmazás ezen verziójáról</string>
+    <string name="preference_screen_buildinfo">Összeállítási adatok</string>
+    <string name="preference_screen_buildinfo_summary">További tudnivalók az alkalmazás ezen verziójáról</string>
     <string name="preference_search_bar_style">Stílus</string>
     <string name="preference_search_bar_style_summary">Keresősáv megjelenésének testreszabása</string>
     <string name="preference_search_bar_style_transparent">Átlátszó</string>
@@ -648,7 +655,7 @@
     <string name="preference_search_bar_auto_focus">Billentyűzet megjelenítése</string>
     <string name="preference_search_bar_auto_focus_summary">Billentyűzet automatikus megjelenítése az alkalmazásfiók megnyitásakor</string>
     <string name="preference_search_bar_launch_on_enter">Keresés enterrel</string>
-    <string name="preference_search_bar_launch_on_enter_summary">Ugrás a kiemelt keresési találatra vagy gyorsműveletre, ha megérinti az „Enter” gombot</string>
+    <string name="preference_search_bar_launch_on_enter_summary">Ugrás a kiemelt keresési találatra vagy gyorsműveletre, az „Enter” gomb megérintésekor</string>
     <string name="preference_hidden_items">Kizárt keresési eredmények</string>
     <string name="preference_hidden_items_summary">Kizárt alkalmazások és keresési eredmények kezelése</string>
     <string name="preference_hidden_items_reveal_button">Kibontásgomb megjelenítése</string>
@@ -734,6 +741,9 @@
     <string name="search_action_contact">Hozzáadás a névjegyekhez</string>
     <string name="search_action_open_url">Weboldal meglátogatása</string>
     <string name="search_action_event">Esemény ütemezése</string>
+    <string name="search_query_private_space">Privát tér</string>
+    <string name="search_action_private_space_lock">Privát tér zárolása</string>
+    <string name="search_action_private_space_unlock">Privát tér feloldása</string>
     <string name="create_search_action_title">Új gyorsművelet</string>
     <string name="edit_search_action_title">Gyorsművelet szerkesztése</string>
     <string name="create_search_action_type">Milyen típusú műveletet szeretne létrehozni?</string>
@@ -747,13 +757,13 @@
     <string name="search_action_app">Alkalmazás</string>
     <string name="search_action_websearch_url">Webcím sablon</string>
     <string name="search_action_websearch_url_hint">A webcím-sablon, az internetes keresés webcímének létrehozásához használatos. Használja a(z) „${1}” kulcsot a tényleges keresési kifejezés helyőrzőjeként</string>
-    <string name="more_information">További információ</string>
+    <string name="more_information">További tudnivalók</string>
     <string name="experimental_feature">Kísérleti</string>
     <string name="tag_exists_error">Egy ilyen nevű címke már létezik</string>
+    <string name="tag_name_empty_error">A név nem lehet üres</string>
     <string name="tag_exists_message">Egy ilyen nevű címke már létezik. Ha folytatja, a két címke egyesül</string>
     <string name="tag_no_items_message">Ehhez a címkéhez nincsenek elemek hozzárendelve. Ha folytatja, a címke törlődik</string>
-    <string name="tag_empty_name">Egy címke nem létezhet név nélkül. Ha folytatja, a címke törlődik</string>
-    <string name="tag_select_items">Elemek kiválasztása:</string>
+    <string name="tag_select_items">Elemek kiválasztása</string>
     <string name="tag_name">Címkenév</string>
     <string name="tag_icon_customicon">Ikon</string>
     <string name="tag_icon_emoji">Emodzsi</string>
@@ -785,14 +795,21 @@
     <string name="preference_gesture_long_press">Hosszú érintés</string>
     <string name="preference_gesture_home_button">Kezdőoldalgomb/-gesztus</string>
     <string name="gesture_action_none">Ne csináljon semmit</string>
-    <string name="gesture_action_open_search">Keresés megnyitása</string>
+    <string name="gesture_action_category_launcher">Indítólapok</string>
+    <string name="gesture_action_category_system">Rendszerműveletek</string>
+    <string name="gesture_action_category_apps">Alkalmazások és parancsikonok</string>
+    <string name="gesture_action_open_search">Keresés / alkalmazásfiók</string>
     <string name="gesture_action_widgets">Modulok</string>
+    <string name="gesture_action_widgets_new">Új modulok lapja</string>
+    <string name="gesture_action_widgets_empty">Üres</string>
+    <string name="gesture_action_widgets_indexed">Modulok (%1$d)</string>
     <string name="gesture_action_launch_app">Alkalmazásindítás</string>
-    <string name="gesture_action_notifications">Értesítési fiók megnyitása</string>
+    <string name="gesture_action_launch_select_app">Alkalmazás vagy parancsikon kiválasztása</string>
+    <string name="gesture_action_notifications">Értesítések</string>
     <string name="gesture_action_lock_screen">Képernyő kikapcsolása</string>
-    <string name="gesture_action_quick_settings">Gyorsbeállítások megnyitása</string>
-    <string name="gesture_action_power_menu">Kikapcsolási menü megjelenítése</string>
-    <string name="gesture_action_recents">Legutóbbi alkalmazások megnyitása</string>
+    <string name="gesture_action_quick_settings">Gyorsbeállítások</string>
+    <string name="gesture_action_power_menu">Kikapcsolási menü</string>
+    <string name="gesture_action_recents">Legutóbbi alkalmazások</string>
     <string name="gesture_action_feed">Hírforrás</string>
     <string name="gesture_failed_message">Egy „%1$s” gesztust hajtott végre. Ez a gesztus jelenleg egy „%2$s” művelet kiváltására van beállítva. Az akciót azonban a következő okból nem lehetett végrehajtani:</string>
     <string name="missing_permission_accessibility_gesture_failed">A művelet végrehajtásához engedélyezni kell a Kvaesitso kisegítő lehetőségek szolgáltatását.</string>
@@ -830,11 +847,11 @@
     <string name="confirmation_delete_typography_scheme">Valóban el szeretné távolítani a(z) %1$s tipográfiai sémát?</string>
     <string name="confirmation_delete_transparencies_scheme">Valóban törölni akarja a(z) %1$s átlátszósági sémát?</string>
     <string name="new_theme_name">(névtelen)</string>
-    <string name="theme_color_scheme_system_default">Rendszer alapértelmezésének használata</string>
+    <string name="preference_use_system_default">Rendszer alapértelmezésének használata</string>
     <string name="theme_color_scheme_autogenerate">Az elsődleges színből</string>
     <string name="theme_color_scheme_palette_color">Paletta</string>
     <string name="theme_color_scheme_custom_color">Egyéni</string>
-    <string name="preference_restore_default">Visszaállítás alapértelmezettre</string>
+    <string name="preference_restore_default">Visszaállítás alapértelmezésre</string>
     <string name="import_theme_contents">Tartalom</string>
     <string name="import_theme_apply">Téma alkalmazása</string>
     <string name="import_theme_exists">A téma már létezik, ezért frissítve lesz</string>
@@ -1045,6 +1062,8 @@
     <string name="theme_bundle_name">Név</string>
     <string name="theme_bundle_author">Szerző</string>
     <string name="preference_typography_fonts">Betűtípusok</string>
+    <string name="add_font_style">Betűtípus hozzáadása</string>
+    <string name="remove_font_style">Betűtípus eltávolítása</string>
     <string name="font_category_device_default">Eszköz alapértelmezése</string>
     <string name="font_name_device_headline">Címsor alapértelmezett betűtípusa</string>
     <string name="font_name_device_body">Eszköz szövegének betűtípusa</string>
@@ -1053,6 +1072,7 @@
     <string name="preference_screen_locale_summary">Nyelv, mértékegységek, időformátum</string>
     <string name="preference_language">Nyelv</string>
     <string name="preference_value_system_default">Rendszer alapértelmezése</string>
+    <string name="preference_value_disabled">Letiltva</string>
     <string name="preference_form_of_address">Megszólítás</string>
     <string name="preference_form_of_address_neutral">Semleges</string>
     <string name="preference_form_of_address_fem">Nőnemű</string>
@@ -1063,7 +1083,19 @@
     <string name="preference_measurement_system_us">Egyesült Államok</string>
     <string name="preference_transliteration">Előnyben részesített átírás</string>
     <string name="preference_transliteration_auto">Automatikus</string>
-    <string name="preference_transliteration_disabled">Letiltva</string>
+    <string name="preference_calendar_system">Naptárrendszer</string>
+    <string name="preference_calendar_system_primary">Elsődleges naptár</string>
+    <string name="preference_calendar_system_secondary">Másodlagos naptár</string>
+    <string name="preference_currencies">Pénznem</string>
+    <string name="preference_add_currency">Pénznem hozzáadása</string>
     <string name="select_tag">Címke kiválasztása</string>
+    <string name="create_tag_title">Új címke</string>
+    <string name="edit_tag_title">Címke szerkesztése</string>
     <string name="dialog_discard_unsaved">Kilépés mentés nélkül?</string>
+    <string name="typo_preview_short1">Éva</string>
+    <string name="typo_preview_short2">Típus</string>
+    <string name="typo_preview_medium1">Budapest</string>
+    <string name="typo_preview_medium2">Előnézet</string>
+    <string name="typo_preview_long">Árvíztűrő tükörfúrógép\n0123456789</string>
+    <string name="preference_category_donate">Fejlesztés támogatása</string>
 </resources>
