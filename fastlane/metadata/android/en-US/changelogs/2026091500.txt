@@ -1,0 +1,6 @@
+- Respect the system's "hide private space" setting
+- Added a setting to set preferred currencies
+- Added a setting to exclude apps from shortcut results
+- Added option to apps widget to skip the first row(s) of favorites
+- Added an option to open launcher settings via a gesture
+- Bug fixes
