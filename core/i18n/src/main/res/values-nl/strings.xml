@@ -936,4 +936,5 @@
     <string name="search_query_private_space">Privégedeelte</string>
     <string name="search_action_private_space_lock">Privégedeelte sluiten</string>
     <string name="search_action_private_space_unlock">Privégedeelte openen</string>
+    <string name="favorites_skip_rows">Rijen overslaan</string>
 </resources>
