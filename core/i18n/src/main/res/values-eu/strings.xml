@@ -215,7 +215,6 @@
     <string name="widget_name_unknown">Ezezaguna</string>
     <string name="widget_add_widget">Trepeta gehitu</string>
     <string name="widget_removed">Trepeta ezabatua</string>
-    <!-- Add a third party widget (=a standard Android app widget) -->
     <string name="notes_widget_placeholder">Ohar bat idatzi</string>
     <string name="notes_widget_action_new">Ohar berria</string>
     <!-- Save / export the current note content as markdown file -->
@@ -561,7 +560,6 @@
     <string name="preference_clockwidget_music_part">Multimedia</string>
     <string name="preference_clockwidget_music_part_summary">Multimedia-kontrolak erakutsi multimedia-saio aktibo bat dagoenean</string>
     <string name="preference_clockwidget_battery_part">Bateria</string>
-    <string name="preference_clockwidget_battery_part_summary">Erakutsi uneko bateriaren maila bateria gutxi dagoenean edo kargatzen ari denean</string>
     <string name="preference_clockwidget_alarm_part">Alarmak</string>
     <string name="preference_clockwidget_alarm_part_summary">Erakutsi hurrengo 8 orduetan joko duten alarmak</string>
     <string name="preference_screen_backup">Babeskopia eta berreskuratzea</string>
@@ -698,6 +696,7 @@
     <string name="search_action_contact">Kontaktuetara gehitu</string>
     <string name="search_action_open_url">Webgunea ikusi</string>
     <string name="search_action_event">Ekitaldia programatu</string>
+    <string name="search_action_private_space_lock">Eremu pribatua blokeatu</string>
     <string name="create_search_action_type">Zein ekintza mota sortu nahi dituzu?</string>
     <string name="create_search_action_type_web">Webgune batean bilatu</string>
     <string name="create_search_action_type_app">Aplikazio batean bilatu</string>
@@ -714,7 +713,6 @@
     <string name="tag_exists_error">Izen hau duen etiketa bat badago</string>
     <string name="tag_exists_message">Izen hau duen etiketa bat badago. Jarraitzen baduzu, bi etiketak batu egingo dira</string>
     <string name="tag_no_items_message">Etiketa honi ez zaio elementurik esleitu. Jarraitzen baduzu, etiketa ezabatu egingo da</string>
-    <string name="tag_empty_name">Etiketa bat ezin da izenik gabe existitu. Jarraitzen baduzu, etiketa ezabatuko da</string>
     <string name="tag_select_items">Elementuak aukeratu:</string>
     <string name="tag_name">Etiketaren izena</string>
     <string name="tag_icon_customicon">Ikonoa</string>
@@ -790,7 +788,7 @@
     <string name="confirmation_delete_typography_scheme">Benetan %1$s letra-tipo eskema ezabatu nahi duzu?</string>
     <string name="confirmation_delete_transparencies_scheme">Benetan %1$s gardentasun eskema ezabatu nahi duzu?</string>
     <string name="new_theme_name">(izengabea)</string>
-    <string name="theme_color_scheme_system_default">Sistemaren lehenetsia erabili</string>
+    <string name="preference_use_system_default">Sistemaren lehenetsia erabili</string>
     <string name="theme_color_scheme_autogenerate">Kolore primariotik</string>
     <string name="theme_color_scheme_palette_color">Paleta</string>
     <string name="theme_color_scheme_custom_color">Pertsonalizatua</string>
@@ -1010,6 +1008,7 @@
     <string name="preference_screen_locale_summary">Hizkuntza, unitateak, denbora formatua</string>
     <string name="preference_language">Hizkuntza</string>
     <string name="preference_value_system_default">Sistemaren lehenetsia</string>
+    <string name="preference_value_disabled">Ezgaitua</string>
     <string name="preference_form_of_address">Helbidearen forma</string>
     <string name="preference_form_of_address_neutral">Neutrala</string>
     <string name="preference_form_of_address_fem">Femeninoa</string>
@@ -1020,6 +1019,6 @@
     <string name="preference_measurement_system_us">Ameriketako Estatu Batuak</string>
     <string name="preference_transliteration">Hobetsitako transliterazioa</string>
     <string name="preference_transliteration_auto">Automatikoa</string>
-    <string name="preference_transliteration_disabled">Ezgaitua</string>
+    <string name="preference_currencies">Moneta</string>
     <string name="select_tag">Etiketa hautatu</string>
 </resources>
