@@ -193,7 +193,6 @@
         the region of the language or not commonly used.
        -->
     <string name="default_websearch_3_url">https://play.google.com/store/search?q=${1}</string>
-    <!-- Add a third party widget (=a standard Android app widget) -->
     <!-- Save / export the current note content as markdown file -->
     <!-- Default filename for exported files. %1$s: the current date and time. File extension is appended automatically. -->
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
