@@ -38,6 +38,7 @@
     <string name="action_more_actions">เมนูเพิ่มเติม</string>
     <string name="action_clear">ล้าง</string>
     <string name="action_install">ติดตั้ง</string>
+    <string name="action_quit">ออก</string>
     <!-- Delete something (a file or a web search shortcut) -->
     <string name="menu_delete">ลบ</string>
     <string name="menu_remove">ลบ</string>
@@ -87,6 +88,7 @@
     <string name="wind_north_west">ตะวันตกเฉียงเหนือ</string>
     <!-- Wind direction, used in weather widget -->
     <string name="wind_north_north_west">เหนือค่อนไปทางตะวันตก</string>
+    <string name="uv_index">ยูวี %1$d</string>
     <!-- No rain or snow, used in weather widget -->
     <!-- The URL of the Wikipedia instance that is used per default. Can be overridden by user.
      This should point to the Wikipedia in the given language. If no such Wikipedia exists,
@@ -223,7 +225,6 @@
     <string name="widget_name_unknown">ไม่รู้จัก</string>
     <string name="widget_add_widget">เพิ่มวิดเจ็ต</string>
     <string name="widget_removed">ลบวิดเจ็ตแล้ว</string>
-    <!-- Add a third party widget (=a standard Android app widget) -->
     <string name="notes_widget_placeholder">เขียนโน้ต</string>
     <string name="notes_widget_action_new">สร้างโน้ต</string>
     <!-- Save / export the current note content as markdown file -->
@@ -388,7 +389,7 @@
     <string name="missing_permission_calendar_widget_settings">วิดเจ็ตนี้ต้องการต้องได้รับการอนุญาตการเข้าถึงปฏิทิน</string>
     <string name="widget_config_calendar_missing_calendars_hint">หาปฏิทินไม่เจอหรือ\?</string>
     <!-- Missing permission app shortcuts permission in search settings screen. %1$s: app name -->
-    <string name="missing_permission_appshortcuts_search_settings">คุณต้องกำหนดให้แอป %1$s เป็นตัวใช้งานเริ่มต้นจึงจะค้นหาทางลัดแอปได้</string>
+    <string name="missing_permission_appshortcuts_search_settings">คุณต้องกำหนดให้แอป %1$s เป็นลอนเชอร์เริ่มต้นจึงจะค้นหาทางลัดแอปได้</string>
     <!-- Missing file permission in search settings screen -->
     <string name="missing_permission_file_search_settings">คุณต้องอนุญาตให้แอปเข้าถึงพื้นที่จัดเก็บข้อมูลภายนอกเพื่อค้นหาไฟล์บนอุปกรณ์นี้</string>
     <!-- Missing file permission in search settings screen.
@@ -408,9 +409,9 @@
     <!-- Missing files permission, used in contact search results -->
     <string name="missing_permission_contact_search">คุณต้องอนุญาตให้แอปเข้าถึงรายชื่อผู้ติดต่อเพื่อค้นหาในรายชื่อผู้ติดต่อ</string>
     <!-- Missing permission app shortcuts permission, used in app shortcut search results. %1$s: app name -->
-    <string name="missing_permission_appshortcuts_search">กำหนดให้แอป %1$s เป็นตัวใช้งานเริ่มต้นเพื่อค้นหาทางลัดแอป</string>
+    <string name="missing_permission_appshortcuts_search">กำหนดให้แอป %1$s เป็นลอนเชอร์เริ่มต้นเพื่อค้นหาทางลัดแอป</string>
     <!-- Missing permission app shortcuts permission, used when creating a shortcut in the edit favorites sheet -->
-    <string name="missing_permission_appshortcuts_create">กำหนดให้แอป %1$s เป็นตัวใช้งานเริ่มต้นเพื่อสร้างทางลัด</string>
+    <string name="missing_permission_appshortcuts_create">กำหนดให้แอป %1$s เป็นลอนเชอร์เริ่มต้นเพื่อสร้างทางลัด</string>
     <!-- Grant a permission, shown in permission banners -->
     <string name="grant_permission">อนุญาต</string>
     <!-- Appearance preference title -->
@@ -419,6 +420,7 @@
     <string name="preference_theme_light">สว่าง</string>
     <string name="preference_theme_dark">มืด</string>
     <string name="preference_screen_colors">โทนสี</string>
+    <string name="preference_create_colors">โทนสีใหม่</string>
     <string name="preference_colors_default">ค่าเริ่มต้น</string>
     <string name="preference_colors_high_contrast">คมชัดสูง</string>
     <string name="preference_colors_bw">ขาว-ดำ</string>
@@ -427,12 +429,15 @@
     <string name="preference_mdy_color_source_system">ระบบ</string>
     <string name="preference_mdy_color_source_wallpaper">ภาพพื้นหลัง</string>
     <string name="preference_screen_shapes">รูปร่าง</string>
+    <string name="preference_create_shapes">ชุดรูปร่าง</string>
     <string name="preference_shapes_default">ค่าเริ่มต้น</string>
     <string name="preference_shapes_extra_round">มุมมน</string>
     <string name="preference_shapes_rect">สี่เหลี่ยม</string>
     <string name="preference_shapes_base">รูปร่างหลัก</string>
-    <string name="preference_screen_typography">การจัดตัวอักษร</string>
+    <string name="preference_screen_typography">ฟอนต์</string>
+    <string name="preference_create_typography">ชุดฟอนต์ใหม่</string>
     <string name="preference_screen_transparencies">ความโปร่งใส</string>
+    <string name="preference_create_transparency">ชุดความโปร่งใสใหม่</string>
     <string name="preference_transparencies_default">ค่าเริ่มต้น</string>
     <string name="preference_transparencies_semi_transparent">โปร่งแสง</string>
     <string name="preference_font">ชุดแบบอักษร</string>
@@ -465,7 +470,7 @@
     <string name="preference_debug_dump_heap_summary">จับสแนปช็อตเพื่อวิเคราะห์การใช้งานเมมโมรี่ แอปจะค้างจนกว่ากระบวนการนี้จะสิ้นสุด</string>
     <string name="preference_debug_dump_heap_in_progress">กำลังจับแสนปช็อต…</string>
     <string name="preference_debug_cleanup_database">ทำความสะอาดฐานข้อมูล</string>
-    <string name="preference_debug_cleanup_database_summary">ลบรายการที่เสียและไม่จำเป็นออกจากฐานข้อมูลของแอปหน้าแรก</string>
+    <string name="preference_debug_cleanup_database_summary">ลบรายการที่เสียและไม่จำเป็นออกจากฐานข้อมูลของลอนเชอร์</string>
     <string name="preference_debug_reinstall_iconpacks">ติดตั้งชุดไอคอนใหม่อีกครั้ง</string>
     <string name="preference_debug_reinstall_iconpacks_summary">ล้างและสร้างแคชของชุดไอคอนใหม่อีกครั้ง</string>
     <plurals name="debug_cleanup_database_result">
@@ -493,6 +498,8 @@
     <string name="preference_screen_integrations">การเชื่อมต่อ</string>
     <string name="preference_screen_plugins">ปลั๊กอิน</string>
     <string name="preference_screen_plugins_summary">จัดการส่วนเสริมที่ติดตั้งไว้</string>
+    <string name="preference_category_enabled_plugins">เปิดใช้งานแล้ว</string>
+    <string name="preference_category_installed_plugins">ติดตั้งแล้ว</string>
     <string name="no_plugins_installed">ยังไม่ได้ติดตั้งปลั๊กอินใด</string>
     <string name="preference_theme_system">ทำตามระบบ</string>
     <string name="preference_themed_icons">ปรับสีไอคอน</string>
@@ -578,6 +585,7 @@
     <string name="preference_clock_widget_alignment_center">กึ่งกลาง</string>
     <string name="preference_clock_widget_alignment_bottom">ด้านล่าง</string>
     <string name="preference_clockwidget_dynamic_zone">ส่วนไดนามิก</string>
+    <string name="preference_clockwidget_smartspacer">จัดการโดย Smartspacer</string>
     <string name="preference_clockwidget_date_part">วันที่</string>
     <string name="preference_clockwidget_date_part_summary">แสดงวันที่ปัจจุบัน</string>
     <string name="preference_clockwidget_favorites_part">แถบด็อค</string>
@@ -586,13 +594,15 @@
     <string name="preference_clockwidget_music_part">สื่อ</string>
     <string name="preference_clockwidget_music_part_summary">แสดงตัวควบคุมสื่อเมื่อมีสื่อกำลังเล่น</string>
     <string name="preference_clockwidget_battery_part">แบตเตอรี่</string>
-    <string name="preference_clockwidget_battery_part_summary">แสดงระดับแบตเตอรี่ปัจจุบันเมื่อแบตเตอรี่เหลือน้อยหรือกำลังถูกชาร์จอยู่</string>
+    <string name="preference_clockwidget_battery_part_always_show">แสดงไว้เสมอ</string>
+    <string name="preference_clockwidget_battery_part_show">แสดงเมื่อเหลือน้อยหรือกำลังชาร์จอยู่</string>
+    <string name="preference_clockwidget_battery_part_hide">ไม่แสดง</string>
     <string name="preference_clockwidget_alarm_part">การตั้งปลุก</string>
     <string name="preference_clockwidget_alarm_part_summary">แสดงการตั้งปลุกที่กำลังจะปลุกในอีก 8 ชั่วโมงข้างหน้า</string>
     <string name="preference_screen_backup">สำรองและกู้คืนข้อมูล</string>
-    <string name="preference_screen_backup_summary">ส่งออกและนำเข้าข้อมูลแอปหน้าแรก</string>
+    <string name="preference_screen_backup_summary">ส่งออกและนำเข้าข้อมูลลอนเชอร์</string>
     <string name="preference_backup">สำรองข้อมูล</string>
-    <string name="preference_backup_summary">ส่งออกการตั้งค่าและข้อมูลแอปหน้าแรก</string>
+    <string name="preference_backup_summary">ส่งออกการตั้งค่าและข้อมูลลอนเชอร์</string>
     <string name="preference_restore">กู้คืนข้อมูล</string>
     <string name="preference_restore_summary">นำเข้าข้อมูลสำรองที่เคยสร้างไว้</string>
     <string name="preference_crash_reporter">ตัวรายงานแอปล่ม</string>
@@ -600,9 +610,13 @@
     <string name="preference_logs">ไฟล์เก็บข้อมูลกิจกรรมแอป</string>
     <string name="preference_logs_summary">ดูและส่งออกไฟล์เก็บข้อมูลกิจกรรมแอป</string>
     <string name="preference_screen_search">ค้นหา</string>
+    <string name="preference_screen_search_summary">การค้นหา แท็ก ผลการค้นหาที่ถูกตัดออก</string>
     <string name="preference_search_favorites">รายการโปรด</string>
     <string name="preference_search_favorites_summary">แสดงสิ่งที่ถูกปักหมุดและสิ่งที่ถูกใช้งานบ่อยข้างบนลิ้นชักแอป</string>
     <string name="preference_search_apps">แอป</string>
+    <string name="preference_search_apps_summary">แสดงแอปทั้งหมดเมื่อยังไม่ได้พิมพ์สิ่งใดในแถบการค้นหา</string>
+    <string name="preference_search_apps_show_details">แสดงข้อมูลแอป</string>
+    <string name="preference_search_apps_show_details_summary">แสดงเวอร์ชันและชื่อแพ็กเกจของแอปในเมนูกดค้าง</string>
     <string name="preference_search_files">ไฟล์</string>
     <string name="preference_search_files_summary">ค้นหาไฟล์บนเครื่องและบนคลาวด์</string>
     <string name="preference_search_contacts">รายชื่อผู้ติดต่อ</string>
@@ -621,6 +635,7 @@
     <string name="preference_search_currencyconverter">ตัวแปลงสกุลเงิน</string>
     <string name="preference_search_currencyconverter_summary">ดาวน์โหลดอัตราแรกเปลี่ยนเพื่อแปลงสกุลเงินเป็นระยะๆ</string>
     <string name="preference_search_supportedunits">หน่วยที่รองรับ</string>
+    <string name="preference_currency_settings">การตั้งค่าสกุลเงิน</string>
     <string name="preference_search_wikipedia">วิกิพีเดีย</string>
     <string name="preference_search_wikipedia_summary">ค้นหาในสารานุกรมเสรี</string>
     <string name="preference_search_websites">เว็บไซต์</string>
@@ -644,8 +659,11 @@
     <string name="preference_search_bar_auto_focus">เปิดคีย์บอร์ด</string>
     <string name="preference_search_bar_auto_focus_summary">แสดงคีย์บอร์ดอัตโนมัติเมื่อเปิดลิ้นชักรวมแอป</string>
     <string name="preference_search_bar_launch_on_enter">เปิดแอปเมื่อกด Enter</string>
-    <string name="preference_search_bar_launch_on_enter_summary">เปิดสิ่งที่ถูกไฮไลต์หรือควิกแอ็กชั่นเมื่อแตะ \"ไป\"</string>
+    <string name="preference_search_bar_launch_on_enter_summary">เปิดสิ่งที่ถูกไฮไลต์หรือควิกแอกชันเมื่อแตะ \"ไป\"</string>
+    <string name="preference_hidden_items">ผลการค้นหาที่ถูกตัดออก</string>
+    <string name="preference_hidden_items_summary">จัดการแอปและผลการค้นหาที่ถูกตัดออก</string>
     <string name="preference_hidden_items_reveal_button">แสดงปุ่มเลิกซ่อน</string>
+    <string name="preference_hidden_items_reveal_button_summary">แสดงปุ่มเผยผลการค้นหาที่ถูกตัดออก</string>
     <string name="preference_screen_tags">แท็ก</string>
     <string name="preference_screen_tags_summary">จัดการแท็ก และสิ่งที่ถูกแท็ก</string>
     <string name="preference_wikipedia_customurl">ลิงก์วิกิพีเดีย</string>
@@ -673,6 +691,13 @@
     <string name="preference_breezyweather_integration_description">Breezy Weather คือแอปเสรีและโอเพนซอร์สสำหรับการติดตามสภาพอากาศ คุณสามารถติดตั้งแอป Breeze Weather เพื่อให้ %1$s ใช้ข้อมูลสภาพอากาศจาก Breezy Weather ได้</string>
     <string name="preference_breezyweather_integration_instructions">ขั้นตอนการตั้งแอป Breezy Weather เป็นแหล่งข้อมูลสภาพอากาศ\n\n1. เปิดแอป Breezy Weather &gt; การตั้งค่า &gt; วิดเจ็ตและภาพพื้นหลังแบบเคลื่อนไหว &gt; ส่งข้อมูล Gadgetbridge &gt; เปิดใช้งาน %1$s \n\n2. เปิดการตั้งค่า %1$s และเลือก Breezy Weather เป็นผู้ให้บริการข้อมูลสภาพอากาศ</string>
     <string name="preference_launch_breezyweather_app">เปิด Breezy Weather</string>
+    <string name="preference_smartspacer_integration_description">Smartspacer คือแอปเสรีและโอเพนซอร์สสำหรับวิดเจ็ตข้อมูลโดยย่อ (At a Glance) คุณสามารถติดตั้งแอป Smartspacer เพื่อนำไปใช้ในโซนไดนามิกของวิดเจ็ตนาฬิกาได้</string>
+    <string name="preference_smartspacer_enable">เปิดใช้งานการเชื่อมต่อกับ Smartspacer</string>
+    <string name="preference_launch_smartspacer_app">เปิด Smartspacer</string>
+    <string name="preference_feed_integration">ฟีด</string>
+    <string name="preference_category_feed_provider">ผู้ให้บริการฟีด</string>
+    <string name="preference_feed_enable_summary">ปัดไปทางขวาบนหน้าจอหลักเพื่อเปิดฟีด</string>
+    <string name="no_feed_providers">ยังไม่ไ่ด้ติดตั้งผู้ให้บริการฟีดใด</string>
     <string name="preference_contacts_call_on_tap">แตะเพื่อโทรฯ</string>
     <string name="preference_contacts_call_on_tap_summary">เริ่มการโทรฯทันทีที่แตะเบอร์โทรศัพท์โดยไม่ต้องยืนยัน</string>
     <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
@@ -707,8 +732,8 @@
     <string name="favorites_empty_tag">ไม่มีสิ่งที่มีแท็กนี้</string>
     <string name="frequently_used_show_in_favorites">แสดงในรายการโปรด</string>
     <string name="frequently_used_rows">จำนวนแถว</string>
-    <string name="preference_screen_search_actions">ควิกแอ็กชั่น</string>
-    <string name="preference_search_search_actions_summary">ปรับแต่งควิกแอ็กชั่น</string>
+    <string name="preference_screen_search_actions">ควิกแอกชัน</string>
+    <string name="preference_search_search_actions_summary">ปรับแต่งควิกแอกชัน</string>
     <string name="search_action_call">โทร</string>
     <string name="search_action_message">ส่งข้อความ</string>
     <string name="search_action_email">ส่งอีเมล</string>
@@ -719,6 +744,11 @@
     <string name="search_action_contact">เพิ่มผู้ติดต่อ</string>
     <string name="search_action_open_url">เปิดเว็บไซต์</string>
     <string name="search_action_event">เขียนกำหนดการกิจกรรม</string>
+    <string name="search_query_private_space">พื้นที่ส่วนตัว</string>
+    <string name="search_action_private_space_lock">ล็อกพื้นที่ส่วนตัว</string>
+    <string name="search_action_private_space_unlock">ปลดล็อกพื้นที่ส่วนตัว</string>
+    <string name="create_search_action_title">ควิกแอกชันใหม่</string>
+    <string name="edit_search_action_title">แก้ไขควิกแอกชัน</string>
     <string name="create_search_action_type">คุณอยากสร้างแอ็กชั่นแบบใด?</string>
     <string name="create_search_action_type_web">ค้นหาบนเว็บไซต์</string>
     <string name="create_search_action_type_app">ค้นหาในแอป</string>
@@ -733,11 +763,13 @@
     <string name="more_information">ข้อมูลเพิ่มเติม</string>
     <string name="experimental_feature">ฟีเจอร์ทดลองใช้</string>
     <string name="tag_exists_error">มีแท็กชื่อนี้อยู่แล้ว</string>
+    <string name="tag_name_empty_error">เว้นชื่อว่างไว้ไม่ได้</string>
     <string name="tag_exists_message">มีแท็กชื่อนี้อยู่แล้ว ถ้าคุณไปต่อ ทั้งสองแท็กจะถูกนำมารวมกัน</string>
     <string name="tag_no_items_message">ไม่มีสิ่งใดใช้แท็กนี้ ถ้าคุณไปต่อ แท็กนี้จะถูกลบ</string>
-    <string name="tag_empty_name">ไม่สามารถตั้งแท็กที่ไม่มีชื่อได้ หากคุณดำเนินการต่อ แท็กจะถูกลบ</string>
     <string name="tag_select_items">สิ่งที่ถูกเลือก:</string>
     <string name="tag_name">ชื่อแท็ก</string>
+    <string name="tag_icon_customicon">ไอคอน</string>
+    <string name="tag_icon_emoji">อีโมจิ</string>
     <plurals name="tag_selected_items">
         <item quantity="other">เลือกแล้ว %1$d อย่าง</item>
     </plurals>
@@ -765,17 +797,25 @@
     <string name="preference_gesture_long_press">แตะค้าง</string>
     <string name="preference_gesture_home_button">ปุ่มหน้าแรก/ท่าทางการสัมผัส</string>
     <string name="gesture_action_none">ไม่ต้องทำอะไร</string>
-    <string name="gesture_action_open_search">เปิดการค้นหา</string>
+    <string name="gesture_action_category_launcher">หน้าต่างๆของลอนเชอร์</string>
+    <string name="gesture_action_category_system">แอกชันระบบ</string>
+    <string name="gesture_action_category_apps">ทางลัดและแอปต่างๆ</string>
+    <string name="gesture_action_open_search">การค้นหา / ลิ้นชักรวมแอป</string>
     <string name="gesture_action_widgets">วิดเจ็ต</string>
+    <string name="gesture_action_widgets_new">หน้าวิดเจ็ตใหม่</string>
+    <string name="gesture_action_widgets_empty">ว่าง</string>
+    <string name="gesture_action_widgets_indexed">วิดเจ็ต (%1$d)</string>
     <string name="gesture_action_launch_app">เปิดแอป</string>
-    <string name="gesture_action_notifications">เปิดแผงการแจ้งเตือน</string>
+    <string name="gesture_action_launch_select_app">เลือกแอปหรือทางลัด</string>
+    <string name="gesture_action_notifications">การแจ้งเตือน</string>
     <string name="gesture_action_lock_screen">ปิดหน้าจอ</string>
-    <string name="gesture_action_quick_settings">เปิดการตั้งค่าลัด</string>
-    <string name="gesture_action_power_menu">แสดงเมนูเปิดปิดเครื่อง</string>
-    <string name="gesture_action_recents">เปิดแอปที่เพิ่งถูกใช้</string>
+    <string name="gesture_action_quick_settings">การตั้งค่าลัด</string>
+    <string name="gesture_action_power_menu">เมนูเปิดปิดเครื่อง</string>
+    <string name="gesture_action_recents">แอปที่เปิดล่าสุด</string>
+    <string name="gesture_action_feed">ฟีด</string>
     <string name="gesture_failed_message">คุณได้ทำท่าทางการสัมผัสแบบ \"%1$s\" ซึ่งถูกกำหนดไว้ว่าให้ทำ \"%2$s\" แต่ไม่สามารถดำเนินการได้เพราะเหตุผลต่อไปนี้:</string>
-    <string name="missing_permission_accessibility_gesture_failed">จำเป็นต้องเปิดใช้งานสิทธิ์การเข้าถึงของแอปหน้าแรกจึงจะสามารถดำเนินการนี้ได้</string>
-    <string name="missing_permission_accessibility_gesture_settings">การดำเนินการนี้ต้องการสิทธิ์การเข้าถึงของแอปหน้าแรก</string>
+    <string name="missing_permission_accessibility_gesture_failed">จำเป็นต้องเปิดใช้งานสิทธิ์การเข้าถึงของลอนเชอร์จึงจะสามารถดำเนินการนี้ได้</string>
+    <string name="missing_permission_accessibility_gesture_settings">การดำเนินการนี้ต้องการสิทธิ์การเข้าถึงของลอนเชอร์</string>
     <string name="preference_search_result_ordering_weight_factor">ความเร็วในการเปลี่ยนแปลงลำดับ</string>
     <string name="preference_search_result_ordering_weight_factor_low">เปลี่ยนช้า</string>
     <string name="preference_search_result_ordering_weight_factor_default">เปลี่ยนปานกลาง</string>
@@ -801,15 +841,15 @@
     <string name="note_widget_conflict_local_version">เวอร์ชั่นล่าสุดที่ถูกบันทึกไว้:</string>
     <string name="note_widget_conflict_file_version">เนื้อหาปัจจุบันของไฟล์:</string>
     <string name="note_widget_file_read_error">ไม่สามารถอ่านโน้ตได้</string>
-    <string name="note_widget_file_read_error_description">ไม่สามารถอ่านไฟล์โน้ตต้นฉบับได้ ข้อมูลสำเนาถูกกู้คืนมาจากพื้นที่จัดเก็บภายในของแอปหน้าแรก ถ้าคุณแก้ไขโน้ต ไฟล์โน้ตต้นฉบับอาจโดนเขียนทับ</string>
+    <string name="note_widget_file_read_error_description">ไม่สามารถอ่านไฟล์โน้ตต้นฉบับได้ ข้อมูลสำเนาถูกกู้คืนมาจากพื้นที่จัดเก็บภายในของลอนเชอร์ ถ้าคุณแก้ไขโน้ต ไฟล์โน้ตต้นฉบับอาจโดนเขียนทับ</string>
     <string name="note_widget_file_write_error">ไม่สามารถบันทึกโน้ตได้</string>
-    <string name="note_widget_file_write_error_description">ไม่สามารถเขียนโน้ตไปยังไฟล์ต้นฉบับได้ บันทึกข้อมูลสำเนาไปยังพื้นที่จัดเก็บภายในของแอปหน้าแรกแล้ว</string>
-    <string name="confirmation_delete_color_scheme">คุณต้องการลบชุดสี %1$s ใช่หรือไม่?</string>
+    <string name="note_widget_file_write_error_description">ไม่สามารถเขียนโน้ตไปยังไฟล์ต้นฉบับได้ บันทึกข้อมูลสำเนาไปยังพื้นที่จัดเก็บภายในของลอนเชอร์แล้ว</string>
+    <string name="confirmation_delete_color_scheme">คุณต้องการลบโทนสี %1$s ใช่หรือไม่?</string>
     <string name="confirmation_delete_shapes_scheme">คุณต้องการลบชุดรูปร่าง %1$s ใช่หรือไม่?</string>
-    <string name="confirmation_delete_typography_scheme">คุณต้องการลบชุดการจัดตัวอักษร %1$s ใช่หรือไม่?</string>
+    <string name="confirmation_delete_typography_scheme">คุณต้องการลบชุดฟอนต์ %1$s ใช่หรือไม่?</string>
     <string name="confirmation_delete_transparencies_scheme">คุณต้องการลบชุดความโปร่งใส %1$s ใช่หรือไม่?</string>
     <string name="new_theme_name">(ไม่มีชื่อ)</string>
-    <string name="theme_color_scheme_system_default">ใช้ค่าเริ่มต้นของระบบ</string>
+    <string name="preference_use_system_default">ใช้ค่าเริ่มต้นของระบบ</string>
     <string name="theme_color_scheme_autogenerate">ใช้สีหลัก</string>
     <string name="theme_color_scheme_palette_color">จานสี</string>
     <string name="theme_color_scheme_custom_color">กำหนดเอง</string>
@@ -821,7 +861,7 @@
     <string name="shortcut_label_unavailable">เข้าถึงไม่ได้</string>
     <string name="app_label_locked_profile">ล็อกอยู่</string>
     <!-- %1$s: app name -->
-    <string name="shortcut_unavailable_description">ไม่สามารถเข้าถึงทางลัดนี้ได้ เนื่องจาก %1$s ไม่ได้ถูกตั้งเป็นแอปหน้าแรกริ่มต้น</string>
+    <string name="shortcut_unavailable_description">ไม่สามารถเข้าถึงทางลัดนี้ได้ เนื่องจาก %1$s ไม่ได้ถูกตั้งเป็นลอนเชอร์เริ่มต้น</string>
     <string name="preference_plugin_enable">เปิดใช้งานปลั๊กอิน</string>
     <string name="length_unit">หน่วยวัดความยาว</string>
     <string name="imperial">หน่วยวัดแบบอังกฤษ</string>
@@ -832,7 +872,7 @@
     <string name="preference_search_locations_show_map">แผนที่</string>
     <string name="preference_search_locations_show_map_summary">แสดงตัวอย่างแผนที่สำหรับสถานที่ต่างๆ</string>
     <string name="preference_search_locations_theme_map">ปรับสีของแผนที่</string>
-    <string name="preference_search_locations_theme_map_summary">ปรับสีของแผนที่ตามโทนสีของแอปหน้าแรก</string>
+    <string name="preference_search_locations_theme_map_summary">ปรับสีของแผนที่ตามโทนสีของลอนเชอร์</string>
     <string name="preference_search_location_custom_tile_server_url">ลิงก์ Tileserver</string>
     <string name="menu_dial">โทรศัพท์</string>
     <string name="menu_navigation">การนำทาง</string>
@@ -1020,10 +1060,42 @@
     <string name="theme_import_title">นำเข้าธีม</string>
     <string name="theme_bundle_name">ชื่อ</string>
     <string name="theme_bundle_author">ผู้สร้าง</string>
-    <string name="preference_typography_fonts">ชุดแบบอักษร</string>
+    <string name="preference_typography_fonts">รูปแบบฟอนต์</string>
+    <string name="add_font_style">เพิ่มรูปแบบฟอนต์</string>
+    <string name="remove_font_style">ลบรูปแบบฟอนต์นี้</string>
     <string name="font_category_device_default">ค่าเริ่มต้นของอุปกรณ์</string>
-    <string name="font_name_device_headline">ชุดแบบอักษรเริ่มต้นสำหรับหัวเรื่อง</string>
+    <string name="font_name_device_headline">ฟอนต์เริ่มต้นสำหรับหัวเรื่อง</string>
     <string name="font_name_device_body">ชุดแบบอักษรของอุปกรณ์</string>
     <string name="font_category_generic">ทั่วไป</string>
-    <string name="preference_measurement_system_metric">หน่วยวัดแบบเมตริก</string>
+    <string name="preference_screen_locale">ภาษาและภูมิภาค</string>
+    <string name="preference_screen_locale_summary">ภาษา หน่วยวัด และรูปแบบเวลา</string>
+    <string name="preference_language">ภาษา</string>
+    <string name="preference_value_system_default">ค่าเริ่มต้นของระบบ</string>
+    <string name="preference_value_disabled">ปิดใช้งาน</string>
+    <string name="preference_form_of_address">การพูดถึงตัวคุณ</string>
+    <string name="preference_form_of_address_neutral">กลางๆ</string>
+    <string name="preference_form_of_address_fem">เพศหญิง</string>
+    <string name="preference_form_of_address_masc">เพศชาย</string>
+    <string name="preference_measurement_system">ระบบการวัด</string>
+    <string name="preference_measurement_system_metric">เมตริก</string>
+    <string name="preference_measurement_system_uk">สหราชอาณาจักร</string>
+    <string name="preference_measurement_system_us">สหรัฐอเมริกา</string>
+    <string name="preference_transliteration">การทับศัพท์ที่ต้องการใช้</string>
+    <string name="preference_transliteration_auto">อัตโนมัติ</string>
+    <string name="preference_calendar_system">ระบบปฏิทิน</string>
+    <string name="preference_calendar_system_primary">ปฏิทินหลัก</string>
+    <string name="preference_calendar_system_secondary">ปฏิทินรอง</string>
+    <string name="preference_currencies">สกุลเงิน</string>
+    <string name="preference_add_currency">เพิ่มสกุลเงิน</string>
+    <string name="select_tag">เลือกแท็ก</string>
+    <string name="create_tag_title">แท็กใหม่</string>
+    <string name="edit_tag_title">แก้ไขแท็ก</string>
+    <string name="dialog_discard_unsaved">ออกโดยไม่บันทึกใช่หรือไม่</string>
+    <string name="typo_preview_extra_short">กข</string>
+    <string name="typo_preview_short1">สยาม</string>
+    <string name="typo_preview_short2">ไทย</string>
+    <string name="typo_preview_medium1">กรุงเทพฯ</string>
+    <string name="typo_preview_medium2">ถนนจตุรทิศ</string>
+    <string name="typo_preview_long">นายสมศักดิ์ ภูมิใจ\nหมายเลขบัตร 124790</string>
+    <string name="preference_category_donate">สนับสนุนการพัฒนา</string>
 </resources>
