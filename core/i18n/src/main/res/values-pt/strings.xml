@@ -224,7 +224,6 @@
     <string name="widget_name_unknown">Desconhecido</string>
     <string name="widget_add_widget">Adicionar widget</string>
     <string name="widget_removed">Widget removido</string>
-    <!-- Add a third party widget (=a standard Android app widget) -->
     <string name="notes_widget_placeholder">Escrever uma nota</string>
     <string name="notes_widget_action_new">Nova nota</string>
     <!-- Save / export the current note content as markdown file -->
@@ -589,7 +588,6 @@
     <string name="preference_clockwidget_music_part">Multimédia</string>
     <string name="preference_clockwidget_music_part_summary">Mostrar controlos multimédia se existir uma sessão ativa</string>
     <string name="preference_clockwidget_battery_part">Bateria</string>
-    <string name="preference_clockwidget_battery_part_summary">Mostrar nível de bateria se a bateria estiver fraca ou o telefone a carregar</string>
     <string name="preference_clockwidget_alarm_part">Alarmes</string>
     <string name="preference_clockwidget_alarm_part_summary">Mostrar alarmes que serão ativados nas próximas 8 horas</string>
     <string name="preference_screen_backup">Backup e restauro</string>
@@ -727,6 +725,7 @@
     <string name="search_action_contact">Criar contacto</string>
     <string name="search_action_open_url">Ir para o site</string>
     <string name="search_action_event">Agendar evento</string>
+    <string name="search_action_private_space_lock">Bloquear Espaço Privado</string>
     <string name="create_search_action_type">Que tipo de ação pretende criar?</string>
     <string name="create_search_action_type_web">Pesquisar nos sites</string>
     <string name="create_search_action_type_app">Pesquisar na aplicação</string>
@@ -742,7 +741,6 @@
     <string name="tag_exists_error">Já existe uma etiqueta com este nome</string>
     <string name="tag_exists_message">Já existe uma etiqueta com este nome. Se continuar, as etiquetas serão combinadas.</string>
     <string name="tag_no_items_message">Não existem itens associados a esta etiqueta. Se continuar, a etiqueta será eliminada.</string>
-    <string name="tag_empty_name">Não pode criar uma etiqueta sem nome. Se continuar, a etiqueta será eliminada.</string>
     <string name="tag_select_items">Selecionar itens:</string>
     <string name="tag_name">Nome da etiqueta</string>
     <string name="tag_icon_customicon">Ícone</string>
@@ -817,7 +815,7 @@
     <string name="confirmation_delete_typography_scheme">Tem a certeza de que deseja eliminar o esquema tipográfico %1$s?</string>
     <string name="confirmation_delete_transparencies_scheme">Tem a certeza de que deseja eliminar o esquema de transparência %1$s?</string>
     <string name="new_theme_name">(sem nome)</string>
-    <string name="theme_color_scheme_system_default">Predefinição do sistema</string>
+    <string name="preference_use_system_default">Predefinição do sistema</string>
     <string name="theme_color_scheme_autogenerate">Da cor primária</string>
     <string name="theme_color_scheme_palette_color">Paleta</string>
     <string name="theme_color_scheme_custom_color">Personalizada</string>
@@ -1041,6 +1039,7 @@
     <string name="preference_screen_locale_summary">Idioma, unidades e formato de horas</string>
     <string name="preference_language">Idioma</string>
     <string name="preference_value_system_default">Definições do sistema</string>
+    <string name="preference_value_disabled">Inativa</string>
     <string name="preference_form_of_address">Formato do endereço</string>
     <string name="preference_form_of_address_neutral">Neutro</string>
     <string name="preference_form_of_address_fem">Feminino</string>
@@ -1051,6 +1050,6 @@
     <string name="preference_measurement_system_us">EUA</string>
     <string name="preference_transliteration">Transliteração preferencial</string>
     <string name="preference_transliteration_auto">Automática</string>
-    <string name="preference_transliteration_disabled">Inativa</string>
+    <string name="preference_currencies">Moeda</string>
     <string name="select_tag">Selecione a etiqueta</string>
 </resources>
