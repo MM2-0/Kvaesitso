@@ -17,7 +17,7 @@
     <!-- Share an APK file, shown in the app detail share menu -->
     <string name="menu_share_apk_file">Installatiebestand</string>
     <!-- Uninstall an application -->
-    <string name="menu_uninstall">Verwijderen</string>
+    <string name="menu_uninstall">De-installeren</string>
     <string name="menu_favorites_pin">Toevoegen aan favorieten</string>
     <string name="menu_favorites_unpin">Verwijderen uit favorieten</string>
     <string name="menu_back">Terug</string>
@@ -85,6 +85,7 @@
     <string name="wind_north_west">Noordwest</string>
     <!-- Wind direction, used in weather widget -->
     <string name="wind_north_north_west">Noordnoordwest</string>
+    <string name="uv_index">UV-index %1$d</string>
     <!-- No rain or snow, used in weather widget -->
     <!-- The URL of the Wikipedia instance that is used per default. Can be overridden by user.
      This should point to the Wikipedia in the given language. If no such Wikipedia exists,
@@ -216,7 +217,6 @@
     <string name="widget_name_unknown">Onbekend</string>
     <string name="widget_add_widget">Widget toevoegen</string>
     <string name="widget_removed">Widget verwijderd</string>
-    <!-- Add a third party widget (=a standard Android app widget) -->
     <string name="notes_widget_placeholder">Notitie maken</string>
     <string name="notes_widget_action_new">Nieuwe notitie</string>
     <!-- Save / export the current note content as markdown file -->
@@ -412,20 +412,24 @@
     <string name="preference_theme_light">Licht</string>
     <string name="preference_theme_dark">Donker</string>
     <string name="preference_screen_colors">Kleurenschema</string>
+    <string name="preference_create_colors">Nieuw kleurenschema</string>
     <string name="preference_colors_default">Standaard</string>
     <string name="preference_colors_high_contrast">Hoog contrast</string>
     <string name="preference_colors_bw">Zwart-wit</string>
     <string name="preference_custom_colors_corepalette">Kleurenpalet</string>
     <string name="preference_mdy_color_source">Kleuren om vanaf Android 12 te gebruiken voor Material You kleurenschema\'s: wat het systeem voorstelt of de eigen kleurextractie uit de achtergrond van Kvaesitso</string>
-    <string name="preference_mdy_color_source_system">Material You kleuren van het OS gebruiken</string>
+    <string name="preference_mdy_color_source_system">Material You systeemkleuren gebruiken</string>
     <string name="preference_mdy_color_source_wallpaper">Material You kleuren uit de achtergrond halen. Dit is de standaardinstelling op Android 11 en lager, maar kan ook aangezet worden op Android 12 en hoger voor compatibiliteit</string>
     <string name="preference_screen_shapes">Vormen</string>
+    <string name="preference_create_shapes">Nieuw vormenthema</string>
     <string name="preference_shapes_default">Standaard</string>
     <string name="preference_shapes_extra_round">Extra rond</string>
     <string name="preference_shapes_rect">Rechthoekig</string>
     <string name="preference_shapes_base">Basisvorm</string>
     <string name="preference_screen_typography">Typografie</string>
+    <string name="preference_create_typography">Nieuw typografieschema</string>
     <string name="preference_screen_transparencies">Doorzichtigheid</string>
+    <string name="preference_create_transparency">Nieuw transparantieschema</string>
     <string name="preference_transparencies_default">Standaard</string>
     <string name="preference_transparencies_semi_transparent">Halfdoorzichtig</string>
     <string name="preference_font">Lettertype</string>
@@ -518,10 +522,12 @@
     <string name="preference_blur_wallpaper_unsupported">Niet ondersteund op dit apparaat</string>
     <string name="preference_blur_wallpaper_radius">Vervagingsstraal</string>
     <string name="preference_wallpaper_summary">Kies een achtergrond</string>
+    <string name="preference_category_badges">Eretekens</string>
     <string name="preference_notification_badges">Meldingsstipjes</string>
     <string name="preference_notification_badges_summary">Toon een badge voor applicaties met ongelezen meldingen</string>
     <string name="preference_suspended_badges_summary">Toon een badge voor uitgesloten applicaties</string>
     <string name="preference_suspended_badges">Uitgesloten applicaties</string>
+    <string name="preference_cloud_badges">Cloud eretekens</string>
     <string name="preference_cloud_badges_summary">Toon een badge voor bestanden in de cloud</string>
     <string name="preference_shortcut_badges">Snelkoppelingbadges</string>
     <string name="preference_shortcut_badges_summary">Toon een badge om te tonen tot welke applicatie een snelkoppeling behoort</string>
@@ -572,7 +578,9 @@
     <string name="preference_clockwidget_dock_rows">Rijen in dock</string>
     <string name="preference_clockwidget_music_part_summary">Bedieningselementen voor media tonen als er media wordt afgespeeld</string>
     <string name="preference_clockwidget_battery_part">Batterij</string>
-    <string name="preference_clockwidget_battery_part_summary">Batterijniveau tonen wanneer het niveau laag is of de batterij aan het opladen is</string>
+    <string name="preference_clockwidget_battery_part_always_show">Altijd tonen</string>
+    <string name="preference_clockwidget_battery_part_show">Tonen bij opladen of laag niveau</string>
+    <string name="preference_clockwidget_battery_part_hide">Uit</string>
     <string name="preference_clockwidget_alarm_part">Alarmen</string>
     <string name="preference_clockwidget_alarm_part_summary">Alarmen tonen die binnen 8 uur zullen afgaan</string>
     <string name="preference_screen_backup">Backup en herstel</string>
@@ -590,6 +598,8 @@
     <string name="preference_search_favorites_summary">Vastgezette en vaak gebruikte items tonen boven het applicatieraster</string>
     <string name="preference_search_apps">Applicaties</string>
     <string name="preference_search_apps_summary">Alle apps tonen als het zoekveld leeg is</string>
+    <string name="preference_search_apps_show_details">Applicatie-informatie tonen</string>
+    <string name="preference_search_apps_show_details_summary">Versie-informatie en pakketnaam van een applicatie tonen in het contextmenu</string>
     <string name="preference_search_files">Bestanden</string>
     <string name="preference_search_files_summary">Lokale en cloudbestanden doorzoeken</string>
     <string name="preference_search_contacts">Contacten</string>
@@ -608,6 +618,7 @@
     <string name="preference_search_currencyconverter">Munteenhedenconversie</string>
     <string name="preference_search_currencyconverter_summary">Periodiek wisselkoersen downloaden om munteenheden te converteren</string>
     <string name="preference_search_supportedunits">Ondersteunde eenheden</string>
+    <string name="preference_currency_settings">Instellingen voor munteenheden</string>
     <string name="preference_search_wikipedia_summary">De vrije encyclopedie doorzoeken</string>
     <string name="preference_search_locations">Plaatsen</string>
     <string name="preference_search_locations_radius">Zoek-radius</string>
@@ -701,6 +712,7 @@
     <string name="favorites_empty_tag">Er zijn geen items met dit label</string>
     <string name="frequently_used_show_in_favorites">In favorieten tonen</string>
     <string name="frequently_used_rows">Aantal rijen</string>
+    <string name="favorites_skip_rows">Rijen overslaan</string>
     <string name="preference_screen_search_actions">Snelle acties</string>
     <string name="preference_search_search_actions_summary">Snelle acties en zoeksnelkoppelingen configureren</string>
     <string name="search_action_call">Oproep</string>
@@ -713,6 +725,9 @@
     <string name="search_action_contact">Contact maken</string>
     <string name="search_action_open_url">Website bekijken</string>
     <string name="search_action_event">Afspraak plannen</string>
+    <string name="search_query_private_space">Privégedeelte</string>
+    <string name="search_action_private_space_lock">Privégedeelte sluiten</string>
+    <string name="search_action_private_space_unlock">Privégedeelte openen</string>
     <string name="create_search_action_title">Nieuwe snelle actie</string>
     <string name="edit_search_action_title">Snelle actie bewerken</string>
     <string name="create_search_action_type">Welk soort actie wil je maken?</string>
@@ -729,10 +744,10 @@
     <string name="more_information">Meer informatie</string>
     <string name="experimental_feature">Experimenteel</string>
     <string name="tag_exists_error">Er bestaat al een label met deze naam</string>
+    <string name="tag_name_empty_error">Naam mag niet leeg zijn</string>
     <string name="tag_exists_message">Er bestaat al een label met deze naam. Als je doorgaat worden de twee labels samengevoegd</string>
     <string name="tag_no_items_message">Dit label bevat geen items. Als je doorgaat wordt het label verwijderd</string>
-    <string name="tag_empty_name">Een label kan niet bestaan zonder een naam. Als je doorgaat, wordt het label verwijderd</string>
-    <string name="tag_select_items">Kies items:</string>
+    <string name="tag_select_items">Kies items</string>
     <string name="tag_name">Labelnaam</string>
     <string name="tag_icon_customicon">Pictogram</string>
     <plurals name="tag_selected_items">
@@ -763,13 +778,20 @@
     <string name="preference_gesture_long_press">Vasthouden</string>
     <string name="preference_gesture_home_button">Startknop of -gebaar</string>
     <string name="gesture_action_none">Niets doen</string>
-    <string name="gesture_action_open_search">Zoeken openen</string>
+    <string name="gesture_action_category_launcher">Startschermpagina\'s</string>
+    <string name="gesture_action_category_system">Systeemacties</string>
+    <string name="gesture_action_category_apps">Applicaties en snelkoppelingen</string>
+    <string name="gesture_action_open_search">Zoeken/Applicatielijst</string>
+    <string name="gesture_action_widgets_new">Nieuwe widgetpagina</string>
+    <string name="gesture_action_widgets_empty">Leeg</string>
+    <string name="gesture_action_widgets_indexed">Widgets %1$d</string>
     <string name="gesture_action_launch_app">Applicatie starten</string>
-    <string name="gesture_action_notifications">Meldingen openen</string>
+    <string name="gesture_action_launch_select_app">Applicatie of snelkoppeling kiezen</string>
+    <string name="gesture_action_notifications">Meldingen</string>
     <string name="gesture_action_lock_screen">Scherm uitzetten</string>
-    <string name="gesture_action_quick_settings">Snelle instellingen openen</string>
-    <string name="gesture_action_power_menu">Menu uitschakelen tonen</string>
-    <string name="gesture_action_recents">Recente applicaties openen</string>
+    <string name="gesture_action_quick_settings">Snelle instellingen</string>
+    <string name="gesture_action_power_menu">Aan/uit-menu</string>
+    <string name="gesture_action_recents">Recente applicaties</string>
     <string name="gesture_failed_message">Je hebt het gebaar \"%1$s\" uitgevoerd. Dit gebaar is ingesteld om de actie \"%2$s\" uit te voeren. Deze actie kon echter niet uitgevoerd worden omwille van de volgende reden:</string>
     <string name="missing_permission_accessibility_gesture_failed">De toegankelijkheidsservice van het startscherm moet aanstaan om deze actie uit te voeren.</string>
     <string name="missing_permission_accessibility_gesture_settings">De toegankelijkheidsservice van het startscherm moet aanstaan om deze actie uit te voeren.</string>
@@ -805,7 +827,7 @@
     <string name="confirmation_delete_typography_scheme">Weet je zeker dat je het typografieschema %1$s wil verwijderen?</string>
     <string name="confirmation_delete_transparencies_scheme">Ben je zeker dat je het doorzichtigheidsschema %1$s wil verwijderen?</string>
     <string name="new_theme_name">(naamloos)</string>
-    <string name="theme_color_scheme_system_default">Systeemstandaard gebruiken</string>
+    <string name="preference_use_system_default">Systeemstandaard gebruiken</string>
     <string name="theme_color_scheme_autogenerate">Van primaire kleur</string>
     <string name="theme_color_scheme_palette_color">Palet</string>
     <string name="theme_color_scheme_custom_color">Aangepast</string>
@@ -834,7 +856,7 @@
     <string name="menu_bugreport">Foutrapport</string>
     <string name="location_open_24_7">24/7 geopend</string>
     <string name="plugin_state_error">Deze plug-in werkt niet correct</string>
-    <string name="plugin_state_setup_required">Je moet deze plug-in eerst instellen</string>
+    <string name="plugin_state_setup_required">Je moet eerst deze plug-in instellen</string>
     <string name="plugin_action_setup">Instellen</string>
     <string name="plugin_type_filesearch">Bestanden</string>
     <string name="plugin_type_contacts">Contactpersonen</string>
@@ -866,7 +888,7 @@
     <string name="preference_customize_filter_bar_summary">Aanpassen welke items getoond worden in de filterbalk</string>
     <string name="filter_settings_network_warning">De huidige filters staan onlineresultaten toe. Je zoektermen kunnen per ongeluk naar externe webdiensten gestuurd worden. Dit is niet aanbevolen voor jouw privacy.</string>
     <string name="preference_search_osm_locations_summary">OpenStreetMap doorzoeken voor winkels en andere plaatsen in de omgeving</string>
-    <string name="poi_category_bar">Café</string>
+    <string name="poi_category_bar">Kroeg</string>
     <string name="poi_category_cafe">Koffiehuis</string>
     <string name="poi_category_supermarket">Supermarkt</string>
     <string name="poi_category_parking">Parkeerplaats</string>
@@ -880,7 +902,7 @@
     <string name="poi_category_police">Politie</string>
     <string name="poi_category_dentist">Tandarts</string>
     <string name="poi_category_library">Bibliotheek</string>
-    <string name="poi_category_ice_cream">IJsverkoper</string>
+    <string name="poi_category_ice_cream">IJssalon</string>
     <string name="poi_category_cinema">Bioscoop</string>
     <string name="poi_category_nightclub">Nachtclub</string>
     <string name="poi_category_clinic">Ziekenhuis</string>
@@ -910,6 +932,7 @@
     <string name="poi_category_buddhist_temple">Boeddhistische tempel</string>
     <string name="poi_category_hindu_temple">Hindoetempel</string>
     <string name="poi_category_synagogue">Synagoge</string>
+    <string name="poi_category_burger_restaurant">Hamburgerrestaurant</string>
     <string name="poi_category_place_of_worship">Plaats van aanbidding</string>
     <string name="poi_category_chinese_restaurant">Chinees restaurant</string>
     <string name="poi_category_japanese_restaurant">Japans restaurant</string>
@@ -929,7 +952,7 @@
     <string name="poi_category_martial_arts">Vechtsporten</string>
     <string name="poi_category_golf">Golfbaan</string>
     <string name="poi_category_gymnastics">Gymnastiek</string>
-    <string name="poi_category_ice_hockey">IJshockey ijsbaan</string>
+    <string name="poi_category_ice_hockey">IJshockeybaan</string>
     <string name="poi_category_baseball">Honkbalveld</string>
     <string name="poi_category_american_football">Amerikaans voetbalveld</string>
     <string name="poi_category_handball">Handbalveld</string>
@@ -1002,7 +1025,9 @@
     <string name="theme_import_title">Thema importeren</string>
     <string name="theme_bundle_name">Naam</string>
     <string name="theme_bundle_author">Auteur</string>
-    <string name="preference_typography_fonts">Lettertypes</string>
+    <string name="preference_typography_fonts">Lettertypestijlen</string>
+    <string name="add_font_style">Lettertypestijl toevoegen</string>
+    <string name="remove_font_style">Deze lettertypestijl verwijderen</string>
     <string name="font_category_device_default">Apparaatstandaard</string>
     <string name="font_name_device_headline">Standaard koplettertype</string>
     <string name="font_name_device_body">Tekstlettertype van het systeem</string>
@@ -1011,6 +1036,7 @@
     <string name="preference_screen_locale_summary">Taal, eenheden, tijdformaat</string>
     <string name="preference_language">Taal</string>
     <string name="preference_value_system_default">Systeemstandaard</string>
+    <string name="preference_value_disabled">Uitgeschakeld</string>
     <string name="preference_form_of_address">Aanspreking</string>
     <string name="preference_form_of_address_neutral">Neutraal</string>
     <string name="preference_form_of_address_fem">Vrouwelijk</string>
@@ -1021,7 +1047,19 @@
     <string name="preference_measurement_system_us">Verenigde Staten</string>
     <string name="preference_transliteration">Voorkeurstransliteratie</string>
     <string name="preference_transliteration_auto">Automatisch</string>
-    <string name="preference_transliteration_disabled">Uitgeschakeld</string>
+    <string name="preference_calendar_system">Kalendersysteem</string>
+    <string name="preference_calendar_system_primary">Voorkeurskalender</string>
+    <string name="preference_calendar_system_secondary">Bijkomende kalender</string>
+    <string name="preference_currencies">Munteenheid</string>
+    <string name="preference_add_currency">Munteenheid toevoegen</string>
     <string name="select_tag">Label selecteren</string>
+    <string name="create_tag_title">Nieuw label</string>
+    <string name="edit_tag_title">Label bewerken</string>
     <string name="dialog_discard_unsaved">Afsluiten zonder opslaan?</string>
+    <string name="typo_preview_short1">Ben</string>
+    <string name="typo_preview_short2">Mie</string>
+    <string name="typo_preview_medium1">Parels</string>
+    <string name="typo_preview_medium2">Comité</string>
+    <string name="typo_preview_long">Doch vlakbĳ zwerft \'n \nexquis gympje 1234790</string>
+    <string name="preference_category_donate">Ondersteun de ontwikkeling</string>
 </resources>
