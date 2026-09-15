@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="sv-rSE">
+    <string name="location_open">Öppna</string>
+    <string name="location_closed">Stängd</string>
     <!-- Time when a place next closes (on the same day). $1%s: time (hh:mm) -->
     <!-- Time when a place next closes (on a different day). $1%s: day of week, %2$s: time (hh:mm) -->
     <!-- Time when a place next opens (on the same day). $1%s: time (hh:mm) -->
@@ -20,11 +22,22 @@
     <string name="menu_app_info">App-info</string>
     <!-- Launch an app -->
     <string name="menu_launch">Öppna</string>
+    <string name="menu_customize">Anpassa</string>
     <!-- Open a file in the corresponding app -->
     <string name="menu_open_file">Öppna</string>
+    <string name="menu_map">Visa på karta</string>
+    <string name="menu_website">Öppna webbplats</string>
     <!-- Shown in a snackbar after an item has been hidden. %1$s: label of the item -->
+    <string name="action_undo">Ångra</string>
+    <string name="action_import">Importera</string>
+    <string name="action_done">Klar</string>
+    <string name="action_more_actions">Fler åtgärder</string>
+    <string name="action_clear">Rensa</string>
+    <string name="action_install">Installera</string>
+    <string name="action_quit">Avsluta</string>
     <!-- Delete something (a file or a web search shortcut) -->
     <string name="menu_delete">Radera</string>
+    <string name="menu_remove">Ta bort</string>
     <!-- Open a contact in the contacts app -->
     <string name="menu_contacts_open_externally">Öppna i Kontakter</string>
     <!-- Open an event in the calendar app -->
@@ -35,6 +48,7 @@
     <!-- Menu entry for launcher settings -->
     <string name="settings">Inställningar</string>
     <!-- Menu entry for launcher help -->
+    <string name="help">Hjälp</string>
     <!-- Set the device's wallpaper -->
     <string name="wallpaper">Bakgrund</string>
     <!-- Wind direction, used in weather widget -->
@@ -190,7 +204,6 @@
     <string name="widget_name_music">Musik</string>
     <string name="widget_name_unknown">Okänt</string>
     <string name="widget_add_widget">Lägg till widget</string>
-    <!-- Add a third party widget (=a standard Android app widget) -->
     <!-- Save / export the current note content as markdown file -->
     <!-- Default filename for exported files. %1$s: the current date and time. File extension is appended automatically. -->
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
@@ -430,12 +443,12 @@
     <string name="preference_clockwidget_date_part_summary">Visa aktuellt datum</string>
     <string name="preference_clockwidget_music_part_summary">Visa mediareglage vid aktiv uppspelning</string>
     <string name="preference_clockwidget_battery_part">Batteri</string>
-    <string name="preference_clockwidget_battery_part_summary">Visa aktuell batterinivå när batteriet är lågt eller laddas</string>
     <string name="preference_clockwidget_alarm_part">Alarm</string>
     <string name="preference_clockwidget_alarm_part_summary">Visa alarm som ringer inom de närmsta 15 minuterna</string>
     <string name="preference_crash_reporter">Kraschrapportering</string>
     <string name="preference_crash_reporter_summary">Error- och kraschrapporter</string>
     <string name="preference_screen_search">Sök</string>
+    <string name="preference_screen_search_summary">Konfigurera sökningen</string>
     <string name="preference_search_favorites">Favoriter</string>
     <string name="preference_search_favorites_summary">Visa fastnålade och ofta använda objekt ovanför apprutan</string>
     <string name="preference_search_files">Filer</string>
