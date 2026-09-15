@@ -219,16 +219,26 @@ fun <T> DismissableBottomSheet(
                         )
                         .onSizeChanged {
                             sheetHeight = it.height
+                            val newAnchors = DraggableAnchors {
+                                SheetValue.Hidden at 0f
+                                if (it.height > containerHeight * 0.5f) {
+                                    SheetValue.PartiallyExpanded at containerHeight * -0.5f
+                                    SheetValue.Expanded at it.height * -1f
+                                } else {
+                                    SheetValue.PartiallyExpanded at it.height * -1f
+                                }
+                            }
                             draggableState.updateAnchors(
-                                DraggableAnchors {
-                                    SheetValue.Hidden at 0f
-                                    if (it.height > containerHeight * 0.5f) {
-                                        SheetValue.PartiallyExpanded at containerHeight * -0.5f
-                                        SheetValue.Expanded at it.height * -1f
+                                newAnchors,
+                                if (!draggableState.offset.isNaN()) {
+                                    val newTarget = newAnchors.closestAnchor(draggableState.offset)
+                                    if (newTarget == null || newTarget == SheetValue.Hidden) {
+                                        draggableState.targetValue
                                     } else {
-                                        SheetValue.PartiallyExpanded at it.height * -1f
+                                        newTarget
                                     }
-                                },
+                                } else draggableState.targetValue,
+
                             )
                         }
                         .fillMaxWidth()
