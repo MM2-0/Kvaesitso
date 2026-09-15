@@ -218,7 +218,6 @@
     <string name="widget_name_notes">메모</string>
     <string name="widget_name_unknown">알 수 없는 앱 위젯</string>
     <string name="widget_add_widget">위젯 추가</string>
-    <!-- Add a third party widget (=a standard Android app widget) -->
     <string name="notes_widget_placeholder">메모 쓰기…</string>
     <string name="notes_widget_action_new">새 메모</string>
     <!-- Save / export the current note content as markdown file -->
@@ -330,6 +329,7 @@
     <!-- Missing contact permission in search settings screen -->
     <string name="missing_permission_contact_search_settings">연락처를 검색하기 위해 연락처 권한이 필요합니다.</string>
     <!-- Missing call permission in contacts settings screen -->
+    <string name="missing_permission_call_contacts_settings">전화를 걸기 위해 전화 권한이 필요합니다.</string>
     <!-- Missing calendar permission in search settings screen -->
     <string name="missing_permission_calendar_search_settings">캘린더를 검색하기 위해 캘린더 권한이 필요합니다.</string>
     <!-- Missing calendar permission in calendar widget settings screen -->
@@ -471,7 +471,6 @@
     <string name="preference_clockwidget_music_part">미디어</string>
     <string name="preference_clockwidget_music_part_summary">활성 미디어 세션이 있을 경우 미디어 제어 기능 표시</string>
     <string name="preference_clockwidget_battery_part">배터리</string>
-    <string name="preference_clockwidget_battery_part_summary">배터리 수준이 낮거나 충전 중이면 현재 배터리 수준 표시</string>
     <string name="preference_clockwidget_alarm_part">알람</string>
     <string name="preference_clockwidget_alarm_part_summary">15분 안에 울리는 알람이 있으면 표시</string>
     <string name="preference_screen_backup">백업 및 복원</string>
@@ -485,6 +484,7 @@
     <string name="preference_logs">로그</string>
     <string name="preference_logs_summary">애플리케이션 로그 보기 및 내보내기</string>
     <string name="preference_screen_search">검색</string>
+    <string name="preference_screen_search_summary">검색, 태그, 숨긴 항목</string>
     <string name="preference_search_favorites">즐겨찾기</string>
     <string name="preference_search_favorites_summary">앱 격자 위에 고정한 항목 및 자주 사용한 항목 표시</string>
     <string name="preference_search_apps">앱</string>
@@ -518,6 +518,8 @@
     <string name="preference_search_bar_auto_focus">키보드 열기</string>
     <string name="preference_search_bar_auto_focus_summary">검색을 열 때 자동으로 키보드 표시</string>
     <string name="preference_search_bar_launch_on_enter">엔터로 실행</string>
+    <string name="preference_hidden_items">숨긴 검색 결과</string>
+    <string name="preference_hidden_items_summary">숨긴 앱 및 검색 결과 관리</string>
     <string name="preference_screen_tags">태그</string>
     <string name="preference_screen_tags_summary">태그 및 태그한 항목 관리</string>
     <string name="preference_wikipedia_customurl">위키백과 URL</string>
