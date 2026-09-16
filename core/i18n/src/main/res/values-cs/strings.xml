@@ -737,6 +737,7 @@
     <string name="favorites_empty_tag">Nejsou zde žádné položky s tímto štítkem</string>
     <string name="frequently_used_show_in_favorites">Zobrazit v oblíbených</string>
     <string name="frequently_used_rows">Počet řádků</string>
+    <string name="favorites_skip_rows">Přeskočit řádky</string>
     <string name="preference_screen_search_actions">Rychlé akce</string>
     <string name="preference_search_search_actions_summary">Nastavit rychlé akce a zkratky vyhledávání</string>
     <string name="search_action_call">Volání</string>
