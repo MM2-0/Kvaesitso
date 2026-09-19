@@ -1,6 +1,7 @@
 package de.mm20.launcher2.ui.settings
 
 import android.content.Intent
+import android.content.res.Resources
 import android.os.Bundle
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.LocalActivity
@@ -23,6 +24,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.core.app.GrammaticalInflectionManagerCompat
@@ -41,6 +43,7 @@ import de.mm20.launcher2.ui.base.ProvideCompositionLocals
 import de.mm20.launcher2.ui.locals.LocalBackStack
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import de.mm20.launcher2.ui.locals.LocalWallpaperColors
+import de.mm20.launcher2.ui.locals.LocalWindowSize
 import de.mm20.launcher2.ui.overlays.OverlayHost
 import de.mm20.launcher2.ui.settings.about.AboutSettingsRoute
 import de.mm20.launcher2.ui.settings.about.AboutSettingsScreen
@@ -164,6 +167,14 @@ class SettingsActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.enableEdgeToEdge(window)
+
+        // Matches SharedLauncherActivity: reflects the display, not the app window, and
+        // is re-read on activity recreation, which a fold/unfold triggers (no
+        // android:configChanges override) — same one-shot-but-fold-aware contract that
+        // scaledGridColumnCount() relies on, so its preview here sees the real state.
+        val windowSize = Resources.getSystem().displayMetrics.let {
+            Size(it.widthPixels.toFloat(), it.heightPixels.toFloat())
+        }
 
         val newRoute = getStartRoute(intent)
         initialRoute = newRoute
@@ -355,6 +366,7 @@ class SettingsActivity : BaseActivity() {
             CompositionLocalProvider(
                 LocalWallpaperColors provides wallpaperColors,
                 LocalBackStack provides backStack,
+                LocalWindowSize provides windowSize,
             ) {
                 ProvideCompositionLocals {
                     LauncherTheme {
