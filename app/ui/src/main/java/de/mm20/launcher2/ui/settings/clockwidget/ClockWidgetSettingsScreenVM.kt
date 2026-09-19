@@ -9,8 +9,14 @@ import de.mm20.launcher2.preferences.ClockWidgetStyle
 import de.mm20.launcher2.preferences.TimeFormat
 import de.mm20.launcher2.preferences.ui.ClockWidgetSettings
 import de.mm20.launcher2.preferences.ui.UiSettings
+import de.mm20.launcher2.search.SavableSearchable
+import de.mm20.launcher2.searchable.SavableSearchableRepository
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -18,6 +24,7 @@ import org.koin.core.component.inject
 class ClockWidgetSettingsScreenVM : ViewModel(), KoinComponent {
     private val settings: ClockWidgetSettings by inject()
     private val uiSettings: UiSettings by inject()
+    private val searchableRepository: SavableSearchableRepository by inject()
 
     val compact = settings.compact
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
@@ -87,6 +94,16 @@ class ClockWidgetSettingsScreenVM : ViewModel(), KoinComponent {
 
     fun setDatePart(datePart: Boolean) {
         settings.setDatePart(datePart)
+    }
+
+    val dateApp: StateFlow<SavableSearchable?> = settings.dateApp.flatMapLatest { key ->
+        if (key == null) flowOf(null)
+        else searchableRepository.getByKeys(listOf(key)).map { it.firstOrNull() }
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    fun setDateApp(searchable: SavableSearchable?) {
+        searchable?.let { searchableRepository.insert(it) }
+        settings.setDateApp(searchable?.key)
     }
 
     fun setBatteryPart(batteryPart: BatteryStatusVisibility) {
