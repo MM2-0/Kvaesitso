@@ -27,7 +27,8 @@ fun SearchResultGrid(
     columns: Int = LocalGridSettings.current.columnCount,
     reverse: Boolean = false,
     highlightedItem: SavableSearchable? = null,
-    transitionKey: Any? = items
+    transitionKey: Any? = items,
+    isDock: Boolean = false,
 ) {
     AnimatedContent(
         items to transitionKey,
@@ -53,7 +54,8 @@ fun SearchResultGrid(
                                         .weight(1f),
                                     item = item,
                                     showLabels = showLabels,
-                                    highlight = item.key == highlightedItem?.key
+                                    highlight = item.key == highlightedItem?.key,
+                                    isDockItem = isDock
                                 )
                             }
                         } else {
