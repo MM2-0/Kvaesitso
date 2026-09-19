@@ -24,7 +24,6 @@ import de.mm20.launcher2.icons.compat.toLauncherIcon
 import de.mm20.launcher2.icons.loaders.AppFilterIconPackInstaller
 import de.mm20.launcher2.icons.loaders.GrayscaleMapIconPackInstaller
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
-import de.mm20.launcher2.ktx.randomElementOrNull
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -242,19 +241,19 @@ class IconPackManager(
     private suspend fun getIconBack(iconPack: String): String? {
         val iconDao = appDatabase.iconDao()
         val iconbacks = iconDao.getIconBacks(iconPack)
-        return iconbacks.randomElementOrNull()
+        return iconbacks.randomOrNull()
     }
 
     private suspend fun getIconUpon(iconPack: String): String? {
         val iconDao = appDatabase.iconDao()
         val iconupons = iconDao.getIconUpons(iconPack)
-        return iconupons.randomElementOrNull()
+        return iconupons.randomOrNull()
     }
 
     private suspend fun getIconMask(iconPack: String): String? {
         val iconDao = appDatabase.iconDao()
         val iconmasks = iconDao.getIconMasks(iconPack)
-        return iconmasks.randomElementOrNull()
+        return iconmasks.randomOrNull()
     }
 
     private suspend fun getPackScale(iconPack: String): Float {
