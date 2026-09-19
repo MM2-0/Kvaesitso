@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="el-rGR">
+    <string name="location_open">Ανοιχτό</string>
+    <string name="location_closed">Κλειστό</string>
     <!-- Time when a place next closes (on the same day). $1%s: time (hh:mm) -->
+    <string name="location_closes">κλείνει στις %1$s</string>
     <!-- Time when a place next closes (on a different day). $1%s: day of week, %2$s: time (hh:mm) -->
+    <string name="location_closes_other_day">κλείνει %1$s, %2$s</string>
     <!-- Time when a place next opens (on the same day). $1%s: time (hh:mm) -->
+    <string name="location_opens">ανοίγει στις %1$s</string>
     <!-- Time when a place next opens (on a different day). $1%s: day of week, %2$s: time (hh:mm) -->
+    <string name="location_opens_other_day">ανοίγει %1$s, %2$s</string>
     <!-- Name of the app -->
     <!-- Share something. Can be anything, an app, a website, a file, … -->
     <string name="menu_share">Κοινοποίηση</string>
@@ -23,9 +29,16 @@
     <string name="menu_customize">Παραμετροποίηση</string>
     <!-- Open a file in the corresponding app -->
     <string name="menu_open_file">Άνοιγμα</string>
+    <string name="menu_map">Προβολή στον χάρτη</string>
+    <string name="menu_website">Άνοιγμα ιστότοπου</string>
     <!-- Shown in a snackbar after an item has been hidden. %1$s: label of the item -->
     <string name="action_undo">Αναίρεση</string>
     <string name="action_import">Εισαγωγή</string>
+    <string name="action_done">Τέλος</string>
+    <string name="action_more_actions">Περισσότερες ενέργειες</string>
+    <string name="action_clear">Εκκαθάριση</string>
+    <string name="action_install">Εγκατάσταση</string>
+    <string name="action_quit">Έξοδος</string>
     <!-- Delete something (a file or a web search shortcut) -->
     <string name="menu_delete">Διαγραφή</string>
     <string name="menu_remove">Αφαίρεση</string>
@@ -205,23 +218,27 @@
     <string name="menu_edit_widgets">Επεξεργασία γραφικών στοιχείων</string>
     <string name="widget_name_weather">Καιρός</string>
     <string name="widget_name_calendar">Ημερολόγιο</string>
-    <string name="widget_name_music">Μουσική</string>
+    <string name="widget_name_music">Πολυμέσα</string>
+    <string name="widget_name_apps">Εφαρμογές</string>
     <string name="widget_name_notes">Ένα γραφικό στοιχείο που αποθηκεύει μία μόνο σημείωση</string>
-    <string name="widget_name_unknown">Ετικέτα που χρησιμοποιείται για μη έγκυρα γραφικά στοιχεία εφαρμογών</string>
+    <string name="widget_name_unknown">Άγνωστο</string>
     <string name="widget_add_widget">Προσθήκη γραφικού στοιχείου</string>
-    <string name="notes_widget_placeholder">Γράψε μια σημείωση…</string>
+    <string name="widget_removed">Το Widget αφαιρέθηκε</string>
+    <string name="notes_widget_placeholder">Γράψε μια σημείωση</string>
     <string name="notes_widget_action_new">Νέα σημείωση</string>
     <!-- Save / export the current note content as markdown file -->
     <string name="notes_widget_action_save">Αποθήκευση</string>
     <!-- Default filename for exported files. %1$s: the current date and time. File extension is appended automatically. -->
     <string name="notes_widget_export_filename">Σημείωση_%1$s</string>
     <string name="notes_widget_action_dismiss">Απόρριψη</string>
-    <string name="notes_widget_dismissed">Η σημείωση απορρίφθηκε.</string>
+    <string name="notes_widget_dismissed">Η σημείωση απορρίφθηκε</string>
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
     <string name="shortcut_summary">Από %1$s</string>
     <!-- Close a dialog -->
     <string name="close">Κλείσιμο</string>
+    <string name="no_selection">Καμία επιλογή</string>
     <string name="save">Αποθήκευση</string>
+    <string name="save_as_file">Αποθήκευση ως αρχείο</string>
     <string name="duplicate">Διπλότυπο</string>
     <string name="edit">Επεξεργασία</string>
     <string name="skip">Παράλειψη</string>
@@ -240,7 +257,7 @@
     <string name="edit_favorites_dialog_empty_section">Σύρετε στοιχεία εδώ</string>
     <string name="edit_favorites_dialog_tags">Ετικέτες</string>
     <string name="edit_favorites_dialog_tag_section_empty">Οι καρφιτσωμένες ετικέτες θα εμφανίζονται εδώ</string>
-    <string name="edit_favorites_dialog_new_tag">Δημιουργία ετικέτας…</string>
+    <string name="edit_favorites_dialog_new_tag">Δημιουργία ετικέτας</string>
     <!-- Nextcloud login flow, URL-->
     <string name="nextcloud_server_url">URL διακομιστή Nextcloud</string>
     <!-- Nextcloud/Owncloud login flow, empty URL-->
@@ -289,11 +306,19 @@
         <item quantity="one">%1$d εκτελούμενη εκδήλωση από προηγούμενες ημέρες</item>
         <item quantity="other">%1$d εκτελούμενες εκδηλώσεις από προηγούμενες ημέρες</item>
     </plurals>
+    <plurals name="calendar_widget_running_tasks">
+        <item quantity="one">%1$d μη ολοκληρωμένη εργασία</item>
+        <item quantity="other">%1$d μη ολοκληρωμένες εργασίες</item>
+    </plurals>
     <!-- Calendar events that last the entire day -->
-    <string name="calendar_event_allday">ολοήμερη</string>
+    <string name="calendar_event_allday">Όλη ημέρα</string>
+    <string name="task_due_time">Λήξη στις %1$s</string>
+    <string name="task_due_date">Λήξη στις %1$s</string>
+    <string name="task_due_today">Λήξη σήμερα</string>
     <!-- Default title that is shown in the music widget if the app that is playing media did not publish a title -->
     <string name="music_widget_default_title">Το %1$s αναπαράγει πολυμέσα</string>
     <string name="music_widget_no_data">Δεν έχει αναπαραχθεί ακόμα κανένα μέσο</string>
+    <string name="music_widget_interactive_progress_bar">Διαδραστική γραμμή προόδου</string>
     <string name="weather_condition_sleetshowers">Χιονόνερο</string>
     <string name="weather_condition_heavysleet">Βαρύ χιονόνερο</string>
     <string name="weather_condition_lightrainshowersandthunder">Ασθενείς βροχές και κεραυνοί</string>
@@ -312,6 +337,8 @@
     <string name="weather_condition_lightrainandthunder">Ασθενής βροχή και κεραυνοί</string>
     <string name="weather_condition_snow">Χιόνι</string>
     <string name="weather_condition_hail">Χαλάζι</string>
+    <string name="weather_condition_thunderstorm">Καταιγίδα</string>
+    <string name="weather_condition_thunder">Βροντή</string>
     <string name="weather_condition_heavysnowshowers">Έντονες χιονοπτώσεις</string>
     <string name="weather_condition_heavyrainshowers">Έντονες βροχοπτώσεις</string>
     <string name="weather_condition_rainshowersandthunder">Βροχές και κεραυνοί</string>
@@ -323,6 +350,7 @@
     <string name="weather_condition_heavyrainshowersandthunder">Έντονες βροχοπτώσεις και κεραυνοί</string>
     <string name="weather_condition_fair">Καλοκαιρία</string>
     <string name="weather_condition_fog">Ομίχλη</string>
+    <string name="weather_condition_haze">Ομίχλη</string>
     <string name="weather_condition_sleetshowersandthunder">Χιονόνερο και κεραυνοί</string>
     <string name="weather_condition_rainandthunder">Βροχές και κεραυνοί</string>
     <string name="weather_condition_lightsleet">Ελαφρύ χιονόνερο</string>
@@ -341,11 +369,11 @@
     <!-- Humidity details, %1$s: formatted humidity value -->
     <!-- Wind details, %1$s: formatted wind values -->
     <!-- Precipitation details, %1$s: formatted precipitation values -->
-    <string name="weather_no_data">Δεν υπάρχουν διαθέσιμα δεδομένα καιρού.</string>
+    <string name="weather_no_data">Δεν υπάρχουν διαθέσιμα δεδομένα καιρού</string>
     <!-- Manually set a location, used in weather widget location permission banner as an
         alternative to granting the permission -->
     <string name="weather_widget_set_location">Ορισμός τοποθεσίας</string>
-    <string name="weather_location_search_no_result">Η τοποθεσία δε βρέθηκε.</string>
+    <string name="weather_location_search_no_result">Η τοποθεσία δεν βρέθηκε</string>
     <!-- Missing location permission in weather widget and weather widget settings settings -->
     <string name="missing_permission_auto_location">Απαιτείται πρόσβαση τοποθεσίας για να προσδιοριστεί αυτόματα</string>
     <!-- Missing notification permission in music widget settings -->
@@ -353,30 +381,33 @@
     <!-- Missing contact permission in search settings screen -->
     <string name="missing_permission_contact_search_settings">Απαιτείται άδεια πρόσβασης στις επαφές για την αναζήτησή τους</string>
     <!-- Missing call permission in contacts settings screen -->
+    <string name="missing_permission_call_contacts_settings">Απαιτείται άδεια πρόσβασης στο τηλέφωνο για πραγματοποίηση κλήσεων</string>
     <!-- Missing calendar permission in search settings screen -->
     <string name="missing_permission_calendar_search_settings">Απαιτείται άδεια πρόσβασης στο ημερολόγιο για αναζήτηση εκδηλώσεων</string>
+    <string name="missing_permission_tasks_search_settings">Απαιτείται άδεια πρόσβασης στις εργασίες για την αναζήτησή τους στην εφαρμογή Εργασίες</string>
     <!-- Missing calendar permission in calendar widget settings screen -->
-    <string name="missing_permission_calendar_widget_settings">Αυτό το γραφικό στοιχείο απαιτεί άδεια πρόσβασης στο ημερολόγιο</string>
+    <string name="missing_permission_calendar_widget_settings">Αυτό το widget απαιτεί άδεια πρόσβασης στο ημερολόγιο</string>
     <string name="widget_config_calendar_missing_calendars_hint">Δεν μπορείτε να βρείτε τα ημερολόγια σας;</string>
     <!-- Missing permission app shortcuts permission in search settings screen. %1$s: app name -->
     <string name="missing_permission_appshortcuts_search_settings">Το %1$s πρέπει να οριστεί ως προεπιλεγμένη εφαρμογή αρχικής οθόνης για αναζήτηση συντομεύσεων εφαρμογών</string>
     <!-- Missing file permission in search settings screen -->
-    <string name="missing_permission_file_search_settings">Απαιτείται άδεια εξωτερικής αποθήκευσης για την αναζήτηση τοπικών αρχείων</string>
+    <string name="missing_permission_file_search_settings">Απαιτείται άδεια πρόσβασης στον εξωτερικό χώρο αποθήκευσης για αναζήτηση αρχείων στη συσκευή σας</string>
     <!-- Missing file permission in search settings screen.
         Used in Android 10+ because the required permission has changed from READ_EXTERNAL_STORAGE
         to MANAGE_EXTERNAL_STORAGE which is labeled differently in the Android OS -->
-    <string name="missing_permission_file_search_settings_android10">Για την αναζήτηση τοπικών αρχείων απαιτείται άδεια διαχείρισης όλων των αρχείων</string>
+    <string name="missing_permission_file_search_settings_android10">Απαιτείται άδεια πρόσβασης σε όλα τα αρχέια για αναζήτηση αρχείων στη συσκευή σας</string>
     <!-- Missing notification permission, used in badge settings screen -->
     <string name="missing_permission_notification_badges">Απαιτείται πρόσβαση στις ειδοποιήσεις για την εμφάνιση σημάτων ειδοποιήσεων</string>
     <!-- Missing calendar permission, used in calendar widget -->
-    <string name="missing_permission_calendar_widget">Παραχωρήστε άδεια στο ημερολόγιο για την εμφάνιση προσεχών συναντήσεων και εκδηλώσεων.</string>
+    <string name="missing_permission_calendar_widget">Απαιτείται άδεια πρόσβασης στο ημερολόγιο για εμφάνιση προσεχών συναντήσεων και εκδηλώσεων εδώ</string>
     <!-- Missing calendar permission, used in calendar search results -->
-    <string name="missing_permission_calendar_search">Παραχωρήστε άδεια στο ημερολόγιο για αναζήτηση εκδηλώσεων ημερολογίου.</string>
+    <string name="missing_permission_calendar_search">Απαιείται άδεια πρόσβασης στο ημερολόγιο για αναζήτηση στο ημερολόγιό σας</string>
     <!-- Missing location permission, used in location search results -->
+    <string name="missing_permission_location_search">Απαιτείται άδεια πρόσβασης στην τοποθεσία για αναζήτηση γειτονικών τοποθεσιών</string>
     <!-- Missing files permission, used in files search results -->
-    <string name="missing_permission_files_search">Παραχωρήστε άδεια αποθηκευτικού χώρου για αναζήτηση φωτογραφιών, πολυμέσων και εγγράφων σε αυτήν τη συσκευή.</string>
+    <string name="missing_permission_files_search">Απαιτείται άδεια πρόσβασης στον χώρο αποθήκευσης για αναζήτηση αρχείων σε αυτήν τη συσκευή</string>
     <!-- Missing files permission, used in contact search results -->
-    <string name="missing_permission_contact_search">Παραχωρήστε άδεια στις επαφές για αναζήτηση επαφών.</string>
+    <string name="missing_permission_contact_search">Απαιτείται άδεια πρόσβασης στις επαφές για αναζήτηση των επαφών σας</string>
     <!-- Missing permission app shortcuts permission, used in app shortcut search results. %1$s: app name -->
     <string name="missing_permission_appshortcuts_search">Ορίστε το %1$s ως προεπιλεγμένη εφαρμογή αρχικής οθόνης, για αναζήτηση συντομεύσεων εφαρμογών.</string>
     <!-- Missing permission app shortcuts permission, used when creating a shortcut in the edit favorites sheet -->
@@ -389,18 +420,31 @@
     <string name="preference_theme_light">Φωτεινό</string>
     <string name="preference_theme_dark">Σκοτεινό</string>
     <string name="preference_screen_colors">Χρωματικός συνδυασμός</string>
+    <string name="preference_create_colors">Νέος συνδυασμός χρωμάτων</string>
     <string name="preference_colors_default">Προεπιλεγμένο</string>
+    <string name="preference_colors_high_contrast">Υψηλή αντίθεση</string>
     <string name="preference_colors_bw">Ασπρόμαυρο</string>
     <string name="preference_custom_colors_corepalette">Παλέτα χρωμάτων</string>
-    <string name="preference_mdy_color_source_wallpaper">Φόντο</string>
-    <string name="preference_shapes_default">Προεπιλεγμένο</string>
-    <string name="preference_transparencies_default">Προεπιλεγμένο</string>
+    <string name="preference_mdy_color_source">Πηγή για δυναμικά χρώματα</string>
+    <string name="preference_mdy_color_source_system">Σύστημα</string>
+    <string name="preference_mdy_color_source_wallpaper">Ταπετσαρία</string>
+    <string name="preference_screen_shapes">Σχήματα</string>
+    <string name="preference_create_shapes">Νέος συνδυασμός σχημάτων</string>
+    <string name="preference_shapes_default">Προεπιλογή</string>
+    <string name="preference_shapes_rect">Ορθογώνιο</string>
+    <string name="preference_shapes_base">Βασικό σχήμα</string>
+    <string name="preference_screen_typography">Τυπογραφία</string>
+    <string name="preference_create_typography">Νέος συνδυασμός τυπογραφίας</string>
+    <string name="preference_screen_transparencies">Διαφάνεια</string>
+    <string name="preference_create_transparency">Νέος συνδυασμός διαφάνειας</string>
+    <string name="preference_transparencies_default">Προεπιλογή</string>
+    <string name="preference_transparencies_semi_transparent">Ημιδιαφανές</string>
     <string name="preference_font">Γραμματοσειρά</string>
     <string name="preference_screen_about">Περί</string>
     <string name="preference_version">Έκδοση</string>
     <string name="preference_category_links">Σύνδεσμοι</string>
     <string name="preference_category_licenses">Άδειες ανοιχτού κώδικα</string>
-    <string name="preference_category_advanced">Προχωρημένο</string>
+    <string name="preference_category_advanced">Για προχωρημένους</string>
     <!-- Open website of an open source library -->
     <string name="open_webpage">Άνοιγμα σελίδας</string>
     <string name="preference_screen_about_summary">Πληροφορίες εφαρμογής και άδειας χρήσης</string>
@@ -409,8 +453,11 @@
     <string name="provider_brightsky">Deutscher Wetterdienst (Γερμανία μόνο)</string>
     <string name="preference_category_location">Τοποθεσία</string>
     <string name="preference_automatic_location">Αυτόματη τοποθεσία</string>
-    <string name="preference_automatic_location_summary">Χρησιμοποιήστε τις υπηρεσίες GPS και τοποθεσίας για να προσδιορίσετε αυτόματα την τοποθεσία</string>
+    <string name="preference_automatic_location_summary">Χρήση υπηρεσιών τοποθεσίας για προσδιορισμό τοποθεσίας αυτόματα</string>
+    <string name="preference_location_managed">Διαχειρίζεται από το πρόσθετο</string>
+    <string name="preference_location_managed_summary">Η τοποθεσία για αυτόν τον πάροχο διαχειρίζεται από την εφαρμογή πρόσθετου</string>
     <string name="preference_location">Τοποθεσία</string>
+    <string name="preference_location_breezy">Διαχείριση τοποθεσίας στο Breezy Weather</string>
     <string name="preference_imperial_units_summary">Χρησιμοποιήστε βαθμούς Φαρενάιτ και μίλια ανά ώρα</string>
     <string name="preference_imperial_units">Αγγλικό σύστημα μέτρησης</string>
     <string name="widget_config_weather_compact">Συμπαγής λειτουργία</string>
@@ -424,8 +471,8 @@
     <string name="preference_debug_reinstall_iconpacks">Επανεγκατάσταση πακέτων εικονιδίων</string>
     <string name="preference_debug_reinstall_iconpacks_summary">Εκκαθαρίστε και δημιουργήστε ξανά την προσωρινή μνήμη του πακέτου εικονιδίων</string>
     <plurals name="debug_cleanup_database_result">
-        <item quantity="one">%1$d καταχώριση έχει αφαιρεθεί.</item>
-        <item quantity="other">%1$d καταχωρίσεις έχουν αφαιρεθεί.</item>
+        <item quantity="one">%1$d καταχώριση έχει αφαιρεθεί</item>
+        <item quantity="other">%1$d καταχωρίσεις έχουν αφαιρεθεί</item>
     </plurals>
     <string name="preference_category_icons">Εικονίδια</string>
     <string name="preference_cards">Κάρτες</string>
@@ -449,6 +496,8 @@
     <string name="preference_screen_integrations">Ενσωματώσεις</string>
     <string name="preference_screen_plugins">Πρόσθετα</string>
     <string name="preference_screen_plugins_summary">Διαχείριση εγκατεστημένων επεκτάσεων</string>
+    <string name="preference_category_enabled_plugins">Ενεργοποιημένο</string>
+    <string name="preference_category_installed_plugins">Εγκατεστημένο</string>
     <string name="no_plugins_installed">Δεν έχουν εγκατασταθεί πρόσθετα</string>
     <string name="preference_theme_system">Χρήση συστήματος</string>
     <string name="preference_themed_icons">Θεματικά εικονίδια</string>
@@ -458,6 +507,9 @@
     <string name="preference_icon_pack">Πακέτο εικονιδίων</string>
     <string name="preference_icon_pack_summary_empty">Δεν έχουν εγκατασταθεί πακέτα εικονιδίων</string>
     <!-- Indicates that an icon pack supports dynamic colors (icon colors adapt to the launchers color scheme) -->
+    <string name="preference_category_animations">Κινήσεις</string>
+    <string name="preference_charging_animation">Κίνηση φόρτισης</string>
+    <string name="preference_charging_animation_summary">Αναπαραγωγή κίνησης φούσκας κατά τη φόρτιση της συσκευής</string>
     <string name="preference_category_system_bars">Γραμμές συστήματος</string>
     <string name="preference_status_bar_icons">Εικονίδια γραμμής κατάστασης</string>
     <string name="preference_nav_bar_icons">Εικονίδια γραμμής πλοήγησης</string>
@@ -468,7 +520,8 @@
     <string name="preference_hide_nav_bar">Απόκρυψη γραμμής πλοήγησης</string>
     <string name="preference_screen_integrations_summary">Διαχείριση συνδεδεμένων λογαριασμών και υπηρεσιών</string>
     <string name="preference_signin_user">Συνδεδεμένος ως %1$s</string>
-    <string name="preference_summary_not_logged_in">Αυτή την στιγμή δεν έχετε συνδεθεί</string>
+    <string name="preference_signout">Αποσύνδεση</string>
+    <string name="preference_summary_not_logged_in">Δεν είσαι συνδεδεμένος</string>
     <string name="preference_icon_shape_pentagon">Πεντάγωνο</string>
     <string name="preference_category_wallpaper">Ταπετσαρία</string>
     <string name="preference_dim_wallpaper">Σκοτείνιασμα ταπετσαρίας</string>
@@ -503,8 +556,12 @@
     <string name="preference_category_grid">Πλέγμα</string>
     <string name="preference_grid_icon_size">Μέγεθος εικονιδίων</string>
     <string name="preference_grid_column_count">Αριθμός στηλών</string>
+    <string name="preference_grid_list_style">Εμφάνιση εφαμογών σε λίστα</string>
+    <string name="preference_grid_list_icons">Εμφάνιση εικονιδίων εφαρμογών στη λίστα</string>
     <string name="preference_grid_labels">Εμφάνιση ταμπελών</string>
     <string name="preference_grid_labels_summary">Εμφάνιση του ονόματος της εφαρμογής κάτω από το εικονίδιο</string>
+    <string name="preference_grid_list_style_summary">Εμφάνιση εφαρμογών σε λίστα αντί σε πλέγμα</string>
+    <string name="preference_grid_list_icons_summary">Εμφάνιση εικονιδίων στην προβολή λίστας</string>
     <string name="preference_screen_debug">Αποσφαλμάτωση</string>
     <string name="preference_screen_debug_summary">Εργαλεία αντιμετώπισης προβλημάτων</string>
     <string name="preference_category_widgets">Γραφικά στοιχεία</string>
@@ -514,22 +571,31 @@
     <string name="preference_screen_clockwidget_summary">Διαμορφώστε το στυλ και τα στοιχεία του ρολογιού</string>
     <string name="preference_clockwidget_layout_vertical">Προεπιλογή</string>
     <string name="preference_clockwidget_layout_horizontal">Συμπαγής</string>
+    <string name="preference_clock_widget_show_seconds">Εμφάνιση δευτερολέπτων</string>
+    <string name="preference_clock_widget_time_format">Μορφή ώρας</string>
+    <string name="preference_clock_widget_time_format_24h">24ωρο</string>
+    <string name="preference_clock_widget_time_format_12h">12ωρο</string>
+    <string name="widget_use_theme_colors">Χρήση χρώματος θέματος</string>
     <string name="preference_clock_widget_fill_height">Γέμισμα ύψους οθόνης</string>
     <string name="preference_clock_widget_alignment">Ευθυγράμμιση</string>
     <string name="preference_clock_widget_alignment_top">Πάνω</string>
     <string name="preference_clock_widget_alignment_center">Κέντρο</string>
     <string name="preference_clock_widget_alignment_bottom">Κάτω</string>
     <string name="preference_clockwidget_dynamic_zone">Μέρος του γραφικού στοιχείου ρολογιού που εμφανίζει δυναμικές πληροφορίες (ημερομηνία, αναπαραγωγήςμουσικής, μπαταρία,…)</string>
+    <string name="preference_clockwidget_smartspacer">Διαχειρίζεται από το Smartspacer</string>
     <string name="preference_clockwidget_date_part">Ημερομηνία</string>
     <string name="preference_clockwidget_date_part_summary">Εμφάνιση τωρινής ημερομηνίας</string>
     <string name="preference_clockwidget_favorites_part">Αγαπημένα</string>
-    <string name="preference_clockwidget_favorites_part_summary">Εμφάνιση της πρώτης σειράς καρφιτσωμένων στοιχείων</string>
+    <string name="preference_clockwidget_favorites_part_summary">Εμφάνιση καρφιτσωμένων στοιχείων στο dock</string>
+    <string name="preference_clockwidget_dock_rows">Σειρές dock</string>
     <string name="preference_clockwidget_music_part">Πολυμέσα</string>
     <string name="preference_clockwidget_music_part_summary">Εμφάνιση ελέγχου πολυμέσων όταν υπάρχει ενεργή περίοδος λειτουργίας</string>
     <string name="preference_clockwidget_battery_part">Μπαταρία</string>
+    <string name="preference_clockwidget_battery_part_always_show">Εμφάνιση πάντα</string>
+    <string name="preference_clockwidget_battery_part_hide">Ανενεργό</string>
     <string name="preference_clockwidget_alarm_part">Ξυπνητήρια</string>
-    <string name="preference_clockwidget_alarm_part_summary">Εμφάνιση ξυπνητηριών που θα χτυπήσουν μέσα στα επόμενα 15 λεπτά</string>
-    <string name="preference_screen_backup">Αντίγραφα ασφαλείας &amp; Επαναφορά</string>
+    <string name="preference_clockwidget_alarm_part_summary">Εμφάνιση ξυπνητηριών που θα χτυπήσουν μέσα στις επόμενες 8 ώρες</string>
+    <string name="preference_screen_backup">Αντίγραφο ασφαλείας και επαναφορά</string>
     <string name="preference_screen_backup_summary">Εξαγωγή και εισαγωγή δεδομένων εφαρμογής εκκίνησης</string>
     <string name="preference_backup">Αντίγραφα ασφαλείας</string>
     <string name="preference_backup_summary">Εξαγωγή προτιμήσεων και δεδομένων εφαρμογής εκκίνησης</string>
@@ -540,15 +606,22 @@
     <string name="preference_logs">Αρχεία καταγραφής</string>
     <string name="preference_logs_summary">Προβολή και εξαγωγή αρχείων καταγραφής</string>
     <string name="preference_screen_search">Αναζήτηση</string>
-    <string name="preference_screen_search_summary">Αναζήτηση, ετικέτες, κρυφά στοιχεία</string>
+    <string name="preference_screen_search_summary">Αναζήτηση, ετικέτες, εξαιρούμενα αποτελέσματα</string>
     <string name="preference_search_favorites">Αγαπημένα</string>
     <string name="preference_search_favorites_summary">Εμφάνιση καρφιτσωμένων και συχνά χρησιμοποιούμενων στοιχείων πάνω από το πλέγμα εφαρμογών</string>
+    <string name="preference_search_apps">Εφαρμογές</string>
+    <string name="preference_search_apps_summary">Εμφάνιση όλων των εφαρμογών όταν το πεδίο αναζήτησης είναι κενό</string>
+    <string name="preference_search_apps_show_details">Εμφάνιση πληροφοριών εφαρμογής</string>
+    <string name="preference_search_apps_show_details_summary">Εμφάνιση έκδοσης και ονόματος πακέτου μιας εφαρμογής στο μενού περιβάλλοντός του</string>
     <string name="preference_search_files">Αρχεία</string>
     <string name="preference_search_files_summary">Αναζήτηση τοπικών αρχείων και αρχείων cloud</string>
     <string name="preference_search_contacts">Επαφές</string>
     <string name="preference_search_contacts_summary">Αναζήτηση επαφών σε αυτή τη συσκευή</string>
     <string name="preference_search_calendar">Ημερολόγιο</string>
     <string name="preference_search_calendar_summary">Αναζητήστε επερχόμενων ραντεβού και εκδηλώσεων</string>
+    <string name="preference_search_local_calendar_summary">Αναζήτηση ημερολογίων σε αυτήν τη συσκευή</string>
+    <string name="preference_search_tasks">Εργασίες</string>
+    <string name="preference_search_tasks_summary">Αναζήτηση εργασιών στην εφαρμογή Εργασίες</string>
     <string name="preference_search_appshortcuts">Συντομεύσεις εφαρμογών</string>
     <string name="preference_search_appshortcuts_summary">Αναζήτηση συντομεύσεων εφαρμογών</string>
     <string name="preference_search_calculator">Αριθμομηχανή</string>
@@ -557,6 +630,8 @@
     <string name="preference_search_unitconverter_summary">Χρήση: 1,5 kg ή 4 cm &gt;&gt; σε</string>
     <string name="preference_search_currencyconverter">Μετατροπέας νομίσματος</string>
     <string name="preference_search_currencyconverter_summary">Λήψη περιοδικών συναλλαγματικών ισοτιμιών για μετατροπή νομισμάτων</string>
+    <string name="preference_search_supportedunits">Υποστηριζόμενες μονάδες</string>
+    <string name="preference_currency_settings">Ρυθμίσεις νομίσματος</string>
     <string name="preference_search_wikipedia_summary">Αναζήτηση στην ελεύθερη εγκυκλοπαίδεια</string>
     <string name="preference_search_websites">Ιστοσελίδες</string>
     <string name="preference_search_websites_summary">Εμφάνιση προεπισκόπησης του ιστότοπου εάν το ερώτημα αναζήτησης είναι διεύθυνση URL</string>
@@ -564,17 +639,20 @@
     <string name="preference_search_localfiles_summary">Αναζήτηση εγγράφων, φωτογραφιών και άλλων αρχείων που είναι αποθηκευμένα σε αυτήν τη συσκευή</string>
     <string name="preference_search_cloud_summary">Αναζήτηση στα αρχεία του %1$s</string>
     <string name="preference_calendar_calendars">Ημερολόγια</string>
+    <string name="preference_calendar_hide_completed">Απόκρυψη ολοκληρωμένων εργασιών</string>
     <string name="preference_screen_buildinfo">Πληροφορίες έκδοσης</string>
     <string name="preference_screen_buildinfo_summary">Περισσότερες πληροφορίες σχετικά με αυτή την έκδοση</string>
     <string name="preference_search_bar_style">Στυλ</string>
     <string name="preference_search_bar_style_summary">Παραμετροποίηση εμφάνισης γραμμής αναζήτησης</string>
+    <string name="preference_search_bar_style_transparent">Διαφανές</string>
+    <string name="preference_search_bar_style_hidden">Κρυφό</string>
     <string name="preference_search_bar_color">Χρώμα</string>
     <string name="preference_search_bar_auto_focus">Άνοιγμα πληκτρολογίου</string>
     <string name="preference_search_bar_auto_focus_summary">Αυτόματη εμφάνιση του πληκτρολογίου κατά το άνοιγμα του μενού εφαρμογών</string>
-    <string name="preference_hidden_items">Κρυφά αποτελέσματα αναζήτησης</string>
-    <string name="preference_hidden_items_summary">Διαχείριση κρυφών εφαρμογών και αποτελεσμάτων αναζήτησης</string>
+    <string name="preference_hidden_items">Εξαιρούμενα αποτελέσματα αναζήτησης</string>
+    <string name="preference_hidden_items_summary">Διαχείριση εξαιρουμένων εφαρμογών και αποτελεσμάτων αναζήτησης</string>
     <string name="preference_hidden_items_reveal_button">Εμφάνιση κουμπιού αποκάλυψης</string>
-    <string name="preference_hidden_items_reveal_button_summary">Εμφάνιση ενός κουμπιού για την αποκάλυψη κρυφών αποτελεσμάτων αναζήτησης</string>
+    <string name="preference_hidden_items_reveal_button_summary">Εμφάνιση κουμπιού για αποκάλυψη εξαιρουμένων αποτελεσμάτων αναζήτησης</string>
     <string name="preference_screen_tags">Ετικέτες</string>
     <string name="preference_screen_tags_summary">Διαχείριση ετικετών και στοιχείων με ετικέτα</string>
     <string name="preference_edit_favorites_summary">Αλλαγή της σειράς των καρφιτσωμένων στοιχείων</string>
@@ -583,13 +661,21 @@
     <string name="preference_edit_button">Πλήκτρο επεξεργασίας</string>
     <string name="preference_favorites_edit_button_summary">Εμφάνιση ενός πλήκτρου για την αναδιάταξη των αγαπημένων</string>
     <string name="preference_widgets_edit_button_summary">Εμφάνιση ενός πλήκτρου για προσθήκη, αφαίρεση και αναδιάταξη γραφικών στοιχείων</string>
+    <string name="preference_widgets_on_home_screen">Τα widget στην αρχική οθόνη</string>
+    <string name="preference_widgets_on_home_screen_summary">Εμφάνιση των widget στην αρχική οθόνη αντί σε ξεχωριστή σελίδα</string>
     <string name="preference_screen_homescreen">Αρχική οθόνη</string>
     <string name="preference_screen_homescreen_summary">Ρολόι, γραμμή αναζήτησης, ταπετσαρία, γραμμές συστήματος</string>
     <string name="preference_screen_icons">Πλέγμα και εικονίδια</string>
-    <string name="preference_screen_icons_summary">Πλέγμα, μέγεθος εικονιδίου, πακέτα εικονιδίων, σήματα</string>
+    <string name="preference_screen_icons_summary">Μέγεθος πλέγματος, εικονίδια, σήματα</string>
     <string name="preference_weather_integration">Καιρός</string>
     <string name="preference_media_integration">Έλεγχος πολυμέσων</string>
+    <string name="preference_tasks_integration">Εργασίες</string>
     <!-- %1$s: app name (Kvaesitso) -->
+    <string name="preference_launch_tasks_app">Άνοιγμα εφαρμογής Tasks</string>
+    <string name="preference_launch_breezyweather_app">Άνοιγμα Breezy Weather</string>
+    <string name="preference_launch_smartspacer_app">Άνοιγμα Smartspacer</string>
+    <string name="preference_contacts_call_on_tap">Πατήστε για κλήση</string>
+    <string name="preference_contacts_call_on_tap_summary">Πραγματοποίηση κλήσης χωρίς επιβεβαίωση κατά το πάτημα στον αριθμό τηλεφώνου</string>
     <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
     <string name="no_account_nextcloud">Δεν έχει συνδεθεί ακόμη λογαριασμός Nextcloud</string>
     <!-- Used in an info banner if a specific feature requires an Owncloud account -->
