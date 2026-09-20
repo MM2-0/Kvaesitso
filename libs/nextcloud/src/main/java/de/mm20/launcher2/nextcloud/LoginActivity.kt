@@ -1,17 +1,18 @@
 package de.mm20.launcher2.nextcloud
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.browser.customtabs.CustomTabsIntent
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
@@ -20,15 +21,16 @@ import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -40,12 +42,19 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import de.mm20.launcher2.ktx.isAtLeastApiLevel
+import de.mm20.launcher2.permissions.PermissionGroup
+import de.mm20.launcher2.permissions.PermissionsManager
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 
 class LoginActivity : AppCompatActivity() {
 
     private val nextcloudClient = NextcloudApiHelper(this)
+
+    private val permissionsManager: PermissionsManager by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,6 +66,9 @@ class LoginActivity : AppCompatActivity() {
                 var nextcloudUrl by rememberSaveable { mutableStateOf("") }
                 var error by rememberSaveable { mutableStateOf<String?>(null) }
                 var loading by rememberSaveable { mutableStateOf(false) }
+
+                val hasLocalNetworkPermission by permissionsManager.hasPermission(PermissionGroup.LocalNetwork)
+                    .collectAsStateWithLifecycle(null)
 
                 val dark = isSystemInDarkTheme()
 
@@ -80,7 +92,7 @@ class LoginActivity : AppCompatActivity() {
                         .padding(32.dp)
                         .systemBarsPadding()
                         .imePadding(),
-                    verticalArrangement = Arrangement.Center,
+                    verticalArrangement = Arrangement.spacedBy(32.dp, Alignment.CenterVertically),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     Image(
@@ -90,10 +102,59 @@ class LoginActivity : AppCompatActivity() {
                             MaterialTheme.colorScheme.primary,
                         )
                     )
+
+                    if (isAtLeastApiLevel(37)) {
+                        AnimatedVisibility(hasLocalNetworkPermission == false && error != null) {
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .background(
+                                        MaterialTheme.colorScheme.surfaceContainer,
+                                        MaterialTheme.shapes.medium
+                                    )
+                                    .padding(8.dp)
+                            ) {
+                                Row(
+                                    modifier = Modifier.padding(8.dp),
+                                    horizontalArrangement = Arrangement.spacedBy(
+                                        16.dp,
+                                        Alignment.Start
+                                    ),
+                                    verticalAlignment = Alignment.CenterVertically,
+                                ) {
+                                    Icon(
+                                        painterResource(R.drawable.warning_24px), null,
+                                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    )
+                                    Text(
+                                        stringResource(
+                                            R.string.missing_permission_local_network,
+                                            stringResource(R.string.app_name)
+                                        ),
+                                        modifier = Modifier.weight(1f),
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                                    )
+                                }
+
+                                TextButton(
+                                    modifier = Modifier.align(Alignment.End),
+                                    onClick = {
+                                        permissionsManager.requestPermission(
+                                            this@LoginActivity,
+                                            PermissionGroup.LocalNetwork
+                                        )
+                                    }) {
+                                    Text(stringResource(R.string.action_fix))
+                                }
+
+                            }
+                        }
+                    }
+
                     OutlinedTextField(
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 32.dp),
+                            .fillMaxWidth(),
                         label = {
                             Text(stringResource(R.string.nextcloud_server_url))
                         },
@@ -145,6 +206,8 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        permissionsManager.onResume()
+
         val flow = currentLoginFlow ?: return
         lifecycleScope.launch {
             val result = nextcloudClient.pollLoginFlow(flow)
@@ -227,4 +290,14 @@ class LoginActivity : AppCompatActivity() {
             outlineVariant = Color(0xFF42474E),
             scrim = Color(0xFF000000),
         )
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        permissionsManager.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
+
 }

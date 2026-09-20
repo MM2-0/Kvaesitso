@@ -39,6 +39,7 @@
     <string name="action_clear">Clear</string>
     <string name="action_install">Install</string>
     <string name="action_quit">Quit</string>
+    <string name="action_fix">Fix</string>
     <!-- Delete something (a file or a web search shortcut) -->
     <string name="menu_delete">Delete</string>
     <string name="menu_remove">Remove</string>
@@ -419,6 +420,7 @@
     <string name="missing_permission_appshortcuts_search">Set %1$s as default home app to search app shortcuts.</string>
     <!-- Missing permission app shortcuts permission, used when creating a shortcut in the edit favorites sheet -->
     <string name="missing_permission_appshortcuts_create">Set %1$s as default home app to create shortcuts.</string>
+    <string name="missing_permission_local_network">%1$s is currently not allowed to find devices on the local network.</string>
     <!-- Grant a permission, shown in permission banners -->
     <string name="grant_permission">Grant</string>
     <!-- Appearance preference title -->

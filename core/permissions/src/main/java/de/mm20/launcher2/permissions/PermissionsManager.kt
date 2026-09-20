@@ -11,6 +11,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.provider.Settings
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.getSystemService
@@ -68,6 +69,7 @@ enum class PermissionGroup {
     Accessibility,
     ManageProfiles,
     Call,
+    LocalNetwork,
 }
 
 internal class PermissionsManagerImpl(
@@ -101,6 +103,9 @@ internal class PermissionsManagerImpl(
     )
     private val callPermissionState = MutableStateFlow(
         checkPermissionOnce(PermissionGroup.Call)
+    )
+    private val localNetworkPermissionState = MutableStateFlow(
+        checkPermissionOnce(PermissionGroup.LocalNetwork)
     )
 
     override fun requestPermission(context: AppCompatActivity, permissionGroup: PermissionGroup) {
@@ -192,6 +197,14 @@ internal class PermissionsManagerImpl(
                     permissionGroup.ordinal
                 )
             }
+
+            PermissionGroup.LocalNetwork -> {
+                ActivityCompat.requestPermissions(
+                    context,
+                    localNetworkPermissions,
+                    permissionGroup.ordinal
+                )
+            }
         }
     }
 
@@ -242,6 +255,9 @@ internal class PermissionsManagerImpl(
             PermissionGroup.Call -> {
                 callPermissions.all { context.checkPermission(it) }
             }
+            PermissionGroup.LocalNetwork -> {
+                !isAtLeastApiLevel(37) || localNetworkPermissions.all { context.checkPermission(it) }
+            }
         }
     }
 
@@ -257,6 +273,7 @@ internal class PermissionsManagerImpl(
             PermissionGroup.Accessibility -> accessibilityPermissionState
             PermissionGroup.ManageProfiles -> manageProfilesPermissionState
             PermissionGroup.Call -> callPermissionState
+            PermissionGroup.LocalNetwork -> localNetworkPermissionState
         }
     }
 
@@ -278,6 +295,7 @@ internal class PermissionsManagerImpl(
             PermissionGroup.Accessibility -> accessibilityPermissionState.value = granted
             PermissionGroup.ManageProfiles -> manageProfilesPermissionState.value = granted
             PermissionGroup.Call -> callPermissionState.value = granted
+            PermissionGroup.LocalNetwork -> localNetworkPermissionState.value = granted
         }
     }
 
@@ -308,5 +326,6 @@ internal class PermissionsManagerImpl(
             Manifest.permission.WRITE_EXTERNAL_STORAGE
         )
         private val callPermissions = arrayOf(Manifest.permission.CALL_PHONE)
+        private val localNetworkPermissions = arrayOf(Manifest.permission.ACCESS_LOCAL_NETWORK)
     }
 }

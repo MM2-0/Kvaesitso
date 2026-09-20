@@ -54,6 +54,7 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.browser)
     implementation(libs.androidx.securitycrypto)
+    implementation(libs.koin.android)
 
     implementation(libs.bundles.androidx.lifecycle)
 
@@ -64,5 +65,6 @@ dependencies {
     implementation(project(":core:ktx"))
     implementation(project(":core:i18n"))
     implementation(project(":core:base"))
+    implementation(project(":core:permissions"))
 
 }
