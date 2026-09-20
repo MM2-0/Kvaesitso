@@ -936,4 +936,6 @@
     <string name="search_action_private_space_unlock">Privát tér feloldása</string>
     <string name="favorites_skip_rows">Sorok kihagyása</string>
     <string name="preference_measurement_system_metric_scientific">Metrikus (tudományos)</string>
+    <string name="action_fix">Javítás</string>
+    <string name="missing_permission_local_network">A(z) %1$s jelenleg nem kereshet eszközöket a helyi hálózaton.</string>
 </resources>
