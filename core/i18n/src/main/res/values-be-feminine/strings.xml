@@ -43,4 +43,5 @@
     <string name="preference_customize_filter_bar_summary">Дапасуй элементы ў панэлі фільтраў</string>
     <string name="hint_drag_and_drop_reorder">Утрымлівай і перацягвай элементы, каб змяніць іх парадак</string>
     <string name="preference_signin_user">Увайшла як %1$s</string>
+    <string name="location_open">Test 123</string>
 </resources>
