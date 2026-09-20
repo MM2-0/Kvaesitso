@@ -1112,8 +1112,6 @@
     <string name="preference_form_of_address_masc">Мужчынскі</string>
     <string name="preference_measurement_system">Сістэма адзінак вымярэння</string>
     <string name="preference_measurement_system_metric">Метрычная</string>
-    <string name="preference_measurement_system_uk">Вялікабрытанская</string>
-    <string name="preference_measurement_system_us">Амерыканская</string>
     <string name="preference_transliteration">Прыярытэтная сістэма транслітарацыі</string>
     <string name="preference_transliteration_auto">Аўтаматчна</string>
     <string name="preference_calendar_system">Каляндарная сістэма</string>
