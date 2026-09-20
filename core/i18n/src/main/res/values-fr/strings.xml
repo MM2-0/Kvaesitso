@@ -1046,8 +1046,6 @@
     <string name="preference_form_of_address_masc">Masculin</string>
     <string name="preference_measurement_system">Système de mesure</string>
     <string name="preference_measurement_system_metric">Métrique</string>
-    <string name="preference_measurement_system_uk">Royaume-Uni</string>
-    <string name="preference_measurement_system_us">États-Unis</string>
     <string name="preference_transliteration">Translittération préférée</string>
     <string name="preference_transliteration_auto">Automatique</string>
     <string name="preference_calendar_system">Système calendaire</string>
