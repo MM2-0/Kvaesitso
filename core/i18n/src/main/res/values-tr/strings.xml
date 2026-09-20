@@ -1071,8 +1071,6 @@
     <string name="preference_form_of_address_masc">Erkek</string>
     <string name="preference_measurement_system">Ölçü sistemi</string>
     <string name="preference_measurement_system_metric">Metrik</string>
-    <string name="preference_measurement_system_uk">Birleşik Krallık</string>
-    <string name="preference_measurement_system_us">Amerika Birleşik Devletleri</string>
     <string name="preference_transliteration">Tercih edilen tercüme</string>
     <string name="preference_transliteration_auto">Otomatik</string>
     <string name="preference_calendar_system">Takvim sistemi</string>
