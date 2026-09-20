@@ -1043,8 +1043,6 @@
     <string name="preference_form_of_address_masc">Mannelijk</string>
     <string name="preference_measurement_system">Eenheden</string>
     <string name="preference_measurement_system_metric">Metrisch</string>
-    <string name="preference_measurement_system_uk">Verenigd Koninkrijk</string>
-    <string name="preference_measurement_system_us">Verenigde Staten</string>
     <string name="preference_transliteration">Voorkeurstransliteratie</string>
     <string name="preference_transliteration_auto">Automatisch</string>
     <string name="preference_calendar_system">Kalendersysteem</string>
