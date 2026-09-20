@@ -39,6 +39,7 @@
     <string name="action_clear">Kiürítés</string>
     <string name="action_install">Telepítés</string>
     <string name="action_quit">Kilépés</string>
+    <string name="action_fix">Javítás</string>
     <!-- Delete something (a file or a web search shortcut) -->
     <string name="menu_delete">Törlés</string>
     <string name="menu_remove">Eltávolítás</string>
@@ -410,6 +411,7 @@
     <string name="missing_permission_appshortcuts_search">Állítsa be a(z) %1$s alkalmazást alapértelmezett indítóként a telepített alkalmazások kereséséhez.</string>
     <!-- Missing permission app shortcuts permission, used when creating a shortcut in the edit favorites sheet -->
     <string name="missing_permission_appshortcuts_create">Állítsa be a(z) %1$s alkalmazást alapértelmezett indítóként a parancsikonok létrehozásához.</string>
+    <string name="missing_permission_local_network">A(z) %1$s jelenleg nem kereshet eszközöket a helyi hálózaton.</string>
     <!-- Grant a permission, shown in permission banners -->
     <string name="grant_permission">Engedélyezés</string>
     <!-- Appearance preference title -->
