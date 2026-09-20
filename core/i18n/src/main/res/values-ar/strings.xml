@@ -1047,8 +1047,6 @@
     <string name="preference_form_of_address_masc">مذكر</string>
     <string name="preference_measurement_system">وحدات القياس</string>
     <string name="preference_measurement_system_metric">كيلومتر وكيلوجرام</string>
-    <string name="preference_measurement_system_uk">النظام البريطاني</string>
-    <string name="preference_measurement_system_us">النظام الأمريكي</string>
     <string name="preference_transliteration">طريقة كتابة الأحرف</string>
     <string name="preference_transliteration_auto">تلقائي</string>
     <string name="preference_calendar_system">تقويم النظام الافتراضي</string>
