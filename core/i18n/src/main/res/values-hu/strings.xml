@@ -729,6 +729,7 @@
     <string name="favorites_empty_tag">Nincsenek elemek ilyen címkével</string>
     <string name="frequently_used_show_in_favorites">Megjelenítés a kedvencekben</string>
     <string name="frequently_used_rows">Sorok száma</string>
+    <string name="favorites_skip_rows">Sorok kihagyása</string>
     <string name="preference_screen_search_actions">Gyorsműveletek</string>
     <string name="preference_search_search_actions_summary">Gyorsműveletek és keresési parancsikonok beállítása</string>
     <string name="search_action_call">Hívás</string>
