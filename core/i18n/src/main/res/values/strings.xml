@@ -1105,8 +1105,9 @@
     <string name="preference_form_of_address_masc">Masculine</string>
     <string name="preference_measurement_system">Measurement system</string>
     <string name="preference_measurement_system_metric">Metric</string>
-    <string name="preference_measurement_system_uk">United Kingdom</string>
-    <string name="preference_measurement_system_us">United States</string>
+    <string name="preference_measurement_system_metric_scientific">Metric (scientific)</string>
+    <string name="preference_measurement_system_uk">UK Hybrid</string>
+    <string name="preference_measurement_system_us">US Customary</string>
     <string name="preference_transliteration">Preferred transliteration</string>
     <string name="preference_transliteration_auto">Automatic</string>
     <string name="preference_calendar_system">Calendar system</string>

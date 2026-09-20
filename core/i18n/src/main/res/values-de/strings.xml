@@ -873,8 +873,9 @@
     <string name="preference_form_of_address_masc">Maskulin</string>
     <string name="preference_measurement_system">Einheitensystem</string>
     <string name="preference_measurement_system_metric">Metrisch</string>
-    <string name="preference_measurement_system_uk">Vereinigtes Königreich</string>
-    <string name="preference_measurement_system_us">Vereinigte Staaten</string>
+    <string name="preference_measurement_system_metric_scientific">Metrisch (wissenschaftl.)</string>
+    <string name="preference_measurement_system_uk">UK Hybrid</string>
+    <string name="preference_measurement_system_us">US Customary</string>
     <string name="preference_transliteration">Bevorzugte Transliteration</string>
     <string name="preference_transliteration_auto">Automatisch</string>
     <string name="preference_value_disabled">Deaktiviert</string>

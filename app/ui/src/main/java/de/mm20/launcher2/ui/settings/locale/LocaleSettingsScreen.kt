@@ -193,19 +193,20 @@ fun LocaleSettingsScreen() {
                         stringResource(R.string.preference_clock_widget_time_format_24h) to TimeFormat.TwentyFourHour,
                     )
                 )
-                ListPreference(
+                Preference(
                     icon = R.drawable.measuring_tape_24px,
                     title = stringResource(R.string.preference_measurement_system),
-                    value = measurementSystem,
-                    onValueChanged = {
-                        if (it != null) viewModel.setMeasurementSystem(it)
+                    summary = when(measurementSystem) {
+                        MeasurementSystem.System -> stringResource(R.string.preference_value_system_default)
+                        MeasurementSystem.Metric -> stringResource(R.string.preference_measurement_system_metric)
+                        MeasurementSystem.MetricScientific -> stringResource(R.string.preference_measurement_system_metric_scientific)
+                        MeasurementSystem.UnitedKingdom -> stringResource(R.string.preference_measurement_system_uk)
+                        MeasurementSystem.UnitedStates -> stringResource(R.string.preference_measurement_system_us)
+                        null -> null
                     },
-                    items = listOf(
-                        stringResource(R.string.preference_value_system_default) to MeasurementSystem.System,
-                        stringResource(R.string.preference_measurement_system_metric) to MeasurementSystem.Metric,
-                        stringResource(R.string.preference_measurement_system_uk) to MeasurementSystem.UnitedKingdom,
-                        stringResource(R.string.preference_measurement_system_us) to MeasurementSystem.UnitedStates,
-                    )
+                    onClick = {
+                        backstack += MeasurementSystemSettingsRoute
+                    }
                 )
                 Preference(
                     title = stringResource(R.string.preference_calendar_system),

@@ -141,13 +141,15 @@ private fun formatMiles(
     }
 }
 
-internal fun formatSpeed(
+internal fun formatWindSpeed(
     context: Context,
     metersPerSecond: Float,
     measurementSystem: MeasurementSystem,
 ): String {
     if (measurementSystem == MeasurementSystem.UnitedStates || measurementSystem == MeasurementSystem.UnitedKingdom) {
         return formatMpH(context, metersPerSecond * 2.2369f)
+    } else if (measurementSystem == MeasurementSystem.MetricScientific) {
+        return formatMps(context, metersPerSecond)
     } else {
         return formatKmH(context, metersPerSecond * 3.6f)
     }
@@ -188,6 +190,25 @@ private fun formatMpH(
             maximumFractionDigits = 0
         }.format(mph)
         return "$formatted ${context.getString(R.string.unit_mile_per_hour_symbol)}"
+    }
+}
+
+private fun formatMps(
+    context: Context,
+    mps: Float,
+): String {
+    if (isAtLeastApiLevel(30)) {
+        return NumberFormatter
+            .withLocale(
+                Locale.getDefault()
+            ).unitWidth(NumberFormatter.UnitWidth.NARROW)
+            .precision(Precision.maxFraction(0))
+            .format(Measure(mps, MeasureUnit.METER_PER_SECOND)).toString()
+    } else {
+        val formatted = NumberFormat.getInstance().apply {
+            maximumFractionDigits = 0
+        }.format(mps)
+        return "$formatted ${context.getString(R.string.unit_meter_per_second_symbol)}"
     }
 }
 

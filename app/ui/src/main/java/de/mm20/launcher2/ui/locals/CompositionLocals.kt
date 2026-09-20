@@ -25,7 +25,17 @@ val LocalShowAppDetails = compositionLocalOf { false }
 
 val LocalGridSettings = compositionLocalOf { GridSettings() }
 
+
+/**
+ * The time format, either 12-hour or 24-hour.
+ * `System` is resolved based on the locale, so this value can never be `System
+ */
 val LocalTimeFormat = staticCompositionLocalOf { TimeFormat.TwentyFourHour }
+
+/**
+ * The measurement system to use.
+ * `System` is resolved based on the locale, so this value can never be `System`.
+ */
 val LocalMeasurementSystem = staticCompositionLocalOf { MeasurementSystem.Metric }
 val LocalCalendarSystems = staticCompositionLocalOf<List<Calendar?>> { listOf(null, null) }
 val LocalCalendarSystemIds = staticCompositionLocalOf<List<String?>> { listOf(null, null) }

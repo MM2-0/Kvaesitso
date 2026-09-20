@@ -95,7 +95,7 @@ import de.mm20.launcher2.ui.locals.LocalTimeFormat
 import de.mm20.launcher2.ui.theme.transparency.transparency
 import de.mm20.launcher2.ui.utils.formatPercent
 import de.mm20.launcher2.ui.utils.formatPrecipitation
-import de.mm20.launcher2.ui.utils.formatSpeed
+import de.mm20.launcher2.ui.utils.formatWindSpeed
 import de.mm20.launcher2.ui.utils.formatTemperature
 import de.mm20.launcher2.weather.DailyForecast
 import de.mm20.launcher2.weather.Forecast
@@ -488,7 +488,7 @@ private fun CurrentWeatherDetails(
                                 )
                             }
                         },
-                        formatSpeed(
+                        formatWindSpeed(
                             context,
                             forecast.windSpeed!!.toFloat(),
                             measurementSystem

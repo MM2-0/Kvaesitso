@@ -106,6 +106,8 @@ import de.mm20.launcher2.ui.settings.locale.CurrencySettingsRoute
 import de.mm20.launcher2.ui.settings.locale.CurrencySettingsScreen
 import de.mm20.launcher2.ui.settings.locale.LocaleSettingsRoute
 import de.mm20.launcher2.ui.settings.locale.LocaleSettingsScreen
+import de.mm20.launcher2.ui.settings.locale.MeasurementSystemSettingsRoute
+import de.mm20.launcher2.ui.settings.locale.MeasurementSystemSettingsScreen
 import de.mm20.launcher2.ui.settings.locations.LocationsSettingsRoute
 import de.mm20.launcher2.ui.settings.locations.LocationsSettingsScreen
 import de.mm20.launcher2.ui.settings.log.LogRoute
@@ -313,6 +315,9 @@ class SettingsActivity : BaseActivity() {
             }
             entry<CurrencySettingsRoute> {
                 CurrencySettingsScreen()
+            }
+            entry<MeasurementSystemSettingsRoute> {
+                MeasurementSystemSettingsScreen()
             }
             entry<BackupSettingsRoute> {
                 BackupSettingsScreen()
