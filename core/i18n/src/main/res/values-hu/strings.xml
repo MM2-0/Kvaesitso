@@ -1080,8 +1080,9 @@
     <string name="preference_form_of_address_masc">Férfinemű</string>
     <string name="preference_measurement_system">Mértékegységrendszer</string>
     <string name="preference_measurement_system_metric">Metrikus</string>
-    <string name="preference_measurement_system_uk">Egyesült Királyság</string>
-    <string name="preference_measurement_system_us">Egyesült Államok</string>
+    <string name="preference_measurement_system_metric_scientific">Metrikus (tudományos)</string>
+    <string name="preference_measurement_system_uk">Brit vegyes</string>
+    <string name="preference_measurement_system_us">Amerikai hagyományos</string>
     <string name="preference_transliteration">Előnyben részesített átírás</string>
     <string name="preference_transliteration_auto">Automatikus</string>
     <string name="preference_calendar_system">Naptárrendszer</string>
