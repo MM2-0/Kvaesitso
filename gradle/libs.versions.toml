@@ -5,7 +5,7 @@ jacksonDataformatYaml = "2.21.3"
 minSdk = "26"
 compileSdk = "37"
 compileSdkMinor = "1"
-targetSdk = "36"
+targetSdk = "37"
 
 pluginSdk = "2.3.0"
 
