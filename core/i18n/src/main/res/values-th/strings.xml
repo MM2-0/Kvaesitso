@@ -1078,8 +1078,6 @@
     <string name="preference_form_of_address_masc">เพศชาย</string>
     <string name="preference_measurement_system">ระบบการวัด</string>
     <string name="preference_measurement_system_metric">เมตริก</string>
-    <string name="preference_measurement_system_uk">สหราชอาณาจักร</string>
-    <string name="preference_measurement_system_us">สหรัฐอเมริกา</string>
     <string name="preference_transliteration">การทับศัพท์ที่ต้องการใช้</string>
     <string name="preference_transliteration_auto">อัตโนมัติ</string>
     <string name="preference_calendar_system">ระบบปฏิทิน</string>
