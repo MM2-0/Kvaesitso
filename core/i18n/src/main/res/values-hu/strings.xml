@@ -934,4 +934,5 @@
     <string name="search_query_private_space">Privát tér</string>
     <string name="search_action_private_space_lock">Privát tér zárolása</string>
     <string name="search_action_private_space_unlock">Privát tér feloldása</string>
+    <string name="favorites_skip_rows">Sorok kihagyása</string>
 </resources>
