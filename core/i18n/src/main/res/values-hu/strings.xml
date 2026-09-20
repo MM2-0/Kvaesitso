@@ -871,8 +871,8 @@
     <string name="preference_form_of_address">Megszólítás</string>
     <string name="preference_measurement_system">Mértékegységrendszer</string>
     <string name="preference_measurement_system_metric">Metrikus</string>
-    <string name="preference_measurement_system_uk">Egyesült Királyság</string>
-    <string name="preference_measurement_system_us">Egyesült Államok</string>
+    <string name="preference_measurement_system_uk">Brit vegyes</string>
+    <string name="preference_measurement_system_us">Amerikai hagyományos</string>
     <string name="preference_transliteration">Előnyben részesített átírás</string>
     <string name="preference_transliteration_auto">Automatikus</string>
     <string name="preference_value_disabled">Letiltva</string>
@@ -935,4 +935,5 @@
     <string name="search_action_private_space_lock">Privát tér zárolása</string>
     <string name="search_action_private_space_unlock">Privát tér feloldása</string>
     <string name="favorites_skip_rows">Sorok kihagyása</string>
+    <string name="preference_measurement_system_metric_scientific">Metrikus (tudományos)</string>
 </resources>
