@@ -1106,8 +1106,6 @@
     <string name="preference_form_of_address_masc">לשון זכר</string>
     <string name="preference_measurement_system">יחידות המידה</string>
     <string name="preference_measurement_system_metric">מטרית</string>
-    <string name="preference_measurement_system_uk">הממלכה המאוחדת</string>
-    <string name="preference_measurement_system_us">ארצות הברית</string>
     <string name="preference_transliteration">תעתיק מועדף</string>
     <string name="preference_transliteration_auto">תעתיק אוטומטי</string>
     <string name="preference_calendar_system">סוג לוח-השנה</string>
