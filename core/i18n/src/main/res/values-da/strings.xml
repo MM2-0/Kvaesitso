@@ -575,7 +575,6 @@
     <string name="preference_search_locations_radius">Søgeradius</string>
     <string name="preference_search_locations_summary">Søg i det lokale område efter butikker og andre steder</string>
     <string name="length_unit">Længdeenhed</string>
-    <string name="imperial"/>
     <string name="preference_search_locations_hide_uncategorized">Skjul ikke-kategoriserede steder</string>
     <string name="preference_search_locations_hide_uncategorized_summary">Vis kun resultater med veldefinerede kategorier, som caféer eller restauranter</string>
     <string name="clock_style_digital1">Fed</string>

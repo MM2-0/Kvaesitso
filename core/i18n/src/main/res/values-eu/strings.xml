@@ -299,7 +299,6 @@
     <string name="weather_condition_lightsnow">Elur arina</string>
     <string name="weather_condition_lightsnowshowers">Elur-zaparrada arinak</string>
     <string name="weather_condition_lightrainandthunder">Euri arina eta trumoiak</string>
-    <string name="weather_condition_heavysleetshowersandthunder"/>
     <string name="weather_condition_lightssleetshowersandthunder">Elurbusti-zaparrada arinak eta trumoiak</string>
     <string name="weather_condition_lightssnowshowersandthunder">Elur-zaparrada arinak eta trumoiak</string>
     <string name="weather_condition_lightsleet">Elurbusti arina</string>

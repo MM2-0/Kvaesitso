@@ -139,13 +139,10 @@
     <string name="music_widget_default_title">%1$s está a reproduzir</string>
     <string name="music_widget_no_data">Ainda nada foi reproduzido</string>
     <string name="weather_condition_lightrainshowersandthunder">Aguaceiros ligeiros e trovoada</string>
-    <string name="weather_condition_sleetshowers"/>
-    <string name="weather_condition_heavysleet"/>
     <string name="weather_condition_lightrain">Chuva ligeira</string>
     <string name="weather_condition_lightrainshowers">Aguaceiros ligeiros</string>
     <string name="weather_condition_lightsnow">Neve ligeira</string>
     <string name="weather_condition_snowandthunder">Neve e trovoada</string>
-    <string name="weather_condition_heavysleetshowersandthunder"/>
     <string name="weather_condition_heavysnow">Neve intensa</string>
     <string name="weather_condition_cloudy">Nublado</string>
     <string name="weather_condition_snow">Neve</string>
@@ -286,7 +283,6 @@
     <string name="preference_force_themed_icons">Impor ícones coloridos</string>
     <string name="preference_charging_animation_summary">Mostrar bolha quando o dispositivo está a ser carregado</string>
     <string name="missing_permission_calendar_widget">Requer acesso ao calendário para mostrar os eventos e os lembretes</string>
-    <string name="weather_condition_lightsnowshowers"/>
     <string name="location_open">Aberto</string>
     <string name="location_closed">Fechado</string>
     <string name="menu_map">Ver no mapa</string>

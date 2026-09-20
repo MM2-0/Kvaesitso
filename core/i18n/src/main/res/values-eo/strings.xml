@@ -10,7 +10,6 @@
     <string name="experimental_feature">Eksperimenta</string>
     <string name="date_today">Hodiaŭ</string>
     <string name="wind_west">Okcidento</string>
-    <string name="wind_north_east"/>
     <string name="wind_east">Oriento</string>
     <string name="wind_south">Sudo</string>
     <string name="help">Helpo</string>
@@ -35,6 +34,4 @@
     <string name="owncloud_password">Pasvorto</string>
     <string name="date_tomorrow">Morgaŭo</string>
     <string name="weather_condition_unknown">Nekonata</string>
-    <string name="preference_search_apps_show_details_summary"></string>
-    <string name="preference_search_files"></string>
 </resources>
