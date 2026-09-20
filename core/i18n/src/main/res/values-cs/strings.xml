@@ -1101,8 +1101,6 @@
     <string name="preference_form_of_address_masc">Mužské</string>
     <string name="preference_measurement_system">Měrná soustava</string>
     <string name="preference_measurement_system_metric">Metrická</string>
-    <string name="preference_measurement_system_uk">Spojené království</string>
-    <string name="preference_measurement_system_us">Spojené státy</string>
     <string name="preference_transliteration">Preferovaná transkripce</string>
     <string name="preference_transliteration_auto">Automatická</string>
     <string name="preference_calendar_system">Kalendářový systém</string>
