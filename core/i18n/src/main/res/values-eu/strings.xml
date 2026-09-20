@@ -1015,6 +1015,8 @@
     <string name="preference_form_of_address_masc">Maskulinoa</string>
     <string name="preference_measurement_system">Neurketa sistema</string>
     <string name="preference_measurement_system_metric">Metrikoa</string>
+    <string name="preference_measurement_system_uk">Erresuma Batua</string>
+    <string name="preference_measurement_system_us">Ameriketako Estatu Batuak</string>
     <string name="preference_transliteration">Hobetsitako transliterazioa</string>
     <string name="preference_transliteration_auto">Automatikoa</string>
     <string name="preference_currencies">Moneta</string>
