@@ -1066,6 +1066,8 @@
     <string name="preference_form_of_address_masc">地址格式</string>
     <string name="preference_measurement_system">度量衡系統</string>
     <string name="preference_measurement_system_metric">公制</string>
+    <string name="preference_measurement_system_uk">英制單位</string>
+    <string name="preference_measurement_system_us">美制單位</string>
     <string name="preference_transliteration">字母轉寫偏好</string>
     <string name="preference_transliteration_auto">自動</string>
     <string name="preference_calendar_system">曆制</string>
