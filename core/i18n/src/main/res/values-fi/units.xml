@@ -265,5 +265,4 @@
         <item quantity="one">kelvin</item>
         <item quantity="other">kelviniä</item>
     </plurals>
-    <string name="dimension_length"></string>
 </resources>
