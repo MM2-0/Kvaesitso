@@ -1,11 +1,12 @@
 package de.mm20.launcher2.database.migrations
 
-import androidx.room.migration.Migration
-import androidx.sqlite.db.SupportSQLiteDatabase
+import androidx.room3.migration.Migration
+import androidx.sqlite.SQLiteConnection
+import androidx.sqlite.execSQL
 
 internal class Migration_25_26 : Migration(25, 26) {
-    override fun migrate(database: SupportSQLiteDatabase) {
-        database.execSQL("""
+    override suspend fun migrate(connection: SQLiteConnection) {
+        connection.execSQL("""
             CREATE TABLE Plugins
             (
                 authority TEXT NOT NULL,

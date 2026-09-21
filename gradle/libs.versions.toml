@@ -30,7 +30,7 @@ androidx-navigation3 = "1.1.6"
 androidx-work = "2.11.2"
 androidx-browser = "1.10.0"
 androidx-palette = "1.0.0"
-androidx-room = "2.8.4"
+androidx-room = "3.1.0-alpha01"
 androidx-emojipicker = "1.6.0"
 
 haze = "1.7.2"
@@ -77,9 +77,9 @@ androidx-navigation3-ui = { group = "androidx.navigation3", name = "navigation3-
 
 androidx-activitycompose = { group = "androidx.activity", name = "activity-compose", version.ref = "androidx-activity" }
 
-androidx-room = { group = "androidx.room", name = "room-ktx", version.ref = "androidx-room" }
-androidx-roomruntime = { group = "androidx.room", name = "room-runtime", version.ref = "androidx-room" }
-androidx-roomcompiler = { group = "androidx.room", name = "room-compiler", version.ref = "androidx-room" }
+androidx-room-runtime = { group = "androidx.room3", name = "room3-runtime", version.ref = "androidx-room" }
+androidx-room-compiler = { group = "androidx.room3", name = "room3-compiler", version.ref = "androidx-room" }
+androidx-sqlite = { group = "androidx.sqlite", name = "sqlite", version = "2.8.0-alpha01" }
 
 androidx-core = { group = "androidx.core", name = "core-ktx", version.ref = "androidx-core" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidx-appcompat" }

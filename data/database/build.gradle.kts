@@ -53,9 +53,9 @@ dependencies {
     implementation(libs.kotlin.stdlib)
     implementation(libs.androidx.core)
     implementation(libs.androidx.appcompat)
-    api(libs.androidx.roomruntime)
-    ksp(libs.androidx.roomcompiler)
-    api(libs.androidx.room)
+    api(libs.androidx.room.runtime)
+    ksp(libs.androidx.room.compiler)
+    ksp(libs.androidx.sqlite)
     implementation(libs.koin.android)
 
     implementation(project(":core:i18n"))

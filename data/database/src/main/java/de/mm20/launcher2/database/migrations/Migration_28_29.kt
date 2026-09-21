@@ -1,12 +1,12 @@
 package de.mm20.launcher2.database.migrations
 
-import androidx.room.migration.Migration
+import androidx.room3.migration.Migration
 import androidx.sqlite.SQLiteConnection
 import androidx.sqlite.execSQL
 
 class Migration_28_29: Migration(28, 29) {
 
-    override fun migrate(connection: SQLiteConnection) {
+    override suspend fun migrate(connection: SQLiteConnection) {
         connection.execSQL(
             """
             CREATE TABLE IF NOT EXISTS `Transparencies` (

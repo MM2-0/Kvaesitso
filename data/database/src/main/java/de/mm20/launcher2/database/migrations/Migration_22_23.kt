@@ -1,15 +1,17 @@
 package de.mm20.launcher2.database.migrations
 
-import androidx.room.migration.Migration
-import androidx.sqlite.db.SupportSQLiteDatabase
+import androidx.room3.migration.Migration
+import androidx.sqlite.SQLiteConnection
+import androidx.sqlite.execSQL
+import de.mm20.launcher2.database.ktx.bindTextOrNull
 import de.mm20.launcher2.ktx.toBytes
 import org.koin.core.component.KoinComponent
 import java.util.UUID
 
 class Migration_22_23 : Migration(22, 23), KoinComponent {
-    override fun migrate(database: SupportSQLiteDatabase) {
-        database.execSQL("ALTER TABLE Widget RENAME TO Widget_old")
-        database.execSQL(
+    override suspend fun migrate(connection: SQLiteConnection) {
+        connection.execSQL("ALTER TABLE Widget RENAME TO Widget_old")
+        connection.execSQL(
             """
             CREATE TABLE IF NOT EXISTS `Widget` (
                 `type` TEXT NOT NULL,
@@ -22,10 +24,10 @@ class Migration_22_23 : Migration(22, 23), KoinComponent {
         """
         )
         val oldWidgets =
-            database.query("SELECT `type`, `data`, `height`, `position` FROM `Widget_old`")
-        while (oldWidgets.moveToNext()) {
-            val oldType = oldWidgets.getString(0)
-            val data = oldWidgets.getString(1)
+            connection.prepare("SELECT `type`, `data`, `height`, `position` FROM `Widget_old`")
+        while (oldWidgets.step()) {
+            val oldType = oldWidgets.getText(0)
+            val data = oldWidgets.getText(1)
             val newType = if (oldType == "3rdparty") "app" else data
             val height = oldWidgets.getInt(2)
             val position = oldWidgets.getInt(3)
@@ -33,12 +35,16 @@ class Migration_22_23 : Migration(22, 23), KoinComponent {
             val config = if (oldType == "3rdparty") {
                 "{\"widgetId\": $data, \"height\": $height}"
             } else null
-            database.execSQL(
-                "INSERT INTO `Widget` (`type`, `config`, `position`, `id`) VALUES (?, ?, ?, ?)",
-                arrayOf(newType, config, position, id.toBytes())
-            )
+
+            connection.prepare("INSERT INTO `Widget` (`type`, `config`, `position`, `id`) VALUES (?, ?, ?, ?)").use {
+                it.bindText(1, newType)
+                it.bindTextOrNull(2, config)
+                it.bindInt(3, position)
+                it.bindBlob(4, id.toBytes())
+                it.step()
+            }
         }
         oldWidgets.close()
-        database.execSQL("DROP TABLE Widget_old")
+        connection.execSQL("DROP TABLE Widget_old")
     }
 }

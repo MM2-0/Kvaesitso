@@ -1,7 +1,7 @@
 package de.mm20.launcher2.searchable
 
 import android.util.Log
-import androidx.room.withTransaction
+import androidx.room3.withWriteTransaction
 import de.mm20.launcher2.backup.Backupable
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.database.AppDatabase
@@ -358,7 +358,7 @@ internal class SavableSearchableRepositoryImpl(
     ) {
         val dao = database.searchableDao()
         scope.launch {
-            database.withTransaction {
+            database.withWriteTransaction {
                 dao.unpinAll()
                 dao.upsert(
                     manuallySorted.mapIndexedNotNull { index, savableSearchable ->

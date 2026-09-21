@@ -1,12 +1,13 @@
 package de.mm20.launcher2.database.migrations
 
-import androidx.room.migration.Migration
-import androidx.sqlite.db.SupportSQLiteDatabase
+import androidx.room3.migration.Migration
+import androidx.sqlite.SQLiteConnection
+import androidx.sqlite.execSQL
 
 class Migration_23_24 : Migration(23, 24) {
-    override fun migrate(database: SupportSQLiteDatabase) {
-        database.execSQL("ALTER TABLE Searchable RENAME TO Searchable_old")
-        database.execSQL(
+    override suspend fun migrate(connection: SQLiteConnection) {
+        connection.execSQL("ALTER TABLE Searchable RENAME TO Searchable_old")
+        connection.execSQL(
             """
             CREATE TABLE IF NOT EXISTS `Searchable` (
                 `key` TEXT NOT NULL,
@@ -20,12 +21,12 @@ class Migration_23_24 : Migration(23, 24) {
             )
         """
         )
-        database.execSQL(
+        connection.execSQL(
             """
             INSERT INTO `Searchable` (`key`, `type`, `searchable`, `launchCount`, `pinPosition`, `hidden`, `weight`)
             SELECT `key`, `type`, `searchable`, `launchCount`, `pinned`, `hidden`, `weight` FROM `Searchable_old`
             """
         )
-        database.execSQL("DROP TABLE Searchable_old")
+        connection.execSQL("DROP TABLE Searchable_old")
     }
 }

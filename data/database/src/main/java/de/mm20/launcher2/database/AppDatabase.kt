@@ -3,11 +3,13 @@
 package de.mm20.launcher2.database
 
 import android.content.Context
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
-import androidx.room.TypeConverters
-import androidx.sqlite.db.SupportSQLiteDatabase
+import androidx.room3.ColumnTypeConverters
+import androidx.room3.Database
+import androidx.room3.Room
+import androidx.room3.RoomDatabase
+import androidx.sqlite.SQLiteConnection
+import androidx.sqlite.driver.AndroidSQLiteDriver
+import androidx.sqlite.execSQL
 import de.mm20.launcher2.database.daos.PluginDao
 import de.mm20.launcher2.database.daos.ThemeDao
 import de.mm20.launcher2.database.entities.ColorsEntity
@@ -72,7 +74,7 @@ import java.util.UUID
         TypographyEntity::class,
     ], version = 34, exportSchema = true
 )
-@TypeConverters(ComponentNameConverter::class)
+@ColumnTypeConverters(ComponentNameConverter::class)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun weatherDao(): WeatherDao
@@ -97,9 +99,9 @@ abstract class AppDatabase : RoomDatabase() {
                 ?: Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, "room")
                     //.fallbackToDestructiveMigration()
                     .addCallback(object : Callback() {
-                        override fun onCreate(db: SupportSQLiteDatabase) {
-                            super.onCreate(db)
-                            db.execSQL(
+                        override suspend fun onCreate(connection: SQLiteConnection) {
+                            super.onCreate(connection)
+                            connection.execSQL(
                                 "INSERT INTO `SearchAction` (`position`, `type`) VALUES" +
                                         "(0, 'call')," +
                                         "(1, 'message')," +
@@ -112,44 +114,48 @@ abstract class AppDatabase : RoomDatabase() {
                                         "(8, 'websearch')"
                             )
 
-                            db.execSQL(
+                            connection.prepare(
                                 "INSERT INTO `SearchAction` (`position`, `type`, `data`, `label`, `color`, `icon`, `customIcon`, `options`) " +
-                                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?), (?, ?, ?, ?, ?, ?, ?, ?)",
-                                arrayOf<Any?>(
-                                    9,
-                                    "url",
-                                    context.getString(R.string.default_websearch_2_url),
-                                    context.getString(R.string.default_websearch_2_name),
-                                    0,
-                                    0,
-                                    null,
-                                    null,
-                                    10,
-                                    "url",
-                                    context.getString(R.string.default_websearch_3_url),
-                                    context.getString(R.string.default_websearch_3_name),
-                                    0,
-                                    0,
-                                    null,
-                                    null,
+                                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?), (?, ?, ?, ?, ?, ?, ?, ?)"
+                            ).use {
+                                it.bindInt(1, 9)
+                                it.bindText(2, "url")
+                                it.bindText(3, context.getString(R.string.default_websearch_2_url))
+                                it.bindText(4, context.getString(R.string.default_websearch_2_name))
+                                it.bindInt(5, 0)
+                                it.bindInt(6, 0)
+                                it.bindNull(7)
+                                it.bindNull(8)
+                                it.bindInt(9, 10)
+                                it.bindText(10, "url")
+                                it.bindText(11, context.getString(R.string.default_websearch_3_url))
+                                it.bindText(
+                                    12,
+                                    context.getString(R.string.default_websearch_3_name)
                                 )
-                            )
+                                it.bindInt(13, 0)
+                                it.bindInt(14, 0)
+                                it.bindNull(15)
+                                it.bindNull(16)
+                                it.step()
+                            }
 
                             val defaultParentId = WidgetScreenTarget.Default.id
-                            db.execSQL(
+
+                            connection.prepare(
                                 "INSERT INTO Widget (`type`, `position`, `id`, `parentId`) VALUES " +
                                         "('weather', 0, ?, ?)," +
                                         "('music', 1, ?, ?)," +
-                                        "('calendar', 2, ?, ?);",
-                                arrayOf(
-                                    UUID.randomUUID().toBytes(),
-                                    defaultParentId.toBytes(),
-                                    UUID.randomUUID().toBytes(),
-                                    defaultParentId.toBytes(),
-                                    UUID.randomUUID().toBytes(),
-                                    defaultParentId.toBytes()
-                                )
-                            )
+                                        "('calendar', 2, ?, ?);"
+                            ).use {
+                                it.bindBlob(1, UUID.randomUUID().toBytes())
+                                it.bindBlob(2, defaultParentId.toBytes())
+                                it.bindBlob(3, UUID.randomUUID().toBytes())
+                                it.bindBlob(4, defaultParentId.toBytes())
+                                it.bindBlob(5, UUID.randomUUID().toBytes())
+                                it.bindBlob(6, defaultParentId.toBytes())
+                                it.step()
+                            }
                         }
                     })
                     .addMigrations(
@@ -181,7 +187,9 @@ abstract class AppDatabase : RoomDatabase() {
                         Migration_31_32(),
                         Migration_32_33(),
                         Migration_33_34(),
-                    ).build()
+                    )
+                    .setDriver(AndroidSQLiteDriver())
+                    .build()
             if (_instance == null) _instance = instance
             return instance
         }

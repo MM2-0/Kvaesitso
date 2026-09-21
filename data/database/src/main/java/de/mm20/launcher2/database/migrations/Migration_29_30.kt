@@ -1,12 +1,12 @@
 package de.mm20.launcher2.database.migrations
 
-import androidx.room.migration.Migration
+import androidx.room3.migration.Migration
 import androidx.sqlite.SQLiteConnection
 import androidx.sqlite.execSQL
 
 class Migration_29_30 : Migration(29, 30) {
 
-    override fun migrate(connection: SQLiteConnection) {
+    override suspend fun migrate(connection: SQLiteConnection) {
         connection.execSQL(
             """
             CREATE TABLE IF NOT EXISTS `Typography` (

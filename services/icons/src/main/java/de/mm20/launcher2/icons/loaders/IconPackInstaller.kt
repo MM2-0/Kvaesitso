@@ -1,8 +1,7 @@
 package de.mm20.launcher2.icons.loaders
 
-import androidx.room.withTransaction
+import androidx.room3.withWriteTransaction
 import de.mm20.launcher2.database.AppDatabase
-import de.mm20.launcher2.icons.BuildConfig
 import de.mm20.launcher2.icons.IconPack
 import de.mm20.launcher2.icons.IconPackComponent
 
@@ -12,7 +11,7 @@ abstract class IconPackInstaller(
     suspend fun install(iconPack: IconPack) {
         var pack = iconPack
         val dao = database.iconDao()
-        database.withTransaction {
+        database.withWriteTransaction {
             dao.deleteIconPack(iconPack.toDatabaseEntity())
             dao.deleteIcons(iconPack.packageName)
             val icons = mutableListOf<IconPackComponent>()

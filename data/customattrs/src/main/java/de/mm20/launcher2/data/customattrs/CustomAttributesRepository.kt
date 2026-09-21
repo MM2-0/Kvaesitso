@@ -1,5 +1,6 @@
 package de.mm20.launcher2.data.customattrs
 
+import androidx.room3.withWriteTransaction
 import de.mm20.launcher2.backup.Backupable
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.database.AppDatabase
@@ -91,7 +92,7 @@ internal class CustomAttributesRepositoryImpl(
         val dao = appDatabase.customAttrsDao()
         scope.launch {
             searchableRepository.insert(searchable)
-            appDatabase.runInTransaction {
+            appDatabase.withWriteTransaction {
                 dao.clearCustomAttribute(searchable.key, CustomAttributeType.Label.value)
                 dao.setCustomAttribute(
                     CustomLabel(

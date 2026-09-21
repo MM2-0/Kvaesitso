@@ -17,7 +17,7 @@ import android.graphics.drawable.LayerDrawable
 import android.util.Log
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
-import androidx.room.withTransaction
+import androidx.room3.withWriteTransaction
 import de.mm20.launcher2.database.AppDatabase
 import de.mm20.launcher2.icons.compat.AdaptiveIconDrawableCompat
 import de.mm20.launcher2.icons.compat.toLauncherIcon
@@ -79,7 +79,7 @@ class IconPackManager(
 
     private suspend fun uninstallAllIconPacksExcept(keep: List<IconPack>) {
         val dao = appDatabase.iconDao()
-        appDatabase.withTransaction {
+        appDatabase.withWriteTransaction {
             dao.deleteIconsNotIn(keep.map { it.packageName })
             dao.deleteIconPacksNotIn(keep.map { it.packageName })
         }

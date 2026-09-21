@@ -1,8 +1,8 @@
 package de.mm20.launcher2.database.entities
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import androidx.room3.ColumnInfo
+import androidx.room3.Entity
+import androidx.room3.PrimaryKey
 
 @Entity(tableName = ForecastEntity.TABLE_NAME)
 data class ForecastEntity(

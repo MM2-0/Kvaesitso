@@ -1,6 +1,6 @@
 package de.mm20.launcher2.database
 
-import androidx.room.*
+import androidx.room3.*
 import de.mm20.launcher2.database.entities.IconEntity
 import de.mm20.launcher2.database.entities.IconPackEntity
 import kotlinx.coroutines.flow.Flow

@@ -1,6 +1,6 @@
 package de.mm20.launcher2.widgets
 
-import androidx.room.withTransaction
+import androidx.room3.withWriteTransaction
 import de.mm20.launcher2.backup.Backupable
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.database.AppDatabase
@@ -66,7 +66,7 @@ internal class WidgetRepositoryImpl(
     override fun set(widgets: List<Widget>, parentId: UUID?) {
         val dao = database.widgetDao()
         scope.launch {
-            database.withTransaction {
+            database.withWriteTransaction {
                 if (parentId == null) {
                     dao.deleteRoot()
                 } else {
