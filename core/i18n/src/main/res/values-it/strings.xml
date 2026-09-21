@@ -39,6 +39,7 @@
     <string name="action_clear">Cancella contenuto campo di testo</string>
     <string name="action_install">Installa</string>
     <string name="action_quit">Abbandona</string>
+    <string name="action_fix">Fisso</string>
     <!-- Delete something (a file or a web search shortcut) -->
     <string name="menu_delete">Elimina</string>
     <string name="menu_remove">Rimuovi</string>
@@ -407,6 +408,7 @@
     <string name="missing_permission_appshortcuts_search">Imposta %1$s come app Home predefinita per cercare le scorciatoie delle app.</string>
     <!-- Missing permission app shortcuts permission, used when creating a shortcut in the edit favorites sheet -->
     <string name="missing_permission_appshortcuts_create">Imposta %1$s come app home predefinita per creare scorciatoie.</string>
+    <string name="missing_permission_local_network">%1$s al momento non è autorizzato a trovare dispositivi sulla rete locale.</string>
     <!-- Grant a permission, shown in permission banners -->
     <string name="grant_permission">Concedi</string>
     <!-- Appearance preference title -->
@@ -1067,6 +1069,9 @@
     <string name="preference_form_of_address_masc">Maschile</string>
     <string name="preference_measurement_system">Sistema di misurazione</string>
     <string name="preference_measurement_system_metric">Metrico</string>
+    <string name="preference_measurement_system_metric_scientific">Metrico (scientifico)</string>
+    <string name="preference_measurement_system_uk">Ibrido Regno Unito</string>
+    <string name="preference_measurement_system_us">Consuetudine Stati Uniti</string>
     <string name="preference_transliteration">Traslitterazione preferita</string>
     <string name="preference_transliteration_auto">Automatica</string>
     <string name="preference_calendar_system">Il sistema di calendario preferito (ad esempio calendario gregoriano, calendario ebraico, calendario persiano)</string>
