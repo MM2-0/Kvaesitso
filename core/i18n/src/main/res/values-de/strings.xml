@@ -938,4 +938,6 @@
     <string name="search_action_private_space_lock">Vertrauliches Profil sperren</string>
     <string name="search_action_private_space_unlock">Vertrauliches Profil entsperren</string>
     <string name="favorites_skip_rows">Zeilen überspringen</string>
+    <string name="action_fix">Beheben</string>
+    <string name="missing_permission_local_network">%1$s darf aktuell keine Geräte im lokalen Netzwerk finden.</string>
 </resources>
