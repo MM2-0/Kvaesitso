@@ -882,10 +882,10 @@
     <string name="preference_form_of_address_fem">Femminile</string>
     <string name="preference_form_of_address_masc">Maschile</string>
     <string name="preference_form_of_address">Appellativo</string>
-    <string name="preference_measurement_system_us">Stati Uniti</string>
+    <string name="preference_measurement_system_us">Consuetudine Stati Uniti</string>
     <string name="preference_measurement_system">Sistema di misurazione</string>
     <string name="preference_measurement_system_metric">Metrico</string>
-    <string name="preference_measurement_system_uk">Regno Unito</string>
+    <string name="preference_measurement_system_uk">Ibrido Regno Unito</string>
     <string name="preference_transliteration">Traslitterazione preferita</string>
     <string name="preference_transliteration_auto">Automatica</string>
     <string name="preference_value_disabled">Disabilitata</string>
@@ -948,4 +948,7 @@
     <string name="search_action_private_space_lock">Blocca spazio privato</string>
     <string name="search_action_private_space_unlock">Sblocca spazio privato</string>
     <string name="favorites_skip_rows">Salta righe</string>
+    <string name="missing_permission_local_network">%1$s al momento non è autorizzato a trovare dispositivi sulla rete locale.</string>
+    <string name="preference_measurement_system_metric_scientific">Metrico (scientifico)</string>
+    <string name="action_fix">Fisso</string>
 </resources>
