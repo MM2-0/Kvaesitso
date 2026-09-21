@@ -263,12 +263,12 @@
     <string name="preference_blur_wallpaper_summary">Vervaag de achtergrond</string>
     <string name="preference_blur_wallpaper_unsupported">Niet ondersteund op dit apparaat</string>
     <string name="preference_wallpaper_summary">Kies een achtergrond</string>
-    <string name="preference_category_badges">Eretekens</string>
+    <string name="preference_category_badges">Badges</string>
     <string name="preference_notification_badges">Meldingsstipjes</string>
     <string name="preference_notification_badges_summary">Toon een badge voor applicaties met ongelezen meldingen</string>
     <string name="preference_suspended_badges_summary">Toon een badge voor uitgesloten applicaties</string>
     <string name="preference_suspended_badges">Uitgesloten applicaties</string>
-    <string name="preference_cloud_badges">Cloud eretekens</string>
+    <string name="preference_cloud_badges">Cloudbadges</string>
     <string name="preference_cloud_badges_summary">Toon een badge voor bestanden in de cloud</string>
     <string name="preference_shortcut_badges">Snelkoppelingbadges</string>
     <string name="preference_shortcut_badges_summary">Toon een badge om te tonen tot welke applicatie een snelkoppeling behoort</string>
@@ -873,8 +873,8 @@
     <string name="preference_form_of_address_masc">Mannelijk</string>
     <string name="preference_measurement_system">Eenheden</string>
     <string name="preference_measurement_system_metric">Metrisch</string>
-    <string name="preference_measurement_system_uk">Verenigd Koninkrijk</string>
-    <string name="preference_measurement_system_us">Verenigde Staten</string>
+    <string name="preference_measurement_system_uk">VK Hybride</string>
+    <string name="preference_measurement_system_us">US Gebruikelijk</string>
     <string name="preference_value_disabled">Uitgeschakeld</string>
     <string name="preference_transliteration">Voorkeurstransliteratie</string>
     <string name="preference_transliteration_auto">Automatisch</string>
@@ -937,4 +937,7 @@
     <string name="search_action_private_space_lock">Privégedeelte sluiten</string>
     <string name="search_action_private_space_unlock">Privégedeelte openen</string>
     <string name="favorites_skip_rows">Rijen overslaan</string>
+    <string name="action_fix">Herstellen</string>
+    <string name="missing_permission_local_network">%1$s heeft momenteel geen toestemming om apparaten op het lokale netwerk te zoeken.</string>
+    <string name="preference_measurement_system_metric_scientific">Metrisch (wetenschappelijk)</string>
 </resources>
