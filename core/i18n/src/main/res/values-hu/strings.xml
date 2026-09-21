@@ -744,7 +744,7 @@
     <string name="search_action_contact">Hozzáadás a névjegyekhez</string>
     <string name="search_action_open_url">Weboldal meglátogatása</string>
     <string name="search_action_event">Esemény ütemezése</string>
-    <string name="search_query_private_space">Privát tér</string>
+    <string name="search_query_private_space">Privát terület</string>
     <string name="search_action_private_space_lock">Privát tér zárolása</string>
     <string name="search_action_private_space_unlock">Privát tér feloldása</string>
     <string name="create_search_action_title">Új gyorsművelet</string>
