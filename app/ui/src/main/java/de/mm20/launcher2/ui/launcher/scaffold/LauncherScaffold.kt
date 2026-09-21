@@ -32,6 +32,7 @@ import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.displayCutout
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.imeAnimationSource
 import androidx.compose.foundation.layout.imeAnimationTarget
@@ -337,7 +338,6 @@ internal class LauncherScaffoldState(
     val darkStatusBarIcons by derivedStateOf {
         val isLightBackground = config.backgroundColor.luminance() > 0.5f
         when {
-            statusBarScrim -> isLightBackground
             currentProgress < 0.5f && !config.homeComponent.drawBackground -> {
                 config.darkStatusBarIcons
             }
@@ -354,7 +354,6 @@ internal class LauncherScaffoldState(
     val darkNavBarIcons by derivedStateOf {
         val isLightBackground = config.backgroundColor.luminance() > 0.5f
         when {
-            navBarScrim -> isLightBackground
             currentProgress < 0.5f && !config.homeComponent.drawBackground -> {
                 config.darkNavBarIcons
             }
@@ -1145,7 +1144,22 @@ internal fun LauncherScaffold(
 
         if (config.wallpaperBlurRadius > 0.dp) {
             val maxRadius = config.wallpaperBlurRadius.toPixels()
-            WallpaperBlur { (maxRadius * state.currentProgress).toInt() }
+            val isScrolledAwayFromTop by remember {
+                derivedStateOf {
+                    state.currentProgress < 0.5f && config.homeComponent.isAtTop.value == false
+                }
+            }
+            val homeScrollBlur by animateIntAsState(
+                if (isScrolledAwayFromTop) maxRadius.toInt() else 0,
+                label = "homeScrollWallpaperBlur"
+            )
+            WallpaperBlur {
+                if (isScrolledAwayFromTop || state.currentProgress < 0.5f && homeScrollBlur > 0) {
+                    homeScrollBlur
+                } else {
+                    (maxRadius * state.currentProgress).toInt()
+                }
+            }
         }
 
         if (!config.finishOnBack || state.currentProgress > 0) {
@@ -1417,6 +1431,9 @@ internal fun LauncherScaffold(
         }
 
 
+        val statusBarHeight = WindowInsets.statusBars.asPaddingValues().calculateTopPadding()
+        val navBarHeight = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
+
         AnimatedVisibility(
             state.statusBarScrim,
             enter = fadeIn(),
@@ -1428,14 +1445,10 @@ internal fun LauncherScaffold(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .height(statusBarHeight)
                     .hazeEffect(hazeState) {
                         blurRadius = 4.dp
-                        backgroundColor = config.backgroundColor
                     }
-                    .background(
-                        MaterialTheme.colorScheme.surfaceContainer.copy(alpha = MaterialTheme.transparency.background)
-                    )
-                    .statusBarsPadding()
             )
         }
         AnimatedVisibility(
@@ -1449,14 +1462,10 @@ internal fun LauncherScaffold(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .height(navBarHeight)
                     .hazeEffect(hazeState) {
                         blurRadius = 4.dp
-                        backgroundColor = config.backgroundColor
                     }
-                    .background(
-                        MaterialTheme.colorScheme.surfaceContainer.copy(alpha = MaterialTheme.transparency.background)
-                    )
-                    .navigationBarsPadding()
             )
         }
     }
