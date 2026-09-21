@@ -2,6 +2,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.android.library)
+    alias(libs.plugins.androidx.room3)
     alias(libs.plugins.ksp)
     alias(libs.plugins.kotlin.plugin.serialization)
 }
@@ -18,12 +19,6 @@ android {
         
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
-
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments["room.schemaLocation"] = "$projectDir/schemas"
-            }
-        }
     }
 
     buildTypes {
@@ -48,13 +43,18 @@ android {
     namespace = "de.mm20.launcher2.database"
 }
 
+room3 {
+    schemaDirectory("$projectDir/schemas")
+}
+
+
 dependencies {
 
     implementation(libs.kotlin.stdlib)
     implementation(libs.androidx.core)
     implementation(libs.androidx.appcompat)
-    api(libs.androidx.room.runtime)
-    ksp(libs.androidx.room.compiler)
+    api(libs.androidx.room3.runtime)
+    ksp(libs.androidx.room3.compiler)
     ksp(libs.androidx.sqlite)
     implementation(libs.koin.android)
 

@@ -30,7 +30,7 @@ androidx-navigation3 = "1.1.6"
 androidx-work = "2.11.2"
 androidx-browser = "1.10.0"
 androidx-palette = "1.0.0"
-androidx-room = "3.1.0-alpha01"
+androidx-room3 = "3.1.0-alpha01"
 androidx-emojipicker = "1.6.0"
 
 haze = "1.7.2"
@@ -77,8 +77,8 @@ androidx-navigation3-ui = { group = "androidx.navigation3", name = "navigation3-
 
 androidx-activitycompose = { group = "androidx.activity", name = "activity-compose", version.ref = "androidx-activity" }
 
-androidx-room-runtime = { group = "androidx.room3", name = "room3-runtime", version.ref = "androidx-room" }
-androidx-room-compiler = { group = "androidx.room3", name = "room3-compiler", version.ref = "androidx-room" }
+androidx-room3-runtime = { group = "androidx.room3", name = "room3-runtime", version.ref = "androidx-room3" }
+androidx-room3-compiler = { group = "androidx.room3", name = "room3-compiler", version.ref = "androidx-room3" }
 androidx-sqlite = { group = "androidx.sqlite", name = "sqlite", version = "2.8.0-alpha01" }
 
 androidx-core = { group = "androidx.core", name = "core-ktx", version.ref = "androidx-core" }
@@ -133,6 +133,7 @@ tests = ["junit"]
 [plugins]
 android-application = { id = "com.android.application", version.ref = "android-gradle-plugin" }
 android-library = { id = "com.android.library", version.ref = "android-gradle-plugin" }
+androidx-room3 = { id = "androidx.room3", version.ref = "androidx-room3" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp-gradle-plugin" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-plugin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }

@@ -1,0 +1,1230 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 34,
+    "identityHash": "d4921a8b36c966c2e891c43d8578dbc3",
+    "entities": [
+      {
+        "tableName": "forecasts",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`timestamp` INTEGER NOT NULL, `temperature` REAL NOT NULL, `minTemp` REAL NOT NULL, `maxTemp` REAL NOT NULL, `pressure` REAL NOT NULL, `humidity` REAL NOT NULL, `icon` INTEGER NOT NULL, `condition` TEXT NOT NULL, `clouds` INTEGER NOT NULL, `windSpeed` REAL NOT NULL, `windDirection` REAL NOT NULL, `rain` REAL NOT NULL, `snow` REAL NOT NULL, `night` INTEGER NOT NULL, `location` TEXT NOT NULL, `provider` TEXT NOT NULL, `providerUrl` TEXT NOT NULL, `rainProbability` INTEGER NOT NULL, `snowProbability` INTEGER NOT NULL, `uvIndex` REAL NOT NULL, `updateTime` INTEGER NOT NULL, PRIMARY KEY(`timestamp`))",
+        "fields": [
+          {
+            "fieldPath": "timestamp",
+            "columnName": "timestamp",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "temperature",
+            "columnName": "temperature",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "minTemp",
+            "columnName": "minTemp",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "maxTemp",
+            "columnName": "maxTemp",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "pressure",
+            "columnName": "pressure",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "humidity",
+            "columnName": "humidity",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "icon",
+            "columnName": "icon",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "condition",
+            "columnName": "condition",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "clouds",
+            "columnName": "clouds",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "windSpeed",
+            "columnName": "windSpeed",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "windDirection",
+            "columnName": "windDirection",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "precipitation",
+            "columnName": "rain",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "snow",
+            "columnName": "snow",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "night",
+            "columnName": "night",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "location",
+            "columnName": "location",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "provider",
+            "columnName": "provider",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "providerUrl",
+            "columnName": "providerUrl",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "precipProbability",
+            "columnName": "rainProbability",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "snowProbability",
+            "columnName": "snowProbability",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "uvIndex",
+            "columnName": "uvIndex",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "updateTime",
+            "columnName": "updateTime",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "timestamp"
+          ]
+        }
+      },
+      {
+        "tableName": "Searchable",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`key` TEXT NOT NULL, `type` TEXT NOT NULL, `searchable` TEXT NOT NULL, `launchCount` INTEGER NOT NULL DEFAULT 0, `pinPosition` INTEGER NOT NULL DEFAULT 0, `hidden` INTEGER NOT NULL DEFAULT 0, `weight` REAL NOT NULL DEFAULT 0.0, PRIMARY KEY(`key`))",
+        "fields": [
+          {
+            "fieldPath": "key",
+            "columnName": "key",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "type",
+            "columnName": "type",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "serializedSearchable",
+            "columnName": "searchable",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "launchCount",
+            "columnName": "launchCount",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "pinPosition",
+            "columnName": "pinPosition",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "visibility",
+            "columnName": "hidden",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "weight",
+            "columnName": "weight",
+            "affinity": "REAL",
+            "notNull": true,
+            "defaultValue": "0.0"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "key"
+          ]
+        }
+      },
+      {
+        "tableName": "Currency",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`symbol` TEXT NOT NULL, `value` REAL NOT NULL, `lastUpdate` INTEGER NOT NULL, PRIMARY KEY(`symbol`))",
+        "fields": [
+          {
+            "fieldPath": "symbol",
+            "columnName": "symbol",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "value",
+            "columnName": "value",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lastUpdate",
+            "columnName": "lastUpdate",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "symbol"
+          ]
+        }
+      },
+      {
+        "tableName": "Icons",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`type` TEXT NOT NULL, `packageName` TEXT, `activityName` TEXT, `drawable` TEXT, `extras` TEXT, `iconPack` TEXT NOT NULL, `name` TEXT, `themed` INTEGER NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT)",
+        "fields": [
+          {
+            "fieldPath": "type",
+            "columnName": "type",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "packageName",
+            "columnName": "packageName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "activityName",
+            "columnName": "activityName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "drawable",
+            "columnName": "drawable",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "extras",
+            "columnName": "extras",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "iconPack",
+            "columnName": "iconPack",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "themed",
+            "columnName": "themed",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "IconPack",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `packageName` TEXT NOT NULL, `version` TEXT NOT NULL, `scale` REAL NOT NULL, `themed` INTEGER NOT NULL, PRIMARY KEY(`packageName`))",
+        "fields": [
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "packageName",
+            "columnName": "packageName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "version",
+            "columnName": "version",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "scale",
+            "columnName": "scale",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "themed",
+            "columnName": "themed",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "packageName"
+          ]
+        }
+      },
+      {
+        "tableName": "Widget",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`type` TEXT NOT NULL, `config` TEXT, `position` INTEGER NOT NULL, `id` BLOB NOT NULL, `parentId` BLOB, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "type",
+            "columnName": "type",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "config",
+            "columnName": "config",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "position",
+            "columnName": "position",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "BLOB",
+            "notNull": true
+          },
+          {
+            "fieldPath": "parentId",
+            "columnName": "parentId",
+            "affinity": "BLOB"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "CustomAttributes",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`key` TEXT NOT NULL, `type` TEXT NOT NULL, `value` TEXT NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT)",
+        "fields": [
+          {
+            "fieldPath": "key",
+            "columnName": "key",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "type",
+            "columnName": "type",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "value",
+            "columnName": "value",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "SearchAction",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`position` INTEGER NOT NULL, `type` TEXT NOT NULL, `data` TEXT, `label` TEXT, `icon` INTEGER, `color` INTEGER, `customIcon` TEXT, `options` TEXT, PRIMARY KEY(`position`))",
+        "fields": [
+          {
+            "fieldPath": "position",
+            "columnName": "position",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "type",
+            "columnName": "type",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "data",
+            "columnName": "data",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "label",
+            "columnName": "label",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "icon",
+            "columnName": "icon",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "color",
+            "columnName": "color",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "customIcon",
+            "columnName": "customIcon",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "options",
+            "columnName": "options",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "position"
+          ]
+        }
+      },
+      {
+        "tableName": "Theme",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` BLOB NOT NULL, `name` TEXT NOT NULL, `corePaletteA1` INTEGER, `corePaletteA2` INTEGER, `corePaletteA3` INTEGER, `corePaletteN1` INTEGER, `corePaletteN2` INTEGER, `corePaletteE` INTEGER, `lightPrimary` TEXT, `lightOnPrimary` TEXT, `lightPrimaryContainer` TEXT, `lightOnPrimaryContainer` TEXT, `lightSecondary` TEXT, `lightOnSecondary` TEXT, `lightSecondaryContainer` TEXT, `lightOnSecondaryContainer` TEXT, `lightTertiary` TEXT, `lightOnTertiary` TEXT, `lightTertiaryContainer` TEXT, `lightOnTertiaryContainer` TEXT, `lightError` TEXT, `lightOnError` TEXT, `lightErrorContainer` TEXT, `lightOnErrorContainer` TEXT, `lightSurface` TEXT, `lightOnSurface` TEXT, `lightOnSurfaceVariant` TEXT, `lightOutline` TEXT, `lightOutlineVariant` TEXT, `lightInverseSurface` TEXT, `lightInverseOnSurface` TEXT, `lightInversePrimary` TEXT, `lightSurfaceDim` TEXT, `lightSurfaceBright` TEXT, `lightSurfaceContainerLowest` TEXT, `lightSurfaceContainerLow` TEXT, `lightSurfaceContainer` TEXT, `lightSurfaceContainerHigh` TEXT, `lightSurfaceContainerHighest` TEXT, `lightBackground` TEXT, `lightOnBackground` TEXT, `lightSurfaceTint` TEXT, `lightScrim` TEXT, `lightSurfaceVariant` TEXT, `darkPrimary` TEXT, `darkOnPrimary` TEXT, `darkPrimaryContainer` TEXT, `darkOnPrimaryContainer` TEXT, `darkSecondary` TEXT, `darkOnSecondary` TEXT, `darkSecondaryContainer` TEXT, `darkOnSecondaryContainer` TEXT, `darkTertiary` TEXT, `darkOnTertiary` TEXT, `darkTertiaryContainer` TEXT, `darkOnTertiaryContainer` TEXT, `darkError` TEXT, `darkOnError` TEXT, `darkErrorContainer` TEXT, `darkOnErrorContainer` TEXT, `darkSurface` TEXT, `darkOnSurface` TEXT, `darkOnSurfaceVariant` TEXT, `darkOutline` TEXT, `darkOutlineVariant` TEXT, `darkInverseSurface` TEXT, `darkInverseOnSurface` TEXT, `darkInversePrimary` TEXT, `darkSurfaceDim` TEXT, `darkSurfaceBright` TEXT, `darkSurfaceContainerLowest` TEXT, `darkSurfaceContainerLow` TEXT, `darkSurfaceContainer` TEXT, `darkSurfaceContainerHigh` TEXT, `darkSurfaceContainerHighest` TEXT, `darkBackground` TEXT, `darkOnBackground` TEXT, `darkSurfaceTint` TEXT, `darkScrim` TEXT, `darkSurfaceVariant` TEXT, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "BLOB",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "corePaletteA1",
+            "columnName": "corePaletteA1",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "corePaletteA2",
+            "columnName": "corePaletteA2",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "corePaletteA3",
+            "columnName": "corePaletteA3",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "corePaletteN1",
+            "columnName": "corePaletteN1",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "corePaletteN2",
+            "columnName": "corePaletteN2",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "corePaletteE",
+            "columnName": "corePaletteE",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "lightPrimary",
+            "columnName": "lightPrimary",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "lightOnPrimary",
+            "columnName": "lightOnPrimary",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "lightPrimaryContainer",
+            "columnName": "lightPrimaryContainer",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "lightOnPrimaryContainer",
+            "columnName": "lightOnPrimaryContainer",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "lightSecondary",
+            "columnName": "lightSecondary",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "lightOnSecondary",
+            "columnName": "lightOnSecondary",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "lightSecondaryContainer",
+            "columnName": "lightSecondaryContainer",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "lightOnSecondaryContainer",
+            "columnName": "lightOnSecondaryContainer",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "lightTertiary",
+            "columnName": "lightTertiary",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "lightOnTertiary",
+            "columnName": "lightOnTertiary",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "lightTertiaryContainer",
+            "columnName": "lightTertiaryContainer",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "lightOnTertiaryContainer",
+            "columnName": "lightOnTertiaryContainer",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "lightError",
+            "columnName": "lightError",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "lightOnError",
+            "columnName": "lightOnError",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "lightErrorContainer",
+            "columnName": "lightErrorContainer",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "lightOnErrorContainer",
+            "columnName": "lightOnErrorContainer",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "lightSurface",
+            "columnName": "lightSurface",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "lightOnSurface",
+            "columnName": "lightOnSurface",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "lightOnSurfaceVariant",
+            "columnName": "lightOnSurfaceVariant",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "lightOutline",
+            "columnName": "lightOutline",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "lightOutlineVariant",
+            "columnName": "lightOutlineVariant",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "lightInverseSurface",
+            "columnName": "lightInverseSurface",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "lightInverseOnSurface",
+            "columnName": "lightInverseOnSurface",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "lightInversePrimary",
+            "columnName": "lightInversePrimary",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "lightSurfaceDim",
+            "columnName": "lightSurfaceDim",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "lightSurfaceBright",
+            "columnName": "lightSurfaceBright",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "lightSurfaceContainerLowest",
+            "columnName": "lightSurfaceContainerLowest",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "lightSurfaceContainerLow",
+            "columnName": "lightSurfaceContainerLow",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "lightSurfaceContainer",
+            "columnName": "lightSurfaceContainer",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "lightSurfaceContainerHigh",
+            "columnName": "lightSurfaceContainerHigh",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "lightSurfaceContainerHighest",
+            "columnName": "lightSurfaceContainerHighest",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "lightBackground",
+            "columnName": "lightBackground",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "lightOnBackground",
+            "columnName": "lightOnBackground",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "lightSurfaceTint",
+            "columnName": "lightSurfaceTint",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "lightScrim",
+            "columnName": "lightScrim",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "lightSurfaceVariant",
+            "columnName": "lightSurfaceVariant",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "darkPrimary",
+            "columnName": "darkPrimary",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "darkOnPrimary",
+            "columnName": "darkOnPrimary",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "darkPrimaryContainer",
+            "columnName": "darkPrimaryContainer",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "darkOnPrimaryContainer",
+            "columnName": "darkOnPrimaryContainer",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "darkSecondary",
+            "columnName": "darkSecondary",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "darkOnSecondary",
+            "columnName": "darkOnSecondary",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "darkSecondaryContainer",
+            "columnName": "darkSecondaryContainer",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "darkOnSecondaryContainer",
+            "columnName": "darkOnSecondaryContainer",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "darkTertiary",
+            "columnName": "darkTertiary",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "darkOnTertiary",
+            "columnName": "darkOnTertiary",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "darkTertiaryContainer",
+            "columnName": "darkTertiaryContainer",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "darkOnTertiaryContainer",
+            "columnName": "darkOnTertiaryContainer",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "darkError",
+            "columnName": "darkError",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "darkOnError",
+            "columnName": "darkOnError",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "darkErrorContainer",
+            "columnName": "darkErrorContainer",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "darkOnErrorContainer",
+            "columnName": "darkOnErrorContainer",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "darkSurface",
+            "columnName": "darkSurface",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "darkOnSurface",
+            "columnName": "darkOnSurface",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "darkOnSurfaceVariant",
+            "columnName": "darkOnSurfaceVariant",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "darkOutline",
+            "columnName": "darkOutline",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "darkOutlineVariant",
+            "columnName": "darkOutlineVariant",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "darkInverseSurface",
+            "columnName": "darkInverseSurface",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "darkInverseOnSurface",
+            "columnName": "darkInverseOnSurface",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "darkInversePrimary",
+            "columnName": "darkInversePrimary",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "darkSurfaceDim",
+            "columnName": "darkSurfaceDim",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "darkSurfaceBright",
+            "columnName": "darkSurfaceBright",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "darkSurfaceContainerLowest",
+            "columnName": "darkSurfaceContainerLowest",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "darkSurfaceContainerLow",
+            "columnName": "darkSurfaceContainerLow",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "darkSurfaceContainer",
+            "columnName": "darkSurfaceContainer",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "darkSurfaceContainerHigh",
+            "columnName": "darkSurfaceContainerHigh",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "darkSurfaceContainerHighest",
+            "columnName": "darkSurfaceContainerHighest",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "darkBackground",
+            "columnName": "darkBackground",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "darkOnBackground",
+            "columnName": "darkOnBackground",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "darkSurfaceTint",
+            "columnName": "darkSurfaceTint",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "darkScrim",
+            "columnName": "darkScrim",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "darkSurfaceVariant",
+            "columnName": "darkSurfaceVariant",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "Plugins",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`authority` TEXT NOT NULL, `label` TEXT NOT NULL, `description` TEXT, `packageName` TEXT NOT NULL, `className` TEXT NOT NULL, `type` TEXT NOT NULL, `settingsActivity` TEXT, `enabled` INTEGER NOT NULL, PRIMARY KEY(`authority`))",
+        "fields": [
+          {
+            "fieldPath": "authority",
+            "columnName": "authority",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "label",
+            "columnName": "label",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "packageName",
+            "columnName": "packageName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "className",
+            "columnName": "className",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "type",
+            "columnName": "type",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "settingsActivity",
+            "columnName": "settingsActivity",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "enabled",
+            "columnName": "enabled",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "authority"
+          ]
+        }
+      },
+      {
+        "tableName": "Shapes",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` BLOB NOT NULL, `name` TEXT NOT NULL, `baseShape` TEXT NOT NULL, `extraSmall` TEXT, `small` TEXT, `medium` TEXT, `large` TEXT, `largeIncreased` TEXT, `extraLarge` TEXT, `extraLargeIncreased` TEXT, `extraExtraLarge` TEXT, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "BLOB",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "baseShape",
+            "columnName": "baseShape",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "extraSmall",
+            "columnName": "extraSmall",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "small",
+            "columnName": "small",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "medium",
+            "columnName": "medium",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "large",
+            "columnName": "large",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "largeIncreased",
+            "columnName": "largeIncreased",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "extraLarge",
+            "columnName": "extraLarge",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "extraLargeIncreased",
+            "columnName": "extraLargeIncreased",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "extraExtraLarge",
+            "columnName": "extraExtraLarge",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "Transparencies",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` BLOB NOT NULL, `name` TEXT NOT NULL, `background` REAL, `surface` REAL, `elevatedSurface` REAL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "BLOB",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "background",
+            "columnName": "background",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "surface",
+            "columnName": "surface",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "elevatedSurface",
+            "columnName": "elevatedSurface",
+            "affinity": "REAL"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "Typography",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` BLOB NOT NULL, `name` TEXT NOT NULL, `fonts` TEXT, `displayLarge` TEXT, `displayMedium` TEXT, `displaySmall` TEXT, `headlineLarge` TEXT, `headlineMedium` TEXT, `headlineSmall` TEXT, `titleLarge` TEXT, `titleMedium` TEXT, `titleSmall` TEXT, `bodyLarge` TEXT, `bodyMedium` TEXT, `bodySmall` TEXT, `labelLarge` TEXT, `labelMedium` TEXT, `labelSmall` TEXT, `emphasizedDisplayLarge` TEXT, `emphasizedDisplayMedium` TEXT, `emphasizedDisplaySmall` TEXT, `emphasizedHeadlineLarge` TEXT, `emphasizedHeadlineMedium` TEXT, `emphasizedHeadlineSmall` TEXT, `emphasizedTitleLarge` TEXT, `emphasizedTitleMedium` TEXT, `emphasizedTitleSmall` TEXT, `emphasizedBodyLarge` TEXT, `emphasizedBodyMedium` TEXT, `emphasizedBodySmall` TEXT, `emphasizedLabelLarge` TEXT, `emphasizedLabelMedium` TEXT, `emphasizedLabelSmall` TEXT, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "BLOB",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "fonts",
+            "columnName": "fonts",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "displayLarge",
+            "columnName": "displayLarge",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "displayMedium",
+            "columnName": "displayMedium",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "displaySmall",
+            "columnName": "displaySmall",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "headlineLarge",
+            "columnName": "headlineLarge",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "headlineMedium",
+            "columnName": "headlineMedium",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "headlineSmall",
+            "columnName": "headlineSmall",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "titleLarge",
+            "columnName": "titleLarge",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "titleMedium",
+            "columnName": "titleMedium",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "titleSmall",
+            "columnName": "titleSmall",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "bodyLarge",
+            "columnName": "bodyLarge",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "bodyMedium",
+            "columnName": "bodyMedium",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "bodySmall",
+            "columnName": "bodySmall",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "labelLarge",
+            "columnName": "labelLarge",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "labelMedium",
+            "columnName": "labelMedium",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "labelSmall",
+            "columnName": "labelSmall",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "emphasizedDisplayLarge",
+            "columnName": "emphasizedDisplayLarge",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "emphasizedDisplayMedium",
+            "columnName": "emphasizedDisplayMedium",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "emphasizedDisplaySmall",
+            "columnName": "emphasizedDisplaySmall",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "emphasizedHeadlineLarge",
+            "columnName": "emphasizedHeadlineLarge",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "emphasizedHeadlineMedium",
+            "columnName": "emphasizedHeadlineMedium",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "emphasizedHeadlineSmall",
+            "columnName": "emphasizedHeadlineSmall",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "emphasizedTitleLarge",
+            "columnName": "emphasizedTitleLarge",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "emphasizedTitleMedium",
+            "columnName": "emphasizedTitleMedium",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "emphasizedTitleSmall",
+            "columnName": "emphasizedTitleSmall",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "emphasizedBodyLarge",
+            "columnName": "emphasizedBodyLarge",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "emphasizedBodyMedium",
+            "columnName": "emphasizedBodyMedium",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "emphasizedBodySmall",
+            "columnName": "emphasizedBodySmall",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "emphasizedLabelLarge",
+            "columnName": "emphasizedLabelLarge",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "emphasizedLabelMedium",
+            "columnName": "emphasizedLabelMedium",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "emphasizedLabelSmall",
+            "columnName": "emphasizedLabelSmall",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd4921a8b36c966c2e891c43d8578dbc3')"
+    ]
+  }
+}
