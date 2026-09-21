@@ -61,7 +61,6 @@ internal class SearchActionRepositoryImpl(
             OpenUrlActionBuilder(context),
             WebsearchActionBuilder(context),
             ShareActionBuilder(context),
-            PrivateSpaceLockActionBuilder(context),
         )
 
         return allActions

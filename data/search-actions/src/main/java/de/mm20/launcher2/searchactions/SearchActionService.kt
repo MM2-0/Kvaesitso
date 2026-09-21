@@ -12,10 +12,12 @@ import coil.imageLoader
 import coil.request.ImageRequest
 import coil.size.Scale
 import de.mm20.launcher2.crashreporter.CrashReporter
+import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.searchactions.actions.SearchAction
 import de.mm20.launcher2.searchactions.actions.SearchActionIcon
 import de.mm20.launcher2.searchactions.builders.SearchActionBuilder
 import de.mm20.launcher2.searchactions.builders.CustomWebsearchActionBuilder
+import de.mm20.launcher2.searchactions.builders.PrivateSpaceLockActionBuilder
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import io.ktor.client.request.url
@@ -71,7 +73,23 @@ internal class SearchActionServiceImpl(
         val builders = repository.getSearchActionBuilders()
 
         return builders.map {
-            it.mapNotNull { it.build(context, classificationResult) }.toImmutableList()
+            val results = mutableListOf<SearchAction>()
+
+            if (isAtLeastApiLevel(35)) {
+                val privateSpaceAction = PrivateSpaceLockActionBuilder(context).build(context, classificationResult)
+                if (privateSpaceAction != null) {
+                    results += privateSpaceAction
+                }
+            }
+
+            for (builder in it) {
+                val result = builder.build(context, classificationResult)
+                if (result != null) {
+                    results += result
+                }
+            }
+
+            results.toImmutableList()
         }
     }
 
