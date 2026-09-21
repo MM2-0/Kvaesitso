@@ -39,6 +39,7 @@
     <string name="action_clear">Leeren</string>
     <string name="action_install">Installieren</string>
     <string name="action_quit">Verlassen</string>
+    <string name="action_fix">Beheben</string>
     <!-- Delete something (a file or a web search shortcut) -->
     <string name="menu_delete">Löschen</string>
     <string name="menu_remove">Entfernen</string>
@@ -405,6 +406,7 @@
     <string name="missing_permission_appshortcuts_search">%1$s als Standard-Start-App festlegen, um App-Shortcuts durchsuchen zu können.</string>
     <!-- Missing permission app shortcuts permission, used when creating a shortcut in the edit favorites sheet -->
     <string name="missing_permission_appshortcuts_create">%1$s muss als Standard-Start-App gesetzt sein, um App-Shortcuts erstellen zu können.</string>
+    <string name="missing_permission_local_network">%1$s darf aktuell keine Geräte im lokalen Netzwerk finden.</string>
     <!-- Grant a permission, shown in permission banners -->
     <string name="grant_permission">Gewähren</string>
     <!-- Appearance preference title -->
