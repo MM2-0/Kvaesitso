@@ -1,22 +1,6 @@
----
-sidebar_position: 4
----
+# Contributing
 
-# Pull Requests
-
-## Bug fixes
-
-If you found a bug and wrote a fix for it, just create a pull request.
-
-## New features
-
-For smaller enhancements, just create a pull request.
-
-If you plan to implement any bigger new features, please create a new issue first so we can discuss
-if and how this feature can be implemented. If you want to work on implementing a feature from an
-existing issue, please leave a note there to avoid duplicate work.
-
-## License
+See https://kvaesitso.mm20.de/docs/contributor-guide/ to get started.
 
 By submitting a contribution to this project, you agree that:
 
