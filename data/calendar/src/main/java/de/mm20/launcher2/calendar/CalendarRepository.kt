@@ -29,6 +29,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.supervisorScope
 import kotlin.time.Duration.Companion.days
+import kotlin.time.Duration.Companion.milliseconds
 
 interface CalendarRepository : SearchableRepository<CalendarEvent> {
     fun findMany(
@@ -89,6 +90,7 @@ internal class CalendarRepositoryImpl(
         }
     }
 
+    @OptIn(kotlinx.coroutines.FlowPreview::class)
     override fun findMany(
         from: Long,
         to: Long,
@@ -121,7 +123,7 @@ internal class CalendarRepositoryImpl(
                     excludeCalendars = excludeCalendars,
                     providers = providers,
                     allowNetwork = false,
-                ).debounce(500)
+                ).debounce(500.milliseconds)
             )
         }
     }

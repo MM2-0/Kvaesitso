@@ -34,6 +34,7 @@ import kotlinx.serialization.Serializable
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
+import kotlin.time.Duration.Companion.milliseconds
 
 @Serializable
 data object DebugSettingsRoute : NavKey
@@ -83,7 +84,7 @@ fun DebugSettingsScreen() {
                                 context.externalCacheDir,
                                 "kvaesitso-dump-${df.format(Date(System.currentTimeMillis()))}.hprof"
                             ).absolutePath
-                            delay(100)
+                            delay(100.milliseconds)
                             withContext(Dispatchers.Default) {
                                 Debug.dumpHprofData(path)
                             }

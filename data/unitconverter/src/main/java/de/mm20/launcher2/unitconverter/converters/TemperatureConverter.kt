@@ -46,8 +46,8 @@ internal class TemperatureConverter(context: Context) : Converter {
             values += UnitValue(
                 value = value,
                 symbol = toUnit,
-                formattedName = ConverterUtils.formatName(context, to, toValue),
-                formattedValue = ConverterUtils.formatValue(context, to, toValue),
+                formattedName = to.formatName(context, toValue),
+                formattedValue = toValue.formatValue(),
             )
         } else {
             for (to in units) {
@@ -56,8 +56,8 @@ internal class TemperatureConverter(context: Context) : Converter {
                 values += UnitValue(
                     v,
                     to.symbol,
-                    ConverterUtils.formatName(context, to, v),
-                    ConverterUtils.formatValue(context, to, v)
+                    to.formatName(context, v),
+                    v.formatValue()
                 )
             }
         }
@@ -66,8 +66,8 @@ internal class TemperatureConverter(context: Context) : Converter {
             inputValue = UnitValue(
                 value = value,
                 symbol = fromUnit,
-                formattedName = ConverterUtils.formatName(context, from, value),
-                formattedValue = ConverterUtils.formatValue(context, from, value),
+                formattedName = from.formatName(context, value),
+                formattedValue = value.formatValue(),
             ),
             values = values
         )
