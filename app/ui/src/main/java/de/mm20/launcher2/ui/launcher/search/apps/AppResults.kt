@@ -123,6 +123,22 @@ private fun AppSectionHeader(
     )
 }
 
+fun LazyListScope.AppResults(
+    onProfileSelected: (Profile) -> Unit = {},
+    profiles: List<Profile> = emptyList(),
+    selectedProfile: Profile? = null,
+    profileStates: Map<Profile.Type, Profile.State> = emptyMap(),
+    showProfileLockControls: Boolean = false,
+    onProfileLockChange: ((Profile, Boolean) -> Unit)? = null,
+    apps: List<Application>,
+    selectedIndex: Int,
+    onSelect: (Int) -> Unit,
+    highlightedItem: Application? = null,
+    columns: Int,
+    reverse: Boolean,
+    showList: Boolean,
+    showAlphabetScroller: Boolean = true,
+) {
     val profileIndex by derivedStateOf {
         profiles.indexOf(selectedProfile).takeIf { it >= 0 } ?: 0
     }
