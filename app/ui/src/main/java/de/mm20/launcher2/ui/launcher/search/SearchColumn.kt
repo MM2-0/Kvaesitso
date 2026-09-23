@@ -158,7 +158,11 @@ fun SearchColumn(
         else -> apps
     }
     val showProfileResults = isSearchEmpty && profiles.size > 1 && allAppsEnabled
-    val isProfileLocked = profileStates.getOrNull(selectedAppProfileIndex)?.locked == true
+    val isProfileLocked = profiles
+        .getOrNull(selectedAppProfileIndex)
+        ?.type
+        ?.let { profileStates[it]?.locked == true }
+        ?: false
     val shownApps = when {
         showProfileResults && !isProfileLocked -> profileApps
         showProfileResults -> emptyList()
