@@ -134,6 +134,8 @@ fun LauncherSearchBar(
                 }
                 SearchBarMenu(searchBarValue = value, onInputClear = {
                     searchVM.reset()
+                }, onEditFavorites = {
+                    sheetManager.showEditFavoritesSheet()
                 })
             },
             actions = {

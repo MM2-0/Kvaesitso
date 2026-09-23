@@ -107,6 +107,7 @@ dependencies {
 
     implementation(libs.coil.core)
     implementation(libs.coil.compose)
+    implementation(libs.icu4j)
 
     implementation(libs.smartspacer) {
         exclude(group = "com.github.skydoves", module = "balloon")
