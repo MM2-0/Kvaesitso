@@ -116,6 +116,7 @@ data class LauncherSettingsData internal constructor(
     val searchBarColors: SearchBarColors = SearchBarColors.Auto,
     val searchBarKeyboard: Boolean = true,
     val searchLaunchOnEnter: Boolean = true,
+    val searchFuzzyMatching: Boolean = false,
     val searchBarBottom: Boolean = false,
     val searchBarFixed: Boolean = false,
 

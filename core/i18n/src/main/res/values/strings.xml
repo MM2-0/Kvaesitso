@@ -682,6 +682,8 @@
     <string name="preference_hidden_items_reveal_button_summary">Show a button to reveal excluded search results</string>
     <string name="preference_screen_tags">Tags</string>
     <string name="preference_screen_tags_summary">Manage tags and tagged items</string>
+    <string name="preference_search_fuzzy">Fuzzy matching</string>
+    <string name="preference_search_fuzzy_summary">Match abbreviations, e.g. \"ytm\" finds YT Music. Disables typo correction.</string>
     <string name="preference_wikipedia_customurl">Wikipedia URL</string>
     <string name="preference_edit_favorites_summary">Change the order of pinned items</string>
     <string name="preference_category_favorites_frequently_used">Frequently used</string>

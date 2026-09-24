@@ -7,14 +7,15 @@ import de.mm20.launcher2.locations.providers.LocationProvider
 import de.mm20.launcher2.openstreetmaps.R
 import de.mm20.launcher2.preferences.search.LocationSearchSettings
 import de.mm20.launcher2.search.Location
-import de.mm20.launcher2.search.ResultScore
+import de.mm20.launcher2.search.SearchScorer
 import de.mm20.launcher2.search.UpdateResult
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.first
 
 internal class OsmLocationProvider(
     private val context: Context,
-    private val settings: LocationSearchSettings
+    private val settings: LocationSearchSettings,
+    private val searchScorer: SearchScorer,
 ) : LocationProvider<Long> {
 
     private val overpassApi = OverpassApi()
@@ -214,10 +215,10 @@ internal class OsmLocationProvider(
 
     private fun delocalizeToQueryableTags(localizedQuery: String): List<String> =
         poiCategories.flatMap { (string, tags) ->
-            val score = ResultScore.from(
+            val score = searchScorer.score(
                 localizedQuery,
                 primaryFields = listOf(string)
             )
-            if (score.score > 0.8f) tags else persistentListOf()
+            if (searchScorer.isMatch(score)) tags else persistentListOf()
         }
 }

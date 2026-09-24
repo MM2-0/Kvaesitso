@@ -1,100 +1,33 @@
 package de.mm20.launcher2.search
 
-import com.aallam.similarity.JaroWinkler
-
+/**
+ * How well a search result matches a query, between 0 and 1. Higher is better.
+ *
+ * Each [SearchScorer] decides how its own measurements become a final score, so scores are only
+ * meaningfully comparable between results scored by the same scorer.
+ */
 @JvmInline
-value class ResultScore private constructor(private val packed: Long) : Comparable<ResultScore> {
-    constructor(
-        isPrefix: Boolean,
-        isSubstring: Boolean,
-        isPrimary: Boolean,
-        similarity: Float,
-    ) : this(
-        (similarity.toRawBits().toLong()) or
-                (if (isPrefix) (1L shl 32) else 0) or
-                (if (isSubstring) (1L shl 33) else 0) or
-                (if (isPrimary) (1L shl 34) else 0)
-    )
+value class ResultScore private constructor(private val bits: Int) : Comparable<ResultScore> {
 
-    /**
-     * Whether the query is a literal prefix of the result.
-     */
-    val isPrefix: Boolean
-        get() = (packed and (1L shl 32)) != 0L
+    constructor(score: Float) : this(score.toRawBits())
 
-    /**
-     * Whether the query is a substring of the result.
-     */
-    val isSubstring: Boolean
-        get() = (packed and (1L shl 33)) != 0L
-
-    /**
-     * Whether the query was matched against a primary field.
-     */
-    val isPrimary: Boolean
-        get() = (packed and (1L shl 34)) != 0L
-
-    /**
-     * The Jaro-Winkler similarity between the query and the result.
-     */
-    val similarity: Float
-        get() = Float.fromBits((packed and 0xffffffffL).toInt())
-
-    /**
-     * A total score for the result, combining the similarity with additional factors.
-     * The score is normalized to be between 0 and 1.
-     */
     val score: Float
-        get() = (similarity + (if (isPrefix) 0.2f else 0f) + (if (isSubstring) 0.8f else 0f)).coerceIn(0f, 1f) * (if (isPrimary) 1f else 0.8f)
+        get() = Float.fromBits(bits)
 
     override fun compareTo(other: ResultScore): Int {
         return score.compareTo(other.score)
     }
 
     companion object {
-        fun from(
-            query: String,
-            primaryFields: Iterable<String> = emptyList(),
-            secondaryFields: Iterable<String> = emptyList(),
-        ): ResultScore {
-            val jaroWinkler = JaroWinkler()
-            val bestPrimaryScore = primaryFields.maxOfOrNull { term ->
-                val sim = jaroWinkler.similarity(query, term).toFloat()
-                ResultScore(
-                    isPrefix = term.startsWith(query),
-                    isSubstring = query in term,
-                    isPrimary = true,
-                    similarity = sim
-                )
-            } ?: Zero
-            val bestSecondaryScore = secondaryFields.maxOfOrNull { term ->
-                val sim = jaroWinkler.similarity(query, term).toFloat()
-                ResultScore(
-                    isPrefix = term.startsWith(query),
-                    isSubstring = query in term,
-                    isPrimary = false,
-                    similarity = sim
-                )
-            } ?: Zero
+        val Zero = ResultScore(0f)
 
-            return maxOf(bestPrimaryScore, bestSecondaryScore)
-        }
-
-        val Zero = ResultScore(
-            isPrefix = false,
-            isSubstring = false,
-            isPrimary = false,
-            similarity = 0f
-        )
-
-        val Unspecified = ResultScore(
-            isPrefix = false,
-            isSubstring = false,
-            isPrimary = false,
-            similarity = Float.NaN,
-        )
+        /**
+         * No score has been computed yet. Results that carry this are scored lazily when they are
+         * ranked, since not every repository scores its own results.
+         */
+        val Unspecified = ResultScore(Float.NaN)
     }
 }
 
-inline val ResultScore.isUnspecified : Boolean
+inline val ResultScore.isUnspecified: Boolean
     get() = this == ResultScore.Unspecified

@@ -15,7 +15,7 @@ import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.search.ShortcutSearchSettings
 import de.mm20.launcher2.profiles.ProfileManager
 import de.mm20.launcher2.search.AppShortcut
-import de.mm20.launcher2.search.ResultScore
+import de.mm20.launcher2.search.SearchScorer
 import de.mm20.launcher2.search.SearchableRepository
 import de.mm20.launcher2.search.StringNormalizer
 import kotlinx.collections.immutable.ImmutableList
@@ -60,6 +60,7 @@ internal class AppShortcutRepositoryImpl(
     private val settings: ShortcutSearchSettings,
     private val profileManager: ProfileManager,
     private val stringNormalizer: StringNormalizer,
+    private val searchScorer: SearchScorer,
 ) : AppShortcutRepository {
 
     private val scope = CoroutineScope(Dispatchers.Default + Job())
@@ -134,11 +135,11 @@ internal class AppShortcutRepositoryImpl(
             val filtered = shortcuts.mapIndexedNotNull { index, normalized ->
                 if (index % 8 == 0) currentCoroutineContext().ensureActive()
 
-                val score = ResultScore.from(
+                val score = searchScorer.score(
                     query = normalizedQuery,
                     primaryFields = normalized.normalizedLabels,
                 )
-                if (score.score < 0.8f) return@mapIndexedNotNull null
+                if (!searchScorer.isMatch(score)) return@mapIndexedNotNull null
                 LauncherShortcut(
                     context,
                     normalized.info,

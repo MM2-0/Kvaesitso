@@ -13,7 +13,7 @@ import android.os.UserHandle
 import de.mm20.launcher2.profiles.Profile
 import de.mm20.launcher2.profiles.ProfileManager
 import de.mm20.launcher2.search.Application
-import de.mm20.launcher2.search.ResultScore
+import de.mm20.launcher2.search.SearchScorer
 import de.mm20.launcher2.search.SearchableRepository
 import de.mm20.launcher2.search.StringNormalizer
 import kotlinx.collections.immutable.ImmutableList
@@ -44,6 +44,7 @@ internal class AppRepositoryImpl(
     private val context: Context,
     private val profileManager: ProfileManager,
     private val stringNormalizer: StringNormalizer,
+    private val searchScorer: SearchScorer,
 ) : AppRepository {
     private val scope = CoroutineScope(Dispatchers.Default + Job())
 
@@ -250,7 +251,7 @@ internal class AppRepositoryImpl(
                 } else {
                     appResults.addAll(apps.mapNotNull { app ->
                         val cachedLabel = app.cachedNormalizerResult
-                        val score = ResultScore.from(
+                        val score = searchScorer.score(
                             query = normalizedQuery,
                             primaryFields = listOf(
                                 if (cachedLabel?.first == normalizerId) {
@@ -262,7 +263,7 @@ internal class AppRepositoryImpl(
                                 }
                             ),
                         )
-                        if (score.score < 0.8f) return@mapNotNull null
+                        if (!searchScorer.isMatch(score)) return@mapNotNull null
                         app.copy(
                             score = score
                         )

@@ -16,4 +16,13 @@ class RankingSettings internal constructor(
             it.copy(rankingWeightFactor = weightFactor)
         }
     }
+
+    val fuzzyMatching
+        get() = launcherDataStore.data.map { it.searchFuzzyMatching }.distinctUntilChanged()
+
+    fun setFuzzyMatching(fuzzyMatching: Boolean) {
+        launcherDataStore.update {
+            it.copy(searchFuzzyMatching = fuzzyMatching)
+        }
+    }
 }
