@@ -22,6 +22,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -33,6 +34,10 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.NestedScrollSource
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -89,18 +94,25 @@ internal class WidgetsComponent(
         val scope = rememberCoroutineScope()
         val topPadding by animateDpAsState(if (editMode) 64.dp else 0.dp)
 
-        val previousScroll = remember { mutableIntStateOf(scrollState.value) }
-
-        LaunchedEffect(scrollState.value, scrollState.canScrollForward, scrollState.canScrollBackward) {
-            val delta = scrollState.value - previousScroll.intValue
-            previousScroll.intValue = scrollState.value
-            if (!editMode) {
-                state.onComponentScroll(delta.toFloat())
+        val scrollConnection = remember(state) {
+            object: NestedScrollConnection {
+                override fun onPostScroll(
+                    consumed: Offset,
+                    available: Offset,
+                    source: NestedScrollSource
+                ): Offset {
+                    val delta = consumed.y
+                    if (!editMode) {
+                        state.onComponentScroll(-delta)
+                    }
+                    return super.onPostScroll(consumed, available, source)
+                }
             }
         }
 
         Column(
             modifier = modifier
+                .nestedScroll(scrollConnection)
                 .verticalScroll(scrollState)
                 .padding(horizontal = 8.dp)
                 .padding(top = topPadding)
