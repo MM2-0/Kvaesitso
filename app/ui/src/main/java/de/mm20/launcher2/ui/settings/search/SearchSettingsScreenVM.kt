@@ -12,7 +12,6 @@ import de.mm20.launcher2.preferences.search.CalculatorSearchSettings
 import de.mm20.launcher2.preferences.search.CalendarSearchSettings
 import de.mm20.launcher2.preferences.search.ContactSearchSettings
 import de.mm20.launcher2.preferences.search.LocationSearchSettings
-import de.mm20.launcher2.preferences.search.RankingSettings
 import de.mm20.launcher2.preferences.search.SearchFilterSettings
 import de.mm20.launcher2.preferences.search.ShortcutSearchSettings
 import de.mm20.launcher2.preferences.search.UnitConverterSettings
@@ -37,7 +36,6 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
     private val calculatorSearchSettings: CalculatorSearchSettings by inject()
     private val locationSearchSettings: LocationSearchSettings by inject()
     private val searchFilterSettings: SearchFilterSettings by inject()
-    private val rankingSettings: RankingSettings by inject()
 
     private val appRepository: AppRepository by inject()
 
@@ -155,13 +153,6 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
 
     fun requestAppShortcutsPermission(activity: AppCompatActivity) {
         permissionsManager.requestPermission(activity, PermissionGroup.AppShortcuts)
-    }
-
-    val fuzzyMatching = rankingSettings.fuzzyMatching
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
-
-    fun setFuzzyMatching(fuzzyMatching: Boolean) {
-        rankingSettings.setFuzzyMatching(fuzzyMatching)
     }
 
     val filterBar = searchFilterSettings.filterBar

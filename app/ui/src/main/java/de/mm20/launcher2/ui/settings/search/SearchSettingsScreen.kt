@@ -90,7 +90,6 @@ fun SearchSettingsScreen() {
     val autoFocus by viewModel.autoFocus.collectAsStateWithLifecycle(null)
     val launchOnEnter by viewModel.launchOnEnter.collectAsStateWithLifecycle(null)
     val reverseSearchResults by viewModel.reverseSearchResults.collectAsStateWithLifecycle(null)
-    val fuzzyMatching by viewModel.fuzzyMatching.collectAsStateWithLifecycle(null)
     val filterBar by viewModel.filterBar.collectAsStateWithLifecycle(null)
 
     PreferenceScreen(title = stringResource(R.string.preference_screen_search)) {
@@ -330,15 +329,6 @@ fun SearchSettingsScreen() {
                     icon = R.drawable.tag_24px,
                     onClick = {
                         backStack.add(TagsSettingsRoute)
-                    }
-                )
-                SwitchPreference(
-                    title = stringResource(R.string.preference_search_fuzzy),
-                    summary = stringResource(R.string.preference_search_fuzzy_summary),
-                    icon = R.drawable.manage_search_24px,
-                    value = fuzzyMatching == true,
-                    onValueChanged = {
-                        viewModel.setFuzzyMatching(it)
                     }
                 )
             }

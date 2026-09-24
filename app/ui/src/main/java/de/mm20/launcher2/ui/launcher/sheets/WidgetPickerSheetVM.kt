@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import de.mm20.launcher2.search.SearchScorer
+import de.mm20.launcher2.search.ResultScore
 import de.mm20.launcher2.search.StringNormalizer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -29,7 +29,6 @@ class WidgetPickerSheetVM(
     private val widgetsService: WidgetsService,
     private val packageManager: PackageManager,
     private val stringNormalizer: StringNormalizer,
-    private val searchScorer: SearchScorer,
 ) : ViewModel() {
 
     val searchQuery = MutableStateFlow("")
@@ -47,14 +46,13 @@ class WidgetPickerSheetVM(
             withContext(Dispatchers.IO) {
                 val normalizedQuery = stringNormalizer.normalize(query)
                 widgets.filter {
-                    val score = searchScorer.score(
+                    ResultScore.from(
                         query = normalizedQuery,
                         primaryFields = listOf(
                             stringNormalizer.normalize(it.label),
                             it.type
                         )
-                    )
-                    searchScorer.isMatch(score)
+                    ).score >= 0.8f
                 }
             }
         }.shareIn(viewModelScope, SharingStarted.WhileSubscribed(100))
@@ -82,14 +80,13 @@ class WidgetPickerSheetVM(
                     }
                     val normalizedAppLabel = stringNormalizer.normalize(appInfo.loadLabel(packageManager).toString())
 
-                    val score = searchScorer.score(
+                    ResultScore.from(
                         query = normalizedQuery,
                         primaryFields = listOf(
                             widgetNormalizedLabel,
                             normalizedAppLabel,
                         )
-                    )
-                    searchScorer.isMatch(score)
+                    ).score >= 0.8f
                 }
             }
         }
@@ -137,7 +134,7 @@ class WidgetPickerSheetVM(
     companion object : KoinComponent {
         val Factory = viewModelFactory {
             initializer {
-                WidgetPickerSheetVM(get(), get(), get(), get())
+                WidgetPickerSheetVM(get(), get(), get())
             }
         }
     }

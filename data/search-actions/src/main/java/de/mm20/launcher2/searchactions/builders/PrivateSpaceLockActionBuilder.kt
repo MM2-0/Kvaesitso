@@ -4,6 +4,7 @@ import android.content.Context
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.profiles.Profile
 import de.mm20.launcher2.profiles.ProfileManager
+import de.mm20.launcher2.search.ResultScore
 import de.mm20.launcher2.searchactions.R
 import de.mm20.launcher2.searchactions.TextClassificationResult
 import de.mm20.launcher2.searchactions.actions.PrivateSpaceLockAction

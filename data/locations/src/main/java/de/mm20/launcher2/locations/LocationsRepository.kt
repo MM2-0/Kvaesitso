@@ -8,7 +8,6 @@ import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.search.LocationSearchSettings
 import de.mm20.launcher2.search.Location
-import de.mm20.launcher2.search.SearchScorer
 import de.mm20.launcher2.search.SearchableRepository
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -31,7 +30,6 @@ internal class LocationsRepository(
     private val settings: LocationSearchSettings,
     private val poseProvider: DevicePoseProvider,
     private val permissionsManager: PermissionsManager,
-    private val searchScorer: SearchScorer,
 ) : SearchableRepository<Location> {
 
     @OptIn(FlowPreview::class)
@@ -62,7 +60,7 @@ internal class LocationsRepository(
 
             val providers = settingsData.providers.map {
                 when (it) {
-                    "openstreetmaps" -> OsmLocationProvider(context, settings, searchScorer)
+                    "openstreetmaps" -> OsmLocationProvider(context, settings)
                     else -> PluginLocationProvider(context, it)
                 }
             }

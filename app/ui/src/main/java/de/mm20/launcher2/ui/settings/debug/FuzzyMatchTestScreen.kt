@@ -21,6 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.navigation3.runtime.NavKey
+import de.mm20.launcher2.search.ResultScore
 import de.mm20.launcher2.search.StringNormalizer
 import de.mm20.launcher2.search.fuzzy.FzfMatcher
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
@@ -59,17 +60,17 @@ fun FuzzyMatchTestScreen() {
             val results by remember {
                 derivedStateOf {
                     val normalizedQuery = normalizer.normalize(query)
-                    val maxScore = FzfMatcher.maxScoreFor(normalizedQuery)
                     candidates
                         .lineSequence()
                         .filter { it.isNotBlank() }
                         .mapNotNull { candidate ->
                             val normalized = normalizer.normalize(candidate)
+                            val score = ResultScore.from(normalizedQuery, primaryFields = listOf(normalized)).score
+                            if (score < ResultScore.MatchThreshold) return@mapNotNull null
                             val match = FzfMatcher.match(normalizedQuery, normalized, withPositions = true)
-                                ?: return@mapNotNull null
                             ScoredCandidate(
-                                label = highlight(normalized, match.positions),
-                                score = FzfMatcher.normalize(match.score, maxScore),
+                                label = highlight(normalized, match?.positions),
+                                score = score,
                             )
                         }
                         .sortedByDescending { it.score }
@@ -112,6 +113,8 @@ fun FuzzyMatchTestScreen() {
                                     append("  ")
                                     withStyle(SpanStyle(color = MaterialTheme.colorScheme.onSurfaceVariant)) {
                                         append(String.format("%.3f", result.score))
+                                        append("  ")
+                                        append(tierOf(result.score))
                                     }
                                 },
                                 style = MaterialTheme.typography.bodyMedium,
@@ -123,6 +126,15 @@ fun FuzzyMatchTestScreen() {
             }
         }
     }
+}
+
+/**
+ * Mirrors the score bands documented on [ResultScore.from].
+ */
+private fun tierOf(score: Float): String = when {
+    score >= 0.95f -> "strong"
+    score >= 0.9f -> "weak"
+    else -> "typo"
 }
 
 private fun highlight(text: String, positions: IntArray?): AnnotatedString {

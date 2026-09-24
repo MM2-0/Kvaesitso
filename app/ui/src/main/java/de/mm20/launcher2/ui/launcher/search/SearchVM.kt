@@ -16,7 +16,6 @@ import de.mm20.launcher2.preferences.search.CalendarSearchSettings
 import de.mm20.launcher2.preferences.search.ContactSearchSettings
 import de.mm20.launcher2.preferences.search.FileSearchSettings
 import de.mm20.launcher2.preferences.search.LocationSearchSettings
-import de.mm20.launcher2.preferences.search.RankingSettings
 import de.mm20.launcher2.preferences.search.SearchFilterSettings
 import de.mm20.launcher2.preferences.search.ShortcutSearchSettings
 import de.mm20.launcher2.preferences.ui.SearchUiSettings
@@ -29,10 +28,10 @@ import de.mm20.launcher2.search.CalendarEvent
 import de.mm20.launcher2.search.Contact
 import de.mm20.launcher2.search.File
 import de.mm20.launcher2.search.Location
+import de.mm20.launcher2.search.ResultScore
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchFilters
 import de.mm20.launcher2.search.SearchResults
-import de.mm20.launcher2.search.SearchScorer
 import de.mm20.launcher2.search.SearchService
 import de.mm20.launcher2.search.Searchable
 import de.mm20.launcher2.search.Website
@@ -49,7 +48,6 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
@@ -72,13 +70,11 @@ class SearchVM : ViewModel(), KoinComponent {
     private val locationSearchSettings: LocationSearchSettings by inject()
     private val devicePoseProvider: DevicePoseProvider by inject()
     private val searchFilterSettings: SearchFilterSettings by inject()
-    private val rankingSettings: RankingSettings by inject()
 
     val launchOnEnter = searchUiSettings.launchOnEnter
         .stateIn(viewModelScope, SharingStarted.Eagerly, false)
 
     private val searchService: SearchService by inject()
-    private val searchScorer: SearchScorer by inject()
 
     val searchQuery = mutableStateOf("")
     val isSearchEmpty = mutableStateOf(true)
@@ -142,11 +138,6 @@ class SearchVM : ViewModel(), KoinComponent {
 
     init {
         search("", forceRestart = true)
-        viewModelScope.launch {
-            rankingSettings.fuzzyMatching.drop(1).collect {
-                search(searchQuery.value, forceRestart = true)
-            }
-        }
     }
 
     fun launchBestMatchOrAction(context: Context) {
@@ -426,13 +417,13 @@ class SearchVM : ViewModel(), KoinComponent {
             val bWeight = weights[b.key] ?: 0.0
 
             val aScore = if (a.score.isUnspecified) {
-                searchScorer.score(query = query, primaryFields = listOf(a.labelOverride ?: a.label)).score
+                ResultScore.from(query = query, primaryFields = listOf(a.labelOverride ?: a.label)).score
             } else {
                 a.score.score
             }
 
             val bScore = if (b.score.isUnspecified) {
-                searchScorer.score(query = query, primaryFields = listOf(b.labelOverride ?: b.label)).score
+                ResultScore.from(query = query, primaryFields = listOf(b.labelOverride ?: b.label)).score
             } else {
                 b.score.score
             }
