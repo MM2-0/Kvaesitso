@@ -38,6 +38,7 @@
     <string name="action_clear">Vymazat</string>
     <string name="action_install">Instalovat</string>
     <string name="action_quit">Ukončit</string>
+    <string name="action_fix">Opravit</string>
     <!-- Delete something (a file or a web search shortcut) -->
     <string name="menu_delete">Odstranit</string>
     <string name="menu_remove">Odebrat</string>
@@ -414,6 +415,7 @@
     <string name="missing_permission_appshortcuts_search">Pro prohledávání záložek aplikací nastavte %1$s jako výchozí spouštěč.</string>
     <!-- Missing permission app shortcuts permission, used when creating a shortcut in the edit favorites sheet -->
     <string name="missing_permission_appshortcuts_create">Pro vytváření zkratek nastavte %1$s jako výchozí aplikaci domovské obrazovky.</string>
+    <string name="missing_permission_local_network">Aplikace %1$s nemá povoleno hledat zařízení v místní síti.</string>
     <!-- Grant a permission, shown in permission banners -->
     <string name="grant_permission">Udělit</string>
     <!-- Appearance preference title -->
@@ -1101,6 +1103,9 @@
     <string name="preference_form_of_address_masc">Mužské</string>
     <string name="preference_measurement_system">Měrná soustava</string>
     <string name="preference_measurement_system_metric">Metrická</string>
+    <string name="preference_measurement_system_metric_scientific">Metrické (vědecké)</string>
+    <string name="preference_measurement_system_uk">UK – hybridní</string>
+    <string name="preference_measurement_system_us">US – zvykové</string>
     <string name="preference_transliteration">Preferovaná transkripce</string>
     <string name="preference_transliteration_auto">Automatická</string>
     <string name="preference_calendar_system">Kalendářový systém</string>
