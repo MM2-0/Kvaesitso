@@ -61,6 +61,10 @@ class IconsSettingsScreenVM(
         uiSettings.setGridShowListIcons(showIcons)
     }
 
+    fun setShowAlphabetScroller(showAlphabetScroller: Boolean) {
+        uiSettings.setGridShowAlphabetScroller(showAlphabetScroller)
+    }
+
     val iconShape = uiSettings.iconShape
     fun setIconShape(iconShape: IconShape) {
         uiSettings.setIconShape(iconShape)

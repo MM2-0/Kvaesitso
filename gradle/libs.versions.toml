@@ -1,4 +1,5 @@
 [versions]
+icu4j = "78.3"
 mustache = "0.9.14"
 jacksonCore = "2.21.3"
 jacksonDataformatYaml = "2.21.3"
@@ -44,6 +45,7 @@ espressoCore = "3.6.1"
 osmOpeningHours = "0.4.0"
 
 [libraries]
+icu4j = { module = "com.ibm.icu:icu4j", version.ref = "icu4j" }
 mustache-compiler = { module = "com.github.spullara.mustache.java:compiler", version.ref = "mustache" }
 
 jackson-core = { module = "com.fasterxml.jackson.core:jackson-core", version.ref = "jacksonCore" }
