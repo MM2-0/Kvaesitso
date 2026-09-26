@@ -1,100 +1,119 @@
 package de.mm20.launcher2.search
 
 import com.aallam.similarity.JaroWinkler
+import de.mm20.launcher2.search.fuzzy.FzfMatcher
 
+/**
+ * How well a search result matches a query, between 0 and 1. Higher is better. Any score of at
+ * least [MatchThreshold] is a match.
+ */
 @JvmInline
-value class ResultScore private constructor(private val packed: Long) : Comparable<ResultScore> {
-    constructor(
-        isPrefix: Boolean,
-        isSubstring: Boolean,
-        isPrimary: Boolean,
-        similarity: Float,
-    ) : this(
-        (similarity.toRawBits().toLong()) or
-                (if (isPrefix) (1L shl 32) else 0) or
-                (if (isSubstring) (1L shl 33) else 0) or
-                (if (isPrimary) (1L shl 34) else 0)
-    )
-
-    /**
-     * Whether the query is a literal prefix of the result.
-     */
-    val isPrefix: Boolean
-        get() = (packed and (1L shl 32)) != 0L
-
-    /**
-     * Whether the query is a substring of the result.
-     */
-    val isSubstring: Boolean
-        get() = (packed and (1L shl 33)) != 0L
-
-    /**
-     * Whether the query was matched against a primary field.
-     */
-    val isPrimary: Boolean
-        get() = (packed and (1L shl 34)) != 0L
-
-    /**
-     * The Jaro-Winkler similarity between the query and the result.
-     */
-    val similarity: Float
-        get() = Float.fromBits((packed and 0xffffffffL).toInt())
-
-    /**
-     * A total score for the result, combining the similarity with additional factors.
-     * The score is normalized to be between 0 and 1.
-     */
-    val score: Float
-        get() = (similarity + (if (isPrefix) 0.2f else 0f) + (if (isSubstring) 0.8f else 0f)).coerceIn(0f, 1f) * (if (isPrimary) 1f else 0.8f)
+value class ResultScore(val score: Float) : Comparable<ResultScore> {
 
     override fun compareTo(other: ResultScore): Int {
         return score.compareTo(other.score)
     }
 
     companion object {
+        /**
+         * Scores [query] against the best of [primaryFields] and [secondaryFields]. Queries and
+         * fields are expected to be normalized (see [StringNormalizer]) by the caller.
+         *
+         * A field matches if it contains the query's characters in order (an fzf-style
+         * subsequence match, e.g. "ytm" in "yt music"), or failing that, if it is close enough to
+         * the query to be a typo of it (Jaro-Winkler similarity, e.g. "settimgs" for "settings").
+         *
+         * Every match lands in one of three non-overlapping bands, so that the kind of evidence
+         * decides the order before the similarity within a band does:
+         *
+         * - `[0.95, 1]` Strong literal match: the characters are all there, tightly clustered or at
+         *   word boundaries. An exact match scores 1.
+         * - `[0.90, 0.95)` Weak literal match: the characters are all there, but scattered.
+         * - `[0.80, 0.90)` Typo match: some typed character is not in the field at all, so this is
+         *   a guess at a correction.
+         *
+         * All bands sit above [MatchThreshold], where the previous substring-or-similar scorer put
+         * its matches too, so the balance against usage weights in ranking is unchanged.
+         */
         fun from(
             query: String,
             primaryFields: Iterable<String> = emptyList(),
             secondaryFields: Iterable<String> = emptyList(),
         ): ResultScore {
-            val jaroWinkler = JaroWinkler()
-            val bestPrimaryScore = primaryFields.maxOfOrNull { term ->
-                val sim = jaroWinkler.similarity(query, term).toFloat()
-                ResultScore(
-                    isPrefix = term.startsWith(query),
-                    isSubstring = query in term,
-                    isPrimary = true,
-                    similarity = sim
-                )
-            } ?: Zero
-            val bestSecondaryScore = secondaryFields.maxOfOrNull { term ->
-                val sim = jaroWinkler.similarity(query, term).toFloat()
-                ResultScore(
-                    isPrefix = term.startsWith(query),
-                    isSubstring = query in term,
-                    isPrimary = false,
-                    similarity = sim
-                )
-            } ?: Zero
+            // An empty query is a prefix of everything.
+            if (query.isEmpty()) return ResultScore(1f)
 
-            return maxOf(bestPrimaryScore, bestSecondaryScore)
+            val maxScore = FzfMatcher.maxScoreFor(query)
+            val bestPrimary = primaryFields.maxOfOrNull { scoreField(query, it, maxScore) } ?: 0f
+            val bestSecondary = secondaryFields.maxOfOrNull {
+                scoreField(query, it, maxScore) * SecondaryFieldFactor
+            } ?: 0f
+            return ResultScore(maxOf(bestPrimary, bestSecondary))
         }
 
-        val Zero = ResultScore(
-            isPrefix = false,
-            isSubstring = false,
-            isPrimary = false,
-            similarity = 0f
-        )
+        private fun scoreField(query: String, term: String, maxScore: Int): Float {
+            val literal = FzfMatcher.normalizedScore(query, term, maxScore)
+            if (literal > 0f) {
+                return if (literal >= StrongLiteralThreshold) {
+                    lerp(
+                        StrongLiteralBand,
+                        1f,
+                        (literal - StrongLiteralThreshold) / (1f - StrongLiteralThreshold)
+                    )
+                } else {
+                    lerp(WeakLiteralBand, StrongLiteralBand, literal / StrongLiteralThreshold)
+                }
+            }
 
-        val Unspecified = ResultScore(
-            isPrefix = false,
-            isSubstring = false,
-            isPrimary = false,
-            similarity = Float.NaN,
-        )
+            // With only one or two characters, there is nothing to base a correction on.
+            if (query.length < MinTypoQueryLength) return 0f
+
+            val similarity = JaroWinkler().similarity(query, term).toFloat()
+            if (similarity < MatchThreshold) return 0f
+            // Similarity is only 1 for identical strings, which the literal path has already
+            // caught, so this stays below WeakLiteralBand.
+            return lerp(
+                TypoBand,
+                WeakLiteralBand,
+                (similarity - MatchThreshold) / (1f - MatchThreshold)
+            )
+        }
+
+        private fun lerp(start: Float, end: Float, fraction: Float): Float {
+            return start + (end - start) * fraction.coerceIn(0f, 1f)
+        }
+
+        /**
+         * The lowest score that counts as a match.
+         */
+        const val MatchThreshold = 0.8f
+
+        /**
+         * Normalized fzf score from which a literal match is considered strong.
+         */
+        private const val StrongLiteralThreshold = 0.5f
+
+        private const val StrongLiteralBand = 0.95f
+        private const val WeakLiteralBand = 0.9f
+        private const val TypoBand = MatchThreshold
+
+        private const val MinTypoQueryLength = 3
+
+        /**
+         * How much a match on a secondary field is worth relative to the same match on a primary
+         * field.
+         */
+        private const val SecondaryFieldFactor = 0.8f
+
+        val Zero = ResultScore(0f)
+
+        /**
+         * No score has been computed yet. Results that carry this are scored lazily when they are
+         * ranked, since not every repository scores its own results.
+         */
+        val Unspecified = ResultScore(Float.NaN)
     }
 }
 
-inline val ResultScore.isUnspecified : Boolean
-    get() = this == ResultScore.Unspecified
+inline val ResultScore.isUnspecified: Boolean
+    get() = score.isNaN()

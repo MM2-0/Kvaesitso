@@ -76,7 +76,9 @@ import de.mm20.launcher2.ui.settings.crashreporter.CrashReporterRoute
 import de.mm20.launcher2.ui.settings.crashreporter.CrashReporterScreen
 import de.mm20.launcher2.ui.settings.debug.DebugSettingsRoute
 import de.mm20.launcher2.ui.settings.debug.DebugSettingsScreen
+import de.mm20.launcher2.ui.settings.debug.FuzzyMatchTestRoute
 import de.mm20.launcher2.ui.settings.debug.StringNormalizerTestRoute
+import de.mm20.launcher2.ui.settings.debug.FuzzyMatchTestScreen
 import de.mm20.launcher2.ui.settings.debug.StringNormalizerTestScreen
 import de.mm20.launcher2.ui.settings.easteregg.EasterEggSettingsRoute
 import de.mm20.launcher2.ui.settings.easteregg.EasterEggSettingsScreen
@@ -306,6 +308,9 @@ class SettingsActivity : BaseActivity() {
             }
             entry<StringNormalizerTestRoute> {
                 StringNormalizerTestScreen()
+            }
+            entry<FuzzyMatchTestRoute> {
+                FuzzyMatchTestScreen()
             }
             entry<LocaleSettingsRoute> {
                 LocaleSettingsScreen()
