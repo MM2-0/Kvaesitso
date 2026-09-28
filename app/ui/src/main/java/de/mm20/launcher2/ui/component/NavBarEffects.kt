@@ -20,6 +20,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
+import kotlin.time.Duration.Companion.milliseconds
 
 @Composable
 fun NavBarEffects(
@@ -44,7 +45,7 @@ fun NavBarEffects(
                     intensity = 5
                     //Workaround for delayed current updates
                     if (retryOnZeroCurrent) {
-                        delay(1000)
+                        delay(1000.milliseconds)
                         update(intent)
                     }
                     return

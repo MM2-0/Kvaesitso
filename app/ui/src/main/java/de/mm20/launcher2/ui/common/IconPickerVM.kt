@@ -15,6 +15,7 @@ import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import kotlin.coroutines.coroutineContext
+import kotlin.time.Duration.Companion.milliseconds
 
 class IconPickerVM(
     private val searchable: SavableSearchable
@@ -45,7 +46,7 @@ class IconPickerVM(
         }
         withContext(coroutineContext) {
             debounceSearchJob = launch {
-                delay(500)
+                delay(500.milliseconds)
                 isSearchingIcons.value = true
                 iconSearchResults.value = emptyList()
                 iconSearchResults.value = iconService.searchCustomIcons(query, iconPack)

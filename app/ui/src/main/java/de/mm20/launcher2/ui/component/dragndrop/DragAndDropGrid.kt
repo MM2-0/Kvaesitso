@@ -19,6 +19,7 @@ import de.mm20.launcher2.ui.ktx.toIntOffset
 import kotlinx.coroutines.*
 import kotlinx.coroutines.android.awaitFrame
 import kotlin.coroutines.coroutineContext
+import kotlin.time.Duration.Companion.milliseconds
 
 /**
  * Create and remember a [LazyDragAndDropGridState]
@@ -90,7 +91,7 @@ data class LazyDragAndDropGridState(
                 dropJob?.cancelAndJoin()
                 dropJob = launch {
                     currentDropPosition = dropTarget.index
-                    delay(300)
+                    delay(300.milliseconds)
                     // Get a fresh copy of layout info because index in saved layout info might be outdated
                     val dragged =
                         gridState.layoutInfo.visibleItemsInfo.find { it.key == draggedItem?.key }
@@ -139,7 +140,7 @@ data class LazyDragAndDropGridState(
             scrollJob?.cancelAndJoin()
             scrollJob = launch {
                 currentScrollDelta = delta
-                delay(500)
+                delay(500.milliseconds)
                 var lastFrame = awaitFrame()
                 while (isActive) {
                     val frame = awaitFrame()
