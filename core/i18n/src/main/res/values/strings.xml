@@ -663,6 +663,7 @@
     <string name="preference_search_cloud_summary">Search %1$s\'s files</string>
     <string name="preference_search_owncloud">Owncloud</string>
     <string name="preference_calendar_calendars">Calendars</string>
+    <string name="calendar_source_google">Google Calendar</string>
     <string name="preference_calendar_hide_completed">Hide completed tasks</string>
     <string name="preference_screen_buildinfo">Build information</string>
     <string name="preference_screen_buildinfo_summary">More information about this build of this app</string>
