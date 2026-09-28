@@ -176,6 +176,7 @@ class PluginCalendarProvider(
                             owner = cursor[CalendarListColumns.AccountName],
                             types = cursor[CalendarListColumns.ContentTypes] ?: continue,
                             providerId = pluginAuthority,
+                            sourceId = pluginAuthority,
                         )
                     }
                 }
