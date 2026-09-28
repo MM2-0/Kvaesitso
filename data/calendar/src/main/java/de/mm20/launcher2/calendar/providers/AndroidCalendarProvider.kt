@@ -191,6 +191,7 @@ class AndroidCalendarProvider(
                 CalendarContract.Calendars.CALENDAR_COLOR,
                 CalendarContract.Calendars.VISIBLE,
                 CalendarContract.Calendars.CALENDAR_DISPLAY_NAME,
+                CalendarContract.Calendars.ACCOUNT_TYPE,
             )
             val cursor = context.contentResolver.query(uri, proj, null, null, null)
                 ?: return@withContext emptyList()
@@ -204,6 +205,7 @@ class AndroidCalendarProvider(
                             color = cursor.getInt(3),
                             types = listOf(CalendarListType.Calendar),
                             providerId = "local",
+                            sourceId = "android:" + (cursor.getStringOrNull(6) ?: "unknown"),
                         )
                     )
                 } catch (e: NullPointerException) {
