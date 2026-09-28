@@ -913,28 +913,64 @@ fun ColumnScope.ConfigureCalendarWidget(
     }
 
     val groups = remember(calendars) {
-        calendars?.groupBy { it.providerId }?.entries
+        calendars?.groupBy { it.sourceId }?.entries
     }
 
     if (groups?.isNotEmpty() == true) {
         for (group in groups) {
-            val pluginName = remember(plugins, group.key) {
-                if (group.key == "local") context.getString(R.string.preference_calendar_calendars)
-                else if (group.key == "tasks.org") context.getString(R.string.preference_search_tasks)
-                else plugins.find { it.authority == group.key }?.label
+            val sourceName = remember(plugins, group.key) {
+                when {
+                    group.key == "local" ->
+                        context.getString(R.string.preference_calendar_calendars)
+                    group.key == "tasks.org" ->
+                        context.getString(R.string.preference_search_tasks)
+                    group.key == "android:com.google" ->
+                        context.getString(R.string.calendar_source_google)
+                    group.key.startsWith("android:") ->
+                        group.key.removePrefix("android:")
+                    else ->
+                        plugins.find { it.authority == group.key }?.label ?: group.key
+                }
             }
-            if (pluginName != null) {
-                Text(
-                    modifier = Modifier.padding(top = 16.dp, bottom = 4.dp),
-                    style = MaterialTheme.typography.titleSmall,
-                    color = MaterialTheme.colorScheme.secondary,
-                    text = pluginName
-                )
+            Text(
+                modifier = Modifier.padding(top = 16.dp, bottom = 4.dp),
+                style = MaterialTheme.typography.titleSmall,
+                color = MaterialTheme.colorScheme.secondary,
+                text = sourceName
+            )
+
+            val calendarIds = remember(group.value) {
+                group.value.map { it.id }
             }
+            val allSelected = remember(excludedCalendars, calendarIds) {
+                calendarIds.isNotEmpty() && calendarIds.none(excludedCalendars::contains)
+            }
+
             OutlinedCard {
                 Column(
                     modifier = Modifier.fillMaxWidth()
                 ) {
+                    CheckboxPreference(
+                        title = sourceName,
+                        iconPadding = false,
+                        value = allSelected,
+                        onValueChanged = { enabled ->
+                            onWidgetUpdated(
+                                widget.copy(
+                                    config = widget.config.copy(
+                                        excludedCalendarIds = if (enabled) {
+                                            excludedCalendars - calendarIds.toSet()
+                                        } else {
+                                            excludedCalendars + calendarIds
+                                        }
+                                    )
+                                )
+                            )
+                        }
+                    )
+                    if (group.value.isNotEmpty()) {
+                        HorizontalDivider()
+                    }
                     for ((i, calendar) in group.value.withIndex()) {
                         if (i > 0) HorizontalDivider()
                         CheckboxPreference(
