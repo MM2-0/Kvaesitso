@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<full-backup-content >
+    <include domain="file" path="./datastore/"/>
+    <include domain="database" path="."/>
+    <include domain="sharedpref" path="."/>
+    <exclude domain="sharedpref" path="nextcloud.xml" />
+    <exclude domain="sharedpref" path="owncloud.xml" />
+</full-backup-content>
