@@ -86,7 +86,7 @@ value class ResultScore(val score: Float) : Comparable<ResultScore> {
         /**
          * The lowest score that counts as a match.
          */
-        const val MatchThreshold = 0.8f
+        internal const val MatchThreshold = 0.8f
 
         /**
          * Normalized fzf score from which a literal match is considered strong.

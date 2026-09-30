@@ -30,7 +30,7 @@ class FzfMatcherMatchesTest(
         Assert.assertEquals(
             "\"$query\" vs \"$target\"",
             expected,
-            FzfMatcher.match(query, target) != null,
+            FzfMatcher.matches(query, target),
         )
     }
 
@@ -148,12 +148,4 @@ class FzfMatcherScoreTest {
             .filter { it.second > 0f }
             .sortedByDescending { it.second }
             .map { it.first }
-
-    @Test
-    fun positionsAreOnlyRecordedOnRequest() {
-        Assert.assertNull(FzfMatcher.match("ytm", "yt music")?.positions)
-        val positions = FzfMatcher.match("ytm", "yt music", withPositions = true)?.positions
-        // y·t·_·m -> the m of "music", not a letter of "yt".
-        Assert.assertArrayEquals(intArrayOf(0, 1, 3), positions)
-    }
 }

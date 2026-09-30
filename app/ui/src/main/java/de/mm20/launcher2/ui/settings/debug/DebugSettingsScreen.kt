@@ -139,13 +139,6 @@ fun DebugSettingsScreen() {
                             backStack += StringNormalizerTestRoute
                         }
                     )
-                    Preference(
-                        title = "Fuzzy match test",
-                        summary = "Test fuzzy matching and tune result scores",
-                        onClick = {
-                            backStack += FuzzyMatchTestRoute
-                        }
-                    )
                 }
             }
         }

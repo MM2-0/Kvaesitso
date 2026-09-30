@@ -29,19 +29,6 @@
 package de.mm20.launcher2.search.fuzzy
 
 /**
- * A successful fuzzy match.
- *
- * @param score The raw, unnormalized score. Higher is better. Use [FzfMatcher.normalize] to turn
- * it into a comparable 0..1 value.
- * @param positions Indices of the matched characters in the target, or null if they were not
- * requested. Only used for highlighting.
- */
-class FzfResult(
-    val score: Int,
-    val positions: IntArray?,
-)
-
-/**
  * An fzf-style fuzzy matcher: a query matches a target if its characters appear in the target in
  * order, but not necessarily contiguously ("ytm" matches "yt music"). The score rewards matches
  * that are tightly clustered, start at a word boundary, and begin early in the target.
@@ -59,7 +46,7 @@ class FzfResult(
  * normalization, because separators (space, `-`, `_`, `.`, `/`) survive it — which covers the shape
  * of most app labels ("google maps", "play store").
  */
-object FzfMatcher {
+internal object FzfMatcher {
 
     private const val ScoreMatch = 16
     private const val ScoreGapStart = -3
@@ -89,17 +76,9 @@ object FzfMatcher {
     private const val CharLower = 3
     private const val CharUpper = 4
 
-    /**
-     * Matches [query] against [target], returning null if [query] is not a subsequence of [target].
-     *
-     * @param withPositions Whether to record the index of every matched character. Only needed for
-     * highlighting; skipping it avoids allocating an array per candidate.
-     */
-    fun match(query: String, target: String, withPositions: Boolean = false): FzfResult? {
-        val positions = if (withPositions) IntArray(query.length) else null
-        val score = rawScore(query, target, positions)
-        if (score == NoMatch) return null
-        return FzfResult(score, positions)
+    /** Whether [query] is a subsequence of [target]. */
+    fun matches(query: String, target: String): Boolean {
+        return rawScore(query, target) != NoMatch
     }
 
     /**
@@ -114,7 +93,7 @@ object FzfMatcher {
         maxScore: Int = maxScoreFor(query),
     ): Float {
         if (maxScore <= 0) return 0f
-        val score = rawScore(query, target, null)
+        val score = rawScore(query, target)
         return if (score == NoMatch) 0f else normalize(score, maxScore)
     }
 
@@ -124,21 +103,18 @@ object FzfMatcher {
      */
     fun maxScoreFor(query: String): Int {
         if (query.isEmpty()) return 0
-        val score = rawScore(query, query, null)
+        val score = rawScore(query, query)
         return if (score == NoMatch) 0 else score
     }
 
-    /** Scales a raw score from [match] into the 0..1 range, given a [maxScore] for the query. */
-    fun normalize(rawScore: Int, maxScore: Int): Float {
+    /** Scales a raw score into the 0..1 range, given a [maxScore] for the query. */
+    private fun normalize(rawScore: Int, maxScore: Int): Float {
         if (maxScore <= 0) return 0f
         return (rawScore.toFloat() / maxScore).coerceIn(0f, 1f)
     }
 
-    /**
-     * The raw score of the tightest window of [target] containing [query], or [NoMatch]. Fills
-     * [positions] with the matched indices when it is non-null.
-     */
-    private fun rawScore(query: String, target: String, positions: IntArray?): Int {
+    /** The raw score of the tightest window of [target] containing [query], or [NoMatch]. */
+    private fun rawScore(query: String, target: String): Int {
         if (query.isEmpty()) return 0
         if (query.length > target.length) return NoMatch
 
@@ -171,7 +147,7 @@ object FzfMatcher {
         }
         if (start == -1) return NoMatch
 
-        return scoreWindow(query, target, start, end, positions)
+        return scoreWindow(query, target, start, end)
     }
 
     private fun scoreWindow(
@@ -179,7 +155,6 @@ object FzfMatcher {
         target: String,
         start: Int,
         end: Int,
-        positions: IntArray?,
     ): Int {
         var queryIndex = 0
         var score = 0
@@ -194,7 +169,6 @@ object FzfMatcher {
             val currClass = charClassOf(char)
 
             if (queryIndex < query.length && char == query[queryIndex]) {
-                positions?.set(queryIndex, i)
                 queryIndex++
                 score += ScoreMatch
 
