@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
@@ -48,8 +49,8 @@ internal object ScreenOffComponent : ScaffoldComponent(), KoinComponent {
     ) {
         if (isActive) {
             val bottomSheetManager = LocalBottomSheetManager.current
-            LaunchedEffect(Unit) {
-                val gesture = state.currentGesture ?: return@LaunchedEffect
+            SideEffect(Unit) {
+                val gesture = state.currentGesture ?: return@SideEffect
                 if (!permissionsManager.checkPermissionOnce(PermissionGroup.Accessibility)) {
                     bottomSheetManager.showFailedGestureSheet(
                         gesture = gesture,

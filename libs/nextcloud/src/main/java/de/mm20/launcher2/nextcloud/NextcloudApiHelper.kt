@@ -34,6 +34,7 @@ import kotlinx.coroutines.withContext
 import kotlinx.serialization.SerializationException
 import java.io.File
 import java.io.IOException
+import javax.crypto.AEADBadTagException
 
 class NextcloudApiHelper(val context: Context) {
 
@@ -68,7 +69,7 @@ class NextcloudApiHelper(val context: Context) {
                 EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
                 EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
             )
-        } catch (e: IOException) {
+        } catch (e: Exception) {
             if (!catchErrors) throw e
             File(context.filesDir, "../shared_prefs/nextcloud.xml").delete()
             return createPreferences(false)

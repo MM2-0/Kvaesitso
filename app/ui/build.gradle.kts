@@ -89,7 +89,8 @@ dependencies {
 
     implementation(libs.markdown)
 
-    implementation(libs.haze)
+    implementation(libs.haze.core)
+    implementation(libs.haze.blur)
 
     implementation(libs.androidx.core)
     implementation(libs.androidx.activitycompose)

@@ -884,8 +884,8 @@
     <string name="preference_form_of_address_masc">Mužské</string>
     <string name="preference_measurement_system">Měrná soustava</string>
     <string name="preference_measurement_system_metric">Metrická</string>
-    <string name="preference_measurement_system_uk">Spojené království</string>
-    <string name="preference_measurement_system_us">Spojené státy</string>
+    <string name="preference_measurement_system_uk">UK – hybridní</string>
+    <string name="preference_measurement_system_us">US – zvykové</string>
     <string name="preference_transliteration">Preferovaná transkripce</string>
     <string name="preference_transliteration_auto">Automatická</string>
     <string name="preference_value_disabled">Zakázaná</string>
@@ -948,4 +948,7 @@
     <string name="preference_currencies">Měna</string>
     <string name="preference_add_currency">Přidat měnu</string>
     <string name="favorites_skip_rows">Přeskočit řádky</string>
+    <string name="action_fix">Opravit</string>
+    <string name="missing_permission_local_network">Aplikace %1$s nemá povoleno hledat zařízení v místní síti.</string>
+    <string name="preference_measurement_system_metric_scientific">Metrické (vědecké)</string>
 </resources>

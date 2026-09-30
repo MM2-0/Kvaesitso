@@ -36,8 +36,9 @@
     <application
         android:name=".LauncherApplication"
         android:allowBackup="true"
+        android:fullBackupContent="@xml/full_backup_rules"
+        android:dataExtractionRules="@xml/data_extraction_rules"
         android:crossProfile="true"
-        android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:requestLegacyExternalStorage="true"
