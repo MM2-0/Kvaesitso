@@ -39,6 +39,7 @@
     <string name="action_clear">清除</string>
     <string name="action_install">安装</string>
     <string name="action_quit">退出</string>
+    <string name="action_fix">修复</string>
     <!-- Delete something (a file or a web search shortcut) -->
     <string name="menu_delete">删除</string>
     <string name="menu_remove">移除</string>
@@ -1075,6 +1076,8 @@
     <string name="preference_form_of_address_masc">男性</string>
     <string name="preference_measurement_system">度量制</string>
     <string name="preference_measurement_system_metric">公制</string>
+    <string name="preference_measurement_system_uk">英制</string>
+    <string name="preference_measurement_system_us">美制</string>
     <string name="preference_transliteration">翻译语言偏好</string>
     <string name="preference_transliteration_auto">自动</string>
     <string name="preference_calendar_system">历制</string>
