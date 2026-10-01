@@ -922,4 +922,6 @@
     <string name="search_query_private_space">私密空间</string>
     <string name="search_action_private_space_lock">锁定私密空间</string>
     <string name="search_action_private_space_unlock">解锁私密空间</string>
+    <string name="action_fix">修复</string>
+    <string name="missing_permission_local_network">不被允许查找本地网络上的设备。</string>
 </resources>
