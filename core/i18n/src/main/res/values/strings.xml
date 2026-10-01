@@ -602,6 +602,8 @@
     <string name="preference_clockwidget_smartspacer">Managed by Smartspacer</string>
     <string name="preference_clockwidget_date_part">Date</string>
     <string name="preference_clockwidget_date_part_summary">Show the current date</string>
+    <string name="preference_clockwidget_date_app">Tap to open</string>
+    <string name="preference_clockwidget_date_app_default">Default calendar app</string>
     <string name="preference_clockwidget_favorites_part">Dock</string>
     <string name="preference_clockwidget_favorites_part_summary">Show pinned items in dock</string>
     <string name="preference_clockwidget_dock_rows">Dock rows</string>
