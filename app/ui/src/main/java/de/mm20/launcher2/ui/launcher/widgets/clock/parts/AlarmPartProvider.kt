@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.provider.AlarmClock
-import android.text.format.DateUtils
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.*
@@ -68,6 +67,18 @@ class AlarmPartProvider : PartProvider {
             context.unregisterReceiver(receiver)
         }
     }
+    private fun formatRemainingTime(alarmTime: Long, currentTime: Long): String {
+        val diff = alarmTime - currentTime
+        val minutes = (diff / (1000 * 60)) % 60
+        val hours = diff / (1000 * 60 * 60)
+
+        return if (hours > 0) {
+            "in $hours hr${if (hours > 1) "s" else ""} $minutes min${if (minutes != 1L) "s" else ""}"
+        } else {
+            "in $minutes min${if (minutes != 1L) "s" else ""}"
+        }
+    }
+
 
     @Composable
     override fun Component(compactLayout: Boolean) {
@@ -94,12 +105,7 @@ class AlarmPartProvider : PartProvider {
                     )
                     Text(
                         modifier = Modifier.padding(start = 12.dp),
-                        text = DateUtils.getRelativeTimeSpanString(
-                            it,
-                            time,
-                            DateUtils.MINUTE_IN_MILLIS
-                        )
-                            .toString(),
+                        text = formatRemainingTime(it, time),
                     )
                 }
             } else {
@@ -118,12 +124,7 @@ class AlarmPartProvider : PartProvider {
                     )
                     Text(
                         modifier = Modifier.padding(start = 12.dp),
-                        text = DateUtils.getRelativeTimeSpanString(
-                            it,
-                            time,
-                            DateUtils.MINUTE_IN_MILLIS
-                        )
-                            .toString(),
+                        text = formatRemainingTime(it, time),
                         style = MaterialTheme.typography.titleMedium
                     )
                 }
