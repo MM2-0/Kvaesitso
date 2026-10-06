@@ -13,7 +13,7 @@ hero:
 ---
 
 <script setup>
-  import Footer from '.vitepress/theme/Footer.vue'
+  import Footer from './.vitepress/theme/Footer.vue'
 </script>
 <div class="home-screenshots">
   <img src="/img/screenshot-1.png"></img>

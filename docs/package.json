@@ -6,9 +6,9 @@
   },
   "devDependencies": {
     "qrcode": "^1.5.4",
-    "sass": "^1.86.0",
-    "vitepress": "^1.6.3",
-    "vue": "^3.5.13"
+    "sass": "^1.105.1",
+    "vitepress": "^2.0.0-alpha.20",
+    "vue": "^3.5.43"
   },
   "dependencies": {
     "material-symbols": "^0.14.7"
