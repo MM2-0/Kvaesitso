@@ -39,6 +39,7 @@
     <string name="action_clear">Очистить поле</string>
     <string name="action_install">Установить</string>
     <string name="action_quit">Выйти</string>
+    <string name="action_fix">Исправить</string>
     <!-- Delete something (a file or a web search shortcut) -->
     <string name="menu_delete">Убрать</string>
     <string name="menu_remove">Удалить</string>
@@ -169,7 +170,7 @@
     <!-- Warning message that is shown when a user attempts to delete a file -->
     <string name="alert_delete_file">Файл %1$s будет удалён навсегда. Продолжить\?</string>
     <!-- Warning message that is shown when a user attempts to delete a pinned shortcut -->
-    <string name="alert_delete_shortcut">Ярлык %1$s будет удален навсегда. Продолжить\?</string>
+    <string name="alert_delete_shortcut">Ярлык %1$s будет удалён навсегда. Продолжить?</string>
     <!-- A somewhat generic error message that is shown when something (a file of a specific file, an app, …)
     could not be opened because there was no app installed that could handle the request  -->
     <!--
@@ -224,7 +225,7 @@
     <string name="widget_name_notes">Заметки</string>
     <string name="widget_name_unknown">Неизвестный</string>
     <string name="widget_add_widget">Добавить виджет</string>
-    <string name="widget_removed">Виджет удален</string>
+    <string name="widget_removed">Виджет удалён</string>
     <string name="notes_widget_placeholder">Написать заметку</string>
     <string name="notes_widget_action_new">Новая заметка</string>
     <!-- Save / export the current note content as markdown file -->
@@ -250,11 +251,11 @@
     <string name="widget_action_replace">Заменить</string>
     <string name="menu_item_edit_favs">Редактировать избранное</string>
     <!-- Edit favorites, title for items that are frequently used but not pinned -->
-    <string name="edit_favorites_dialog_unpinned">Не закреплены — часто используются</string>
+    <string name="edit_favorites_dialog_unpinned">Не закреплены — часто используемые</string>
     <!-- Edit favorites, title for items that are pinned but have not been sorted by the user -->
-    <string name="edit_favorites_dialog_pinned_unsorted">Закреплены — отсортированы автоматически</string>
+    <string name="edit_favorites_dialog_pinned_unsorted">Закреплены — автосортировка</string>
     <!-- Edit favorites, title for items that are pinned and have been sorted by the user -->
-    <string name="edit_favorites_dialog_pinned_sorted">Закреплены — отсортированы вручную</string>
+    <string name="edit_favorites_dialog_pinned_sorted">Закреплены — ручная сортировка</string>
     <string name="edit_favorites_dialog_empty_section">Перетаскивайте значки сюда</string>
     <string name="edit_favorites_dialog_tags">Теги</string>
     <string name="edit_favorites_dialog_tag_section_empty">Закреплённые теги появятся здесь</string>
@@ -263,17 +264,17 @@
     <string name="nextcloud_server_url">Адрес сервера Nextcloud</string>
     <!-- Nextcloud/Owncloud login flow, empty URL-->
     <!-- Nextcloud login flow, error invalid URL-->
-    <string name="nextcloud_server_invalid_url">Этот адрес не ведёт к действующей сборке Nextcloud</string>
+    <string name="nextcloud_server_invalid_url">Этот URL-адрес не указывает на работоспособную установку Nextcloud</string>
     <!-- Owncloud login flow, UR-->
     <string name="owncloud_server_url">Адрес сервера Owncloud</string>
     <!-- Owncloud login flow, error invalid URL-->
-    <string name="owncloud_server_invalid_url">Этот адрес не ведёт к действующей сборке Owncloud</string>
+    <string name="owncloud_server_invalid_url">Этот URL-адрес не указывает на работоспособную установку Owncloud</string>
     <!-- Owncloud login flow, password-->
     <string name="owncloud_password">Пароль</string>
     <!-- Owncloud login flow, user name-->
     <string name="owncloud_username">Имя пользователя</string>
     <!-- Owncloud login flow -->
-    <string name="owncloud_login_2fa_hint">Если у вас включена двухфакторная аутентификация, вы должны здесь использовать пароль приложения.</string>
+    <string name="owncloud_login_2fa_hint">Если у вас включена двухфакторная аутентификация, вы должны использовать здесь пароль приложения.</string>
     <!-- Owncloud login flow, login failed -->
     <string name="owncloud_login_failed">Ошибка входа: неверное имя пользователя или пароль.</string>
     <!-- Owncloud login flow, error: username empty -->
@@ -322,9 +323,9 @@
     <string name="task_due_today">Выполнить до конца сегодняшнего дня</string>
     <!-- Default title that is shown in the music widget if the app that is playing media did not publish a title -->
     <string name="music_widget_default_title">%1$s проигрывает медиа</string>
-    <string name="music_widget_no_data">Пока что медиа не включались</string>
+    <string name="music_widget_no_data">Пока что медиафайлы не проигрывались</string>
     <string name="music_widget_interactive_progress_bar">Интерактивная полоса прогресса</string>
-    <string name="weather_condition_sleetshowers">Ливневый дождь со снегом</string>
+    <string name="weather_condition_sleetshowers">Ливень с мокрым снегом</string>
     <string name="weather_condition_heavysleet">Сильный дождь со снегом</string>
     <string name="weather_condition_lightrainshowersandthunder">Слабый ливень с громом</string>
     <string name="weather_condition_heavyrain">Сильный дождь</string>
@@ -347,13 +348,13 @@
     <string name="weather_condition_heavysnowshowers">Сильный снежный ливень</string>
     <string name="weather_condition_heavyrainshowers">Сильный ливень</string>
     <string name="weather_condition_rainshowersandthunder">Ливень с громом</string>
-    <string name="weather_condition_clearsky">Ясно</string>
+    <string name="weather_condition_clearsky">Безоблачное небо</string>
     <string name="weather_condition_sleet">Дождь со снегом</string>
     <string name="weather_condition_rain">Дождь</string>
     <string name="weather_condition_sleetandthunder">Дождь со снегом и громом</string>
     <string name="weather_condition_lightssnowshowersandthunder">Слабый ливневый снег с громом</string>
     <string name="weather_condition_heavyrainshowersandthunder">Сильный ливень с громом</string>
-    <string name="weather_condition_fair">Погоже</string>
+    <string name="weather_condition_fair">Ясно</string>
     <string name="weather_condition_fog">Туман</string>
     <string name="weather_condition_haze">Дымка</string>
     <string name="weather_condition_sleetshowersandthunder">Ливневый дождь со снегом и громом</string>
@@ -369,7 +370,7 @@
     <string name="weather_condition_snowshowersandthunder">Снежный ливень с громом</string>
     <string name="weather_condition_snowshowers">Снежный ливень</string>
     <string name="weather_condition_heavyrainandthunder">Сильный дождь с громом</string>
-    <string name="weather_condition_wind">Ветрено</string>
+    <string name="weather_condition_wind">Ветер</string>
     <string name="weather_condition_unknown">Неизвестно</string>
     <!-- Humidity details, %1$s: formatted humidity value -->
     <!-- Wind details, %1$s: formatted wind values -->
@@ -384,18 +385,18 @@
     <!-- Missing notification permission in music widget settings -->
     <string name="missing_permission_music_widget">Доступ к уведомлениям необходим для управления воспроизведением медиа</string>
     <!-- Missing contact permission in search settings screen -->
-    <string name="missing_permission_contact_search_settings">Для поиска контактов требуется соответствующее разрешение</string>
+    <string name="missing_permission_contact_search_settings">Для поиска контактов требуется разрешение на доступ к контактам</string>
     <!-- Missing call permission in contacts settings screen -->
-    <string name="missing_permission_call_contacts_settings">Для начала звонков необходимо разрешение на вызов</string>
+    <string name="missing_permission_call_contacts_settings">Для совершения звонков требуется разрешение на доступ к телефону</string>
     <!-- Missing calendar permission in search settings screen -->
-    <string name="missing_permission_calendar_search_settings">Для поиска в календаре требуется соответствующее разрешение</string>
-    <string name="missing_permission_tasks_search_settings">Для поиска в задачах приложения Tasks требуется соответствующее разрешение</string>
-    <string name="missing_permission_tasks_integration">Для использования интеграции с задачами требуется соответствующее разрешение</string>
+    <string name="missing_permission_calendar_search_settings">Для поиска в календаре требуется разрешение на доступ к календарю</string>
+    <string name="missing_permission_tasks_search_settings">Для поиска в задачах приложения Tasks требуется разрешение на доступ к задачам</string>
+    <string name="missing_permission_tasks_integration">Для использования интеграции с задачами требуется разрешение на доступ к задачам</string>
     <!-- Missing calendar permission in calendar widget settings screen -->
     <string name="missing_permission_calendar_widget_settings">Этому виджету требуется доступ к календарю</string>
-    <string name="widget_config_calendar_missing_calendars_hint">Не находите свои напоминания?</string>
+    <string name="widget_config_calendar_missing_calendars_hint">Не находите свои календари?</string>
     <!-- Missing permission app shortcuts permission in search settings screen. %1$s: app name -->
-    <string name="missing_permission_appshortcuts_search_settings">Для поиска ярлыков приложений %1$s должно быть установлено главным экраном по умолчанию</string>
+    <string name="missing_permission_appshortcuts_search_settings">Для поиска ярлыков приложений %1$s нужно установить как умолчальный лаунчер</string>
     <!-- Missing file permission in search settings screen -->
     <string name="missing_permission_file_search_settings">Для поиска файлов требуется разрешение на доступ к хранилищу</string>
     <!-- Missing file permission in search settings screen.
@@ -403,21 +404,22 @@
         to MANAGE_EXTERNAL_STORAGE which is labeled differently in the Android OS -->
     <string name="missing_permission_file_search_settings_android10">Для поиска файлов требуется разрешение «Доступ ко всем файлам»</string>
     <!-- Missing notification permission, used in badge settings screen -->
-    <string name="missing_permission_notification_badges">Для отображения значков-оповещений требуется доступ к уведомлениям</string>
+    <string name="missing_permission_notification_badges">Для отображения значков уведомлений требуется доступ к уведомлениям</string>
     <!-- Missing calendar permission, used in calendar widget -->
     <string name="missing_permission_calendar_widget">Для отображения предстоящих встреч и событий требуется разрешение на доступ к календарю</string>
     <!-- Missing calendar permission, used in calendar search results -->
-    <string name="missing_permission_calendar_search">Поиска по календарю требуется разрешение на доступ к нему</string>
+    <string name="missing_permission_calendar_search">Для поиска по календарю требуется разрешение на доступ к календарю</string>
     <!-- Missing location permission, used in location search results -->
     <string name="missing_permission_location_search">Для поиска мест поблизости требуется разрешение на доступ к местоположению</string>
     <!-- Missing files permission, used in files search results -->
     <string name="missing_permission_files_search">Для поиска фотографий, медиафайлов и документов на этом устройстве требуется разрешение на доступ к хранилищу</string>
     <!-- Missing files permission, used in contact search results -->
-    <string name="missing_permission_contact_search">Для поиска по контактной книге требуется разрешение на доступ к ней</string>
+    <string name="missing_permission_contact_search">Для поиска в списке контактов требуется разрешение на доступ к контактам</string>
     <!-- Missing permission app shortcuts permission, used in app shortcut search results. %1$s: app name -->
-    <string name="missing_permission_appshortcuts_search">Установите %1$s главным экраном по умолчанию для поиска ярлыков приложений.</string>
+    <string name="missing_permission_appshortcuts_search">Установите %1$s умолчальным лаунчером для поиска ярлыков приложений.</string>
     <!-- Missing permission app shortcuts permission, used when creating a shortcut in the edit favorites sheet -->
-    <string name="missing_permission_appshortcuts_create">Установите %1$s главным экраном по умолчанию, чтобы создавать ярлыки.</string>
+    <string name="missing_permission_appshortcuts_create">Установите %1$s умолчальным лаунчером чтобы создавать ярлыки.</string>
+    <string name="missing_permission_local_network">%1$s в настоящее время не разрешено находить устройства в локальной сети.</string>
     <!-- Grant a permission, shown in permission banners -->
     <string name="grant_permission">Предоставить</string>
     <!-- Appearance preference title -->
@@ -441,7 +443,7 @@
     <string name="preference_shapes_rect">Квадратная</string>
     <string name="preference_shapes_base">Базовая форма</string>
     <string name="preference_screen_typography">Типографика</string>
-    <string name="preference_create_typography">Новая типографика</string>
+    <string name="preference_create_typography">Новая схема типографики</string>
     <string name="preference_screen_transparencies">Прозрачный</string>
     <string name="preference_create_transparency">Новая схема прозрачности</string>
     <string name="preference_transparencies_default">По умолчанию</string>
@@ -455,17 +457,17 @@
     <!-- Open website of an open source library -->
     <string name="open_webpage">Открыть веб-сайт</string>
     <string name="preference_screen_about_summary">Информация о лицензии и приложении</string>
-    <string name="preference_screen_appearance_summary">Настройте внешний вид</string>
+    <string name="preference_screen_appearance_summary">Настроить внешний вид</string>
     <string name="preference_weather_provider">Поставщик</string>
     <string name="provider_brightsky">Deutscher Wetterdienst (только Германия)</string>
     <string name="preference_category_location">Местоположение</string>
     <string name="preference_automatic_location">Автоматическое определение местоположения</string>
-    <string name="preference_automatic_location_summary">Использовать геолокационные службы для автоматического определения местоположения</string>
+    <string name="preference_automatic_location_summary">Использовать сервисы геолокации для автоопределения местоположения</string>
     <string name="preference_location_managed">Управляется плагином</string>
     <string name="preference_location_managed_summary">Местоположение этого провайдера управляется приложением плагина</string>
     <string name="preference_location">Местоположение</string>
     <string name="preference_location_breezy">Управлять местоположением в Breezy Weather</string>
-    <string name="preference_imperial_units_summary">Использовать имперскую систему</string>
+    <string name="preference_imperial_units_summary">Использовать градусы Фаренгейта и мили в час</string>
     <string name="preference_imperial_units">Имперские единицы</string>
     <string name="widget_config_weather_compact">Компактный вид</string>
     <string name="preference_category_debug">Отладка</string>
@@ -505,14 +507,14 @@
     <string name="preference_screen_integrations">Интеграции</string>
     <string name="preference_screen_plugins">Плагины</string>
     <string name="preference_screen_plugins_summary">Управление установленными дополнениями</string>
-    <string name="preference_category_enabled_plugins">Включить</string>
-    <string name="preference_category_installed_plugins">Установлен</string>
+    <string name="preference_category_enabled_plugins">Включено</string>
+    <string name="preference_category_installed_plugins">Установлено</string>
     <string name="no_plugins_installed">Установленных плагинов нет</string>
     <string name="preference_theme_system">Следовать системе</string>
     <string name="preference_themed_icons">Тематические значки</string>
     <string name="preference_themed_icons_summary">Раскрасьте иконки в соответствии с цветовой схемой приложения</string>
     <string name="preference_force_themed_icons">Принудительные тематические значки</string>
-    <string name="preference_force_themed_icons_summary">Применить цветовую схему приложения ко всем значкам, включая неподдерживающиеся (не рекомендуется)</string>
+    <string name="preference_force_themed_icons_summary">Применить цветовую схему приложения ко всем значкам, включая неподдерживаемые (не рекомендуется)</string>
     <string name="preference_icon_pack">Набор иконок</string>
     <string name="preference_icon_pack_summary_empty">Наборы иконок не установлены</string>
     <!-- Indicates that an icon pack supports dynamic colors (icon colors adapt to the launchers color scheme) -->
@@ -533,15 +535,15 @@
     <string name="preference_summary_not_logged_in">Вы не вошли</string>
     <string name="preference_icon_shape_pentagon">Пятиугольник</string>
     <string name="preference_category_wallpaper">Обои</string>
-    <string name="preference_dim_wallpaper">Тусклые обои</string>
-    <string name="preference_dim_wallpaper_summary">Затемнять обои тёмных темах</string>
+    <string name="preference_dim_wallpaper">Затемнять обои</string>
+    <string name="preference_dim_wallpaper_summary">Затемнять обои в тёмных темах</string>
     <string name="preference_blur_wallpaper">Размытие обоев</string>
     <string name="preference_blur_wallpaper_summary">Применять эффект размытия к обоям</string>
     <string name="preference_blur_wallpaper_unsupported">Не поддерживается на данном устройстве</string>
     <string name="preference_blur_wallpaper_radius">Радиус размытия</string>
     <string name="preference_wallpaper_summary">Выберите обои</string>
     <string name="preference_category_badges">Значки</string>
-    <string name="preference_notification_badges">Значки-оповещения</string>
+    <string name="preference_notification_badges">Значки уведомлений</string>
     <string name="preference_notification_badges_summary">Показывать значок возле приложений с непрочитанными уведомлениями</string>
     <string name="preference_suspended_badges_summary">Показывать значок для приостановленных приложений</string>
     <string name="preference_suspended_badges">Приостановленные приложения</string>
@@ -558,12 +560,12 @@
     <string name="preference_about_telegram">Группа Telegram</string>
     <string name="preference_about_fdroid">Репозиторий F-Droid</string>
     <string name="preference_enforce_icon_shape">Принудительная форма</string>
-    <string name="preference_enforce_icon_shape_summary">Применить форму ко всем значкам, включая неподдерживаемые</string>
+    <string name="preference_enforce_icon_shape_summary">Применить форму ко всем иконкам, включая неподдерживаемые</string>
     <string name="preference_category_license">Лицензия</string>
     <string name="preference_about_license">Данное приложение является свободным ПО.</string>
     <string name="preference_about_license_summary">Под лицензией GNU General Public License 3.0</string>
     <string name="preference_category_grid">Сетка</string>
-    <string name="preference_grid_icon_size">Размер значков</string>
+    <string name="preference_grid_icon_size">Размер иконок</string>
     <string name="preference_grid_column_count">Количество столбцов</string>
     <string name="preference_grid_list_style">Показывать приложения списком</string>
     <string name="preference_grid_list_icons">Показывать иконки приложений в списке</string>
@@ -595,8 +597,9 @@
     <string name="preference_clockwidget_smartspacer">Управляется Smartspacer\'ом</string>
     <string name="preference_clockwidget_date_part">Дата</string>
     <string name="preference_clockwidget_date_part_summary">Показывать текущую дату</string>
-    <string name="preference_clockwidget_favorites_part">Быстрый доступ</string>
-    <string name="preference_clockwidget_favorites_part_summary">Показывать первую строку избранных</string>
+    <string name="preference_clockwidget_favorites_part">Док</string>
+    <string name="preference_clockwidget_favorites_part_summary">Показывать закрепленные элементы в доке</string>
+    <string name="preference_clockwidget_dock_rows">Строки дока</string>
     <string name="preference_clockwidget_music_part">Медиа</string>
     <string name="preference_clockwidget_music_part_summary">Показать управление медиа, если активна медиа-сессия</string>
     <string name="preference_clockwidget_battery_part">Батарея</string>
@@ -606,19 +609,19 @@
     <string name="preference_clockwidget_alarm_part">Будильники</string>
     <string name="preference_clockwidget_alarm_part_summary">Показывать будильники, которые сработают в течении следующих 8 часов</string>
     <string name="preference_screen_backup">Резервное копирование</string>
-    <string name="preference_screen_backup_summary">Экспортируйте и импортируйте данные лаунчера</string>
+    <string name="preference_screen_backup_summary">Экспортировать и импортировать данные лаунчера</string>
     <string name="preference_backup">Создать резервную копию</string>
     <string name="preference_backup_summary">Экспортировать настройки и данные лаунчера</string>
     <string name="preference_restore">Восстановить из копии</string>
-    <string name="preference_restore_summary">Импортировать ранее созданную резевную копию</string>
-    <string name="preference_crash_reporter">Отчёты об ошибках</string>
-    <string name="preference_crash_reporter_summary">Отчёты об ошибках и вылетах</string>
+    <string name="preference_restore_summary">Импортировать ранее созданную резервную копию</string>
+    <string name="preference_crash_reporter">Отчёт о сбоях</string>
+    <string name="preference_crash_reporter_summary">Отчёты об ошибках и сбоях</string>
     <string name="preference_logs">Журналы</string>
     <string name="preference_logs_summary">Просмотр и экспорт журналов приложения</string>
     <string name="preference_screen_search">Поиск</string>
-    <string name="preference_screen_search_summary">Поиск, теги, скрытые элементы</string>
+    <string name="preference_screen_search_summary">Поиск, теги, исключённые результаты</string>
     <string name="preference_search_favorites">Избранные</string>
-    <string name="preference_search_favorites_summary">Отображать закрепленные и часто используемые над списком приложений</string>
+    <string name="preference_search_favorites_summary">Закрепленные и часто используемые элементы над сеткой приложений</string>
     <string name="preference_search_apps">Приложения</string>
     <string name="preference_search_apps_summary">Показывать все приложения, когда строка поиска пуста</string>
     <string name="preference_search_apps_show_details">Показывать информацию о приложении</string>
@@ -637,10 +640,11 @@
     <string name="preference_search_calculator">Калькулятор</string>
     <string name="preference_search_calculator_summary">Вычислять математические выражения</string>
     <string name="preference_search_unitconverter">Конвертер величин</string>
-    <string name="preference_search_unitconverter_summary">Использование: 1.5 kg или 4 cm &gt;&gt; in</string>
+    <string name="preference_search_unitconverter_summary">Использование: 1,5 м или 4 см &gt;&gt; дюйм</string>
     <string name="preference_search_currencyconverter">Конвертер валют</string>
     <string name="preference_search_currencyconverter_summary">Периодически скачивать курсы обмена валют для конвертирования</string>
     <string name="preference_search_supportedunits">Поддерживаемые единицы</string>
+    <string name="preference_currency_settings">Настройки валюты</string>
     <string name="preference_search_wikipedia_summary">Поиск в свободной энциклопедии</string>
     <string name="preference_search_websites">Веб-сайты</string>
     <string name="preference_search_locations">Места</string>
@@ -663,9 +667,9 @@
     <string name="preference_search_bar_auto_focus">Показывать клавиатуру</string>
     <string name="preference_search_bar_auto_focus_summary">Автоматически показывать клавиатуру при открытии списка приложений</string>
     <string name="preference_search_bar_launch_on_enter">Запускать по Enter</string>
-    <string name="preference_search_bar_launch_on_enter_summary">Запускать подсвеченное совпадение или быстрое действие по клавише «Вперёд»</string>
-    <string name="preference_hidden_items">Скрытые результаты поиска</string>
-    <string name="preference_hidden_items_summary">Управление скрытыми приложениями и результатами поиска</string>
+    <string name="preference_search_bar_launch_on_enter_summary">Запускать подсвеченное совпадение или быстрое действие по клавише «Перейти»</string>
+    <string name="preference_hidden_items">Исключённые результаты поиска</string>
+    <string name="preference_hidden_items_summary">Управление исключёнными приложениями и результатами поиска</string>
     <string name="preference_hidden_items_reveal_button">Показывать кнопку раскрытия</string>
     <string name="preference_hidden_items_reveal_button_summary">Показывать кнопку, раскрывающую скрытые результаты поиска</string>
     <string name="preference_screen_tags">Теги</string>
@@ -677,7 +681,7 @@
     <string name="preference_edit_button">Кнопка для редактирования</string>
     <string name="preference_favorites_edit_button_summary">Показывать кнопку для редактирования избранных</string>
     <string name="preference_compact_tags">Компактные теги</string>
-    <string name="preference_compact_tags_summary">Скройте метки тегов или значки, чтобы уменьшить пространство, занимаемое тегами</string>
+    <string name="preference_compact_tags_summary">Скрыть метки тегов или значки, чтобы уменьшить пространство, занимаемое тегами</string>
     <string name="preference_widgets_edit_button_summary">Показывать кнопку для добавления, удаления и редактирования виджетов</string>
     <string name="preference_widgets_on_home_screen">Виджеты на главном экране</string>
     <string name="preference_widgets_on_home_screen_summary">Показывать виджеты на главном экране вместо отдельной страницы</string>
@@ -789,7 +793,7 @@
     <string name="search_results_order_top_down">Сверху вниз</string>
     <string name="search_results_order_bottom_up">Снизу вверх</string>
     <string name="preference_layout_fixed_search_bar">Зафиксировать строку поиска</string>
-    <string name="preference_layout_fixed_search_bar_summary">Не скорллить строку поиска за пределы экрана</string>
+    <string name="preference_layout_fixed_search_bar_summary">Не прокручивать строку поиска за пределы экрана</string>
     <string name="preference_layout_fixed_rotation">Фиксированная ориентация</string>
     <string name="preference_layout_fixed_rotation_summary">Зафиксировать ориентацию экрана в портретном режиме</string>
     <string name="preference_screen_gestures">Жесты</string>
