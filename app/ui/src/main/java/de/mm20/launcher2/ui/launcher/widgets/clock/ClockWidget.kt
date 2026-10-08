@@ -9,7 +9,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
@@ -59,6 +64,7 @@ import de.mm20.launcher2.preferences.ui.ClockWidgetSettings
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.base.LocalTime
 import de.mm20.launcher2.ui.component.Banner
+import de.mm20.launcher2.ui.common.SearchablePicker
 import de.mm20.launcher2.ui.component.DismissableBottomSheet
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
@@ -650,6 +656,56 @@ fun ConfigureClockWidgetSheet(
                                 viewModel.setDatePart(it)
                             }
                         )
+                        val dateApp by viewModel.dateApp.collectAsState()
+                        var showDateAppPicker by remember { mutableStateOf(false) }
+                        Preference(
+                            title = stringResource(R.string.preference_clockwidget_date_app),
+                            iconPadding = true,
+                            summary = dateApp?.let { it.labelOverride ?: it.label }
+                                ?: stringResource(R.string.preference_clockwidget_date_app_default),
+                            enabled = parts?.date == true,
+                            onClick = { showDateAppPicker = true },
+                        )
+                        DismissableBottomSheet(
+                            expanded = showDateAppPicker,
+                            onDismissRequest = { showDateAppPicker = false },
+                        ) {
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(horizontal = 16.dp),
+                            ) {
+                                Preference(
+                                    title = stringResource(R.string.preference_clockwidget_date_app_default),
+                                    icon = R.drawable.today_24px,
+                                    controls = if (dateApp == null) {
+                                        {
+                                            Icon(
+                                                painterResource(R.drawable.check_24px),
+                                                contentDescription = null,
+                                            )
+                                        }
+                                    } else null,
+                                    onClick = {
+                                        viewModel.setDateApp(null)
+                                        showDateAppPicker = false
+                                    },
+                                )
+                                SearchablePicker(
+                                    value = dateApp,
+                                    onValueChanged = {
+                                        viewModel.setDateApp(it)
+                                        showDateAppPicker = false
+                                    },
+                                    modifier = Modifier.weight(1f),
+                                    contentPadding = PaddingValues(
+                                        top = 8.dp,
+                                        bottom = WindowInsets.navigationBars.asPaddingValues()
+                                            .calculateBottomPadding(),
+                                    ),
+                                )
+                            }
+                        }
                         SwitchPreference(
                             title = stringResource(R.string.preference_clockwidget_music_part),
                             summary = stringResource(R.string.preference_clockwidget_music_part_summary),
