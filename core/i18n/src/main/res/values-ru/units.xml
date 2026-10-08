@@ -381,7 +381,7 @@
     <string name="dimension_length">Длина</string>
     <string name="dimension_mass">Масса</string>
     <string name="dimension_velocity">Скорость</string>
-    <string name="dimension_volume">Объем</string>
+    <string name="dimension_volume">Объём</string>
     <string name="dimension_area">Область</string>
     <string name="dimension_currency">Валюта</string>
     <string name="dimension_data">Данные</string>
@@ -503,4 +503,11 @@
         <item quantity="other">жидких унций (имперских)</item>
     </plurals>
     <string name="unit_tablespoon_symbol">ст. л.</string>
+    <plurals name="unit_pint_imp">
+        <item quantity="one">пинта (имперская)</item>
+        <item quantity="few">пинты (имперских)</item>
+        <item quantity="many">пинты (имперские)</item>
+        <item quantity="other">пинты (имперские)</item>
+    </plurals>
+    <string name="unit_pint_imp_symbol">пт имп</string>
 </resources>
