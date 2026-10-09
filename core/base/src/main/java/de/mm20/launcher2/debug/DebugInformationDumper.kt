@@ -17,18 +17,19 @@ class DebugInformationDumper {
             "kvaesitso-log-${df.format(Date(System.currentTimeMillis()))}"
         )
         withContext(Dispatchers.IO) {
-            val fos = file.outputStream().writer()
-            fos.write("Device: ${Build.DEVICE}\n")
-            fos.write("SDK version: ${Build.VERSION.SDK_INT}\n")
-            fos.write("====================================\n")
-            val input =
+            file.outputStream().writer().use { fos ->
+                fos.write("Device: ${Build.DEVICE}\n")
+                fos.write("SDK version: ${Build.VERSION.SDK_INT}\n")
+                fos.write("====================================\n")
                 Runtime.getRuntime().exec("/system/bin/logcat -d").inputStream.bufferedReader()
-            var line = input.readLine()
-            while (line != null) {
-                line = input.readLine()
-                fos.write("$line\n")
+                    .use { input ->
+                        var line = input.readLine()
+                        while (line != null) {
+                            fos.write("$line\n")
+                            line = input.readLine()
+                        }
+                    }
             }
-            fos.close()
         }
         return file.absolutePath
     }

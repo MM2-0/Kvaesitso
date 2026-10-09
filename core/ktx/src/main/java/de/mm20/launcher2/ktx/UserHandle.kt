@@ -4,8 +4,10 @@ import android.content.Context
 import android.os.Process
 import android.os.UserHandle
 import android.os.UserManager
+import java.util.concurrent.ConcurrentHashMap
 
-private val cache = mutableMapOf<Int, Long>()
+// Accessed from multiple threads
+private val cache = ConcurrentHashMap<Int, Long>()
 
 fun UserHandle.getSerialNumber(context: Context): Long {
     return cache.getOrPut(hashCode()) {

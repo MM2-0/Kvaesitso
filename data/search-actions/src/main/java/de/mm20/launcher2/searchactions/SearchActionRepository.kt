@@ -128,7 +128,7 @@ internal class SearchActionRepositoryImpl(
         for (file in files) {
             val searchActions = mutableListOf<SearchActionEntity>()
             try {
-                val jsonArray = JSONArray(file.inputStream().reader().readText())
+                val jsonArray = JSONArray(file.readText())
 
                 for (i in 0 until jsonArray.length()) {
                     val json = jsonArray.getJSONObject(i)

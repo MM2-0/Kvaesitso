@@ -63,7 +63,7 @@ internal data class AndroidContact(
             val uri =
                 ContactsContract.Contacts.getLookupUri(id, lookupKey) ?: return@withContext null
             ContactsContract.Contacts.openContactPhotoInputStream(contentResolver, uri, false)
-                ?.asBitmap()
+                ?.use { it.asBitmap() }
         } ?: return null
 
         return StaticLauncherIcon(

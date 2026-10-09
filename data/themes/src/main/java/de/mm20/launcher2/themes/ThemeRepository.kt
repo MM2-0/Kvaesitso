@@ -66,7 +66,7 @@ class ThemeRepository(
                 ?: return@withContext
 
         for (file in colorFiles) {
-            val data = file.inputStream().reader().readText()
+            val data = file.readText()
             val colors: List<ColorsEntity> = try {
                 Json.Lenient.decodeFromString(data)
             } catch (e: SerializationException) {
@@ -84,7 +84,7 @@ class ThemeRepository(
             fromDir.listFiles { _, name -> name.startsWith("shapes.") }
                 ?: return@withContext
         for (file in shapeFiles) {
-            val data = file.inputStream().reader().readText()
+            val data = file.readText()
             val shapes: List<ShapesEntity> = try {
                 Json.Lenient.decodeFromString(data)
             } catch (e: SerializationException) {
@@ -102,7 +102,7 @@ class ThemeRepository(
             fromDir.listFiles { _, name -> name.startsWith("transparencies.") }
                 ?: return@withContext
         for (file in transparencyFiles) {
-            val data = file.inputStream().reader().readText()
+            val data = file.readText()
             val transparencies: List<TransparenciesEntity>  = try {
                 Json.Lenient.decodeFromString(data)
             } catch (e: SerializationException) {
@@ -120,7 +120,7 @@ class ThemeRepository(
             fromDir.listFiles { _, name -> name.startsWith("typographies.") }
                 ?: return@withContext
         for (file in typographyFiles) {
-            val data = file.inputStream().reader().readText()
+            val data = file.readText()
             val typographies: List<TypographyEntity> = try {
                 Json.Lenient.decodeFromString(data)
             } catch (e: SerializationException) {

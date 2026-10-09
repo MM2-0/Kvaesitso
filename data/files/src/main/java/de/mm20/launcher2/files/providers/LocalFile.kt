@@ -65,8 +65,19 @@ internal data class LocalFile(
         when {
             mimeType.startsWith("image/") -> {
                 val thumbnail = withContext(Dispatchers.IO) {
+                    // Subsample large images while decoding, decoding them at full resolution
+                    // just to create a small thumbnail can easily cause an OutOfMemoryError
+                    val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
+                    BitmapFactory.decodeFile(path, bounds)
+                    var sampleSize = 1
+                    while (size > 0 && bounds.outWidth / (sampleSize * 2) >= size && bounds.outHeight / (sampleSize * 2) >= size) {
+                        sampleSize *= 2
+                    }
                     ThumbnailUtils.extractThumbnail(
-                        BitmapFactory.decodeFile(path),
+                        BitmapFactory.decodeFile(
+                            path,
+                            BitmapFactory.Options().apply { inSampleSize = sampleSize }
+                        ),
                         size, size
                     )
                 } ?: return null

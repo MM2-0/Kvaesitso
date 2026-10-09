@@ -127,7 +127,7 @@ internal class WidgetRepositoryImpl(
         for (file in files) {
             val widgets = mutableListOf<WidgetEntity>()
             try {
-                val jsonArray = JSONArray(file.inputStream().reader().readText())
+                val jsonArray = JSONArray(file.readText())
 
                 for (i in 0 until jsonArray.length()) {
                     val json = jsonArray.getJSONObject(i)

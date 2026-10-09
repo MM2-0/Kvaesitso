@@ -167,6 +167,7 @@ abstract class QueryPluginApi<TQuery, TResult>(
             }
 
             if (cursor.extras?.getBoolean(SearchPluginContract.Extras.NotUpdated) == true) {
+                cursor.close()
                 it.resume(Result.failure(NotUpdated()))
                 return@suspendCancellableCoroutine
             }

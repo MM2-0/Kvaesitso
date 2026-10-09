@@ -53,6 +53,8 @@ class ExchangeRateWorker(val context: Context, params: WorkerParameters) :
         } catch (e: Exception) {
             CrashReporter.logException(e)
             return Result.retry()
+        } finally {
+            httpClient.close()
         }
     }
 }

@@ -158,8 +158,8 @@ internal class SearchActionServiceImpl(
         openSearchHref: String,
         iconSize: Int
     ): CustomWebsearchActionBuilder? {
+        val httpClient = HttpClient()
         try {
-            val httpClient = HttpClient()
             val response = httpClient.get {
                 url(openSearchHref)
             }
@@ -237,6 +237,8 @@ internal class SearchActionServiceImpl(
         } catch (e: IOException) {
 
         } catch (e: XmlPullParserException) {
+        } finally {
+            httpClient.close()
         }
         return null
     }

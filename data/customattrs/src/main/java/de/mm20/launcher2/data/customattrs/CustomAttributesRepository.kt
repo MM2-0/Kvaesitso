@@ -225,7 +225,7 @@ internal class CustomAttributesRepositoryImpl(
         for (file in files) {
             val customAttrs = mutableListOf<CustomAttributeEntity>()
             try {
-                val jsonArray = JSONArray(file.inputStream().reader().readText())
+                val jsonArray = JSONArray(file.readText())
 
                 for (i in 0 until jsonArray.length()) {
                     val json = jsonArray.getJSONObject(i)

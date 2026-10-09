@@ -32,6 +32,9 @@ internal class LocationsRepository(
     private val permissionsManager: PermissionsManager,
 ) : SearchableRepository<Location> {
 
+    // Reuse the provider (and its HttpClient) instead of creating a new one for every search
+    private val osmLocationProvider by lazy { OsmLocationProvider(context, settings) }
+
     @OptIn(FlowPreview::class)
     override fun search(
         query: String,
@@ -60,7 +63,7 @@ internal class LocationsRepository(
 
             val providers = settingsData.providers.map {
                 when (it) {
-                    "openstreetmaps" -> OsmLocationProvider(context, settings)
+                    "openstreetmaps" -> osmLocationProvider
                     else -> PluginLocationProvider(context, it)
                 }
             }
