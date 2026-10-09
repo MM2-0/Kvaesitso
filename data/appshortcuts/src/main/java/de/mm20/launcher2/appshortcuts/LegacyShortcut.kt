@@ -111,10 +111,14 @@ internal data class LegacyShortcut(
 
             return LegacyShortcut(
                 intent = intent,
-                appName = packageName?.let {
-                    context.packageManager.getApplicationInfo(
-                        it, 0
-                    ).loadLabel(context.packageManager).toString()
+                appName = try {
+                    packageName?.let {
+                        context.packageManager.getApplicationInfo(
+                            it, 0
+                        ).loadLabel(context.packageManager).toString()
+                    }
+                } catch (e: PackageManager.NameNotFoundException) {
+                    null
                 },
                 label = name,
                 iconResource = iconResource

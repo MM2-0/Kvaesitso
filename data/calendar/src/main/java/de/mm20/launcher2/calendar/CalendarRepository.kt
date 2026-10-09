@@ -145,7 +145,9 @@ internal class CalendarRepositoryImpl(
                         from = intervalStart,
                         to = intervalEnd,
                         excludedCalendars = excludeCalendars.mapNotNull {
-                            val (namespace, id) = it.split(":")
+                            // Plugin calendar IDs may contain ':' themselves, only split once
+                            val (namespace, id) = it.split(":", limit = 2)
+                                .takeIf { it.size == 2 } ?: return@mapNotNull null
                             if (namespace == provider.namespace) id else null
                         },
                         excludeAllDayEvents = excludeAllDayEvents,

@@ -3,8 +3,10 @@ package de.mm20.launcher2.backup
 import android.content.Context
 import android.net.Uri
 import android.os.Build
+import android.util.Log
 import kotlinx.coroutines.*
 import java.io.File
+import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
 import java.util.zip.ZipEntry
@@ -46,7 +48,12 @@ class BackupManager(
             meta.writeToFile(metaFile)
 
             for (component in components) {
-                component.backup(backupDir)
+                try {
+                    component.backup(backupDir)
+                } catch (e: Exception) {
+                    if (e is CancellationException) throw e
+                    Log.e("BackupManager", "Failed to back up ${component::class.java.name}", e)
+                }
             }
 
             createArchive(backupDir, outputStream)
@@ -70,7 +77,13 @@ class BackupManager(
                 inputStream.close()
 
                 for (component in components) {
-                    component.restore(restoreDir)
+                    // Don't let a single broken component abort the restore (or crash the app)
+                    try {
+                        component.restore(restoreDir)
+                    } catch (e: Exception) {
+                        if (e is CancellationException) throw e
+                        Log.e("BackupManager", "Failed to restore ${component::class.java.name}", e)
+                    }
                 }
             }
         }
@@ -79,19 +92,25 @@ class BackupManager(
 
     suspend fun readBackupMeta(uri: Uri): BackupMetadata? {
         return withContext(Dispatchers.IO) {
-            val inputStream = context.contentResolver.openInputStream(uri) ?: return@withContext null
-            val zipStream = ZipInputStream(inputStream)
-            var entry = zipStream.nextEntry
-            while(entry != null) {
-                if (entry.name == "meta") {
-                    val metadata = BackupMetadata.fromInputStream(zipStream)
-                    zipStream.close()
-                    return@withContext metadata
+            try {
+                val inputStream =
+                    context.contentResolver.openInputStream(uri) ?: return@withContext null
+                ZipInputStream(inputStream).use { zipStream ->
+                    var entry = zipStream.nextEntry
+                    while (entry != null) {
+                        if (entry.name == "meta") {
+                            return@withContext BackupMetadata.fromInputStream(zipStream)
+                        }
+
+                        zipStream.closeEntry()
+
+                        entry = zipStream.nextEntry
+                    }
                 }
-
-                zipStream.closeEntry()
-
-                entry = zipStream.nextEntry
+            } catch (e: IOException) {
+                Log.e("BackupManager", "Failed to read backup metadata", e)
+            } catch (e: SecurityException) {
+                Log.e("BackupManager", "Failed to read backup metadata", e)
             }
             return@withContext null
         }

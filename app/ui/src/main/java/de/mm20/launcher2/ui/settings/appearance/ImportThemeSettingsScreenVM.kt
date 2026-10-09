@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import java.io.IOException
 
 class ImportThemeSettingsScreenVM : ViewModel(), KoinComponent {
 
@@ -77,6 +78,10 @@ class ImportThemeSettingsScreenVM : ViewModel(), KoinComponent {
                     }
                 }
             } catch (e: SecurityException) {
+                CrashReporter.logException(e)
+                error = true
+            } catch (e: IOException) {
+                // e.g. FileNotFoundException, this activity can be started by other apps with any URI
                 CrashReporter.logException(e)
                 error = true
             }

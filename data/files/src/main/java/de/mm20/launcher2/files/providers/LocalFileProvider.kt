@@ -44,7 +44,7 @@ internal class LocalFileProvider(
             if (results.size >= 10) {
                 break
             }
-            val path = cursor.getString(3)
+            val path = cursor.getStringOrNull(3) ?: continue
             if (!java.io.File(path).exists()) continue
             val directory = java.io.File(path).isDirectory
             val mimeType = (cursor.getStringOrNull(4).takeIf { it != "application/octet-stream" }

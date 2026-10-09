@@ -174,6 +174,9 @@ class ProfileManager(
             userManager.requestQuietModeEnabled(false, profile.userHandle)
         } catch (e: IllegalArgumentException) {
             Log.w(TAG, "Unable to unlock profile ${profile.serial}", e)
+        } catch (e: SecurityException) {
+            // Thrown if we are not the default launcher
+            Log.w(TAG, "Unable to unlock profile ${profile.serial}", e)
         }
     }
 
@@ -185,6 +188,9 @@ class ProfileManager(
         try {
             userManager.requestQuietModeEnabled(true, profile.userHandle)
         } catch (e: IllegalArgumentException) {
+            Log.w(TAG, "Unable to lock profile ${profile.serial}", e)
+        } catch (e: SecurityException) {
+            // Thrown if we are not the default launcher
             Log.w(TAG, "Unable to lock profile ${profile.serial}", e)
         }
     }

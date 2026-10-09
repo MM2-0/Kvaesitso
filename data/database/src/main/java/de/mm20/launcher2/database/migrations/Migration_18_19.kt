@@ -4,6 +4,7 @@ import androidx.room3.migration.Migration
 import androidx.sqlite.SQLiteConnection
 import androidx.sqlite.execSQL
 import de.mm20.launcher2.database.ktx.bindTextOrNull
+import de.mm20.launcher2.database.ktx.getIntOrNull
 import de.mm20.launcher2.database.ktx.getTextOrNull
 import de.mm20.launcher2.ktx.jsonObjectOf
 
@@ -30,24 +31,10 @@ class Migration_18_19 : Migration(18, 19) {
             val data = websearches.getText(1)
             val color = 0
             val icon = websearches.getTextOrNull(3)
-            val encoding = websearches.getTextOrNull(4)
+            val encoding = websearches.getIntOrNull(4)
 
             val options = encoding?.let {
                 jsonObjectOf("encoding" to encoding).toString()
-            }
-
-            connection.prepare(
-                "INSERT INTO `SearchAction` (`position`, `type`, `data`, `label`, `color`, `icon`, `customIcon`, `options`)" +
-                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
-            ).use { statement ->
-                statement.bindInt(1, position)
-                statement.bindText(2, "url")
-                statement.bindText(3, data)
-                statement.bindText(4, label)
-                statement.bindInt(5, color)
-                statement.bindInt(6, if (icon == null) 0 else 1)
-                statement.bindTextOrNull(7, icon)
-                statement.bindTextOrNull(8, options)
             }
 
             connection.prepare(

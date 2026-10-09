@@ -17,7 +17,7 @@ class CrashReport(
     companion object {
         suspend fun fromFile(file: File, loadStackTrace: Boolean): CrashReport {
             val df = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-            val time = df.parse(file.name.replace("[a-zA-Z_.]", ""))
+            val time = df.parse(file.name.replace(Regex("[a-zA-Z_.]"), ""))
             val content = if (loadStackTrace) {
                 withContext(Dispatchers.IO) {
                     file.inputStream().bufferedReader().use {
@@ -28,7 +28,7 @@ class CrashReport(
             val summary = content?.substringBefore("\n")
                 ?: withContext(Dispatchers.IO) {
                     file.inputStream().bufferedReader().use {
-                        it.readLine()
+                        it.readLine() ?: ""
                     }
                 }
             return CrashReport(

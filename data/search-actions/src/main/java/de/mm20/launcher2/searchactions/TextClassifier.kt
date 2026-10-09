@@ -156,8 +156,10 @@ internal class TextClassifierImpl : TextClassifier {
             // Not a 24h time
         }
 
+        // Timespans are limited to 9 digits so that parsing the value and creating the Duration
+        // below can't overflow.
         val seconds = context.getString(R.string.unit_second_symbol)
-        val secondsMatch = Regex("^([0-9]+)\\s?${seconds}$").find(trimmedQuery)
+        val secondsMatch = Regex("^([0-9]{1,9})\\s?${Regex.escape(seconds)}$").find(trimmedQuery)
         if (secondsMatch != null) {
             val value = secondsMatch.groups[1]!!.value.toLong()
             return TextClassificationResult(
@@ -167,7 +169,7 @@ internal class TextClassifierImpl : TextClassifier {
         }
 
         val days = context.getString(R.string.unit_day_symbol)
-        val daysMatch = Regex("^([0-9]+)\\s?${days}$").find(trimmedQuery)
+        val daysMatch = Regex("^([0-9]{1,9})\\s?${Regex.escape(days)}$").find(trimmedQuery)
         if (daysMatch != null) {
             val value = daysMatch.groups[1]!!.value.toLong()
             return TextClassificationResult(
@@ -177,10 +179,9 @@ internal class TextClassifierImpl : TextClassifier {
         }
 
         val minutes = context.getString(R.string.unit_minute_symbol)
-        val minutesMatch = Regex("^([0-9]+)\\s?${minutes}$").find(trimmedQuery)
+        val minutesMatch = Regex("^([0-9]{1,9})\\s?${Regex.escape(minutes)}$").find(trimmedQuery)
         if (minutesMatch != null) {
             val value = minutesMatch.groups[1]!!.value.toLong()
-            val then = LocalDateTime.now().plusMinutes(value)
             return TextClassificationResult(
                 text = trimmedQuery,
                 timespan = Duration.ofMinutes(value)
@@ -188,7 +189,7 @@ internal class TextClassifierImpl : TextClassifier {
         }
 
         val hours = context.getString(R.string.unit_hour_symbol)
-        val hoursMatch = Regex("^([0-9]+)\\s?${hours}$").find(trimmedQuery)
+        val hoursMatch = Regex("^([0-9]{1,9})\\s?${Regex.escape(hours)}$").find(trimmedQuery)
         if (hoursMatch != null) {
             val value = hoursMatch.groups[1]!!.value.toLong()
             return TextClassificationResult(

@@ -22,7 +22,7 @@ object CrashReporter {
     suspend fun getCrashReports(): List<CrashReport> {
         val files = withContext(Dispatchers.IO) {
             val now = System.currentTimeMillis()
-            val path = CrashReporter.getCrashReportPath()?.takeIf { it.isEmpty() } ?: CrashUtil.getDefaultPath()
+            val path = CrashReporter.getCrashReportPath()?.takeIf { it.isNotEmpty() } ?: CrashUtil.getDefaultPath()
             File(path).listFiles { f ->
                 f.lastModified() > now - 7 * 24 * 60 * 60 * 1000L
             }?.sortedByDescending { it.lastModified() }

@@ -43,6 +43,7 @@ import androidx.navigation3.runtime.NavKey
 import coil.compose.AsyncImage
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.ktx.sendWithBackgroundPermission
+import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.plugin.PluginState
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.GuardedPreference
@@ -155,7 +156,7 @@ fun PluginSettingsScreen(pluginId: String) {
                     if (pluginPackage?.settings != null) {
                         IconButton(onClick = {
                             pluginPackage?.settings?.let {
-                                activity?.startActivity(it)
+                                activity?.tryStartActivity(it)
                             }
                         }) {
                             Icon(

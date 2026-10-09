@@ -28,7 +28,6 @@ import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.SerializationException
 import java.io.File
 import java.io.IOException
-import javax.crypto.AEADBadTagException
 
 class OwncloudClient(val context: Context) {
 
@@ -169,9 +168,13 @@ class OwncloudClient(val context: Context) {
             return getUserName()
         }
 
-        if (response.status != HttpStatusCode.OK) {
+        if (response.status == HttpStatusCode.Unauthorized) {
             logout()
             return null
+        }
+        if (response.status != HttpStatusCode.OK) {
+            // Don't log out on temporary server errors
+            return getUserName()
         }
         val body = try {
             response.body<UserReponse>()

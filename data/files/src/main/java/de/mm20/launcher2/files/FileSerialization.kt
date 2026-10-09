@@ -79,29 +79,29 @@ internal class LocalFileDeserializer(
         val sel = "${MediaStore.Files.FileColumns._ID} = ?"
         val selArgs = arrayOf(json.getLong("id").toString())
         val cursor = context.contentResolver.query(uri, proj, sel, selArgs, null) ?: return null
-        if (cursor.moveToNext()) {
-            val path = cursor.getString(2)
-            if (!java.io.File(path).exists()) return null
-            val directory = java.io.File(path).isDirectory
-            val id = cursor.getLong(0)
-            val mimeType = cursor.getStringOrNull(3).takeIf { it != "application/octet-stream" }
-                ?: if (directory) "resource/folder" else LocalFile.getMimetypeByFileExtension(
-                    path.substringAfterLast(
-                        '.'
+        cursor.use {
+            if (cursor.moveToNext()) {
+                val path = cursor.getStringOrNull(2) ?: return null
+                if (!java.io.File(path).exists()) return null
+                val directory = java.io.File(path).isDirectory
+                val id = cursor.getLong(0)
+                val mimeType = cursor.getStringOrNull(3).takeIf { it != "application/octet-stream" }
+                    ?: if (directory) "resource/folder" else LocalFile.getMimetypeByFileExtension(
+                        path.substringAfterLast(
+                            '.'
+                        )
                     )
+                val size = cursor.getLong(1)
+                return LocalFile(
+                    path = path,
+                    mimeType = mimeType,
+                    size = size,
+                    isDirectory = directory,
+                    id = id,
+                    metaData = LocalFile.getMetaData(context, mimeType, path)
                 )
-            val size = cursor.getLong(1)
-            cursor.close()
-            return LocalFile(
-                path = path,
-                mimeType = mimeType,
-                size = size,
-                isDirectory = directory,
-                id = id,
-                metaData = LocalFile.getMetaData(context, mimeType, path)
-            )
+            }
         }
-        cursor.close()
         return null
     }
 }

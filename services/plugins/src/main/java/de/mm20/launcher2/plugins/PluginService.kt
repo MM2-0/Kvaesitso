@@ -20,6 +20,7 @@ import de.mm20.launcher2.plugin.PluginRepository
 import de.mm20.launcher2.plugin.PluginState
 import de.mm20.launcher2.plugin.PluginType
 import de.mm20.launcher2.plugin.contracts.PluginContract
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -167,7 +168,11 @@ internal class PluginServiceImpl(
                 } ?: return PluginState.Error
             } catch (e: SecurityException) {
                 return PluginState.NoPermission
-            } catch (e: IllegalArgumentException) {
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                // Plugins are third-party code, any exception they throw is propagated to us
+                Log.e("PluginService", "Plugin ${plugin.authority} threw exception", e)
                 return PluginState.Error
             }
         return PluginState.fromBundle(bundle) ?: PluginState.Error

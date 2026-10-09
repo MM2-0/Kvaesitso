@@ -39,6 +39,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import de.mm20.launcher2.ktx.tryStartActivity
 import org.intellij.markdown.MarkdownElementTypes
 import org.intellij.markdown.MarkdownTokenTypes
 import org.intellij.markdown.ast.ASTNode
@@ -180,7 +181,7 @@ fun ParagraphNode(node: ASTNode, text: String) {
                 val upAnnotation = text.getUrlAnnotations(upPosition, upPosition).firstOrNull()
                 val url = upAnnotation?.item?.url ?: return@awaitEachGesture
                 if (url == downUrl) {
-                    context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+                    context.tryStartActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
                     up.consume()
                 }
             }

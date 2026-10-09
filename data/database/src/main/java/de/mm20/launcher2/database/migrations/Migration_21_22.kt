@@ -1,7 +1,5 @@
 package de.mm20.launcher2.database.migrations
 
-import android.util.Log
-import androidx.core.database.getIntOrNull
 import androidx.room3.migration.Migration
 import androidx.sqlite.SQLiteConnection
 import androidx.sqlite.execSQL
@@ -20,8 +18,11 @@ class Migration_21_22 : Migration(21, 22) {
             if (!it.step()) return@use
 
             val launchCount = it.getIntOrNull(0) ?: return@use
+            // x / 0 is NULL in SQLite, which would violate the NOT NULL constraint
+            if (launchCount <= 0) return@use
 
-            connection.execSQL("UPDATE `Searchable` SET `weight` = `launchCount` / $launchCount")
+            // Cast to REAL, integer division would only yield 0 or 1
+            connection.execSQL("UPDATE `Searchable` SET `weight` = CAST(`launchCount` AS REAL) / $launchCount")
         }
     }
 }

@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.serialization.SerializationException
 import java.io.File
+import java.io.IOException
 
 abstract class BaseSettings<T>(
     internal val context: Context,
@@ -63,6 +64,9 @@ abstract class BaseSettings<T>(
         } catch (e: SerializationException) {
             Log.e("MM20", "Cannot restore $fileName", e)
         } catch (e: IllegalArgumentException) {
+            Log.e("MM20", "Cannot restore $fileName", e)
+        } catch (e: IOException) {
+            // Serializers usually wrap parsing errors in a CorruptionException (an IOException)
             Log.e("MM20", "Cannot restore $fileName", e)
         }
     }

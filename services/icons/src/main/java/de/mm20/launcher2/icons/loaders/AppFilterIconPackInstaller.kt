@@ -44,6 +44,8 @@ class AppFilterIconPackInstaller(
                 )
             } catch (e: XmlPullParserException) {
                 CrashReporter.logException(e)
+            } catch (e: IOException) {
+                CrashReporter.logException(e)
             }
         }
     }

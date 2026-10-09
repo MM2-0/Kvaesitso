@@ -197,26 +197,35 @@ internal class FeedConnectionImpl(
     override fun onStart(owner: LifecycleOwner) {
         super.onStart(owner)
         isActivityStarted = true
-        overlay?.setActivityState(activityState)
+        updateActivityState()
     }
 
     override fun onResume(owner: LifecycleOwner) {
         super.onResume(owner)
         isActivityResumed = true
-        overlay?.setActivityState(activityState)
+        updateActivityState()
     }
 
     override fun onPause(owner: LifecycleOwner) {
         super.onPause(owner)
         isActivityResumed = false
-        overlay?.setActivityState(activityState)
+        updateActivityState()
     }
 
     override fun onStop(owner: LifecycleOwner) {
         super.onStop(owner)
         isActivityStarted = false
-        overlay?.setActivityState(activityState)
+        updateActivityState()
 
+    }
+
+    private fun updateActivityState() {
+        try {
+            overlay?.setActivityState(activityState)
+        } catch (e: RemoteException) {
+            // The overlay process died, onServiceDisconnected / onBindingDied will handle it
+            CrashReporter.logException(e)
+        }
     }
 
     @Throws(RemoteException::class)

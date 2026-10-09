@@ -29,6 +29,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import kotlin.math.roundToInt
 
@@ -54,26 +55,26 @@ class IconPackManager(
     private var updateIconPacksMutex = Mutex()
     suspend fun updateIconPacks(forceReinstall: Boolean = false): Boolean {
         var iconsHaveBeenUpdated = false
-        updateIconPacksMutex.lock()
-        val installers = listOf(
-            AppFilterIconPackInstaller(context, appDatabase),
-            GrayscaleMapIconPackInstaller(context, appDatabase),
-        )
-        val installedPacks = mutableListOf<IconPack>()
-        for (installer in installers) {
-            val iconPacks = installer.getInstalledIconPacks()
-            for (pack in iconPacks) {
-                if (forceReinstall || !installer.isInstalledAndUpToDate(pack)) {
-                    installer.install(pack)
-                    iconsHaveBeenUpdated = true
-                } else {
-                    Log.d("MM20", "Icon pack ${pack.packageName} is up to date")
+        updateIconPacksMutex.withLock {
+            val installers = listOf(
+                AppFilterIconPackInstaller(context, appDatabase),
+                GrayscaleMapIconPackInstaller(context, appDatabase),
+            )
+            val installedPacks = mutableListOf<IconPack>()
+            for (installer in installers) {
+                val iconPacks = installer.getInstalledIconPacks()
+                for (pack in iconPacks) {
+                    if (forceReinstall || !installer.isInstalledAndUpToDate(pack)) {
+                        installer.install(pack)
+                        iconsHaveBeenUpdated = true
+                    } else {
+                        Log.d("MM20", "Icon pack ${pack.packageName} is up to date")
+                    }
                 }
+                installedPacks.addAll(iconPacks)
             }
-            installedPacks.addAll(iconPacks)
+            uninstallAllIconPacksExcept(installedPacks)
         }
-        uninstallAllIconPacksExcept(installedPacks)
-        updateIconPacksMutex.unlock()
         return iconsHaveBeenUpdated
     }
 
