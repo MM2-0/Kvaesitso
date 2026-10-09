@@ -33,14 +33,23 @@ internal class IcuStringNormalizer(
         }
         .stateIn(scope, SharingStarted.Eagerly, DisabledTransliteratorId)
 
+    /**
+     * Creating a transliterator is expensive, and this is called for every searchable item on
+     * every keystroke. Transliterators must not be shared between threads without synchronization,
+     * so keep one per thread.
+     */
+    private val cachedTransliterator = ThreadLocal<Pair<String, Transliterator?>>()
+
     override fun normalize(input: String): String {
         val id = transliteratorId.value
 
-        val transliterator = try {
+        val transliterator = cachedTransliterator.get()?.takeIf { it.first == id }?.second ?: try {
             Transliterator.getInstance(id)
         } catch (e: IllegalArgumentException) {
             CrashReporter.logException(e)
             null
+        }.also {
+            cachedTransliterator.set(id to it)
         }
 
         if (transliterator ==  null) {

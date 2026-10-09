@@ -64,6 +64,7 @@ internal class PluginContactProvider(
                 )
             }
         }
+        cursor.close()
         return results
     }
 
