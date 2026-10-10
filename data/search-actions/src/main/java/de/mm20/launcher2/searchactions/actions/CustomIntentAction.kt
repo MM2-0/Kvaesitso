@@ -30,6 +30,8 @@ class CustomIntentAction(
             }
         }
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        intent.addFlags(Intent.FLAG_ACTIVITY_RETAIN_IN_RECENTS)
+        intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK)
         context.tryStartActivity(intent)
     }
 }
