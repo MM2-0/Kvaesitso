@@ -7,6 +7,7 @@ import androidx.compose.material3.Slider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberSliderState
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,7 +34,11 @@ fun SliderPreference(
     enabled: Boolean = true,
     label: (@Composable (Float) -> Unit)? = null
 ) {
-    var sliderValue by remember(value) { mutableStateOf(value) }
+    val sliderState = rememberSliderState(
+        value = value,
+        trackRange = min..max,
+        steps = step?.let { ((max - min) / it).toInt() - 1 } ?: 0,
+    )
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
@@ -75,18 +80,16 @@ fun SliderPreference(
             ) {
                 Slider(
                     modifier = Modifier.weight(1f),
-                    value = sliderValue,
+                    state = sliderState,
                     onValueChange = {
-                        sliderValue = it
+                        sliderState.value = it
                     },
-                    valueRange = min..max,
-                    steps = step?.let { ((max - min) / it).toInt() - 1 } ?: 0,
                     onValueChangeFinished = {
-                        onValueChanged(sliderValue)
+                        onValueChanged(sliderState.value)
                     },
                 )
                 if (label != null) {
-                    label(sliderValue)
+                    label(sliderState.value)
                 } else {
                     val decimalPlaces = -log(step ?: 0.01f, 10f)
                     val format = remember { DecimalFormat().apply {
@@ -95,7 +98,7 @@ fun SliderPreference(
                     } }
                     Text(
                         modifier = Modifier.width(56.dp).padding(start = 24.dp),
-                        text = format.format(sliderValue),
+                        text = format.format(sliderState.value),
                         style = MaterialTheme.typography.titleSmall,
                         textAlign = TextAlign.Center,
                     )

@@ -28,6 +28,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.ToggleButton
 import androidx.compose.material3.ToggleButtonDefaults
+import androidx.compose.material3.rememberSliderState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -312,11 +313,15 @@ fun ThemeColorPreference(
                                 style = MaterialTheme.typography.labelMedium,
                                 textAlign = TextAlign.Center
                             )
+                            val toneSliderState = rememberSliderState(
+                                value = tone,
+                                trackRange = 0f..100f,
+                            )
                             Slider(
                                 modifier = Modifier.weight(1f),
-                                value = tone,
-                                valueRange = 0f..100f,
+                                state = toneSliderState,
                                 onValueChange = {
+                                    toneSliderState.value = it
                                     tone = it
                                     currentValue = themeColor.copy(tone = it.roundToInt())
                                 },

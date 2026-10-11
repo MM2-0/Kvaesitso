@@ -44,8 +44,10 @@ import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberSliderState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -171,16 +173,24 @@ fun MusicWidget(widget: MusicWidget) {
                                 LocalLayoutDirection provides LayoutDirection.Ltr
                             ) {
                                 if (playbackState != PlaybackState.Stopped && supportedActions.seekTo && widget.config.interactiveProgressBar) {
+                                    val sliderState = rememberSliderState(
+                                        value = pos?.toFloat() ?: 0f,
+                                        trackRange =  0f..dur.toFloat(),
+                                    )
+                                    SideEffect(pos) {
+                                        if (!isDragged) {
+                                            sliderState.value = pos?.toFloat() ?: 0f
+                                        }
+                                    }
                                     Slider(
                                         modifier = Modifier
                                             .fillMaxWidth()
                                             .padding(horizontal = 14.dp)
                                             .requiredHeightIn(max = 20.dp),
-                                        value = (if (isDragged) seekPosition else pos?.toFloat())
-                                            ?: 0f,
-                                        valueRange = 0f..dur.toFloat(),
+                                        state = sliderState,
                                         interactionSource = interactionSource,
                                         onValueChange = {
+                                            sliderState.value = it
                                             seekPosition = it
                                         },
                                         onValueChangeFinished = {

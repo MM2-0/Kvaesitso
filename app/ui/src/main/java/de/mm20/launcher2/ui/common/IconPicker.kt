@@ -25,6 +25,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.SearchBarDefaults
+import androidx.compose.material3.SelectableDropdownMenuItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -195,7 +196,7 @@ fun IconPicker(
                         DropdownMenuGroup(
                             shapes = MenuDefaults.groupShapes()
                         ) {
-                            DropdownMenuItem(
+                            SelectableDropdownMenuItem(
                                 selected = filterIconPack == null,
                                 shapes = MenuDefaults.itemShape(
                                     0,
@@ -214,7 +215,7 @@ fun IconPicker(
                                 }
                             )
                             installedIconPacks?.forEachIndexed { i, iconPack ->
-                                DropdownMenuItem(
+                                SelectableDropdownMenuItem(
                                     selected = filterIconPack == iconPack,
                                     shapes = MenuDefaults.itemShape(
                                         i + 1,

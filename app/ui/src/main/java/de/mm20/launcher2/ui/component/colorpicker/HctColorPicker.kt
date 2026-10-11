@@ -21,6 +21,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberSliderState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.derivedStateOf
@@ -194,11 +195,15 @@ fun HctColorPicker(
                 style = MaterialTheme.typography.labelMedium,
                 textAlign = TextAlign.Center
             )
+            val chromaSliderState = rememberSliderState(
+                value = state.chroma,
+                trackRange = 0f..150f,
+            )
             Slider(
                 modifier = Modifier.weight(1f),
-                value = state.chroma,
-                valueRange = 0f..150f,
+                state = chromaSliderState,
                 onValueChange = {
+                    chromaSliderState.value = it
                     state.setChroma(it)
                 },
                 track = {
@@ -261,13 +266,17 @@ fun HctColorPicker(
                 style = MaterialTheme.typography.labelMedium,
                 textAlign = TextAlign.Center
             )
+            val toneSliderState = rememberSliderState(
+                value = state.tone,
+                trackRange = 0f..100f
+            )
             Slider(
                 modifier = Modifier.weight(1f),
-                value = state.tone,
+                state = toneSliderState,
                 onValueChange = {
+                    toneSliderState.value = it
                     state.setTone(it)
                 },
-                valueRange = 0f..100f,
                 track = {
                     Canvas(
                         modifier = Modifier
