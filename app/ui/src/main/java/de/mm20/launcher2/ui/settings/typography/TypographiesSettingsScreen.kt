@@ -219,20 +219,20 @@ fun TypographiesSettingsScreen() {
                     }
                 }
             }
-            item {
-                FilledTonalButton(
-                    contentPadding = ButtonDefaults.ButtonWithIconContentPadding,
-                    onClick = {
-                        val uuid = viewModel.createNew(context)
-                        backStack.add(TypographySettingsRoute(uuid))
-                    }) {
-                    Icon(
-                        painterResource(R.drawable.add_20px),
-                        null,
-                        modifier = Modifier.padding(end = ButtonDefaults.IconSpacing).size(ButtonDefaults.IconSize)
-                    )
-                    Text(stringResource(R.string.preference_create_typography))
-                }
+        }
+        item {
+            FilledTonalButton(
+                contentPadding = ButtonDefaults.ButtonWithIconContentPadding,
+                onClick = {
+                    val uuid = viewModel.createNew(context)
+                    backStack.add(TypographySettingsRoute(uuid))
+                }) {
+                Icon(
+                    painterResource(R.drawable.add_20px),
+                    null,
+                    modifier = Modifier.padding(end = ButtonDefaults.IconSpacing).size(ButtonDefaults.IconSize)
+                )
+                Text(stringResource(R.string.preference_create_typography))
             }
         }
     }
