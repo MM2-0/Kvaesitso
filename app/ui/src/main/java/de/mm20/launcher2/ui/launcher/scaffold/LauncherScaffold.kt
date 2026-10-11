@@ -1485,6 +1485,7 @@ private fun SecondaryPage(
             config.swipeRight?.component,
             config.doubleTap?.component,
             config.longPress?.component,
+            config.homeButton?.component,
             config.searchComponent,
         )
     }
