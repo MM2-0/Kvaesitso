@@ -8,6 +8,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 interface AccountsRepository {
     fun signin(context: Activity, accountType: AccountType)
@@ -63,12 +64,17 @@ internal class AccountsRepositoryImpl(
     }
 
     override suspend fun getCurrentlySignedInAccount(accountType: AccountType): Account? {
-        return when (accountType) {
-            AccountType.Nextcloud -> {
-                getNextcloudAccount()
-            }
-            AccountType.Owncloud -> {
-                getOwncloudAccount()
+        // The credentials are kept in encrypted preferences, which take a key from the Android
+        // keystore when they are first opened. That can block for long enough to freeze the
+        // settings screen that asks.
+        return withContext(Dispatchers.IO) {
+            when (accountType) {
+                AccountType.Nextcloud -> {
+                    getNextcloudAccount()
+                }
+                AccountType.Owncloud -> {
+                    getOwncloudAccount()
+                }
             }
         }
     }
