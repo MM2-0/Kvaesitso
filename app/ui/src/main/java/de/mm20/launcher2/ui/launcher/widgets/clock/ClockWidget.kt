@@ -63,6 +63,7 @@ import de.mm20.launcher2.ui.component.DismissableBottomSheet
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import de.mm20.launcher2.ui.component.preferences.ListPreference
+import de.mm20.launcher2.ui.ktx.atTone
 import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.AnalogClock
 import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.BinaryClock
 import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.CustomClock
@@ -96,9 +97,9 @@ fun ClockWidget(
 
     val contentColor =
         if (darkColors) {
-            Color(0, 0, 0, 180)
+            MaterialTheme.colorScheme.primary.atTone(30)
         } else {
-            Color.White
+            MaterialTheme.colorScheme.primary.atTone(99)
         }
 
     LaunchedEffect(time) {

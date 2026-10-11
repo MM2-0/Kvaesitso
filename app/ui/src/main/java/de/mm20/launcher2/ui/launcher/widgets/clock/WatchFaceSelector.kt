@@ -70,6 +70,7 @@ import de.mm20.launcher2.ui.BuildConfig
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.base.LocalAppWidgetHost
 import de.mm20.launcher2.ui.component.DragResizeHandle
+import de.mm20.launcher2.ui.ktx.atTone
 import de.mm20.launcher2.ui.ktx.toDp
 import de.mm20.launcher2.ui.launcher.sheets.WidgetPickerSheet
 import de.mm20.launcher2.ui.launcher.widgets.external.AppWidgetHost
@@ -313,9 +314,9 @@ fun WatchFaceSelector(
 
                     CompositionLocalProvider(
                         LocalContentColor provides if (darkColors) {
-                            Color(0, 0, 0, 180)
+                            MaterialTheme.colorScheme.primary.atTone(30)
                         } else {
-                            Color.White
+                            MaterialTheme.colorScheme.primary.atTone(99)
                         },
                     ) {
 
