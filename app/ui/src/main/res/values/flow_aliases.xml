@@ -1,0 +1,12 @@
+<resources>
+    <string name="flow_alias_title">FLOW alias</string>
+    <string name="flow_alias_create">Create FLOW alias</string>
+    <string name="flow_alias_name">Alias, for example vlak</string>
+    <string name="flow_alias_choose_target">Choose a visible personal-profile app</string>
+    <string name="flow_alias_target_unavailable">Target unavailable — choose another app or delete this alias</string>
+    <string name="flow_alias_empty">Enter an alias</string>
+    <string name="flow_alias_control">Aliases cannot contain control characters</string>
+    <string name="flow_alias_too_long">Use at most 64 characters</string>
+    <string name="flow_alias_duplicate">This alias already exists</string>
+    <string name="flow_alias_save_failed">Could not save the alias. Try again.</string>
+</resources>

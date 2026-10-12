@@ -1,8 +1,8 @@
 # 010 — FLOW v0: exact offline app aliases
 
-Status: READY after bootstrap review. Suggested branch: `feat/flow-aliases`.
-Read AGENTS, STATUS, ARCHITECTURE search/execution and DECISIONS D003. This is the
-first implementation task; none of the behavior below exists in the baseline.
+Status: IMPLEMENTED on `feat/flow-aliases`; build/JVM tests pass, device validation remains pending.
+Read AGENTS, STATUS, ARCHITECTURE search/execution and DECISIONS D003. The behavior below was absent from the bootstrap baseline and is implemented
+on the feature branch.
 
 ## Outcome and scope
 
@@ -102,3 +102,32 @@ record a narrow decision and adjust it without expanding feature scope.
 Record implemented paths, payload version/compatibility, matching/visibility
 policy, exact test counts, device evidence or limitations, and any follow-up.
 Only then plan typed multi-step FLOW and POCKET; do not silently add them here.
+
+## Implementation evidence
+
+- Version-1 `FlowAlias` codec, exact matcher, guarded executor and raw record
+  operations are in `data/search-actions/.../searchactions/flow/`.
+- `FlowAliasActionBuilder` adds a separate stored type; existing storage/backup
+  columns remain unchanged. Shared repository write serialization protects alias
+  mutations and preserves other raw records.
+- `FlowAliasRuntime` observes installed apps and hidden app keys, then rechecks
+  the exact target before dispatch. Action chips invoke `SearchAction.activate`
+  within a Compose-owned coroutine; the legacy synchronous path fails closed.
+- `FlowAliasSheet` is a dedicated editor on the existing settings route. This
+  avoids expanding the sealed arbitrary-intent editor or conflating ACTION_SEARCH
+  with launching. Existing customization types are unchanged.
+- Only existing project dependencies (`data/applications`, `data/searchable`)
+  and the existing catalog's JUnit test dependency were added; no production
+  external artifact, permission, service or namespace change.
+- Fresh verification: 16 FLOW + 52 core/base + 16 locations tests passed, 1
+  existing locations test skipped. Debug APK built successfully. See STATUS for
+  the exact command and limits of JVM persistence evidence.
+
+### Remaining device checklist (unrun)
+
+- [ ] Create/edit/delete alias and confirm persistence after process restart.
+- [ ] Launch offline, return, and verify ordinary search/action behavior.
+- [ ] Hide, suspend or uninstall target; verify no stale-label disclosure or launch.
+- [ ] Backup/restore real saved aliases alongside existing search actions.
+- [ ] TalkBack, keyboard action-chip focus, large fonts and rotation/IME behavior.
+- [ ] Collect latency/frame/memory observations on the selected reference device.

@@ -24,6 +24,11 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
+import de.mm20.launcher2.searchactions.flow.*
+import de.mm20.launcher2.searchactions.builders.FlowAliasActionBuilder
 import kotlinx.coroutines.withContext
 import org.json.JSONArray
 import org.json.JSONException
@@ -34,6 +39,9 @@ interface SearchActionRepository : Backupable {
     fun getSearchActionBuilders(): Flow<List<SearchActionBuilder>>
     fun getBuiltinSearchActionBuilders(): List<SearchActionBuilder>
 
+    suspend fun saveFlowAlias(alias: FlowAlias): FlowAliasError?
+    suspend fun removeFlowAlias(id: String)
+
     fun saveSearchActionBuilders(builders: List<SearchActionBuilder>)
 }
 
@@ -42,11 +50,17 @@ internal class SearchActionRepositoryImpl(
     private val database: AppDatabase
 ) : SearchActionRepository {
 
+    private val writeMutex = Mutex()
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
     override fun getSearchActionBuilders(): Flow<List<SearchActionBuilder>> {
         val dao = database.searchActionDao()
         return dao.getSearchActions()
-            .map { it.mapNotNull { SearchActionBuilder.from(context, it) } }
+            .map { entities ->
+                val ids = mutableSetOf<String>()
+                entities.mapNotNull { SearchActionBuilder.from(context, it) }.filter {
+                    it !is FlowAliasActionBuilder || ids.add(it.alias.id)
+                }
+            }
     }
 
     override fun getBuiltinSearchActionBuilders(): List<SearchActionBuilder> {
@@ -68,14 +82,32 @@ internal class SearchActionRepositoryImpl(
 
     override fun saveSearchActionBuilders(builders: List<SearchActionBuilder>) {
         scope.launch {
-            val dao = database.searchActionDao()
-            dao.replaceAll(
-                builders.mapIndexed { i, it -> SearchActionBuilder.toDatabaseEntity(it, i) }
-            )
+            writeMutex.withLock {
+                database.searchActionDao().replaceAll(
+                    builders.mapIndexed { i, it -> SearchActionBuilder.toDatabaseEntity(it, i) }
+                )
+            }
         }
     }
 
+    override suspend fun saveFlowAlias(alias: FlowAlias): FlowAliasError? = writeMutex.withLock {
+        val dao = database.searchActionDao()
+        val current = dao.getSearchActions().first()
+        val (updated, error) = FlowAliasRecords.upsert(current, alias)
+        if (error == null) dao.replaceAll(updated)
+        error
+    }
+
+    override suspend fun removeFlowAlias(id: String) = writeMutex.withLock {
+        val dao = database.searchActionDao()
+        dao.replaceAll(FlowAliasRecords.remove(dao.getSearchActions().first(), id))
+    }
+
     override suspend fun backup(toDir: File) = withContext(Dispatchers.IO) {
+        writeMutex.withLock { backupRecords(toDir) }
+    }
+
+    private suspend fun backupRecords(toDir: File) {
         val dao = database.backupDao()
         var page = 0
         var iconCounter = 0
@@ -119,11 +151,15 @@ internal class SearchActionRepositoryImpl(
     }
 
     override suspend fun restore(fromDir: File) = withContext(Dispatchers.IO) {
+        writeMutex.withLock { restoreRecords(fromDir) }
+    }
+
+    private suspend fun restoreRecords(fromDir: File) {
         val dao = database.backupDao()
         dao.wipeSearchActions()
 
         val files =
-            fromDir.listFiles { _, name -> name.startsWith("searchactions.") } ?: return@withContext
+            fromDir.listFiles { _, name -> name.startsWith("searchactions.") } ?: return
 
         for (file in files) {
             val searchActions = mutableListOf<SearchActionEntity>()

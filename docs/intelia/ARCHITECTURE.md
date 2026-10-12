@@ -107,3 +107,25 @@ Keep both recent commits in ancestry: `556883681` fixes input/error crashes and
 database migration hazards; `3d18f3056` closes streams/clients, reuses the OSM
 provider, improves thumbnail memory use and makes a user-serial cache concurrent.
 Feature tasks must not undo those resource, migration and cancellation safeguards.
+
+## Implemented FLOW v0 extension
+
+The bootstrap map above describes the inherited baseline. On `feat/flow-aliases`,
+`data/search-actions/.../searchactions/flow/` contains the pure alias codec,
+validator/matcher, guarded executor, record operations and Android target adapter.
+`FlowAliasActionBuilder` is the `flow_alias` discriminator in existing entity
+serialization. `SearchActionService` combines alias records with current eligible
+targets; `SearchBarActions` dispatches through the suspend `activate` hook in a
+Compose coroutine. Existing synchronous actions use the default adapter.
+
+`FlowAliasRuntime` depends on existing `AppRepository` and saved-searchable
+visibility. It filters personal-profile/exact activity targets, queries hidden
+app keys without a count cutoff, resolves again for activation and dispatch, and
+never falls back by package. `FlowAliasRecords` updates raw records without losing
+legacy/unknown payloads; the shared repository serializes writes. No migration
+is needed because existing fields already store the versioned payload.
+
+`FlowAliasSheet` adds authoring/repair/delete to the current Search Actions settings
+route, separate from the sealed generic intent editor. `SearchVM` excludes alias
+results from best-match fallback. Unit tests cover the pure contracts; Android
+Room persistence, real backup/restore and UI/device behavior are still unverified.

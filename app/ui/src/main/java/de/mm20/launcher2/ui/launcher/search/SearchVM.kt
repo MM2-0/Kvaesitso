@@ -31,6 +31,7 @@ import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.ResultScore
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchFilters
+import de.mm20.launcher2.searchactions.flow.FlowAliasAction
 import de.mm20.launcher2.search.SearchResults
 import de.mm20.launcher2.search.SearchService
 import de.mm20.launcher2.search.Searchable
@@ -328,7 +329,7 @@ class SearchVM : ViewModel(), KoinComponent {
                                 articleResults.isNotEmpty() -> articleResults.first()
                                 websiteResults.isNotEmpty() -> websiteResults.first()
                                 fileResults.isNotEmpty() -> fileResults.first()
-                                searchActionResults.isNotEmpty() -> searchActionResults.first()
+                                searchActionResults.any { it !is FlowAliasAction } -> searchActionResults.first { it !is FlowAliasAction }
                                 else -> null
                             }
                         } else {

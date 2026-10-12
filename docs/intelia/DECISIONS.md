@@ -52,3 +52,21 @@ Cloud build/unit-test success is a development baseline. Device UX, jank, startu
 heap and battery claims require recorded device evidence. PERFORMANCE budgets
 are proposed targets until measured. Fix observed regressions before speculative
 optimizations or adding benchmark dependencies.
+
+## D007 — A focused alias editor and scoped activation (accepted, 2026-10-12)
+
+FLOW v0 uses a dedicated sheet on the existing Search Actions settings route;
+the sealed generic intent editor and its existing customization types stay
+unchanged. Alias persistence uses existing entity fields with version-1 JSON and
+stable IDs. Alias mutations retain raw legacy/unknown records. The repository is
+shared, with serialized writes rather than separate per-editor locks.
+
+`SearchAction.activate` is the lifecycle-aware dispatch hook. Ordinary actions
+retain their synchronous implementation through its default adapter; alias chips
+resolve/dispatch in a Compose-owned coroutine and exclude aliases from the
+best-match fallback. Legacy synchronous alias activation fails closed with a
+user-facing instruction. One shared execution guard spans rebuilt result objects,
+and cancellation/target eligibility are checked before dispatch. Leaving the
+action UI or stopping its lifecycle cancels pending jobs; backup/restore shares
+the repository write guard. No new schema,
+production external dependency, permission or background service is required.

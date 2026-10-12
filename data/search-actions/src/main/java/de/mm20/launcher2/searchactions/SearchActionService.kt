@@ -28,6 +28,9 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
+import de.mm20.launcher2.searchactions.builders.FlowAliasActionBuilder
+import de.mm20.launcher2.searchactions.flow.*
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
@@ -59,6 +62,7 @@ internal class SearchActionServiceImpl(
     private val context: Context,
     private val repository: SearchActionRepository,
     private val textClassifier: TextClassifier,
+    private val flowAliases: FlowAliasRuntime,
 ) : SearchActionService {
     override suspend fun search(
         query: String
@@ -72,7 +76,7 @@ internal class SearchActionServiceImpl(
 
         val builders = repository.getSearchActionBuilders()
 
-        return builders.map {
+        return builders.combine(flowAliases.targets()) { savedBuilders, targets ->
             val results = mutableListOf<SearchAction>()
 
             if (isAtLeastApiLevel(35)) {
@@ -82,13 +86,20 @@ internal class SearchActionServiceImpl(
                 }
             }
 
-            for (builder in it) {
+            for (builder in savedBuilders.filterNot { it is FlowAliasActionBuilder }) {
                 val result = builder.build(context, classificationResult)
                 if (result != null) {
                     results += result
                 }
             }
 
+            val seen = mutableSetOf<String>()
+            for (builder in savedBuilders.filterIsInstance<FlowAliasActionBuilder>()) {
+                val alias = builder.alias
+                if (FlowAliases.matches(alias, query) && seen.add(FlowAliases.normalize(alias.alias))) {
+                    targets.find { it.key == alias.targetKey }?.let { results += FlowAliasAction(alias, it, flowAliases) }
+                }
+            }
             results.toImmutableList()
         }
     }

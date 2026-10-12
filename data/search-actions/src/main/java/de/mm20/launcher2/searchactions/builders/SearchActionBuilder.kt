@@ -7,6 +7,7 @@ import de.mm20.launcher2.ktx.jsonObjectOf
 import de.mm20.launcher2.searchactions.TextClassificationResult
 import de.mm20.launcher2.searchactions.actions.SearchAction
 import de.mm20.launcher2.searchactions.actions.SearchActionIcon
+import de.mm20.launcher2.searchactions.flow.FlowAliases
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -31,6 +32,7 @@ interface SearchActionBuilder {
                 }
             }
             when (entity.type) {
+                "flow_alias" -> return FlowAliases.decode(entity.data)?.let { FlowAliasActionBuilder(it) }
                 "url" -> {
                     return CustomWebsearchActionBuilder(
                         label = entity.label ?: "",
@@ -77,6 +79,7 @@ interface SearchActionBuilder {
 
         internal fun toDatabaseEntity(builder: SearchActionBuilder, position: Int): SearchActionEntity {
             return when(builder) {
+                is FlowAliasActionBuilder -> SearchActionEntity(position = position, type = "flow_alias", data = FlowAliases.encode(builder.alias))
                 is CustomWebsearchActionBuilder -> SearchActionEntity(
                     position = position,
                     type = "url",

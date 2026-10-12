@@ -3,7 +3,9 @@
 Intelia is an Android launcher derived from the open-source Kvaesitso project.
 Its existing search, providers, widgets and customization are the foundation for
 an original interaction model, not evidence that Intelia's signature capabilities
-already exist. This bootstrap changes documentation only.
+already exist. The bootstrap changed documentation only; the subsequent FLOW v0
+feature branch implements exact local app aliases. Device validation remains
+pending, and multi-step FLOW, ORBIT, MORPH and POCKET are still plans.
 
 ## Product contract
 

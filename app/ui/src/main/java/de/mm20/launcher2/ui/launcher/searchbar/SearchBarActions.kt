@@ -15,6 +15,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SmallFloatingActionButton
 import androidx.compose.material3.Text
+import androidx.compose.runtime.rememberCoroutineScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.cancelChildren
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -36,6 +41,10 @@ fun ColumnScope.SearchBarActions(
 ) {
     val context = LocalContext.current
     AnimatedVisibility(actions.isNotEmpty()) {
+        val actionScope = rememberCoroutineScope()
+        LifecycleEventEffect(Lifecycle.Event.ON_STOP) {
+            actionScope.coroutineContext.cancelChildren()
+        }
         LazyRow(
             modifier = Modifier
                 .consumeAllScrolling()
@@ -62,7 +71,7 @@ fun ColumnScope.SearchBarActions(
                         )
                     } else AssistChipDefaults.assistChipBorder(true),
                     onClick = {
-                        it.start(context)
+                        actionScope.launch { it.activate(context) }
                     },
                     label = { Text(it.label) },
                     leadingIcon = {

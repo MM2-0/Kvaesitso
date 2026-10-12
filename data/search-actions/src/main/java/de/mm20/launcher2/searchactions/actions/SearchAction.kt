@@ -8,6 +8,8 @@ interface SearchAction : Searchable {
     val icon: SearchActionIcon
     val iconColor: Int
     val customIcon: String?
+    /** UI callers own the coroutine so pending work stops with their lifecycle. */
+    suspend fun activate(context: Context) { start(context) }
     fun start(context: Context)
 }
 

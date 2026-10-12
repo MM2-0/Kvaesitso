@@ -51,6 +51,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
+import de.mm20.launcher2.searchactions.builders.FlowAliasActionBuilder
 import de.mm20.launcher2.searchactions.builders.CustomizableSearchActionBuilder
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.SearchActionIcon
@@ -80,7 +81,7 @@ fun SearchActionsSettingsScreen() {
 
     val listState = rememberLazyDragAndDropListState(
         onDragStart = {
-            it.key != "divider" && !(it.key as String).startsWith("disabled-")
+            it.key != "divider" && it.key != "flow-alias-create" && !(it.key as String).startsWith("disabled-")
         },
         onItemMove = { from, to -> viewModel.moveItem(from.index - 1, to.index - 1) }
     )
@@ -202,7 +203,15 @@ fun SearchActionsSettingsScreen() {
                             if (it) draggedShape else shape
                         ).value
                     ) {
-                        if (item is CustomizableSearchActionBuilder) {
+                        if (item is FlowAliasActionBuilder) {
+                            val targets by viewModel.aliasTargets.collectAsState()
+                            Preference(
+                                title = item.label,
+                                summary = targets.find { it.key == item.alias.targetKey }?.label
+                                    ?: stringResource(R.string.flow_alias_target_unavailable),
+                                onClick = { viewModel.editAlias(item.alias) },
+                            )
+                        } else if (item is CustomizableSearchActionBuilder) {
                             Preference(
                                 icon = {
                                     SearchActionIcon(item)
@@ -307,6 +316,11 @@ fun SearchActionsSettingsScreen() {
                     )
                 }
             }
+            item(key = "flow-alias-create") {
+                FilledTonalButton(onClick = { viewModel.editAlias(null) }, modifier = Modifier.padding(horizontal = 12.dp)) {
+                    Text(stringResource(R.string.flow_alias_create))
+                }
+            }
             item(key = "disabled-button") {
                 FilledTonalButton(
                     modifier = Modifier
@@ -327,6 +341,18 @@ fun SearchActionsSettingsScreen() {
                 }
             }
         }
+    }
+
+    val showAlias by viewModel.showAliasEditor
+    val aliasTargets by viewModel.aliasTargets.collectAsState()
+    if (showAlias) {
+        FlowAliasSheet(
+            initial = viewModel.editingAlias.value, targets = aliasTargets,
+            error = viewModel.aliasError.value, saving = viewModel.savingAlias.value,
+            onSave = { viewModel.saveAlias(context, it) },
+            onDelete = { viewModel.deleteAlias(context, it) },
+            onDismiss = { viewModel.dismissAlias() },
+        )
     }
 
     val editAction by viewModel.showEditDialogFor
