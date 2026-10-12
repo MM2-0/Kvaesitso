@@ -1,6 +1,8 @@
 # 000 — Preserve and document the Android baseline
 
 Type: documentation/environment bootstrap. Branch: `docs/intelia-bootstrap`.
+Status: COMPLETE; [PR #1](https://github.com/ondrejmacko-it/Intelia-Launcher/pull/1)
+is open for review, not merged.
 Application changes: none. Baseline: `3d18f3056dce2276569aa335343175ad2ca6700e`.
 
 ## Deliverables
@@ -19,8 +21,8 @@ Application changes: none. Baseline: `3d18f3056dce2276569aa335343175ad2ca6700e`.
 - [x] Full onboarding default debug build and relevant tests pass.
 - [x] Repeat setup and cached bootstrap build pass; record cache status accurately.
 - [x] Record fresh bootstrap test results and documentation/link checks.
-- [ ] Confirm only documentation paths changed and no lock/license/source changes.
-- [ ] Commit, push and create PR, or record the precise external delivery blocker.
+- [x] Confirm only documentation paths changed and no lock/license/source changes.
+- [x] Commit, push and create PR; no merge.
 
 ## Exact Android checks
 

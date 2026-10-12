@@ -79,8 +79,9 @@ established; running Claude Code itself was not verified.
 Git read access works. At bootstrap inspection, HTTPS CONNECT to
 `api.github.com` returned proxy 403 before API authentication could be evaluated.
 An additive allowed-domain requirement for `api.github.com` was saved while
-preserving package-manager presets. PR creation remains pending that runtime
-access check; no new token is requested based on this network denial alone.
+preserving package-manager presets. PR creation subsequently succeeded with the
+supplied authentication. No new token was requested; the failed CONNECT alone
+did not establish a credential problem.
 
 The inherited nightly/Pages CI uses JDK 17 and has not been run here. Updating CI
 to the verified toolchain is a separate task. Node 24.19.0 / npm 11.9.0 installed
@@ -93,6 +94,8 @@ apps, surfaced through existing action chips and activated only by the user.
 Use D003 and the verified integration map. Do not implement multi-step automation,
 AI, Accessibility, overlays or rebranding in that task.
 
-Delivery is through `docs/intelia-bootstrap`; PR creation is pending the GitHub
-API network prerequisite above. Until the bootstrap is reviewed/merged, base
-follow-up work on this branch's reviewed commit rather than recreating its context.
+Documentation commit `f0e828bc1` was pushed to `docs/intelia-bootstrap`.
+[PR #1](https://github.com/ondrejmacko-it/Intelia-Launcher/pull/1) is verified OPEN
+against `main`; no automatic merge was performed. A documentation handoff update
+records this delivery evidence on the same branch. Until bootstrap review/merge,
+base follow-up work on this branch's reviewed commit rather than recreating its context.
