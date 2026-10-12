@@ -1,6 +1,7 @@
 # 010 — FLOW v0: exact offline app aliases
 
 Status: IMPLEMENTED on `feat/flow-aliases`; build/JVM tests pass, device validation remains pending.
+Review: [PR #2](https://github.com/ondrejmacko-it/Intelia-Launcher/pull/2), stacked on bootstrap PR #1.
 Read AGENTS, STATUS, ARCHITECTURE search/execution and DECISIONS D003. The behavior below was absent from the bootstrap baseline and is implemented
 on the feature branch.
 

@@ -4,8 +4,9 @@
 
 Branch: `feat/flow-aliases`, based on bootstrap commit `5b7aa3445`. Bootstrap
 PR #1 is still open; the feature PR is stacked on `docs/intelia-bootstrap` to
-keep application review separate from bootstrap documentation. Neither PR is
-merged automatically.
+keep application review separate from bootstrap documentation.
+[Feature PR #2](https://github.com/ondrejmacko-it/Intelia-Launcher/pull/2) was created
+after pushing implementation commit `5d4ce7423`. Neither PR is merged automatically.
 
 Implemented: create/edit/delete local app aliases in Search Actions settings,
 NFKC / whitespace / Locale.ROOT exact matching, version-1 JSON payloads in the
