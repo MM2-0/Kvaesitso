@@ -126,6 +126,9 @@ Only then plan typed multi-step FLOW and POCKET; do not silently add them here.
 
 ### Remaining device checklist (unrun)
 
+Use the [device validation runbook](../docs/intelia/FLOW_DEVICE_VALIDATION.md)
+for installation, steps, expected results and the evidence record.
+
 - [ ] Create/edit/delete alias and confirm persistence after process restart.
 - [ ] Launch offline, return, and verify ordinary search/action behavior.
 - [ ] Hide, suspend or uninstall target; verify no stale-label disclosure or launch.

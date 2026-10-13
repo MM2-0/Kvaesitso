@@ -1,5 +1,29 @@
 # Intelia status
 
+## Resumed validation preparation — 2026-10-13
+
+Restored feature branch at `6c74e9b47` in a new cloud chat. GitHub API confirmed
+PR #1 and PR #2 are OPEN; PR #2 still targets `docs/intelia-bootstrap` and is
+mergeable. No merge was performed.
+
+Re-executed the FLOW verification command below: PASS in 20s, 1018 tasks
+(3 executed, 1015 up-to-date). All three test tasks executed: 16 FLOW, 52
+core/base and 16 locations passed; 1 existing locations test skipped, no
+failures/errors. APK assembly was up-to-date, not a fresh compilation;
+`apksigner verify --verbose` independently passed with v2 signing.
+APK SHA-256: `f7a4d1ceee21f50e8729d908a5fcd0f04e6c056e4cc1af1d0b6320c72e2d17e0`.
+`npm run docs:build` passed in 2.41s after using a GitHub URL for the task
+outside the VitePress root; link checking remains enabled. `git diff --check`
+passed. Application source and behavior were unchanged by this follow-up.
+
+`adb devices -l` succeeded outside the local-socket sandbox and returned no
+devices. SDK emulator/system images and `/dev/kvm` are absent. Device acceptance
+and performance remain UNRUN. Added the
+[device validation runbook](FLOW_DEVICE_VALIDATION.md) with executable install
+and force-stop commands, explicit expected results and a result template. The
+next action requires an authorized connected Android test device; use that
+runbook rather than repeating JVM tests as evidence of device behavior.
+
 ## FLOW v0 implementation — 2026-10-12
 
 Branch: `feat/flow-aliases`, based on bootstrap commit `5b7aa3445`. Bootstrap
