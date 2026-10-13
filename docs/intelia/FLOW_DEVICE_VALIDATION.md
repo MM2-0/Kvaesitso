@@ -7,6 +7,32 @@ device, Android version, source commit and APK SHA-256.
 
 ## Install and prepare
 
+The next validation session will run in a local Codex chat on the computer
+connected to the user's phone over USB. The cloud chat cannot access that USB
+connection. Enable USB debugging and accept the computer's authorization prompt
+on the phone, then verify it appears as `device` in `adb devices -l`.
+
+To resume from GitHub in a fresh local checkout:
+
+```sh
+git clone --branch feat/flow-aliases https://github.com/ondrejmacko-it/Intelia-Launcher.git
+cd Intelia-Launcher
+```
+
+For an existing checkout, preserve local changes first, then fetch and switch to
+`feat/flow-aliases`. Read `AGENTS.md`, `docs/intelia/STATUS.md` and task 010 before
+testing. Use the portable JDK/SDK prerequisites and build command in
+[WORKFLOW](WORKFLOW.md) to produce the debug APK, or use the verified APK from
+the cloud chat. Copy that APK to `app-default-debug.apk` in the local working
+directory before using the install command below. APKs are build outputs, not
+tracked source files.
+
+The user has authorized local live testing and APK installation once ADB is
+available. Obtain explicit consent before clearing the user's app data or
+restoring a backup over their everyday configuration. Run those cases on an
+isolated test installation otherwise. If multiple devices are connected, select
+the intended device with `adb -s SERIAL` for every command.
+
 Use a test device/profile with Android 8 (API 26) or newer and a visible
 personal-profile app that can safely be launched offline. The debug application
 ID is `de.mm20.launcher2.debug`. Installation updates that debug app if present;

@@ -23,6 +23,10 @@ and performance remain UNRUN. Added the
 and force-stop commands, explicit expected results and a result template. The
 next action requires an authorized connected Android test device; use that
 runbook rather than repeating JVM tests as evidence of device behavior.
+The user chose a local Codex session with their USB-debugging phone for this
+follow-up. The runbook includes the GitHub checkout and local ADB handoff;
+clearing personal app data or restoring over everyday settings needs separate
+explicit consent. No device testing has occurred yet.
 
 ## FLOW v0 implementation — 2026-10-12
 
