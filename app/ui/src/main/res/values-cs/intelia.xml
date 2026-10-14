@@ -4,6 +4,10 @@
     <string name="intelia_flow">FLOW</string>
     <string name="intelia_settings">Nastavení</string>
     <string name="intelia_search">Hledat</string>
+    <string name="intelia_lens_description">Vyhledat aplikace a příkazy</string>
+    <string name="intelia_arc_action">Otevřít rychlý přístup ARC</string>
+    <string name="intelia_arc_open">Rychlý přístup otevřen</string>
+    <string name="intelia_app_options">Možnosti aplikace</string>
     <string name="intelia_wallpaper">Tapeta</string>
     <string name="intelia_wallpaper_auto">Automatický blur</string>
     <string name="intelia_wallpaper_clear">Bez rozostření</string>

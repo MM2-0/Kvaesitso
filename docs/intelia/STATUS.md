@@ -1,5 +1,18 @@
 # Intelia status
 
+## Keyboard / ARC accessibility follow-up — 2026-10-14
+
+Existing preview updated without data wipe. LENS keyboard focus, Enter/Space
+search, Up into five saved ARC apps and Escape cancellation from focused icons
+passed on A059/API 36. Localized descriptions/roles, explicit 48 dp ARC targets,
+bounded labels and layer-driven fading preserve the minimal Home. 104 existing
+JVM tests passed, one existing skip; release build/signature/embedded source/
+scoped file checks passed. No permissions/dependencies/services were added.
+ARC jank was similar (5.39% before, 5.29% after); rapid LENS measured 6.73% versus
+previous preview 5.71%, so no additional speed improvement is established.
+Full accessibility and performance acceptance remain open. See
+[verification and remaining limits](LENS_ACCESSIBILITY_REPORT.md).
+
 ## Release preview / performance follow-up — 2026-10-14
 
 User requested continuation on PR #3's open jank issue and explicitly approved

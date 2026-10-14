@@ -35,3 +35,14 @@ measurements improve materially over debug. Source changes remain focused on
 transition/window effects and the opt-in build identity. See
 [follow-up evidence](../docs/intelia/LENS_PERFORMANCE_REPORT.md). Performance tails,
 accessibility/physical multitouch/energy and final design approval remain open.
+
+### Keyboard and ARC accessibility continuation — 2026-10-14
+
+LENS Enter/Space and Up-to-ARC focus, Escape from focused ARC icon, touch search,
+exact FLOW availability and no-selection release passed on the actual phone.
+Minimal Home appearance and all five saved ARC slots retained. Explicit touch
+targets/localized semantics/layer-driven fade added without new permissions.
+Build/104 tests (one existing skip)/signature/source/file audit passed. See
+[current evidence](../docs/intelia/LENS_ACCESSIBILITY_REPORT.md), including exact
+commands, changed paths, measured frame tails and unrun acceptance. No additional
+performance improvement or complete TalkBack/font-scale acceptance is claimed.

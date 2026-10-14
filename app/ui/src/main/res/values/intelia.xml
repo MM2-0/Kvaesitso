@@ -4,6 +4,10 @@
     <string name="intelia_flow">FLOW</string>
     <string name="intelia_settings">Settings</string>
     <string name="intelia_search">Search</string>
+    <string name="intelia_lens_description">Search apps and commands</string>
+    <string name="intelia_arc_action">Open ARC quick access</string>
+    <string name="intelia_arc_open">Quick access open</string>
+    <string name="intelia_app_options">App options</string>
     <string name="intelia_wallpaper">Wallpaper</string>
     <string name="intelia_wallpaper_auto">Automatic blur</string>
     <string name="intelia_wallpaper_clear">Unblurred</string>

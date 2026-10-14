@@ -178,7 +178,7 @@ fun InteliaHome(
                 if (page != 0) Surface(Modifier.fillMaxWidth().padding(top = 12.dp, bottom = 14.dp), shape = RoundedCornerShape(22.dp), color = scheme.surface.copy(alpha = 0.94f)) {
                     Row(Modifier.padding(end = 8.dp), verticalAlignment = Alignment.CenterVertically) {
                         TextField(value = query, onValueChange = { model.query.value = it }, singleLine = true,
-                            modifier = Modifier.weight(1f).focusRequester(searchFocus),
+                            modifier = Modifier.weight(1f).focusRequester(searchFocus).semantics { contentDescription = context.getString(R.string.intelia_lens_description) },
                             placeholder = { Text(stringResource(R.string.intelia_search), fontSize = 14.sp) },
                             leadingIcon = { HomeGlyph(0, null) },
                             colors = TextFieldDefaults.colors(focusedContainerColor = Color.Transparent, unfocusedContainerColor = Color.Transparent,
@@ -325,7 +325,8 @@ private fun FlowLibrary(aliases: List<FlowAlias>, targets: List<FlowAliasTarget>
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun AppRow(app: Application, onClick: () -> Unit, onLongClick: () -> Unit) {
-    Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(12.dp)).combinedClickable(onClick = onClick, onLongClick = onLongClick).padding(vertical = 12.dp),
+    Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(12.dp)).combinedClickable(role = androidx.compose.ui.semantics.Role.Button,
+        onLongClickLabel = stringResource(R.string.intelia_app_options), onClick = onClick, onLongClick = onLongClick).padding(vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically) {
         AppIcon(app, Modifier.size(36.dp))
         Text(app.labelOverride ?: app.label, modifier = Modifier.padding(start = 18.dp).weight(1f), maxLines = 1, overflow = TextOverflow.Ellipsis, fontSize = 16.sp)
