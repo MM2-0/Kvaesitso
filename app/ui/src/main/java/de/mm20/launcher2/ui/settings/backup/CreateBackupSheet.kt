@@ -47,7 +47,7 @@ fun CreateBackupSheet(
                 ZonedDateTime.now().format(
                     DateTimeFormatter.ISO_INSTANT
                 ).replace(":", "_")
-            }.kvaesitso"
+            }.intelia"
             backupLauncher.launch(fileName)
         }
 
@@ -69,6 +69,12 @@ fun CreateBackupSheet(
                         modifier = Modifier.size(48.dp)
                     )
                 }
+            } else if (it == CreateBackupState.Failed) {
+                LargeMessage(
+                    modifier = Modifier.aspectRatio(1f),
+                    icon = R.drawable.error_48px,
+                    text = stringResource(R.string.backup_failed),
+                )
             } else if (it == CreateBackupState.BackedUp) {
                 LargeMessage(
                     modifier = Modifier.aspectRatio(1f),

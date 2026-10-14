@@ -8,17 +8,15 @@ import kotlinx.coroutines.*
 import java.io.File
 import java.io.IOException
 import java.io.InputStream
+import java.io.ByteArrayInputStream
 import java.io.OutputStream
 import java.util.zip.ZipEntry
-import java.util.zip.ZipInputStream
 import java.util.zip.ZipOutputStream
 
 class BackupManager(
     private val context: Context,
     private val components: List<Backupable>,
 ) {
-    private val scope = CoroutineScope(Dispatchers.Default + Job())
-
     /**
      * Create a backup
      * @return Uri to the created backup archive
@@ -37,57 +35,58 @@ class BackupManager(
         )
 
         withContext(Dispatchers.IO) {
-            val outputStream = context.contentResolver.openOutputStream(uri) ?: return@withContext null
-            val backupDir = File(context.cacheDir, "backup")
-            if (backupDir.exists()) {
-                backupDir.deleteRecursively()
-            }
-            backupDir.mkdirs()
+            val outputStream = context.contentResolver.openOutputStream(uri)
+                ?: throw IOException("Cannot create backup")
+            outputStream.use {
+                val backupDir = File(context.cacheDir, "backup")
+                if (backupDir.exists()) backupDir.deleteRecursively()
+                if (!backupDir.mkdirs()) throw IOException("Cannot prepare backup directory")
 
-            val metaFile = File(backupDir, "meta")
-            meta.writeToFile(metaFile)
+                val metaFile = File(backupDir, "meta")
+                meta.writeToFile(metaFile)
 
-            for (component in components) {
-                try {
-                    component.backup(backupDir)
-                } catch (e: Exception) {
-                    if (e is CancellationException) throw e
-                    Log.e("BackupManager", "Failed to back up ${component::class.java.name}", e)
+                var failure: Exception? = null
+                for (component in components) {
+                    try {
+                        component.backup(backupDir)
+                    } catch (e: Exception) {
+                        if (e is CancellationException) throw e
+                        Log.e("BackupManager", "Failed to back up ${component::class.java.name}", e)
+                        failure = e
+                    }
                 }
+                failure?.let { throw IOException("Backup could not be fully created", it) }
+                createArchive(backupDir, outputStream)
             }
-
-            createArchive(backupDir, outputStream)
-            outputStream.close()
-
         }
     }
 
     suspend fun restore(
         uri: Uri,
     ) {
-        val job = scope.launch {
-            withContext(Dispatchers.IO) {
-                val inputStream = context.contentResolver.openInputStream(uri) ?: return@withContext
-                val restoreDir = File(context.cacheDir, "restore")
-                if (restoreDir.exists()) {
-                    restoreDir.deleteRecursively()
-                }
-                restoreDir.mkdirs()
-                extractArchive(inputStream, restoreDir)
-                inputStream.close()
+        withContext(Dispatchers.IO) {
+            val inputStream = context.contentResolver.openInputStream(uri)
+                ?: throw IOException("Cannot open backup")
+            val restoreDir = File(context.cacheDir, "restore")
+            inputStream.use {
+                if (restoreDir.exists()) restoreDir.deleteRecursively()
+                if (!restoreDir.mkdirs()) throw IOException("Cannot prepare backup directory")
+                extractArchive(it, restoreDir)
+            }
 
-                for (component in components) {
-                    // Don't let a single broken component abort the restore (or crash the app)
-                    try {
-                        component.restore(restoreDir)
-                    } catch (e: Exception) {
-                        if (e is CancellationException) throw e
-                        Log.e("BackupManager", "Failed to restore ${component::class.java.name}", e)
-                    }
+            var failure: Exception? = null
+            for (component in components) {
+                // Preserve component isolation, but never report a partial failure as success.
+                try {
+                    component.restore(restoreDir)
+                } catch (e: Exception) {
+                    if (e is CancellationException) throw e
+                    Log.e("BackupManager", "Failed to restore ${component::class.java.name}", e)
+                    failure = e
                 }
             }
+            failure?.let { throw IOException("Backup could not be fully restored", it) }
         }
-        job.join()
     }
 
     suspend fun readBackupMeta(uri: Uri): BackupMetadata? {
@@ -95,18 +94,10 @@ class BackupManager(
             try {
                 val inputStream =
                     context.contentResolver.openInputStream(uri) ?: return@withContext null
-                ZipInputStream(inputStream).use { zipStream ->
-                    var entry = zipStream.nextEntry
-                    while (entry != null) {
-                        if (entry.name == "meta") {
-                            return@withContext BackupMetadata.fromInputStream(zipStream)
-                        }
-
-                        zipStream.closeEntry()
-
-                        entry = zipStream.nextEntry
-                    }
-                }
+                val owner = currentCoroutineContext()
+                val metadata = BackupArchive.readMetadata(inputStream, checkCancelled = { owner.ensureActive() })
+                    ?: return@withContext null
+                return@withContext BackupMetadata.fromInputStream(ByteArrayInputStream(metadata))
             } catch (e: IOException) {
                 Log.e("BackupManager", "Failed to read backup metadata", e)
             } catch (e: SecurityException) {
@@ -117,32 +108,21 @@ class BackupManager(
     }
 
     private suspend fun createArchive(dir: File, outputStream: OutputStream) = withContext(Dispatchers.IO){
-        val zipStream = ZipOutputStream(outputStream)
-
-        val fileList = dir.listFiles()
-
-        for (file in fileList) {
-            zipStream.putNextEntry(ZipEntry(file.name))
-            file.inputStream().use {
-                it.copyTo(zipStream)
+        ZipOutputStream(outputStream).use { zipStream ->
+            val fileList = dir.listFiles() ?: throw IOException("Cannot read backup directory")
+            for (file in fileList) {
+                zipStream.putNextEntry(ZipEntry(file.name))
+                file.inputStream().use {
+                    it.copyTo(zipStream)
+                }
+                zipStream.closeEntry()
             }
-            zipStream.closeEntry()
         }
-        zipStream.close()
     }
 
     private suspend fun extractArchive(inputStream: InputStream, outDir: File) = withContext(Dispatchers.IO) {
-        val zipStream = ZipInputStream(inputStream)
-        var entry = zipStream.nextEntry
-        while(entry != null) {
-            val file = File(outDir, entry.name)
-            file.outputStream().use {
-                zipStream.copyTo(it)
-            }
-            zipStream.closeEntry()
-
-            entry = zipStream.nextEntry
-        }
+        val owner = currentCoroutineContext()
+        BackupArchive.extract(inputStream, outDir, checkCancelled = { owner.ensureActive() })
     }
 
     fun checkCompatibility(meta: BackupMetadata): BackupCompatibility {

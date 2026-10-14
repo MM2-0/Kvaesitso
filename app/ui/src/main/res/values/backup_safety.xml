@@ -1,0 +1,4 @@
+<resources>
+    <string name="backup_failed">Could not create the backup. Try again.</string>
+    <string name="restore_failed">Could not restore the backup. Some settings may already have changed.</string>
+</resources>

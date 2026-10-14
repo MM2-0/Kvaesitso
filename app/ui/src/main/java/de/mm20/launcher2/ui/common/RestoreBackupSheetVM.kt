@@ -8,6 +8,7 @@ import de.mm20.launcher2.backup.BackupCompatibility
 import de.mm20.launcher2.backup.BackupManager
 import de.mm20.launcher2.backup.BackupMetadata
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.CancellationException
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -41,8 +42,14 @@ class RestoreBackupSheetVM : ViewModel(), KoinComponent {
 
         viewModelScope.launch {
             state.value = RestoreBackupState.Restoring
-            backupManager.restore(uri)
-            state.value = RestoreBackupState.Restored
+            try {
+                backupManager.restore(uri)
+                state.value = RestoreBackupState.Restored
+            } catch (e: CancellationException) {
+                throw e
+            } catch (_: Exception) {
+                state.value = RestoreBackupState.Failed
+            }
         }
     }
 }
@@ -53,4 +60,5 @@ enum class RestoreBackupState {
     Ready,
     Restoring,
     Restored,
+    Failed,
 }

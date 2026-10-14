@@ -2,7 +2,7 @@ package de.mm20.launcher2.searchactions
 
 import android.content.Context
 import de.mm20.launcher2.backup.Backupable
-import de.mm20.launcher2.crashreporter.CrashReporter
+import de.mm20.launcher2.backup.BackupArchive
 import de.mm20.launcher2.database.AppDatabase
 import de.mm20.launcher2.database.entities.SearchActionEntity
 import de.mm20.launcher2.ktx.jsonObjectOf
@@ -31,7 +31,6 @@ import de.mm20.launcher2.searchactions.flow.*
 import de.mm20.launcher2.searchactions.builders.FlowAliasActionBuilder
 import kotlinx.coroutines.withContext
 import org.json.JSONArray
-import org.json.JSONException
 import java.io.File
 import java.util.UUID
 
@@ -155,15 +154,15 @@ internal class SearchActionRepositoryImpl(
     }
 
     private suspend fun restoreRecords(fromDir: File) {
-        val dao = database.backupDao()
-        dao.wipeSearchActions()
-
         val files =
             fromDir.listFiles { _, name -> name.startsWith("searchactions.") } ?: return
+        if (files.isEmpty()) return
+        val searchActions = mutableListOf<SearchActionEntity>()
+        val createdIcons = mutableListOf<File>()
+        var restored = false
 
-        for (file in files) {
-            val searchActions = mutableListOf<SearchActionEntity>()
-            try {
+        try {
+            for (file in files.sortedBy { it.name }) {
                 val jsonArray = JSONArray(file.readText())
 
                 for (i in 0 until jsonArray.length()) {
@@ -174,8 +173,9 @@ internal class SearchActionRepositoryImpl(
                     var iconFile: File? = null
 
                     if (customIcon != null) {
-                        val asset = File(fromDir, customIcon)
+                        val asset = BackupArchive.child(fromDir, customIcon)
                         iconFile = File(context.filesDir, UUID.randomUUID().toString())
+                        createdIcons.add(iconFile)
                         asset.inputStream().use { inStream ->
                             iconFile.outputStream().use { outStream ->
                                 inStream.copyTo(outStream)
@@ -196,11 +196,12 @@ internal class SearchActionRepositoryImpl(
                     searchActions.add(entity)
                 }
 
-                dao.importSearchActions(searchActions)
-
-            } catch (e: JSONException) {
-                CrashReporter.logException(e)
             }
+            // Validate every page and asset before atomically replacing existing actions.
+            database.searchActionDao().replaceAll(searchActions)
+            restored = true
+        } finally {
+            if (!restored) createdIcons.forEach { it.delete() }
         }
     }
 }

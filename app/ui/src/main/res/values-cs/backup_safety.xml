@@ -1,0 +1,4 @@
+<resources>
+    <string name="backup_failed">Zálohu se nepodařilo vytvořit. Zkuste to znovu.</string>
+    <string name="restore_failed">Zálohu se nepodařilo obnovit. Některá nastavení již mohla být změněna.</string>
+</resources>

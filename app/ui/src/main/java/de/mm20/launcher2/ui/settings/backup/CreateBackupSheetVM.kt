@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.backup.BackupManager
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.CancellationException
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -22,8 +23,14 @@ class CreateBackupSheetVM : ViewModel(), KoinComponent {
     fun createBackup(uri: Uri) {
         viewModelScope.launch {
             state.value = CreateBackupState.BackingUp
-            backupManager.backup(uri)
-            state.value = CreateBackupState.BackedUp
+            try {
+                backupManager.backup(uri)
+                state.value = CreateBackupState.BackedUp
+            } catch (e: CancellationException) {
+                throw e
+            } catch (_: Exception) {
+                state.value = CreateBackupState.Failed
+            }
         }
     }
 }
@@ -32,4 +39,5 @@ enum class CreateBackupState {
     Ready,
     BackingUp,
     BackedUp,
+    Failed,
 }

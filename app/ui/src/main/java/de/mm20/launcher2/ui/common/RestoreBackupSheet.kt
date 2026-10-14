@@ -156,6 +156,14 @@ fun RestoreBackupSheet(
                         }
                     }
 
+                    RestoreBackupState.Failed -> {
+                        LargeMessage(
+                            modifier = Modifier.fillMaxWidth().navigationBarsPadding(),
+                            icon = R.drawable.error_48px,
+                            text = stringResource(R.string.restore_failed),
+                        )
+                    }
+
                     RestoreBackupState.Restored -> {
                         LargeMessage(
                             modifier = Modifier

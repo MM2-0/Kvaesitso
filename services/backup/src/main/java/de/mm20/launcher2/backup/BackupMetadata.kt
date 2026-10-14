@@ -37,7 +37,7 @@ data class BackupMetadata(
     companion object {
         internal suspend fun fromInputStream(inputStream: InputStream): BackupMetadata? {
             return withContext(Dispatchers.IO) {
-                val text = inputStream.reader().readText()
+                val text = BackupArchive.readLimited(inputStream, BackupArchive.MaxMetadataBytes).toString(Charsets.UTF_8)
                 try {
                     val json = JSONObject(text)
                     return@withContext BackupMetadata(
