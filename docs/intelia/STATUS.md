@@ -1,5 +1,24 @@
 # Intelia status
 
+## Release preview / performance follow-up — 2026-10-14
+
+User requested continuation on PR #3's open jank issue and explicitly approved
+a new backup only on the phone plus updating existing Intelia without data wipe.
+The installed package is still `dev.intelia.launcher.debug`, now a non-debuggable
+release preview built with `-Pintelia.localPreview=true`. Home role, stored FLOW,
+five ARC slots and Nothing were preserved. The temporary fresh `.release`
+measurement install was removed; its absence was checked before creation.
+
+The matched own-Home/800 ms workload recorded 9.49% jank in debug, 4.57%/3.94%
+in baseline release, and 4.29%/3.93% in the updated preview. Rapid LENS/system
+Home/350 ms workload recorded 5.71% in preview (older debug result 51.08%).
+This is substantial practical progress, largely removal of debug overhead;
+the smaller animation/window changes did not show a separate convincing gain.
+Frame tails and full performance/energy acceptance remain open. 104 unit tests
+passed, one existing skip; build/signature/source/permission checks passed.
+See [performance follow-up](LENS_PERFORMANCE_REPORT.md) for exact variants,
+commands, hashes, limitations and rollback/backup locations.
+
 ## Current recovery / LENS / ARC — 2026-10-14
 
 Task 020, branch `codex/intelia-wallpaper-design`, supersedes the previous

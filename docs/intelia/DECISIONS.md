@@ -122,3 +122,17 @@ separate from drawing/dispatch so cancellation and duplicate release are tested.
 Public OS blur is conditional, with runtime fallback and no wallpaper-reading
 permission. Vendor-private Nothing effects are not claimed. Existing widget
 hosting infrastructure remains intact but widgets stay outside this UI task.
+
+## D010 — Explicit release preview retaining local data (accepted, 2026-10-14)
+
+Debug Compose/tooling overhead contributes materially to observed LENS jank.
+The user explicitly approved a phone-only backup and updating the existing
+installation without data wipe. A developer-only Gradle opt-in
+`-Pintelia.localPreview=true` selects the existing `.debug` identity for release;
+same signing key plus install -r retain preferences, FLOW and Home role. Default
+release/debug identities and build behavior remain unchanged. Rollback APK is
+kept locally; the private backup remains on the phone and is not committed/copied.
+R8's inherited dontoptimize/dontobfuscate rules remain for compatibility; do not
+claim this preview is fully optimized. Minimal crossfade replaces animated
+content lookahead; window appearance/keep-awake flags update only when needed.
+Separate measured build-mode gain from unproven individual micro-optimizations.

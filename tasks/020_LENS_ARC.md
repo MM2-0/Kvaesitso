@@ -26,3 +26,12 @@ is disabled and fallback was verified. Performance remains FAIL/open: rapid
 keyboard/Home cycles produce substantial debug jank. Only a draft PR/design is
 appropriate. Enabled-blur, physical multitouch/rotation, TalkBack/font scaling,
 release startup and battery checks remain unrun; no final product approval.
+
+### Requested performance continuation — 2026-10-14
+
+User asked to continue and explicitly approved a phone-only backup and release
+preview update. Build option keeps existing installation/data; matched release
+measurements improve materially over debug. Source changes remain focused on
+transition/window effects and the opt-in build identity. See
+[follow-up evidence](../docs/intelia/LENS_PERFORMANCE_REPORT.md). Performance tails,
+accessibility/physical multitouch/energy and final design approval remain open.

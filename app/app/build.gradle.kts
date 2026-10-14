@@ -65,7 +65,8 @@ android {
 
     buildTypes {
         release {
-            applicationIdSuffix = ".release"
+            // Explicit local preview can update the existing debug install without moving its data.
+            applicationIdSuffix = if (providers.gradleProperty("intelia.localPreview").orNull == "true") ".debug" else ".release"
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(

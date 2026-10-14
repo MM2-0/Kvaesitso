@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.*
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.core.snap
 import androidx.compose.foundation.*
 import androidx.compose.foundation.gestures.detectVerticalDragGestures
 import androidx.compose.foundation.layout.*
@@ -82,13 +81,14 @@ fun InteliaHome(
     )
     MaterialTheme(colorScheme = scheme) {
         val context = LocalContext.current
-        SideEffect {
+        DisposableEffect(context, dark) {
             (context as? android.app.Activity)?.let { activity ->
                 androidx.core.view.WindowCompat.getInsetsController(activity.window, activity.window.decorView).apply {
                     isAppearanceLightStatusBars = !dark
                     isAppearanceLightNavigationBars = !dark
                 }
             }
+            onDispose { }
         }
         val query by model.query.collectAsStateWithLifecycle()
         val apps by model.apps.collectAsStateWithLifecycle()
@@ -142,8 +142,7 @@ fun InteliaHome(
                     IconButton(onClick = { sheet = 1; keyboard?.hide(); focus.clearFocus() }) { HomeGlyph(4, stringResource(R.string.intelia_settings)) }
                 }
                 Box(Modifier.weight(1f)) {
-                    AnimatedContent(targetState = page,
-                        transitionSpec = { (fadeIn(tween(duration)) togetherWith fadeOut(tween(duration))).using(SizeTransform(sizeAnimationSpec = { _, _ -> snap() })) }, label = "intelia-morph") { page ->
+                    Crossfade(targetState = page, animationSpec = tween(duration), label = "intelia-morph") { page ->
                         when (page) {
                             0 -> Box(Modifier.fillMaxSize()) {
                                 ClockHome(preferences.showClock, onLibrary = { mode = 1 })

@@ -1,5 +1,18 @@
 # Development workflow for Codex and Claude Code
 
+## Local release preview for the existing installation
+
+`./gradlew :app:app:assembleDefaultRelease -Pintelia.localPreview=true` builds
+release UI/code under `dev.intelia.launcher.debug` for an explicitly requested
+local preview. Install with `adb install -r` and the same local signing key to
+retain existing settings/FLOW/Home role. Ordinary release remains `.release`;
+ordinary debug remains debuggable. The preview is not debuggable and ignores
+the debug keep-awake extra. Preserve a signed rollback APK and an own backup
+before previewing; never clear data or uninstall the user's current launcher.
+The source bundle contains this option and the build command reproduces it.
+Inherited R8 rules still disable obfuscation/optimizer transformations; the
+preview removes debug/tooling overhead, not all possible release optimization.
+
 ## Minimal Home / LENS / ARC — 2026-10-14
 
 The active Home uses the user's Android wallpaper surface, not a copied/read

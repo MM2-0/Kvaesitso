@@ -49,12 +49,16 @@ class InteliaHomeActivity : BaseActivity() {
         }
     }
     override fun onResume() { super.onResume(); model.refreshHomeRole() }
-    override fun onPause() { window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON); super.onPause() }
+    override fun onPause() { setValidationKeepAwake(false); super.onPause() }
     override fun onNewIntent(intent: Intent) { super.onNewIntent(intent); applyValidationWindow(intent); model.refreshHomeRole(); homePulse++ }
     private fun applyValidationWindow(intent: Intent) {
         // Temporary, explicitly requested by the local debug tester; normal Home never keeps the display awake.
-        if (de.mm20.launcher2.ui.BuildConfig.DEBUG && intent.getBooleanExtra("intelia.validation.keepAwake", false)) {
-            window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-        } else window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        setValidationKeepAwake(de.mm20.launcher2.ui.BuildConfig.DEBUG && intent.getBooleanExtra("intelia.validation.keepAwake", false))
+    }
+    private fun setValidationKeepAwake(enabled: Boolean) {
+        val flag = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+        if ((window.attributes.flags and flag != 0) != enabled) {
+            if (enabled) window.addFlags(flag) else window.clearFlags(flag)
+        }
     }
 }
