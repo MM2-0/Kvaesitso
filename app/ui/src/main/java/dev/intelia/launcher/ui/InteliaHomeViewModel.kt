@@ -34,10 +34,13 @@ class InteliaHomeViewModel(application: AndroidApplication) : AndroidViewModel(a
     private val repository: SearchActionRepository by inject()
     private val runtime: FlowAliasRuntime by inject()
     private val preferences: InteliaUiPreferences by inject()
+    private val iconEngine: InteliaIconEngine by inject()
     private val backups: BackupManager by inject()
     private val context get() = getApplication<AndroidApplication>()
     val query = MutableStateFlow("")
     val ui = preferences.state
+    val iconPacks = iconEngine.installedPacks.catch { if (it is CancellationException) throw it; emit(emptyList()) }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
     val message = MutableStateFlow<Int?>(null)
     val editor = MutableStateFlow(false)
     val editingAlias = MutableStateFlow<FlowAlias?>(null)
@@ -73,8 +76,11 @@ class InteliaHomeViewModel(application: AndroidApplication) : AndroidViewModel(a
     private val eligible = combine(appRepository.findMany(), hidden) { installed, hiddenKeys ->
         installed.filter { it.key !in hiddenKeys && it.user == Process.myUserHandle() && !it.isPrivate && !it.isSuspended }
     }
+    val eligibleApps = eligible.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
     val shortcuts: StateFlow<List<AppShortcut>> = query.flatMapLatest { text ->
-        if (text.trim().length < 3) flowOf(emptyList()) else shortcutRepository.search(text, false).map { it.toList() }
+        if (text.trim().length < 3) flowOf(emptyList()) else shortcutRepository.search(text, false).map { matches ->
+            matches.filter { matchesInteliaShortcut(text, it.labelOverride ?: it.label, it.appName) }.toList()
+        }
             .catch { if (it is CancellationException) throw it; emit(emptyList()) }
     }.combine(eligible) { matches, parents -> matches.filter { shortcut ->
         shortcut.user == Process.myUserHandle() && !shortcut.isUnavailable && parents.any { it.componentName.packageName == shortcut.packageName }
@@ -96,7 +102,8 @@ class InteliaHomeViewModel(application: AndroidApplication) : AndroidViewModel(a
     val actions = combine(query, aliases, targets) { text, savedAliases, currentTargets ->
         if (text.isBlank()) emptyList() else savedAliases.filter { FlowAliases.matches(it, text) }
             .distinctBy { FlowAliases.normalize(it.alias) }.mapNotNull { alias ->
-                currentTargets.find { it.key == alias.targetKey }?.let { FlowAliasAction(alias, it, runtime) }
+                val ordered = alias.targetKeys.map { key -> currentTargets.find { it.key == key } }
+                if (ordered.any { it == null }) null else FlowAliasAction(alias, ordered.first()!!, runtime, ordered.filterNotNull())
             }
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
@@ -119,7 +126,8 @@ class InteliaHomeViewModel(application: AndroidApplication) : AndroidViewModel(a
     }
     fun dismissEditor() { if (!savingAlias.value) editor.value = false }
     fun save(alias: FlowAlias) = mutateAlias {
-        val available = runtime.targets().first().any { it.key == alias.targetKey }
+        val keys = runtime.targets().first().map { it.key }.toSet()
+        val available = alias.targetKeys.all { it in keys }
         val error = if (available) repository.saveFlowAlias(alias) else FlowAliasError.InvalidTarget
         aliasError.value = error?.let { context.getString(when (it) {
             FlowAliasError.Empty -> R.string.flow_alias_empty
@@ -141,8 +149,21 @@ class InteliaHomeViewModel(application: AndroidApplication) : AndroidViewModel(a
         }
     }
     fun theme(mode: Int) = changeUi { it.copy(theme = mode) }
+    fun icons(mode: Int) = changeUi { it.copy(icons = mode) }
+    fun iconPack(pack: String) = changeUi { it.copy(iconPack = pack, icons = 3) }
+    fun iconOverride(app: Application, mode: Int?) = changeUi {
+        it.copy(iconOverrides = if (mode == null) it.iconOverrides - app.key else it.iconOverrides + (app.key to mode))
+    }
+    fun palette(mode: Int) = changeUi { it.copy(palette = mode) }
+    fun typeface(mode: Int) = changeUi { it.copy(typeface = mode) }
+    fun date(enabled: Boolean) = changeUi { it.copy(showDate = enabled) }
     fun clock(enabled: Boolean) = changeUi { it.copy(showClock = enabled) }
     fun motion(reduced: Boolean) = changeUi { it.copy(reduceMotion = reduced) }
+    fun hand(mode: Int) = changeUi { it.copy(hand = mode) }
+    fun island(enabled: Boolean) = changeUi { it.copy(island = enabled) }
+    fun space(app: Application, space: Int) = changeUi { state ->
+        state.copy(spaces = if (space == 0) state.spaces - app.key else state.spaces + (app.key to space))
+    }
     fun wallpaper(mode: Int) = changeUi { it.copy(wallpaper = mode) }
     private fun changeUi(transform: (InteliaUiState) -> InteliaUiState) {
         viewModelScope.launch {

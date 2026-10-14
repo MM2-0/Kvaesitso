@@ -136,3 +136,52 @@ R8's inherited dontoptimize/dontobfuscate rules remain for compatibility; do not
 claim this preview is fully optimized. Minimal crossfade replaces animated
 content lookahead; window appearance/keep-awake flags update only when needed.
 Separate measured build-mode gain from unproven individual micro-optimizations.
+
+## D011 — Ordered app FLOW and optional global Pulse (accepted, 2026-10-14)
+
+User explicitly requested multi-app workflows, ARC overshoot tolerance, swipe-up
+LENS search, original clock/library and an island usable above other apps. This
+supersedes task 020's no-overlay limit for task 030 only. Retain existing aliases,
+eligibility adapter, repository and backup boundary rather than a second engine.
+Single-target payloads remain v1; ordered two-to-four-app payloads are v2. Resolve
+every eligible target before dispatch, recheck the whole ordered set and launch
+through the existing LauncherApps adapter in one main-thread turn. No delays,
+background scheduling or third-party UI driving. The last requested app is the
+foreground destination; OS acceptance is not proof that earlier private content
+(such as a card) has loaded. A platform failure can leave an earlier app open.
+
+Pulse is optional and off by default. The user separately enabled it and granted
+overlay/notification-listener access through Android UI for physical testing.
+Use a narrowly implemented system-bound listener with public MediaSessionManager
+callbacks, not the inherited general notification repository, which processes
+broader notification payloads. No message-content access, storage, networking,
+Accessibility service, foreground worker or media polling is introduced. Ignore
+notification payloads; limit default listener categories to ongoing notifications.
+Hide the overlay while locked/off, unregister session callbacks when disabled,
+and never enable the global feature merely by restoring a backup. Android overlay
+windows stay below status bar/IME and may be hidden by protected app screens;
+there is no claim of replacing a vendor's cutout/system UI.
+
+Original clock paths and paired-stroke Pulse glyph are drawn in project code;
+no proprietary artwork/source was imported. Spaces are assigned explicitly by
+the user, without usage tracking or guessed classifications. Attribution and
+the modified-GPL source delivery remain intact.
+
+## D012 — Native foundation and shared appearance adapter (accepted, 2026-10-14)
+
+User's priority extension requires independent diagnosis of background rendering
+and HOME/Recents behavior. Insets belong to content, full-window wallpaper/contrast
+to the root. Inspect real role/task/Quickstep state and target evidence; do not
+present an inset-gradient repair as a fix for vendor overview transitions.
+
+Keep real System/Device icons as the default. Extend existing icon-pack importer
+and LauncherIcon renderer through a small native adapter shared by Compose and
+Pulse, with a bounded cache and explicit theme/package invalidation. Do not copy
+private Nothing settings/assets or replace app launch identities with icon data.
+Offer installed compatible packs, original neutral Intelia framing, monochrome
+and safe per-app rendering modes. Locally persist and back up validated choices.
+
+Split working appearance settings into Colors, Icons, Typography and Interface.
+Use actual system fonts; no new font/image/dependency import. Defer larger geometry,
+font-import, custom resource-picker and advanced slider work to task 050 instead
+of adding inert controls. Appearance updates must not activate global Pulse consent.

@@ -1,0 +1,27 @@
+<resources>
+    <string name="intelia_flow_order">Vyber až čtyři aplikace v pořadí. Poslední zůstane vpředu. Celý postup otevřeš tlačítkem Spustit.</string>
+    <string name="intelia_remove">Odebrat</string>
+    <string name="intelia_spaces">Prostory</string>
+    <string name="intelia_space_all">Rejstřík</string>
+    <string name="intelia_space_daily">Denně</string>
+    <string name="intelia_space_focus">Soustředění</string>
+    <string name="intelia_space_travel">Na cestě</string>
+    <string name="intelia_space_rest">Volno</string>
+    <string name="intelia_space_assign">Zařadit do prostoru</string>
+    <string name="intelia_space_empty">Tenhle prostor je tvůj. Podrž aplikaci v rejstříku a zařaď ji sem.</string>
+    <string name="intelia_reach">Dosah palce</string>
+    <string name="intelia_reach_center">Střed</string>
+    <string name="intelia_reach_left">Vlevo</string>
+    <string name="intelia_reach_right">Vpravo</string>
+    <string name="intelia_island">Intelia Pulse</string>
+    <string name="intelia_island_hint">Malý ovladač nad ostatními aplikacemi. Klepnutí otevře hudbu, podržení ARC a FLOW. Volitelně, jen na tomto zařízení.</string>
+    <string name="intelia_island_overlay">Povolit zobrazení nad aplikacemi</string>
+    <string name="intelia_island_media">Povolit přístup k přehrávání</string>
+    <string name="intelia_island_privacy">Android zpřístupňuje přehrávání přes přístup k oznámením. Jde o široké systémové oprávnění. Intelia používá údaje a ovládání přehrávání; zprávy z oznámení nečte, neukládá ani neposílá. Přístup lze odebrat v nastavení Androidu.</string>
+    <string name="intelia_island_idle">Podrž pro aplikace a FLOW</string>
+    <string name="intelia_play_pause">Přehrát / pozastavit</string>
+    <string name="intelia_next_track">Další skladba</string>
+    <string name="intelia_previous_track">Předchozí skladba</string>
+    <string name="intelia_island_hide">Skrýt do dalšího odemčení</string>
+    <string name="intelia_flow_partial">Postup se nepodařilo dokončit. Předchozí aplikace už může být otevřená.</string>
+</resources>

@@ -1,5 +1,56 @@
 # Intelia status
 
+## Native foundation and Design System V1 — 2026-10-14
+
+Priority task 040 preserves task 030 work. The inner Home rectangle was traced to
+the contrast gradient inside inset/padded content; moving it to the full-window
+root removed its visible edges on the phone. HOME/Recents was investigated
+separately: real Intelia HOME role/type=home task and Nothing Quickstep overview
+routing confirmed, original Nothing briefly compared and Intelia restored.
+No claim of identical vendor transition animations or a Recents fix from the
+background repair. Physical gesture acceptance remains open.
+
+Native appearance source now has four shared icon modes (System/Device default,
+Intelia, Monochrome, compatible installed pack), safe per-app mode overrides,
+bounded package/theme-aware rendering, four grouped settings pages, Material You/
+neutral/accent presets, system fonts and independent clock/date visibility.
+No dependency, proprietary asset or new permission added by task 040. Final
+build: 118 tests PASS, one existing skip, signature/source/file checks PASS.
+All four icon modes and both installed Nothing-style packs rendered on the phone
+and preserved Chrome launch identity; per-app override, live light/dark/accent/
+system serif and restored preferences passed. Public shortcuts now also need a
+literal accent-insensitive label/parent match, excluding unrelated fuzzy results.
+Final non-debuggable preview installed without wiping data. Current normal-motion
+round: ARC 360 frames/5.56% jank/p95 26 ms; rapid LENS 783/5.87%/21 ms. No causal
+speed/battery guarantee; full acceptance remains open. User's broad manual report
+was “ok, asi dobrý”; no specific regression reported, detailed gesture acceptance
+is still a follow-up. User asked to finish today and continue tomorrow. See
+[separate evidence](NATIVE_FOUNDATION_REPORT.md) and [design system](DESIGN_SYSTEM.md).
+
+## Original interactions / ordered FLOW / Pulse — 2026-10-14
+
+Task 030 extends the user-approved design: original drawn clock, clearer system
+wallpaper/contrast gradients, open index/manual spaces, thumb reach, upward LENS
+search and ARC selection tolerant of quick overshoot. FLOW supports ordered
+one-to-four-app sequences with explicit full preview and existing guarded
+eligibility/launch adapter; v1 aliases remain compatible. User's `cesta` sequence
+Alive App → Můj vlak worked from search and Pulse, ending with Můj vlak in front.
+Můj vlak is assigned to Na cestě; original `vlak` and all five ARC slots retained.
+
+User explicitly approved a global island and personally granted its two Android
+accesses. Optional Pulse is off by default, now enabled on this test phone:
+media-session controls, original paired-stroke handle, ARC and FLOW above apps.
+Synthetic media transport, global app/FLOW launch and disabling/re-enabling its
+window passed; own temporary media fixture removed. No notification payload
+reader, internet, Accessibility service, polling or new dependency introduced.
+Source/backup/license boundaries retained; restoring backup leaves Pulse off.
+
+Final release preview installed without data wipe, HOME role retained. Build,
+114 tests (one existing skip), signature/embedded source and scoped file checks
+passed. Normal-animation observations: ARC 5.56% jank/p95 24 ms, rapid LENS
+6.27%/23 ms. No extra speed gain or full performance/accessibility acceptance.
+See [delivery evidence and limitations](INTELIA_INTERACTIONS_REPORT.md).
+
 ## Keyboard / ARC accessibility follow-up — 2026-10-14
 
 Existing preview updated without data wipe. LENS keyboard focus, Enter/Space

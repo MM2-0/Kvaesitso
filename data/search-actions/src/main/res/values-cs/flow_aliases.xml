@@ -2,4 +2,5 @@
     <string name="flow_alias_tap_to_launch">Aplikaci spustíte klepnutím na akci FLOW</string>
     <string name="flow_alias_unavailable">Cílová aplikace není dostupná</string>
     <string name="flow_alias_launch_failed">Cílovou aplikaci se nepodařilo spustit</string>
+    <string name="flow_sequence_launch_failed">Postup se nepodařilo dokončit. Předchozí aplikace už může být otevřená.</string>
 </resources>

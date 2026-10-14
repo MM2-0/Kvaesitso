@@ -22,7 +22,7 @@
     <string name="intelia_app_count">%1$d aplikací · v tomto zařízení</string>
     <string name="intelia_no_results">Žádná odpovídající aplikace.</string>
     <string name="intelia_commands">Tvoje příkazy</string>
-    <string name="intelia_flow_hint">Přesný název. Jasný cíl. O spuštění rozhoduješ ty.</string>
+    <string name="intelia_flow_hint">Jeden název. Tvoje aplikace v tvém pořadí. O spuštění rozhoduješ ty.</string>
     <string name="intelia_flow_empty">Dej časté akci krátké jméno.</string>
     <string name="intelia_run">Spustit</string>
     <string name="intelia_launch_failed">Aplikaci se nepodařilo otevřít.</string>
@@ -57,4 +57,25 @@
     <string name="intelia_unhide">Znovu zobrazit</string>
     <string name="intelia_no_hidden">Žádné skryté aplikace.</string>
     <string name="intelia_targets_search">Najít cílovou aplikaci</string>
+    <string name="intelia_customize">Vzhled a přizpůsobení</string>
+    <string name="intelia_back">Zpět</string>
+    <string name="intelia_colors">Barvy</string>
+    <string name="intelia_icons">Ikony</string>
+    <string name="intelia_typography">Typografie a hodiny</string>
+    <string name="intelia_interface">Rozhraní a dosah</string>
+    <string name="intelia_palette">Barevný akcent</string>
+    <string name="intelia_material_you">Material You</string>
+    <string name="intelia_mono">Jednobarevné</string>
+    <string name="intelia_sage">Šalvěj</string>
+    <string name="intelia_slate">Břidlice</string>
+    <string name="intelia_icon_system">Systém / zařízení</string>
+    <string name="intelia_icon_intelia">Intelia</string>
+    <string name="intelia_icon_custom">Balíček ikon</string>
+    <string name="intelia_icon_pack_hint">Vyberte kompatibilní nainstalovaný balíček. Chybějící ikony zachovají původní vzhled aplikace. Soukromé nastavení ikon jiného launcheru nelze převzít.</string>
+    <string name="intelia_no_icon_packs">Není nainstalován kompatibilní balíček. Použijí se původní ikony aplikací.</string>
+    <string name="intelia_font_system">Systémové písmo</string>
+    <string name="intelia_font_serif">Systémové patkové</string>
+    <string name="intelia_date">Zobrazit datum</string>
+    <string name="intelia_icon_override">Styl ikony této aplikace</string>
+    <string name="intelia_icon_inherit">Použít společný styl</string>
 </resources>

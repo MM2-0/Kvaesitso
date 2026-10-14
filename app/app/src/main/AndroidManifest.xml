@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+  <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
   <uses-permission android:name="android.permission.FOREGROUND_SERVICE" tools:node="remove" />
   <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" tools:node="remove" />
   <uses-permission android:name="android.permission.WAKE_LOCK" tools:node="remove" />
@@ -54,6 +55,13 @@
       <meta-data android:name="android.support.PARENT_ACTIVITY" android:value="dev.intelia.launcher.ui.InteliaHomeActivity" tools:replace="android:value" />
     </activity>
     <service android:name="de.mm20.launcher2.notifications.NotificationService" tools:node="remove" />
+    <service android:name="dev.intelia.launcher.ui.InteliaIslandService"
+      android:label="@string/intelia_island" android:exported="true"
+      android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+      <intent-filter><action android:name="android.service.notification.NotificationListenerService" /></intent-filter>
+      <meta-data android:name="android.service.notification.default_filter_types" android:value="ongoing" />
+      <meta-data android:name="android.service.notification.disabled_filter_types" android:value="conversations|alerting|silent" />
+    </service>
     <service android:name="de.mm20.launcher2.globalactions.LauncherAccessibilityService" tools:node="remove" />
     <receiver android:name="de.mm20.launcher2.weather.breezy.BreezyWeatherReceiver" tools:node="remove" />
     <provider android:name="androidx.startup.InitializationProvider" android:authorities="${applicationId}.androidx-startup" tools:node="merge">

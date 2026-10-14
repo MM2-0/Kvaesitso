@@ -7,6 +7,27 @@ import org.junit.Test
 class FlowAliasExecutorTest {
     private val alias = FlowAlias("one", "vlak", "app://train:Main")
     private val target = FlowAliasTarget(alias.targetKey, "Train")
+    @Test fun sequenceResolvesEveryTargetBeforeOneOrderedBatch() = runBlocking {
+        val sequence = alias.copy(additionalTargetKeys = listOf("app://card:Main"))
+        val events = mutableListOf<String>()
+        val result = FlowAliasExecutor().activate(sequence,
+            resolve = { events += it; FlowAliasTarget(it, it) },
+            launch = { fail("Single adapter must not dispatch a sequence"); true },
+            launchBatch = { targets -> assertEquals(sequence.targetKeys, targets.map { it.key }); events += "batch"; true })
+        assertEquals(FlowAliasExecutor.Result.Launched, result)
+        assertEquals(sequence.targetKeys + "batch", events)
+    }
+    @Test fun unavailableLaterStepPreventsAnyLaunchAndMissingAdapterFailsClosed() = runBlocking {
+        val sequence = alias.copy(additionalTargetKeys = listOf("app://card:Main"))
+        val executor = FlowAliasExecutor()
+        assertEquals(FlowAliasExecutor.Result.Unavailable, executor.activate(sequence,
+            resolve = { if (it == alias.targetKey) target else null }, launch = { fail("Partial launch"); true },
+            launchBatch = { fail("Unavailable sequence dispatched"); true }))
+        assertEquals(FlowAliasExecutor.Result.Unavailable, executor.activate(sequence,
+            resolve = { FlowAliasTarget(it, it) }, launch = { fail("Missing batch adapter"); true }))
+        assertEquals(FlowAliasExecutor.Result.Failed, executor.activate(sequence,
+            resolve = { FlowAliasTarget(it, it) }, launch = { true }, launchBatch = { false }))
+    }
 
     @Test fun matchingHasNoSideEffectsAndActivationLaunchesExactTarget() = runBlocking {
         var launches = 0

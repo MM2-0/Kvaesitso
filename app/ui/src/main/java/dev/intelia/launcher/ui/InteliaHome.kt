@@ -35,6 +35,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -52,6 +53,7 @@ import de.mm20.launcher2.searchactions.flow.FlowAliasAction
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.settings.searchactions.FlowAliasSheet
 import kotlinx.coroutines.*
+import org.koin.compose.koinInject
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Locale
@@ -68,7 +70,7 @@ fun InteliaHome(
 ) {
     val preferences by model.ui.collectAsStateWithLifecycle()
     val dark = when (preferences.theme) { 0 -> isSystemInDarkTheme(); 2 -> false; else -> true }
-    val scheme = if (dark) darkColorScheme(
+    val neutral = if (dark) darkColorScheme(
         primary = Color(0xFFE8E8E8), onPrimary = Color(0xFF222222), background = Color(0xFF121212),
         surface = Color(0xFF1C1C1C), surfaceContainer = Color(0xFF252525), surfaceContainerHigh = Color(0xFF353535),
         onSurface = Color(0xFFF5F5F5), onSurfaceVariant = Color(0xFFD0D0D0), outlineVariant = Color(0xFF404040),
@@ -79,7 +81,24 @@ fun InteliaHome(
         outlineVariant = Color(0xFFD3D3D3),
         outline = Color(0xFF999999), secondaryContainer = Color(0xFFE0E0E0), onSecondaryContainer = Color(0xFF292929),
     )
-    MaterialTheme(colorScheme = scheme) {
+    val context = LocalContext.current
+    val scheme = when (preferences.palette) {
+        0 -> if (android.os.Build.VERSION.SDK_INT >= 31) {
+            if (dark) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+        } else neutral
+        2 -> neutral.copy(primary = if (dark) Color(0xffbbd1c2) else Color(0xff355b46))
+        3 -> neutral.copy(primary = if (dark) Color(0xffbccdeb) else Color(0xff36557e))
+        else -> neutral
+    }
+    val font = if (preferences.typeface == 1) FontFamily.Serif else FontFamily.Default
+    val type = Typography().let { it.copy(
+        bodyLarge = it.bodyLarge.copy(fontFamily = font), bodyMedium = it.bodyMedium.copy(fontFamily = font),
+        bodySmall = it.bodySmall.copy(fontFamily = font), titleLarge = it.titleLarge.copy(fontFamily = font),
+        titleMedium = it.titleMedium.copy(fontFamily = font), titleSmall = it.titleSmall.copy(fontFamily = font),
+        headlineSmall = it.headlineSmall.copy(fontFamily = font), headlineMedium = it.headlineMedium.copy(fontFamily = font),
+        labelLarge = it.labelLarge.copy(fontFamily = font), labelMedium = it.labelMedium.copy(fontFamily = font),
+        labelSmall = it.labelSmall.copy(fontFamily = font)) }
+    MaterialTheme(colorScheme = scheme, typography = type) {
         val context = LocalContext.current
         DisposableEffect(context, dark) {
             (context as? android.app.Activity)?.let { activity ->
@@ -93,6 +112,7 @@ fun InteliaHome(
         val query by model.query.collectAsStateWithLifecycle()
         val apps by model.apps.collectAsStateWithLifecycle()
         val shortcuts by model.shortcuts.collectAsStateWithLifecycle()
+        val eligibleApps by model.eligibleApps.collectAsStateWithLifecycle()
         val aliases by model.aliases.collectAsStateWithLifecycle()
         val arcApps by model.arcApps.collectAsStateWithLifecycle()
         val targets by model.targets.collectAsStateWithLifecycle()
@@ -116,7 +136,7 @@ fun InteliaHome(
         val page = if (query.isNotBlank()) 1 else mode
         val blurred = InteliaWallpaper(preferences.wallpaper, page != 0 || sheet != 0)
         val backdrop = if (preferences.wallpaper == 2) scheme.background else scheme.background.copy(
-            alpha = if (page != 0) 0.93f else if (!dark) 0.80f else if (blurred) 0.52f else 0.62f)
+            alpha = if (page != 0) 0.92f else if (!dark) 0.72f else if (blurred) 0.36f else 0.42f)
         LifecycleEventEffect(Lifecycle.Event.ON_STOP) { scope.coroutineContext.cancelChildren() }
         LaunchedEffect(homePulse) { mode = 0; sheet = 0; model.query.value = ""; model.dismissEditor(); selectedApp = null; focus.clearFocus(); keyboard?.hide() }
         LaunchedEffect(mode) { if (mode == 1) { searchFocus.requestFocus(); keyboard?.show() } }
@@ -131,7 +151,12 @@ fun InteliaHome(
                 sheet != 0 -> sheet = 0
                 else -> { lensPulse++; mode = 0; model.query.value = ""; focus.clearFocus(); keyboard?.hide() } }
         }
-        Scaffold(containerColor = backdrop, contentColor = scheme.onSurface, snackbarHost = { SnackbarHost(snackbar) }) { inset ->
+        // Wallpaper contrast belongs to the window-sized root, never the padded content.
+        Box(Modifier.fillMaxSize().background(backdrop)) {
+            if (page == 0) Box(Modifier.matchParentSize().background(androidx.compose.ui.graphics.Brush.verticalGradient(
+                0f to scheme.background.copy(alpha = .28f), .30f to scheme.background.copy(alpha = .28f),
+                .55f to Color.Transparent, .72f to Color.Transparent, 1f to scheme.background.copy(alpha = .38f))))
+        Scaffold(containerColor = Color.Transparent, contentColor = scheme.onSurface, snackbarHost = { SnackbarHost(snackbar) }) { inset ->
             Column(Modifier.fillMaxSize().padding(inset).consumeWindowInsets(inset).imePadding().padding(horizontal = 20.dp)) {
                 if (page != 0) Row(Modifier.fillMaxWidth().padding(top = 10.dp, bottom = 16.dp), verticalAlignment = Alignment.CenterVertically) {
                     if (page != 0) IconButton(onClick = { mode = 0; model.query.value = ""; keyboard?.hide(); focus.clearFocus() }) {
@@ -145,10 +170,10 @@ fun InteliaHome(
                     Crossfade(targetState = page, animationSpec = tween(duration), label = "intelia-morph") { page ->
                         when (page) {
                             0 -> Box(Modifier.fillMaxSize()) {
-                                ClockHome(preferences.showClock, onLibrary = { mode = 1 })
+                                ClockHome(preferences.showClock, preferences.showDate, onLibrary = { mode = 1 })
                                 key(homePulse, lensPulse) { InteliaLens(arcApps, preferences.reduceMotion, onSearch = { mode = 1 },
                                     onLaunch = { app -> scope.launch { if (!model.launch(app, context)) snackbar.showSnackbar(context.getString(R.string.intelia_launch_failed)) } },
-                                    modifier = Modifier.align(Alignment.BottomCenter)) }
+                                    modifier = Modifier.align(Alignment.BottomCenter), hand = preferences.hand) }
                             }
                             2 -> FlowLibrary(aliases, targets, onCreate = { model.edit(null) }, onEdit = model::edit)
                             else -> Column(Modifier.fillMaxSize()) {
@@ -156,16 +181,18 @@ fun InteliaHome(
                                     actions.forEach { action -> CommandPreview(action) { scope.launch { action.activate(context) } } }
                                     Spacer(Modifier.height(18.dp))
                                 }
-                                Text(stringResource(R.string.intelia_library), style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Medium)
-                                Spacer(Modifier.height(20.dp))
-                                if (apps.isEmpty()) Text(stringResource(R.string.intelia_no_results), color = scheme.onSurfaceVariant, modifier = Modifier.padding(top = 24.dp))
-                                LazyColumn(verticalArrangement = Arrangement.spacedBy(4.dp), contentPadding = PaddingValues(bottom = 16.dp)) {
+                                if (query.isBlank()) InteliaIndex(apps, preferences.spaces,
+                                    onLaunch = { app -> scope.launch { if (!model.launch(app, context)) snackbar.showSnackbar(context.getString(R.string.intelia_launch_failed)) } },
+                                    onHold = { selectedApp = it; keyboard?.hide(); focus.clearFocus() })
+                                else LazyColumn(verticalArrangement = Arrangement.spacedBy(4.dp), contentPadding = PaddingValues(bottom = 16.dp)) {
+                                    if (apps.isEmpty() && actions.isEmpty()) item { Text(stringResource(R.string.intelia_no_results), color = scheme.onSurfaceVariant, modifier = Modifier.padding(top = 24.dp)) }
                                     items(apps, key = { it.key }) { app -> AppRow(app,
                                         onClick = { scope.launch { if (!model.launch(app, context)) snackbar.showSnackbar(context.getString(R.string.intelia_launch_failed)) } },
                                         onLongClick = { selectedApp = app; keyboard?.hide(); focus.clearFocus() }) }
                                     if (shortcuts.isNotEmpty()) item { Text(stringResource(R.string.intelia_shortcuts), Modifier.padding(top = 16.dp, bottom = 8.dp), fontSize = 13.sp, color = scheme.onSurfaceVariant) }
                                     items(shortcuts, key = { "shortcut:${it.key}" }) { shortcut ->
                                         ListItem(headlineContent = { Text(shortcut.labelOverride ?: shortcut.label) }, supportingContent = { Text(shortcut.appName ?: "") },
+                                            leadingContent = { eligibleApps.firstOrNull { it.componentName.packageName == shortcut.packageName }?.let { AppIcon(it, Modifier.size(32.dp)) } },
                                             colors = ListItemDefaults.colors(containerColor = Color.Transparent), modifier = Modifier.clickable {
                                                 scope.launch { if (!model.launchShortcut(shortcut, context)) snackbar.showSnackbar(context.getString(R.string.intelia_launch_failed)) }
                                             })
@@ -175,7 +202,8 @@ fun InteliaHome(
                         }
                     }
                 }
-                if (page != 0) Surface(Modifier.fillMaxWidth().padding(top = 12.dp, bottom = 14.dp), shape = RoundedCornerShape(22.dp), color = scheme.surface.copy(alpha = 0.94f)) {
+                if (page != 0) Surface(Modifier.fillMaxWidth().padding(top = 12.dp, bottom = 14.dp), shape = RoundedCornerShape(14.dp), color = Color.Transparent,
+                    border = BorderStroke(1.dp, scheme.outlineVariant)) {
                     Row(Modifier.padding(end = 8.dp), verticalAlignment = Alignment.CenterVertically) {
                         TextField(value = query, onValueChange = { model.query.value = it }, singleLine = true,
                             modifier = Modifier.weight(1f).focusRequester(searchFocus).semantics { contentDescription = context.getString(R.string.intelia_lens_description) },
@@ -193,6 +221,7 @@ fun InteliaHome(
                 }
             }
         }
+        }
         if (sheet == 1) InteliaSettings(model, onBackup, onRestore, onDefaultHome, onLegal = { sheet = 2 }, onHidden = { sheet = 3 }, onDismiss = { sheet = 0 })
         if (sheet == 2) InteliaLegal(onSource, onDismiss = { sheet = 0 })
         if (sheet == 3) {
@@ -208,13 +237,29 @@ fun InteliaHome(
             }
         }
         if (editor) FlowAliasSheet(initial = editingAlias, targets = targets, error = aliasError, saving = saving,
-            onSave = model::save, onDelete = model::delete, onDismiss = model::dismissEditor)
+            onSave = model::save, onDelete = model::delete, onDismiss = model::dismissEditor,
+            targetIcon = { TargetIcon(it.key, Modifier.size(28.dp)) })
         if (restoreReady) AlertDialog(onDismissRequest = model::cancelRestore,
             title = { Text(stringResource(R.string.intelia_restore_title)) }, text = { Text(stringResource(R.string.intelia_restore_warning)) },
             confirmButton = { TextButton(onClick = model::restore) { Text(stringResource(R.string.intelia_restore)) } },
             dismissButton = { TextButton(onClick = model::cancelRestore) { Text(stringResource(android.R.string.cancel)) } })
         selectedApp?.let { app -> ModalBottomSheet(onDismissRequest = { selectedApp = null }, sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)) {
             Text(app.label, Modifier.padding(24.dp), style = MaterialTheme.typography.headlineSmall)
+            Text(stringResource(R.string.intelia_icon_override), Modifier.padding(horizontal = 24.dp), style = MaterialTheme.typography.titleSmall)
+            FlowRow(Modifier.padding(horizontal = 16.dp), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                FilterChip(selected = app.key !in preferences.iconOverrides, onClick = { model.iconOverride(app, null) }, label = { Text(stringResource(R.string.intelia_icon_inherit)) })
+                inteliaIconLabels.forEachIndexed { mode, label ->
+                    FilterChip(selected = preferences.iconOverrides[app.key] == mode, enabled = mode != 3 || preferences.iconPack.isNotBlank(),
+                        onClick = { model.iconOverride(app, mode) }, label = { Text(stringResource(label)) })
+                }
+            }
+            Text(stringResource(R.string.intelia_space_assign), Modifier.padding(horizontal = 24.dp), fontSize = 12.sp, color = scheme.onSurfaceVariant)
+            FlowRow(Modifier.padding(horizontal = 16.dp), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                inteliaSpaceLabels.forEachIndexed { index, label ->
+                    FilterChip(selected = (preferences.spaces[app.key] ?: 0) == index,
+                        onClick = { model.space(app, index); selectedApp = null }, label = { Text(stringResource(label)) })
+                }
+            }
             TextButton(onClick = { model.toggleArc(app); selectedApp = null }, enabled = app.key in preferences.arc || preferences.arc.size < 5,
                 modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)) { Text(stringResource(if (app.key in preferences.arc) R.string.intelia_arc_remove else R.string.intelia_arc_add)) }
             TextButton(onClick = { model.hide(app); selectedApp = null }, modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)) { Text(stringResource(R.string.intelia_hide)) }
@@ -265,7 +310,7 @@ internal fun HomeGlyph(kind: Int, label: String?) {
 }
 
 @Composable
-private fun ClockHome(showClock: Boolean, onLibrary: () -> Unit) {
+private fun ClockHome(showClock: Boolean, showDate: Boolean, onLibrary: () -> Unit) {
     var now by remember { mutableStateOf(LocalDateTime.now()) }
     val lifecycle = LocalLifecycleOwner.current.lifecycle
     LaunchedEffect(lifecycle) { lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -278,10 +323,10 @@ private fun ClockHome(showClock: Boolean, onLibrary: () -> Unit) {
         val compact = maxHeight < 280.dp
         Column(Modifier.fillMaxSize().padding(top = if (compact) 18.dp else 94.dp), horizontalAlignment = Alignment.CenterHorizontally) {
             if (showClock) {
-                Text(now.format(DateTimeFormatter.ofPattern("HH:mm")), fontSize = if (compact) 48.sp else 64.sp, fontWeight = FontWeight.Light, letterSpacing = (-3).sp, maxLines = 1)
-                Text(now.format(DateTimeFormatter.ofPattern("EEE d. MMMM", Locale.getDefault())), color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 14.sp,
-                    modifier = Modifier.padding(top = 4.dp))
+                InteliaClockFace(now, compact)
             }
+            if (showDate) Text(now.format(DateTimeFormatter.ofPattern("EEE d. MMMM", Locale.getDefault())), color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 14.sp,
+                modifier = Modifier.padding(top = 4.dp))
         }
     }
 }
@@ -291,6 +336,7 @@ private fun CommandPreview(action: FlowAliasAction, onRun: () -> Unit) {
     Surface(shape = RoundedCornerShape(22.dp), color = MaterialTheme.colorScheme.surfaceContainer, border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)) {
         Row(Modifier.fillMaxWidth().padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
             Column(Modifier.weight(1f)) {
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) { action.alias.targetKeys.forEach { TargetIcon(it, Modifier.size(24.dp)) } }
                 Text("FLOW", fontSize = 10.sp, letterSpacing = 2.sp, color = MaterialTheme.colorScheme.primary)
                 Text(action.label, modifier = Modifier.padding(top = 6.dp), style = MaterialTheme.typography.titleMedium)
             }
@@ -309,8 +355,10 @@ private fun FlowLibrary(aliases: List<FlowAlias>, targets: List<FlowAliasTarget>
             items(aliases, key = { it.id }) { alias ->
                 Surface(onClick = { onEdit(alias) }, shape = RoundedCornerShape(22.dp), color = MaterialTheme.colorScheme.surfaceContainer) {
                     Column(Modifier.fillMaxWidth().padding(20.dp)) {
+                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) { alias.targetKeys.filter { key -> targets.any { it.key == key } }.forEach { TargetIcon(it, Modifier.size(28.dp)) } }
                         Text(alias.alias, style = MaterialTheme.typography.titleMedium)
-                        Text(targets.find { it.key == alias.targetKey }?.label ?: stringResource(R.string.flow_alias_target_unavailable),
+                        val unavailable = stringResource(R.string.flow_alias_target_unavailable)
+                        Text(alias.targetKeys.joinToString(" → ") { key -> targets.find { it.key == key }?.label ?: unavailable },
                             Modifier.padding(top = 5.dp), color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 13.sp)
                     }
                 }
@@ -335,16 +383,28 @@ private fun AppRow(app: Application, onClick: () -> Unit, onLongClick: () -> Uni
 
 @Composable
 internal fun AppIcon(app: Application, modifier: Modifier = Modifier) {
+    TargetIcon(app.key, modifier, app.componentName)
+}
+
+@Composable
+internal fun TargetIcon(key: String, modifier: Modifier = Modifier, component: android.content.ComponentName? = null) {
     val context = LocalContext.current
-    val icon by produceState<ImageBitmap?>(initialValue = null, app.key) {
+    val engine = koinInject<InteliaIconEngine>()
+    val preferences by koinInject<InteliaUiPreferences>().state.collectAsStateWithLifecycle()
+    val revision by engine.revision.collectAsStateWithLifecycle()
+    val night = isSystemInDarkTheme()
+    val parts = key.removePrefix("app://").split(':')
+    val target = component ?: parts.takeIf { key.startsWith("app://") && it.size == 2 }?.let { android.content.ComponentName(it[0], it[1]) }
+    val icon by produceState<ImageBitmap?>(initialValue = null, key, preferences.icons, preferences.iconPack, preferences.iconOverrides[key], preferences.theme, night, revision) {
+        value = null
         value = withContext(Dispatchers.IO) {
-            try { InteliaIconCache.load(context, app) }
+            try { target?.let { engine.load(it, key, preferences).asImageBitmap() } }
             catch (e: CancellationException) { throw e }
             catch (_: Exception) { null }
         }
     }
     Box(modifier, contentAlignment = Alignment.Center) {
         icon?.let { Image(it, contentDescription = null, modifier = Modifier.fillMaxSize()) }
-            ?: Text(app.label.take(1), fontSize = 22.sp, color = MaterialTheme.colorScheme.primary)
+            ?: Image(engine.placeholder.asImageBitmap(), contentDescription = null, modifier = Modifier.fillMaxSize())
     }
 }

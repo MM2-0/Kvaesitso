@@ -6,6 +6,20 @@ import org.junit.Test
 
 class FlowAliasesTest {
     private val alias = FlowAlias("one", "vlak", "app://train:Main")
+    @Test fun orderedSequenceRoundTripsAndKeepsLegacyPayloads() {
+        val sequence = alias.copy(additionalTargetKeys = listOf("app://card:Main", "app://map:Main"))
+        assertEquals(sequence, FlowAliases.decode(FlowAliases.encode(sequence)))
+        assertEquals(listOf(alias.targetKey, "app://card:Main", "app://map:Main"), sequence.targetKeys)
+        assertTrue(FlowAliases.encode(alias).contains("\"version\":1"))
+        assertTrue(FlowAliases.encode(sequence).contains("\"version\":2"))
+    }
+    @Test fun sequencesRejectDuplicateUnboundedAndNonAppSteps() {
+        for (extra in listOf(listOf(alias.targetKey), List(4) { "app://$it:Main" }, listOf("intent://evil"))) {
+            assertEquals(FlowAliasError.InvalidTarget, FlowAliases.validate(alias.copy(additionalTargetKeys = extra)))
+        }
+        val sequence = FlowAliases.encode(alias.copy(additionalTargetKeys = listOf("app://card:Main")))
+        assertNull(FlowAliases.decode(sequence.replace("[\"app://card:Main\"]", "[42]")))
+    }
 
     @Test fun matchingIsExactAndHasNoPrefixFallback() {
         assertTrue(FlowAliases.matches(alias, " VLAK "))

@@ -22,7 +22,7 @@
     <string name="intelia_app_count">%1$d apps · on this device</string>
     <string name="intelia_no_results">No matching apps.</string>
     <string name="intelia_commands">Your commands</string>
-    <string name="intelia_flow_hint">One exact name. One clear destination. You choose when it runs.</string>
+    <string name="intelia_flow_hint">One name. Your apps in your order. You choose when it runs.</string>
     <string name="intelia_flow_empty">Give a frequent action a short name.</string>
     <string name="intelia_run">Run</string>
     <string name="intelia_launch_failed">This app could not be opened.</string>
@@ -57,4 +57,25 @@
     <string name="intelia_unhide">Show again</string>
     <string name="intelia_no_hidden">No hidden apps.</string>
     <string name="intelia_targets_search">Find a target app</string>
+    <string name="intelia_customize">Appearance &amp; customization</string>
+    <string name="intelia_back">Back</string>
+    <string name="intelia_colors">Colors</string>
+    <string name="intelia_icons">Icons</string>
+    <string name="intelia_typography">Typography &amp; clock</string>
+    <string name="intelia_interface">Interface &amp; reach</string>
+    <string name="intelia_palette">Accent</string>
+    <string name="intelia_material_you">Material You</string>
+    <string name="intelia_mono">Monochrome</string>
+    <string name="intelia_sage">Sage</string>
+    <string name="intelia_slate">Slate</string>
+    <string name="intelia_icon_system">System / Device</string>
+    <string name="intelia_icon_intelia">Intelia</string>
+    <string name="intelia_icon_custom">Icon pack</string>
+    <string name="intelia_icon_pack_hint">Choose an installed compatible pack below. Missing icons keep their original app appearance. Other launchers’ private icon settings cannot be imported.</string>
+    <string name="intelia_no_icon_packs">No compatible icon packs installed. Original app icons are used.</string>
+    <string name="intelia_font_system">System font</string>
+    <string name="intelia_font_serif">System serif</string>
+    <string name="intelia_date">Show date</string>
+    <string name="intelia_icon_override">Icon style for this app</string>
+    <string name="intelia_icon_inherit">Use global style</string>
 </resources>

@@ -40,7 +40,8 @@ class SearchActionsSettingsScreenVM : ViewModel(), KoinComponent {
     }
 
     fun saveAlias(context: Context, alias: FlowAlias) = mutateAlias(context) {
-        val available = aliasRuntime.targets().first().any { it.key == alias.targetKey }
+        val keys = aliasRuntime.targets().first().map { it.key }.toSet()
+        val available = alias.targetKeys.all { it in keys }
         val error = if (available) aliasRepository.saveFlowAlias(alias) else FlowAliasError.InvalidTarget
         aliasError.value = error?.let { context.getString(when (it) {
             FlowAliasError.Empty -> R.string.flow_alias_empty

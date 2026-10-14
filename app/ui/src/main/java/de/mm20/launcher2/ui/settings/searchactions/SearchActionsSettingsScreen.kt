@@ -207,7 +207,8 @@ fun SearchActionsSettingsScreen() {
                             val targets by viewModel.aliasTargets.collectAsState()
                             Preference(
                                 title = item.label,
-                                summary = targets.find { it.key == item.alias.targetKey }?.label
+                                summary = item.alias.targetKeys.map { key -> targets.find { it.key == key }?.label }
+                                    .takeIf { it.none { label -> label == null } }?.joinToString(" → ")
                                     ?: stringResource(R.string.flow_alias_target_unavailable),
                                 onClick = { viewModel.editAlias(item.alias) },
                             )

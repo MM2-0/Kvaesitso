@@ -84,7 +84,8 @@ internal class SearchActionServiceImpl(
             for (builder in savedBuilders.filterIsInstance<FlowAliasActionBuilder>()) {
                 val alias = builder.alias
                 if (FlowAliases.matches(alias, query) && seen.add(FlowAliases.normalize(alias.alias))) {
-                    targets.find { it.key == alias.targetKey }?.let { results += FlowAliasAction(alias, it, flowAliases) }
+                    val ordered = alias.targetKeys.map { key -> targets.find { it.key == key } }
+                    if (ordered.none { it == null }) results += FlowAliasAction(alias, ordered.first()!!, flowAliases, ordered.filterNotNull())
                 }
             }
 

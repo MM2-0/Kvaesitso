@@ -35,7 +35,7 @@ import kotlin.math.min
 
 @Composable
 internal fun InteliaLens(apps: List<Application?>, reducedMotion: Boolean, onSearch: () -> Unit,
-    onLaunch: (Application) -> Unit, modifier: Modifier = Modifier) {
+    onLaunch: (Application) -> Unit, modifier: Modifier = Modifier, hand: Int = 0) {
     var open by remember { mutableStateOf(false) }
     var selected by remember { mutableStateOf<Int?>(null) }
     var session by remember { mutableStateOf<ArcGesture?>(null) }
@@ -57,7 +57,8 @@ internal fun InteliaLens(apps: List<Application?>, reducedMotion: Boolean, onSea
     val density = LocalDensity.current
     val scale by animateFloatAsState(if (open) 1.08f else 1f, tween(if (reducedMotion) 0 else 100), label = "lens-touch")
     LifecycleEventEffect(Lifecycle.Event.ON_STOP) { session?.cancel(); open = false; selected = null }
-    BoxWithConstraints(modifier.fillMaxWidth().height(200.dp).onPreviewKeyEvent { event ->
+    val shift = when (hand) { 1 -> (-24).dp; 2 -> 24.dp; else -> 0.dp }
+    BoxWithConstraints(modifier.fillMaxWidth().height(200.dp).offset(x = shift).onPreviewKeyEvent { event ->
         if (event.key == Key.Escape && open) {
             if (event.type == KeyEventType.KeyUp) {
                 session?.cancel(); session = null; open = false; selected = null; focus.clearFocus()
@@ -65,7 +66,7 @@ internal fun InteliaLens(apps: List<Application?>, reducedMotion: Boolean, onSea
             true
         } else false
     }) {
-        val span = min(maxWidth.value - 52f, 300f)
+        val span = min(maxWidth.value - if (hand == 0) 52f else 100f, 300f)
         val centers = apps.mapIndexed { index, app ->
             val position = if (apps.size <= 1) 0f else (index.toFloat() / (apps.size - 1) - .5f) * 2f
             if (app == null) null else (position * span / 2f) to (-90f + 28f * position * position)
@@ -111,15 +112,25 @@ internal fun InteliaLens(apps: List<Application?>, reducedMotion: Boolean, onSea
                     else -> false
                 }
             }.focusable()
-            .pointerInput(apps, maxWidth) {
+            .pointerInput(apps, maxWidth, hand) {
                 awaitEachGesture {
                     val down = awaitFirstDown(requireUnconsumed = true)
                     focus.clearFocus()
                     val hold = awaitLongPressOrCancellation(down.id)
                     if (hold == null) {
-                        val event = currentEvent
-                        if (event.changes.size == 1 && event.changes.first().id == down.id && event.changes.first().changedToUpIgnoreConsumed() &&
-                            (event.changes.first().position - down.position).getDistance() < viewConfiguration.touchSlop) showSearch()
+                        var event = currentEvent
+                        while (event.changes.size == 1) {
+                            val change = event.changes.first()
+                            if (change.id != down.id || change.isConsumed) break
+                            val delta = change.position - down.position
+                            val swipe = with(density) { lensSwipeSearch(delta.x.toDp().value, delta.y.toDp().value) }
+                            if (!change.pressed) {
+                                if (change.changedToUpIgnoreConsumed() && (delta.getDistance() < viewConfiguration.touchSlop || swipe)) showSearch()
+                                break
+                            }
+                            if (swipe) change.consume()
+                            event = awaitPointerEvent()
+                        }
                         return@awaitEachGesture
                     }
                     if (hold.id != down.id || currentEvent.changes.size != 1) return@awaitEachGesture

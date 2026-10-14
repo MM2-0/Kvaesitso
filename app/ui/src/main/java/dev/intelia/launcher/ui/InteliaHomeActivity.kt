@@ -48,7 +48,13 @@ class InteliaHomeActivity : BaseActivity() {
             )
         }
     }
-    override fun onResume() { super.onResume(); model.refreshHomeRole() }
+    override fun onResume() {
+        super.onResume(); model.refreshHomeRole()
+        if (model.ui.value.island && !InteliaIslandService.bridgeConnected && androidx.core.app.NotificationManagerCompat.getEnabledListenerPackages(this).contains(packageName)) {
+            runCatching { android.service.notification.NotificationListenerService.requestRebind(android.content.ComponentName(this, InteliaIslandService::class.java)) }
+        }
+        sendBroadcast(Intent("dev.intelia.launcher.REFRESH_PULSE").setPackage(packageName))
+    }
     override fun onPause() { setValidationKeepAwake(false); super.onPause() }
     override fun onNewIntent(intent: Intent) { super.onNewIntent(intent); applyValidationWindow(intent); model.refreshHomeRole(); homePulse++ }
     private fun applyValidationWindow(intent: Intent) {
