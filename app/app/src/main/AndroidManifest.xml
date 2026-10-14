@@ -1,76 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
-
-    <uses-feature
-        android:name="android.hardware.telephony"
-        android:required="false" />
-
-    <uses-permission android:name="android.permission.SET_ALARM" />
-    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_LOCAL_NETWORK" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.READ_CALENDAR" />
-    <uses-permission android:name="android.permission.WRITE_CALENDAR" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_MEDIA_LOCATION" />
-    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
-    <uses-permission android:name="android.permission.INTERACT_ACROSS_PROFILES" />
-    <uses-permission android:name="android.permission.EXPAND_STATUS_BAR" />
-    <uses-permission
-        android:name="android.permission.QUERY_ALL_PACKAGES"
-        tools:ignore="QueryAllPackagesPermission" />
-    <uses-permission android:name="android.permission.REQUEST_DELETE_PACKAGES" />
-    <uses-permission android:name="android.permission.CALL_PHONE" />
-
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="org.tasks.permission.READ_TASKS" />
-
-    <application
-        android:name=".LauncherApplication"
-        android:allowBackup="true"
-        android:fullBackupContent="@xml/full_backup_rules"
-        android:dataExtractionRules="@xml/data_extraction_rules"
-        android:crossProfile="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:requestLegacyExternalStorage="true"
-        android:resizeableActivity="true"
-        android:supportsRtl="true"
-        android:theme="@style/LauncherTheme"
-        android:usesCleartextTraffic="true"
-        tools:ignore="GoogleAppIndexingWarning">
-
-        <meta-data
-            android:name="android.webkit.WebView.MetricsOptOut"
-            android:value="true" />
-
-        <activity
-            android:name=".activity.AddItemActivity"
-            android:exported="true"
-            android:theme="@android:style/Theme.NoDisplay">
-            <intent-filter>
-                <action android:name="android.content.pm.action.CONFIRM_PIN_SHORTCUT" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-
-        <provider
-            android:name=".content.GenericFileProvider"
-            android:authorities="${applicationId}.fileprovider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths" />
-        </provider>
-    </application>
-
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+  <uses-permission android:name="android.permission.FOREGROUND_SERVICE" tools:node="remove" />
+  <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" tools:node="remove" />
+  <uses-permission android:name="android.permission.WAKE_LOCK" tools:node="remove" />
+  <uses-permission android:name="android.permission.POST_NOTIFICATIONS" tools:node="remove" />
+  <uses-permission android:name="android.permission.ACCESS_HIDDEN_PROFILES" tools:node="remove" />
+  <uses-permission android:name="com.kieronquinn.app.smartspacer.permission.ACCESS_SMARTSPACER" tools:node="remove" />
+  <uses-feature android:name="android.hardware.telephony" android:required="false" />
+  <uses-permission android:name="android.permission.SET_ALARM" tools:node="remove" />
+  <uses-permission android:name="com.android.alarm.permission.SET_ALARM" tools:node="remove" />
+  <uses-permission android:name="android.permission.GET_ACCOUNTS" tools:node="remove" />
+  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" tools:node="remove" />
+  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" tools:node="remove" />
+  <uses-permission android:name="android.permission.INTERNET" tools:node="remove" />
+  <uses-permission android:name="android.permission.ACCESS_LOCAL_NETWORK" tools:node="remove" />
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" tools:node="remove" />
+  <uses-permission android:name="android.permission.READ_CALENDAR" tools:node="remove" />
+  <uses-permission android:name="android.permission.WRITE_CALENDAR" tools:node="remove" />
+  <uses-permission android:name="android.permission.READ_CONTACTS" tools:node="remove" />
+  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" tools:node="remove" />
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" tools:node="remove" />
+  <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" tools:node="remove" />
+  <uses-permission android:name="android.permission.ACCESS_MEDIA_LOCATION" tools:node="remove" />
+  <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" tools:node="remove" />
+  <uses-permission android:name="android.permission.INTERACT_ACROSS_PROFILES" tools:node="remove" />
+  <uses-permission android:name="android.permission.EXPAND_STATUS_BAR" tools:node="remove" />
+  <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" tools:ignore="QueryAllPackagesPermission" />
+  <uses-permission android:name="android.permission.REQUEST_DELETE_PACKAGES" tools:node="remove" />
+  <uses-permission android:name="android.permission.CALL_PHONE" tools:node="remove" />
+  <uses-permission android:name="android.permission.VIBRATE" tools:node="remove" />
+  <uses-permission android:name="org.tasks.permission.READ_TASKS" tools:node="remove" />
+  <application android:name=".LauncherApplication" android:allowBackup="false" android:fullBackupContent="@xml/full_backup_rules" android:dataExtractionRules="@xml/data_extraction_rules" android:crossProfile="false" android:icon="@mipmap/intelia_launcher" android:label="@string/app_name" android:requestLegacyExternalStorage="false" android:resizeableActivity="true" android:supportsRtl="true" android:theme="@style/LauncherTheme" android:usesCleartextTraffic="false" tools:ignore="GoogleAppIndexingWarning">
+    <meta-data android:name="android.webkit.WebView.MetricsOptOut" android:value="true" />
+    <activity android:name="dev.intelia.launcher.ui.InteliaHomeActivity" android:exported="true" android:launchMode="singleTask" android:excludeFromRecents="true" android:screenOrientation="portrait" android:theme="@style/InteliaTheme" android:windowSoftInputMode="adjustResize" android:enableOnBackInvokedCallback="true">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.HOME" />
+        <category android:name="android.intent.category.DEFAULT" />
+      </intent-filter>
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+      </intent-filter>
+    </activity>
+    <activity android:name="de.mm20.launcher2.ui.launcher.LauncherActivity" tools:node="remove" />
+    <activity android:name="de.mm20.launcher2.ui.assistant.AssistantActivity" tools:node="remove" />
+    <activity android:name="de.mm20.launcher2.ui.launcher.ImportThemeActivity" tools:node="remove" />
+    <activity android:name="de.mm20.launcher2.owncloud.LoginActivity" tools:node="remove" />
+    <activity android:name="de.mm20.launcher2.nextcloud.LoginActivity" tools:node="remove" />
+    <activity android:name="androidx.compose.ui.tooling.PreviewActivity" tools:node="remove" />
+    <activity android:name="de.mm20.launcher2.ui.settings.SettingsActivity" android:exported="false" tools:replace="android:exported">
+      <intent-filter tools:node="removeAll" />
+      <meta-data android:name="android.support.PARENT_ACTIVITY" android:value="dev.intelia.launcher.ui.InteliaHomeActivity" tools:replace="android:value" />
+    </activity>
+    <service android:name="de.mm20.launcher2.notifications.NotificationService" tools:node="remove" />
+    <service android:name="de.mm20.launcher2.globalactions.LauncherAccessibilityService" tools:node="remove" />
+    <receiver android:name="de.mm20.launcher2.weather.breezy.BreezyWeatherReceiver" tools:node="remove" />
+    <provider android:name="androidx.startup.InitializationProvider" android:authorities="${applicationId}.androidx-startup" tools:node="merge">
+      <meta-data android:name="androidx.work.WorkManagerInitializer" tools:node="remove" />
+    </provider>
+    <activity android:name="de.mm20.launcher2.activity.AddItemActivity" tools:node="remove"></activity>
+    <provider android:name=".content.GenericFileProvider" android:authorities="${applicationId}.fileprovider" android:exported="false" android:grantUriPermissions="true">
+      <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/provider_paths" />
+    </provider>
+  </application>
 </manifest>

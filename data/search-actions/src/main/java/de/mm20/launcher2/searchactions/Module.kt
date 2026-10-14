@@ -7,7 +7,7 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val searchActionsModule = module {
-    single { FlowAliasRuntime(get(), get()) }
+    single { FlowAliasRuntime(get(), get(), androidContext().packageName) }
     factory<Backupable>(named<SearchActionRepository>()) { get<SearchActionRepository>() }
     single<SearchActionRepository> { SearchActionRepositoryImpl(androidContext(), get()) }
     single<SearchActionService> { SearchActionServiceImpl(androidContext(), get(), TextClassifierImpl(), get()) }

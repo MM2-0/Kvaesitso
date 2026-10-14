@@ -1,5 +1,27 @@
 # Architectural decisions
 
+## D008 — Intelia identity and own native UI (user-approved, 2026-10-13)
+
+The user explicitly requested Intelia Launcher as its own product, interface,
+navigation, animations and file naming, while preserving and adapting the working
+foundation. The user also explicitly approved apps + FLOW and setting it as Home.
+An original `dev.intelia.launcher.ui` layer reuses app discovery/fuzzy search,
+hidden-item storage, guarded FLOW and bounded backup interfaces. Runtime identity
+is `dev.intelia.launcher` with build suffixes. Existing internal namespaces and
+module notices remain; no blind source/package replacement or new launcher import.
+
+The active UI is local/personal-profile only, with Home/library/FLOW, its own
+settings and transitions. Old notification, Accessibility, login and external
+theme entry points and their unnecessary permissions are disabled for this slice.
+Original copyright/GPL/library notices are isolated in Legal and retained in
+source; `.intelia` replaces legacy export naming without discarding import
+compatibility. An embedded, exportable project-source snapshot avoids claiming
+that an unpublished GitHub branch is already available to APK recipients.
+
+No performance guarantees follow from branding or build success. Preserve the
+foundation rather than deleting unused implementations; bring additional
+features into the new interface only through measured, scoped adapters.
+
 Record durable decisions here; factual run results belong in STATUS. Revisit a
 decision with new evidence, preserving its rationale and superseding entry.
 
@@ -70,3 +92,33 @@ and cancellation/target eligibility are checked before dispatch. Leaving the
 action UI or stopping its lifecycle cancels pending jobs; backup/restore shares
 the repository write guard. No new schema,
 production external dependency, permission or background service is required.
+
+## D008 — Own Intelia surface over the audited foundation (accepted, 2026-10-13)
+
+The user explicitly requested an original Intelia identity, UI and transitions
+while preserving the functioning base. Reuse/adapters solve app discovery,
+offline matching, storage and backup. A new native Compose surface is necessary
+to implement the requested independent navigation and visual system; modifying
+every inherited screen would retain unrelated product flows. Internal namespaces
+remain compatibility boundaries. The active package is dev.intelia.launcher
+(debug suffix in local QA), with its own icon/settings and .intelia exports.
+
+The local product surface enables only applications and explicit FLOW. The
+manifest removes online/sensitive permissions and unused exported activities,
+notification/Accessibility services and background initialization. Existing
+foundation source/history is retained. This is a modified GPL work, not a
+clean-room rewrite. Preserve original attribution and deliver corresponding
+source offline through Legal. No claim of trademark clearance is made.
+
+## D009 — LENS and local shallow ARC (accepted, 2026-10-14)
+
+User's recovery/design brief supersedes the header/search-bar/tab-dock Home.
+Reuse current native repositories and backup/preferences layer rather than
+replacing the launcher again. Home is portrait, with real system wallpaper,
+optional restrained clock/date and one bottom LENS. Search is an in-activity
+surface. Hold/drag/release ARC is launcher-only, user-owned, with persistent slot
+keys; no automatic ranking or fake default apps. Its pure selection reducer is
+separate from drawing/dispatch so cancellation and duplicate release are tested.
+Public OS blur is conditional, with runtime fallback and no wallpaper-reading
+permission. Vendor-private Nothing effects are not claimed. Existing widget
+hosting infrastructure remains intact but widgets stay outside this UI task.

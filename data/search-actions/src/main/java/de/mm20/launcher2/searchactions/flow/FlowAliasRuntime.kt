@@ -19,6 +19,7 @@ import kotlinx.coroutines.flow.map
 class FlowAliasRuntime(
     private val apps: AppRepository,
     private val saved: SavableSearchableRepository,
+    private val ownPackage: String,
 ) {
     private val executor = FlowAliasExecutor()
     private fun eligibleApps() = combine(
@@ -27,7 +28,7 @@ class FlowAliasRuntime(
             maxVisibility = VisibilityLevel.Hidden, limit = Int.MAX_VALUE),
     ) { installed, hidden ->
         val hiddenKeys = hidden.toHashSet()
-        installed.filter { target(it, hiddenKeys).eligible }
+        installed.filter { it.componentName.packageName != ownPackage && target(it, hiddenKeys).eligible }
     }
 
     private fun target(app: Application, hidden: Set<String>) = FlowAliasTarget(

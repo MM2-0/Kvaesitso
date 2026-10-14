@@ -1,5 +1,16 @@
 # Verified architecture and extension points
 
+## Active native layer — 2026-10-14
+
+`app/ui/.../dev/intelia/launcher/ui` now owns Home/LENS/ARC/search/settings and
+version-1 local preferences/backups. `InteliaHomeActivity` is the exported
+portrait Home of `dev.intelia.launcher.debug` (0.1.0); underlying namespaces and
+repositories are retained. App/FLOW/shortcut dispatch rechecks eligibility.
+`ArcGesture` is a pure hold-selection contract; Compose manages pointer/lifecycle
+cancellation. Wallpaper uses the public window compositor API with conditional
+runtime fallback, never reading wallpaper images. See LENS_ARC_REPORT for limits.
+The remaining architecture map below describes the original inspected baseline.
+
 Inspected on 2026-10-12 at baseline commit
 `3d18f3056dce2276569aa335343175ad2ca6700e`. Source paths below are repository-relative.
 This is a map of existing code followed by proposed integration boundaries.

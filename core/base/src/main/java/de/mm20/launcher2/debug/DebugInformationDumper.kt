@@ -14,7 +14,7 @@ class DebugInformationDumper {
         val df = SimpleDateFormat("yyyy-MM-dd-HHmmss")
         val file = File(
             context.getExternalFilesDir(null),
-            "kvaesitso-log-${df.format(Date(System.currentTimeMillis()))}"
+            "intelia-log-${df.format(Date(System.currentTimeMillis()))}"
         )
         withContext(Dispatchers.IO) {
             file.outputStream().writer().use { fos ->

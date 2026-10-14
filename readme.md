@@ -1,68 +1,50 @@
-# Kvaesitso
+# Intelia Launcher
 
-<img src="https://raw.githubusercontent.com/MM2-0/Kvaesitso/main/assets/icons/ic_launcher.png" width="128">
+A native Android home for local apps and explicit commands. Intelia has its own
+interface, identity and transitions: system wallpaper, a quiet home, one bottom
+LENS for local search and user-owned FLOW aliases.
 
-Kvaesitso is a search focused, free and open source launcher for Android.
+## This version
 
-[Website and documentation](https://kvaesitso.mm20.de)
+- Own portrait Compose home, app list, settings, mark/icon and runtime identity.
+- Tap LENS for search; hold for a shallow ARC of up to five user-selected apps.
+- Stable ARC positions, explicit release selection and safe cancellation.
+- System wallpaper with conditional public OS blur and contrast fallback.
+- Offline app discovery/search and exact FLOW aliases with visible destinations.
+- Explicit activation, hidden-target guards and local create/edit/delete persistence.
+- Dark/light/system appearance, optional clock/date and reduced-motion control.
+- Local `.intelia` backup import/export, bounded archive validation and clear errors.
+- Legal information and an exportable project source snapshot inside the APK.
 
-## Installation
+The active interface has no account connection, online search, notification
+collection, Accessibility automation or background workflow service. Existing
+infrastructure remains available in source for measured, separately scoped
+extensions. The current active app library is the personal profile; work/private
+profile UI, widgets and typed multi-step workflows are not claimed as complete.
 
-### Using an F-Droid client and MM20's repo
+## Build
 
-The preferred way of installation is using the [F-Droid](https://f-droid.org) application. That way
-you will always be notified about updates. Kvaesitso is available in the official F-Droid
-repository, but all features depending on non-foss external APIs were removed.
-For feature-complete builds you can add [MM20's repository](https://fdroid.mm20.de). Just scan the code below or open
-the link on your phone:
+Use a full JDK 21, Android SDK platform 37.1 and build-tools 36.0.0, then the
+checksum-pinned Gradle wrapper. The detailed portable commands are in
+[WORKFLOW](docs/intelia/WORKFLOW.md).
 
-<img src="https://fdroid.mm20.de/repo/index.png" width="150" alt="QR code">
+```sh
+./gradlew :app:app:assembleDefaultDebug :app:ui:testDebugUnitTest \
+  :data:search-actions:testDebugUnitTest :core:base:testDebugUnitTest \
+  :data:locations:testDebugUnitTest --console=plain --max-workers=4
+```
 
-https://fdroid.mm20.de/repo/
+The debug package is `dev.intelia.launcher.debug`. Output:
+`app/app/build/outputs/apk/default/debug/app-default-debug.apk`.
+A successful build is not a device, performance or production-readiness claim.
 
-The same version is also available in [IzzyOnDroid's repository](https://apt.izzysoft.de/fdroid/index/apk/de.mm20.launcher2.release).
+## Source and attribution
 
-### Manual installation
-
-You can also download the latest release from
-the [releases page](https://github.com/MM2-0/Kvaesitso/releases/latest) and install it manually.
-
-## Report issues
-
-If you notice any bugs or issues create a new issue in
-the [issue tracker](https://github.com/MM2-0/Kvaesitso/issues). Before you do, please search the
-existing issues for any similar issues. Please include any relevant information such as steps to
-reproduce, stack traces, logs, and device information. These information can be founder under
-Settings > Debug > Crash reporter and Settings > Debug > Export debug information.
-
-## Feature requests
-
-If you have an idea for a new feature, just create a new issue. However, there is no guarantee that
-they will be implemented. If it's important for you, consider implementing it yourself,
-see [contribute](#contribute).
-
-
-## Contribute
-
-Contributions are always welcome. If you want to fix any existing issues or implement smaller new
-features just create a new pull request. If you plan to implement any (bigger) new features, please
-create an issue first so we can discuss if and how this feature should be implemented.
-
-If you want to help translating, see [how to translate the project.](https://kvaesitso.mm20.de/docs/contributor-guide/i18n)
-
-<a href="https://i18n.mm20.de/engage/kvaesitso/">
-<img src="https://i18n.mm20.de/widgets/kvaesitso/-/287x66-grey.png" alt ="Translation Status">
-</a>
-
-## Links
-
-- User guide: https://kvaesitso.mm20.de/docs/user-guide
-- F-Droid-Repository: https://fdroid.mm20.de
-
-## Thanks to
-
-- [@EliotAku](https://github.com/EliotAku) for the app icon
-- All [translators and code contributors](https://github.com/MM2-0/Kvaesitso/graphs/contributors)
+The application is a modified GPL work. Its original native interface is built
+above a preserved open-source launcher foundation; legal provenance and original
+notices are in [ATTRIBUTIONS](docs/intelia/ATTRIBUTIONS.md) and the license below.
+They are not presented as product branding. Source export includes this build's
+project sources/resources and build scripts; it excludes private machine files.
 
 ## License
 

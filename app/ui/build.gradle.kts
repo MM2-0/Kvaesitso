@@ -72,6 +72,7 @@ android {
 
 
 dependencies {
+    testImplementation(libs.junit)
     implementation(libs.bundles.kotlin)
 
     implementation(libs.androidx.compose.runtime)

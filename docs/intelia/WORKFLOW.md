@@ -1,5 +1,53 @@
 # Development workflow for Codex and Claude Code
 
+## Minimal Home / LENS / ARC — 2026-10-14
+
+The active Home uses the user's Android wallpaper surface, not a copied/read
+wallpaper bitmap or Nothing-private API. Public API 31 cross-window blur follows
+the runtime capability callback; older/disabled devices use a contrast scrim.
+Appearance offers automatic blur, clear wallpaper and solid background. Native
+portrait Home shows only optional clock/date and LENS. Tap opens local search;
+hold reveals a user-selected shallow ARC with up to five stable saved app keys.
+An unavailable/hidden app leaves its position empty. Hold alone never dispatches;
+selection requires upward movement and a target hit, followed by release. Back,
+Home, stop, multitouch and pointer cancellation clear the session. Accessible
+actions and explicit search rows offer alternatives to the gesture.
+
+No global overlay, Accessibility service, HALO/TRACE/AI or new dependency is
+introduced. Existing public shortcuts are reused and filtered by parent/profile
+and hidden state; their indexing is subscribed only while used. Test pure ARC
+gesture contracts and backward-compatible preference backups with app/ui tests.
+Decoded app icons use a process-local 4 MiB LRU keyed by app and package revision,
+with package/icon loading on IO. The cache is bounded and needs no background job.
+
+## Active Intelia interface — 2026-10-13
+
+The user authorized an original native interface over the preserved foundation.
+The active debug application is `dev.intelia.launcher.debug`, version 0.1.0;
+its entry point is `dev.intelia.launcher.ui.InteliaHomeActivity`. Existing internal
+namespaces are retained as implementation/compatibility boundaries, not product
+branding. Source licenses and attribution remain intact.
+
+Add `:app:ui:testDebugUnitTest` to the existing verification command. The
+`bundleInteliaSource` prerequisite embeds the corresponding project source
+snapshot as `assets/intelia-source.zip`; Legal can export it through Android's
+document picker. The source bundle includes build scripts, wrapper, sources,
+resources and notices, excluding caches, logs, private machine files and outputs.
+New backup exports use `.intelia`; legacy backups remain readable by metadata.
+
+For local debug QA only, opening the home with
+`--ez intelia.validation.keepAwake true` temporarily keeps that activity's display
+awake. This is ignored in non-debug builds, cleared on pause and cleared by an
+ordinary Home intent. Finish validation with an ordinary Home/open intent without
+that extra. Do not change global screen timeout/rotation/connectivity for this.
+
+Permission/component inspection of the APK is mandatory for identity changes.
+The native local slice does not expose notification/Accessibility/account-import
+interfaces or require network/storage/contact/calendar permissions. Android app
+discovery still uses `QUERY_ALL_PACKAGES`. Do not mistake retained source modules
+for active UI features. Work/private-profile UI, widgets, multi-step FLOW and
+production performance remain separate acceptance work.
+
 ## Shared context and branches
 
 Read root `AGENTS.md`, this project's STATUS, then the active task. `CLAUDE.md`

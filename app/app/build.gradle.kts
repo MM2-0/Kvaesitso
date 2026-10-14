@@ -6,6 +6,22 @@ plugins {
     alias(libs.plugins.android.application)
 }
 
+// The exact source snapshot travels with the APK and can be exported from Legal.
+val inteliaSourceBundle = tasks.register<Zip>("bundleInteliaSource") {
+    archiveFileName.set("intelia-source.zip")
+    destinationDirectory.set(layout.buildDirectory.dir("generated/intelia-source/assets"))
+    from(rootDir) {
+        include("app/**", "core/**", "data/**", "services/**", "libs/**", "plugins/**", "gradle/**")
+        include("*.gradle.kts", "gradle.properties", "gradlew", "gradlew.bat", "LICENSE*", "license*", "README.md", "readme.md", "AGENTS.md", "CLAUDE.md")
+        include("docs/intelia/WORKFLOW.md")
+        include("docs/intelia/ATTRIBUTIONS.md")
+        exclude("**/build/**", "**/.gradle/**", "**/.kotlin/**", "**/.git/**", "**/.idea/**", "**/.codex/**", "**/.agents/**", "**/.signing/**", "**/node_modules/**", "**/local.properties", "**/*.keystore", "**/*.jks", "**/*.log")
+    }
+}
+// A concrete source directory also enables assets in variants that initially had none.
+android.sourceSets.getByName("main").assets.srcDir(layout.buildDirectory.dir("generated/intelia-source/assets").get().asFile)
+tasks.named("preBuild").configure { dependsOn(inteliaSourceBundle) }
+
 android {
     androidResources {
         generateLocaleConfig = true
@@ -30,11 +46,11 @@ android {
         }
     }
     defaultConfig {
-        applicationId = "de.mm20.launcher2"
+        applicationId = "dev.intelia.launcher"
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
-        versionCode = System.getenv("VERSION_CODE_OVERRIDE")?.toIntOrNull() ?: 2026091500
-        versionName = "1.41.0"
+        versionCode = System.getenv("VERSION_CODE_OVERRIDE")?.toIntOrNull() ?: 2026101301
+        versionName = "0.1.0"
         signingConfig = signingConfigs.getByName("debug")
     }
 

@@ -1,0 +1,12 @@
+<resources>
+    <string name="flow_alias_title">Alias FLOW</string>
+    <string name="flow_alias_create">Vytvořit alias FLOW</string>
+    <string name="flow_alias_name">Alias, například vlak</string>
+    <string name="flow_alias_choose_target">Vyberte viditelnou aplikaci z osobního profilu</string>
+    <string name="flow_alias_target_unavailable">Cíl není dostupný. Vyberte jinou aplikaci nebo alias odstraňte.</string>
+    <string name="flow_alias_empty">Zadejte alias</string>
+    <string name="flow_alias_control">Alias nesmí obsahovat řídicí znaky</string>
+    <string name="flow_alias_too_long">Použijte nejvýše 64 znaků</string>
+    <string name="flow_alias_duplicate">Tento alias již existuje</string>
+    <string name="flow_alias_save_failed">Alias se nepodařilo uložit. Zkuste to znovu.</string>
+</resources>

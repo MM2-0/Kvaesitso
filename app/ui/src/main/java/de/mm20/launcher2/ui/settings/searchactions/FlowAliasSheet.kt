@@ -1,6 +1,8 @@
 package de.mm20.launcher2.ui.settings.searchactions
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
@@ -30,8 +32,16 @@ fun FlowAliasSheet(
     var alias by rememberSaveable(id) { mutableStateOf(initial?.alias ?: "") }
     var targetKey by rememberSaveable(id) { mutableStateOf(initial?.targetKey ?: "") }
     val selected = targets.find { it.key == targetKey }
-    ModalBottomSheet(onDismissRequest = { if (!saving) onDismiss() }) {
-        Column(Modifier.fillMaxWidth().padding(horizontal = 24.dp)) {
+    var targetQuery by rememberSaveable(id) { mutableStateOf("") }
+    val filteredTargets = remember(targets, targetQuery) {
+        val normalized = de.mm20.launcher2.searchactions.flow.FlowAliases.normalize(targetQuery)
+        targets.filter { de.mm20.launcher2.searchactions.flow.FlowAliases.normalize(it.label).contains(normalized) }
+    }
+    ModalBottomSheet(
+        sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
+        onDismissRequest = { if (!saving) onDismiss() },
+    ) {
+        Column(Modifier.fillMaxWidth().verticalScroll(rememberScrollState()).padding(horizontal = 24.dp)) {
             Text(stringResource(R.string.flow_alias_title), style = MaterialTheme.typography.headlineSmall)
             OutlinedTextField(
                 value = alias, onValueChange = { alias = it }, enabled = !saving,
@@ -45,8 +55,13 @@ fun FlowAliasSheet(
                 Text(stringResource(R.string.flow_alias_target_unavailable), color = MaterialTheme.colorScheme.error)
             }
             // Virtualized and height bounded, including large fonts and many installed apps.
+            OutlinedTextField(
+                value = targetQuery, onValueChange = { targetQuery = it }, singleLine = true,
+                label = { Text(stringResource(R.string.intelia_targets_search)) },
+                modifier = Modifier.fillMaxWidth().padding(top = 8.dp), enabled = !saving,
+            )
             LazyColumn(Modifier.fillMaxWidth().heightIn(max = 260.dp)) {
-                items(targets, key = { it.key }) { target ->
+                items(filteredTargets, key = { it.key }) { target ->
                     TextButton(onClick = { targetKey = target.key }, enabled = !saving) {
                         RadioButton(selected = targetKey == target.key, onClick = null)
                         Text(target.label, Modifier.padding(start = 8.dp))

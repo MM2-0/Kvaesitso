@@ -47,6 +47,7 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
 import kotlin.coroutines.CoroutineContext
+import dev.intelia.launcher.ui.inteliaUiModule
 
 class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
 
@@ -100,6 +101,7 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
                     profilesModule,
                     i18nDataModule,
                     feedModule,
+                    inteliaUiModule,
                 )
             )
         }

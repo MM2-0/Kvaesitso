@@ -79,6 +79,15 @@ internal class SearchActionServiceImpl(
         return builders.combine(flowAliases.targets()) { savedBuilders, targets ->
             val results = mutableListOf<SearchAction>()
 
+            // Exact local commands lead the action row so their preview is immediately visible.
+            val seen = mutableSetOf<String>()
+            for (builder in savedBuilders.filterIsInstance<FlowAliasActionBuilder>()) {
+                val alias = builder.alias
+                if (FlowAliases.matches(alias, query) && seen.add(FlowAliases.normalize(alias.alias))) {
+                    targets.find { it.key == alias.targetKey }?.let { results += FlowAliasAction(alias, it, flowAliases) }
+                }
+            }
+
             if (isAtLeastApiLevel(35)) {
                 val privateSpaceAction = PrivateSpaceLockActionBuilder(context).build(context, classificationResult)
                 if (privateSpaceAction != null) {
@@ -93,13 +102,6 @@ internal class SearchActionServiceImpl(
                 }
             }
 
-            val seen = mutableSetOf<String>()
-            for (builder in savedBuilders.filterIsInstance<FlowAliasActionBuilder>()) {
-                val alias = builder.alias
-                if (FlowAliases.matches(alias, query) && seen.add(FlowAliases.normalize(alias.alias))) {
-                    targets.find { it.key == alias.targetKey }?.let { results += FlowAliasAction(alias, it, flowAliases) }
-                }
-            }
             results.toImmutableList()
         }
     }

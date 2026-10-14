@@ -1,6 +1,6 @@
 # 010 — FLOW v0: exact offline app aliases
 
-Status: IMPLEMENTED on `feat/flow-aliases`; build/JVM tests pass, device validation remains pending.
+Status: IMPLEMENTED on `feat/flow-aliases`; build/JVM tests pass, partial physical-device validation recorded on `codex/flow-device-validation`.
 Review: [PR #2](https://github.com/ondrejmacko-it/Intelia-Launcher/pull/2), stacked on bootstrap PR #1.
 Read AGENTS, STATUS, ARCHITECTURE search/execution and DECISIONS D003. The behavior below was absent from the bootstrap baseline and is implemented
 on the feature branch.
@@ -124,14 +124,29 @@ Only then plan typed multi-step FLOW and POCKET; do not silently add them here.
   existing locations test skipped. Debug APK built successfully. See STATUS for
   the exact command and limits of JVM persistence evidence.
 
-### Remaining device checklist (unrun)
+### Physical-device follow-up — 2026-10-13
+
+See [device results](../docs/intelia/FLOW_DEVICE_RESULTS.md): actual A059 / Android
+16 installation, create/exact match/explicit launch, blank/length validation,
+rename and delete persistence, missing-target settings, ordinary-action presence
+and the footer layout fix. This is partial acceptance; detailed limits are in
+that report. No performance pass is claimed.
+
+### Remaining device checklist
 
 Use the [device validation runbook](../docs/intelia/FLOW_DEVICE_VALIDATION.md)
 for installation, steps, expected results and the evidence record.
 
-- [ ] Create/edit/delete alias and confirm persistence after process restart.
+- [x] Create/edit/delete alias and confirm persistence after process restart.
 - [ ] Launch offline, return, and verify ordinary search/action behavior.
 - [ ] Hide, suspend or uninstall target; verify no stale-label disclosure or launch.
 - [ ] Backup/restore real saved aliases alongside existing search actions.
 - [ ] TalkBack, keyboard action-chip focus, large fonts and rotation/IME behavior.
 - [ ] Collect latency/frame/memory observations on the selected reference device.
+
+Native Intelia follow-up (task 015): exact alias/duplicate rejection, actual
+public target launch/return, hide/unhide without stale label, native backup/FLOW
+and theme roundtrip/restart passed. Frame/memory observations collected. See
+[native report](../docs/intelia/INTELIA_NATIVE_REPORT.md). These scoped checks do
+not imply suspended/profile/offline-connectivity/accessibility/full performance
+acceptance; the broader checklist above remains partial.

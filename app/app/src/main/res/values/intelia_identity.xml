@@ -1,0 +1,12 @@
+<resources>
+    <color name="intelia_icon_background">#111923</color>
+    <style name="InteliaTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowShowWallpaper">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/intelia_mark</item>
+        <item name="android:windowSplashScreenBackground">@color/intelia_icon_background</item>
+        <item name="android:enforceStatusBarContrast">false</item>
+        <item name="android:enforceNavigationBarContrast">false</item>
+    </style>
+</resources>

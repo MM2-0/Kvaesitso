@@ -85,6 +85,8 @@ internal class AppShortcutRepositoryImpl(
                 launcherApps.getShortcuts(query, user)
             } catch (e: IllegalStateException) {
                 emptyList()
+            } catch (_: SecurityException) {
+                emptyList()
             }
             val appShortcuts = mutableListOf<LauncherShortcut>()
             appShortcuts.addAll(
@@ -225,7 +227,8 @@ internal class AppShortcutRepositoryImpl(
                     LauncherApps.ShortcutQuery.FLAG_MATCH_CACHED or
                     LauncherApps.ShortcutQuery.FLAG_MATCH_PINNED_BY_ANY_LAUNCHER
         )
-        val result = launcherApps.getShortcuts(shortcutQuery, Process.myUserHandle()) ?: emptyList()
+        val result = try { launcherApps.getShortcuts(shortcutQuery, Process.myUserHandle()) ?: emptyList() }
+            catch (_: SecurityException) { emptyList() }
         val normalized = result.mapNotNull {
             if ("${it.`package`}:${it.userHandle.getSerialNumber(context)}" in blocklist) return@mapNotNull null
             NormalizedShortcut(
@@ -238,7 +241,7 @@ internal class AppShortcutRepositoryImpl(
         }
         normalized
     }
-        .shareIn(scope, SharingStarted.Eagerly, replay = 1)
+        .shareIn(scope, SharingStarted.WhileSubscribed(500), replay = 1)
 
     override suspend fun getShortcutsConfigActivities(): List<AppShortcutConfigActivity> {
         val launcherApps = context.getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps

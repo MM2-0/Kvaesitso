@@ -1,5 +1,72 @@
 # Intelia status
 
+## Current recovery / LENS / ARC — 2026-10-14
+
+Task 020, branch `codex/intelia-wallpaper-design`, supersedes the previous
+header/dock Home. Recovery preserved all local work in an external source ZIP.
+Original PR #1/#2 remain OPEN; their remote heads were not changed. Security
+changes committed separately as `88cd426b5`.
+
+Native portrait Home now shows the system wallpaper, optional time/date and one
+LENS. Tap opens local app/FLOW/public-shortcut search; hold opens user-configured
+shallow ARC with stable positions. No HALO/TRACE/AI/global overlay was introduced.
+On A059 / Android 16, updated APK installation, tap/search, hold without launch,
+drag-back cancellation, valid release launch, explicit FLOW, Home return and
+preference/ARC restart persistence were physically verified. Current HOME role
+remains Intelia; Nothing/data/other apps preserved. Android reports blur disabled;
+actual phone evidence is wallpaper with contrast fallback, not enabled GPU blur.
+
+104 tests passed, one existing skip. APK signature/archive/source/file audits
+passed; active permissions remain package discovery plus private receiver only.
+**Performance acceptance is FAIL/open:** ten rapid LENS/keyboard/Home cycles on
+the final debug build recorded 51.08% janky frames. No release/FPS/battery claim.
+See [recovery report](LENS_ARC_REPORT.md) for exact evidence and unresolved checks.
+This is a reviewable design draft, not final UX/performance approval.
+
+## Current native Intelia slice — 2026-10-13
+
+Task 015 is verified locally on `codex/intelia-native-ui`, based on `c646d97aa`;
+changes are uncommitted. An original Compose Home/library/FLOW/settings surface,
+icon, package `dev.intelia.launcher.debug` and `.intelia` backups now run on A059,
+Android 16. This package is the actual default Home. Nothing launcher/data were
+preserved; only our earlier debug launcher and disposable target were removed.
+
+95 unit tests passed, one existing locations test skipped. Exact alias matching,
+explicit public-app launch, duplicate rejection, hidden-target suppression,
+source export, backup/theme/FLOW restoration and restart persistence passed on
+the phone. The APK has no INTERNET, contacts/calendar/storage, notification or
+Accessibility permission/service. Required source/license attribution remains.
+Measured 20 Home/library transitions: 773 frames, 19 janky (2.46%), p95 13 ms;
+this is a debug observation, not a performance acceptance or battery claim.
+
+See [native report](INTELIA_NATIVE_REPORT.md) for hashes, commands, scope and
+remaining acceptance. Historical results below describe previous installations.
+Multi-step FLOW, full profile support, widgets and global ORBIT remain outside
+this slice. The next smallest task is release-build frame profiling/optimization
+and accessibility acceptance, subject to a new task boundary.
+
+## Local physical-device validation — 2026-10-13
+
+On A059 / Android 16 (API 36), built and installed the actual default debug APK
+from `c646d97aa` with a focused editor fix on `codex/flow-device-validation`.
+The first local build and tests passed: 84 tests passed, 1 existing skip,
+zero failures/errors. After the fix, offline assembly passed; test tasks were
+up-to-date. APK v2 verification and both installations passed.
+
+Fixed the observed partially expanded FLOW sheet hiding its footer: open fully
+expanded and allow outer content scrolling. Physical-device checks passed for
+creation, exact matching/casing/spaces, typing without execution, explicit launch
+of a private test helper, blank/length validation, rename/restart persistence,
+missing-target settings and delete/restart persistence. Ordinary action presence
+was preserved. Detailed commands, APK hash and limits are in
+[FLOW_DEVICE_RESULTS](FLOW_DEVICE_RESULTS.md).
+
+Device acceptance is still partial. Offline dispatch, duplicate validation,
+hidden/suspended/profile targets, backup/restore, accessibility, the full lifecycle
+matrix and performance remain unrun. No unrelated app or system configuration was
+changed, and no personal app data was cleared. Continue task 010's remaining
+checks before starting another product feature.
+
 ## Resumed validation preparation — 2026-10-13
 
 Restored feature branch at `6c74e9b47` in a new cloud chat. GitHub API confirmed
