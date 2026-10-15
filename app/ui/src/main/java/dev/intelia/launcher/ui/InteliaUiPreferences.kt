@@ -22,18 +22,22 @@ import org.koin.dsl.module
 data class InteliaUiState(val version: Int = 1, val theme: Int = 0, val showClock: Boolean = true, val reduceMotion: Boolean = false,
     val wallpaper: Int = 0, val arc: List<String> = emptyList(), val spaces: Map<String, Int> = emptyMap(), val hand: Int = 0, val island: Boolean = false,
     val icons: Int = 0, val iconPack: String = "", val iconOverrides: Map<String, Int> = emptyMap(),
-    val palette: Int = 0, val typeface: Int = 0, val showDate: Boolean = true)
+    val palette: Int = 0, val typeface: Int = 0, val showDate: Boolean = true,
+    val pulseProfiles: Map<String, PulseCameraProfile> = emptyMap())
 
 object InteliaUiCodec {
     private val json = Json { ignoreUnknownKeys = true; encodeDefaults = true }
     fun encode(state: InteliaUiState): String = json.encodeToString(state)
+    fun forRestore(state: InteliaUiState) = state.copy(island = false, pulseProfiles = state.pulseProfiles.mapValues { it.value.copy(confirmed = false) })
     fun decode(text: String): InteliaUiState {
         val state = json.decodeFromString<InteliaUiState>(text)
         require(state.version == 1 && state.theme in 0..2 && state.wallpaper in 0..2 && validArc(state.arc) && validExtensions(state)) { "Unsupported Intelia UI settings" }
         return state
     }
     fun validArc(keys: List<String>) = keys.size <= 5 && keys.distinct().size == keys.size && keys.all { it.isNotBlank() && it.length <= 512 && it.none(Char::isISOControl) }
-    fun validExtensions(state: InteliaUiState) = state.hand in 0..2 && state.icons in 0..3 && state.palette in 0..3 && state.typeface in 0..1 &&
+    fun validExtensions(state: InteliaUiState) = state.pulseProfiles.size <= 16 && state.pulseProfiles.all { (key, value) ->
+        key.matches(Regex("v1:[0-9]{1,5}:[0-3]:[0-9]{1,6}")) && value.valid()
+    } && state.hand in 0..2 && state.icons in 0..3 && state.palette in 0..3 && state.typeface in 0..1 &&
         state.iconPack.length <= 255 && state.iconPack.all { it.isLetterOrDigit() || it == '.' || it == '_' } &&
         state.iconOverrides.size <= 128 && state.iconOverrides.all { (key, value) ->
             key.startsWith("app://") && key.length <= 512 && key.none(Char::isISOControl) && value in 0..3
@@ -55,6 +59,15 @@ class InteliaUiPreferences(context: Context) : Backupable {
         spaces = extensions.spaces, hand = extensions.hand, island = extensions.island,
         icons = extensions.icons, iconPack = extensions.iconPack, iconOverrides = extensions.iconOverrides,
         palette = extensions.palette, typeface = extensions.typeface, showDate = extensions.showDate,
+        pulseProfiles = extensions.pulseProfiles.ifEmpty {
+            // Keep only the old user-position, not the probe's unrelated 48dp touch size.
+            context.getSharedPreferences("intelia-pulse-calibration-debug", Context.MODE_PRIVATE).all.entries
+                .take(16).mapNotNull { (key, raw) ->
+                    val values = (raw as? String)?.split(';')?.mapNotNull { it.toFloatOrNull() }
+                    val profile = values?.takeIf { it.size == 4 }?.let { PulseCameraProfile(x = it[0], y = it[1]) }
+                    if (key.matches(Regex("v1:[0-9]{1,5}:[0-3]:[0-9]{1,6}")) && profile?.valid() == true) key to profile else null
+                }.toMap()
+        },
     ))
     val state = mutable.asStateFlow()
 
@@ -81,7 +94,7 @@ class InteliaUiPreferences(context: Context) : Backupable {
             file.inputStream().use { InteliaUiCodec.decode(BackupArchive.readLimited(it, 1024 * 1024).toString(Charsets.UTF_8)) }
         }
         // Restoring appearance must not silently enable a global overlay.
-        update { decoded.copy(island = false) }
+        update { InteliaUiCodec.forRestore(decoded) }
     }
 }
 

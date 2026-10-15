@@ -60,7 +60,7 @@ internal fun InteliaSettings(
             item {
                 val context = LocalContext.current
                 val calibrationIntent = remember(context) {
-                    android.content.Intent().setClassName(context.packageName, "dev.intelia.launcher.ui.PulseProbeActivity")
+                    android.content.Intent().setClassName(context.packageName, "dev.intelia.launcher.ui.InteliaPulseCalibrationActivity")
                         .takeIf { it.resolveActivity(context.packageManager) != null }
                 }
                 PreferenceToggle(stringResource(R.string.intelia_island), preferences.island, model::island)
@@ -75,9 +75,8 @@ internal fun InteliaSettings(
                 if (preferences.island) {
                     Text(stringResource(R.string.intelia_island_privacy), Modifier.padding(top = 12.dp), fontSize = 13.sp)
                     TextButton(onClick = {
-                        runCatching { context.startActivity(android.content.Intent(android.provider.Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                            android.net.Uri.parse("package:${context.packageName}"))) }
-                    }) { Text(stringResource(R.string.intelia_island_overlay)) }
+                        runCatching { context.startActivity(android.content.Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS)) }
+                    }) { Text(stringResource(R.string.intelia_pulse_activation)) }
                     TextButton(onClick = {
                         runCatching {
                             val intent = if (android.os.Build.VERSION.SDK_INT >= 30) android.content.Intent(android.provider.Settings.ACTION_NOTIFICATION_LISTENER_DETAIL_SETTINGS)

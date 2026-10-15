@@ -1,5 +1,25 @@
 # Intelia status
 
+## Pulse 2.0 stage B first slice — 2026-10-15
+
+Production camera calibration is saved by the user; new optional accessibility
+host is explicitly enabled and MT temporarily disabled by the user. Replaced the
+old permanent media overlay with invisible idle activation, compact real-media
+summary, explicit controls and bounded ARC using existing eligible apps/FLOW.
+Sequences require preview then Run. Camera geometry and touch padding are separate;
+profiles join existing backup validation, restore disables Pulse/unconfirms profiles.
+Window-state package/class metadata only; no app content retrieval/gesture injection.
+
+Final debug APK installed with data/HOME retained. 35 UI + 20 search-action tests
+PASS, exact 14 changed/new application source matches/CRC/license/private-artifact
+checks PASS. Injected tap/hold, ordered FLOW preview without launch, media compact/
+detail/pause, outside close and shade restriction + Home recovery PASS. Fixed
+pointer-stream handoff on hold and latched Home restriction; no background polling.
+Commands, hashes and precise boundaries in [PULSE_V2](PULSE_V2.md), decision D015.
+Final physical-finger/security/lock/call/IME/rotation/OEM/accessibility and battery
+matrix remain UNRUN. This is not completion of every Pulse 2.0 module. No push or
+merge. Next smallest task is that acceptance matrix before broader event features.
+
 ## Pulse 2.0 stage A / manual camera calibration — 2026-10-15
 
 User approved implementation after documentation checkpoint `1e7311aa1`.

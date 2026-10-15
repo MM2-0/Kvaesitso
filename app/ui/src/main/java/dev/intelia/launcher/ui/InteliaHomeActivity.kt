@@ -11,6 +11,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.core.view.WindowCompat
 import de.mm20.launcher2.ui.base.BaseActivity
@@ -19,6 +20,7 @@ import java.time.LocalDate
 class InteliaHomeActivity : BaseActivity() {
     private val model: InteliaHomeViewModel by viewModels()
     private var homePulse by mutableIntStateOf(0)
+    private var requestedPanel by mutableStateOf<String?>(null)
     private val backup = registerForActivityResult(ActivityResultContracts.CreateDocument("application/vnd.intelia.backup")) {
         it?.let(model::export)
     }
@@ -30,8 +32,9 @@ class InteliaHomeActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         WindowCompat.enableEdgeToEdge(window)
         applyValidationWindow(intent)
+        requestedPanel = intent.getStringExtra("intelia.open")?.takeIf { it in setOf("search", "settings") }
         setContent {
-            InteliaHome(model, homePulse,
+            InteliaHome(model, homePulse, requestedPanel,
                 onBackup = { backup.launch("intelia-${LocalDate.now()}.intelia") },
                 onRestore = { restore.launch(arrayOf("*/*")) },
                 onSource = { source.launch("intelia-launcher-source.zip") },
@@ -56,7 +59,15 @@ class InteliaHomeActivity : BaseActivity() {
         sendBroadcast(Intent("dev.intelia.launcher.REFRESH_PULSE").setPackage(packageName))
     }
     override fun onPause() { setValidationKeepAwake(false); super.onPause() }
-    override fun onNewIntent(intent: Intent) { super.onNewIntent(intent); applyValidationWindow(intent); model.refreshHomeRole(); homePulse++ }
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        if (hasFocus) sendBroadcast(Intent("dev.intelia.launcher.REFRESH_PULSE").setPackage(packageName).putExtra("intelia.home.visible", true))
+    }
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent); applyValidationWindow(intent); model.refreshHomeRole()
+        requestedPanel = intent.getStringExtra("intelia.open")?.takeIf { it in setOf("search", "settings") }; homePulse++
+        if (hasWindowFocus()) sendBroadcast(Intent("dev.intelia.launcher.REFRESH_PULSE").setPackage(packageName).putExtra("intelia.home.visible", true))
+    }
     private fun applyValidationWindow(intent: Intent) {
         // Temporary, explicitly requested by the local debug tester; normal Home never keeps the display awake.
         setValidationKeepAwake(de.mm20.launcher2.ui.BuildConfig.DEBUG && intent.getBooleanExtra("intelia.validation.keepAwake", false))

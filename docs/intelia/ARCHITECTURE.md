@@ -152,3 +152,18 @@ pure geometry helper. The existing InteliaIslandService only gains temporary
 suspension while the debug calibrator is visible. Action registry/reducer/event
 architecture remains proposed; camera alignment requires user calibration,
 and independent production host lifetime/safety remain feasibility gates.
+
+## Pulse stage B implementation boundary — 2026-10-15
+
+The stage A description above is historical. InteliaIslandService is now only a
+public-media permission bridge, with no window or notification-payload callbacks.
+InteliaPulseAccessibilityService owns opt-in bounded windows, package/class-only
+system transitions, public eligible MediaController callbacks and teardown.
+PulsePolicy contains pure presentation/profile/geometry contracts. Production
+InteliaPulseCalibrationActivity + PulseCalibrationControls replace the debug
+settings entry; the old debug probe remains available only as a separate tool.
+Profiles live in InteliaUiPreferences and existing backup serialization; restore
+requires a fresh opt-in/confirmation. InteliaHomeActivity accepts only search and
+settings destinations, and re-arms Pulse on focused Home return. ARC delegates to
+existing runtime targets/icons and guarded FLOW activation, including explicit
+multi-step preview. Generic action registry and event reducer remain future work.

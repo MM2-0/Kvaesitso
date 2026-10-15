@@ -30,3 +30,20 @@ PULSE_V2.md and decision D014. Camera calibration geometry must be independent
 of activation size and visible event content. No reference code/artwork copied.
 Next bounded stage B starts with that contract; do not claim production capsule,
 full touch pass-through or completed hardware matrix from the reference trial.
+# Stage B activation — 2026-10-15
+
+User approved corrected reference-driven implementation after 588df32a5.
+Active slice: production calibration/config/backup, optional accessibility host,
+HIDDEN/COMPACT/explicit detail and existing guarded ARC/FLOW adapter. No copied
+reference code/assets. Original source recoverable through 588df32a5. Preserve
+HOME, old aliases/profiles/settings; no push/merge. Stop before generic Action
+Registry, priority engine and additional event modules. Physical cutout acceptance,
+new Android accessibility opt-in and temporary reference-overlay conflict handling
+remain explicit device gates. Do not silently enable a permission or disable MT.
+
+Stage B bounded slice implemented and installed without data wipe. Production
+calibration user-confirmed; new service explicitly enabled and reference overlay
+temporarily disabled by user. 35 UI + 20 FLOW tests PASS, source/license/CRC checks
+PASS; injected hidden/search/hold/preview/media/pause/shade/Home checks PASS.
+See PULSE_V2.md for exact commands/hashes and UNRUN physical/security/rotation
+matrix. Stop here before generic action registry or additional event modules.

@@ -63,6 +63,7 @@ import java.util.Locale
 fun InteliaHome(
     model: InteliaHomeViewModel,
     homePulse: Int,
+    requestedPanel: String? = null,
     onBackup: () -> Unit,
     onRestore: () -> Unit,
     onSource: () -> Unit,
@@ -138,7 +139,7 @@ fun InteliaHome(
         val backdrop = if (preferences.wallpaper == 2) scheme.background else scheme.background.copy(
             alpha = if (page != 0) 0.92f else if (!dark) 0.72f else if (blurred) 0.36f else 0.42f)
         LifecycleEventEffect(Lifecycle.Event.ON_STOP) { scope.coroutineContext.cancelChildren() }
-        LaunchedEffect(homePulse) { mode = 0; sheet = 0; model.query.value = ""; model.dismissEditor(); selectedApp = null; focus.clearFocus(); keyboard?.hide() }
+        LaunchedEffect(homePulse) { mode = if (requestedPanel == "search") 1 else 0; sheet = if (requestedPanel == "settings") 1 else 0; model.query.value = ""; model.dismissEditor(); selectedApp = null; focus.clearFocus(); if (requestedPanel != "search") keyboard?.hide() }
         LaunchedEffect(mode) { if (mode == 1) { searchFocus.requestFocus(); keyboard?.show() } }
         LaunchedEffect(message) {
             message?.let { snackbar.showSnackbar(context.getString(it)); model.message.value = null }

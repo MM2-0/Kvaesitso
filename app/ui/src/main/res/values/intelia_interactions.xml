@@ -14,7 +14,7 @@
     <string name="intelia_reach_left">Left</string>
     <string name="intelia_reach_right">Right</string>
     <string name="intelia_island">Intelia Pulse</string>
-    <string name="intelia_island_hint">A small control above other apps. Tap for music; hold for ARC and FLOW. Optional, on this device only.</string>
+    <string name="intelia_island_hint">Invisible camera control while idle. A small capsule during playback, with details on tap. Enable control and calibrate first.</string>
     <string name="intelia_island_overlay">Allow display over other apps</string>
     <string name="intelia_island_media">Allow media access</string>
     <string name="intelia_island_privacy">Android grants media-session access through notification access. This is a broad system permission. Intelia uses playback metadata and controls; it does not read, save or send message notifications. You can revoke access in Android Settings.</string>
@@ -26,4 +26,18 @@
     <string name="intelia_flow_partial">The sequence could not be completed. An earlier app may already be open.</string>
     <string name="intelia_camera_calibration">Camera calibration</string>
     <string name="intelia_camera_calibration_unavailable">Camera calibration could not be opened.</string>
+    <string name="intelia_pulse_activation">Allow control around the camera</string>
+    <string name="intelia_pulse_accessibility_description">Pulse uses a small overlay around the camera and window package changes to hide controls over system screens. It does not read app content, take screenshots or automate gestures. Media access is optional and separate. You can disable Pulse at any time.</string>
+    <string name="intelia_pulse_calibration_help">Align the inner oval with your camera. The faint outer frame is the touch area; its padding is independent. Nothing is shown here during normal idle use. Choose Done to save. LENS remains a larger accessible alternative.</string>
+    <string name="intelia_pulse_calibration_reset">Reset automatic suggestion</string>
+    <string name="intelia_pulse_calibration_permission">Enable Intelia Pulse in Accessibility to see the preview around your camera.</string>
+    <string name="intelia_pulse_center_x">Camera center X</string>
+    <string name="intelia_pulse_center_y">Camera center Y</string>
+    <string name="intelia_pulse_camera_width">Camera width</string>
+    <string name="intelia_pulse_camera_height">Camera height</string>
+    <string name="intelia_pulse_touch_padding">Touch padding</string>
+    <string name="intelia_pulse_save">Done · save calibration</string>
+    <string name="intelia_pulse_run">Run sequence</string>
+    <string name="intelia_pulse_search">Search</string>
+    <string name="intelia_pulse_settings">Intelia settings</string>
 </resources>

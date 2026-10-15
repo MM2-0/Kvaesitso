@@ -14,7 +14,7 @@
     <string name="intelia_reach_left">Vlevo</string>
     <string name="intelia_reach_right">Vpravo</string>
     <string name="intelia_island">Intelia Pulse</string>
-    <string name="intelia_island_hint">Malý ovladač nad ostatními aplikacemi. Klepnutí otevře hudbu, podržení ARC a FLOW. Volitelně, jen na tomto zařízení.</string>
+    <string name="intelia_island_hint">V klidu neviditelné ovládání u čočky. Při přehrávání malá kapsle, po klepnutí detail. Nejprve povol ovládání a nastav kalibraci.</string>
     <string name="intelia_island_overlay">Povolit zobrazení nad aplikacemi</string>
     <string name="intelia_island_media">Povolit přístup k přehrávání</string>
     <string name="intelia_island_privacy">Android zpřístupňuje přehrávání přes přístup k oznámením. Jde o široké systémové oprávnění. Intelia používá údaje a ovládání přehrávání; zprávy z oznámení nečte, neukládá ani neposílá. Přístup lze odebrat v nastavení Androidu.</string>
@@ -26,4 +26,18 @@
     <string name="intelia_flow_partial">Postup se nepodařilo dokončit. Předchozí aplikace už může být otevřená.</string>
     <string name="intelia_camera_calibration">Kalibrace čočky</string>
     <string name="intelia_camera_calibration_unavailable">Kalibraci čočky se nepodařilo otevřít.</string>
+    <string name="intelia_pulse_activation">Povolit ovládání u čočky</string>
+    <string name="intelia_pulse_accessibility_description">Pulse zobrazuje malý překryv kolem kamery a používá změnu aktivní aplikace ke skrytí ovládání nad systémovými obrazovkami. Nečte obsah aplikací, nepořizuje snímky ani neautomatizuje gesta. Přístup k přehrávání je volitelný a oddělený. Pulse lze kdykoliv vypnout.</string>
+    <string name="intelia_pulse_calibration_help">Zarovnej vnitřní ovál se skutečnou čočkou. Jemný vnější rámeček je dotyková oblast; její lem nastavíš zvlášť. V běžném klidu se nic z toho nezobrazuje. Hotovo nastavení uloží. LENS zůstává větší přístupnou alternativou.</string>
+    <string name="intelia_pulse_calibration_reset">Obnovit automatický návrh</string>
+    <string name="intelia_pulse_calibration_permission">Pro náhled kolem kamery zapni Intelia Pulse ve Zpřístupnění.</string>
+    <string name="intelia_pulse_center_x">Střed čočky X</string>
+    <string name="intelia_pulse_center_y">Střed čočky Y</string>
+    <string name="intelia_pulse_camera_width">Šířka čočky</string>
+    <string name="intelia_pulse_camera_height">Výška čočky</string>
+    <string name="intelia_pulse_touch_padding">Dotykový lem</string>
+    <string name="intelia_pulse_save">Hotovo · uložit kalibraci</string>
+    <string name="intelia_pulse_run">Spustit posloupnost</string>
+    <string name="intelia_pulse_search">Vyhledávání</string>
+    <string name="intelia_pulse_settings">Nastavení Intelia</string>
 </resources>

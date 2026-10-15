@@ -118,3 +118,14 @@ media summary occupies only its required safe area; expanded controls are explic
 Own paired-stroke symbols, typography/geometry/motion remain the design identity.
 Reference behavior and limitations are recorded once in PULSE_V2.md. This is a
 review/design milestone, not implemented production Pulse 2.0 or a battery claim.
+
+### Pulse stage B current implementation — 2026-10-15
+
+Historical proposal/probe paragraphs above are superseded for this bounded slice.
+Production calibration has independent camera size and touch padding. Idle draws
+nothing; media uses the original paired-stroke glyph with bounded session artwork.
+Explicit detail/ARC use a neutral adaptive rounded surface and flat ripple controls;
+no stock button shadows, reference assets or fullscreen scrim. Hold opens after
+release to preserve the pointer stream; then tap a stable eligible target. FLOW
+sequence preview is mandatory. One candidate was inspected on Nothing portrait;
+large fonts/TalkBack/other rotations and physical touch matrix remain unverified.

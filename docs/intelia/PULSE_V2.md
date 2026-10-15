@@ -269,3 +269,77 @@ obnovit; při příštím srovnání znovu předejít dvojímu překryvu. Kalibr
 Další nejmenší úsek: etapě B předřadit produkční kontrakt oddělené geometrie a
 kalibrace (validace/migrace/backup), potom bounded accessibility host a HIDDEN +
 jedna reálná media karta. V této srovnávací etapě nebyla přepsána produkční služba.
+
+## Stage B first executable slice — 2026-10-15
+
+User authorized production implementation, personally enabled the new Intelia
+Pulse accessibility service, temporarily disabled MT and saved production camera
+calibration. MT remains installed with its settings. Debug automatic geometry is
+not reused as physical proof. User-confirmed portrait profile survives APK updates.
+
+Implemented files: PulsePolicy + tests, production calibration activity/controls,
+InteliaUiPreferences backup/profile validation, bounded Pulse accessibility host,
+minimal Island media permission bridge, Settings/Home destinations and manifest/
+localized resources. Hardware shape, transparent activation, compact media and
+expanded content are separate. Idle paints nothing. On the tested portrait profile
+activation is 84x84px; active media is 168x79px, centered at the camera. Detail starts
+below status/cutout insets; no fullscreen scrim. Hold is release-then-tap, not drag.
+System-window events conservatively hide the host; no application content retrieval,
+notification payload callbacks, gesture injection, polling or foreground worker.
+
+Tap idle opens existing Intelia search. Hold opens five stable eligible app slots,
+search/settings and up to six existing FLOW aliases. Multi-step aliases show an
+ordered preview, then require explicit Run through the existing guarded runtime.
+Real public media session supplies compact artwork/glyph and explicit detail with
+supported previous/play/pause/next controls. Large bitmaps are rejected (>1024px).
+Preview calibration is non-touchable; only Done persists. Backup restores Pulse off
+and camera profiles unconfirmed. No reference source/artwork or new dependency.
+
+### Verification / candidate evidence
+
+Final command PASS (BUILD SUCCESSFUL, 23s; 1042 tasks):
+`gradlew.bat -p Intelia-Launcher :app:ui:testDebugUnitTest :data:search-actions:testDebugUnitTest :app:app:assembleDefaultDebug --offline --console=plain --max-workers=2 --no-problems-report`.
+35 UI + 20 search-action tests PASS; 0 failure/error/skip. An initial unprivileged
+Gradle daemon startup failed in the restricted environment; same local offline
+build succeeded with approved toolchain access. Initial MediaController import
+ambiguity was repaired before the passing build.
+
+APK `app/app/build/outputs/apk/default/debug/app-default-debug.apk`:
+SHA256 `dbbd4f54f551135ef54d29d0a0384f996abcdd8f2cff1e8c3092ed7cac57d7ec`.
+Embedded source SHA256 `289fe5c3de87bb352cad999782932c76eaa4dfee7523d53d9354f7324be5f05b`.
+APK/source CRC, exact byte match for all 14 changed/new application source files,
+license/attribution presence and absence of keys/APKs/private backups in bundled
+source PASS. Local helper scripts, device IDs, captures and media metadata excluded
+from Git. `git diff --check` PASS (line-ending notices only).
+
+Device: Nothing A059 / Android 16 API36, 1080x2392, 2026-10-15. `adb install -r`
+PASS, data and HOME holder retained. User saved production alignment. Injected
+idle tap -> own search PASS; hold -> bounded ARC PASS; cesta -> ordered two-app
+preview without dispatch PASS; outside dismissal PASS. Playback -> COMPACT,
+tap beside physical hole -> EXPANDED, own pause -> HIDDEN PASS. Playback finally
+paused. Shade swipe beside camera -> RESTRICTED/window=false/observing=false,
+collapse + Home -> HIDDEN PASS. No notification contents read for this check.
+
+Two discovered issues were fixed and rechecked: Home return could leave a safe
+restriction latched; an already-focused Home intent now explicitly re-arms it.
+Replacing the camera window during long-press DOWN could hand the remaining stream
+to SystemUI; hold now marks intent, dispatches only on UP, CANCEL/multipointer does
+nothing. Final ARC has flat ripple controls, no stock button elevation. A physical
+cutout is not tappable glass: media was verified beside it, not through the lens.
+UI-automation queries can interrupt accessibility host observation; final bounded
+UI checks used own screenshots and service diagnostics instead of cross-app dumps.
+An accidental shade screenshot from the failed transition was deleted locally.
+
+### Remaining acceptance boundaries
+
+This is the first stage B slice, not all Pulse 2.0. Physical finger acceptance after
+this final gesture change, final-host lock/unlock/call/security/IME/fullscreen,
+TalkBack/large-font, other OEMs/resolutions/rotations and battery/latency measurements
+are UNRUN. Package-based system restrictions are best effort, not universal proof
+of non-obstruction. Other rotation/aspect profiles require user confirmation.
+Back dismissal is not globally intercepted; close/outside/timeout/window transition
+are available. No continuous camera-to-ARC selection. Generic action registry,
+configurable gesture bindings, priority/event modules, session picker/progress and
+broader media artwork support remain future work. No Google Play policy approval
+or release performance claim. Next smallest task: physical gesture and security/
+rotation acceptance on this bounded host before adding more event types.

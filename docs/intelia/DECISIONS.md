@@ -219,3 +219,26 @@ of invisibly blocking nearby SystemUI just to force 48dp near the cutout. User
 calibration wins over OEM metadata. No permanent capsule while idle, no automatic
 large expansion. Functional reference is not permission to copy code or artwork.
 See PULSE_V2.md for observed behavior, unverified cases and the stage B boundary.
+
+## D015 — Opt-in bounded Pulse host and production calibration (2026-10-15)
+
+The user approved stage B and personally enabled the new Intelia Pulse service,
+then disabled the reference overlay temporarily and saved their production camera
+profile. Accessibility listens only to window-state package/class metadata;
+canRetrieveWindowContent=false. It does not read app trees, notification payloads,
+or inject gestures. A NotificationListener bridge only authorizes public media
+sessions. The host owns small accessibility windows and detaches media observation
+when disabled, restricted, hidden, calibrating or locked.
+
+Separate normalized camera coordinates, camera dimensions and touch padding are
+stored per display/rotation/aspect in the existing local extension/backup codec.
+Legacy debug center is only an unconfirmed suggestion, never a copied 48dp camera.
+Restoring backup turns Pulse off and requires profile confirmation on new hardware.
+No silent permission activation. Near-camera target is smaller than 48dp; existing
+Home search and settings remain normal accessible alternatives. Calls/security
+restrictions are conservative package heuristics, not a universal OEM guarantee.
+
+Reuse existing eligible app targets, icon engine and FLOW runtime. Multi-step FLOW
+needs preview and a second explicit Run. Hold opens a bounded tap menu; continuous
+camera-to-icon dragging is not claimed. No generic action registry, event selector,
+background poller, notification mirroring or reference assets are introduced.
