@@ -331,3 +331,13 @@ Documentation commit `f0e828bc1` was pushed to `docs/intelia-bootstrap`.
 against `main`; no automatic merge was performed. A documentation handoff update
 records this delivery evidence on the same branch. Until bootstrap review/merge,
 base follow-up work on this branch's reviewed commit rather than recreating its context.
+
+## Priority documentation update — 2026-10-15
+
+User explicitly stopped implementation for a Pulse 2.0 design/model-switch gate.
+[PULSE_V2](PULSE_V2.md) now defines the proposal, feasibility gates, reuse/migration,
+stages A–E and acceptance tests. Documentation branch: `codex/pulse-v2-design`,
+based on `09bf44885`; source was clean at branch creation. Only documentation
+changed; task 050 and Pulse 2.0 implementation have not started. No new APK,
+installation, phone interaction, permission change, push or merge in this phase.
+Next: user confirmation/model switch, then stage A capability experiment.

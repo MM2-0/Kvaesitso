@@ -185,3 +185,15 @@ Split working appearance settings into Colors, Icons, Typography and Interface.
 Use actual system fonts; no new font/image/dependency import. Defer larger geometry,
 font-import, custom resource-picker and advanced slider work to task 050 instead
 of adding inert controls. Appearance updates must not activate global Pulse consent.
+
+## D013 — Pulse 2.0 documentation gate (2026-10-15)
+
+User stopped implementation and requested documentation/planning only, followed
+by confirmation and a model switch. This overrides implementation instructions
+inside the attached Pulse 2.0 brief. Task 050 is deferred without source edits.
+The proposed design is [PULSE_V2](PULSE_V2.md); technical choices there remain
+proposals until validated. Do not assume camera-area touch capture, automatic
+Accessibility permission, Play acceptance or an independent background lifetime.
+Reuse existing launch/media/icon adapters and preserve explicit FLOW previews.
+No automatic expanded panel; incoming events may only request compact/live UI.
+Resume with bounded feasibility stage A only after the user's confirmation.

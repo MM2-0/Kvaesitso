@@ -53,3 +53,10 @@ count and measurement tool. Prefer medians and tail percentiles to one run.
 The cloud machine can compile and run JVM tests. It cannot establish Android
 gesture quality or battery efficiency. Device evidence remains explicitly unrun
 until collected; a debug APK and passing unit tests are prerequisites only.
+
+## Pulse 2.0 future acceptance — 2026-10-15
+
+[PULSE_V2](PULSE_V2.md#testovací-a-výkonnostní-plán--vše-pulse-20-zatím-unrun)
+contains the proposed device/unit/regression and paired OFF/ON measurement matrix.
+All Pulse 2.0 results are UNRUN. Existing native foundation measurements remain
+historical evidence for the previous implementation, not evidence for this design.
