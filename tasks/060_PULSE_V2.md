@@ -24,3 +24,9 @@ and all 31 UI tests PASS; source/CRC audit PASS; device nudge/persistence PASS.
 Original injected rotation matrix PASS; physical automatic alignment FAIL per
 user, replaced with manual calibration. Await user alignment and physical test.
 See docs/intelia/PULSE_V2.md for complete evidence and candidate-specific limits.
+
+Reference follow-up: user authorized MT UI/web/practical review, now recorded in
+PULSE_V2.md and decision D014. Camera calibration geometry must be independent
+of activation size and visible event content. No reference code/artwork copied.
+Next bounded stage B starts with that contract; do not claim production capsule,
+full touch pass-through or completed hardware matrix from the reference trial.

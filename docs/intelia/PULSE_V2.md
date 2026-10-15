@@ -175,3 +175,97 @@ inert control. Localized launch errors are displayed. Final incremental build an
 source/XML audit PASS; installation and direct opening PASS. End-to-end entry UI
 check interrupted by another foreground app and remains UNVERIFIED. Previous
 artifact hashes above identify their historical candidates, not this update.
+
+## Praktické porovnání MT Capsule — 2026-10-15
+
+Uživatel výslovně povolil aplikaci zapnout, procházet nastavení a zkoušet v praxi.
+Inspekce pouze veřejného UI/chování, bez extrakce APK zdrojů, assetů nebo interních
+souborů reference. Žádné převzetí grafiky. Větev `codex/pulse-v2-design`, vstupní
+HEAD `483070bb4`. V tomto úseku se neměnil kód ani instalace Intelia.
+
+### Web a identita
+
+Oficiální [Google Play](https://play.google.com/store/apps/details?id=com.pryshedko.mtisland&hl=en)
+uvádí mediální ovládání, nastavitelné události/gesta a Accessibility překryv nad
+stavovým řádkem. To je tvrzení vydavatele, nikoliv nezávislý audit soukromí nebo
+spolehlivosti. Na telefonu skutečně instalována `com.pryshedko.mtisland` 17.2,
+versionCode 172. Její accessibility host byl během testu ověřen enabled, přístup
+mediálního listeneru již dostupný. První otevření ukázalo disclosure požadavku
+Accessibility. Nebyly použity žádné shell zápisy do secure permission settings.
+
+### Co bylo skutečně prohlédnuto
+
+- Přehled Mini Capsule Events, Dynamic Cards, Gestures & Cards, Notifications,
+  Help/Tips; profil portrét 1080×2392 aktivní, landscape profil 2392×1080 vypnutý.
+  Landscape stav se neměnil, proto neslibovat referenční funkčnost v landscape.
+- Single tap byl povolen a přiřazen App Search, platí bez aktivní dynamické karty.
+  Long press byl přiřazen spuštění Spotify. Double tap stránka výslovně upozorňuje
+  na zvýšení globálního zpoždění gest. Přiřazení/uložené hodnoty se neměnily.
+- Kalibrace profilu: oddělené Size and position, Collapsed opacity (0 %), border,
+  Mini alignment/scale a Expanded mode. V kalibračním UI byly hodnoty X=503,
+  Y=30, width=75, height=75 px. Jde o zobrazené hodnoty reference; podle náhledu
+  obdélník přibližně vycentruje kameru kolem x540/y68, nejsou to hodnoty středu
+  našeho kalibrátoru a nesmějí být slepě zkopírovány. Bez stisknutí Save.
+- Player Control: samostatná malá/velká varianta, artwork, ovládací prvky a jejich
+  styl, denní/noční náhled, oddělený progress. Vzhled v náhledu není důkaz živého
+  přehrávání. Nebyly měněny styly, povolení oznámení ani osobní karty/barcodes.
+
+### Praktické výsledky a meze
+
+| Test | Skutečný výsledek |
+| --- | --- |
+| MT Test gesture / App Search | Otevřel horní vyhledávací kartu. |
+| Klepnutí x540/y98 nad Intelia Home | Otevřelo MT hledání aplikací a IME, tedy globální chování mimo MT activity. |
+| Podržení stejné oblasti 850 ms | Přepnulo foreground na Spotify, jak je přiřazeno. |
+| Reálné přehrávání | Standardní media PLAY obnovil existující session; MediaSession stav PLAYING. MT zobrazila malou kapsli uvnitř status baru, nikoliv starý Intelia panel pod ním. |
+| Klepnutí na aktivní mediální kapsli | Rozbalilo artwork/title/artist a previous/pause/next nad vlastní plochou; vlastní původní screenshot ověřen. |
+| Pauza | První pokus nebyl potvrzen (session ještě PLAYING). Při opakování po čerstvém rozbalení byl pozorován PAUSED. Následně explicitní standardní PAUSE garantoval konečný paused stav. Pozdější snímek zachytil přechod systémového UI, proto neodvozovat univerzální bezkoliznost ani dokonalé dismissal chování. |
+| Swipe do systémové lišty mimo kameru | NotificationShade isOnScreen=true/isVisible=true, bez čtení obsahu oznámení. |
+| LENS při přechodu lišty/overlay | Automatická kontrola nenašla vlastní UI; UNVERIFIED, nikoliv důkaz regrese Intelia nebo spolehlivého pass-through. |
+| Syntetická MediaSession fixture bez audia | Nevyvolala viditelnou MT media kartu; nelze považovat za reálný mediální test. Vlastní dočasná testOnly aplikace následně odinstalována, absence ověřena. |
+| Zámek, hovory, chráněné dialogy, jiné OEM, baterie | UNRUN. |
+
+Pokus o dump celé Spotify UI zastavila automatická kontrola kvůli potenciálně
+soukromým údajům. Nebyl proveden ani obcházen; bezpečná náhrada byla standardní
+media key bez čtení knihovny/playlistů. Nedošlo k nákupu, přihlášení, změně playlistu
+ani kopírování soukromé zálohy. Screenshoty referenčního UI zůstávají jen v místních
+pomocných souborech mimo Git; nejde o assety pro Intelia. Nechtěný pozdější snímek
+systémového UI byl odstraněn. Bez nových výkonnostních tvrzení.
+
+Konečný stav: Intelia stále výchozí HOME; přehrávání PAUSED; MT ponechána instalovaná
+s povoleným hostem a původními profily/vazbami. Původní Intelia Pulse pouze skryt
+svým existujícím „do dalšího odemčení“ (enabled preference true, hidden true,
+observing false/window false v ověřeném okamžiku). Po odemčení se může stará kapsle
+obnovit; při příštím srovnání znovu předejít dvojímu překryvu. Kalibrace není otevřená.
+
+### Opravené zadání vlastní implementace
+
+1. **Oddělit čtyři geometrie:** přesný vizuální cutout/čočka, minimální transparentní
+   aktivační region, kompaktní událost a rozbalený detail. Dnešní testovací 48dp
+   obdélník není finální vizuální velikost čočky. Nespojovat šířku karty s touch slop.
+2. Kalibrace určuje skutečný hardware střed/tvar/rozměr a viditelný náhled existuje
+   pouze během nastavování. Umístění near-camera se ověřuje nezávisle od přístupnosti
+   aktivačního cíle. Pokud plných 48 dp u lišty koliduje, nabídnout kompaktní přesný
+   region s jasnou dosažitelnou 48dp alternativou v Intelia/LENS, ne tajně rozšířený
+   neviditelný blok přes systémové prvky. Konkrétní kompromis ověřit accessibility
+   testem; žádná deklarace, že malý cíl automaticky splňuje doporučení 48 dp.
+3. HIDDEN nemá viditelný obdélník/šrafy/obrys. Jen explicitně povolený minimální
+   aktivátor. Aktivní media → malý obsah v bezpečném místě u čočky; ne trvalá velká
+   titulková karta pod statusem. Při nedostatku prostoru omezit obsah/host/režim.
+4. Tap otevře aktivní relevantní detail; bez události vlastní uživatelovu akci.
+   Hold otevře náš horní ARC; stabilní pozice, CANCEL nic nevykoná. Přiřazení přes
+   společný Action Engine/FLOW, nikoliv kopie těchto konkrétních MT vazeb.
+5. Detail pouze po interakci, zavření mimo/Zpět/systémový přechod bezpečně otestovat.
+   Žádný trvalý fullscreen touch blocker. U skutečné karty přesné obslužné regiony;
+   nestačí transparentní pixely na celé obrazovce. Neřešit kolize vypínáním systémové
+   lišty, privacy indikátorů, IME nebo cizích aplikací.
+6. Vlastní vzhled: původní párové tahy Intelia, klidná geometrie, čitelný kontrast,
+   artwork zdrojové aplikace, omezené akcenty a krátké přechody. Nepřebírat referenční
+   červený kalibrační kruh, karty, tvary tlačítek nebo jeho názvosloví/grafiku.
+7. „Nesmí překážet“ je testovatelná acceptance matice, nikoliv absolutní slib:
+   mimo region běžné ovládání, shade vedle čočky, IME, lock/security restrictions,
+   fullscreen/rotace a dostupná alternativní aktivace. Kritický konflikt blokuje host.
+
+Další nejmenší úsek: etapě B předřadit produkční kontrakt oddělené geometrie a
+kalibrace (validace/migrace/backup), potom bounded accessibility host a HIDDEN +
+jedna reálná media karta. V této srovnávací etapě nebyla přepsána produkční služba.

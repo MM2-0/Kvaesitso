@@ -208,3 +208,14 @@ requires the explicitly enabled debug accessibility host. A received pointer
 CANCEL always forbids dispatch; prefer hold/release/tap over assuming continuous
 camera-to-ARC drag. Production Pulse is temporarily suspended only during the
 debug calibration to prevent its own capsule covering those controls.
+
+## D014 — Separate camera, activation and content geometries (2026-10-15)
+
+After an explicitly authorized reference-app UI trial, do not reuse the debug
+48dp rectangle as the camera's visual geometry. Hardware calibration, touch
+activation, compact events and expanded content have separate bounded contracts.
+Choose minimum safe transparent activation with an accessible alternative instead
+of invisibly blocking nearby SystemUI just to force 48dp near the cutout. User
+calibration wins over OEM metadata. No permanent capsule while idle, no automatic
+large expansion. Functional reference is not permission to copy code or artwork.
+See PULSE_V2.md for observed behavior, unverified cases and the stage B boundary.

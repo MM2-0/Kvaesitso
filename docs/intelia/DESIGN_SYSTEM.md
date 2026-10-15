@@ -106,3 +106,15 @@ that proposal are targets, not measurements. No copied MT Capsule artwork/code.
 Only a debug manual calibration interface currently exists: native Czech
 controls, live crosshair/outline, X/Y/width/height sliders, 1 px nudges and local
 profiles. It is a functional calibration tool, not the final capsule design.
+
+### Reference validated through UI — 2026-10-15
+
+User-authorized MT Capsule 17.2 settings/global tap/hold and real-media behavior
+were inspected on the phone; source/artwork were not imported. The revised Pulse
+contract separates hardware/cutout geometry, activation region, compact event
+and expanded detail. The current 48dp debug rectangle must not become permanent
+camera decoration or an oversized hidden status-bar blocker. Idle renders nothing;
+media summary occupies only its required safe area; expanded controls are explicit.
+Own paired-stroke symbols, typography/geometry/motion remain the design identity.
+Reference behavior and limitations are recorded once in PULSE_V2.md. This is a
+review/design milestone, not implemented production Pulse 2.0 or a battery claim.

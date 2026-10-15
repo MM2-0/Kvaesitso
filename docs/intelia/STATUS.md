@@ -373,3 +373,16 @@ Build + existing UI tests PASS (final build 4s; unit task up-to-date), installat
 `adb install -r` PASS, source/XML/UTF8 audit PASS. Direct activity opened on phone.
 Attempted end-to-end settings navigation was interrupted by the phone moving to
 another app and is UNVERIFIED, not an app regression. User calibration preserved.
+
+### MT Capsule practical review — 2026-10-15
+
+User authorized web research and reference-app activation/settings/practical use.
+Installed MT 17.2 was inspected through UI; global tap opened its search/IME,
+hold launched its assigned Spotify, and real playback produced compact/expanded
+media. Status shade outside the camera opened. No personal Spotify screen dump
+was executed: auto-review rejected it; standard media-key control provided a safe
+alternative. Media ended PAUSED; own temporary fixture removed; MT remains installed/
+enabled with original profiles/bindings, Intelia HOME retained. Old Intelia Pulse
+hidden only until unlock. LENS pass-through/transitions and broader system matrix
+remain unverified. No launcher code change/build in this review. Geometry/design
+contract corrected in PULSE_V2 and DESIGN_SYSTEM; stage B implementation remains.
