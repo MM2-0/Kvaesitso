@@ -94,7 +94,7 @@ lists; no battery/FPS guarantee or performance certification is claimed.
 Verification and independent rectangle/HOME/Recents results are maintained in
 [native foundation report](NATIVE_FOUNDATION_REPORT.md) and [status](STATUS.md).
 
-## Pulse 2.0 design proposal — 2026-10-15, NOT IMPLEMENTED
+## Pulse 2.0 design proposal / calibration — 2026-10-15
 
 See [PULSE_V2](PULSE_V2.md) for the proposed native ambient design: no visible idle
 surface, content-sized transient capsule, original paired-stroke identity and a
@@ -103,3 +103,6 @@ contrast, scrollable expanded content and 48 dp targets must pass font-scale and
 rotation tests. Camera-area placement depends on actual touch/system collision
 verification; safe-anchor fallback must be labelled honestly. Motion timings in
 that proposal are targets, not measurements. No copied MT Capsule artwork/code.
+Only a debug manual calibration interface currently exists: native Czech
+controls, live crosshair/outline, X/Y/width/height sliders, 1 px nudges and local
+profiles. It is a functional calibration tool, not the final capsule design.

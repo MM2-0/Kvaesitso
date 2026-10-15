@@ -1,7 +1,7 @@
 # Pulse 2.0 — návrh a předání implementace
 
-Stav: **pouze návrh, čeká na potvrzení uživatele a přepnutí modelu**. 2026-10-15.
-Přímá instrukce v chatu má přednost před přiloženým promptem požadujícím okamžitou implementaci. Nespouštět implementaci, instalaci ani testy ovládající telefon před potvrzením. Rozpracování task 050 je odloženo; žádné jeho změny kódu nevznikly.
+Stav: **uživatel potvrdil implementaci; probíhá pouze etapa A**. 2026-10-15.
+Původní dokumentační brána byla splněna: návrh uložen commitem `1e7311aa1`, poté uživatel napsal „zahaj implementaci“. Task 050 je odložen; žádné jeho změny kódu nevznikly. Etapy B–E níže zůstávají návrhem, nikoliv implementovaným stavem.
 
 ## Ověřený výchozí bod
 
@@ -107,7 +107,9 @@ Accessibility nepoužívat pro čtení stromů, screenshots, injekci gest nebo a
 
 Každá etapa má logický ověřený commit, žádný automatický push/merge. Po schválení začít A, ne přepisem celé služby. Nezávislou P0 regresi zaznamenat/řešit minimálně. Neotvírat původní široký task 050. Před každou instalací zachovat package/signature/data; současný release preview může mít vyšší versionCode než debug. Build není důkaz běhu na telefonu. Soukromá záloha zůstává jen na telefonu; žádné pull/overwrite. MT Capsule ponechat; případný konflikt dvou overlayů řešit pouze odsouhlaseným dočasným přepnutím.
 
-## Testovací a výkonnostní plán — vše Pulse 2.0 zatím UNRUN
+## Testovací a výkonnostní plán
+
+Produkční Pulse 2.0 je zatím UNRUN/neimplementovaný. Výjimkou jsou níže uvedené výsledky debug experimentu etapy A a navazující ruční kalibrace; nelze je přenášet na dokončený Pulse, výkon nebo fyzickou ergonomii.
 
 - Pure unit: přechodová tabulka; priorita/expiry/stabilita; tap/double/hold race, rychlé segmenty, multipointer/CANCEL; validace/import, idempotence migrace a chybějící targets; confirmation revision a no duplicate dispatch.
 - Device: idle bez kresby, kalibrace/cutout, touch stream napříč rozvinutím, hold/tap/overshoot/cancel, 4–6 položek a fixní pořadí, rotace, font200%, TalkBack/focus, short/long názvy. Screenshoty jen vlastní UI bez osobních notifikací.
@@ -116,7 +118,48 @@ Každá etapa má logický ověřený commit, žádný automatický push/merge. 
 - Regression: HOME role/Recents samostatně, LENS search/swipe, spodní ARC, exact FLOW prefix/preview/launch, aliases, icon packs, wallpaper, restore/migration. Soukromou uživatelskou zálohu nepoužívat jako testovací fixture.
 - Performance: stejný optimized build/telefon/refresh/brightness/thermal/network/media workload, střídavé OFF/ON běhy nejméně 3x. Idle CPU/PSS a wakeups, viditelné media, p95/p99/jank/gesture-to-feedback, 100 open/close a heap trend. Idle alespoň 10 min, dlouhý screen-off/audio test alespoň 60 min každá varianta; USB nabíjení zkresluje výdrž, měřit zvlášť bez nabíjení. Žádné resetování celotelefonních statistik bez potřeby/souhlasu. Uvést variabilitu a omezení, žádný slib úspory bez výsledků.
 
-Plná Definition of Done z uživatelova zadání zůstává závazná: fallback anchor sám není splnění cutout cíle. Vyplnit PASS/FAIL/SKIPPED/UNRUN po etapách, screenshot/video relevantních stavů, přesné commands, build/hash/source a otevřená omezení. Dnešní validace je pouze kontrola dokumentace; žádný nový APK/test/performance výsledek.
+Plná Definition of Done z uživatelova zadání zůstává závazná: fallback anchor sám není splnění cutout cíle. Vyplnit PASS/FAIL/SKIPPED/UNRUN po etapách, screenshot/video relevantních stavů, přesné commands, build/hash/source a otevřená omezení.
+
+## Etapa A — ověřený debug experiment 2026-10-15
+
+Zdrojový checkpoint `09bf44885`, dokumentace `1e7311aa1`; větev `codex/pulse-v2-design`. Draft PR #3 byl ověřen OPEN/draft, stále pro původní `codex/intelia-wallpaper-design` proti `feat/flow-aliases`; žádný push/merge. Nová geometrie je čistá Kotlin politika, bez práva ovládat systémovou lištu. Debug activity/service/manifest/resources jsou pouze v `src/debug`. Produkční preference, FLOW a HOME manifest se nezměnily. Produkční Pulse služba dostala pouze dočasnou nepersistovanou brzdu po dobu otevřené debug kalibrace: její vlastní mediální kapsle zakrývala kalibrační údaje. Pause kalibrace brzdu zruší a požádá stávající refresh; běžný release nemá žádného volajícího, který ji aktivuje. Kalibrace nevykonává žádné akce, nic nečte z oznámení/cizích oken a neukládá historii.
+
+Uživatel osobně zapnul volitelnou debug accessibility službu a potvrdil „Povoleno, pokračuj v testu u čočky“. Služba má `canRetrieveWindowContent=false`, bez event types, screenshot/gesture capabilities či global actions. Kalibrační okno existuje jen během vlastní activity, výchozí rozměr je 48 dp × 48 dp (126 px při density 2.625), s viditelným tyrkysovým obrysem. První experiment měl 30sekundový timeout; ruční kalibrace jej prodloužila na 2 minuty, změna posuvníku obnoví náhled. To není finální neviditelný režim. Při pause/rotaci se ruší; keep-awake platí jen pro otevřenou debug activity, ne systémový timeout.
+
+Nothing A059: 1080 × 2392, density 2.625. Portrét: DisplayCutout rect `(454,0)-(540,126)`, status inset 126 px; camera anchor `(434,0)-(560,126)`, safe anchor `(434,126)-(560,252)`. Jde o API geometrii, nikoliv důkaz fyzické dotykovosti otvoru.
+
+| Ověření | Výsledek |
+| --- | --- |
+| Application overlay / camera | 0 DOWN / 0 UP ze 2 vložených tapů; vykreslení samo nestačí. |
+| Application overlay / pod lištou | 2 DOWN / 2 UP ze 2 vložených tapů. |
+| Accessibility overlay / camera | 2 DOWN / 2 UP; prokázané doručení s uživatelským grantem. |
+| Accessibility drag v portrait | 3. DOWN, 26 MOVE, poté CANCEL místo UP; nelze spoléhat na nepřerušitelné tažení. |
+| Rotace 0/1/2/3 | Po ustálení 2 vložené tapy → 2 DOWN / 2 UP v každé. |
+| Mimo hitbox | Vlastní čítače zůstaly 0; neprokazuje kompletní kolizní matici jiných aplikací. |
+| Home teardown | Kalibrační okno v WindowManager již neexistovalo. |
+| Fyzické zarovnání původního automatického návrhu | FAIL podle uživatele: kamera je jinde. Samotný OEM bounding rect nestačí. |
+| Fyzické tap/hold a lišta vedle nové ruční oblasti | Čeká na zarovnání a ověření uživatelem. |
+| Invisible idle, protected dialogs, hovory, IME, reboot, energie | UNRUN; není produkční host. |
+
+Rotované cutout rects: 1=`(0,540)-(126,626)`, 2=`(540,2266)-(626,2392)`, 3=`(2266,454)-(2392,540)`. Anchor zůstal v obrazovce. První landscape pokus během přechodu nedoručil tap; opakování po ustálení prošlo. Testy musí čekat na stabilní rotaci/layout/input, nikoliv jen dokončení `am start`.
+
+Přesné finální sestavení: `gradlew.bat :app:ui:testDebugUnitTest :app:app:assembleDefaultDebug --offline --console=plain --max-workers=2 --no-problems-report`, lokální JDK21/SDK/Gradle cache z WORKFLOW. PASS, 17 s; 1037 tasks: 12 executed, 1025 up-to-date. UI JUnit XML: 27 tests, 0 failure/error/skip; z toho 5 nových geometrických. Předchozí kompilační chyba nullable `Activity.dump` byla opravena před instalací finálního kandidáta.
+
+Zařízení: `adb install -r <debug.apk>` PASS, shodný signing certificate ověřen přes `apksigner verify --print-certs` s předchozím preview. `am start -n dev.intelia.launcher.debug/dev.intelia.launcher.ui.PulseProbeActivity --ei rotation <0..3> --es probe <application|safe|accessibility>`; diagnostika přes `dumpsys activity <component>`, dotyky přes `input tap` / `input swipe`. Žádné globální rotation/font/timeout nastavení se neměnilo. APK/source ZIP CRC PASS, šest nových source souborů byte-identických v GPL zdrojovém balíčku, licence/attribution přítomny, bez soukromých záloh/klíčů.
+
+První automatický debug kandidát APK SHA256 `f19692be9fddd5da3a4419d8fbba88d41651ca85c771ae820a1bdb48a241ed45`; source ZIP `21dc6db88b2ec381b8beb76632639920670ca48ebd9ecc9707324008b2033bc5`. Je nahrazen ruční kalibrací popsanou níže. Předchozí podepsané preview uloženo soukromě pro rollback, SHA256 `bc90ff9c3509d9c452b907c1048c75f8f5d320e3ea42afe884228771899798e4`. Uživatelská záloha zůstala pouze v telefonu.
+
+Závěr pro další etapu: application host má dostupný safe anchor; camera varianta potřebuje ověřený accessibility host. CANCEL musí vždy skončit bez dispatch. Předběžně zvolit horní ARC hold → release → tap, nikoliv slib kontinuálního tahu. Plný „Cutout verified“ režim zatím neoznačit za dokončený: fyzická ergonomie, přístupnost a citlivé systémové situace zbývají.
+
+### Uživatelská korekce: ruční kalibrace kamery
+
+Uživatel výslovně odmítl polohu odvozenou z OEM API a vyžádal vlastní nastavovací program. Implementován původní nativní kalibrátor: křížek/střed, posuvníky X/Y, šířka a výška, jemné šipky po 1 px, automatické lokální ukládání a explicitní reset na Android návrh. Reset se nikdy neprovede automaticky po opětovném otevření. Technické údaje/testy jsou schované za přepínačem, ovládání je česky, rozložení respektuje insets a nemá pevné pixelové paddingy pro Nothing.
+
+Profil je v oddělených debug SharedPreferences, klíč version/displayId/rotation/aspect; středy jsou normalizované, rozměry v dp. Změna rozlišení při stejném aspectu může zachovat relativní střed; jiná geometrie dostane samostatný profil. Souřadnice nezávisí na umístění či existenci cutoutu. Rozměry se omezují na displej, minimální cíl 48 dp; výška nejvýše třetina displeje, žádné fullscreen okno. To umožňuje ruční nastavení různých zařízení, není to důkaz funkčnosti na každém OEM. Nevalidní/nonfinite profil neaktivuje chybnou geometrii. Debug profil zatím není součást `.intelia`: teprve etapa B jej musí migrovat do validovaného produkčního config/backup kontraktu. Neoznačovat tuto mezeru za hotovou personalizaci Pulse 2.0.
+
+Finální stejný build command PASS, 17 s, 1037 tasks (12 executed / 1025 up-to-date). **31 UI unit testů PASS**, 0 skip/failure/error; 9 geometrických včetně ručního středu, změny rozlišení, clamp/NaN a pixelového float round-trip. Device PASS: pravá šipka posune skutečné WindowManager okno o právě 1 px; po Domů a znovuotevření poloha zůstane; levá šipka vrátí testovací posun. Zachována před testem nastavená poloha uživatele. Screenshot pouze vlastní kalibrace vizuálně zkontrolován, současný Pulse již nezakrývá ovládání. HOME role zůstala `dev.intelia.launcher.debug`. Žádné mazání dat, žádné změny cizích aplikací, žádný push/merge.
+
+Nainstalovaný APK SHA256 `66714df0e6851716e56dab38ad481588eb2bad00e3f64aadee68b1f593cef865`, source ZIP `ee77a25c70028209aac453c3c9a90462a5822a8ff178c2f1b33d1087573faa22`. CRC/source audit PASS, 8 relevantních source souborů byte-identických, licence přítomny. Finální ruční UI nebylo znovu otestováno na všech rotacích ani na 200% font scale/TalkBack; tabulka rotací výše patří předchozímu kandidátu. Na telefonu zůstala otevřená ruční kalibrace pro uživatelovo zarovnání. Další krok: skutečné fyzické zarovnání a dotyky, potom uzavření A a teprve B.
 
 ## Primární technické zdroje
 

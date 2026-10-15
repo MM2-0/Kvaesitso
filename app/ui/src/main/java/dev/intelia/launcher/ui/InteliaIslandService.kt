@@ -26,7 +26,11 @@ import org.koin.core.component.inject
 
 /** System-bound, opt-in media control. Never reads notification payloads or app screens. */
 class InteliaIslandService : NotificationListenerService(), KoinComponent {
-    companion object { @Volatile internal var bridgeConnected: Boolean = false; private set }
+    companion object {
+        @Volatile internal var bridgeConnected: Boolean = false; private set
+        // Set only by the debug calibration activity; never persisted or restored.
+        @Volatile internal var calibrationActive: Boolean = false
+    }
     private val preferences: InteliaUiPreferences by inject()
     private val runtime: FlowAliasRuntime by inject()
     private val aliases: SearchActionRepository by inject()
@@ -80,7 +84,7 @@ class InteliaIslandService : NotificationListenerService(), KoinComponent {
             }
         }
     }
-    private fun allowed() = connected && showInteliaIsland(state.island, Settings.canDrawOverlays(this),
+    private fun allowed() = connected && !calibrationActive && showInteliaIsland(state.island, Settings.canDrawOverlays(this),
         getSystemService(PowerManager::class.java).isInteractive, getSystemService(KeyguardManager::class.java).isKeyguardLocked, hidden)
 
     private fun updateObservation() {

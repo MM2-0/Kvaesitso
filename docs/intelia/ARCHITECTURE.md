@@ -141,11 +141,14 @@ route, separate from the sealed generic intent editor. `SearchVM` excludes alias
 results from best-match fallback. Unit tests cover the pure contracts; Android
 Room persistence, real backup/restore and UI/device behavior are still unverified.
 
-## Pulse 2.0 proposal — 2026-10-15, NOT IMPLEMENTED
+## Pulse 2.0 proposal and stage A — 2026-10-15
 
-The user explicitly paused implementation pending confirmation/model switch.
+The user completed the documentation confirmation/model-switch gate.
 [PULSE_V2](PULSE_V2.md) is the authoritative proposed architecture: pure reducer,
 capability-dependent window host, event sources/selector and one action registry/
 dispatch adapter over existing FLOW/profile-aware launch paths. Current
-InteliaIslandService remains unchanged. Cutout touch delivery and independent
-non-media service lifetime are feasibility gates, not proven platform capabilities.
+Stage A now has debug-only manual calibration/activity/accessibility host and a
+pure geometry helper. The existing InteliaIslandService only gains temporary
+suspension while the debug calibrator is visible. Action registry/reducer/event
+architecture remains proposed; camera alignment requires user calibration,
+and independent production host lifetime/safety remain feasibility gates.

@@ -1,5 +1,27 @@
 # Intelia status
 
+## Pulse 2.0 stage A / manual camera calibration — 2026-10-15
+
+User approved implementation after documentation checkpoint `1e7311aa1`.
+Branch `codex/pulse-v2-design`; no push/merge. Implemented debug-only calibration
+activity and optional user-enabled accessibility host, pure bounded geometry,
+then user-requested manual X/Y/width/height controls with 1 px nudges and local
+per-display/rotation profiles. OEM cutout-based alignment was rejected by the
+user; do not call it physically verified. Ordinary application overlay received
+no camera-area taps; accessibility host did, but drag CANCEL can occur. Original
+probe injected taps passed all four rotations; final manual UI rotation/accessibility
+matrix remains open. Current own Pulse is suspended only while calibration is
+visible so it does not cover the controls; no persisted launcher preference change.
+
+Final build `:app:ui:testDebugUnitTest :app:app:assembleDefaultDebug --offline
+--console=plain --max-workers=2 --no-problems-report` PASS; 31 UI tests, no skips/
+failures/errors. Installed with `adb install -r`, HOME role retained. Pixel nudge,
+reopen persistence and restoration of test nudge PASS; source/CRC audit PASS.
+See [PULSE_V2](PULSE_V2.md) for exact hashes, commands, source boundaries and
+limitations. Phone left in manual calibration for user alignment. No claims of
+completed Pulse 2.0, invisible idle or battery improvements. Next: physical
+alignment/touch validation, finish A before B. Task 050 remains deferred.
+
 ## Native foundation and Design System V1 — 2026-10-14
 
 Priority task 040 preserves task 030 work. The inner Home rectangle was traced to

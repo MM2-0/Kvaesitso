@@ -197,3 +197,14 @@ Accessibility permission, Play acceptance or an independent background lifetime.
 Reuse existing launch/media/icon adapters and preserve explicit FLOW previews.
 No automatic expanded panel; incoming events may only request compact/live UI.
 Resume with bounded feasibility stage A only after the user's confirmation.
+
+User supplied that confirmation after checkpoint `1e7311aa1`; stage A started.
+The OEM cutout rect was insufficient for visual alignment on the target phone.
+Use automatic geometry only as an editable initial suggestion; user calibration
+takes precedence. Debug calibration owns bounded local profiles, later requiring
+explicit production config/backup integration. Keep action dispatch absent from
+calibration. Application overlays need a safe anchor; camera interaction currently
+requires the explicitly enabled debug accessibility host. A received pointer
+CANCEL always forbids dispatch; prefer hold/release/tap over assuming continuous
+camera-to-ARC drag. Production Pulse is temporarily suspended only during the
+debug calibration to prevent its own capsule covering those controls.

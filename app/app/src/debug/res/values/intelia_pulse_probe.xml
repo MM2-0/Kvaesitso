@@ -1,0 +1,3 @@
+<resources>
+    <string name="intelia_pulse_probe_description">Optional, temporary Pulse calibration test. Creates a small touch-test overlay only while the calibration screen is open. Does not read other apps, notifications or screenshots, and does not automate actions. You can disable this debug service in Android settings at any time.</string>
+</resources>
