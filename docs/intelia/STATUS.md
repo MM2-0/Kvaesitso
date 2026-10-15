@@ -1,5 +1,18 @@
 # Intelia status
 
+## Pulse stage B acceptance follow-up — 2026-10-15
+
+Optimized non-debuggable preview installed without data wipe; calibration and HOME
+retained. User confirmed physical tap/hold/ARC/shade. Verified app launch, Settings/
+default-phone restriction, outside touch in own fullscreen fixture, all four actual
+display rotations, screen-off and automatic restoration after user unlock without
+Home. Fixed observation on unconfirmed profiles, missing 180-degree rotation update
+and latched post-unlock restriction. Temporary test app removed; global rotation
+unchanged. 59 tests PASS, exact source/CRC/license/private-artifact checks PASS.
+See [PULSE_V2](PULSE_V2.md) for exact commands/hashes and candidate evidence, D016
+for policy. Other OEMs, live calls, TalkBack/200% fonts and battery benchmarks remain
+unrun; no universal performance/security claim. Bounded task closed, no push/merge.
+
 ## Pulse 2.0 stage B first slice — 2026-10-15
 
 Production camera calibration is saved by the user; new optional accessibility

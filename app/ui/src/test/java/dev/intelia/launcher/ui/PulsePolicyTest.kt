@@ -4,6 +4,47 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class PulsePolicyTest {
+    @Test fun unlockRestoresOrdinaryAppButPreservesSensitiveAppRestriction() {
+        val policy=PulseRestrictions()
+        policy.onUnlock(); assertTrue(policy.restricted)
+        policy.onHomeVisible(); assertFalse(policy.restricted)
+        policy.onWindow("com.android.systemui",null); assertTrue(policy.restricted)
+        policy.onUnlock(); assertFalse(policy.restricted)
+        for(pkg in listOf("com.android.settings","org.example.phone")) {
+            policy.onWindow(pkg,"org.example.phone"); assertTrue(policy.restricted)
+            policy.onWindow("com.android.systemui",null)
+            policy.onUnlock(); assertTrue(policy.restricted)
+        }
+        policy.onWindow("org.example.music",null); assertFalse(policy.restricted)
+        policy.interrupt(); policy.onUnlock(); assertTrue(policy.restricted)
+        policy.onHomeVisible(); assertFalse(policy.restricted)
+    }
+    @Test fun systemPermissionAndDefaultPhoneScreensSuppressPulse() {
+        for (pkg in listOf("com.android.systemui","com.android.settings","com.google.android.permissioncontroller",
+            "com.samsung.android.incallui","com.android.server.telecom","com.google.android.dialer","org.example.phone")) {
+            assertTrue(pkg,pulseRestrictedPackage(pkg,"org.example.phone"))
+        }
+        assertFalse(pulseRestrictedPackage("dev.intelia.launcher.debug",null))
+        assertFalse(pulseRestrictedPackage("org.example.music","org.example.phone"))
+    }
+    @Test fun cameraBoundsStayInsideAllSupportedScreenShapes() {
+        for ((width,height) in listOf(720 to 1600,1080 to 2392,2392 to 1080,1440 to 3200,2208 to 1840)) {
+            for (density in listOf(1f,2.625f,4f)) for (x in listOf(0f,.05f,.5f,.95f,1f)) for (y in listOf(0f,.03f,.5f,1f)) {
+                val profile=PulseCameraProfile(x=x,y=y,widthDp=96f,heightDp=96f,paddingDp=12f,confirmed=true)
+                for ((extraW,extraH) in listOf(24f to 24f,40f to 6f)) {
+                    val b=PulseGeometry.bounds(profile,width,height,density,extraW,extraH)!!
+                    assertTrue(b.left>=0 && b.top>=0 && b.right<=width && b.bottom<=height)
+                    assertTrue(kotlin.math.abs(b.width-(96f+extraW)*density)<=.5f)
+                }
+            }
+        }
+    }
+    @Test fun calibrationKeysCannotCrossDisplayRotationOrAspect() {
+        val keys=(0..3).flatMap { rotation -> (0..1).map { display -> PulseGeometry.key(display,rotation,1080,2392) } }
+        assertEquals(8,keys.toSet().size)
+        assertNotEquals(PulseGeometry.key(0,0,1080,2392),PulseGeometry.key(0,0,2392,1080))
+        assertEquals(PulseGeometry.key(0,0,1080,2392),PulseGeometry.key(0,0,2160,4784))
+    }
     @Test fun capabilityGatesTakePriorityOverInteractions() {
         assertEquals(PulsePresentation.DISABLED, pulsePresentation(false,true,true,true,true))
         assertEquals(PulsePresentation.RESTRICTED, pulsePresentation(true,false,true,true,true))

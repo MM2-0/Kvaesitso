@@ -1,7 +1,7 @@
 # Pulse 2.0 — návrh a předání implementace
 
-Stav: **uživatel potvrdil implementaci; probíhá pouze etapa A**. 2026-10-15.
-Původní dokumentační brána byla splněna: návrh uložen commitem `1e7311aa1`, poté uživatel napsal „zahaj implementaci“. Task 050 je odložen; žádné jeho změny kódu nevznikly. Etapy B–E níže zůstávají návrhem, nikoliv implementovaným stavem.
+Stav: **etapy A a první ohraničený úsek B implementovány a ověřeny na dostupném telefonu**. 2026-10-15. Podrobné výsledky a zbývající limity jsou v závěrečném acceptance záznamu.
+Původní dokumentační brána byla splněna: návrh uložen commitem `1e7311aa1`, poté uživatel napsal „zahaj implementaci“. Task 050 je odložen; žádné jeho změny kódu nevznikly. Zbývající moduly B–E níže jsou návrhem; implementovaný rozsah určují závěrečné ověřené záznamy.
 
 ## Ověřený výchozí bod
 
@@ -343,3 +343,55 @@ configurable gesture bindings, priority/event modules, session picker/progress a
 broader media artwork support remain future work. No Google Play policy approval
 or release performance claim. Next smallest task: physical gesture and security/
 rotation acceptance on this bounded host before adding more event types.
+
+## Acceptance follow-up and optimized preview — 2026-10-15
+
+User requested completion of remaining stage B checks. Physical idle tap, hold/
+release/ARC and shade beside the lens were explicitly confirmed OK by the user.
+Device verification exposed and repaired three issues: unconfirmed rotation kept
+media observation attached; 180-degree rotation did not cause a configuration
+callback; unlock left SystemUI restriction latched until Home. The host now gates
+observation/dispatch by confirmed current geometry, observes DisplayManager changes
+(including 180 degrees), cancels pending icon work/timeouts under restriction, and
+tracks the last app restriction separately from temporary SystemUI/keyguard cover.
+Unlock restores an ordinary app but preserves Settings/default-phone restrictions.
+The default dialer is resolved using public TelecomManager.getDefaultDialerPackage,
+without phone-state/contact/call-log permissions. Known call/permission/system
+packages are also conservatively restricted. No incoming/outgoing call was placed.
+API reference: https://developer.android.com/reference/android/telecom/TelecomManager#getDefaultDialerPackage()
+
+PASS on Nothing A059/API36: Settings hides window and observation, Home restores;
+physical gesture acceptance; actual Chrome launch from ARC without reading its UI;
+screen-off removes window/observation; user unlock restores Pulse automatically
+without pressing Home (final release candidate); default dialer screen hides Pulse
+without dialing; four actual display rotations 0/1/2/3, unconfirmed orientations
+have window=false/observing=false and portrait restores. A temporary testOnly local
+media/fullscreen fixture drove rotation only in its own activity; global auto-rotate
+remained 1. A tap outside the compact capsule reached that fixture (own UP log).
+Fixture was uninstalled and package absence verified. User apps/data/backup retained.
+No AndroidRuntime error in final own-process log. These observations are not a
+universal security guarantee or a battery benchmark.
+
+Final PASS command (3m15s, 2870 tasks):
+`gradlew.bat -p Intelia-Launcher :app:ui:testDebugUnitTest :data:search-actions:testDebugUnitTest :app:app:assembleDefaultDebug :app:app:assembleDefaultRelease "-Pintelia.localPreview=true" --offline --console=plain --max-workers=2 --no-problems-report`.
+39 UI + 20 search-action tests PASS, zero failure/error/skip. Added geometry edge/
+density/screen-shape and profile-key isolation cases, system/default-dialer policy,
+and unlock/restriction transition coverage. Initial unquoted PowerShell property
+invocation failed before tasks; quoting fixed it. Final builds are successful.
+
+Installed non-debuggable optimized APK with `adb install -r`:
+`app/app/build/outputs/apk/default/release/app-default-release.apk`.
+APK SHA256 `4454677d1b3b8c2eb93ddc44f572838742058b287fa38f357860961e0a7d6065`.
+Embedded source SHA256 `512524846b4ce838999beab82bfc230b3d83b8ce807900459b0e3b955a8c36f1`.
+Package remains dev.intelia.launcher.debug, matching the installed signing identity;
+HOME role retained, production calibration preserved. Signature verification and
+non-debuggable manifest check passed for optimized build. Exact 15 relevant source
+files/CRC/licenses PASS; repository scan of 2181 files found no secret-pattern hits
+or unexpected artifacts, APK 1034 entries had no unexpected private artifacts.
+No screenshot/device ID/private backup or test fixture entered Git. No push/merge.
+
+Stage B acceptance on available hardware is closed with explicit limits: live call,
+other OEMs/devices, physical calibration of other rotations, TalkBack/200% fonts and
+battery/latency benchmarks remain UNRUN. Do not claim all Pulse 2.0 modules complete.
+Next independent task is accessibility/other-device acceptance; generic registry,
+new event types, session picker/progress/custom bindings remain separate proposals.

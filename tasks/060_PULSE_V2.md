@@ -47,3 +47,12 @@ temporarily disabled by user. 35 UI + 20 FLOW tests PASS, source/license/CRC che
 PASS; injected hidden/search/hold/preview/media/pause/shade/Home checks PASS.
 See PULSE_V2.md for exact commands/hashes and UNRUN physical/security/rotation
 matrix. Stop here before generic action registry or additional event modules.
+
+Acceptance follow-up completed on available hardware: physical gestures confirmed
+by user; actual ARC launch, Settings/dialer restriction, fullscreen outside touch,
+all display rotations, screen-off and automatic unlock restoration verified.
+Fixed missing 180-degree display observation, unconfirmed-profile media attachment
+and latched post-unlock restriction. 59 tests PASS; optimized non-debuggable preview
+installed with data/calibration/HOME retained. Fixture removed; no push/merge.
+Exact command/hashes and remaining external-hardware/accessibility/benchmark limits
+are recorded in docs/intelia/PULSE_V2.md. This closes this bounded stage B task.

@@ -12,6 +12,25 @@ data class PulseCameraProfile(val x: Float = .5f, val y: Float = .03f,
 }
 
 internal enum class PulsePresentation { DISABLED, RESTRICTED, HIDDEN, COMPACT, EXPANDED, ARC }
+internal fun pulseRestrictedPackage(pkg: String, defaultDialer: String?) =
+    pkg == "com.android.systemui" || pkg == "com.android.settings" ||
+        pkg.endsWith(".permissioncontroller") || pkg.contains("incallui") ||
+        pkg == "com.android.server.telecom" || pkg == "com.android.dialer" ||
+        pkg == "com.google.android.dialer" || (defaultDialer != null && pkg == defaultDialer)
+
+/** SystemUI temporarily covers the last app; unlock must not clear its safety restriction. */
+internal class PulseRestrictions {
+    var restricted = true; private set
+    private var appRestricted = true
+    fun onWindow(pkg: String, defaultDialer: String?) {
+        if (pkg != "com.android.systemui") appRestricted = pulseRestrictedPackage(pkg, defaultDialer)
+        restricted = if (pkg == "com.android.systemui") true else appRestricted
+    }
+    fun onHomeVisible() { appRestricted = false; restricted = false }
+    fun onUnlock() { restricted = appRestricted }
+    fun interrupt() { appRestricted = true; restricted = true }
+}
+
 internal fun pulsePresentation(enabled: Boolean, available: Boolean, playing: Boolean,
     detail: Boolean, arc: Boolean): PulsePresentation = when {
     !enabled -> PulsePresentation.DISABLED

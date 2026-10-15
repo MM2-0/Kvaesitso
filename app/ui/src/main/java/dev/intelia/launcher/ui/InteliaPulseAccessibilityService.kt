@@ -6,6 +6,7 @@ import android.content.*
 import android.content.res.Configuration
 import android.graphics.*
 import android.graphics.drawable.GradientDrawable
+import android.hardware.display.DisplayManager
 import android.media.MediaMetadata
 import android.media.session.MediaController
 import android.media.session.MediaSessionManager
@@ -34,6 +35,19 @@ class InteliaPulseAccessibilityService : AccessibilityService(), KoinComponent {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
     private val handler = Handler(Looper.getMainLooper())
     private val windows by lazy { getSystemService(WindowManager::class.java) }
+    private val displays by lazy { getSystemService(DisplayManager::class.java) }
+    private var displayGeometry: String? = null
+    private val displayChanges = object : DisplayManager.DisplayListener {
+        override fun onDisplayAdded(id: Int) = Unit
+        override fun onDisplayRemoved(id: Int) { restrictions.interrupt(); observe() }
+        override fun onDisplayChanged(id: Int) {
+            val key = cameraKey()
+            if (key != displayGeometry) {
+                displayGeometry = key; detail = false; arc = false; pending = null; lastRender = null
+                observe()
+            }
+        }
+    }
     private val sessions by lazy { getSystemService(MediaSessionManager::class.java) }
     private var state = InteliaUiState()
     private var targets = emptyList<FlowAliasTarget>()
@@ -42,7 +56,8 @@ class InteliaPulseAccessibilityService : AccessibilityService(), KoinComponent {
     private var panel: View? = null
     private var observing = false
     private var collection: Job? = null
-    private var restricted = true
+    private val restrictions = PulseRestrictions()
+    private val restricted get() = restrictions.restricted
     private var hidden = false
     private var detail = false
     private var arc = false
@@ -60,14 +75,16 @@ class InteliaPulseAccessibilityService : AccessibilityService(), KoinComponent {
     private val sessionChanges = MediaSessionManager.OnActiveSessionsChangedListener { select(it.orEmpty()) }
     private val receiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
-            if (intent?.action == Intent.ACTION_USER_PRESENT) hidden = false
-            if (intent?.getBooleanExtra("intelia.home.visible", false) == true) restricted = false
+            if (intent?.action == Intent.ACTION_SCREEN_OFF) restrictions.onWindow("com.android.systemui", null)
+            if (intent?.action == Intent.ACTION_USER_PRESENT) { hidden = false; restrictions.onUnlock() }
+            if (intent?.getBooleanExtra("intelia.home.visible", false) == true) restrictions.onHomeVisible()
             detail = false; arc = false; pending = null
             observe()
         }
     }
     override fun onCreate() {
         super.onCreate()
+        displays.registerDisplayListener(displayChanges, handler)
         ContextCompat.registerReceiver(this, receiver, IntentFilter().apply {
             addAction(Intent.ACTION_SCREEN_OFF); addAction(Intent.ACTION_USER_PRESENT); addAction("dev.intelia.launcher.REFRESH_PULSE")
         }, ContextCompat.RECEIVER_NOT_EXPORTED)
@@ -91,14 +108,26 @@ class InteliaPulseAccessibilityService : AccessibilityService(), KoinComponent {
         val pkg = event.packageName?.toString() ?: return
         // Ignore our non-focusable overlay events; only our real activities can clear a restriction.
         if (pkg == packageName && event.className?.toString() !in setOf(InteliaHomeActivity::class.java.name, InteliaPulseCalibrationActivity::class.java.name)) return
-        restricted = pkg == "com.android.systemui" || pkg == "com.android.settings" ||
-            pkg.endsWith(".permissioncontroller") || pkg.contains("incallui") || pkg == "com.android.server.telecom"
+        val dialer = runCatching { getSystemService(android.telecom.TelecomManager::class.java)?.defaultDialerPackage }.getOrNull()
+        restrictions.onWindow(pkg, dialer)
         detail = false; arc = false; pending = null
         observe()
     }
-    override fun onInterrupt() { restricted = true; observe() }
+    override fun onInterrupt() { restrictions.interrupt(); observe() }
     private fun allowed() = state.island && !hidden && !restricted && !InteliaIslandService.calibrationActive &&
-        getSystemService(PowerManager::class.java).isInteractive && !getSystemService(KeyguardManager::class.java).isKeyguardLocked
+        getSystemService(PowerManager::class.java).isInteractive && !getSystemService(KeyguardManager::class.java).isKeyguardLocked &&
+        confirmedCamera()
+    private fun confirmedCamera(): Boolean {
+        val profile = state.pulseProfiles[cameraKey()]
+        return profile?.confirmed == true && profile.valid()
+    }
+    private fun cameraKey(): String {
+        val metrics = resources.displayMetrics
+        val screen = if (Build.VERSION.SDK_INT >= 30) windows.currentWindowMetrics.bounds else Rect(0, 0, metrics.widthPixels, metrics.heightPixels)
+        @Suppress("DEPRECATION") val display = windows.defaultDisplay
+        val rotation = displays.getDisplay(display.displayId)?.rotation ?: display.rotation
+        return PulseGeometry.key(display.displayId, rotation, screen.width(), screen.height())
+    }
     private fun eligible(player: MediaController) = targets.any { it.key.removePrefix("app://").substringBefore(':') == player.packageName }
     private fun observe() {
         val mediaAllowed = allowed() && InteliaIslandService.bridgeConnected
@@ -160,11 +189,11 @@ class InteliaPulseAccessibilityService : AccessibilityService(), KoinComponent {
     private fun render() {
         val metrics = resources.displayMetrics
         val screen = if (Build.VERSION.SDK_INT >= 30) windows.currentWindowMetrics.bounds else Rect(0, 0, metrics.widthPixels, metrics.heightPixels)
-        @Suppress("DEPRECATION") val rotation = windows.defaultDisplay.rotation
-        @Suppress("DEPRECATION") val displayId = windows.defaultDisplay.displayId
-        val profile = state.pulseProfiles[PulseGeometry.key(displayId, rotation, screen.width(), screen.height())]
+        val profile = state.pulseProfiles[cameraKey()]
         val next = pulsePresentation(state.island, allowed() && profile?.confirmed == true, playing(), detail, arc)
         if (next in listOf(PulsePresentation.DISABLED, PulsePresentation.RESTRICTED)) {
+            handler.removeCallbacks(close)
+            iconJobs.forEach { it.cancel() }; iconJobs.clear()
             presentation = next; detail = false; arc = false; pending = null; removePanel(); return
         }
         val media = controller?.metadata
@@ -321,15 +350,16 @@ class InteliaPulseAccessibilityService : AccessibilityService(), KoinComponent {
         }
     }
     private fun removePanel() { panel?.let { runCatching { windows.removeViewImmediate(it) } }; panel = null; lastRender = null }
-    override fun onUnbind(intent: Intent?): Boolean { instance = null; restricted = true; observe(); return super.onUnbind(intent) }
-    override fun onConfigurationChanged(config: Configuration) { super.onConfigurationChanged(config); detail = false; arc = false; pending = null; lastRender = null; render() }
+    override fun onUnbind(intent: Intent?): Boolean { instance = null; restrictions.interrupt(); observe(); return super.onUnbind(intent) }
+    override fun onConfigurationChanged(config: Configuration) { super.onConfigurationChanged(config); detail = false; arc = false; pending = null; lastRender = null; observe() }
     override fun onDestroy() {
+        displays.unregisterDisplayListener(displayChanges)
         instance = null; handler.removeCallbacksAndMessages(null); iconJobs.forEach { it.cancel() }
         if (observing) runCatching { sessions.removeOnActiveSessionsChangedListener(sessionChanges) }
         controller?.unregisterCallback(callback); controller = null; removePanel(); scope.cancel(); unregisterReceiver(receiver); super.onDestroy()
     }
     override fun dump(fd: java.io.FileDescriptor, writer: java.io.PrintWriter, args: Array<out String>?) {
-        writer.println("Pulse presentation=$presentation enabled=${state.island} restricted=$restricted hidden=$hidden observing=$observing window=${panel != null}")
+        writer.println("Pulse presentation=$presentation enabled=${state.island} restricted=$restricted hidden=$hidden observing=$observing window=${panel != null} camera=${cameraKey()}")
     }
 }
 

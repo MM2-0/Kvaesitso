@@ -242,3 +242,13 @@ Reuse existing eligible app targets, icon engine and FLOW runtime. Multi-step FL
 needs preview and a second explicit Run. Hold opens a bounded tap menu; continuous
 camera-to-icon dragging is not claimed. No generic action registry, event selector,
 background poller, notification mirroring or reference assets are introduced.
+
+## D016 — Separate app restriction from temporary system cover (2026-10-15)
+
+Device acceptance requires DisplayManager callbacks, not orientation callbacks
+alone: 180-degree rotation can preserve configuration. Unconfirmed current camera
+geometry gates media observation as well as windows and dispatch. Unlock restores
+the last ordinary app context; it does not erase a sensitive app restriction.
+Default dialer lookup uses public TelecomManager metadata, not phone-state access.
+Calls are not automated to test this policy. Geometry and state transitions have
+pure regression tests; broader OEM/accessibility/battery acceptance remains separate.
