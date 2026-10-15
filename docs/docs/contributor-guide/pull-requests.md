@@ -16,6 +16,18 @@ If you plan to implement any bigger new features, please create a new issue firs
 if and how this feature can be implemented. If you want to work on implementing a feature from an
 existing issue, please leave a note there to avoid duplicate work.
 
+## Contribution guidelines
+
+### Git
+
+In order to keep your pull request clean and reviewable, please follow these guidelines:
+
+- Create a new branch with a distinct name. Don't work on the `main` branch of your fork.
+- Keep each pull request focused on a single change.
+- Try to keep the pull request short. As a rule of thumb, a pull request should not be longer than
+  200-400 lines of code. If it is longer, consider splitting it into multiple pull requests.
+- Do not merge `main` into your PR branch. Instead, rebase it on `main` to keep the diff clean.
+
 ## License
 
 By submitting a contribution to this project, you agree that:
