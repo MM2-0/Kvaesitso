@@ -363,3 +363,13 @@ based on `09bf44885`; source was clean at branch creation. Only documentation
 changed; task 050 and Pulse 2.0 implementation have not started. No new APK,
 installation, phone interaction, permission change, push or merge in this phase.
 Next: user confirmation/model switch, then stage A capability experiment.
+
+### Calibration settings entry — 2026-10-15
+
+User requested a discoverable entry. Settings now offers **Pulse → Kalibrace
+čočky / Camera calibration**, also when Pulse is off, only when the actual
+calibration activity is installed. Launch failure has localized feedback.
+Build + existing UI tests PASS (final build 4s; unit task up-to-date), installation
+`adb install -r` PASS, source/XML/UTF8 audit PASS. Direct activity opened on phone.
+Attempted end-to-end settings navigation was interrupted by the phone moving to
+another app and is UNVERIFIED, not an app regression. User calibration preserved.

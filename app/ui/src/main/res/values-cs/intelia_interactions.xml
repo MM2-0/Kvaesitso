@@ -24,4 +24,6 @@
     <string name="intelia_previous_track">Předchozí skladba</string>
     <string name="intelia_island_hide">Skrýt do dalšího odemčení</string>
     <string name="intelia_flow_partial">Postup se nepodařilo dokončit. Předchozí aplikace už může být otevřená.</string>
+    <string name="intelia_camera_calibration">Kalibrace čočky</string>
+    <string name="intelia_camera_calibration_unavailable">Kalibraci čočky se nepodařilo otevřít.</string>
 </resources>

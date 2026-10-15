@@ -24,4 +24,6 @@
     <string name="intelia_previous_track">Previous track</string>
     <string name="intelia_island_hide">Hide until next unlock</string>
     <string name="intelia_flow_partial">The sequence could not be completed. An earlier app may already be open.</string>
+    <string name="intelia_camera_calibration">Camera calibration</string>
+    <string name="intelia_camera_calibration_unavailable">Camera calibration could not be opened.</string>
 </resources>

@@ -58,10 +58,21 @@ internal fun InteliaSettings(
                 }
             }
             item {
+                val context = LocalContext.current
+                val calibrationIntent = remember(context) {
+                    android.content.Intent().setClassName(context.packageName, "dev.intelia.launcher.ui.PulseProbeActivity")
+                        .takeIf { it.resolveActivity(context.packageManager) != null }
+                }
                 PreferenceToggle(stringResource(R.string.intelia_island), preferences.island, model::island)
+                if (calibrationIntent != null) {
+                    TextButton(onClick = {
+                        runCatching { context.startActivity(calibrationIntent) }.onFailure {
+                            android.widget.Toast.makeText(context, R.string.intelia_camera_calibration_unavailable, android.widget.Toast.LENGTH_SHORT).show()
+                        }
+                    }, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.intelia_camera_calibration)) }
+                }
                 Text(stringResource(R.string.intelia_island_hint), fontSize = 13.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 if (preferences.island) {
-                    val context = LocalContext.current
                     Text(stringResource(R.string.intelia_island_privacy), Modifier.padding(top = 12.dp), fontSize = 13.sp)
                     TextButton(onClick = {
                         runCatching { context.startActivity(android.content.Intent(android.provider.Settings.ACTION_MANAGE_OVERLAY_PERMISSION,

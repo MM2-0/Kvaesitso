@@ -167,3 +167,11 @@ Ověřeno při návrhu 2026-10-15, před implementací platformní hrany znovu p
 - [WindowManager typy a pořadí oken](https://developer.android.com/reference/android/view/WindowManager.LayoutParams): application overlay pod kritickými systémovými okny; accessibility overlay je zvláštní typ vázaný na službu.
 - [Display cutout](https://developer.android.com/develop/ui/views/layout/display-cutout): geometrie/insets, nehardcodovat status bar; layout pravidla nejsou oprávnění zachytávat dotyk.
 - [Google Play AccessibilityService policy](https://support.google.com/googleplay/android-developer/answer/10964491?hl=en): deklarace, relevantní disclosure/consent a správné označení účelu služby; návrh není garance přijetí do Play.
+
+The calibrator is now discoverable in the native Settings Pulse group through
+**Kalibrace čočky** even with Pulse disabled. The entry is capability-gated on the
+actual installed activity, so release builds without the debug activity show no
+inert control. Localized launch errors are displayed. Final incremental build and
+source/XML audit PASS; installation and direct opening PASS. End-to-end entry UI
+check interrupted by another foreground app and remains UNVERIFIED. Previous
+artifact hashes above identify their historical candidates, not this update.
