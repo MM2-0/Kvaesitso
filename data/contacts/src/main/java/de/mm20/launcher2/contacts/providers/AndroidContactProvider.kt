@@ -7,7 +7,7 @@ import android.provider.ContactsContract
 import android.telephony.PhoneNumberUtils
 import androidx.core.database.getLongOrNull
 import androidx.core.database.getStringOrNull
-import de.mm20.launcher2.ktx.distinctByEquality
+
 import de.mm20.launcher2.search.Contact
 import de.mm20.launcher2.search.contact.ContactInfoType
 import de.mm20.launcher2.search.contact.CustomContactAction
@@ -218,5 +218,17 @@ internal class AndroidContactProvider(
             return@withContext null
         }
         return@withContext getWithRawIds(id, rawContacts)
+    }
+
+    private fun <T> List<T>.distinctByEquality(equalityPredicate: (T, T) -> Boolean): List<T> {
+        if (size < 2) return this
+
+        val ret = mutableListOf<T>()
+
+        for (item in this) {
+            if (ret.none { equalityPredicate(it, item) }) ret.add(item)
+        }
+
+        return ret
     }
 }
