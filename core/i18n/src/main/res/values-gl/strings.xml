@@ -316,7 +316,7 @@
     <string name="preference_cards_opacity">Opacidade</string>
     <string name="preference_cards_shape">Forma</string>
     <string name="preference_cards_shape_rounded">Arredondado</string>
-    <string name="preference_cards_shape_cut">Cortar</string>
+    <string name="preference_cards_shape_cut">Recorte</string>
     <string name="preference_icon_shape">Forma</string>
     <string name="preference_icon_shape_square">Cadrado</string>
     <string name="preference_icon_shape_rounded_square">Cadrado con esquinas redondeadas</string>
