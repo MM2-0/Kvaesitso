@@ -179,12 +179,14 @@
     <!-- Appearance preference title -->
     <!-- Open website of an open source library -->
     <!-- Indicates that an icon pack supports dynamic colors (icon colors adapt to the launchers color scheme) -->
+    <string name="preference_signin_user">Connecté en tant que %1$s</string>
     <string name="preference_summary_not_logged_in">Vous n\'êtes pas connecté</string>
     <!-- %1$s: app name (Kvaesitso) -->
     <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
     <!-- Used in an info banner if a specific feature requires an Owncloud account -->
     <!-- Used in an info banner if a specific feature requires a Google account -->
     <!-- Used in info banners that indicate that an account is required to enable a certain feature -->
+    <string name="restore_invalid_file">Le fichier sélectionné semble ne pas être un fichier de sauvegarde. Êtes-vous sûr d\'avoir sélectionné le bon fichier ?</string>
     <!-- %1$s: app name -->
     <!-- %1$s: app name -->
     <!-- %1$s: date and time of backup creation, %s$s: name of the device this backup has been created on, %s$s app name and version of creating app-->
