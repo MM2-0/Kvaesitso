@@ -512,7 +512,7 @@
     <string name="preference_hide_status_bar">Cacher la barre d\'état</string>
     <string name="preference_hide_nav_bar">Cacher la barre de navigation</string>
     <string name="preference_screen_integrations_summary">Gérer les comptes et les services</string>
-    <string name="preference_signin_user">Connecté en tant que %1$s</string>
+    <string name="preference_signin_user">Connecté·e en tant que %1$s</string>
     <string name="preference_signout">Se déconnecter</string>
     <string name="preference_summary_not_logged_in">Vous n\'êtes pas connecté·e</string>
     <string name="preference_icon_shape_pentagon">Pentagone</string>
@@ -697,7 +697,7 @@
         <item quantity="other">Pleine dans %1$s minutes</item>
     </plurals>
     <string name="backup_complete">La sauvegarde a bien été réalisée.</string>
-    <string name="restore_invalid_file">Le fichier sélectionné semble ne pas être un fichier de sauvegarde. Êtes-vous sûr d\'avoir sélectionné le bon fichier ?</string>
+    <string name="restore_invalid_file">Le fichier sélectionné semble ne pas être un fichier de sauvegarde. Êtes-vous sûr·e d\'avoir sélectionné le bon fichier ?</string>
     <!-- %1$s: app name -->
     <string name="restore_incompatible_file">Cette sauvegarde a été créée avec une version différente de %1$s et ne peut donc pas être restaurée sur cette version.</string>
     <!-- %1$s: app name -->
@@ -1039,13 +1039,15 @@
     <string name="preference_screen_locale_summary">Langue, unités, format de l’heure</string>
     <string name="preference_language">Langue</string>
     <string name="preference_value_system_default">Valeur par défaut du système</string>
-    <string name="preference_value_disabled">Désactivé(e)</string>
+    <string name="preference_value_disabled">Désactivé</string>
     <string name="preference_form_of_address">Choisissez comment on s’adresse à vous</string>
     <string name="preference_form_of_address_neutral">Neutre</string>
     <string name="preference_form_of_address_fem">Féminin</string>
     <string name="preference_form_of_address_masc">Masculin</string>
     <string name="preference_measurement_system">Système de mesure</string>
     <string name="preference_measurement_system_metric">Métrique</string>
+    <string name="preference_measurement_system_uk">Royaume-Uni</string>
+    <string name="preference_measurement_system_us">États-Unis</string>
     <string name="preference_transliteration">Translittération préférée</string>
     <string name="preference_transliteration_auto">Automatique</string>
     <string name="preference_calendar_system">Système calendaire</string>
