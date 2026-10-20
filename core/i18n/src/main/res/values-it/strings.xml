@@ -702,7 +702,7 @@
         <item quantity="other">Carico in %1$s minuti</item>
     </plurals>
     <string name="backup_complete">Il backup è stato completato.</string>
-    <string name="restore_invalid_file">Il file selezionato non sembra essere un backup. Sei sicuro di aver selezionato il file giusto\?</string>
+    <string name="restore_invalid_file">Il file selezionato non sembra essere un backup. Confermi di aver selezionato il file corretto\?</string>
     <!-- %1$s: app name -->
     <string name="restore_incompatible_file">Questo backup è stato creato con una versione diversa di %1$s e non può essere ripristinato con questa versione.</string>
     <!-- %1$s: app name -->
@@ -1045,7 +1045,7 @@
         <item quantity="other">tra %1$d minuti</item>
     </plurals>
     <string name="departure_time_departed">Partito</string>
-    <string name="bad_configuration_title">Congratulazioni, ti sei chiuso fuori!</string>
+    <string name="bad_configuration_title">Congratulazioni, non puoi più accedere al launcher!</string>
     <string name="bad_configuration_summary">Hai scoperto una combinazione di impostazioni che rende inaccessibili sia la ricerca sia le impostazioni, impedendoti di fatto di accedere al launcher</string>
     <string name="theme_export_title">Esporta tema</string>
     <string name="theme_import_title">Importa tema</string>
