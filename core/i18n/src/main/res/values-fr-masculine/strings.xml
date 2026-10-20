@@ -1,3 +1,5 @@
 <resources>
+    <string name="preference_signin_user">Connecté en tant que %1$s</string>
     <string name="preference_summary_not_logged_in">Vous n\'êtes pas connecté</string>
+    <string name="restore_invalid_file">Le fichier sélectionné semble ne pas être un fichier de sauvegarde. Êtes-vous sûr d\'avoir sélectionné le bon fichier ?</string>
 </resources>

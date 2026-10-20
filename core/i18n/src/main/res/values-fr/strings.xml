@@ -142,7 +142,7 @@
     <string name="menu_back">Retour</string>
     <string name="menu_app_info">Infos sur l\'appli</string>
     <string name="preference_screen_integrations_summary">Gérer les comptes et les services</string>
-    <string name="preference_signin_user">Connecté en tant que %1$s</string>
+    <string name="preference_signin_user">Connecté·e en tant que %1$s</string>
     <string name="preference_summary_not_logged_in">Vous n\'êtes pas connecté·e</string>
     <string name="file_type_ebook">E-book</string>
     <string name="file_type_drawing">Dessin</string>
@@ -344,7 +344,7 @@
     <string name="preference_search_appshortcuts_summary">Rechercher les raccourcis d\'applications</string>
     <string name="restore_different_minor_version">Cette sauvegarde a été créée depuis une version différente de %1$s. Certaines données pourraient ne pas être restaurées correctement.</string>
     <string name="preference_clockwidget_favorites_part_summary">Afficher les éléments épinglés sur le dock</string>
-    <string name="restore_invalid_file">Le fichier sélectionné semble ne pas être un fichier de sauvegarde. Êtes-vous sûr d\'avoir sélectionné le bon fichier ?</string>
+    <string name="restore_invalid_file">Le fichier sélectionné semble ne pas être un fichier de sauvegarde. Êtes-vous sûr·e d\'avoir sélectionné le bon fichier ?</string>
     <string name="restore_incompatible_file">Cette sauvegarde a été créée avec une version différente de %1$s et ne peut donc pas être restaurée sur cette version.</string>
     <string name="restore_complete">La sauvegarde a bien été restaurée.</string>
     <string name="preference_search_currencyconverter">Convertisseur de devise</string>
@@ -931,7 +931,7 @@
     <string name="typo_preview_medium2">Prévisual.</string>
     <string name="typo_preview_short2">Typ.</string>
     <string name="typo_preview_extra_short">Aa</string>
-    <string name="preference_value_disabled">Désactivé(e)</string>
+    <string name="preference_value_disabled">Désactivé</string>
     <string name="preference_create_colors">Nouvelle palette de couleurs</string>
     <string name="preference_create_shapes">Nouvelle palette de formes</string>
     <string name="preference_create_typography">Nouvelle palette typographique</string>

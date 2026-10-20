@@ -1,3 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="restore_invalid_file">Il file selezionato non sembra essere un backup. Sei sicuro di aver selezionato il file giusto\?</string>
+    <string name="bad_configuration_title">Congratulazioni, ti sei chiuso fuori!</string>
 </resources>

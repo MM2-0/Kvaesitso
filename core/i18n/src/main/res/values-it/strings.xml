@@ -327,7 +327,7 @@
     <string name="file_type_launcherbackup">%1$s backup</string>
     <string name="weather_condition_lightrainshowers">Pioggia leggera debole</string>
     <string name="backup_complete">Il backup è stato completato.</string>
-    <string name="restore_invalid_file">Il file selezionato non sembra essere un backup. Sei sicuro di aver selezionato il file giusto\?</string>
+    <string name="restore_invalid_file">Il file selezionato non sembra essere un backup. Confermi di aver selezionato il file corretto\?</string>
     <string name="preference_blur_wallpaper_unsupported">Non supportato su questo dispositivo</string>
     <string name="restore_different_minor_version">Questo backup è stato creato con una versione diversa di %1$s. Alcuni dati potrebbero non essere ripristinati correttamente.</string>
     <string name="preference_screen_backup_summary">Esporta e importa i dati del launcher</string>
@@ -833,7 +833,7 @@
     <string name="preference_widgets_on_home_screen">Widget nella schermata home</string>
     <string name="preference_gesture_swipe_up">Scorri su</string>
     <string name="gesture_action_widgets">Widget</string>
-    <string name="bad_configuration_title">Congratulazioni, ti sei chiuso fuori!</string>
+    <string name="bad_configuration_title">Congratulazioni, non puoi più accedere al launcher!</string>
     <string name="bad_configuration_summary">Hai scoperto una combinazione di impostazioni che rende inaccessibili sia la ricerca sia le impostazioni, impedendoti di fatto di accedere al launcher</string>
     <string name="preference_shapes_default">Predefinito</string>
     <string name="preference_screen_shapes">Forme</string>

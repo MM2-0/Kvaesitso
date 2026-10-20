@@ -235,7 +235,7 @@
     <string name="preference_icon_pack_summary_empty">No hay ningún paquete de iconos instalado</string>
     <string name="preference_hide_status_bar">Ocultar barra de estado</string>
     <string name="preference_hide_nav_bar">Ocultar barra de navegación</string>
-    <string name="preference_signin_user">Iniciado sesión como %1$s</string>
+    <string name="preference_signin_user">Has iniciado sesión como %1$s</string>
     <string name="preference_summary_not_logged_in">No has iniciado sesión</string>
     <string name="preference_category_wallpaper">Fondo de pantalla</string>
     <string name="preference_notification_badges_summary">Mostrar una insignia en aplicaciones con notificaciones no leídas</string>
@@ -301,7 +301,7 @@
     <string name="no_account_nextcloud">Aún no has vinculado ninguna cuenta de Nextcloud</string>
     <string name="connect_account">Vincular cuenta</string>
     <string name="backup_complete">La copia de seguridad ha sido completada.</string>
-    <string name="restore_invalid_file">El archivo seleccionado no es una copia de seguridad. ¿Estás seguro de que has seleccionado el archivo correcto\?</string>
+    <string name="restore_invalid_file">El archivo seleccionado no es una copia de seguridad. ¿Confirmas que has seleccionado el archivo correcto\?</string>
     <string name="restore_different_minor_version">Esta copia de seguridad se ha creado con una diferente versión de %1$s. Puede que algunos datos no se restauren correctamente.</string>
     <string name="restore_meta">Creado %1$s en %2$s con %3$s.</string>
     <string name="icon_picker_default_icon">Por defecto</string>
