@@ -15,9 +15,9 @@ ksp-gradle-plugin = "2.3.4"
 kotlin = "2.4.21"
 kotlinx-coroutines = "1.11.0"
 kotlinx-immutable = "0.5.2"
-kotlinx-serialization = "1.11.0"
+kotlinx-serialization = "1.12.0"
 
-jetbrains-markdown = "0.7.16"
+jetbrains-markdown = "0.7.18"
 
 androidx-compose = "1.13.0-beta01"
 androidx-compose-material3 = "1.5.0-beta01"
