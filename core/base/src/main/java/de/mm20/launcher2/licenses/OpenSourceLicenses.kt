@@ -206,7 +206,7 @@ val OpenSourceLicenses = arrayOf(
     ),
     OpenSourceLibrary(
         name = "fzf",
-        description = "A command-line fuzzy finder. Its fuzzy matching algorithm is used in search.",
+        description = "A command-line fuzzy finder",
         licenseName = R.string.mit_license_name,
         licenseText = R.raw.license_mit,
         url = "https://github.com/junegunn/fzf",
