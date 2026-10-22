@@ -19,8 +19,8 @@ kotlinx-serialization = "1.12.0"
 
 jetbrains-markdown = "0.7.18"
 
-androidx-compose = "1.13.0-beta01"
-androidx-compose-material3 = "1.5.0-beta01"
+androidx-compose = "1.13.0-beta02"
+androidx-compose-material3 = "1.5.0-beta02"
 androidx-compose-material3adaptive = "1.3.0"
 androidx-lifecycle = "2.11.0"
 androidx-core = "1.19.1"
@@ -29,8 +29,8 @@ androidx-activity = "1.13.0"
 androidx-navigation3 = "1.2.0"
 androidx-work = "2.12.0"
 androidx-browser = "1.10.0"
-androidx-palette = "1.0.0"
-androidx-room3 = "3.1.0-alpha01"
+androidx-palette = "1.1.0"
+androidx-room3 = "3.1.0-alpha03"
 androidx-emojipicker = "1.7.0"
 
 haze = "2.0.1"
@@ -79,7 +79,7 @@ androidx-activitycompose = { group = "androidx.activity", name = "activity-compo
 
 androidx-room3-runtime = { group = "androidx.room3", name = "room3-runtime", version.ref = "androidx-room3" }
 androidx-room3-compiler = { group = "androidx.room3", name = "room3-compiler", version.ref = "androidx-room3" }
-androidx-sqlite = { group = "androidx.sqlite", name = "sqlite", version = "2.8.0-alpha01" }
+androidx-sqlite = { group = "androidx.sqlite", name = "sqlite", version = "2.8.0-alpha03" }
 
 androidx-core = { group = "androidx.core", name = "core-ktx", version.ref = "androidx-core" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidx-appcompat" }
@@ -92,7 +92,7 @@ haze-blur = {group = "dev.chrisbanes.haze", name = "haze-blur", version.ref = "h
 
 androidx-exifinterface = { group = "androidx.exifinterface", name = "exifinterface", version = "1.4.2" }
 androidx-securitycrypto = { group = "androidx.security", name = "security-crypto", version = "1.1.0" }
-androidx-datastore = { group = "androidx.datastore", name = "datastore", version = "1.2.1" }
+androidx-datastore = { group = "androidx.datastore", name = "datastore", version = "1.3.0" }
 androidx-emojipicker = { group = "androidx.emoji2", name = "emoji2-emojipicker", version.ref = "androidx-emojipicker" }
 
 ktor-client-core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
