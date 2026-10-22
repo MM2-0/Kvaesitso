@@ -1,7 +1,7 @@
 package de.mm20.launcher2.webdav
 
 import com.balsikandar.crashreporter.CrashReporter
-import de.mm20.launcher2.ktx.decodeUrl
+
 import io.ktor.client.HttpClient
 import io.ktor.client.request.request
 import io.ktor.client.request.setBody
@@ -81,7 +81,7 @@ object WebDavApi {
                     val displayName = res.getElementsByTagName("d:displayname")
                         .takeIf { it.length > 0 }?.item(0)?.textContent
                         ?.takeIf { it.isNotEmpty() }
-                        ?: url.trimEnd('/').substringAfterLast("/").decodeUrl("utf8")
+                        ?: java.net.URLDecoder.decode(url.trimEnd('/').substringAfterLast("/"), "utf8")
                         ?: continue
 
                     val isDirectory = res.getElementsByTagName("d:resourcetype")
@@ -171,7 +171,7 @@ object WebDavApi {
                     val displayName = res.getElementsByTagName("d:displayname")
                         .takeIf { it.length > 0 }?.item(0)?.textContent
                         ?.takeIf { it.isNotEmpty() }
-                        ?: url.trimEnd('/').substringAfterLast("/").decodeUrl("utf8")
+                        ?: java.net.URLDecoder.decode(url.trimEnd('/').substringAfterLast("/"), "utf8")
                         ?: continue
 
                     val isDirectory = res.getElementsByTagName("d:resourcetype")
