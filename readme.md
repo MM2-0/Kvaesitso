@@ -8,19 +8,24 @@ Kvaesitso is a search focused, free and open source launcher for Android.
 
 ## Installation
 
+Kvaesitso can be installed on Android devices running Android 8.0 or higher, but a Google Pixel
+device running Android 11 or higher is recommended for the best experience.
+
 ### Using an F-Droid client and MM20's repo
 
 The preferred way of installation is using the [F-Droid](https://f-droid.org) application. That way
 you will always be notified about updates. Kvaesitso is available in the official F-Droid
 repository, but all features depending on non-foss external APIs were removed.
-For feature-complete builds you can add [MM20's repository](https://fdroid.mm20.de). Just scan the code below or open
+For feature-complete builds you can add [MM20's repository](https://fdroid.mm20.de). Just scan the
+code below or open
 the link on your phone:
 
 <img src="https://fdroid.mm20.de/repo/index.png" width="150" alt="QR code">
 
 https://fdroid.mm20.de/repo/
 
-The same version is also available in [IzzyOnDroid's repository](https://apt.izzysoft.de/fdroid/index/apk/de.mm20.launcher2.release).
+The same version is also available
+in [IzzyOnDroid's repository](https://apt.izzysoft.de/fdroid/index/apk/de.mm20.launcher2.release).
 
 ### Manual installation
 
@@ -38,17 +43,16 @@ Settings > Debug > Crash reporter and Settings > Debug > Export debug informatio
 ## Feature requests
 
 If you have an idea for a new feature, just create a new issue. However, there is no guarantee that
-they will be implemented. If it's important for you, consider implementing it yourself,
-see [contribute](#contribute).
-
+they will be implemented.
 
 ## Contribute
 
-Contributions are always welcome. If you want to fix any existing issues or implement smaller new
-features just create a new pull request. If you plan to implement any (bigger) new features, please
+Contributions are always welcome. If you want to fix any existing issues just create a new pull
+request. If you plan to implement any (bigger) new features, please
 create an issue first so we can discuss if and how this feature should be implemented.
 
-If you want to help translating, see [how to translate the project.](https://kvaesitso.mm20.de/docs/contributor-guide/i18n)
+If you want to help translating,
+see [how to translate the project.](https://kvaesitso.mm20.de/docs/contributor-guide/i18n)
 
 <a href="https://i18n.mm20.de/engage/kvaesitso/">
 <img src="https://i18n.mm20.de/widgets/kvaesitso/-/287x66-grey.png" alt ="Translation Status">

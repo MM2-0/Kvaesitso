@@ -4,8 +4,8 @@ sidebar_position: 0
 
 # Get Started
 
-Kvaesitso can be installed on Android devices running Android 8.0 or higher, but Android 11 or
-higher is recommended for the best experience.
+Kvaesitso can be installed on Android devices running Android 8.0 or higher, but a Google Pixel
+device running Android 11 or higher is recommended for the best experience.
 
 ## Installation
 
