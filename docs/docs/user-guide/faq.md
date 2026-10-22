@@ -54,15 +54,17 @@ the [Launcher Cannot Be Updated](/docs/user-guide/troubleshooting/update-not-ins
 
 ## Why is wallpaper blur not supported on my device?
 
-Wallpaper blur is available if:
+Wallpaper blur is available if the device runs Android 12 or higher.
 
-- the device runs Android 12 or higher
-- battery saver is not enabled
+If the device supports [cross window
+blur](https://source.android.com/docs/core/display/window-blurs), the wallpaper is blurred by the
+system. This is a flag that has to be enabled by the device manufacturer to indicate that their
+implementation of the render engine supports blur effects and that the GPU is powerful enough to
+handle them. Most Samsung devices do not support it.
 
-Furthermore, the device has to have support for [cross window
-blur](https://source.android.com/docs/core/display/window-blurs). This is a flag that has to
-be enabled by the device manufacturer to indicate that their implementation of the render engine
-supports blur effects and that the GPU is powerful enough to handle them.
+On devices without cross window blur support, the launcher renders the wallpaper itself and blurs
+it in-app. For this, the app needs access to all files, which you can grant in the app's settings
+in Android. Note that live wallpapers are not animated while they are blurred.
 
 ## How can I set up the nightly version?
 

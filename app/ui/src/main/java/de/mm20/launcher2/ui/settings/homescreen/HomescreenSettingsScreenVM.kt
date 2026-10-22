@@ -13,6 +13,8 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
+import de.mm20.launcher2.permissions.PermissionGroup
+import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.GestureAction
 import de.mm20.launcher2.preferences.ScreenOrientation
 import de.mm20.launcher2.preferences.SearchBarColors
@@ -33,6 +35,7 @@ class HomescreenSettingsScreenVM(
     private val uiSettings: UiSettings,
     private val clockWidgetSettings: ClockWidgetSettings,
     private val gestureSettings: GestureSettings,
+    private val permissionsManager: PermissionsManager,
 ) : ViewModel() {
 
     var showClockWidgetSheet by mutableStateOf(false)
@@ -63,9 +66,36 @@ class HomescreenSettingsScreenVM(
         context.startActivity(Intent.createChooser(Intent(Intent.ACTION_SET_WALLPAPER), null))
     }
 
-    fun isBlurAvailable(context: Context): Boolean {
+    /**
+     * Whether the wallpaper can be blurred on this device at all.
+     *
+     * Devices that support cross window blur can use the system's blur, everything else has to
+     * render the wallpaper itself, which requires Android 12 or later.
+     */
+    fun isBlurAvailable(): Boolean {
+        return isAtLeastApiLevel(31)
+    }
+
+    /**
+     * Whether the launcher has to render the wallpaper itself in order to blur it.
+     *
+     * This is the case on devices that do not support cross window blur, which includes most
+     * Samsung devices.
+     */
+    fun requiresWallpaperAccess(context: Context): Boolean {
         if (!isAtLeastApiLevel(31)) return false
-        return context.getSystemService<WindowManager>()?.isCrossWindowBlurEnabled == true
+        return context.getSystemService<WindowManager>()?.isCrossWindowBlurEnabled != true
+    }
+
+    /**
+     * Whether the app is allowed to read the system wallpaper.
+     */
+    val hasWallpaperAccess = permissionsManager
+        .hasPermission(PermissionGroup.ExternalStorage)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    fun requestWallpaperAccess(context: AppCompatActivity) {
+        permissionsManager.requestPermission(context, PermissionGroup.ExternalStorage)
     }
 
     val statusBarIcons = uiSettings.statusBarColor
@@ -173,6 +203,7 @@ class HomescreenSettingsScreenVM(
                     uiSettings = get(),
                     clockWidgetSettings = get(),
                     gestureSettings = get(),
+                    permissionsManager = get(),
                 )
             }
         }
