@@ -58,6 +58,7 @@ data class LauncherSettingsData internal constructor(
     val clockWidgetBatteryPart: BatteryStatusVisibility = BatteryStatusVisibility.Show,
     val clockWidgetMusicPart: Boolean = true,
     val clockWidgetDatePart: Boolean = true,
+    val clockWidgetDateAppKey: String? = null,
     val clockWidgetFillHeight: Boolean = false,
     val clockWidgetAlignment: ClockWidgetAlignment = ClockWidgetAlignment.Bottom,
 
