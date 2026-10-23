@@ -22,6 +22,11 @@
     <string name="menu_uninstall">Uninstall</string>
     <string name="menu_favorites_pin">Pin to favorites</string>
     <string name="menu_favorites_unpin">Unpin</string>
+    <string name="menu_frequently_used_exclude">Hide from frequently used</string>
+    <string name="menu_frequently_used_include">Show in frequently used</string>
+    <string name="preference_frequently_used_excluded">Excluded items</string>
+    <string name="preference_frequently_used_excluded_summary">Items that never appear in frequently used</string>
+    <string name="preference_frequently_used_excluded_empty">No excluded items. Long-press an app and choose \"Hide from frequently used\" to add one.</string>
     <string name="menu_back">Back</string>
     <string name="menu_app_info">App info</string>
     <!-- Launch an app -->

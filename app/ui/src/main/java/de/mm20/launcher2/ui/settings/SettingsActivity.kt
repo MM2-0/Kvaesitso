@@ -80,6 +80,8 @@ import de.mm20.launcher2.ui.settings.debug.StringNormalizerTestRoute
 import de.mm20.launcher2.ui.settings.debug.StringNormalizerTestScreen
 import de.mm20.launcher2.ui.settings.easteregg.EasterEggSettingsRoute
 import de.mm20.launcher2.ui.settings.easteregg.EasterEggSettingsScreen
+import de.mm20.launcher2.ui.settings.favorites.ExcludedFrequentlyUsedSettingsRoute
+import de.mm20.launcher2.ui.settings.favorites.ExcludedFrequentlyUsedSettingsScreen
 import de.mm20.launcher2.ui.settings.favorites.FavoritesSettingsRoute
 import de.mm20.launcher2.ui.settings.favorites.FavoritesSettingsScreen
 import de.mm20.launcher2.ui.settings.feed.FeedIntegrationSettingsRoute
@@ -264,6 +266,9 @@ class SettingsActivity : BaseActivity() {
             }
             entry<FavoritesSettingsRoute> {
                 FavoritesSettingsScreen()
+            }
+            entry<ExcludedFrequentlyUsedSettingsRoute> {
+                ExcludedFrequentlyUsedSettingsScreen()
             }
             entry<AppShortcutsSettingsRoute> {
                 AppShortcutsSettingsScreen()

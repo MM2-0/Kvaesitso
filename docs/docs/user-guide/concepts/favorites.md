@@ -14,6 +14,10 @@ You can pin any app and any search result to favorites by long pressing it and s
 
 Some apps allow the creation of home screen shortcuts. These shortcuts will also appear in the favorites section.
 
+## Hide apps from frequently used
+
+If an app keeps showing up in the frequently used section and you don't want it there, long press it and select <span class="material-symbols-rounded">more_vert</span> > <span class="material-symbols-rounded">visibility_off</span> **Hide from frequently used**. The app will no longer appear in that section, no matter how often you use it. It will still show up in the app drawer and in search results. To undo this, long press the app and select <span class="material-symbols-rounded">more_vert</span> > <span class="material-symbols-rounded">visibility</span> **Show in frequently used**, or restore it at Settings > Search > Favorites > Excluded items.
+
 ## Access favorites
 
 Favorites can appear in three different places:
