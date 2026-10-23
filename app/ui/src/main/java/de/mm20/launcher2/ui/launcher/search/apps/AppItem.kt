@@ -374,9 +374,9 @@ fun AppItem(
                     }
 
                     val toolbarActions = mutableListOf<ToolbarAction>()
+                    val isPinned by viewModel.isPinned.collectAsState(false)
 
                     if (LocalFavoritesEnabled.current) {
-                        val isPinned by viewModel.isPinned.collectAsState(false)
                         val favAction = if (isPinned) {
                             DefaultToolbarAction(
                                 label = stringResource(R.string.menu_favorites_unpin),
@@ -424,6 +424,31 @@ fun AppItem(
                                 icon = R.drawable.tune_24px,
                                 action = { sheetManager.showCustomizeSearchableModal(app) }
                             ))
+                    }
+
+                    // Placed after the primary actions so it ends up in the overflow menu
+                    val isFrequentlyUsedEnabled by viewModel.isFrequentlyUsedEnabled.collectAsState(false)
+                    if (LocalFavoritesEnabled.current && isFrequentlyUsedEnabled && !isPinned) {
+                        val isExcluded by viewModel.isExcludedFromFrequentlyUsed.collectAsState(false)
+                        toolbarActions.add(
+                            if (isExcluded) {
+                                DefaultToolbarAction(
+                                    label = stringResource(R.string.menu_frequently_used_include),
+                                    icon = R.drawable.visibility_24px,
+                                    action = {
+                                        viewModel.includeInFrequentlyUsed()
+                                    }
+                                )
+                            } else {
+                                DefaultToolbarAction(
+                                    label = stringResource(R.string.menu_frequently_used_exclude),
+                                    icon = R.drawable.visibility_off_24px,
+                                    action = {
+                                        viewModel.excludeFromFrequentlyUsed()
+                                    }
+                                )
+                            }
+                        )
                     }
 
                     if (!app.isPrivate) {
