@@ -1,14 +1,19 @@
 package de.mm20.launcher2.locations.providers.openstreetmaps
 
+import android.util.Log
 import de.mm20.launcher2.serialization.Json
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.request.header
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
+import io.ktor.client.statement.bodyAsText
+import io.ktor.http.isSuccess
 import io.ktor.http.path
 import io.ktor.http.takeFrom
 import io.ktor.serialization.kotlinx.json.json
+import kotlinx.io.IOException
 import kotlinx.serialization.Serializable
 import kotlin.math.cos
 
@@ -107,7 +112,9 @@ internal data class OverpassResponseElement(
     val tags: Map<String, String>?,
 )
 
-internal class OverpassApi {
+internal class OverpassApi(
+    private val userAgent: String,
+) {
 
     private val httpClient by lazy {
         HttpClient {
@@ -121,15 +128,23 @@ internal class OverpassApi {
         baseUrl: String,
         query: OverpassQuery,
     ): OverpassResponse {
-        return httpClient.post {
+        Log.d("MM20", query.toQueryString())
+        val response = httpClient.post {
             url {
                 takeFrom(baseUrl)
                 if (pathSegments.isEmpty()) {
                     path("api", "interpreter")
                 }
             }
+            header("user-agent", userAgent)
             setBody(query.toQueryString())
-        }.body()
+        }
+
+        if (!response.status.isSuccess()) {
+            throw IOException("Overpass returned error: ${response.status} ${response.bodyAsText()}")
+        }
+
+        return response.body()
     }
 }
 

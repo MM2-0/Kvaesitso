@@ -1,6 +1,7 @@
 package de.mm20.launcher2.locations.providers.openstreetmaps
 
 import android.content.Context
+import android.util.Log
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.locations.providers.AndroidLocation
 import de.mm20.launcher2.locations.providers.LocationProvider
@@ -17,7 +18,14 @@ internal class OsmLocationProvider(
     private val settings: LocationSearchSettings
 ) : LocationProvider<Long> {
 
-    private val overpassApi = OverpassApi()
+    private val userAgent = "${context.packageName}/${
+        context.packageManager.getPackageInfo(
+            context.packageName,
+            0
+        )?.versionName ?: "dev"
+    }"
+
+    private val overpassApi = OverpassApi(userAgent)
 
 
     suspend fun update(
@@ -71,7 +79,7 @@ internal class OsmLocationProvider(
                     radius = searchRadiusMeters,
                     latitude = userLocation.latitude,
                     longitude = userLocation.longitude
-                )
+                ),
             )
         } catch (e: Exception) {
             CrashReporter.logException(e)
