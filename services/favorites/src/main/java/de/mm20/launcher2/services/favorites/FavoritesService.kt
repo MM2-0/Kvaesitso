@@ -48,6 +48,7 @@ class FavoritesService(
             visibility = VisibilityLevel.Default,
             weight = 0.0,
             launchCount = 0,
+            excludeFromFrequentlyUsed = false,
         )
     }
 
@@ -62,6 +63,21 @@ class FavoritesService(
         searchableRepository.upsert(
             searchable,
             visibility = visibility,
+        )
+    }
+
+    fun isExcludedFromFrequentlyUsed(searchable: SavableSearchable): Flow<Boolean> {
+        return searchableRepository.isExcludedFromFrequentlyUsed(searchable)
+    }
+
+    fun getExcludedFromFrequentlyUsed(): Flow<List<SavableSearchable>> {
+        return searchableRepository.getExcludedFromFrequentlyUsed()
+    }
+
+    fun setExcludedFromFrequentlyUsed(searchable: SavableSearchable, excluded: Boolean) {
+        searchableRepository.upsert(
+            searchable,
+            excludeFromFrequentlyUsed = excluded,
         )
     }
 
