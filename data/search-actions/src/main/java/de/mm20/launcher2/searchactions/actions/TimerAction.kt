@@ -8,7 +8,8 @@ import java.time.Duration
 
 data class TimerAction(
     override val label: String,
-    val length: Duration
+    val length: Duration,
+    val name: String?
 ): SearchAction {
 
     override val icon: SearchActionIcon = SearchActionIcon.Timer
@@ -17,6 +18,7 @@ data class TimerAction(
     override fun start(context: Context) {
         val intent = Intent(AlarmClock.ACTION_SET_TIMER).apply {
             putExtra(AlarmClock.EXTRA_LENGTH, length.seconds.toInt())
+            if (name != null) putExtra(AlarmClock.EXTRA_MESSAGE, name)
         }
         context.tryStartActivity(intent)
     }

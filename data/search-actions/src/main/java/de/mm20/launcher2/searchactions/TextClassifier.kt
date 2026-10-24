@@ -5,8 +5,6 @@ import android.icu.text.SimpleDateFormat
 import android.net.Uri
 import android.text.format.DateFormat
 import android.util.Patterns
-import java.net.MalformedURLException
-import java.net.URL
 import java.text.ParseException
 import java.time.Duration
 import java.time.LocalDate
@@ -43,6 +41,10 @@ internal class TextClassifierImpl : TextClassifier {
             }
         }
 
+        parseTime(trimmedQuery)?.let {
+            return it
+        }
+
         val parsedDate = parseDate(context, trimmedQuery)
 
         if (parsedDate != null) {
@@ -60,6 +62,58 @@ internal class TextClassifierImpl : TextClassifier {
         )
     }
 
+
+
+    private fun parseTime(query: String): TextClassificationResult? {
+        val parts = query.trim()
+            .replace(":", " ")
+            .split(Regex("\\s+"))
+
+        val startsWithNumber = parts.firstOrNull()?.toLongOrNull() != null
+
+        val timeParts = if (startsWithNumber) {
+            parts.takeWhile { it.toLongOrNull() != null }.take(3)
+        } else {
+            parts.takeLastWhile { it.toLongOrNull() != null }.takeLast(3)
+        }
+
+        val label = if (startsWithNumber) {
+            parts.drop(timeParts.size).joinToString(" ").ifBlank { null }
+        } else {
+            parts.dropLast(timeParts.size).joinToString(" ").ifBlank { null }
+        }
+
+        val numbers = timeParts.mapNotNull { it.toLongOrNull() }
+
+        if (numbers.isEmpty()) return null
+
+        val timerSeconds = when (numbers.size) {
+            1 -> numbers[0]
+            2 -> numbers[0] * 60 + numbers[1]
+            else -> numbers[0] * 3600 + numbers[1] * 60 + numbers[2]
+        }
+
+        if (timerSeconds <= 0) return null
+
+        val alarmTime = if (
+            numbers[0] in 0L..23L &&
+            (numbers.size < 2 || numbers[1] in 0L..59L)
+        ) {
+            LocalTime.of(
+                numbers[0].toInt(),
+                numbers.getOrElse(1) { 0 }.toInt()
+            )
+        } else {
+            null
+        }
+
+        return TextClassificationResult(
+            text = query,
+            label = label,
+            time = alarmTime,
+            timespan = Duration.ofSeconds(timerSeconds)
+        )
+    }
     private fun parseDate(
         context: Context,
         trimmedQuery: String
@@ -210,4 +264,5 @@ data class TextClassificationResult(
     val date: LocalDate? = null,
     val timespan: Duration? = null,
     val url: Uri? = null,
+    val label: String? = null
 )

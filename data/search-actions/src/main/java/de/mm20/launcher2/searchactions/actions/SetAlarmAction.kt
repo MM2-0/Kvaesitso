@@ -8,7 +8,8 @@ import java.time.LocalTime
 
 data class SetAlarmAction(
     override val label: String,
-    val time: LocalTime
+    val time: LocalTime,
+    val name: String?
 ) : SearchAction {
     override val icon: SearchActionIcon = SearchActionIcon.Alarm
     override val iconColor: Int = 0
@@ -17,6 +18,7 @@ data class SetAlarmAction(
         val intent = Intent(AlarmClock.ACTION_SET_ALARM).apply {
             putExtra(AlarmClock.EXTRA_HOUR, time.hour)
             putExtra(AlarmClock.EXTRA_MINUTES, time.minute)
+            if (name != null) putExtra(AlarmClock.EXTRA_MESSAGE, name)
         }
         context.tryStartActivity(intent)
     }
