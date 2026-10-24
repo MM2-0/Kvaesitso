@@ -43,6 +43,10 @@ internal class TextClassifierImpl : TextClassifier {
             }
         }
 
+        parseCompactTime(trimmedQuery)?.let {
+            return it
+        }
+
         val parsedDate = parseDate(context, trimmedQuery)
 
         if (parsedDate != null) {
@@ -57,6 +61,49 @@ internal class TextClassifierImpl : TextClassifier {
             phoneNumber = phoneNumber,
             email = email,
             url = url
+        )
+    }
+
+    private fun parseCompactTime(query: String): TextClassificationResult? {
+        if (!query.matches(Regex("""\d{1,9}(?:[\s:]+\d{1,2}){0,2}"""))) {
+            return null
+        }
+
+        val parts = query.trim().split(Regex("""[\s:]+""")).map { it.toLongOrNull() ?: return null }
+        if (parts.isEmpty() || parts.size > 3) return null
+
+        val timerSeconds = when (parts.size) {
+            1 -> parts[0]
+            2 -> parts[0] * 60 + parts[1]
+            else -> parts[0] * 3600 + parts[1] * 60 + parts[2]
+        }
+        val validTimerParts = when (parts.size) {
+            1 -> true
+            2 -> parts[1] < 60
+            else -> parts[1] < 60 && parts[2] < 60
+        }
+        val timespan = if (validTimerParts && timerSeconds in 1..86400) {
+            Duration.ofSeconds(timerSeconds)
+        } else {
+            null
+        }
+
+        val alarmTime = when (parts.size) {
+            1 -> if (parts[0] in 0L..23L) LocalTime.of(parts[0].toInt(), 0) else null
+            2 -> if (parts[0] in 0L..23L && parts[1] in 0L..59L) {
+                LocalTime.of(parts[0].toInt(), parts[1].toInt())
+            } else {
+                null
+            }
+            else -> null
+        }
+
+        if (timespan == null && alarmTime == null) return null
+
+        return TextClassificationResult(
+            text = query,
+            time = alarmTime,
+            timespan = timespan,
         )
     }
 
