@@ -938,4 +938,5 @@
     <string name="typo_preview_medium2">Vista previa</string>
     <string name="typo_preview_long">Polo mar abaixo vai\nunha troita de pé 1234790</string>
     <string name="preference_category_donate">Apoia o desenvolvemento</string>
+    <string name="file_meta_date">Data: %1$s</string>
 </resources>
