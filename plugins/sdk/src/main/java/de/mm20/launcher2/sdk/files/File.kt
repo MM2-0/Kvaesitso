@@ -1,49 +1,42 @@
 package de.mm20.launcher2.sdk.files
 
 import android.net.Uri
+import de.mm20.launcher2.search.file.FileMetadata
+import java.time.Year
+import kotlin.time.Duration.Companion.milliseconds
 
-data class FileDimensions(
-    val width: Int,
-    val height: Int,
-)
 
-data class FileMetadata(
-    /**
-     * Song title, for audio files.
-     */
-    val title: String? = null,
-    /**
-     * Artist name, for audio files.
-     */
-    val artist: String? = null,
-    /**
-     * Album name, for audio files.
-     */
-    val album: String? = null,
-    /**
-     * Duration in milliseconds, for audio and video files.
-     */
-    val duration: Long? = null,
-    /**
-     * Year, for media files.
-     */
-    val year: Int? = null,
-    /**
-     * Dimensions in pixels, for image and video files.
-     */
-    val dimensions: FileDimensions? = null,
-    /**
-     * Geo location, for image and video files.
-     */
-    val location: String? = null,
-    /**
-     * App name, for APK files.
-     */
-    val appName: String? = null,
-    /**
-     * App package name, for APK files.
-     */
-    val appPackageName: String? = null,
+@Deprecated("Use [de.mm20.launcher2.search.file.FileMetadata] instead.")
+typealias FileMetadata = FileMetadata
+@Deprecated("Use [de.mm20.launcher2.search.file.FileMetadata.Dimensions] instead.")
+typealias FileDimensions = FileMetadata.Dimensions
+
+/**
+ * Creates a [FileMetadata] object with the given properties.
+ */
+@Deprecated("Use the [de.mm20.launcher2.search.file.FileMetadata] class constructor instead.")
+fun FileMetadata(
+    title: String? = null,
+    artist: String? = null,
+    album: String? = null,
+    duration: Long? = null,
+    year: Int? = null,
+    dimensions: FileMetadata.Dimensions? = null,
+    location: String? = null,
+    appName: String? = null,
+    appPackageName: String? = null,
+    appVersion: String? = null,
+) = FileMetadata(
+    title = title,
+    artist = artist,
+    album = album,
+    duration = duration?.milliseconds,
+    year = year?.let { Year.of(it) },
+    dimensions = dimensions,
+    location = location,
+    appName = appName,
+    appPackageName = appPackageName,
+    appVersion = appVersion
 )
 
 data class File(

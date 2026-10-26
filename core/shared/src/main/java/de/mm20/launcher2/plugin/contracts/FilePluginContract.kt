@@ -55,6 +55,7 @@ abstract class FilePluginContract {
         val MetaAlbum = column<String>("meta_album")
         val MetaDuration = column<Long>("meta_duration")
         val MetaYear = column<Int>("meta_year")
+        val MetaDate = column<Long>("meta_date")
         val MetaWidth = column<Int>("meta_width")
         val MetaHeight = column<Int>("meta_height")
         val MetaLocation = column<String>("meta_location")

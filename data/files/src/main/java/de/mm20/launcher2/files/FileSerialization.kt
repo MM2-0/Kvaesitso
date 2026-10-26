@@ -14,22 +14,20 @@ import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.plugin.PluginRepository
 import de.mm20.launcher2.plugin.config.StorageStrategy
-import de.mm20.launcher2.search.FileMetaType
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchableDeserializer
 import de.mm20.launcher2.search.SearchableSerializer
 import de.mm20.launcher2.search.UpdateResult
 import de.mm20.launcher2.search.asUpdateResult
+import de.mm20.launcher2.search.file.FileMetadata
 import de.mm20.launcher2.serialization.Json
-import kotlinx.collections.immutable.persistentMapOf
-import kotlinx.collections.immutable.toImmutableMap
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.encodeToString
-import org.json.JSONException
 import org.json.JSONObject
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
+import androidx.core.net.toUri
 
 @Serializable
 internal data class SerializedFile(
@@ -43,7 +41,9 @@ internal data class SerializedFile(
     val uri: String? = null,
     val thumbnailUri: String? = null,
     val isDirectory: Boolean? = null,
-    val metadata: Map<FileMetaType, String>? = null,
+    val owner: String? = null,
+    @SerialName("metadata2")
+    val metadata: FileMetadata? = null,
     val timestamp: Long? = null,
 )
 
@@ -116,17 +116,9 @@ internal class NextcloudFileSerializer : SearchableSerializer {
             "mimeType" to searchable.mimeType,
             "size" to searchable.size,
             "isDirectory" to searchable.isDirectory,
-            "server" to searchable.server
-        ).apply {
-            for ((k, v) in searchable.metaData) {
-                put(
-                    when (k) {
-                        FileMetaType.Owner -> "owner"
-                        else -> "other"
-                    }, v
-                )
-            }
-        }.toString()
+            "server" to searchable.server,
+            "owner" to searchable.owner,
+        ).toString()
     }
 
     override val typePrefix: String
@@ -153,7 +145,7 @@ internal class NextcloudFileDeserializer : SearchableDeserializer {
             size = size,
             isDirectory = isDirectory,
             server = server,
-            metaData = owner?.let { persistentMapOf(FileMetaType.Owner to it) } ?: persistentMapOf()
+            owner = owner,
 
         )
     }
@@ -169,17 +161,9 @@ internal class OwncloudFileSerializer : SearchableSerializer {
             "mimeType" to searchable.mimeType,
             "size" to searchable.size,
             "isDirectory" to searchable.isDirectory,
-            "server" to searchable.server
-        ).apply {
-            for ((k, v) in searchable.metaData) {
-                put(
-                    when (k) {
-                        FileMetaType.Owner -> "owner"
-                        else -> "other"
-                    }, v
-                )
-            }
-        }.toString()
+            "server" to searchable.server,
+            "owner" to searchable.owner,
+        ).toString()
     }
 
     override val typePrefix: String
@@ -206,8 +190,7 @@ internal class OwncloudFileDeserializer : SearchableDeserializer {
             size = size,
             isDirectory = isDirectory,
             server = server,
-            metaData = owner?.let { persistentMapOf(FileMetaType.Owner to it) } ?: persistentMapOf()
-
+            owner = owner,
         )
     }
 }
@@ -215,7 +198,7 @@ internal class OwncloudFileDeserializer : SearchableDeserializer {
 internal class PluginFileSerializer : SearchableSerializer {
     override fun serialize(searchable: SavableSearchable): String? {
         searchable as PluginFile
-        return when(searchable.storageStrategy) {
+        return when (searchable.storageStrategy) {
             StorageStrategy.StoreReference -> Json.Lenient.encodeToString(
                 SerializedFile(
                     id = searchable.id,
@@ -223,6 +206,7 @@ internal class PluginFileSerializer : SearchableSerializer {
                     strategy = StorageStrategy.StoreReference
                 )
             )
+
             else -> {
                 Json.Lenient.encodeToString(
                     SerializedFile(
@@ -236,7 +220,8 @@ internal class PluginFileSerializer : SearchableSerializer {
                         isDirectory = searchable.isDirectory,
                         authority = searchable.authority,
                         timestamp = searchable.timestamp,
-                        metadata = searchable.metaData.toMap(),
+                        metadata = searchable.metaData,
+                        owner = searchable.owner,
                         strategy = StorageStrategy.StoreCopy,
                     )
                 )
@@ -262,10 +247,11 @@ internal class PluginFileDeserializer(
         val plugin = pluginRepository.get(authority).firstOrNull() ?: return null
         if (!plugin.enabled) return null
 
-        return when(strategy) {
+        return when (strategy) {
             StorageStrategy.StoreReference -> {
                 PluginFileProvider(context, authority).get(id).getOrNull()
             }
+
             else -> {
                 val timestamp = json.timestamp ?: 0
                 PluginFile(
@@ -273,17 +259,19 @@ internal class PluginFileDeserializer(
                     path = json.path,
                     mimeType = json.mimeType ?: "binary/octet-stream",
                     size = json.size ?: 0,
-                    metaData = json.metadata?.toImmutableMap() ?: persistentMapOf(),
+                    metaData = json.metadata ?: FileMetadata(),
                     label = json.label ?: return null,
-                    uri = Uri.parse(json.uri ?: return null),
-                    thumbnailUri = json.thumbnailUri?.let { Uri.parse(it) },
+                    uri = json.uri?.toUri() ?: return null,
+                    thumbnailUri = json.thumbnailUri?.toUri(),
                     storageStrategy = StorageStrategy.StoreCopy,
                     isDirectory = json.isDirectory ?: false,
                     authority = authority,
                     timestamp = timestamp,
+                    owner = json.owner,
                     updatedSelf = {
                         if (it !is PluginFile) UpdateResult.TemporarilyUnavailable()
-                        else PluginFileProvider(context, authority).refresh(it, timestamp).asUpdateResult()
+                        else PluginFileProvider(context, authority).refresh(it, timestamp)
+                            .asUpdateResult()
                     }
                 )
             }

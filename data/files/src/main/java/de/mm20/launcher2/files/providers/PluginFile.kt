@@ -15,12 +15,11 @@ import de.mm20.launcher2.icons.StaticLauncherIcon
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.plugin.config.StorageStrategy
 import de.mm20.launcher2.search.File
-import de.mm20.launcher2.search.FileMetaType
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchableSerializer
 import de.mm20.launcher2.search.UpdatableSearchable
 import de.mm20.launcher2.search.UpdateResult
-import kotlinx.collections.immutable.ImmutableMap
+import de.mm20.launcher2.search.file.FileMetadata
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -29,7 +28,8 @@ data class PluginFile(
     override val path: String?,
     override val mimeType: String,
     override val size: Long,
-    override val metaData: ImmutableMap<FileMetaType, String>,
+    override val owner: String?,
+    override val metaData: FileMetadata,
     override val label: String,
     override val isDirectory: Boolean,
     val uri: Uri,

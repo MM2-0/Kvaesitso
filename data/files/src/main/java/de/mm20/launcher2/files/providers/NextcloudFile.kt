@@ -9,9 +9,8 @@ import de.mm20.launcher2.files.NextcloudFileSerializer
 import de.mm20.launcher2.files.R
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.search.File
-import de.mm20.launcher2.search.FileMetaType
 import de.mm20.launcher2.search.SearchableSerializer
-import kotlinx.collections.immutable.ImmutableMap
+import de.mm20.launcher2.search.file.FileMetadata
 
 internal data class NextcloudFile(
     val fileId: Long,
@@ -21,9 +20,10 @@ internal data class NextcloudFile(
     override val size: Long,
     override val isDirectory: Boolean,
     val server: String,
-    override val metaData: ImmutableMap<FileMetaType, String>,
+    override val owner: String?,
     override val labelOverride: String? = null,
 ) : File {
+
 
     override fun overrideLabel(label: String): NextcloudFile {
         return this.copy(labelOverride = label)
@@ -34,6 +34,8 @@ internal data class NextcloudFile(
     override val key: String = "$domain://$server/$fileId"
 
     override val providerIconRes = R.drawable.ic_badge_nextcloud
+
+    override val metaData: FileMetadata = FileMetadata()
 
     private fun getLaunchIntent(context: Context): Intent {
         return Intent(Intent.ACTION_VIEW).apply {

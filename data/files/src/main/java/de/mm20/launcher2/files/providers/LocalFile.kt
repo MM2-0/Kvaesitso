@@ -11,7 +11,7 @@ import android.media.ThumbnailUtils
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.text.format.DateUtils
+import android.util.Log
 import android.util.Size
 import androidx.core.content.FileProvider
 import androidx.exifinterface.media.ExifInterface
@@ -26,14 +26,21 @@ import de.mm20.launcher2.ktx.formatToString
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.media.ThumbnailUtilsCompat
 import de.mm20.launcher2.search.File
-import de.mm20.launcher2.search.FileMetaType
 import de.mm20.launcher2.search.SearchableSerializer
-import kotlinx.collections.immutable.ImmutableMap
-import kotlinx.collections.immutable.toImmutableMap
+import de.mm20.launcher2.search.file.FileMetadata
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.withContext
 import java.io.IOException
+import java.time.Instant
+import java.time.LocalDateTime
+import java.time.Year
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeParseException
+import java.util.Locale
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
 import java.io.File as JavaIOFile
 
 internal data class LocalFile(
@@ -42,11 +49,13 @@ internal data class LocalFile(
     override val mimeType: String,
     override val size: Long,
     override val isDirectory: Boolean,
-    override val metaData: ImmutableMap<FileMetaType, String>,
+    override val metaData: FileMetadata,
     override val labelOverride: String? = null
 ) : File {
 
     override val label = path.substringAfterLast('/')
+
+    override val owner: String? = null
 
     override fun overrideLabel(label: String): LocalFile {
         return this.copy(labelOverride = label)
@@ -257,8 +266,19 @@ internal data class LocalFile(
             context: Context,
             mimeType: String,
             path: String
-        ): ImmutableMap<FileMetaType, String> {
-            val metaData = mutableMapOf<FileMetaType, String>()
+        ): FileMetadata {
+            var title: String? = null
+            var artist: String? = null
+            var album: String? = null
+            var duration: Duration? = null
+            var year: Year? = null
+            var date: ZonedDateTime? = null
+            var dimensions: FileMetadata.Dimensions? = null
+            var location: String? = null
+            var appName: String? = null
+            var appPackageName: String? = null
+            var appVersion: String? = null
+
             when {
                 mimeType.startsWith("audio/") -> {
                     val retriever = MediaMetadataRetriever()
@@ -266,20 +286,22 @@ internal data class LocalFile(
                         retriever.setDataSource(path)
 
                         retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE)
-                            ?.let { metaData[FileMetaType.Title] = it }
+                            ?.also { title = it }
                         retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST)
-                            ?.let { metaData[FileMetaType.Artist] = it }
+                            ?.also { artist = it }
                         retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM)
-                            ?.let { metaData[FileMetaType.Album] = it }
+                            ?.also { album = it }
                         retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_YEAR)
-                            ?.let { metaData[FileMetaType.Year] = it }
+                            ?.toIntOrNull()
+                            ?.let { year = Year.of(it) }
+                        retriever
+                            .extractMetadata(MediaMetadataRetriever.METADATA_KEY_DATE)
+                            ?.toDateOrNull()
+                            ?.also { date = it }
                         retriever
                             .extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
                             ?.toLongOrNull()
-                            ?.let {
-                                metaData[FileMetaType.Duration] =
-                                    DateUtils.formatElapsedTime((it) / 1000)
-                            }
+                            ?.also { duration = it.milliseconds }
                         retriever.release()
                     } catch (e: RuntimeException) {
                         retriever.release()
@@ -297,15 +319,16 @@ internal data class LocalFile(
                             retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT)
                                 ?.toLongOrNull()
                         if (width != null && height != null) {
-                            metaData[FileMetaType.Dimensions] = "${width}x$height"
+                            dimensions = FileMetadata.Dimensions(width.toInt(), height.toInt())
                         }
-                        val duration =
-                            retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
-                                ?.toLongOrNull()
-                                ?.let {
-                                    metaData[FileMetaType.Duration] =
-                                        DateUtils.formatElapsedTime((it) / 1000)
-                                }
+                        retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
+                            ?.toLongOrNull()
+                            ?.let { duration = it.milliseconds }
+                        retriever
+                            .extractMetadata(MediaMetadataRetriever.METADATA_KEY_DATE)
+                            ?.toDateOrNull()
+                            ?.also { date = it }
+
                         val loc =
                             retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_LOCATION)
                         if (Geocoder.isPresent() && loc != null) {
@@ -323,8 +346,8 @@ internal data class LocalFile(
                             } catch (e: IllegalArgumentException) {
                                 null
                             }
-                            if (list != null && list.size > 0) {
-                                metaData[FileMetaType.Location] = list[0].formatToString()
+                            if (!list.isNullOrEmpty()) {
+                                location = list[0].formatToString()
                             }
                         }
                     } catch (e: RuntimeException) {
@@ -343,7 +366,7 @@ internal data class LocalFile(
                     val width = options.outWidth
                     val height = options.outHeight
                     if (height >= 0 && width >= 0) {
-                        metaData[FileMetaType.Dimensions] = "${width}x$height"
+                        dimensions = FileMetadata.Dimensions(width, height)
                     }
                     try {
                         val exif = ExifInterface(path)
@@ -356,10 +379,11 @@ internal data class LocalFile(
                             } catch (e: IOException) {
                                 null
                             }
-                            if (list != null && list.size > 0) {
-                                metaData[FileMetaType.Location] = list[0].formatToString()
+                            if (!list.isNullOrEmpty()) {
+                                location = list[0].formatToString()
                             }
                         }
+                        date = exif.getAttribute(ExifInterface.TAG_DATETIME)?.toDateOrNull()
                     } catch (_: IOException) {
 
                     }
@@ -367,19 +391,49 @@ internal data class LocalFile(
 
                 mimeType == "application/vnd.android.package-archive" -> {
                     val pkgInfo = context.packageManager.getPackageArchiveInfo(path, 0)
-                        ?: return metaData.toImmutableMap()
+                        ?: return FileMetadata()
 
-                    pkgInfo.applicationInfo?.loadLabel(context.packageManager)?.toString()?.let {
-                        metaData[FileMetaType.AppName] = it
+                    pkgInfo.applicationInfo?.loadLabel(context.packageManager)?.toString()?.also {
+                        appName = it
                     }
-                    pkgInfo.versionName?.let { metaData[FileMetaType.AppVersion] = it }
-                    pkgInfo.packageName.let { metaData[FileMetaType.AppPackageName] = it }
-                    pkgInfo.applicationInfo?.minSdkVersion?.toString()?.let {
-                        metaData[FileMetaType.AppMinSdk] = it
-                    }
+                    appPackageName = pkgInfo.packageName
+                    appVersion = pkgInfo.versionName
                 }
             }
-            return metaData.toImmutableMap()
+            return FileMetadata(
+                title = title,
+                artist = artist,
+                album = album,
+                duration = duration,
+                year = year,
+                date = date,
+                dimensions = dimensions,
+                location = location,
+                appName = appName,
+                appPackageName = appPackageName,
+                appVersion = appVersion,
+            )
+        }
+
+        private fun String.toDateOrNull(): ZonedDateTime? {
+            val formats = listOf(
+                "yyyyMMdd'T'HHmmss",
+                "yyyy-MM-dd'T'HH:mm:ss",
+                "yyyy:MM:dd HH:mm:ss",
+                "yyyy-MM-dd",
+                "yyyy MM dd"
+            )
+            for(format in formats) {
+                try {
+                    return LocalDateTime.parse(
+                        this,
+                        DateTimeFormatter.ofPattern(format, Locale.ROOT)
+                    ).atZone(ZonedDateTime.now().zone)
+                } catch (_: DateTimeParseException) {
+                }
+            }
+            return null
+
         }
     }
 

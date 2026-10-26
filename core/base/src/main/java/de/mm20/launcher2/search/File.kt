@@ -7,6 +7,7 @@ import de.mm20.launcher2.icons.ColorLayer
 import de.mm20.launcher2.icons.StaticLauncherIcon
 import de.mm20.launcher2.icons.TintedIconLayer
 import de.mm20.launcher2.icons.VectorLayer
+import de.mm20.launcher2.search.file.FileMetadata
 import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -17,7 +18,8 @@ interface File : SavableSearchable {
     val mimeType: String
     val size: Long
     val isDirectory: Boolean
-    val metaData: ImmutableMap<FileMetaType, String>
+    val metaData: FileMetadata
+    val owner: String?
 
     override val preferDetailsOverLaunch: Boolean
         get() = false
@@ -140,20 +142,4 @@ interface File : SavableSearchable {
     fun share(context: Context) {}
     suspend fun delete(context: Context) {}
 
-}
-
-@Serializable
-enum class FileMetaType {
-    @SerialName("title") Title,
-    @SerialName("artist") Artist,
-    @SerialName("album") Album,
-    @SerialName("duration") Duration,
-    @SerialName("year") Year,
-    @SerialName("dimensions") Dimensions,
-    @SerialName("location") Location,
-    @SerialName("app_name") AppName,
-    @SerialName("app_version") AppVersion,
-    @SerialName("app_minsdk") AppMinSdk,
-    @SerialName("app_packagename") AppPackageName,
-    @SerialName("owner") Owner,
 }

@@ -3,13 +3,18 @@ package de.mm20.launcher2.sdk.files
 import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import de.mm20.launcher2.plugin.PluginType
 import de.mm20.launcher2.plugin.config.QueryPluginConfig
 import de.mm20.launcher2.plugin.contracts.FilePluginContract.FileColumns
 import de.mm20.launcher2.plugin.data.buildCursor
 import de.mm20.launcher2.plugin.data.get
 import de.mm20.launcher2.sdk.base.StringPluginProvider
+import de.mm20.launcher2.search.file.FileMetadata
+import de.mm20.launcher2.search.file.FileMetadata.Dimensions
+import java.time.Instant
+import java.time.Year
+import java.time.ZonedDateTime
+import kotlin.time.Duration.Companion.milliseconds
 
 abstract class FileProvider(
     config: QueryPluginConfig,
@@ -33,8 +38,9 @@ abstract class FileProvider(
             put(FileColumns.MetaTitle, it.metadata.title)
             put(FileColumns.MetaArtist, it.metadata.artist)
             put(FileColumns.MetaAlbum, it.metadata.album)
-            put(FileColumns.MetaDuration, it.metadata.duration)
-            put(FileColumns.MetaYear, it.metadata.year)
+            put(FileColumns.MetaDuration, it.metadata.duration?.inWholeMilliseconds)
+            put(FileColumns.MetaYear, it.metadata.year?.value)
+            put(FileColumns.MetaDate, it.metadata.date?.toEpochSecond())
             put(FileColumns.MetaWidth, it.metadata.dimensions?.width)
             put(FileColumns.MetaHeight, it.metadata.dimensions?.height)
             put(FileColumns.MetaLocation, it.metadata.location)
@@ -52,19 +58,20 @@ abstract class FileProvider(
             path = get(FileColumns.Path),
             uri = get(FileColumns.ContentUri)?.let { Uri.parse(it) } ?: return null,
             thumbnailUri = get(FileColumns.ThumbnailUri)?.let { Uri.parse(it) },
-            isDirectory = get(FileColumns.IsDirectory) == false,
+            isDirectory = get(FileColumns.IsDirectory) == true,
             owner = get(FileColumns.Owner),
             metadata = FileMetadata(
                 title = get(FileColumns.MetaTitle),
                 artist = get(FileColumns.MetaArtist),
                 album = get(FileColumns.MetaAlbum),
-                duration = get(FileColumns.MetaDuration),
-                year = get(FileColumns.MetaYear),
+                duration = get(FileColumns.MetaDuration)?.milliseconds,
+                year = get(FileColumns.MetaYear)?.let { Year.of(it) },
+                date = get(FileColumns.MetaDate)?.let { ZonedDateTime.from(Instant.ofEpochSecond(it)) },
                 dimensions = run {
                     val width = get(FileColumns.MetaWidth)
                     val height = get(FileColumns.MetaHeight)
                     if (width != null && height != null) {
-                        FileDimensions(width, height)
+                        Dimensions(width, height)
                     } else {
                         null
                     }

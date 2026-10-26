@@ -13,10 +13,15 @@ import de.mm20.launcher2.plugin.contracts.FilePluginContract.FileColumns
 import de.mm20.launcher2.plugin.contracts.SearchPluginContract
 import de.mm20.launcher2.plugin.data.set
 import de.mm20.launcher2.plugin.data.withColumns
-import de.mm20.launcher2.search.FileMetaType
 import de.mm20.launcher2.search.UpdateResult
 import de.mm20.launcher2.search.asUpdateResult
+import de.mm20.launcher2.search.file.FileMetadata
 import kotlinx.collections.immutable.toPersistentMap
+import java.time.Year
+import java.time.ZonedDateTime
+import kotlin.time.Duration.Companion.milliseconds
+import androidx.core.net.toUri
+import java.time.Instant
 
 class PluginFileProvider(
     private val context: Context,
@@ -34,7 +39,7 @@ class PluginFileProvider(
         val cursor = this
 
         if (config == null) {
-            Log.e("MM20", "Plugin ${pluginAuthority} returned null config")
+            Log.e("MM20", "Plugin $pluginAuthority returned null config")
             cursor.close()
             return null
         }
@@ -49,43 +54,26 @@ class PluginFileProvider(
                         path = cursor[FileColumns.Path],
                         mimeType = cursor[FileColumns.MimeType] ?: "application/octet-stream",
                         size = cursor[FileColumns.Size] ?: 0L,
-                        metaData = buildMap {
-                            cursor[FileColumns.MetaTitle]?.let {
-                                put(FileMetaType.Title, it)
-                            }
-                            cursor[FileColumns.MetaArtist]?.let {
-                                put(FileMetaType.Artist, it)
-                            }
-                            cursor[FileColumns.MetaAlbum]?.let {
-                                put(FileMetaType.Album, it)
-                            }
-                            cursor[FileColumns.MetaDuration]?.let {
-                                put(FileMetaType.Duration, DateUtils.formatElapsedTime(it / 1000L))
-                            }
-                            cursor[FileColumns.MetaYear]?.let {
-                                put(FileMetaType.Year, it.toString())
-                            }
-                            val width = cursor[FileColumns.MetaWidth]
-                            val height = cursor[FileColumns.MetaHeight]
-                            if (width != null && height != null) {
-                                put(FileMetaType.Dimensions, "${width}x${height}")
-                            }
-                            cursor[FileColumns.MetaLocation]?.let {
-                                put(FileMetaType.Location, it)
-                            }
-                            cursor[FileColumns.MetaAppName]?.let {
-                                put(FileMetaType.AppName, it)
-                            }
-                            cursor[FileColumns.MetaAppPackageName]?.let {
-                                put(FileMetaType.AppPackageName, it)
-                            }
-                            cursor[FileColumns.Owner]?.let {
-                                put(FileMetaType.Owner, it)
-                            }
-                        }.toPersistentMap(),
+                        owner = cursor[FileColumns.Owner],
+                        metaData = FileMetadata(
+                            title = cursor[FileColumns.MetaTitle],
+                            artist = cursor[FileColumns.MetaArtist],
+                            album = cursor[FileColumns.MetaAlbum],
+                            duration = cursor[FileColumns.MetaDuration]?.milliseconds,
+                            year = cursor[FileColumns.MetaYear]?.let { Year.of(it) },
+                            date = cursor[FileColumns.MetaDate]?.let { ZonedDateTime.from(Instant.ofEpochSecond(it)) },
+                            dimensions = cursor[FileColumns.MetaWidth]?.let { width ->
+                                cursor[FileColumns.MetaHeight]?.let { height ->
+                                    FileMetadata.Dimensions(width, height)
+                                }
+                            },
+                            location = cursor[FileColumns.MetaLocation],
+                            appName = cursor[FileColumns.MetaAppName],
+                            appPackageName = cursor[FileColumns.MetaAppPackageName],
+                        ),
                         label = cursor[FileColumns.DisplayName] ?: continue,
-                        uri = cursor[FileColumns.ContentUri]?.let { Uri.parse(it) } ?: continue,
-                        thumbnailUri = cursor[FileColumns.ThumbnailUri]?.let { Uri.parse(it) },
+                        uri = cursor[FileColumns.ContentUri]?.toUri() ?: continue,
+                        thumbnailUri = cursor[FileColumns.ThumbnailUri]?.toUri(),
                         storageStrategy = config.storageStrategy,
                         isDirectory = cursor[FileColumns.IsDirectory] == true,
                         authority = pluginAuthority,
@@ -109,23 +97,24 @@ class PluginFileProvider(
             set(FileColumns.ContentUri, uri.toString())
             set(FileColumns.MimeType, mimeType)
             set(FileColumns.Size, size)
-            set(FileColumns.MetaTitle, metaData[FileMetaType.Title])
-            set(FileColumns.MetaArtist, metaData[FileMetaType.Artist])
-            set(FileColumns.MetaAlbum, metaData[FileMetaType.Album])
-            set(FileColumns.MetaDuration, metaData[FileMetaType.Duration]?.toLong())
-            set(FileColumns.MetaYear, metaData[FileMetaType.Year]?.toInt())
+            set(FileColumns.MetaTitle, metaData.title)
+            set(FileColumns.MetaArtist, metaData.artist)
+            set(FileColumns.MetaAlbum, metaData.album)
+            set(FileColumns.MetaDuration, metaData.duration?.inWholeMilliseconds)
+            set(FileColumns.MetaYear, metaData.year?.value)
+            set(FileColumns.MetaDate, metaData.date?.toEpochSecond())
             set(
                 FileColumns.MetaWidth,
-                metaData[FileMetaType.Dimensions]?.split("x")?.getOrNull(0)?.toInt()
+                metaData.dimensions?.width,
             )
             set(
                 FileColumns.MetaHeight,
-                metaData[FileMetaType.Dimensions]?.split("x")?.getOrNull(1)?.toInt()
+                metaData.dimensions?.height,
             )
-            set(FileColumns.MetaLocation, metaData[FileMetaType.Location])
-            set(FileColumns.MetaAppName, metaData[FileMetaType.AppName])
-            set(FileColumns.MetaAppPackageName, metaData[FileMetaType.AppPackageName])
-            set(FileColumns.Owner, metaData[FileMetaType.Owner])
+            set(FileColumns.MetaLocation, metaData.location)
+            set(FileColumns.MetaAppName, metaData.appName)
+            set(FileColumns.MetaAppPackageName, metaData.appPackageName)
+            set(FileColumns.Owner, owner)
             set(FileColumns.DisplayName, label)
             set(FileColumns.ThumbnailUri, thumbnailUri?.toString())
             set(FileColumns.IsDirectory, isDirectory)

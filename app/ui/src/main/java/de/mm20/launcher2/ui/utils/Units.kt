@@ -8,6 +8,7 @@ import android.icu.util.MeasureUnit
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.preferences.MeasurementSystem
 import de.mm20.launcher2.ui.R
+import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -310,5 +311,59 @@ private fun formatInches(
             maximumFractionDigits = 1
         }.format(inches)
         return "$formatted ${context.getString(R.string.unit_inch_symbol)}"
+    }
+}
+
+internal fun formatFileSize(context: Context, bytes: Long): String {
+    if (isAtLeastApiLevel(30)) {
+        return NumberFormatter
+            .withLocale(
+                Locale.getDefault()
+            ).unitWidth(NumberFormatter.UnitWidth.NARROW)
+            .precision(Precision.maxFraction(1))
+            .format(
+                Measure(
+                    when {
+                        bytes < 1000L -> bytes
+                        bytes < 1000000L -> bytes / 1000.0
+                        bytes < 1000000000L -> bytes / 1000000.0
+                        bytes < 1000000000000L -> bytes / 1000000000.0
+                        else -> bytes / 1000000000000.0
+                    }, when {
+                        bytes < 1000L -> MeasureUnit.BYTE
+                        bytes < 1000000L -> MeasureUnit.KILOBYTE
+                        bytes < 1000000000L -> MeasureUnit.MEGABYTE
+                        bytes < 1000000000000L -> MeasureUnit.GIGABYTE
+                        else -> MeasureUnit.TERABYTE
+                    }
+                )
+            ).toString()
+    } else {
+        return when {
+            bytes < 1000L -> "$bytes ${context.getString(R.string.unit_byte_symbol)}"
+            bytes < 1000000L -> "${DecimalFormat("#,##0.#").format(bytes / 1000.0)} ${
+                context.getString(
+                    R.string.unit_kilobyte_symbol
+                )
+            }"
+
+            bytes < 1000000000L -> "${DecimalFormat("#,##0.#").format(bytes / 1000000.0)} ${
+                context.getString(
+                    R.string.unit_megabyte_symbol
+                )
+            }"
+
+            bytes < 1000000000000L -> "${DecimalFormat("#,##0.#").format(bytes / 1000000000.0)} ${
+                context.getString(
+                    R.string.unit_gigabyte_symbol
+                )
+            }"
+
+            else -> "${DecimalFormat("#,##0.#").format(bytes / 1000000000000.0)} ${
+                context.getString(
+                    R.string.unit_terabyte_symbol
+                )
+            }"
+        }
     }
 }

@@ -1,5 +1,8 @@
 package de.mm20.launcher2.ui.launcher.search.files
 
+import android.icu.text.DateFormat
+import android.icu.util.ULocale
+import android.text.format.DateUtils
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.SharedTransitionLayout
@@ -8,6 +11,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandIn
 import androidx.compose.animation.shrinkOut
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
@@ -32,8 +36,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.IntRect
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import de.mm20.launcher2.preferences.TimeFormat
 import de.mm20.launcher2.search.File
-import de.mm20.launcher2.search.FileMetaType
+import de.mm20.launcher2.search.file.FileMetadata
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.DefaultToolbarAction
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
@@ -43,10 +48,14 @@ import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
 import de.mm20.launcher2.ui.launcher.search.listItemViewModel
 import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
+import de.mm20.launcher2.ui.locals.LocalCalendarSystems
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
 import de.mm20.launcher2.ui.locals.LocalGridSettings
+import de.mm20.launcher2.ui.locals.LocalTimeFormat
 import de.mm20.launcher2.ui.modifier.scale
-import java.text.DecimalFormat
+import de.mm20.launcher2.ui.utils.formatFileSize
+import java.time.ZoneId
+import java.util.Date
 
 @Composable
 fun FileItem(
@@ -112,12 +121,7 @@ fun FileItem(
                                 ),
                                 style = MaterialTheme.typography.bodySmall,
                             )
-                            for ((k, v) in file.metaData) {
-                                Text(
-                                    text = stringResource(k.labelRes, v),
-                                    style = MaterialTheme.typography.bodySmall
-                                )
-                            }
+                            FileMetadata(file.metaData)
                             if (file.path != null) {
                                 Text(
                                     text = stringResource(
@@ -131,7 +135,7 @@ fun FileItem(
                                 Text(
                                     text = stringResource(
                                         R.string.file_meta_size,
-                                        formatFileSize(file.size)
+                                        formatFileSize(LocalContext.current, file.size)
                                     ),
                                     style = MaterialTheme.typography.bodySmall,
                                 )
@@ -341,30 +345,99 @@ fun FileItemGridPopup(
     }
 }
 
-private fun formatFileSize(size: Long): String {
-    return when {
-        size < 1000L -> "$size Bytes"
-        size < 1000000L -> "${DecimalFormat("#,##0.#").format(size / 1000.0)} kB"
-        size < 1000000000L -> "${DecimalFormat("#,##0.#").format(size / 1000000.0)} MB"
-        size < 1000000000000L -> "${DecimalFormat("#,##0.#").format(size / 1000000000.0)} GB"
-        else -> "${DecimalFormat("#,##0.#").format(size / 1000000000000.0)} TB"
+@Composable
+private fun ColumnScope.FileMetadata(metadata: FileMetadata) {
+    if (metadata.title != null) {
+        Text(
+            text = stringResource(R.string.file_meta_title, metadata.title!!),
+            style = MaterialTheme.typography.bodySmall
+        )
+    }
+    if (metadata.artist != null) {
+        Text(
+            text = stringResource(R.string.file_meta_artist, metadata.artist!!),
+            style = MaterialTheme.typography.bodySmall
+        )
+    }
+    if (metadata.album != null) {
+        Text(
+            text = stringResource(R.string.file_meta_album, metadata.album!!),
+            style = MaterialTheme.typography.bodySmall
+        )
+    }
+    if (metadata.duration != null) {
+        Text(
+            text = stringResource(R.string.file_meta_duration,
+                DateUtils.formatElapsedTime(metadata.duration!!.inWholeSeconds)
+            ),
+            style = MaterialTheme.typography.bodySmall
+        )
+    }
+    if (metadata.year != null) {
+        Text(
+            text = stringResource(
+                R.string.file_meta_year, android.icu.text.DateFormat.getInstanceForSkeleton(
+                    LocalCalendarSystems.current.first(),
+                    "yyyy",
+                    ULocale.getDefault(),
+                ).format(
+                    Date(
+                        metadata.year!!
+                            .atDay(0)
+                            .atTime(0, 0)
+                            .atZone(ZoneId.systemDefault())
+                            .toInstant().toEpochMilli()
+                    )
+                )
+            ),
+            style = MaterialTheme.typography.bodySmall
+        )
+    }
+    if (metadata.date != null) {
+        Text(
+            text = stringResource(
+                R.string.file_meta_date, DateFormat.getInstanceForSkeleton(
+                    LocalCalendarSystems.current.first(),
+                    if (LocalTimeFormat.current == TimeFormat.TwelveHour) "yyyy-MM-dd, hh:mm a" else "yyyy-MM-dd, HH:mm",
+                    ULocale.getDefault(),
+                ).format(
+                    Date(metadata.date!!.toInstant().toEpochMilli())
+                )
+            ),
+            style = MaterialTheme.typography.bodySmall
+        )
+    }
+    if (metadata.dimensions != null) {
+        Text(
+            text = stringResource(
+                R.string.file_meta_dimensions,
+                "${metadata.dimensions!!.width} x ${metadata.dimensions!!.height}"
+            ),
+            style = MaterialTheme.typography.bodySmall
+        )
+    }
+    if (metadata.location != null) {
+        Text(
+            text = stringResource(R.string.file_meta_location, metadata.location!!),
+            style = MaterialTheme.typography.bodySmall
+        )
+    }
+    if (metadata.appName != null) {
+        Text(
+            text = stringResource(R.string.file_meta_app_name, metadata.appName!!),
+            style = MaterialTheme.typography.bodySmall
+        )
+    }
+    if (metadata.appPackageName != null) {
+        Text(
+            text = stringResource(R.string.file_meta_app_pkgname, metadata.appPackageName!!),
+            style = MaterialTheme.typography.bodySmall
+        )
+    }
+    if (metadata.appVersion != null) {
+        Text(
+            text = stringResource(R.string.file_meta_app_version, metadata.appVersion!!),
+            style = MaterialTheme.typography.bodySmall
+        )
     }
 }
-
-private val FileMetaType.labelRes: Int
-    get() {
-        return when (this) {
-            FileMetaType.Title -> R.string.file_meta_title
-            FileMetaType.Artist -> R.string.file_meta_artist
-            FileMetaType.Album -> R.string.file_meta_album
-            FileMetaType.Duration -> R.string.file_meta_duration
-            FileMetaType.Year -> R.string.file_meta_year
-            FileMetaType.Dimensions -> R.string.file_meta_dimensions
-            FileMetaType.Location -> R.string.file_meta_location
-            FileMetaType.AppName -> R.string.file_meta_app_name
-            FileMetaType.AppVersion -> R.string.file_meta_app_version
-            FileMetaType.AppMinSdk -> R.string.file_meta_app_min_sdk
-            FileMetaType.AppPackageName -> R.string.file_meta_app_pkgname
-            FileMetaType.Owner -> R.string.file_meta_owner
-        }
-    }

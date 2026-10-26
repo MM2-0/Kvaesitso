@@ -1,10 +1,7 @@
 package de.mm20.launcher2.files.providers
 
-import de.mm20.launcher2.files.R
 import de.mm20.launcher2.nextcloud.NextcloudApiHelper
 import de.mm20.launcher2.search.File
-import de.mm20.launcher2.search.FileMetaType
-import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlin.math.min
@@ -25,8 +22,7 @@ internal class NextcloudFileProvider(
                     size = it.size,
                     isDirectory = it.isDirectory,
                     server = server,
-                    metaData = it.owner?.let { persistentMapOf(FileMetaType.Owner to it) }
-                        ?: persistentMapOf()
+                    owner = it.owner,
                 )
             }
         }
