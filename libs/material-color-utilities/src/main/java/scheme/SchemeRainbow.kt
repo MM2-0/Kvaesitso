@@ -23,29 +23,67 @@ import hct.Hct
 
 /** A playful theme - the source color's hue does not appear in the theme. */
 class SchemeRainbow(
-  sourceColorHct: Hct,
+  sourceColorHctList: List<Hct>,
   isDark: Boolean,
   contrastLevel: Double,
   specVersion: SpecVersion = DEFAULT_SPEC_VERSION,
   platform: Platform = DEFAULT_PLATFORM,
 ) :
   DynamicScheme(
-    sourceColorHct,
+    sourceColorHctList,
     Variant.RAINBOW,
     isDark,
     contrastLevel,
     platform,
     specVersion,
     ColorSpecs.get(specVersion)
-      .getPrimaryPalette(Variant.RAINBOW, sourceColorHct, isDark, platform, contrastLevel),
+      .getPrimaryPalette(
+        Variant.RAINBOW,
+        sourceColorHctList.first(),
+        isDark,
+        platform,
+        contrastLevel,
+      ),
     ColorSpecs.get(specVersion)
-      .getSecondaryPalette(Variant.RAINBOW, sourceColorHct, isDark, platform, contrastLevel),
+      .getSecondaryPalette(
+        Variant.RAINBOW,
+        sourceColorHctList.first(),
+        isDark,
+        platform,
+        contrastLevel,
+      ),
     ColorSpecs.get(specVersion)
-      .getTertiaryPalette(Variant.RAINBOW, sourceColorHct, isDark, platform, contrastLevel),
+      .getTertiaryPalette(
+        Variant.RAINBOW,
+        sourceColorHctList.first(),
+        isDark,
+        platform,
+        contrastLevel,
+      ),
     ColorSpecs.get(specVersion)
-      .getNeutralPalette(Variant.RAINBOW, sourceColorHct, isDark, platform, contrastLevel),
+      .getNeutralPalette(
+        Variant.RAINBOW,
+        sourceColorHctList.first(),
+        isDark,
+        platform,
+        contrastLevel,
+      ),
     ColorSpecs.get(specVersion)
-      .getNeutralVariantPalette(Variant.RAINBOW, sourceColorHct, isDark, platform, contrastLevel),
+      .getNeutralVariantPalette(
+        Variant.RAINBOW,
+        sourceColorHctList.first(),
+        isDark,
+        platform,
+        contrastLevel,
+      ),
     ColorSpecs.get(specVersion)
-      .getErrorPalette(Variant.RAINBOW, sourceColorHct, isDark, platform, contrastLevel),
-  )
+      .getErrorPalette(Variant.RAINBOW, sourceColorHctList.first(), isDark, platform, contrastLevel),
+  ) {
+  constructor(
+    sourceColorHct: Hct,
+    isDark: Boolean,
+    contrastLevel: Double,
+    specVersion: SpecVersion = DEFAULT_SPEC_VERSION,
+    platform: Platform = DEFAULT_PLATFORM,
+  ) : this(listOf(sourceColorHct), isDark, contrastLevel, specVersion, platform)
+}

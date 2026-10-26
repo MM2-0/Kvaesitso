@@ -30,7 +30,7 @@ import kotlin.math.min
  */
 open class DynamicScheme(
   /** The source color of the scheme in HCT format. */
-  val sourceColorHct: Hct,
+  val sourceColorHctList: List<Hct>,
   /** The variant of the scheme. */
   val variant: Variant,
   /** Whether or not the scheme is dark mode. */
@@ -53,11 +53,43 @@ open class DynamicScheme(
 ) {
 
   /** The spec version of the scheme. */
+  constructor(
+    sourceColorHct: Hct,
+    variant: Variant,
+    isDark: Boolean,
+    contrastLevel: Double,
+    platform: Platform = DEFAULT_PLATFORM,
+    specVersion: SpecVersion = DEFAULT_SPEC_VERSION,
+    primaryPalette: TonalPalette,
+    secondaryPalette: TonalPalette,
+    tertiaryPalette: TonalPalette,
+    neutralPalette: TonalPalette,
+    neutralVariantPalette: TonalPalette,
+    errorPalette: TonalPalette,
+  ) : this(
+    listOf(sourceColorHct),
+    variant,
+    isDark,
+    contrastLevel,
+    platform,
+    specVersion,
+    primaryPalette,
+    secondaryPalette,
+    tertiaryPalette,
+    neutralPalette,
+    neutralVariantPalette,
+    errorPalette,
+  )
+
   val specVersion: SpecVersion
 
   init {
-    this.specVersion = maybeFallbackSpecVersion(specVersion, variant)
+    require(sourceColorHctList.isNotEmpty()) { "sourceColorHctList cannot be empty" }
+    this.specVersion = maybeFallbackSpecVersion(specVersion, variant, platform)
   }
+
+  /** The source color of the scheme in HCT format. */
+  val sourceColorHct: Hct = sourceColorHctList.first()
 
   /** The source color of the scheme in ARGB format. */
   val sourceColorArgb: Int = sourceColorHct.toInt()
@@ -77,9 +109,17 @@ open class DynamicScheme(
   }
 
   override fun toString(): String {
-    return "Scheme: variant=${variant.name}, mode=${if (isDark) "dark" else "light"}, platform=${platform.name.lowercase(
-      Locale.ENGLISH
-    )}, contrastLevel=${DecimalFormat("0.0").format(contrastLevel)}, seed=$sourceColorHct, specVersion=$specVersion"
+    val mode = if (isDark) "dark" else "light"
+    val platformName = platform.name.lowercase(Locale.ENGLISH)
+    val contrast = DecimalFormat("0.0").format(contrastLevel)
+    val extraColors =
+      if (sourceColorHctList.size <= 1) {
+        ""
+      } else {
+        "sourceColorHctList=[${sourceColorHctList.joinToString(", ") { it.toString() }}], "
+      }
+    return "Scheme: variant=${variant.name}, mode=$mode, platform=$platformName, " +
+      "contrastLevel=$contrast, seed=$sourceColorHct, ${extraColors}specVersion=$specVersion"
   }
 
   private val dynamicColors = MaterialDynamicColors()
@@ -247,8 +287,8 @@ open class DynamicScheme(
     get() = getArgb(dynamicColors.onTertiaryFixedVariant)
 
   companion object {
-    val DEFAULT_SPEC_VERSION = SpecVersion.SPEC_2021
-    val DEFAULT_PLATFORM = Platform.PHONE
+    val DEFAULT_SPEC_VERSION: SpecVersion = SpecVersion.SPEC_2021
+    val DEFAULT_PLATFORM: Platform = Platform.PHONE
 
     @JvmStatic
     fun from(other: DynamicScheme, isDark: Boolean): DynamicScheme {
@@ -258,7 +298,7 @@ open class DynamicScheme(
     @JvmStatic
     fun from(other: DynamicScheme, isDark: Boolean, contrastLevel: Double): DynamicScheme {
       return DynamicScheme(
-        other.sourceColorHct,
+        other.sourceColorHctList,
         other.variant,
         isDark,
         contrastLevel,
@@ -356,18 +396,24 @@ open class DynamicScheme(
      * Returns the spec version to use for the given variant. If the variant is not supported by the
      * given spec version, the fallback spec version is returned.
      */
-    private fun maybeFallbackSpecVersion(specVersion: SpecVersion, variant: Variant): SpecVersion {
-      return when (variant) {
-        Variant.EXPRESSIVE,
-        Variant.VIBRANT,
-        Variant.TONAL_SPOT,
-        Variant.NEUTRAL -> specVersion
-        Variant.MONOCHROME,
-        Variant.FIDELITY,
-        Variant.CONTENT,
-        Variant.RAINBOW,
-        Variant.FRUIT_SALAD -> SpecVersion.SPEC_2021
+    private fun maybeFallbackSpecVersion(
+      specVersion: SpecVersion,
+      variant: Variant,
+      platform: Platform,
+    ): SpecVersion {
+      if (variant == Variant.CMF) {
+        return specVersion
       }
+      if (
+        variant == Variant.EXPRESSIVE ||
+          variant == Variant.VIBRANT ||
+          variant == Variant.TONAL_SPOT ||
+          variant == Variant.NEUTRAL ||
+          (platform == Platform.WATCH && variant == Variant.CONTENT)
+      ) {
+        return if (specVersion == SpecVersion.SPEC_2026) SpecVersion.SPEC_2025 else specVersion
+      }
+      return SpecVersion.SPEC_2021
     }
   }
 }

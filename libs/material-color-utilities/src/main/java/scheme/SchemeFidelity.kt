@@ -32,29 +32,73 @@ import hct.Hct
  * maintains constant appearance.
  */
 class SchemeFidelity(
-  sourceColorHct: Hct,
+  sourceColorHctList: List<Hct>,
   isDark: Boolean,
   contrastLevel: Double,
   specVersion: SpecVersion = DEFAULT_SPEC_VERSION,
   platform: Platform = DEFAULT_PLATFORM,
 ) :
   DynamicScheme(
-    sourceColorHct,
+    sourceColorHctList,
     Variant.FIDELITY,
     isDark,
     contrastLevel,
     platform,
     specVersion,
     ColorSpecs.get(specVersion)
-      .getPrimaryPalette(Variant.FIDELITY, sourceColorHct, isDark, platform, contrastLevel),
+      .getPrimaryPalette(
+        Variant.FIDELITY,
+        sourceColorHctList.first(),
+        isDark,
+        platform,
+        contrastLevel,
+      ),
     ColorSpecs.get(specVersion)
-      .getSecondaryPalette(Variant.FIDELITY, sourceColorHct, isDark, platform, contrastLevel),
+      .getSecondaryPalette(
+        Variant.FIDELITY,
+        sourceColorHctList.first(),
+        isDark,
+        platform,
+        contrastLevel,
+      ),
     ColorSpecs.get(specVersion)
-      .getTertiaryPalette(Variant.FIDELITY, sourceColorHct, isDark, platform, contrastLevel),
+      .getTertiaryPalette(
+        Variant.FIDELITY,
+        sourceColorHctList.first(),
+        isDark,
+        platform,
+        contrastLevel,
+      ),
     ColorSpecs.get(specVersion)
-      .getNeutralPalette(Variant.FIDELITY, sourceColorHct, isDark, platform, contrastLevel),
+      .getNeutralPalette(
+        Variant.FIDELITY,
+        sourceColorHctList.first(),
+        isDark,
+        platform,
+        contrastLevel,
+      ),
     ColorSpecs.get(specVersion)
-      .getNeutralVariantPalette(Variant.FIDELITY, sourceColorHct, isDark, platform, contrastLevel),
+      .getNeutralVariantPalette(
+        Variant.FIDELITY,
+        sourceColorHctList.first(),
+        isDark,
+        platform,
+        contrastLevel,
+      ),
     ColorSpecs.get(specVersion)
-      .getErrorPalette(Variant.FIDELITY, sourceColorHct, isDark, platform, contrastLevel),
-  )
+      .getErrorPalette(
+        Variant.FIDELITY,
+        sourceColorHctList.first(),
+        isDark,
+        platform,
+        contrastLevel,
+      ),
+  ) {
+  constructor(
+    sourceColorHct: Hct,
+    isDark: Boolean,
+    contrastLevel: Double,
+    specVersion: SpecVersion = DEFAULT_SPEC_VERSION,
+    platform: Platform = DEFAULT_PLATFORM,
+  ) : this(listOf(sourceColorHct), isDark, contrastLevel, specVersion, platform)
+}

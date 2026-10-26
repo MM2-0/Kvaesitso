@@ -23,35 +23,73 @@ import hct.Hct
 
 /** A calm theme, sedated colors that aren't particularly chromatic. */
 class SchemeTonalSpot(
-  sourceColorHct: Hct,
+  sourceColorHctList: List<Hct>,
   isDark: Boolean,
   contrastLevel: Double,
   specVersion: SpecVersion = DEFAULT_SPEC_VERSION,
   platform: Platform = DEFAULT_PLATFORM,
 ) :
   DynamicScheme(
-    sourceColorHct,
+    sourceColorHctList,
     Variant.TONAL_SPOT,
     isDark,
     contrastLevel,
     platform,
     specVersion,
     ColorSpecs.get(specVersion)
-      .getPrimaryPalette(Variant.TONAL_SPOT, sourceColorHct, isDark, platform, contrastLevel),
-    ColorSpecs.get(specVersion)
-      .getSecondaryPalette(Variant.TONAL_SPOT, sourceColorHct, isDark, platform, contrastLevel),
-    ColorSpecs.get(specVersion)
-      .getTertiaryPalette(Variant.TONAL_SPOT, sourceColorHct, isDark, platform, contrastLevel),
-    ColorSpecs.get(specVersion)
-      .getNeutralPalette(Variant.TONAL_SPOT, sourceColorHct, isDark, platform, contrastLevel),
-    ColorSpecs.get(specVersion)
-      .getNeutralVariantPalette(
+      .getPrimaryPalette(
         Variant.TONAL_SPOT,
-        sourceColorHct,
+        sourceColorHctList.first(),
         isDark,
         platform,
         contrastLevel,
       ),
     ColorSpecs.get(specVersion)
-      .getErrorPalette(Variant.TONAL_SPOT, sourceColorHct, isDark, platform, contrastLevel),
-  )
+      .getSecondaryPalette(
+        Variant.TONAL_SPOT,
+        sourceColorHctList.first(),
+        isDark,
+        platform,
+        contrastLevel,
+      ),
+    ColorSpecs.get(specVersion)
+      .getTertiaryPalette(
+        Variant.TONAL_SPOT,
+        sourceColorHctList.first(),
+        isDark,
+        platform,
+        contrastLevel,
+      ),
+    ColorSpecs.get(specVersion)
+      .getNeutralPalette(
+        Variant.TONAL_SPOT,
+        sourceColorHctList.first(),
+        isDark,
+        platform,
+        contrastLevel,
+      ),
+    ColorSpecs.get(specVersion)
+      .getNeutralVariantPalette(
+        Variant.TONAL_SPOT,
+        sourceColorHctList.first(),
+        isDark,
+        platform,
+        contrastLevel,
+      ),
+    ColorSpecs.get(specVersion)
+      .getErrorPalette(
+        Variant.TONAL_SPOT,
+        sourceColorHctList.first(),
+        isDark,
+        platform,
+        contrastLevel,
+      ),
+  ) {
+  constructor(
+    sourceColorHct: Hct,
+    isDark: Boolean,
+    contrastLevel: Double,
+    specVersion: SpecVersion = DEFAULT_SPEC_VERSION,
+    platform: Platform = DEFAULT_PLATFORM,
+  ) : this(listOf(sourceColorHct), isDark, contrastLevel, specVersion, platform)
+}

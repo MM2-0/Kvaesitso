@@ -26,4 +26,5 @@ enum class Variant {
   CONTENT,
   RAINBOW,
   FRUIT_SALAD,
+  CMF,
 }

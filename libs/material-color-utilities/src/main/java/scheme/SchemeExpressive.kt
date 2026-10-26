@@ -23,35 +23,73 @@ import hct.Hct
 
 /** A playful theme - the source color's hue does not appear in the theme. */
 class SchemeExpressive(
-  sourceColorHct: Hct,
+  sourceColorHctList: List<Hct>,
   isDark: Boolean,
   contrastLevel: Double,
   specVersion: SpecVersion = DEFAULT_SPEC_VERSION,
   platform: Platform = DEFAULT_PLATFORM,
 ) :
   DynamicScheme(
-    sourceColorHct,
+    sourceColorHctList,
     Variant.EXPRESSIVE,
     isDark,
     contrastLevel,
     platform,
     specVersion,
     ColorSpecs.get(specVersion)
-      .getPrimaryPalette(Variant.EXPRESSIVE, sourceColorHct, isDark, platform, contrastLevel),
-    ColorSpecs.get(specVersion)
-      .getSecondaryPalette(Variant.EXPRESSIVE, sourceColorHct, isDark, platform, contrastLevel),
-    ColorSpecs.get(specVersion)
-      .getTertiaryPalette(Variant.EXPRESSIVE, sourceColorHct, isDark, platform, contrastLevel),
-    ColorSpecs.get(specVersion)
-      .getNeutralPalette(Variant.EXPRESSIVE, sourceColorHct, isDark, platform, contrastLevel),
-    ColorSpecs.get(specVersion)
-      .getNeutralVariantPalette(
+      .getPrimaryPalette(
         Variant.EXPRESSIVE,
-        sourceColorHct,
+        sourceColorHctList.first(),
         isDark,
         platform,
         contrastLevel,
       ),
     ColorSpecs.get(specVersion)
-      .getErrorPalette(Variant.EXPRESSIVE, sourceColorHct, isDark, platform, contrastLevel),
-  )
+      .getSecondaryPalette(
+        Variant.EXPRESSIVE,
+        sourceColorHctList.first(),
+        isDark,
+        platform,
+        contrastLevel,
+      ),
+    ColorSpecs.get(specVersion)
+      .getTertiaryPalette(
+        Variant.EXPRESSIVE,
+        sourceColorHctList.first(),
+        isDark,
+        platform,
+        contrastLevel,
+      ),
+    ColorSpecs.get(specVersion)
+      .getNeutralPalette(
+        Variant.EXPRESSIVE,
+        sourceColorHctList.first(),
+        isDark,
+        platform,
+        contrastLevel,
+      ),
+    ColorSpecs.get(specVersion)
+      .getNeutralVariantPalette(
+        Variant.EXPRESSIVE,
+        sourceColorHctList.first(),
+        isDark,
+        platform,
+        contrastLevel,
+      ),
+    ColorSpecs.get(specVersion)
+      .getErrorPalette(
+        Variant.EXPRESSIVE,
+        sourceColorHctList.first(),
+        isDark,
+        platform,
+        contrastLevel,
+      ),
+  ) {
+  constructor(
+    sourceColorHct: Hct,
+    isDark: Boolean,
+    contrastLevel: Double,
+    specVersion: SpecVersion = DEFAULT_SPEC_VERSION,
+    platform: Platform = DEFAULT_PLATFORM,
+  ) : this(listOf(sourceColorHct), isDark, contrastLevel, specVersion, platform)
+}

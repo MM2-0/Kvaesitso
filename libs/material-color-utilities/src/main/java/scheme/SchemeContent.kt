@@ -20,6 +20,7 @@ import dynamiccolor.ColorSpecs
 import dynamiccolor.DynamicScheme
 import dynamiccolor.Variant
 import hct.Hct
+import palettes.TonalPalette
 
 /**
  * A scheme that places the source color in Scheme.primaryContainer.
@@ -33,29 +34,75 @@ import hct.Hct
  * equivalent to rotating hue clockwise by 60 degrees. It also maintains constant appearance.
  */
 class SchemeContent(
-  sourceColorHct: Hct,
+  sourceColorHctList: List<Hct>,
   isDark: Boolean,
   contrastLevel: Double,
   specVersion: SpecVersion = DEFAULT_SPEC_VERSION,
   platform: Platform = DEFAULT_PLATFORM,
 ) :
   DynamicScheme(
-    sourceColorHct,
+    sourceColorHctList,
     Variant.CONTENT,
     isDark,
     contrastLevel,
     platform,
     specVersion,
     ColorSpecs.get(specVersion)
-      .getPrimaryPalette(Variant.CONTENT, sourceColorHct, isDark, platform, contrastLevel),
+      .getPrimaryPalette(
+        Variant.CONTENT,
+        sourceColorHctList.first(),
+        isDark,
+        platform,
+        contrastLevel,
+      ),
     ColorSpecs.get(specVersion)
-      .getSecondaryPalette(Variant.CONTENT, sourceColorHct, isDark, platform, contrastLevel),
+      .getSecondaryPalette(
+        Variant.CONTENT,
+        sourceColorHctList.first(),
+        isDark,
+        platform,
+        contrastLevel,
+      ),
+    if (
+      sourceColorHctList.size > 1 &&
+        platform == Platform.WATCH &&
+        sourceColorHctList[0].toInt() != sourceColorHctList[1].toInt()
+    ) {
+      TonalPalette.fromHueAndChroma(sourceColorHctList[1].hue, sourceColorHctList[1].chroma)
+    } else {
+      ColorSpecs.get(specVersion)
+        .getTertiaryPalette(
+          Variant.CONTENT,
+          sourceColorHctList.first(),
+          isDark,
+          platform,
+          contrastLevel,
+        )
+    },
     ColorSpecs.get(specVersion)
-      .getTertiaryPalette(Variant.CONTENT, sourceColorHct, isDark, platform, contrastLevel),
+      .getNeutralPalette(
+        Variant.CONTENT,
+        sourceColorHctList.first(),
+        isDark,
+        platform,
+        contrastLevel,
+      ),
     ColorSpecs.get(specVersion)
-      .getNeutralPalette(Variant.CONTENT, sourceColorHct, isDark, platform, contrastLevel),
+      .getNeutralVariantPalette(
+        Variant.CONTENT,
+        sourceColorHctList.first(),
+        isDark,
+        platform,
+        contrastLevel,
+      ),
     ColorSpecs.get(specVersion)
-      .getNeutralVariantPalette(Variant.CONTENT, sourceColorHct, isDark, platform, contrastLevel),
-    ColorSpecs.get(specVersion)
-      .getErrorPalette(Variant.CONTENT, sourceColorHct, isDark, platform, contrastLevel),
-  )
+      .getErrorPalette(Variant.CONTENT, sourceColorHctList.first(), isDark, platform, contrastLevel),
+  ) {
+  constructor(
+    sourceColorHct: Hct,
+    isDark: Boolean,
+    contrastLevel: Double,
+    specVersion: SpecVersion = DEFAULT_SPEC_VERSION,
+    platform: Platform = DEFAULT_PLATFORM,
+  ) : this(listOf(sourceColorHct), isDark, contrastLevel, specVersion, platform)
+}

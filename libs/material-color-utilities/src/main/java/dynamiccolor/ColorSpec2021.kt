@@ -29,7 +29,7 @@ import kotlin.math.max
 import kotlin.math.min
 
 /** [ColorSpec] implementation for the 2021 spec. */
-class ColorSpec2021 : ColorSpec {
+open class ColorSpec2021 : ColorSpec {
   // ////////////////////////////////////////////////////////////////
   // Main Palettes //
   // ////////////////////////////////////////////////////////////////
@@ -877,7 +877,7 @@ class ColorSpec2021 : ColorSpec {
   // Color value calculations //
   // ///////////////////////////////////////////////////////////////
   override fun getHct(scheme: DynamicScheme, color: DynamicColor): Hct {
-    // This is crucial for aesthetics: we aren't simply the taking the standard color
+    // This is crucial for aesthetics: we aren't simply taking the standard color
     // and changing its tone for contrast. Rather, we find the tone for contrast, then
     // use the specified chroma from the palette to construct a new color.
     //
@@ -1094,6 +1094,7 @@ class ColorSpec2021 : ColorSpec {
           40.0,
         )
       Variant.VIBRANT -> TonalPalette.fromHueAndChroma(sourceColorHct.hue, 200.0)
+      else -> throw IllegalArgumentException("$variant variant is not supported in current spec.")
     }
   }
 
@@ -1138,6 +1139,7 @@ class ColorSpec2021 : ColorSpec {
           ),
           24.0,
         )
+      else -> throw IllegalArgumentException("$variant variant is not supported in current spec.")
     }
   }
 
@@ -1186,6 +1188,7 @@ class ColorSpec2021 : ColorSpec {
           ),
           32.0,
         )
+      else -> throw IllegalArgumentException("$variant variant is not supported in current spec.")
     }
   }
 
@@ -1208,6 +1211,7 @@ class ColorSpec2021 : ColorSpec {
       Variant.EXPRESSIVE ->
         TonalPalette.fromHueAndChroma(MathUtils.sanitizeDegreesDouble(sourceColorHct.hue + 15), 8.0)
       Variant.VIBRANT -> TonalPalette.fromHueAndChroma(sourceColorHct.hue, 10.0)
+      else -> throw IllegalArgumentException("$variant variant is not supported in current spec.")
     }
   }
 
@@ -1233,6 +1237,7 @@ class ColorSpec2021 : ColorSpec {
           12.0,
         )
       Variant.VIBRANT -> TonalPalette.fromHueAndChroma(sourceColorHct.hue, 12.0)
+      else -> throw IllegalArgumentException("$variant variant is not supported in current spec.")
     }
   }
 

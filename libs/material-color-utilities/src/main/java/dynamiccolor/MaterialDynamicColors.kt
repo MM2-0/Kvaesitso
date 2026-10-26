@@ -17,7 +17,7 @@ package dynamiccolor
 
 /** Named colors, otherwise known as tokens, or roles, in the Material Design system. */
 class MaterialDynamicColors {
-  private val colorSpec: ColorSpec = ColorSpec2025()
+  private val colorSpec: ColorSpec = ColorSpec2026()
 
   fun highestSurface(scheme: DynamicScheme): DynamicColor = colorSpec.highestSurface(scheme)
 

@@ -21,11 +21,12 @@ import dynamiccolor.ToneDeltaPair.DeltaConstraint
 import dynamiccolor.ToneDeltaPair.TonePolarity
 import hct.Hct
 import palettes.TonalPalette
+import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
 
 /** [ColorSpec] implementation for the 2025 spec. */
-class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : ColorSpec by baseSpec {
+open class ColorSpec2025 : ColorSpec2021() {
   // ////////////////////////////////////////////////////////////////
   // Surfaces [S] //
   // ////////////////////////////////////////////////////////////////
@@ -33,7 +34,7 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
     get() {
       // Remapped to surface for 2025 spec.
       val color2025 = surface.copy(name = "background")
-      return baseSpec.background.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
+      return super.background.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
     }
 
   override val onBackground: DynamicColor
@@ -46,7 +47,7 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
             if (scheme.platform == Platform.WATCH) 100.0 else onSurface.getTone(scheme)
           },
         )
-      return baseSpec.onBackground.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
+      return super.onBackground.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
     }
 
   override val surface: DynamicColor
@@ -74,7 +75,7 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
           },
           isBackground = true,
         )
-      return baseSpec.surface.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
+      return super.surface.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
     }
 
   override val surfaceDim: DynamicColor
@@ -84,7 +85,7 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
           name = "surface_dim",
           palette = { scheme -> scheme.neutralPalette },
           tone = { scheme ->
-            if (scheme.isDark) {
+            if (scheme.isDark || scheme.platform == Platform.WATCH) {
               4.0
             } else {
               if (Hct.isYellow(scheme.neutralPalette.hue)) {
@@ -98,7 +99,7 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
           },
           isBackground = true,
           chromaMultiplier = { scheme ->
-            if (!scheme.isDark) {
+            if (!scheme.isDark && scheme.platform == Platform.PHONE) {
               when (scheme.variant) {
                 Variant.NEUTRAL -> 2.5
                 Variant.TONAL_SPOT -> 1.7
@@ -111,7 +112,7 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
             }
           },
         )
-      return baseSpec.surfaceDim.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
+      return super.surfaceDim.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
     }
 
   override val surfaceBright: DynamicColor
@@ -121,7 +122,7 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
           name = "surface_bright",
           palette = { scheme -> scheme.neutralPalette },
           tone = { scheme ->
-            if (scheme.isDark) {
+            if (scheme.isDark || scheme.platform == Platform.WATCH) {
               18.0
             } else {
               if (Hct.isYellow(scheme.neutralPalette.hue)) {
@@ -135,7 +136,7 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
           },
           isBackground = true,
           chromaMultiplier = { scheme ->
-            if (scheme.isDark) {
+            if (scheme.isDark || scheme.platform == Platform.WATCH) {
               when (scheme.variant) {
                 Variant.NEUTRAL -> 2.5
                 Variant.TONAL_SPOT -> 1.7
@@ -148,7 +149,7 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
             }
           },
         )
-      return baseSpec.surfaceBright.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
+      return super.surfaceBright.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
     }
 
   override val surfaceContainerLowest: DynamicColor
@@ -157,10 +158,12 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
         DynamicColor(
           name = "surface_container_lowest",
           palette = { scheme -> scheme.neutralPalette },
-          tone = { scheme -> if (scheme.isDark) 0.0 else 100.0 },
+          tone = { scheme ->
+            if (scheme.isDark || scheme.platform == Platform.WATCH) 0.0 else 100.0
+          },
           isBackground = true,
         )
-      return baseSpec.surfaceContainerLowest.extendSpecVersion(
+      return super.surfaceContainerLowest.extendSpecVersion(
         ColorSpec.SpecVersion.SPEC_2025,
         color2025,
       )
@@ -204,10 +207,7 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
             }
           },
         )
-      return baseSpec.surfaceContainerLow.extendSpecVersion(
-        ColorSpec.SpecVersion.SPEC_2025,
-        color2025,
-      )
+      return super.surfaceContainerLow.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
     }
 
   override val surfaceContainer: DynamicColor
@@ -248,7 +248,7 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
             }
           },
         )
-      return baseSpec.surfaceContainer.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
+      return super.surfaceContainer.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
     }
 
   override val surfaceContainerHigh: DynamicColor
@@ -289,7 +289,7 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
             }
           },
         )
-      return baseSpec.surfaceContainerHigh.extendSpecVersion(
+      return super.surfaceContainerHigh.extendSpecVersion(
         ColorSpec.SpecVersion.SPEC_2025,
         color2025,
       )
@@ -302,7 +302,7 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
           name = "surface_container_highest",
           palette = { scheme -> scheme.neutralPalette },
           tone = { scheme ->
-            if (scheme.isDark) {
+            if (scheme.isDark || scheme.platform == Platform.WATCH) {
               15.0
             } else {
               if (Hct.isYellow(scheme.neutralPalette.hue)) {
@@ -325,7 +325,7 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
             }
           },
         )
-      return baseSpec.surfaceContainerHighest.extendSpecVersion(
+      return super.surfaceContainerHighest.extendSpecVersion(
         ColorSpec.SpecVersion.SPEC_2025,
         color2025,
       )
@@ -338,7 +338,7 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
           name = "on_surface",
           palette = { scheme -> scheme.neutralPalette },
           tone = { scheme ->
-            if (scheme.variant == Variant.VIBRANT) {
+            if (scheme.platform == Platform.PHONE && scheme.variant == Variant.VIBRANT) {
               tMaxC(scheme.neutralPalette, 0.0, 100.0, 1.1)
             } else {
               DynamicColor.getInitialToneFromBackground { scheme: DynamicScheme ->
@@ -377,21 +377,21 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
             }
           },
           contrastCurve = { scheme ->
-            if (scheme.isDark && scheme.platform == Platform.PHONE) {
-              getContrastCurve(11.0)
+            if (scheme.platform == Platform.PHONE) {
+              if (scheme.isDark) getContrastCurve(11.0) else getContrastCurve(9.0)
             } else {
-              getContrastCurve(9.0)
+              ContrastCurve(4.5, 9.0, 11.0, 21.0)
             }
           },
         )
-      return baseSpec.onSurface.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
+      return super.onSurface.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
     }
 
   override val surfaceVariant: DynamicColor
     get() {
       // Remapped to surfaceContainerHighest for 2025 spec.
       val color2025 = surfaceContainerHighest.copy(name = "surface_variant")
-      return baseSpec.surfaceVariant.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
+      return super.surfaceVariant.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
     }
 
   override val onSurfaceVariant: DynamicColor
@@ -399,7 +399,13 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
       val color2025 =
         DynamicColor(
           name = "on_surface_variant",
-          palette = { scheme -> scheme.neutralPalette },
+          palette = { scheme ->
+            if (scheme.platform == Platform.WATCH) {
+              scheme.neutralVariantPalette
+            } else {
+              scheme.neutralPalette
+            }
+          },
           chromaMultiplier = { scheme ->
             if (scheme.platform == Platform.PHONE) {
               when (scheme.variant) {
@@ -429,11 +435,11 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
             if (scheme.platform == Platform.PHONE) {
               (if (scheme.isDark) getContrastCurve(6.0) else getContrastCurve(4.5))
             } else {
-              getContrastCurve(7.0)
+              ContrastCurve(3.0, 7.0, 7.0, 11.0)
             }
           },
         )
-      return baseSpec.onSurfaceVariant.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
+      return super.onSurfaceVariant.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
     }
 
   override val inverseSurface: DynamicColor
@@ -442,10 +448,12 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
         DynamicColor(
           name = "inverse_surface",
           palette = { scheme -> scheme.neutralPalette },
-          tone = { scheme -> if (scheme.isDark) 98.0 else 4.0 },
+          tone = { scheme ->
+            if (scheme.isDark || scheme.platform == Platform.WATCH) 98.0 else 4.0
+          },
           isBackground = true,
         )
-      return baseSpec.inverseSurface.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
+      return super.inverseSurface.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
     }
 
   override val inverseOnSurface: DynamicColor
@@ -457,7 +465,7 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
           background = { inverseSurface },
           contrastCurve = { getContrastCurve(7.0) },
         )
-      return baseSpec.inverseOnSurface.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
+      return super.inverseOnSurface.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
     }
 
   override val outline: DynamicColor
@@ -465,7 +473,13 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
       val color2025 =
         DynamicColor(
           name = "outline",
-          palette = { scheme -> scheme.neutralPalette },
+          palette = { scheme ->
+            if (scheme.platform == Platform.WATCH) {
+              scheme.neutralVariantPalette
+            } else {
+              scheme.neutralPalette
+            }
+          },
           chromaMultiplier = { scheme ->
             if (scheme.platform == Platform.PHONE) {
               when (scheme.variant) {
@@ -492,10 +506,14 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
             }
           },
           contrastCurve = { scheme ->
-            if (scheme.platform == Platform.PHONE) getContrastCurve(3.0) else getContrastCurve(4.5)
+            if (scheme.platform == Platform.PHONE) {
+              getContrastCurve(3.0)
+            } else {
+              ContrastCurve(1.5, 4.5, 4.5, 7.0)
+            }
           },
         )
-      return baseSpec.outline.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
+      return super.outline.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
     }
 
   override val outlineVariant: DynamicColor
@@ -503,7 +521,13 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
       val color2025 =
         DynamicColor(
           name = "outline_variant",
-          palette = { scheme -> scheme.neutralPalette },
+          palette = { scheme ->
+            if (scheme.platform == Platform.WATCH) {
+              scheme.neutralVariantPalette
+            } else {
+              scheme.neutralPalette
+            }
+          },
           chromaMultiplier = { scheme ->
             if (scheme.platform == Platform.PHONE) {
               when (scheme.variant) {
@@ -530,17 +554,21 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
             }
           },
           contrastCurve = { scheme ->
-            if (scheme.platform == Platform.PHONE) getContrastCurve(1.5) else getContrastCurve(3.0)
+            if (scheme.platform == Platform.PHONE) {
+              getContrastCurve(1.5)
+            } else {
+              ContrastCurve(1.0, 3.0, 3.0, 4.5)
+            }
           },
         )
-      return baseSpec.outlineVariant.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
+      return super.outlineVariant.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
     }
 
   override val surfaceTint: DynamicColor
     get() {
       // Remapped to primary for 2025 spec.
       val color2025 = primary.copy(name = "surface_tint")
-      return baseSpec.surfaceTint.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
+      return super.surfaceTint.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
     }
 
   // ////////////////////////////////////////////////////////////////
@@ -554,51 +582,39 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
           palette = { scheme -> scheme.primaryPalette },
           tone = { scheme ->
             when {
-              scheme.variant == Variant.NEUTRAL -> {
-                if (scheme.platform == Platform.PHONE) {
-                  if (scheme.isDark) 80.0 else 40.0
-                } else {
+              scheme.platform == Platform.WATCH -> {
+                if (scheme.variant == Variant.NEUTRAL) {
                   90.0
+                } else {
+                  mainTone(
+                    scheme.primaryPalette,
+                    if (scheme.variant == Variant.TONAL_SPOT) 90.0 else 100.0,
+                  )
                 }
+              }
+              scheme.variant == Variant.NEUTRAL -> {
+                if (scheme.isDark) 80.0 else 40.0
               }
               scheme.variant == Variant.TONAL_SPOT -> {
-                if (scheme.platform == Platform.PHONE) {
-                  if (scheme.isDark) {
-                    80.0
-                  } else {
-                    tMaxC(scheme.primaryPalette)
-                  }
-                } else {
-                  tMaxC(scheme.primaryPalette, 0.0, 90.0)
-                }
+                if (scheme.isDark) 80.0 else tMaxC(scheme.primaryPalette)
               }
               scheme.variant == Variant.EXPRESSIVE -> {
-                if (scheme.platform == Platform.PHONE) {
-                  tMaxC(
-                    scheme.primaryPalette,
-                    0.0,
-                    if (Hct.isYellow(scheme.primaryPalette.hue)) {
-                      25.0
-                    } else if (Hct.isCyan(scheme.primaryPalette.hue)) {
-                      88.0
-                    } else {
-                      98.0
-                    },
-                  )
-                } else { // WATCH
-                  tMaxC(scheme.primaryPalette)
-                }
+                tMaxC(
+                  scheme.primaryPalette,
+                  0.0,
+                  if (scheme.isDark) {
+                    if (Hct.isCyan(scheme.primaryPalette.hue)) 88.0 else 98.0
+                  } else {
+                    if (Hct.isYellow(scheme.primaryPalette.hue)) 25.0 else 98.0
+                  },
+                )
               }
               else -> { // VIBRANT
-                if (scheme.platform == Platform.PHONE) {
-                  tMaxC(
-                    scheme.primaryPalette,
-                    0.0,
-                    if (Hct.isCyan(scheme.primaryPalette.hue)) 88.0 else 98.0,
-                  )
-                } else { // WATCH
-                  tMaxC(scheme.primaryPalette)
-                }
+                tMaxC(
+                  scheme.primaryPalette,
+                  0.0,
+                  if (Hct.isCyan(scheme.primaryPalette.hue)) 88.0 else 98.0,
+                )
               }
             }
           },
@@ -627,7 +643,7 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
             }
           },
         )
-      return baseSpec.primary.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
+      return super.primary.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
     }
 
   override val primaryDim: DynamicColor
@@ -636,23 +652,42 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
         name = "primary_dim",
         palette = { scheme -> scheme.primaryPalette },
         tone = { scheme ->
-          when (scheme.variant) {
-            Variant.NEUTRAL -> 85.0
-            Variant.TONAL_SPOT -> tMaxC(scheme.primaryPalette, 0.0, 90.0)
+          when {
+            scheme.platform == Platform.WATCH ->
+              if (scheme.variant == Variant.NEUTRAL) {
+                85.0
+              } else {
+                dimTone(
+                  scheme.primaryPalette,
+                  if (scheme.variant == Variant.TONAL_SPOT) 90.0 else 100.0,
+                )
+              }
+            scheme.variant == Variant.NEUTRAL -> 85.0
+            scheme.variant == Variant.TONAL_SPOT -> tMaxC(scheme.primaryPalette, 0.0, 90.0)
             else -> tMaxC(scheme.primaryPalette)
           }
         },
         isBackground = true,
         background = { surfaceContainerHigh },
-        contrastCurve = { getContrastCurve(4.5) },
-        toneDeltaPair = {
-          ToneDeltaPair(
-            roleA = primaryDim,
-            roleB = primary,
-            delta = 5.0,
-            polarity = TonePolarity.DARKER,
-            constraint = DeltaConstraint.FARTHER,
-          )
+        contrastCurve = { scheme ->
+          if (scheme.platform == Platform.WATCH) {
+            ContrastCurve(4.5, 4.5, 4.5, 4.5)
+          } else {
+            getContrastCurve(4.5)
+          }
+        },
+        toneDeltaPair = { scheme ->
+          if (scheme.platform == Platform.WATCH) {
+            null
+          } else {
+            ToneDeltaPair(
+              roleA = primaryDim,
+              roleB = primary,
+              delta = 5.0,
+              polarity = TonePolarity.DARKER,
+              constraint = DeltaConstraint.FARTHER,
+            )
+          }
         },
       )
     }
@@ -668,7 +703,7 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
             if (scheme.platform == Platform.PHONE) getContrastCurve(6.0) else getContrastCurve(7.0)
           },
         )
-      return baseSpec.onPrimary.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
+      return super.onPrimary.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
     }
 
   override val primaryContainer: DynamicColor
@@ -689,7 +724,7 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
                 }
               scheme.variant == Variant.EXPRESSIVE ->
                 if (scheme.isDark) {
-                  tMaxC(scheme.primaryPalette, 30.0, 93.0)
+                  tMinC(scheme.primaryPalette, 30.0, 93.0)
                 } else {
                   tMaxC(
                     scheme.primaryPalette,
@@ -715,7 +750,7 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
             if (scheme.platform == Platform.PHONE) {
               if (scheme.isDark) surfaceBright else surfaceDim
             } else {
-              null
+              surfaceContainerHigh
             }
           },
           toneDeltaPair = { scheme ->
@@ -732,14 +767,14 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
             }
           },
           contrastCurve = { scheme ->
-            if (scheme.platform == Platform.PHONE && scheme.contrastLevel > 0) {
-              getContrastCurve(1.5)
+            if (scheme.platform == Platform.PHONE) {
+              if (scheme.contrastLevel > 0) getContrastCurve(1.5) else null
             } else {
-              null
+              ContrastCurve(1.0, 1.0, 3.0, 4.5)
             }
           },
         )
-      return baseSpec.primaryContainer.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
+      return super.primaryContainer.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
     }
 
   override val onPrimaryContainer: DynamicColor
@@ -750,13 +785,14 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
           palette = { scheme -> scheme.primaryPalette },
           background = { primaryContainer },
           contrastCurve = { scheme ->
-            if (scheme.platform == Platform.PHONE) getContrastCurve(6.0) else getContrastCurve(7.0)
+            if (scheme.platform == Platform.PHONE) {
+              getContrastCurve(6.0)
+            } else {
+              ContrastCurve(3.0, 7.0, 7.0, 11.0)
+            }
           },
         )
-      return baseSpec.onPrimaryContainer.extendSpecVersion(
-        ColorSpec.SpecVersion.SPEC_2025,
-        color2025,
-      )
+      return super.onPrimaryContainer.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
     }
 
   override val inversePrimary: DynamicColor
@@ -771,7 +807,7 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
             if (scheme.platform == Platform.PHONE) getContrastCurve(6.0) else getContrastCurve(7.0)
           },
         )
-      return baseSpec.inversePrimary.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
+      return super.inversePrimary.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
     }
 
   // ////////////////////////////////////////////////////////////////
@@ -789,7 +825,7 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
                 if (scheme.variant == Variant.NEUTRAL) {
                   90.0
                 } else {
-                  tMaxC(scheme.secondaryPalette, 0.0, 90.0)
+                  mainTone(scheme.secondaryPalette, 90.0)
                 }
               scheme.variant == Variant.NEUTRAL ->
                 if (scheme.isDark) {
@@ -829,32 +865,42 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
             }
           },
         )
-      return baseSpec.secondary.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
+      return super.secondary.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
     }
 
-  override val secondaryDim: DynamicColor?
+  override val secondaryDim: DynamicColor
     get() {
       return DynamicColor(
         name = "secondary_dim",
         palette = { scheme -> scheme.secondaryPalette },
         tone = { scheme ->
-          if (scheme.variant == Variant.NEUTRAL) {
-            85.0
-          } else {
-            tMaxC(scheme.secondaryPalette, 0.0, 90.0)
+          when {
+            scheme.variant == Variant.NEUTRAL -> 85.0
+            scheme.platform == Platform.WATCH -> dimTone(scheme.secondaryPalette, 90.0)
+            else -> tMaxC(scheme.secondaryPalette, 0.0, 90.0)
           }
         },
         isBackground = true,
         background = { surfaceContainerHigh },
-        contrastCurve = { getContrastCurve(4.5) },
-        toneDeltaPair = {
-          ToneDeltaPair(
-            roleA = secondaryDim!!,
-            roleB = secondary,
-            delta = 5.0,
-            polarity = TonePolarity.DARKER,
-            constraint = DeltaConstraint.FARTHER,
-          )
+        contrastCurve = { scheme ->
+          if (scheme.platform == Platform.WATCH) {
+            ContrastCurve(4.5, 4.5, 4.5, 4.5)
+          } else {
+            getContrastCurve(4.5)
+          }
+        },
+        toneDeltaPair = { scheme ->
+          if (scheme.platform == Platform.WATCH) {
+            null
+          } else {
+            ToneDeltaPair(
+              roleA = secondaryDim,
+              roleB = secondary,
+              delta = 5.0,
+              polarity = TonePolarity.DARKER,
+              constraint = DeltaConstraint.FARTHER,
+            )
+          }
         },
       )
     }
@@ -872,7 +918,7 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
             if (scheme.platform == Platform.PHONE) getContrastCurve(6.0) else getContrastCurve(7.0)
           },
         )
-      return baseSpec.onSecondary.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
+      return super.onSecondary.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
     }
 
   override val secondaryContainer: DynamicColor
@@ -900,7 +946,7 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
             if (scheme.platform == Platform.PHONE) {
               if (scheme.isDark) surfaceBright else surfaceDim
             } else {
-              null
+              surfaceContainerHigh
             }
           },
           toneDeltaPair = { scheme ->
@@ -917,17 +963,14 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
             }
           },
           contrastCurve = { scheme ->
-            if (scheme.platform == Platform.PHONE && scheme.contrastLevel > 0) {
-              getContrastCurve(1.5)
+            if (scheme.platform == Platform.PHONE) {
+              if (scheme.contrastLevel > 0) getContrastCurve(1.5) else null
             } else {
-              null
+              ContrastCurve(1.0, 1.0, 3.0, 4.5)
             }
           },
         )
-      return baseSpec.secondaryContainer.extendSpecVersion(
-        ColorSpec.SpecVersion.SPEC_2025,
-        color2025,
-      )
+      return super.secondaryContainer.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
     }
 
   override val onSecondaryContainer: DynamicColor
@@ -938,10 +981,14 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
           palette = { scheme -> scheme.secondaryPalette },
           background = { secondaryContainer },
           contrastCurve = { scheme ->
-            if (scheme.platform == Platform.PHONE) getContrastCurve(6.0) else getContrastCurve(7.0)
+            if (scheme.platform == Platform.PHONE) {
+              getContrastCurve(6.0)
+            } else {
+              ContrastCurve(3.0, 7.0, 7.0, 11.0)
+            }
           },
         )
-      return baseSpec.onSecondaryContainer.extendSpecVersion(
+      return super.onSecondaryContainer.extendSpecVersion(
         ColorSpec.SpecVersion.SPEC_2025,
         color2025,
       )
@@ -959,11 +1006,10 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
           tone = { scheme ->
             when {
               scheme.platform == Platform.WATCH ->
-                if (scheme.variant == Variant.TONAL_SPOT) {
-                  tMaxC(scheme.tertiaryPalette, 0.0, 90.0)
-                } else {
-                  tMaxC(scheme.tertiaryPalette)
-                }
+                mainTone(
+                  scheme.tertiaryPalette,
+                  if (scheme.variant == Variant.TONAL_SPOT) 90.0 else 100.0,
+                )
               scheme.variant == Variant.EXPRESSIVE || scheme.variant == Variant.VIBRANT ->
                 tMaxC(
                   scheme.tertiaryPalette,
@@ -1011,32 +1057,46 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
             }
           },
         )
-      return baseSpec.tertiary.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
+      return super.tertiary.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
     }
 
-  override val tertiaryDim: DynamicColor?
+  override val tertiaryDim: DynamicColor
     get() {
       return DynamicColor(
         name = "tertiary_dim",
         palette = { scheme -> scheme.tertiaryPalette },
         tone = { scheme ->
-          if (scheme.variant == Variant.TONAL_SPOT) {
-            tMaxC(scheme.tertiaryPalette, 0.0, 90.0)
-          } else {
-            tMaxC(scheme.tertiaryPalette)
+          when {
+            scheme.platform == Platform.WATCH ->
+              dimTone(
+                scheme.tertiaryPalette,
+                if (scheme.variant == Variant.TONAL_SPOT) 90.0 else 100.0,
+              )
+            scheme.variant == Variant.TONAL_SPOT -> tMaxC(scheme.tertiaryPalette, 0.0, 90.0)
+            else -> tMaxC(scheme.tertiaryPalette)
           }
         },
         isBackground = true,
         background = { surfaceContainerHigh },
-        contrastCurve = { getContrastCurve(4.5) },
-        toneDeltaPair = {
-          ToneDeltaPair(
-            roleA = tertiaryDim!!,
-            roleB = tertiary,
-            delta = 5.0,
-            polarity = TonePolarity.DARKER,
-            constraint = DeltaConstraint.FARTHER,
-          )
+        contrastCurve = { scheme ->
+          if (scheme.platform == Platform.WATCH) {
+            ContrastCurve(4.5, 4.5, 4.5, 4.5)
+          } else {
+            getContrastCurve(4.5)
+          }
+        },
+        toneDeltaPair = { scheme ->
+          if (scheme.platform == Platform.WATCH) {
+            null
+          } else {
+            ToneDeltaPair(
+              roleA = tertiaryDim,
+              roleB = tertiary,
+              delta = 5.0,
+              polarity = TonePolarity.DARKER,
+              constraint = DeltaConstraint.FARTHER,
+            )
+          }
         },
       )
     }
@@ -1054,7 +1114,7 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
             if (scheme.platform == Platform.PHONE) getContrastCurve(6.0) else getContrastCurve(7.0)
           },
         )
-      return baseSpec.onTertiary.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
+      return super.onTertiary.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
     }
 
   override val tertiaryContainer: DynamicColor
@@ -1066,11 +1126,10 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
           tone = { scheme ->
             when {
               scheme.platform == Platform.WATCH ->
-                if (scheme.variant == Variant.TONAL_SPOT) {
-                  tMaxC(scheme.tertiaryPalette, 0.0, 90.0)
-                } else {
-                  tMaxC(scheme.tertiaryPalette)
-                }
+                containerTone(
+                  scheme.tertiaryPalette,
+                  if (scheme.variant == Variant.TONAL_SPOT) 90.0 else 100.0,
+                )
               scheme.variant == Variant.NEUTRAL ->
                 if (scheme.isDark) {
                   tMaxC(scheme.tertiaryPalette, 0.0, 93.0)
@@ -1106,34 +1165,18 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
             if (scheme.platform == Platform.PHONE) {
               if (scheme.isDark) surfaceBright else surfaceDim
             } else {
-              null
-            }
-          },
-          toneDeltaPair = { scheme ->
-            if (scheme.platform == Platform.WATCH) {
-              ToneDeltaPair(
-                roleA = tertiaryContainer,
-                roleB = tertiaryDim!!,
-                delta = 10.0,
-                polarity = TonePolarity.DARKER,
-                constraint = DeltaConstraint.FARTHER,
-              )
-            } else {
-              null
+              surfaceContainerHigh
             }
           },
           contrastCurve = { scheme ->
-            if (scheme.platform == Platform.PHONE && scheme.contrastLevel > 0) {
-              getContrastCurve(1.5)
+            if (scheme.platform == Platform.PHONE) {
+              if (scheme.contrastLevel > 0) getContrastCurve(1.5) else null
             } else {
-              null
+              ContrastCurve(1.0, 1.0, 3.0, 4.5)
             }
           },
         )
-      return baseSpec.tertiaryContainer.extendSpecVersion(
-        ColorSpec.SpecVersion.SPEC_2025,
-        color2025,
-      )
+      return super.tertiaryContainer.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
     }
 
   override val onTertiaryContainer: DynamicColor
@@ -1144,13 +1187,14 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
           palette = { scheme -> scheme.tertiaryPalette },
           background = { tertiaryContainer },
           contrastCurve = { scheme ->
-            if (scheme.platform == Platform.PHONE) getContrastCurve(6.0) else getContrastCurve(7.0)
+            if (scheme.platform == Platform.PHONE) {
+              getContrastCurve(6.0)
+            } else {
+              ContrastCurve(3.0, 7.0, 7.0, 11.0)
+            }
           },
         )
-      return baseSpec.onTertiaryContainer.extendSpecVersion(
-        ColorSpec.SpecVersion.SPEC_2025,
-        color2025,
-      )
+      return super.onTertiaryContainer.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
     }
 
   // ////////////////////////////////////////////////////////////////
@@ -1170,7 +1214,13 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
                 tMaxC(scheme.errorPalette)
               }
             } else {
-              tMinC(scheme.errorPalette)
+              val startingTone = DynamicColor.foregroundTone(25.0, ratio = 7.0)
+              findDesiredChromaByTone(
+                scheme.errorPalette.hue,
+                scheme.errorPalette.chroma,
+                startingTone,
+                100.0,
+              )
             }
           },
           isBackground = true,
@@ -1182,7 +1232,11 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
             }
           },
           contrastCurve = { scheme ->
-            if (scheme.platform == Platform.PHONE) getContrastCurve(4.5) else getContrastCurve(7.0)
+            if (scheme.platform == Platform.PHONE) {
+              getContrastCurve(4.5)
+            } else {
+              ContrastCurve(3.0, 7.0, 7.0, 7.0)
+            }
           },
           toneDeltaPair = { scheme ->
             if (scheme.platform == Platform.PHONE) {
@@ -1198,10 +1252,10 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
             }
           },
         )
-      return baseSpec.error.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
+      return super.error.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
     }
 
-  override val errorDim: DynamicColor?
+  override val errorDim: DynamicColor
     get() {
       return DynamicColor(
         name = "error_dim",
@@ -1212,7 +1266,7 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
         contrastCurve = { getContrastCurve(4.5) },
         toneDeltaPair = {
           ToneDeltaPair(
-            roleA = errorDim!!,
+            roleA = errorDim,
             roleB = error,
             delta = 5.0,
             polarity = TonePolarity.DARKER,
@@ -1230,10 +1284,14 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
           palette = { scheme -> scheme.errorPalette },
           background = { scheme -> if (scheme.platform == Platform.PHONE) error else errorDim },
           contrastCurve = { scheme ->
-            if (scheme.platform == Platform.PHONE) getContrastCurve(6.0) else getContrastCurve(7.0)
+            if (scheme.platform == Platform.PHONE) {
+              getContrastCurve(6.0)
+            } else {
+              ContrastCurve(4.5, 7.0, 11.0, 21.0)
+            }
           },
         )
-      return baseSpec.onError.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
+      return super.onError.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
     }
 
   override val errorContainer: DynamicColor
@@ -1258,7 +1316,7 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
             if (scheme.platform == Platform.PHONE) {
               if (scheme.isDark) surfaceBright else surfaceDim
             } else {
-              null
+              surfaceContainerHigh
             }
           },
           toneDeltaPair = { scheme ->
@@ -1275,14 +1333,14 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
             }
           },
           contrastCurve = { scheme ->
-            if (scheme.platform == Platform.PHONE && scheme.contrastLevel > 0) {
-              getContrastCurve(1.5)
+            if (scheme.platform == Platform.PHONE) {
+              if (scheme.contrastLevel > 0) getContrastCurve(1.5) else null
             } else {
-              null
+              ContrastCurve(1.0, 1.0, 3.0, 4.5)
             }
           },
         )
-      return baseSpec.errorContainer.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
+      return super.errorContainer.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
     }
 
   override val onErrorContainer: DynamicColor
@@ -1293,10 +1351,14 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
           palette = { scheme -> scheme.errorPalette },
           background = { errorContainer },
           contrastCurve = { scheme ->
-            if (scheme.platform == Platform.PHONE) getContrastCurve(4.5) else getContrastCurve(7.0)
+            if (scheme.platform == Platform.PHONE) {
+              getContrastCurve(4.5)
+            } else {
+              ContrastCurve(3.0, 7.0, 7.0, 11.0)
+            }
           },
         )
-      return baseSpec.onErrorContainer.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
+      return super.onErrorContainer.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
     }
 
   // ////////////////////////////////////////////////////////////////
@@ -1309,26 +1371,37 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
           name = "primary_fixed",
           palette = { scheme -> scheme.primaryPalette },
           tone = { scheme ->
-            val tempS = DynamicScheme.from(scheme, isDark = false, contrastLevel = 0.0)
-            primaryContainer.getTone(tempS)
+            if (scheme.platform == Platform.WATCH) {
+              if (scheme.variant == Variant.NEUTRAL) {
+                90.0
+              } else {
+                mainTone(
+                  scheme.primaryPalette,
+                  if (scheme.variant == Variant.TONAL_SPOT) 90.0 else 100.0,
+                )
+              }
+            } else {
+              val tempS = DynamicScheme.from(scheme, isDark = false, contrastLevel = 0.0)
+              primaryContainer.getTone(tempS)
+            }
           },
           isBackground = true,
           background = { scheme ->
             if (scheme.platform == Platform.PHONE) {
               if (scheme.isDark) surfaceBright else surfaceDim
             } else {
-              null
+              surfaceContainerHigh
             }
           },
           contrastCurve = { scheme ->
-            if (scheme.platform == Platform.PHONE && scheme.contrastLevel > 0) {
-              getContrastCurve(1.5)
+            if (scheme.platform == Platform.PHONE) {
+              if (scheme.contrastLevel > 0) getContrastCurve(1.5) else null
             } else {
-              null
+              ContrastCurve(7.0, 7.0, 7.0, 7.0)
             }
           },
         )
-      return baseSpec.primaryFixed.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
+      return super.primaryFixed.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
     }
 
   override val primaryFixedDim: DynamicColor
@@ -1337,19 +1410,42 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
         DynamicColor(
           name = "primary_fixed_dim",
           palette = { scheme -> scheme.primaryPalette },
-          tone = { scheme -> primaryFixed.getTone(scheme) },
+          tone = { scheme ->
+            if (scheme.platform == Platform.WATCH) {
+              if (scheme.variant == Variant.NEUTRAL) {
+                85.0
+              } else {
+                dimTone(
+                  scheme.primaryPalette,
+                  if (scheme.variant == Variant.TONAL_SPOT) 90.0 else 100.0,
+                )
+              }
+            } else {
+              primaryFixed.getTone(scheme)
+            }
+          },
           isBackground = true,
-          toneDeltaPair = {
-            ToneDeltaPair(
-              roleA = primaryFixedDim,
-              roleB = primaryFixed,
-              delta = 5.0,
-              polarity = TonePolarity.DARKER,
-              constraint = DeltaConstraint.EXACT,
-            )
+          background = { scheme ->
+            if (scheme.platform == Platform.WATCH) surfaceContainerHigh else null
+          },
+          contrastCurve = { scheme ->
+            if (scheme.platform == Platform.WATCH) ContrastCurve(4.5, 4.5, 4.5, 4.5) else null
+          },
+          toneDeltaPair = { scheme ->
+            if (scheme.platform == Platform.WATCH) {
+              null
+            } else {
+              ToneDeltaPair(
+                roleA = primaryFixedDim,
+                roleB = primaryFixed,
+                delta = 5.0,
+                polarity = TonePolarity.DARKER,
+                constraint = DeltaConstraint.EXACT,
+              )
+            }
           },
         )
-      return baseSpec.primaryFixedDim.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
+      return super.primaryFixedDim.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
     }
 
   override val onPrimaryFixed: DynamicColor
@@ -1359,9 +1455,18 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
           name = "on_primary_fixed",
           palette = { scheme -> scheme.primaryPalette },
           background = { primaryFixedDim },
-          contrastCurve = { getContrastCurve(7.0) },
+          secondBackground = { scheme ->
+            if (scheme.platform == Platform.WATCH) primaryFixed else null
+          },
+          contrastCurve = { scheme ->
+            if (scheme.platform == Platform.WATCH) {
+              ContrastCurve(4.5, 7.0, 11.0, 21.0)
+            } else {
+              getContrastCurve(7.0)
+            }
+          },
         )
-      return baseSpec.onPrimaryFixed.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
+      return super.onPrimaryFixed.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
     }
 
   override val onPrimaryFixedVariant: DynamicColor
@@ -1370,10 +1475,26 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
         DynamicColor(
           name = "on_primary_fixed_variant",
           palette = { scheme -> scheme.primaryPalette },
+          tone = { scheme ->
+            if (scheme.platform == Platform.WATCH) {
+              30.0
+            } else {
+              DynamicColor.getInitialToneFromBackground { primaryFixedDim }.invoke(scheme)
+            }
+          },
           background = { primaryFixedDim },
-          contrastCurve = { getContrastCurve(4.5) },
+          secondBackground = { scheme ->
+            if (scheme.platform == Platform.WATCH) primaryFixed else null
+          },
+          contrastCurve = { scheme ->
+            if (scheme.platform == Platform.WATCH) {
+              ContrastCurve(3.0, 4.5, 7.0, 11.0)
+            } else {
+              getContrastCurve(4.5)
+            }
+          },
         )
-      return baseSpec.onPrimaryFixedVariant.extendSpecVersion(
+      return super.onPrimaryFixedVariant.extendSpecVersion(
         ColorSpec.SpecVersion.SPEC_2025,
         color2025,
       )
@@ -1389,26 +1510,34 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
           name = "secondary_fixed",
           palette = { scheme -> scheme.secondaryPalette },
           tone = { scheme ->
-            val tempS = DynamicScheme.from(scheme, isDark = false, contrastLevel = 0.0)
-            secondaryContainer.getTone(tempS)
+            if (scheme.platform == Platform.WATCH) {
+              if (scheme.variant == Variant.NEUTRAL) {
+                90.0
+              } else {
+                mainTone(scheme.secondaryPalette, 90.0)
+              }
+            } else {
+              val tempS = DynamicScheme.from(scheme, isDark = false, contrastLevel = 0.0)
+              secondaryContainer.getTone(tempS)
+            }
           },
           isBackground = true,
           background = { scheme ->
             if (scheme.platform == Platform.PHONE) {
               if (scheme.isDark) surfaceBright else surfaceDim
             } else {
-              null
+              surfaceContainerHigh
             }
           },
           contrastCurve = { scheme ->
-            if (scheme.platform == Platform.PHONE && scheme.contrastLevel > 0) {
-              getContrastCurve(1.5)
+            if (scheme.platform == Platform.PHONE) {
+              if (scheme.contrastLevel > 0) getContrastCurve(1.5) else null
             } else {
-              null
+              ContrastCurve(7.0, 7.0, 7.0, 7.0)
             }
           },
         )
-      return baseSpec.secondaryFixed.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
+      return super.secondaryFixed.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
     }
 
   override val secondaryFixedDim: DynamicColor
@@ -1417,22 +1546,39 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
         DynamicColor(
           name = "secondary_fixed_dim",
           palette = { scheme -> scheme.secondaryPalette },
-          tone = { scheme -> secondaryFixed.getTone(scheme) },
+          tone = { scheme ->
+            if (scheme.platform == Platform.WATCH) {
+              if (scheme.variant == Variant.NEUTRAL) {
+                85.0
+              } else {
+                dimTone(scheme.secondaryPalette, 90.0)
+              }
+            } else {
+              secondaryFixed.getTone(scheme)
+            }
+          },
           isBackground = true,
-          toneDeltaPair = {
-            ToneDeltaPair(
-              roleA = secondaryFixedDim,
-              roleB = secondaryFixed,
-              delta = 5.0,
-              polarity = TonePolarity.DARKER,
-              constraint = DeltaConstraint.EXACT,
-            )
+          background = { scheme ->
+            if (scheme.platform == Platform.WATCH) surfaceContainerHigh else null
+          },
+          contrastCurve = { scheme ->
+            if (scheme.platform == Platform.WATCH) ContrastCurve(4.5, 4.5, 4.5, 4.5) else null
+          },
+          toneDeltaPair = { scheme ->
+            if (scheme.platform == Platform.WATCH) {
+              null
+            } else {
+              ToneDeltaPair(
+                roleA = secondaryFixedDim,
+                roleB = secondaryFixed,
+                delta = 5.0,
+                polarity = TonePolarity.DARKER,
+                constraint = DeltaConstraint.EXACT,
+              )
+            }
           },
         )
-      return baseSpec.secondaryFixedDim.extendSpecVersion(
-        ColorSpec.SpecVersion.SPEC_2025,
-        color2025,
-      )
+      return super.secondaryFixedDim.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
     }
 
   override val onSecondaryFixed: DynamicColor
@@ -1442,9 +1588,18 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
           name = "on_secondary_fixed",
           palette = { scheme -> scheme.secondaryPalette },
           background = { secondaryFixedDim },
-          contrastCurve = { getContrastCurve(7.0) },
+          secondBackground = { scheme ->
+            if (scheme.platform == Platform.WATCH) secondaryFixed else null
+          },
+          contrastCurve = { scheme ->
+            if (scheme.platform == Platform.WATCH) {
+              ContrastCurve(4.5, 7.0, 11.0, 21.0)
+            } else {
+              getContrastCurve(7.0)
+            }
+          },
         )
-      return baseSpec.onSecondaryFixed.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
+      return super.onSecondaryFixed.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
     }
 
   override val onSecondaryFixedVariant: DynamicColor
@@ -1453,10 +1608,26 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
         DynamicColor(
           name = "on_secondary_fixed_variant",
           palette = { scheme -> scheme.secondaryPalette },
+          tone = { scheme ->
+            if (scheme.platform == Platform.WATCH) {
+              30.0
+            } else {
+              DynamicColor.getInitialToneFromBackground { secondaryFixedDim }.invoke(scheme)
+            }
+          },
           background = { secondaryFixedDim },
-          contrastCurve = { getContrastCurve(4.5) },
+          secondBackground = { scheme ->
+            if (scheme.platform == Platform.WATCH) secondaryFixed else null
+          },
+          contrastCurve = { scheme ->
+            if (scheme.platform == Platform.WATCH) {
+              ContrastCurve(3.0, 4.5, 7.0, 11.0)
+            } else {
+              getContrastCurve(4.5)
+            }
+          },
         )
-      return baseSpec.onSecondaryFixedVariant.extendSpecVersion(
+      return super.onSecondaryFixedVariant.extendSpecVersion(
         ColorSpec.SpecVersion.SPEC_2025,
         color2025,
       )
@@ -1472,26 +1643,33 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
           name = "tertiary_fixed",
           palette = { scheme -> scheme.tertiaryPalette },
           tone = { scheme ->
-            val tempS = DynamicScheme.from(scheme, isDark = false, contrastLevel = 0.0)
-            tertiaryContainer.getTone(tempS)
+            if (scheme.platform == Platform.WATCH) {
+              mainTone(
+                scheme.tertiaryPalette,
+                if (scheme.variant == Variant.TONAL_SPOT) 90.0 else 100.0,
+              )
+            } else {
+              val tempS = DynamicScheme.from(scheme, isDark = false, contrastLevel = 0.0)
+              tertiaryContainer.getTone(tempS)
+            }
           },
           isBackground = true,
           background = { scheme ->
             if (scheme.platform == Platform.PHONE) {
               if (scheme.isDark) surfaceBright else surfaceDim
             } else {
-              null
+              surfaceContainerHigh
             }
           },
           contrastCurve = { scheme ->
-            if (scheme.platform == Platform.PHONE && scheme.contrastLevel > 0) {
-              getContrastCurve(1.5)
+            if (scheme.platform == Platform.PHONE) {
+              if (scheme.contrastLevel > 0) getContrastCurve(1.5) else null
             } else {
-              null
+              ContrastCurve(7.0, 7.0, 7.0, 7.0)
             }
           },
         )
-      return baseSpec.tertiaryFixed.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
+      return super.tertiaryFixed.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
     }
 
   override val tertiaryFixedDim: DynamicColor
@@ -1500,19 +1678,38 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
         DynamicColor(
           name = "tertiary_fixed_dim",
           palette = { scheme -> scheme.tertiaryPalette },
-          tone = { scheme -> tertiaryFixed.getTone(scheme) },
+          tone = { scheme ->
+            if (scheme.platform == Platform.WATCH) {
+              dimTone(
+                scheme.tertiaryPalette,
+                if (scheme.variant == Variant.TONAL_SPOT) 90.0 else 100.0,
+              )
+            } else {
+              tertiaryFixed.getTone(scheme)
+            }
+          },
           isBackground = true,
-          toneDeltaPair = {
-            ToneDeltaPair(
-              roleA = tertiaryFixedDim,
-              roleB = tertiaryFixed,
-              delta = 5.0,
-              polarity = TonePolarity.DARKER,
-              constraint = DeltaConstraint.EXACT,
-            )
+          background = { scheme ->
+            if (scheme.platform == Platform.WATCH) surfaceContainerHigh else null
+          },
+          contrastCurve = { scheme ->
+            if (scheme.platform == Platform.WATCH) ContrastCurve(4.5, 4.5, 4.5, 4.5) else null
+          },
+          toneDeltaPair = { scheme ->
+            if (scheme.platform == Platform.WATCH) {
+              null
+            } else {
+              ToneDeltaPair(
+                roleA = tertiaryFixedDim,
+                roleB = tertiaryFixed,
+                delta = 5.0,
+                polarity = TonePolarity.DARKER,
+                constraint = DeltaConstraint.EXACT,
+              )
+            }
           },
         )
-      return baseSpec.tertiaryFixedDim.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
+      return super.tertiaryFixedDim.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
     }
 
   override val onTertiaryFixed: DynamicColor
@@ -1522,9 +1719,18 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
           name = "on_tertiary_fixed",
           palette = { scheme -> scheme.tertiaryPalette },
           background = { tertiaryFixedDim },
-          contrastCurve = { getContrastCurve(7.0) },
+          secondBackground = { scheme ->
+            if (scheme.platform == Platform.WATCH) tertiaryFixed else null
+          },
+          contrastCurve = { scheme ->
+            if (scheme.platform == Platform.WATCH) {
+              ContrastCurve(4.5, 7.0, 11.0, 21.0)
+            } else {
+              getContrastCurve(7.0)
+            }
+          },
         )
-      return baseSpec.onTertiaryFixed.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
+      return super.onTertiaryFixed.extendSpecVersion(ColorSpec.SpecVersion.SPEC_2025, color2025)
     }
 
   override val onTertiaryFixedVariant: DynamicColor
@@ -1533,10 +1739,26 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
         DynamicColor(
           name = "on_tertiary_fixed_variant",
           palette = { scheme -> scheme.tertiaryPalette },
+          tone = { scheme ->
+            if (scheme.platform == Platform.WATCH) {
+              30.0
+            } else {
+              DynamicColor.getInitialToneFromBackground { tertiaryFixedDim }.invoke(scheme)
+            }
+          },
           background = { tertiaryFixedDim },
-          contrastCurve = { getContrastCurve(4.5) },
+          secondBackground = { scheme ->
+            if (scheme.platform == Platform.WATCH) tertiaryFixed else null
+          },
+          contrastCurve = { scheme ->
+            if (scheme.platform == Platform.WATCH) {
+              ContrastCurve(3.0, 4.5, 7.0, 11.0)
+            } else {
+              getContrastCurve(4.5)
+            }
+          },
         )
-      return baseSpec.onTertiaryFixedVariant.extendSpecVersion(
+      return super.onTertiaryFixedVariant.extendSpecVersion(
         ColorSpec.SpecVersion.SPEC_2025,
         color2025,
       )
@@ -1546,7 +1768,7 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
   // Color value calculations //
   // /////////////////////////////////////////////////////////////////
   override fun getHct(scheme: DynamicScheme, color: DynamicColor): Hct {
-    // This is crucial for aesthetics: we aren't simply the taking the standard color
+    // This is crucial for aesthetics: we aren't simply taking the standard color
     // and changing its tone for contrast. Rather, we find the tone for contrast, then
     // use the specified chroma from the palette to construct a new color.
     //
@@ -1554,10 +1776,16 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
     // "recover" intended chroma as contrast increases.
     val palette = color.palette.invoke(scheme)
     val tone = getTone(scheme, color)
-    val hue = palette.hue
     val chromaMultiplier = color.chromaMultiplier?.invoke(scheme) ?: 1.0
+    if (chromaMultiplier == 1.0) {
+      return palette.getHct(tone)
+    }
+
     val chroma = palette.chroma * chromaMultiplier
-    return Hct.from(hue, chroma, tone)
+    if (tone == 99.0 && Hct.isYellow(palette.hue)) {
+      return TonalPalette.fromHueAndChroma(palette.hue, chroma).getHct(tone)
+    }
+    return Hct.from(palette.hue, chroma, tone)
   }
 
   override fun getTone(scheme: DynamicScheme, color: DynamicColor): Double {
@@ -1619,7 +1847,11 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
 
       // This can avoid the awkward tones for background colors including the access fixed colors.
       // Accent fixed dim colors should not be adjusted.
-      if (color.isBackground && !color.name.endsWith("_fixed_dim")) {
+      if (
+        scheme.platform == Platform.PHONE &&
+          color.isBackground &&
+          !color.name.endsWith("_fixed_dim")
+      ) {
         selfTone =
           if (selfTone >= 57) {
             selfTone.coerceIn(65.0, 100.0)
@@ -1651,13 +1883,20 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
 
       // This can avoid the awkward tones for background colors including the access fixed colors.
       // Accent fixed dim colors should not be adjusted.
-      if (color.isBackground && !color.name.endsWith("_fixed_dim")) {
-        answer =
-          if (answer >= 57) {
-            answer.coerceIn(65.0, 100.0)
-          } else {
-            answer.coerceIn(0.0, 49.0)
-          }
+      when {
+        scheme.platform == Platform.PHONE &&
+          color.isBackground &&
+          !color.name.endsWith("_fixed_dim") -> {
+          answer =
+            if (answer >= 57) {
+              answer.coerceIn(65.0, 100.0)
+            } else {
+              answer.coerceIn(0.0, 49.0)
+            }
+        }
+        scheme.platform == Platform.WATCH && color.isBackground && 50 <= answer && answer < 60 -> {
+          answer = if (Contrast.ratioOfTones(49.0, bgTone) >= desiredRatio) 49.0 else 60.0
+        }
       }
       val secondBackground = color.secondBackground?.invoke(scheme)
       if (secondBackground == null) {
@@ -1724,7 +1963,7 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
           sourceColorHct.hue,
           if (platform == Platform.PHONE) {
             (if (Hct.isBlue(sourceColorHct.hue)) 12.0 else 8.0)
-          } else if (Hct.isBlue(sourceColorHct.hue)) {
+          } else if (isWatchBlueHue(sourceColorHct)) {
             16.0
           } else {
             12.0
@@ -1747,9 +1986,15 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
       Variant.VIBRANT ->
         TonalPalette.fromHueAndChroma(
           sourceColorHct.hue,
-          if (platform == Platform.PHONE) 74.0 else 56.0,
+          if (platform == Platform.PHONE) 74.0 else 48.0,
         )
-      else -> baseSpec.getPrimaryPalette(variant, sourceColorHct, isDark, platform, contrastLevel)
+      Variant.CONTENT ->
+        if (platform == Platform.WATCH) {
+          TonalPalette.fromHueAndChroma(sourceColorHct.hue, sourceColorHct.chroma)
+        } else {
+          super.getPrimaryPalette(variant, sourceColorHct, isDark, platform, contrastLevel)
+        }
+      else -> super.getPrimaryPalette(variant, sourceColorHct, isDark, platform, contrastLevel)
     }
   }
 
@@ -1766,7 +2011,7 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
           sourceColorHct.hue,
           if (platform == Platform.PHONE) {
             (if (Hct.isBlue(sourceColorHct.hue)) 6.0 else 4.0)
-          } else if (Hct.isBlue(sourceColorHct.hue)) {
+          } else if (isWatchBlueHue(sourceColorHct)) {
             10.0
           } else {
             6.0
@@ -1775,11 +2020,19 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
       Variant.TONAL_SPOT -> TonalPalette.fromHueAndChroma(sourceColorHct.hue, 16.0)
       Variant.EXPRESSIVE ->
         TonalPalette.fromHueAndChroma(
-          DynamicScheme.getRotatedHue(
-            sourceColorHct,
-            doubleArrayOf(0.0, 105.0, 140.0, 204.0, 253.0, 278.0, 300.0, 333.0, 360.0),
-            doubleArrayOf(-160.0, 155.0, -100.0, 96.0, -96.0, -156.0, -165.0, -160.0),
-          ),
+          if (platform == Platform.WATCH) {
+            DynamicScheme.getRotatedHue(
+              sourceColorHct,
+              doubleArrayOf(0.0, 21.0, 51.0, 121.0, 151.0, 191.0, 271.0, 321.0, 360.0),
+              doubleArrayOf(204.0, 175.0, 155.0, 150.0, 204.0, 260.0, 204.0, 204.0, 204.0),
+            )
+          } else {
+            DynamicScheme.getRotatedHue(
+              sourceColorHct,
+              doubleArrayOf(0.0, 105.0, 140.0, 204.0, 253.0, 278.0, 300.0, 333.0, 360.0),
+              doubleArrayOf(-160.0, 155.0, -100.0, 96.0, -96.0, -156.0, -165.0, -160.0),
+            )
+          },
           if (platform == Platform.PHONE) {
             if (isDark) 16.0 else 24.0
           } else {
@@ -1788,14 +2041,31 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
         )
       Variant.VIBRANT ->
         TonalPalette.fromHueAndChroma(
-          DynamicScheme.getRotatedHue(
-            sourceColorHct,
-            doubleArrayOf(0.0, 38.0, 105.0, 140.0, 333.0, 360.0),
-            doubleArrayOf(-14.0, 10.0, -14.0, 10.0, -14.0),
-          ),
+          if (platform == Platform.WATCH) {
+            DynamicScheme.getRotatedHue(
+              sourceColorHct,
+              doubleArrayOf(0.0, 41.0, 61.0, 101.0, 131.0, 181.0, 251.0, 301.0, 360.0),
+              doubleArrayOf(-14.0, 0.0, 355.0, 357.0, 0.0, 3.0, 10.0, 331.0, 331.0),
+            )
+          } else {
+            DynamicScheme.getRotatedHue(
+              sourceColorHct,
+              doubleArrayOf(0.0, 38.0, 105.0, 140.0, 333.0, 360.0),
+              doubleArrayOf(-14.0, 10.0, -14.0, 10.0, -14.0),
+            )
+          },
           if (platform == Platform.PHONE) 56.0 else 36.0,
         )
-      else -> baseSpec.getSecondaryPalette(variant, sourceColorHct, isDark, platform, contrastLevel)
+      Variant.CONTENT ->
+        if (platform == Platform.WATCH) {
+          TonalPalette.fromHueAndChroma(
+            sourceColorHct.hue,
+            (sourceColorHct.chroma * 0.5).coerceIn(16.0, 36.0),
+          )
+        } else {
+          super.getSecondaryPalette(variant, sourceColorHct, isDark, platform, contrastLevel)
+        }
+      else -> super.getSecondaryPalette(variant, sourceColorHct, isDark, platform, contrastLevel)
     }
   }
 
@@ -1809,41 +2079,86 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
     return when (variant) {
       Variant.NEUTRAL ->
         TonalPalette.fromHueAndChroma(
-          DynamicScheme.getRotatedHue(
-            sourceColorHct,
-            doubleArrayOf(0.0, 38.0, 105.0, 161.0, 204.0, 278.0, 333.0, 360.0),
-            doubleArrayOf(-32.0, 26.0, 10.0, -39.0, 24.0, -15.0, -32.0),
-          ),
+          if (platform == Platform.WATCH) {
+            DynamicScheme.getRotatedHue(
+              sourceColorHct,
+              doubleArrayOf(0.0, 41.0, 61.0, 101.0, 131.0, 181.0, 250.0, 270.0, 360.0),
+              doubleArrayOf(25.0, 25.0, 26.0, 25.0, -39.0, 25.0, 28.0, 25.0, 25.0),
+            )
+          } else {
+            DynamicScheme.getRotatedHue(
+              sourceColorHct,
+              doubleArrayOf(0.0, 38.0, 105.0, 161.0, 204.0, 278.0, 333.0, 360.0),
+              doubleArrayOf(-32.0, 26.0, 10.0, -39.0, 24.0, -15.0, -32.0),
+            )
+          },
           if (platform == Platform.PHONE) 20.0 else 36.0,
         )
       Variant.TONAL_SPOT ->
         TonalPalette.fromHueAndChroma(
-          DynamicScheme.getRotatedHue(
-            sourceColorHct,
-            doubleArrayOf(0.0, 20.0, 71.0, 161.0, 333.0, 360.0),
-            doubleArrayOf(-40.0, 48.0, -32.0, 40.0, -32.0),
-          ),
+          if (platform == Platform.WATCH) {
+            DynamicScheme.getRotatedHue(
+              sourceColorHct,
+              doubleArrayOf(0.0, 40.0, 101.0, 210.0, 301.0, 360.0),
+              doubleArrayOf(-32.0, 32.0, -32.0, 32.0, -32.0, -32.0),
+            )
+          } else {
+            DynamicScheme.getRotatedHue(
+              sourceColorHct,
+              doubleArrayOf(0.0, 20.0, 71.0, 161.0, 333.0, 360.0),
+              doubleArrayOf(-40.0, 48.0, -32.0, 40.0, -32.0),
+            )
+          },
           if (platform == Platform.PHONE) 28.0 else 32.0,
         )
       Variant.EXPRESSIVE ->
         TonalPalette.fromHueAndChroma(
-          DynamicScheme.getRotatedHue(
-            sourceColorHct,
-            doubleArrayOf(0.0, 105.0, 140.0, 204.0, 253.0, 278.0, 300.0, 333.0, 360.0),
-            doubleArrayOf(-165.0, 160.0, -105.0, 101.0, -101.0, -160.0, -170.0, -165.0),
-          ),
+          if (platform == Platform.WATCH) {
+            DynamicScheme.getRotatedHue(
+              sourceColorHct,
+              doubleArrayOf(0.0, 21.0, 51.0, 121.0, 151.0, 191.0, 271.0, 321.0, 360.0),
+              doubleArrayOf(200.0, 200.0, 160.0, 169.0, 200.0, 220.0, 200.0, 200.0, 200.0),
+            )
+          } else {
+            DynamicScheme.getRotatedHue(
+              sourceColorHct,
+              doubleArrayOf(0.0, 105.0, 140.0, 204.0, 253.0, 278.0, 300.0, 333.0, 360.0),
+              doubleArrayOf(-165.0, 160.0, -105.0, 101.0, -101.0, -160.0, -170.0, -165.0),
+            )
+          },
           48.0,
         )
       Variant.VIBRANT ->
         TonalPalette.fromHueAndChroma(
-          DynamicScheme.getRotatedHue(
-            sourceColorHct,
-            doubleArrayOf(0.0, 38.0, 71.0, 105.0, 140.0, 161.0, 253.0, 333.0, 360.0),
-            doubleArrayOf(-72.0, 35.0, 24.0, -24.0, 62.0, 50.0, 62.0, -72.0),
-          ),
-          56.0,
+          if (platform == Platform.WATCH) {
+            DynamicScheme.getRotatedHue(
+              sourceColorHct,
+              doubleArrayOf(0.0, 41.0, 61.0, 101.0, 131.0, 181.0, 251.0, 301.0, 360.0),
+              doubleArrayOf(-72.0, 55.0, 45.0, 50.0, 55.0, 50.0, 62.0, 303.0, 303.0),
+            )
+          } else {
+            DynamicScheme.getRotatedHue(
+              sourceColorHct,
+              doubleArrayOf(0.0, 38.0, 71.0, 105.0, 140.0, 161.0, 253.0, 333.0, 360.0),
+              doubleArrayOf(-72.0, 35.0, 24.0, -24.0, 62.0, 50.0, 62.0, -72.0),
+            )
+          },
+          if (platform == Platform.PHONE) 56.0 else 48.0,
         )
-      else -> baseSpec.getTertiaryPalette(variant, sourceColorHct, isDark, platform, contrastLevel)
+      Variant.CONTENT ->
+        if (platform == Platform.WATCH) {
+          TonalPalette.fromHueAndChroma(
+            DynamicScheme.getRotatedHue(
+              sourceColorHct,
+              doubleArrayOf(0.0, 40.0, 101.0, 210.0, 301.0, 360.0),
+              doubleArrayOf(-32.0, 32.0, -32.0, 32.0, -32.0, -32.0),
+            ),
+            sourceColorHct.chroma,
+          )
+        } else {
+          super.getTertiaryPalette(variant, sourceColorHct, isDark, platform, contrastLevel)
+        }
+      else -> super.getTertiaryPalette(variant, sourceColorHct, isDark, platform, contrastLevel)
     }
   }
 
@@ -1867,15 +2182,24 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
         )
       Variant.EXPRESSIVE ->
         TonalPalette.fromHueAndChroma(
-          getExpressiveNeutralHue(sourceColorHct),
+          getExpressiveNeutralHue(sourceColorHct, platform),
           getExpressiveNeutralChroma(sourceColorHct, isDark, platform),
         )
       Variant.VIBRANT ->
         TonalPalette.fromHueAndChroma(
-          getVibrantNeutralHue(sourceColorHct),
+          getVibrantNeutralHue(sourceColorHct, platform),
           getVibrantNeutralChroma(sourceColorHct, platform),
         )
-      else -> baseSpec.getNeutralPalette(variant, sourceColorHct, isDark, platform, contrastLevel)
+      Variant.CONTENT ->
+        if (platform == Platform.WATCH) {
+          TonalPalette.fromHueAndChroma(
+            sourceColorHct.hue,
+            (sourceColorHct.chroma * 0.333).coerceIn(6.0, 20.0),
+          )
+        } else {
+          super.getNeutralPalette(variant, sourceColorHct, isDark, platform, contrastLevel)
+        }
+      else -> super.getNeutralPalette(variant, sourceColorHct, isDark, platform, contrastLevel)
     }
   }
 
@@ -1886,6 +2210,18 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
     platform: Platform,
     contrastLevel: Double,
   ): TonalPalette {
+    if (platform == Platform.WATCH) {
+      return when (variant) {
+        Variant.NEUTRAL,
+        Variant.TONAL_SPOT,
+        Variant.EXPRESSIVE,
+        Variant.VIBRANT,
+        Variant.CONTENT ->
+          getNeutralPalette(variant, sourceColorHct, isDark, platform, contrastLevel)
+        else ->
+          super.getNeutralVariantPalette(variant, sourceColorHct, isDark, platform, contrastLevel)
+      }
+    }
     when (variant) {
       Variant.NEUTRAL ->
         return TonalPalette.fromHueAndChroma(
@@ -1898,7 +2234,7 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
           (if (platform == Platform.PHONE) 5.0 else 10.0) * 1.7,
         )
       Variant.EXPRESSIVE -> {
-        val expressiveNeutralHue = getExpressiveNeutralHue(sourceColorHct)
+        val expressiveNeutralHue = getExpressiveNeutralHue(sourceColorHct, platform)
         val expressiveNeutralChroma = getExpressiveNeutralChroma(sourceColorHct, isDark, platform)
         return TonalPalette.fromHueAndChroma(
           expressiveNeutralHue,
@@ -1907,12 +2243,12 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
         )
       }
       Variant.VIBRANT -> {
-        val vibrantNeutralHue = getVibrantNeutralHue(sourceColorHct)
+        val vibrantNeutralHue = getVibrantNeutralHue(sourceColorHct, platform)
         val vibrantNeutralChroma = getVibrantNeutralChroma(sourceColorHct, platform)
         return TonalPalette.fromHueAndChroma(vibrantNeutralHue, vibrantNeutralChroma * 1.29)
       }
       else ->
-        return baseSpec.getNeutralVariantPalette(
+        return super.getNeutralVariantPalette(
           variant,
           sourceColorHct,
           isDark,
@@ -1943,12 +2279,29 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
       Variant.EXPRESSIVE ->
         TonalPalette.fromHueAndChroma(errorHue, if (platform == Platform.PHONE) 64.0 else 48.0)
       Variant.VIBRANT ->
-        TonalPalette.fromHueAndChroma(errorHue, if (platform == Platform.PHONE) 80.0 else 60.0)
-      else -> baseSpec.getErrorPalette(variant, sourceColorHct, isDark, platform, contrastLevel)
+        TonalPalette.fromHueAndChroma(errorHue, if (platform == Platform.PHONE) 80.0 else 48.0)
+      Variant.CONTENT ->
+        if (platform == Platform.WATCH) {
+          TonalPalette.fromHueAndChroma(errorHue, max(40.0, sourceColorHct.chroma))
+        } else {
+          super.getErrorPalette(variant, sourceColorHct, isDark, platform, contrastLevel)
+        }
+      else -> super.getErrorPalette(variant, sourceColorHct, isDark, platform, contrastLevel)
     }
   }
 
-  private fun getExpressiveNeutralHue(sourceColorHct: Hct): Double {
+  private fun isWatchBlueHue(sourceColorHct: Hct): Boolean {
+    return 250.0 <= sourceColorHct.hue && sourceColorHct.hue <= 270.0
+  }
+
+  private fun getExpressiveNeutralHue(sourceColorHct: Hct, platform: Platform): Double {
+    if (platform == Platform.WATCH) {
+      return DynamicScheme.getRotatedHue(
+        sourceColorHct,
+        doubleArrayOf(0.0, 21.0, 51.0, 121.0, 151.0, 191.0, 271.0, 321.0, 360.0),
+        doubleArrayOf(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 10.0, 0.0, 0.0),
+      )
+    }
     return DynamicScheme.getRotatedHue(
       sourceColorHct,
       doubleArrayOf(0.0, 71.0, 124.0, 253.0, 278.0, 300.0, 360.0),
@@ -1961,7 +2314,7 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
     isDark: Boolean,
     platform: Platform,
   ): Double {
-    val neutralHue = getExpressiveNeutralHue(sourceColorHct)
+    val neutralHue = getExpressiveNeutralHue(sourceColorHct, platform)
     return if (platform == Platform.PHONE) {
       if (isDark) {
         if (Hct.isYellow(neutralHue)) 6.0 else 14.0
@@ -1973,7 +2326,14 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
     }
   }
 
-  private fun getVibrantNeutralHue(sourceColorHct: Hct): Double {
+  private fun getVibrantNeutralHue(sourceColorHct: Hct, platform: Platform): Double {
+    if (platform == Platform.WATCH) {
+      return DynamicScheme.getRotatedHue(
+        sourceColorHct,
+        doubleArrayOf(0.0, 41.0, 61.0, 101.0, 131.0, 181.0, 251.0, 301.0, 360.0),
+        doubleArrayOf(-14.0, 0.0, 355.0, 357.0, 0.0, 3.0, 10.0, 331.0, 331.0),
+      )
+    }
     return DynamicScheme.getRotatedHue(
       sourceColorHct,
       doubleArrayOf(0.0, 38.0, 105.0, 140.0, 333.0, 360.0),
@@ -1982,8 +2342,72 @@ class ColorSpec2025(private val baseSpec: ColorSpec2021 = ColorSpec2021()) : Col
   }
 
   private fun getVibrantNeutralChroma(sourceColorHct: Hct, platform: Platform): Double {
-    val neutralHue = getVibrantNeutralHue(sourceColorHct)
-    return if (platform == Platform.PHONE) 28.0 else if (Hct.isBlue(neutralHue)) 28.0 else 20.0
+    return when {
+      platform == Platform.PHONE -> 28.0
+      isWatchBlueHue(sourceColorHct) -> 28.0
+      else -> 20.0
+    }
+  }
+
+  private fun isCloseToChroma(hct: Hct, chroma: Double): Boolean {
+    return abs(hct.chroma - chroma) < 0.4
+  }
+
+  private fun findDesiredChromaByTone(
+    hue: Double,
+    chroma: Double,
+    startingTone: Double,
+    endingTone: Double,
+  ): Double {
+    if (endingTone == startingTone) {
+      return startingTone
+    }
+
+    var answer = startingTone
+    var potentialAnswer = answer
+
+    var closestToChroma = Hct.from(hue, chroma, startingTone)
+    if (closestToChroma.chroma < chroma && !isCloseToChroma(closestToChroma, chroma)) {
+      while (closestToChroma.chroma < chroma) {
+        val increment = if (endingTone < startingTone) -1.0 else 1.0
+        potentialAnswer += increment
+        when {
+          potentialAnswer < endingTone && endingTone < startingTone -> return answer
+          potentialAnswer > endingTone && endingTone > startingTone -> return answer
+        }
+        val potentialSolution = Hct.from(hue, chroma, potentialAnswer)
+        if (isCloseToChroma(potentialSolution, chroma)) {
+          return potentialAnswer
+        }
+
+        val potentialDelta = abs(potentialSolution.chroma - chroma)
+        val currentDelta = abs(closestToChroma.chroma - chroma)
+        if (potentialDelta < currentDelta) {
+          closestToChroma = potentialSolution
+          answer = potentialAnswer
+        }
+      }
+    }
+
+    return answer
+  }
+
+  private fun mainTone(tonalPalette: TonalPalette, maxTone: Double): Double {
+    val initialTone = maxTone
+    val endingTone = DynamicColor.foregroundTone(25.0, ratio = 7.0)
+    return findDesiredChromaByTone(tonalPalette.hue, tonalPalette.chroma, initialTone, endingTone)
+  }
+
+  private fun dimTone(tonalPalette: TonalPalette, maxTone: Double): Double {
+    val initialTone = min(mainTone(tonalPalette, maxTone) - 5.0, maxTone)
+    val endingTone = DynamicColor.foregroundTone(25.0, ratio = 4.5)
+    return findDesiredChromaByTone(tonalPalette.hue, tonalPalette.chroma, initialTone, endingTone)
+  }
+
+  private fun containerTone(tonalPalette: TonalPalette, maxTone: Double): Double {
+    val initialTone = min(dimTone(tonalPalette, maxTone) - 5.0, maxTone)
+    val endingTone = DynamicColor.foregroundTone(0.0, ratio = 7.0)
+    return findDesiredChromaByTone(tonalPalette.hue, tonalPalette.chroma, initialTone, endingTone)
   }
 
   private fun tMaxC(

@@ -23,29 +23,67 @@ import hct.Hct
 
 /** A loud theme, colorfulness is maximum for Primary palette, increased for others. */
 class SchemeVibrant(
-  sourceColorHct: Hct,
+  sourceColorHctList: List<Hct>,
   isDark: Boolean,
   contrastLevel: Double,
   specVersion: SpecVersion = DEFAULT_SPEC_VERSION,
   platform: Platform = DEFAULT_PLATFORM,
 ) :
   DynamicScheme(
-    sourceColorHct,
+    sourceColorHctList,
     Variant.VIBRANT,
     isDark,
     contrastLevel,
     platform,
     specVersion,
     ColorSpecs.get(specVersion)
-      .getPrimaryPalette(Variant.VIBRANT, sourceColorHct, isDark, platform, contrastLevel),
+      .getPrimaryPalette(
+        Variant.VIBRANT,
+        sourceColorHctList.first(),
+        isDark,
+        platform,
+        contrastLevel,
+      ),
     ColorSpecs.get(specVersion)
-      .getSecondaryPalette(Variant.VIBRANT, sourceColorHct, isDark, platform, contrastLevel),
+      .getSecondaryPalette(
+        Variant.VIBRANT,
+        sourceColorHctList.first(),
+        isDark,
+        platform,
+        contrastLevel,
+      ),
     ColorSpecs.get(specVersion)
-      .getTertiaryPalette(Variant.VIBRANT, sourceColorHct, isDark, platform, contrastLevel),
+      .getTertiaryPalette(
+        Variant.VIBRANT,
+        sourceColorHctList.first(),
+        isDark,
+        platform,
+        contrastLevel,
+      ),
     ColorSpecs.get(specVersion)
-      .getNeutralPalette(Variant.VIBRANT, sourceColorHct, isDark, platform, contrastLevel),
+      .getNeutralPalette(
+        Variant.VIBRANT,
+        sourceColorHctList.first(),
+        isDark,
+        platform,
+        contrastLevel,
+      ),
     ColorSpecs.get(specVersion)
-      .getNeutralVariantPalette(Variant.VIBRANT, sourceColorHct, isDark, platform, contrastLevel),
+      .getNeutralVariantPalette(
+        Variant.VIBRANT,
+        sourceColorHctList.first(),
+        isDark,
+        platform,
+        contrastLevel,
+      ),
     ColorSpecs.get(specVersion)
-      .getErrorPalette(Variant.VIBRANT, sourceColorHct, isDark, platform, contrastLevel),
-  )
+      .getErrorPalette(Variant.VIBRANT, sourceColorHctList.first(), isDark, platform, contrastLevel),
+  ) {
+  constructor(
+    sourceColorHct: Hct,
+    isDark: Boolean,
+    contrastLevel: Double,
+    specVersion: SpecVersion = DEFAULT_SPEC_VERSION,
+    platform: Platform = DEFAULT_PLATFORM,
+  ) : this(listOf(sourceColorHct), isDark, contrastLevel, specVersion, platform)
+}

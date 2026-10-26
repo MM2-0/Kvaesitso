@@ -57,20 +57,23 @@ private constructor(
 
   /** Given a tone, use hue and chroma of palette to create a color, and return it as HCT. */
   fun getHct(tone: Double): Hct {
+    if (tone == 99.0 && Hct.isYellow(hue)) {
+      return Hct.fromInt(tone(99))
+    }
     return Hct.from(hue, chroma, tone)
   }
 
   private fun averageArgb(argb1: Int, argb2: Int): Int {
-    val red1 = argb1 ushr 16 and 0xff
-    val green1 = argb1 ushr 8 and 0xff
+    val red1 = (argb1 ushr 16) and 0xff
+    val green1 = (argb1 ushr 8) and 0xff
     val blue1 = argb1 and 0xff
-    val red2 = argb2 ushr 16 and 0xff
-    val green2 = argb2 ushr 8 and 0xff
+    val red2 = (argb2 ushr 16) and 0xff
+    val green2 = (argb2 ushr 8) and 0xff
     val blue2 = argb2 and 0xff
     val red = ((red1 + red2) / 2f).roundToInt()
     val green = ((green1 + green2) / 2f).roundToInt()
     val blue = ((blue1 + blue2) / 2f).roundToInt()
-    return 255 shl 24 or (red and 255) shl 16 or (green and 255) shl 8 or (blue and 255)
+    return (255 shl 24) or ((red and 255) shl 16) or ((green and 255) shl 8) or (blue and 255)
   }
 
   /** Key color is a color that represents the hue and chroma of a tonal palette. */

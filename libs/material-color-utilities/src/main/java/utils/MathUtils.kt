@@ -56,6 +56,20 @@ object MathUtils {
   }
 
   /**
+   * Clamps an integer between two floating-point numbers.
+   *
+   * @return input when min <= input <= max, and either min or max otherwise.
+   */
+  fun clampDouble(min: Double, max: Double, input: Double): Double {
+    if (input < min) {
+      return min
+    } else if (input > max) {
+      return max
+    }
+    return input
+  }
+
+  /**
    * Sign of direction change needed to travel from one angle to another.
    *
    * For angles that are 180 degrees apart from each other, both directions have the same travel

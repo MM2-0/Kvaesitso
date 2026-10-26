@@ -23,35 +23,73 @@ import hct.Hct
 
 /** A monochrome theme, colors are purely black / white / gray. */
 class SchemeMonochrome(
-  sourceColorHct: Hct,
+  sourceColorHctList: List<Hct>,
   isDark: Boolean,
   contrastLevel: Double,
   specVersion: SpecVersion = DEFAULT_SPEC_VERSION,
   platform: Platform = DEFAULT_PLATFORM,
 ) :
   DynamicScheme(
-    sourceColorHct,
+    sourceColorHctList,
     Variant.MONOCHROME,
     isDark,
     contrastLevel,
     platform,
     specVersion,
     ColorSpecs.get(specVersion)
-      .getPrimaryPalette(Variant.MONOCHROME, sourceColorHct, isDark, platform, contrastLevel),
-    ColorSpecs.get(specVersion)
-      .getSecondaryPalette(Variant.MONOCHROME, sourceColorHct, isDark, platform, contrastLevel),
-    ColorSpecs.get(specVersion)
-      .getTertiaryPalette(Variant.MONOCHROME, sourceColorHct, isDark, platform, contrastLevel),
-    ColorSpecs.get(specVersion)
-      .getNeutralPalette(Variant.MONOCHROME, sourceColorHct, isDark, platform, contrastLevel),
-    ColorSpecs.get(specVersion)
-      .getNeutralVariantPalette(
+      .getPrimaryPalette(
         Variant.MONOCHROME,
-        sourceColorHct,
+        sourceColorHctList.first(),
         isDark,
         platform,
         contrastLevel,
       ),
     ColorSpecs.get(specVersion)
-      .getErrorPalette(Variant.MONOCHROME, sourceColorHct, isDark, platform, contrastLevel),
-  )
+      .getSecondaryPalette(
+        Variant.MONOCHROME,
+        sourceColorHctList.first(),
+        isDark,
+        platform,
+        contrastLevel,
+      ),
+    ColorSpecs.get(specVersion)
+      .getTertiaryPalette(
+        Variant.MONOCHROME,
+        sourceColorHctList.first(),
+        isDark,
+        platform,
+        contrastLevel,
+      ),
+    ColorSpecs.get(specVersion)
+      .getNeutralPalette(
+        Variant.MONOCHROME,
+        sourceColorHctList.first(),
+        isDark,
+        platform,
+        contrastLevel,
+      ),
+    ColorSpecs.get(specVersion)
+      .getNeutralVariantPalette(
+        Variant.MONOCHROME,
+        sourceColorHctList.first(),
+        isDark,
+        platform,
+        contrastLevel,
+      ),
+    ColorSpecs.get(specVersion)
+      .getErrorPalette(
+        Variant.MONOCHROME,
+        sourceColorHctList.first(),
+        isDark,
+        platform,
+        contrastLevel,
+      ),
+  ) {
+  constructor(
+    sourceColorHct: Hct,
+    isDark: Boolean,
+    contrastLevel: Double,
+    specVersion: SpecVersion = DEFAULT_SPEC_VERSION,
+    platform: Platform = DEFAULT_PLATFORM,
+  ) : this(listOf(sourceColorHct), isDark, contrastLevel, specVersion, platform)
+}

@@ -108,7 +108,7 @@ fun systemCorePalette(dark: Boolean): CorePalette {
                 wallpaperColors.primary.toArgb()),
             dark,
             0.0,
-            ColorSpec.SpecVersion.SPEC_2025,
+            ColorSpec.SpecVersion.SPEC_2026,
         )
         CorePalette(
             primary = corePalette.primaryPaletteKeyColor,

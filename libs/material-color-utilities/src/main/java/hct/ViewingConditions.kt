@@ -58,7 +58,7 @@ private constructor(
 
   companion object {
     /** sRGB-like viewing conditions. */
-    val DEFAULT = defaultWithBackgroundLstar(50.0)
+    val DEFAULT: ViewingConditions = defaultWithBackgroundLstar(50.0)
 
     /**
      * Create ViewingConditions from a simple, physically relevant, set of parameters.

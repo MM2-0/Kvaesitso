@@ -21,6 +21,7 @@ import dynamiccolor.ColorSpec.SpecVersion
 object ColorSpecs {
   private val SPEC_2021: ColorSpec = ColorSpec2021()
   private val SPEC_2025: ColorSpec = ColorSpec2025()
+  private val SPEC_2026: ColorSpec = ColorSpec2026()
 
   @JvmStatic
   fun get(): ColorSpec {
@@ -34,6 +35,10 @@ object ColorSpecs {
 
   @JvmStatic
   fun get(specVersion: SpecVersion, isExtendedFidelity: Boolean): ColorSpec {
-    return if (specVersion == SpecVersion.SPEC_2025) SPEC_2025 else SPEC_2021
+    return when (specVersion) {
+      SpecVersion.SPEC_2025 -> SPEC_2025
+      SpecVersion.SPEC_2026 -> SPEC_2026
+      else -> SPEC_2021
+    }
   }
 }

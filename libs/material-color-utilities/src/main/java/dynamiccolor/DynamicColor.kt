@@ -231,15 +231,15 @@ fun DynamicColor.extendSpecVersion(
   validateExtendedColor(specVersion, extendedColor)
   return copy(
     palette = { scheme ->
-      (if (scheme.specVersion == specVersion) extendedColor.palette else this.palette).invoke(
+      (if (scheme.specVersion >= specVersion) extendedColor.palette else this.palette).invoke(
         scheme
       )
     },
     tone = { scheme ->
-      (if (scheme.specVersion == specVersion) extendedColor.tone else this.tone).invoke(scheme)
+      (if (scheme.specVersion >= specVersion) extendedColor.tone else this.tone).invoke(scheme)
     },
     chromaMultiplier = { scheme ->
-      (if (scheme.specVersion == specVersion) {
+      (if (scheme.specVersion >= specVersion) {
           extendedColor.chromaMultiplier
         } else {
           this.chromaMultiplier
@@ -247,11 +247,11 @@ fun DynamicColor.extendSpecVersion(
         ?.invoke(scheme) ?: 1.0
     },
     background = { scheme ->
-      (if (scheme.specVersion == specVersion) extendedColor.background else this.background)
+      (if (scheme.specVersion >= specVersion) extendedColor.background else this.background)
         ?.invoke(scheme)
     },
     secondBackground = { scheme ->
-      (if (scheme.specVersion == specVersion) {
+      (if (scheme.specVersion >= specVersion) {
           extendedColor.secondBackground
         } else {
           this.secondBackground
@@ -259,15 +259,15 @@ fun DynamicColor.extendSpecVersion(
         ?.invoke(scheme)
     },
     contrastCurve = { scheme ->
-      (if (scheme.specVersion == specVersion) extendedColor.contrastCurve else this.contrastCurve)
+      (if (scheme.specVersion >= specVersion) extendedColor.contrastCurve else this.contrastCurve)
         ?.invoke(scheme)
     },
     toneDeltaPair = { scheme ->
-      (if (scheme.specVersion == specVersion) extendedColor.toneDeltaPair else this.toneDeltaPair)
+      (if (scheme.specVersion >= specVersion) extendedColor.toneDeltaPair else this.toneDeltaPair)
         ?.invoke(scheme)
     },
     opacity = { scheme ->
-      (if (scheme.specVersion == specVersion) extendedColor.opacity else this.opacity)?.invoke(
+      (if (scheme.specVersion >= specVersion) extendedColor.opacity else this.opacity)?.invoke(
         scheme
       )
     },

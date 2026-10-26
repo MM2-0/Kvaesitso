@@ -23,35 +23,73 @@ import hct.Hct
 
 /** A playful theme - the source color's hue does not appear in the theme. */
 class SchemeFruitSalad(
-  sourceColorHct: Hct,
+  sourceColorHctList: List<Hct>,
   isDark: Boolean,
   contrastLevel: Double,
   specVersion: SpecVersion = DEFAULT_SPEC_VERSION,
   platform: Platform = DEFAULT_PLATFORM,
 ) :
   DynamicScheme(
-    sourceColorHct,
+    sourceColorHctList,
     Variant.FRUIT_SALAD,
     isDark,
     contrastLevel,
     platform,
     specVersion,
     ColorSpecs.get(specVersion)
-      .getPrimaryPalette(Variant.FRUIT_SALAD, sourceColorHct, isDark, platform, contrastLevel),
-    ColorSpecs.get(specVersion)
-      .getSecondaryPalette(Variant.FRUIT_SALAD, sourceColorHct, isDark, platform, contrastLevel),
-    ColorSpecs.get(specVersion)
-      .getTertiaryPalette(Variant.FRUIT_SALAD, sourceColorHct, isDark, platform, contrastLevel),
-    ColorSpecs.get(specVersion)
-      .getNeutralPalette(Variant.FRUIT_SALAD, sourceColorHct, isDark, platform, contrastLevel),
-    ColorSpecs.get(specVersion)
-      .getNeutralVariantPalette(
+      .getPrimaryPalette(
         Variant.FRUIT_SALAD,
-        sourceColorHct,
+        sourceColorHctList.first(),
         isDark,
         platform,
         contrastLevel,
       ),
     ColorSpecs.get(specVersion)
-      .getErrorPalette(Variant.FRUIT_SALAD, sourceColorHct, isDark, platform, contrastLevel),
-  )
+      .getSecondaryPalette(
+        Variant.FRUIT_SALAD,
+        sourceColorHctList.first(),
+        isDark,
+        platform,
+        contrastLevel,
+      ),
+    ColorSpecs.get(specVersion)
+      .getTertiaryPalette(
+        Variant.FRUIT_SALAD,
+        sourceColorHctList.first(),
+        isDark,
+        platform,
+        contrastLevel,
+      ),
+    ColorSpecs.get(specVersion)
+      .getNeutralPalette(
+        Variant.FRUIT_SALAD,
+        sourceColorHctList.first(),
+        isDark,
+        platform,
+        contrastLevel,
+      ),
+    ColorSpecs.get(specVersion)
+      .getNeutralVariantPalette(
+        Variant.FRUIT_SALAD,
+        sourceColorHctList.first(),
+        isDark,
+        platform,
+        contrastLevel,
+      ),
+    ColorSpecs.get(specVersion)
+      .getErrorPalette(
+        Variant.FRUIT_SALAD,
+        sourceColorHctList.first(),
+        isDark,
+        platform,
+        contrastLevel,
+      ),
+  ) {
+  constructor(
+    sourceColorHct: Hct,
+    isDark: Boolean,
+    contrastLevel: Double,
+    specVersion: SpecVersion = DEFAULT_SPEC_VERSION,
+    platform: Platform = DEFAULT_PLATFORM,
+  ) : this(listOf(sourceColorHct), isDark, contrastLevel, specVersion, platform)
+}
