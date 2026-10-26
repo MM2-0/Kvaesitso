@@ -37,10 +37,11 @@ internal class TextClassifierImpl : TextClassifier {
         var url: Uri? = null
 
         if (Patterns.WEB_URL.matcher(trimmedQuery).matches()) {
-            url = trimmedQuery.toUri()
-            if (url.scheme == null) {
-                url = url.buildUpon().scheme("https").build()
+            var urlStr = trimmedQuery
+            if (!trimmedQuery.contains("://")) {
+                urlStr = "https://$urlStr";
             }
+            url = urlStr.toUri()
         }
 
         val parsedDate = parseDate(context, trimmedQuery)
