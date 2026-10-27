@@ -106,6 +106,7 @@
     <string name="file_meta_duration">Durata: %1$s</string>
     <!-- File metadata, year of audio tracks -->
     <string name="file_meta_year">Anno: %1$s</string>
+    <string name="file_meta_date">Data: %1$s</string>
     <!-- File size -->
     <string name="file_meta_size">Dimensione: %1$s</string>
     <!-- File path -->
