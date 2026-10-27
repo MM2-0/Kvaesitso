@@ -105,6 +105,7 @@
     <string name="file_meta_duration">Délka: %1$s</string>
     <!-- File metadata, year of audio tracks -->
     <string name="file_meta_year">Rok: %1$s</string>
+    <string name="file_meta_date">Datum: %1$s</string>
     <!-- File size -->
     <string name="file_meta_size">Velikost: %1$s</string>
     <!-- File path -->
