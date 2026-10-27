@@ -951,4 +951,5 @@
     <string name="missing_permission_local_network">%1$s al momento non è autorizzato a trovare dispositivi sulla rete locale.</string>
     <string name="preference_measurement_system_metric_scientific">Metrico (scientifico)</string>
     <string name="action_fix">Fisso</string>
+    <string name="file_meta_date">Data: %1$s</string>
 </resources>
