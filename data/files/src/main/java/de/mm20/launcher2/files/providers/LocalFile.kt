@@ -4,16 +4,16 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.drawable.AdaptiveIconDrawable
-import android.graphics.drawable.BitmapDrawable
 import android.location.Geocoder
 import android.media.MediaMetadataRetriever
 import android.media.ThumbnailUtils
-import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
 import android.util.Size
 import androidx.core.content.FileProvider
+import androidx.core.net.toUri
 import androidx.exifinterface.media.ExifInterface
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.files.LocalFileSerializer
@@ -42,6 +42,7 @@ import java.util.Locale
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 import java.io.File as JavaIOFile
+import androidx.core.graphics.drawable.toDrawable
 
 internal data class LocalFile(
     val id: Long,
@@ -93,7 +94,7 @@ internal data class LocalFile(
 
                 return StaticLauncherIcon(
                     foregroundLayer = StaticIconLayer(
-                        icon = BitmapDrawable(context.resources, thumbnail),
+                        icon = thumbnail.toDrawable(context.resources),
                         scale = 1f,
                     ),
                     backgroundLayer = ColorLayer()
@@ -110,7 +111,7 @@ internal data class LocalFile(
 
                 return StaticLauncherIcon(
                     foregroundLayer = StaticIconLayer(
-                        icon = BitmapDrawable(context.resources, thumbnail),
+                        icon = thumbnail.toDrawable(context.resources),
                         scale = 1f,
                     ),
                     backgroundLayer = ColorLayer()
@@ -142,7 +143,7 @@ internal data class LocalFile(
 
                 return StaticLauncherIcon(
                     foregroundLayer = StaticIconLayer(
-                        icon = BitmapDrawable(context.resources, thumbnail),
+                        icon = thumbnail.toDrawable(context.resources),
                         scale = 1f,
                     ),
                     backgroundLayer = ColorLayer()
@@ -191,7 +192,7 @@ internal data class LocalFile(
 
     private fun getLaunchIntent(context: Context): Intent {
         val uri = if (isDirectory) {
-            Uri.parse(path)
+            path.toUri()
         } else {
             FileProvider.getUriForFile(
                 context,
@@ -204,7 +205,18 @@ internal data class LocalFile(
     }
 
     override fun launch(context: Context, options: Bundle?): Boolean {
-        return context.tryStartActivity(getLaunchIntent(context), options)
+        if (context.tryStartActivity(getLaunchIntent(context), options)) {
+            return true
+        }
+
+        if (isDirectory && path == Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).path) {
+            val viewDownloadsIntent = Intent("android.intent.action.VIEW_DOWNLOADS")
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK + Intent.FLAG_GRANT_READ_URI_PERMISSION)
+
+            return context.tryStartActivity(viewDownloadsIntent, options)
+        }
+
+        return false
     }
 
     override val isDeletable: Boolean
