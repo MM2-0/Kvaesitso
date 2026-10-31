@@ -135,9 +135,11 @@
     <!-- Owncloud login flow, error invalid URL-->
     <!-- Owncloud login flow, password-->
     <!-- Owncloud login flow, user name-->
+    <string name="owncloud_username">Імя карыстальніцы</string>
     <!-- Owncloud login flow -->
     <string name="owncloud_login_2fa_hint">Калі ў цябе ўключана праверка сапраўднасці, ты павінна ўвесці пароль тут.</string>
     <!-- Owncloud login flow, login failed -->
+    <string name="owncloud_login_failed">Не ўдалося ўвайсці: няверныя імя карыстальніцы ці пароль.</string>
     <!-- Owncloud login flow, error: username empty -->
     <!-- Owncloud login flow, error: password empty -->
     <!-- Nextcloud/Owncloud login flow, continue button -->
@@ -212,7 +214,7 @@
     <string name="create_search_action_pick_app">Выберы праграму, дзе шукаць:</string>
     <string name="create_search_action_website_url">Увядзі адрас вэб-сайта:</string>
     <string name="create_search_action_website_invalid_url">Дадзены вэб-сайт не можа быць аўтаматычна імпартаваны як сродак пошуку. Ты можаш паспрабаваць іншы сайт або ўвесці ўсе патрэбныя дадзеныя ў наступным кроку</string>
-    <string name="search_action_websearch_url_hint">Шаблон спасылкі, які выкарыстоўваецца для будавання спасылкі пошуку. Выкарыстоўвай ‘${1}’ у якасці пошукавага запыту</string>
+    <string name="search_action_websearch_url_hint">Шаблон URL-адраса, які выкарыстоўваецца для будавання спасылкі пошуку. Выкарыстоўвай ‘${1}’ у якасці пошукавага запыту</string>
     <string name="tag_exists_message">Тэг з такой назвай ужо існуе. Калі ты працягнеш, гэтыя два цэтліка будуць аб\'яднаныя</string>
     <string name="tag_no_items_message">Няма ярлыкоў з гэтым цэтлікам. Калі ты працягнеш, цэтлік будзе выдалены</string>
     <string name="tag_select_items">Выберы ярлыкі</string>
