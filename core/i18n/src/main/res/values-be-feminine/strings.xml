@@ -37,10 +37,12 @@
     <string name="preference_contacts_call_on_tap">Націсні, каб патэлефанаваць</string>
     <string name="create_search_action_pick_app">Выберы праграму, дзе шукаць:</string>
     <string name="create_search_action_website_url">Увядзі адрас вэб-сайта:</string>
-    <string name="search_action_websearch_url_hint">Шаблон спасылкі, які выкарыстоўваецца для будавання спасылкі пошуку. Выкарыстоўвай ‘${1}’ у якасці пошукавага запыту</string>
+    <string name="search_action_websearch_url_hint">Шаблон URL-адраса, які выкарыстоўваецца для будавання спасылкі пошуку. Выкарыстоўвай ‘${1}’ у якасці пошукавага запыту</string>
     <string name="tag_select_items">Выберы ярлыкі</string>
     <string name="gesture_action_launch_select_app">Выберы праграму або ярлык</string>
     <string name="preference_customize_filter_bar_summary">Дапасуй элементы ў панэлі фільтраў</string>
     <string name="hint_drag_and_drop_reorder">Утрымлівай і перацягвай элементы, каб змяніць іх парадак</string>
     <string name="preference_signin_user">Увайшла як %1$s</string>
+    <string name="owncloud_username">Імя карыстальніцы</string>
+    <string name="owncloud_login_failed">Не ўдалося ўвайсці: няверныя імя карыстальніцы ці пароль.</string>
 </resources>
