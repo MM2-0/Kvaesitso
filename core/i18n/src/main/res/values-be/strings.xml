@@ -39,6 +39,7 @@
     <string name="action_clear">Ачысціць</string>
     <string name="action_install">Усталяваць</string>
     <string name="action_quit">Пакінуць</string>
+    <string name="action_fix">Выправіць</string>
     <!-- Delete something (a file or a web search shortcut) -->
     <string name="menu_delete">Выдаліць</string>
     <string name="menu_remove">Прыбраць</string>
@@ -107,6 +108,7 @@
     <string name="file_meta_duration">Працягласць: %1$s</string>
     <!-- File metadata, year of audio tracks -->
     <string name="file_meta_year">Год: %1$s</string>
+    <string name="file_meta_date">Дата: %1$s</string>
     <!-- File size -->
     <string name="file_meta_size">Памер: %1$s</string>
     <!-- File path -->
@@ -211,7 +213,7 @@
         the region of the language or not commonly used.
        -->
     <string name="default_websearch_3_url">https://play.google.com/store/search?q=${1}</string>
-    <string name="websearch_dialog_url_error">У запаўніцеля \'${1}\' адсутнічае гэта спасылка</string>
+    <string name="websearch_dialog_url_error">У гэтым URL-адрасы адсутнічае запаўніцель \'${1}\'</string>
     <string name="websearch_dialog_replace_icon">Змяніць значок</string>
     <string name="websearch_dialog_delete_icon">Выдаліць значок</string>
     <string name="websearch_dialog_custom_icon">Уласны значок</string>
@@ -263,14 +265,14 @@
     <string name="edit_favorites_dialog_tag_section_empty">Замацаваныя цэтлікі з\'явяцца тут</string>
     <string name="edit_favorites_dialog_new_tag">Стварыць цэтлік</string>
     <!-- Nextcloud login flow, URL-->
-    <string name="nextcloud_server_url">URL сервера Nextcloud</string>
+    <string name="nextcloud_server_url">URL-адрас сервера Nextcloud</string>
     <!-- Nextcloud/Owncloud login flow, empty URL-->
     <!-- Nextcloud login flow, error invalid URL-->
-    <string name="nextcloud_server_invalid_url">Гэта URL не вядзе на Nextcloud</string>
+    <string name="nextcloud_server_invalid_url">Гэты URL-адрас не вядзе на Nextcloud</string>
     <!-- Owncloud login flow, UR-->
-    <string name="owncloud_server_url">URL сервера Owncloud</string>
+    <string name="owncloud_server_url">URL-адрас сервера Owncloud</string>
     <!-- Owncloud login flow, error invalid URL-->
-    <string name="owncloud_server_invalid_url">Гэта URL не вядзе на Owncloud</string>
+    <string name="owncloud_server_invalid_url">Гэты URL-адрас не вядзе на Owncloud</string>
     <!-- Owncloud login flow, password-->
     <string name="owncloud_password">Пароль</string>
     <!-- Owncloud login flow, user name-->
@@ -419,6 +421,7 @@
     <string name="missing_permission_appshortcuts_search">Зрабіце %1$s стандартным дамашнім экранам, каб шукаць праграмы.</string>
     <!-- Missing permission app shortcuts permission, used when creating a shortcut in the edit favorites sheet -->
     <string name="missing_permission_appshortcuts_create">Зрабіце %1$s стандартным дамашнім экранам, каб ствараць ярлыкі праграм.</string>
+    <string name="missing_permission_local_network">У %1$s пакуль што няма дазволу на знаходжанне прылад у лакальнай сетцы.</string>
     <!-- Grant a permission, shown in permission banners -->
     <string name="grant_permission">Дазволіць</string>
     <!-- Appearance preference title -->
@@ -649,7 +652,7 @@
     <string name="preference_search_websites">Вэб-сайты</string>
     <string name="preference_search_locations">Месцы</string>
     <string name="preference_search_locations_radius">Радыус пошука</string>
-    <string name="preference_search_websites_summary">Паказваць перадпрагляд вэб-сайта, калі ў поле пошуку ўводзіцца спасылка</string>
+    <string name="preference_search_websites_summary">Паказваць перадпрагляд вэб-сайта, калі ў поле пошуку ўводзіцца URL-адрас</string>
     <string name="preference_search_locations_summary">Шукаць крамы і іншыя месцы паблізу</string>
     <string name="preference_search_localfiles">Файлы на прыладзе</string>
     <string name="preference_search_localfiles_summary">Шукаць дакументы, фота і іншыя файлы з гэтай прылады</string>
@@ -744,6 +747,7 @@
     <string name="favorites_empty_tag">Няма ярлыкоў з гэтым цэтлікам</string>
     <string name="frequently_used_show_in_favorites">Паказваць у абраных</string>
     <string name="frequently_used_rows">Колькасць радкоў</string>
+    <string name="favorites_skip_rows">Прапусціць радкі</string>
     <string name="preference_screen_search_actions">Хуткія дзеянні</string>
     <string name="preference_search_search_actions_summary">Кіраванне хуткімі дзеяннямі і ярлыкамі пошуку</string>
     <string name="search_action_call">Выклікаць</string>
@@ -770,8 +774,8 @@
     <string name="create_search_action_website_invalid_url">Дадзены вэб-сайт не можа быць аўтаматычна імпартаваны як сродак пошуку. Вы можаце паспрабаваць іншы сайт або ўвесці ўсе патрэбныя даныя ў наступным кроку</string>
     <string name="search_action_label">Назва</string>
     <string name="search_action_app">Праграма</string>
-    <string name="search_action_websearch_url">Шаблон спасылкі</string>
-    <string name="search_action_websearch_url_hint">Шаблон спасылкі, які выкарыстоўваецца для будавання спасылкі пошуку. Выкарыстоўвайце ‘${1}’ у якасці пошукавага запыту</string>
+    <string name="search_action_websearch_url">Шаблон URL-адраса</string>
+    <string name="search_action_websearch_url_hint">Шаблон URL-адраса, які выкарыстоўваецца для стварэння спасылкі пошуку. Выкарыстоўвайце ‘${1}’ у якасці пошукавага запыту</string>
     <string name="more_information">Больш інфармацыі</string>
     <string name="experimental_feature">Эксперыментальная</string>
     <string name="tag_exists_error">Тэг з такой назвай ужо існуе</string>
@@ -1112,6 +1116,9 @@
     <string name="preference_form_of_address_masc">Мужчынскі</string>
     <string name="preference_measurement_system">Сістэма адзінак вымярэння</string>
     <string name="preference_measurement_system_metric">Метрычная</string>
+    <string name="preference_measurement_system_metric_scientific">Метрычная (навуковая)</string>
+    <string name="preference_measurement_system_uk">Брытанская гібрыдная</string>
+    <string name="preference_measurement_system_us">Амерыканская традыцыйная</string>
     <string name="preference_transliteration">Прыярытэтная сістэма транслітарацыі</string>
     <string name="preference_transliteration_auto">Аўтаматчна</string>
     <string name="preference_calendar_system">Каляндарная сістэма</string>
