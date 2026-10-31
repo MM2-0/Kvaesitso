@@ -99,7 +99,7 @@
     <string name="websearch_dialog_advanced">Пашыраныя налады</string>
     <string name="websearch_dialog_query_encoding_url">Працэнтнае кадзіраванне</string>
     <string name="websearch_dialog_query_encoding_form">application/x-www-form-urlencoded</string>
-    <string name="websearch_dialog_url_error">У запаўніцеля \'${1}\' адсутнічае гэта спасылка</string>
+    <string name="websearch_dialog_url_error">У гэтым URL-адрасы адсутнічае запаўніцель \'${1}\'</string>
     <string name="close">Закрыць</string>
     <string name="save">Захаваць</string>
     <string name="duplicate">Дубліраваць</string>
@@ -111,9 +111,9 @@
     <string name="widget_action_remove">Прыбраць</string>
     <string name="menu_item_edit_favs">Рэдагаваць абраныя</string>
     <string name="edit_favorites_dialog_unpinned">Не замацаваныя, але выкарыстоўваюцца часта</string>
-    <string name="nextcloud_server_invalid_url">Гэта URL не вядзе на Nextcloud</string>
-    <string name="owncloud_server_invalid_url">Гэта URL не вядзе на Owncloud</string>
-    <string name="owncloud_server_url">URL сервера Owncloud</string>
+    <string name="nextcloud_server_invalid_url">Гэты URL-адрас не вядзе на Nextcloud</string>
+    <string name="owncloud_server_invalid_url">Гэты URL-адрас не вядзе на Owncloud</string>
+    <string name="owncloud_server_url">URL-адрас сервера Owncloud</string>
     <string name="owncloud_password">Пароль</string>
     <string name="owncloud_username">Імя карыстальніка</string>
     <string name="owncloud_login_2fa_hint">Калі ў вас уключана праверка сапраўднасці, вы павінны ўвесці пароль тут.</string>
@@ -140,7 +140,7 @@
     <string name="edit_favorites_dialog_tags">Цэтлікі</string>
     <string name="edit_favorites_dialog_tag_section_empty">Замацаваныя цэтлікі з\'явяцца тут</string>
     <string name="edit_favorites_dialog_new_tag">Стварыць цэтлік</string>
-    <string name="nextcloud_server_url">URL сервера Nextcloud</string>
+    <string name="nextcloud_server_url">URL-адрас сервера Nextcloud</string>
     <string name="login_flow_login">Увайсці</string>
     <string name="disclaimer_currency_converter">Курсы валют абнаўляюцца штодзень Еўрапейскім цэнтральным банкам. Уся інфармацыя дана «як ёсць», без аніякай гарантыі. На гэту інфармацыю не мяркуецца адказнасці. \n \nАпошняе абнаўленне: %1$s</string>
     <string name="date_tomorrow">Заўтра</string>
@@ -417,7 +417,7 @@
     <string name="preference_search_websites">Вэб-сайты</string>
     <string name="preference_search_locations">Месцы</string>
     <string name="preference_search_locations_radius">Радыус пошука</string>
-    <string name="preference_search_websites_summary">Паказваць перадпрагляд вэб-сайта, калі ў поле пошуку ўводзіцца спасылка</string>
+    <string name="preference_search_websites_summary">Паказваць перадпрагляд вэб-сайта, калі ў поле пошуку ўводзіцца URL-адрас</string>
     <string name="preference_search_owncloud">Owncloud</string>
     <string name="preference_calendar_calendars">Календары</string>
     <string name="preference_search_cloud_summary">Шукаць файлы %1$s</string>
@@ -480,7 +480,7 @@
     <string name="preference_screen_search_actions">Хуткія дзеянні</string>
     <string name="preference_search_search_actions_summary">Кіраванне хуткімі дзеяннямі і ярлыкамі пошуку</string>
     <string name="search_action_label">Назва</string>
-    <string name="search_action_websearch_url">Шаблон спасылкі</string>
+    <string name="search_action_websearch_url">Шаблон URL-адраса</string>
     <string name="search_action_alarm">Задаць будзільнік</string>
     <string name="search_action_open_url">Праглядзець вэб-сайт</string>
     <string name="search_action_event">Запланаваць падзею</string>
@@ -493,7 +493,7 @@
     <string name="search_action_message">Напісаць паведамленне</string>
     <string name="create_search_action_pick_app">Выберыце праграму, дзе шукаць:</string>
     <string name="create_search_action_website_invalid_url">Дадзены вэб-сайт не можа быць аўтаматычна імпартаваны як сродак пошуку. Вы можаце паспрабаваць іншы сайт або ўвесці ўсе патрэбныя даныя ў наступным кроку</string>
-    <string name="search_action_websearch_url_hint">Шаблон спасылкі, які выкарыстоўваецца для будавання спасылкі пошуку. Выкарыстоўвайце ‘${1}’ у якасці пошукавага запыту</string>
+    <string name="search_action_websearch_url_hint">Шаблон URL-адраса, які выкарыстоўваецца для стварэння спасылкі пошуку. Выкарыстоўвайце ‘${1}’ у якасці пошукавага запыту</string>
     <string name="apps_profile_main">Персанальны</string>
     <string name="apps_profile_work">Працоўны</string>
     <string name="frequently_used_show_in_favorites">Паказваць у абраных</string>
@@ -930,8 +930,8 @@
     <string name="preference_form_of_address_masc">Мужчынскі</string>
     <string name="preference_measurement_system">Сістэма адзінак вымярэння</string>
     <string name="preference_measurement_system_metric">Метрычная</string>
-    <string name="preference_measurement_system_uk">Вялікабрытанская</string>
-    <string name="preference_measurement_system_us">Амерыканская</string>
+    <string name="preference_measurement_system_uk">Брытанская гібрыдная</string>
+    <string name="preference_measurement_system_us">Амерыканская традыцыйная</string>
     <string name="preference_transliteration">Прыярытэтная сістэма транслітарацыі</string>
     <string name="preference_transliteration_auto">Аўтаматчна</string>
     <string name="preference_calendar_system">Каляндарная сістэма</string>
@@ -956,4 +956,9 @@
     <string name="search_action_private_space_unlock">Разблакіраваць прыватную прастору</string>
     <string name="preference_currencies">Валюта</string>
     <string name="preference_add_currency">Дадаць валюту</string>
+    <string name="action_fix">Выправіць</string>
+    <string name="file_meta_date">Дата: %1$s</string>
+    <string name="missing_permission_local_network">У %1$s пакуль што няма дазволу на знаходжанне прылад у лакальнай сетцы.</string>
+    <string name="favorites_skip_rows">Прапусціць радкі</string>
+    <string name="preference_measurement_system_metric_scientific">Метрычная (навуковая)</string>
 </resources>
