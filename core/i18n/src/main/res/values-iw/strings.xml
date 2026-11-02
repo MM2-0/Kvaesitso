@@ -949,4 +949,5 @@
     <string name="missing_permission_local_network">%1$s איננו מורשה כרגע למצוא התקנים ברשת המקומית.</string>
     <string name="favorites_skip_rows">דילוג על שורות</string>
     <string name="preference_measurement_system_metric_scientific">מידות מטריות (מדעיות)</string>
+    <string name="file_meta_date">תאריך: %1$s</string>
 </resources>
