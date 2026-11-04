@@ -46,6 +46,7 @@ import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.DismissableBottomSheet
 import de.mm20.launcher2.ui.component.SearchBar
 import de.mm20.launcher2.ui.component.SearchBarLevel
+import de.mm20.launcher2.ui.component.preferences.GuardedPreference
 import de.mm20.launcher2.ui.component.preferences.ListPreference
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
@@ -198,20 +199,32 @@ fun HomescreenSettingsScreen() {
                         viewModel.setDimWallpaper(it)
                     }
                 )
-                val isBlurSupported = remember { viewModel.isBlurAvailable(context) }
-                SwitchPreference(
-                    title = stringResource(R.string.preference_blur_wallpaper),
-                    summary = stringResource(
-                        if (isBlurSupported) R.string.preference_blur_wallpaper_summary
-                        else R.string.preference_blur_wallpaper_unsupported
-                    ),
-                    value = blurWallpaper && isBlurSupported,
-                    onValueChanged = {
-                        viewModel.setBlurWallpaper(it)
+                val isBlurSupported = remember { viewModel.isBlurAvailable() }
+                val requiresWallpaperAccess = remember { viewModel.requiresWallpaperAccess(context) }
+                val hasWallpaperAccess by viewModel.hasWallpaperAccess.collectAsStateWithLifecycle(null)
+                val isBlurEnabled = isBlurSupported
+                        && (!requiresWallpaperAccess || hasWallpaperAccess != false)
+                GuardedPreference(
+                    locked = isBlurSupported && requiresWallpaperAccess && hasWallpaperAccess == false,
+                    onUnlock = {
+                        viewModel.requestWallpaperAccess(context as AppCompatActivity)
                     },
-                    enabled = isBlurSupported
-                )
-                AnimatedVisibility(blurWallpaper && isBlurSupported) {
+                    description = stringResource(R.string.missing_permission_wallpaper_blur),
+                ) {
+                    SwitchPreference(
+                        title = stringResource(R.string.preference_blur_wallpaper),
+                        summary = stringResource(
+                            if (isBlurSupported) R.string.preference_blur_wallpaper_summary
+                            else R.string.preference_blur_wallpaper_unsupported
+                        ),
+                        value = blurWallpaper && isBlurEnabled,
+                        onValueChanged = {
+                            viewModel.setBlurWallpaper(it)
+                        },
+                        enabled = isBlurEnabled
+                    )
+                }
+                AnimatedVisibility(blurWallpaper && isBlurEnabled) {
                     SliderPreference(
                         title = stringResource(R.string.preference_blur_wallpaper_radius),
                         value = blurWallpaperRadius,

@@ -243,6 +243,8 @@ abstract class SharedLauncherActivity(
                                 searchBarAutofocus,
                                 wallpaperBlur,
                                 wallpaperBlurRadius,
+                                dimBackground,
+                                darkTheme,
                             ) {
                                 if (mode == LauncherActivityMode.Assistant) {
                                     val searchComponent = SearchComponent(
@@ -267,6 +269,7 @@ abstract class SharedLauncherActivity(
                                         searchBarPosition = if (bottomSearchBar) SearchBarPosition.Bottom else SearchBarPosition.Top,
                                         finishOnBack = true,
                                         backgroundColor = backgroundColor,
+                                        wallpaperBlurRadius = 0.dp,
                                     )
                                 } else {
                                     val searchComponent = SearchComponent(
@@ -403,6 +406,7 @@ abstract class SharedLauncherActivity(
                                         showNavBar = !hideNav,
                                         darkSearchBar = darkSearchBar,
                                         wallpaperBlurRadius = if (wallpaperBlur) wallpaperBlurRadius.dp else 0.dp,
+                                        wallpaperDim = if (dimBackground && darkTheme) 0.3f else 0f,
                                     )
 
                                     if (config.isUseless()) config.copy(
