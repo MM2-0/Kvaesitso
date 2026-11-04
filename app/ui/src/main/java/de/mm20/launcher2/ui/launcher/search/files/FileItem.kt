@@ -241,7 +241,7 @@ fun FileItem(
                     toolbarActions.add(
                         DefaultToolbarAction(
                             label = stringResource(R.string.menu_customize),
-                            icon = R.drawable.tune_24px,
+                            icon = R.drawable.edit_24px,
                             action = { sheetManager.showCustomizeSearchableModal(file) }
                         ))
 
