@@ -4,7 +4,7 @@ jacksonCore = "2.22.3"
 jacksonDataformatYaml = "2.22.3"
 minSdk = "26"
 compileSdk = "37"
-compileSdkMinor = "1"
+compileSdkMinor = "2"
 targetSdk = "37"
 
 pluginSdk = "2.3.0"
