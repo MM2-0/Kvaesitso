@@ -18,10 +18,22 @@ class TimerActionBuilder(
     override val icon: SearchActionIcon = SearchActionIcon.Timer
 
     override fun build(context: Context, classifiedQuery: TextClassificationResult): SearchAction? {
-        // Maximum time span for a timer is 24 hours, see https://developer.android.com/reference/android/provider/AlarmClock#EXTRA_LENGTH
-        if (classifiedQuery.timespan != null && classifiedQuery.timespan.seconds <= 86400) {
+        val duration = classifiedQuery.timespan
+        if (duration != null && duration.seconds in 1..86400) {
+            val totalSeconds = duration.seconds
+            val hours = totalSeconds / 3600
+            val minutes = (totalSeconds % 3600) / 60
+            val seconds = totalSeconds % 60
+
+            val preview = buildList {
+                if (hours > 0) add("${hours}h")
+                if (minutes > 0) add("${minutes}m")
+                if (seconds > 0 || isEmpty()) add("${seconds}s")
+            }.joinToString(" ")
+
             return TimerAction(
-                context.getString(R.string.search_action_timer), classifiedQuery.timespan
+                "${context.getString(R.string.search_action_timer)} · $preview",
+                duration
             )
         }
         return null

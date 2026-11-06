@@ -6,7 +6,7 @@ import de.mm20.launcher2.searchactions.TextClassificationResult
 import de.mm20.launcher2.searchactions.actions.SearchAction
 import de.mm20.launcher2.searchactions.actions.SearchActionIcon
 import de.mm20.launcher2.searchactions.actions.SetAlarmAction
-import java.time.LocalDate
+import java.util.Locale
 
 class SetAlarmActionBuilder(
     override val label: String
@@ -21,8 +21,11 @@ class SetAlarmActionBuilder(
 
     override fun build(context: Context, classifiedQuery: TextClassificationResult): SearchAction? {
         if (classifiedQuery.time != null) {
+            val time = classifiedQuery.time
+            val preview = String.format(Locale.ROOT, "%02d:%02d", time.hour, time.minute)
             return SetAlarmAction(
-                context.getString(R.string.search_action_alarm), classifiedQuery.time
+                "${context.getString(R.string.search_action_alarm)} · $preview",
+                time
             )
         }
         return null
