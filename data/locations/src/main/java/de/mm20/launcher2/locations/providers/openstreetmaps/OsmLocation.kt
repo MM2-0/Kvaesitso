@@ -1,10 +1,10 @@
 package de.mm20.launcher2.locations.providers.openstreetmaps
 
 import android.content.Context
-import de.mm20.launcher2.ktx.ifNullOrEmpty
+
 import de.mm20.launcher2.ktx.into
 import de.mm20.launcher2.ktx.map
-import de.mm20.launcher2.ktx.stripStartOrNull
+
 import de.mm20.launcher2.locations.OsmLocationSerializer
 import de.mm20.launcher2.openstreetmaps.R
 import de.mm20.launcher2.search.Location
@@ -121,7 +121,7 @@ internal data class OsmLocation(
                     ?.let { min(it, 5) / 5.0f },
                 acceptedPaymentMethods = with(
                     it.tags.mapNotNull { (key, value) ->
-                        (key.stripStartOrNull("payment:") ?: return@mapNotNull null) to value
+                        (key.takeIf { k -> k.startsWith("payment:") }?.removePrefix("payment:") ?: return@mapNotNull null) to value
                     }.toMap()
                 ) {
                     // best-effort way to take any method payment as it being available,
@@ -415,7 +415,7 @@ internal fun parseOpeningSchedule(
         val localTimesWithDuration =
             range.times?.mapNotNull { it.toLocalTimeWithDuration() } ?: continue
         val daysOfWeek = range.weekdays
-            .ifNullOrEmpty { Weekday.entries.toList() }
+            .orEmpty().ifEmpty { Weekday.entries.toList() }
             .flatMap { it.toDaysOfWeek() }
 
         hours += daysOfWeek.flatMap { dow ->

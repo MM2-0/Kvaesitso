@@ -129,6 +129,7 @@ import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import java.util.Locale
 import kotlin.math.pow
+import kotlin.time.Duration.Companion.milliseconds
 import java.time.format.TextStyle as JavaTextStyle
 
 @Composable
@@ -691,7 +692,7 @@ private fun Departures(
                                 val itemIdx = lines.indexOf(selectedLine)
                                 if (itemIdx != -1) {
                                     if (animateFilterChipsOnce) {
-                                        delay(500)
+                                        delay(500.milliseconds)
                                         filterChipListState.animateScrollToItem(
                                             itemIdx
                                         )

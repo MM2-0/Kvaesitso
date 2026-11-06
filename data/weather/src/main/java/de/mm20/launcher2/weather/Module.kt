@@ -9,7 +9,7 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
 val weatherModule = module {
-    single<WeatherRepository> { WeatherRepositoryImpl(androidContext(), get(), get(), get()) }
+    single { WeatherRepository(androidContext(), get(), get(), get()) }
     factory<WeatherProvider> { (providerId: String) ->
         when (providerId) {
             OpenWeatherMapProvider.Id -> OpenWeatherMapProvider(androidContext())
