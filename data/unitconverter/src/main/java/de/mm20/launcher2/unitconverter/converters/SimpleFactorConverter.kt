@@ -2,8 +2,9 @@ package de.mm20.launcher2.unitconverter.converters
 
 import android.content.Context
 import de.mm20.launcher2.search.data.UnitConverter
-import de.mm20.launcher2.unitconverter.ConverterUtils
+
 import de.mm20.launcher2.unitconverter.MeasureUnit
+import de.mm20.launcher2.unitconverter.formatValue
 import de.mm20.launcher2.unitconverter.UnitValue
 import kotlin.math.roundToInt
 
@@ -27,14 +28,14 @@ internal abstract class SimpleFactorConverter: Converter {
             for (targetUnit in standardUnits) {
                 if (targetUnit.symbol == unit.symbol) continue
                 val v = value * targetUnit.factor / unit.factor
-                results += UnitValue(v, targetUnit.symbol, ConverterUtils.formatName(context, targetUnit, v), ConverterUtils.formatValue(context, unit, v))
+                results += UnitValue(v, targetUnit.symbol, targetUnit.formatName(context, v), v.formatValue())
             }
         } else {
             val targetUnit = standardUnits.first { it.symbol == toUnit }
             val v = value * targetUnit.factor / unit.factor
-            results += UnitValue(v, targetUnit.symbol, ConverterUtils.formatName(context, targetUnit, v), ConverterUtils.formatValue(context, unit, v))
+            results += UnitValue(v, targetUnit.symbol, targetUnit.formatName(context, v), v.formatValue())
         }
-        val inputValue = UnitValue(value, fromUnit, ConverterUtils.formatName(context, unit, value), ConverterUtils.formatValue(context, unit, value))
+        val inputValue = UnitValue(value, fromUnit, unit.formatName(context, value), value.formatValue())
         return UnitConverter(dimension, inputValue, results)
     }
 
