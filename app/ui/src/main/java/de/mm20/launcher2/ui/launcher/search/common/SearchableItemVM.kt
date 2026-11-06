@@ -18,6 +18,7 @@ import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.MeasurementSystem
 import de.mm20.launcher2.preferences.search.ContactSearchSettings
+import de.mm20.launcher2.preferences.search.FavoritesSettings
 import de.mm20.launcher2.preferences.search.LocationSearchSettings
 import de.mm20.launcher2.search.AppShortcut
 import de.mm20.launcher2.search.Application
@@ -56,6 +57,7 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
     private val permissionsManager: PermissionsManager by inject()
     private val locationSearchSettings: LocationSearchSettings by inject()
     private val contactSearchSettings: ContactSearchSettings by inject()
+    private val favoritesSettings: FavoritesSettings by inject()
 
     val isUpToDate = MutableStateFlow(true)
 
@@ -78,6 +80,20 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
 
     fun unpin() {
         searchable.value?.let { favoritesService.unpinItem(it) }
+    }
+
+    val isFrequentlyUsedEnabled = favoritesSettings.frequentlyUsed
+
+    val isExcludedFromFrequentlyUsed = searchable.flatMapLatest {
+        if (it == null) emptyFlow() else favoritesService.isExcludedFromFrequentlyUsed(it)
+    }
+
+    fun excludeFromFrequentlyUsed() {
+        searchable.value?.let { favoritesService.setExcludedFromFrequentlyUsed(it, true) }
+    }
+
+    fun includeInFrequentlyUsed() {
+        searchable.value?.let { favoritesService.setExcludedFromFrequentlyUsed(it, false) }
     }
 
     val badge = searchable.flatMapLatest {

@@ -44,6 +44,7 @@ interface SavableSearchableRepository : Backupable {
         pinned: Boolean? = null,
         launchCount: Int? = null,
         weight: Double? = null,
+        excludeFromFrequentlyUsed: Boolean? = null,
     )
 
     fun update(
@@ -52,6 +53,7 @@ interface SavableSearchableRepository : Backupable {
         pinned: Boolean? = null,
         launchCount: Int? = null,
         weight: Double? = null,
+        excludeFromFrequentlyUsed: Boolean? = null,
     )
 
     /**
@@ -100,6 +102,13 @@ interface SavableSearchableRepository : Backupable {
 
     fun isPinned(searchable: SavableSearchable): Flow<Boolean>
     fun getVisibility(searchable: SavableSearchable): Flow<VisibilityLevel>
+
+    fun isExcludedFromFrequentlyUsed(searchable: SavableSearchable): Flow<Boolean>
+
+    /**
+     * Get all items that have been excluded from the frequently used section.
+     */
+    fun getExcludedFromFrequentlyUsed(): Flow<List<SavableSearchable>>
     fun updateFavorites(
         manuallySorted: List<SavableSearchable>,
         automaticallySorted: List<SavableSearchable>,
@@ -165,7 +174,8 @@ internal class SavableSearchableRepositoryImpl(
         visibility: VisibilityLevel?,
         pinned: Boolean?,
         launchCount: Int?,
-        weight: Double?
+        weight: Double?,
+        excludeFromFrequentlyUsed: Boolean?,
     ) {
         val dao = database.searchableDao()
         scope.launch {
@@ -178,6 +188,8 @@ internal class SavableSearchableRepositoryImpl(
                     pinPosition = pinned?.let { if (it) 1 else 0 } ?: entity?.pinPosition ?: 0,
                     launchCount = launchCount ?: entity?.launchCount ?: 0,
                     weight = weight ?: entity?.weight ?: 0.0,
+                    excludeFromFrequentlyUsed = excludeFromFrequentlyUsed
+                        ?: entity?.excludeFromFrequentlyUsed ?: false,
                     serializedSearchable = searchable.serialize() ?: return@launch,
                 )
             )
@@ -189,7 +201,8 @@ internal class SavableSearchableRepositoryImpl(
         visibility: VisibilityLevel?,
         pinned: Boolean?,
         launchCount: Int?,
-        weight: Double?
+        weight: Double?,
+        excludeFromFrequentlyUsed: Boolean?,
     ) {
         val dao = database.searchableDao()
         scope.launch {
@@ -202,6 +215,8 @@ internal class SavableSearchableRepositoryImpl(
                     pinPosition = pinned?.let { if (it) 1 else 0 } ?: entity?.pinPosition ?: 0,
                     launchCount = launchCount ?: entity?.launchCount ?: 0,
                     weight = weight ?: entity?.weight ?: 0.0,
+                    excludeFromFrequentlyUsed = excludeFromFrequentlyUsed
+                        ?: entity?.excludeFromFrequentlyUsed ?: false,
                     serializedSearchable = searchable.serialize() ?: return@launch,
                 )
             )
@@ -333,6 +348,16 @@ internal class SavableSearchableRepositoryImpl(
         }
     }
 
+    override fun isExcludedFromFrequentlyUsed(searchable: SavableSearchable): Flow<Boolean> {
+        return database.searchableDao().isExcludedFromFrequentlyUsed(searchable.key)
+    }
+
+    override fun getExcludedFromFrequentlyUsed(): Flow<List<SavableSearchable>> {
+        return database.searchableDao().getExcludedFromFrequentlyUsed().map {
+            it.mapNotNull { fromDatabaseEntity(it).searchable }
+        }
+    }
+
     override fun delete(searchable: SavableSearchable) {
         scope.launch {
             database.searchableDao().delete(searchable.key)
@@ -461,6 +486,7 @@ internal class SavableSearchableRepositoryImpl(
                         "pinPosition" to fav.pinPosition,
                         "searchable" to fav.serializedSearchable,
                         "weight" to fav.weight,
+                        "excludeFromFrequentlyUsed" to fav.excludeFromFrequentlyUsed,
                     )
                 )
             }
@@ -494,7 +520,8 @@ internal class SavableSearchableRepositoryImpl(
                         launchCount = json.getInt("launchCount"),
                         visibility = json.optInt("visibility", 0),
                         pinPosition = json.getInt("pinPosition"),
-                        weight = json.optDouble("weight").takeIf { !it.isNaN() } ?: 0.0
+                        weight = json.optDouble("weight").takeIf { !it.isNaN() } ?: 0.0,
+                        excludeFromFrequentlyUsed = json.optBoolean("excludeFromFrequentlyUsed", false),
                     )
                     favorites.add(entity)
                 }
