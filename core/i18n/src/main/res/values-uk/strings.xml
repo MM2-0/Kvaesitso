@@ -39,6 +39,7 @@
     <string name="action_clear">Стерти</string>
     <string name="action_install">Встановити</string>
     <string name="action_quit">Вийти</string>
+    <string name="action_fix">Виправити</string>
     <!-- Delete something (a file or a web search shortcut) -->
     <string name="menu_delete">Видалити</string>
     <string name="menu_remove">Прибрати</string>
@@ -106,6 +107,7 @@
     <string name="file_meta_duration">Тривалість: %1$s</string>
     <!-- File metadata, year of audio tracks -->
     <string name="file_meta_year">Рік: %1$s</string>
+    <string name="file_meta_date">Дата: %1$s</string>
     <!-- File size -->
     <string name="file_meta_size">Розмір: %1$s</string>
     <!-- File path -->
@@ -417,6 +419,7 @@
     <string name="missing_permission_appshortcuts_search">Встановіть %1$s як застосунок головного екрана, щоби шукати застосунки.</string>
     <!-- Missing permission app shortcuts permission, used when creating a shortcut in the edit favorites sheet -->
     <string name="missing_permission_appshortcuts_create">Встановіть %1$s як застосунок головного екрана, щоби створювати ярлики.</string>
+    <string name="missing_permission_local_network">%1$s не має дозволу знаходити пристрої в локальній мережі.</string>
     <!-- Grant a permission, shown in permission banners -->
     <string name="grant_permission">Надати</string>
     <!-- Appearance preference title -->
@@ -425,6 +428,7 @@
     <string name="preference_theme_light">Світла</string>
     <string name="preference_theme_dark">Темна</string>
     <string name="preference_screen_colors">Колірна схема</string>
+    <string name="preference_create_colors">Нова кольорова схема</string>
     <string name="preference_colors_default">За замовчуванням</string>
     <string name="preference_colors_high_contrast">Висока контрастність</string>
     <string name="preference_colors_bw">Чорно-біла</string>
@@ -433,27 +437,56 @@
     <string name="preference_mdy_color_source_system">Система</string>
     <string name="preference_mdy_color_source_wallpaper">Шпалери</string>
     <string name="preference_screen_shapes">Фігури</string>
+    <string name="preference_create_shapes">Нова форма</string>
     <string name="preference_shapes_default">За замовчуванням</string>
     <string name="preference_shapes_extra_round">Більш скруглені</string>
     <string name="preference_shapes_rect">Прямокутні</string>
     <string name="preference_shapes_base">Основна фігура</string>
     <string name="preference_screen_typography">Топографія</string>
+    <string name="preference_screen_transparencies">Прозорість</string>
     <string name="preference_create_transparency">Нова схема прозорості</string>
     <string name="preference_transparencies_default">За замовчуванням</string>
     <string name="preference_transparencies_semi_transparent">Напівпрозорий</string>
+    <string name="preference_font">Шрифт</string>
+    <string name="preference_screen_about">Інформація</string>
     <string name="preference_version">Версія</string>
     <string name="preference_category_links">Посилання</string>
     <string name="preference_category_licenses">Ліцензії з відкритим кодом</string>
     <string name="preference_category_advanced">Розширений</string>
     <!-- Open website of an open source library -->
-    <string name="open_webpage">Відкрити сайт</string>
+    <string name="open_webpage">Переглянути сайт</string>
+    <string name="preference_screen_about_summary">Відомості про ліцензію та розробку</string>
+    <string name="preference_screen_appearance_summary">Налаштуйте як виглядає Kvaesito</string>
+    <string name="preference_weather_provider">Постачальник</string>
     <string name="provider_brightsky">Deutscher Wetterdienst (Тільки Німеччина)</string>
     <string name="preference_category_location">Локалізація</string>
     <string name="preference_automatic_location">Автоматична локалізація</string>
+    <string name="preference_automatic_location_summary">Використовувати сервіси телефону для автоматичного визначення розташування</string>
+    <string name="preference_location_managed">Керується плагіном</string>
+    <string name="preference_location">Розташування</string>
+    <string name="preference_location_breezy">Оберіть розташування в Breezy Weather</string>
+    <string name="preference_imperial_units_summary">Використовувати градуси Фаренгейта та милі за годину</string>
+    <string name="preference_imperial_units">Імперські одиниці вимірювання</string>
     <string name="widget_config_weather_compact">Компактний вигляд</string>
+    <string name="preference_category_debug">Розробка</string>
     <string name="preference_category_debug_tools">Інтсрументи</string>
+    <string name="preference_debug_dump_heap">Знімок оперативної пам\'яті</string>
+    <string name="preference_debug_dump_heap_summary">Зробить знімок пам\'яті для аналізу її використання. Додаток не буде відповідати доки знімок не буде завершено.</string>
+    <string name="preference_debug_dump_heap_in_progress">Захоплюється знімок…</string>
+    <string name="preference_debug_cleanup_database">Очистити базу даних</string>
+    <string name="preference_debug_cleanup_database_summary">Очистити базу даних лаунчера від пошкоджених і невикористаних записів</string>
+    <string name="preference_debug_reinstall_iconpacks">Перевстановити набори іконок</string>
+    <string name="preference_debug_reinstall_iconpacks_summary">Очистити та зібрати наново кеш для наборів іконок</string>
+    <plurals name="debug_cleanup_database_result">
+        <item quantity="one">Було видалено %1$d запис</item>
+        <item quantity="few">Було видалено %1$d записи</item>
+        <item quantity="many">Було видалено %1$d записів</item>
+        <item quantity="other">Було видалено %1$d записів</item>
+    </plurals>
     <string name="preference_category_icons">Іконки</string>
     <string name="preference_cards">Картки</string>
+    <string name="preference_cards_summary">Налаштуйте вигляд картки</string>
+    <string name="preference_cards_corner_radius">Радіус скруглення</string>
     <string name="preference_cards_opacity">Непрозорість</string>
     <string name="preference_cards_shape">Форма</string>
     <string name="preference_cards_shape_rounded">Закруглені</string>
@@ -463,11 +496,21 @@
     <string name="preference_icon_shape_hexagon">Шестикутник</string>
     <string name="preference_category_searchbar">Рядок пошуку</string>
     <string name="preference_screen_plugins">Плагіни</string>
+    <string name="preference_screen_plugins_summary">Керувати встановленими розширеннями</string>
     <string name="preference_category_enabled_plugins">Увімкнено</string>
     <string name="preference_category_installed_plugins">Заватнажено</string>
     <string name="no_plugins_installed">Не встановлено жодних плагінів</string>
+    <string name="preference_theme_system">Як в системі</string>
+    <string name="preference_themed_icons">Тематичні іконки</string>
+    <string name="preference_themed_icons_summary">Зафарбовувати іконки кольорами Kvaesito</string>
+    <string name="preference_force_themed_icons">Примусові іконки теми</string>
+    <string name="preference_force_themed_icons_summary">Застосовувати кольори теми до всіх іконок, включаючи ті що цього не підтримують (не рекомендовано)</string>
+    <string name="preference_icon_pack">Набір іконок</string>
+    <string name="preference_icon_pack_summary_empty">Наборів іконок не встановлено</string>
     <!-- Indicates that an icon pack supports dynamic colors (icon colors adapt to the launchers color scheme) -->
+    <string name="preference_category_animations">Анімований</string>
     <string name="preference_charging_animation">Анімація заряджання</string>
+    <string name="preference_charging_animation_summary">Показувати анімацію бульбашок коли пристрій заряджається</string>
     <string name="preference_system_bar_icons_auto">Авто</string>
     <string name="preference_system_bar_icons_light">Світлий</string>
     <string name="preference_system_bar_icons_dark">Темний</string>
