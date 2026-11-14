@@ -13,7 +13,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -22,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.base.R as BaseR
 import de.mm20.launcher2.comms.akou.AkouHistory
@@ -58,7 +58,7 @@ fun AkouScreen() {
     var autoListen by remember { mutableStateOf(false) }
     var preferencesLoaded by remember { mutableStateOf(false) }
     var foreground by remember { mutableStateOf(false) }
-    var autoAttempted by rememberSaveable { mutableStateOf(false) }
+    val entryState: AkouEntryViewModel = viewModel()
     var songTarget by remember { mutableStateOf<RecognizedSong?>(null) }
     var officialMusicAvailable by remember { mutableStateOf(false) }
     var showDisclosure by remember { mutableStateOf(true) }
@@ -124,18 +124,19 @@ fun AkouScreen() {
     LifecycleEventEffect(Lifecycle.Event.ON_STOP) {
         foreground = false
         job?.cancel()
-        if (context.akouActivity()?.isChangingConfigurations != true) autoAttempted = false
+        if (context.akouActivity()?.isChangingConfigurations != true)
+            entryState.autoAttempted = false
     }
     AkouAutoListenEffect(
         enabled = autoListen,
         ready = preferencesLoaded,
         foreground = foreground,
-        attempted = autoAttempted,
+        attempted = entryState.autoAttempted,
         canRecord = {
             ContextCompat.checkSelfPermission(context, Manifest.permission.RECORD_AUDIO) ==
                 PackageManager.PERMISSION_GRANTED
         },
-        onAttempt = { autoAttempted = true },
+        onAttempt = { entryState.autoAttempted = true },
         onListen = {
             if (job?.isActive != true) {
                 job?.join()

@@ -61,6 +61,7 @@ fun YouTubeScreen(music: Boolean, vm: YouTubeViewModel, initialLink: String? = n
     val sessionExpired by vm.sessionExpired.collectAsStateWithLifecycle()
     val loadingAccount by vm.isLoadingPlaylists.collectAsStateWithLifecycle()
 
+    var shelf by rememberSaveable(music) { mutableStateOf("search") }
     var consumedLinkRequest by rememberSaveable(music) { mutableStateOf<Long?>(null) }
     LaunchedEffect(music, initialLink, linkRequestId) {
         vm.loadUserPlaylists(context)
@@ -70,13 +71,13 @@ fun YouTubeScreen(music: Boolean, vm: YouTubeViewModel, initialLink: String? = n
             query = (de.mm20.launcher2.comms.youtube.flow.parseYouTubeLink(initialLink) as?
                 de.mm20.launcher2.comms.youtube.flow.YouTubeLink.Search)?.query ?: initialLink
             searchExpanded = true
+            shelf = "search"
             vm.openLink(context, initialLink, music, autoplay = newRequest)
         } else if (initialLink == null) {
             vm.loadHome(context, music)
         }
     }
 
-    var shelf by rememberSaveable(music) { mutableStateOf("search") }
     var playlistTarget by remember { mutableStateOf<de.mm20.launcher2.comms.youtube.YouTubeEntry?>(null) }
     var playlistName by rememberSaveable { mutableStateOf("") }
     val entries = when {
