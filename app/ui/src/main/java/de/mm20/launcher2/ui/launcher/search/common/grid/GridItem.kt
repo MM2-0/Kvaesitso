@@ -3,8 +3,6 @@ package de.mm20.launcher2.ui.launcher.search.common.grid
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.MutableTransitionState
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.gestures.detectTapGestures
@@ -12,7 +10,6 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
@@ -88,7 +85,8 @@ fun GridItem(
     item: SavableSearchable,
     showLabels: Boolean = true,
     labelMaxLines: Int = 1,
-    highlight: Boolean = false
+    highlight: Boolean = false,
+    isDockItem: Boolean = false,
 ) {
     val viewModel: SearchableItemVM = listItemViewModel(key = "search-${item.key}")
     val iconSize = LocalGridSettings.current.iconSize.dp.toPixels()
@@ -124,7 +122,7 @@ fun GridItem(
                 },
                 indication = null,
                 interactionSource = remember { MutableInteractionSource() },
-            ) then if (!showLabels) Modifier.aspectRatio(1f) else Modifier,
+            ) then if (!showLabels && !isDockItem) Modifier.aspectRatio(1f) else Modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
