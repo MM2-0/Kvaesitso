@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_auto_listen">खोलने पर अपने आप सुनें</string>
+    <string name="youtube_register_links_shizuku">Shizuku से लिंक खोलें</string>
+    <string name="youtube_links_registration_failed">लिंक सेटअप विफल हुआ। Shizuku की अनुमति जाँचें।</string>
+</resources>

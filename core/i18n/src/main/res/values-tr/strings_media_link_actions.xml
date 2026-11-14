@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_auto_listen">Açıldığında otomatik dinle</string>
+    <string name="youtube_register_links_shizuku">Bağlantıları Shizuku ile aç</string>
+    <string name="youtube_links_registration_failed">Bağlantı kurulumu başarısız oldu. Shizuku yetkisini kontrol edin.</string>
+</resources>

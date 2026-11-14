@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_auto_listen">Automātiski klausīties atverot</string>
+    <string name="youtube_register_links_shizuku">Atvērt saites ar Shizuku</string>
+    <string name="youtube_links_registration_failed">Saišu iestatīšana neizdevās. Pārbaudiet Shizuku atļauju.</string>
+</resources>

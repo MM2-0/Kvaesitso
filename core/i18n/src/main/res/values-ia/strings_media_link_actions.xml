@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_auto_listen">Ascoltar automaticamente al apertura</string>
+    <string name="youtube_register_links_shizuku">Aperir ligamines con Shizuku</string>
+    <string name="youtube_links_registration_failed">Configuration de ligamines fallite. Verifica le autorisation de Shizuku.</string>
+</resources>

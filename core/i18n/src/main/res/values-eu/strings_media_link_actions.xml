@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_auto_listen">Entzun automatikoki irekitzean</string>
+    <string name="youtube_register_links_shizuku">Ireki estekak Shizuku bidez</string>
+    <string name="youtube_links_registration_failed">Ezin izan dira estekak konfiguratu. Egiaztatu Shizuku baimena.</string>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_auto_listen">Isma’ awtomatikament meta tiftaħ</string>
+    <string name="youtube_register_links_shizuku">Iftaħ links b’Shizuku</string>
+    <string name="youtube_links_registration_failed">Is-setup tal-links falla. Iċċekkja l-awtorizzazzjoni ta’ Shizuku.</string>
+</resources>

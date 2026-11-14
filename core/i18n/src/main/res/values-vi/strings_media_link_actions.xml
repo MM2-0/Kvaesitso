@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_auto_listen">Tự động nghe khi mở</string>
+    <string name="youtube_register_links_shizuku">Mở liên kết bằng Shizuku</string>
+    <string name="youtube_links_registration_failed">Thiết lập liên kết thất bại. Hãy kiểm tra quyền Shizuku.</string>
+</resources>

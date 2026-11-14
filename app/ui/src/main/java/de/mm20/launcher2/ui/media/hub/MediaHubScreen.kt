@@ -126,7 +126,7 @@ import org.koin.compose.koinInject
 
 /** Telos Media. [space] is music, radio, tv or video; empty = the space that was open last. */
 @Serializable
-data class MediaHubRoute(val space: String = "") : NavKey
+data class MediaHubRoute(val space: String = "", val link: String? = null, val requestId: Long = 0L) : NavKey
 
 private enum class MediaSpace(
     val id: String,
@@ -164,7 +164,7 @@ private val MediaSpace.groupIcon: Int get() = when (group) {
  * Only the open source is composed, while view models and saveable navigation state survive switches.
  */
 @Composable
-fun MediaHubScreen(initialSpace: String = "") {
+fun MediaHubScreen(initialSpace: String = "", initialLink: String? = null, linkRequestId: Long = 0L) {
     val context = LocalContext.current
     val settings: CommsSettings = koinInject()
     val backStack = LocalBackStack.current
@@ -311,8 +311,8 @@ fun MediaHubScreen(initialSpace: String = "") {
                                     MediaSpace.Radio -> RadioDashboardScreen()
                                     MediaSpace.Tv -> TvScreen()
                                     MediaSpace.Video -> VideoScreen()
-                                    MediaSpace.YouTube -> de.mm20.launcher2.ui.media.youtube.YouTubeScreen(false, youtubeVm)
-                                    MediaSpace.YouTubeMusic -> de.mm20.launcher2.ui.media.youtube.YouTubeScreen(true, youtubeVm)
+                                    MediaSpace.YouTube -> de.mm20.launcher2.ui.media.youtube.YouTubeScreen(false, youtubeVm, initialLink.takeIf { initialSpace == "youtube" }, linkRequestId)
+                                    MediaSpace.YouTubeMusic -> de.mm20.launcher2.ui.media.youtube.YouTubeScreen(true, youtubeVm, initialLink.takeIf { initialSpace == "youtube_music" }, linkRequestId)
                                     MediaSpace.Stremio -> de.mm20.launcher2.ui.media.stremio.StremioScreen()
                                 }
                             }

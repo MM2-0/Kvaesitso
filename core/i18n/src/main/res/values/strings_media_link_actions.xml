@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_auto_listen">Listen automatically when opened</string>
+    <string name="youtube_register_links_shizuku">Open links with Shizuku</string>
+    <string name="youtube_links_registration_failed">Link setup failed. Check Shizuku authorization.</string>
+    <string name="telos_youtube_handler_label" translatable="false">Telos YouTube</string>
+    <string name="telos_youtube_music_handler_label" translatable="false">Telos YouTube Music</string>
+</resources>

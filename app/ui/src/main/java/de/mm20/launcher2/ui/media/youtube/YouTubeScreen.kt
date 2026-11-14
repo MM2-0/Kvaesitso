@@ -44,12 +44,14 @@ import coil.compose.AsyncImage
 import de.mm20.launcher2.ui.R
 
 @Composable
-fun YouTubeScreen(music: Boolean, vm: YouTubeViewModel) {
+fun YouTubeScreen(music: Boolean, vm: YouTubeViewModel, initialLink: String? = null, linkRequestId: Long = 0L) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     val gridState = rememberLazyGridState()
     var query by rememberSaveable(music) { mutableStateOf("") }
     var searchExpanded by rememberSaveable(music) { mutableStateOf(false) }
+    var registeringLinks by remember { mutableStateOf(false) }
+    var linkStatus by remember { mutableStateOf<Int?>(null) }
     var accountPanel by rememberSaveable { mutableStateOf(false) }
     var browserUnavailable by rememberSaveable { mutableStateOf(false) }
     val allEntries by vm.results.collectAsStateWithLifecycle()
@@ -59,9 +61,19 @@ fun YouTubeScreen(music: Boolean, vm: YouTubeViewModel) {
     val sessionExpired by vm.sessionExpired.collectAsStateWithLifecycle()
     val loadingAccount by vm.isLoadingPlaylists.collectAsStateWithLifecycle()
 
-    LaunchedEffect(music) {
+    var consumedLinkRequest by rememberSaveable(music) { mutableStateOf<Long?>(null) }
+    LaunchedEffect(music, initialLink, linkRequestId) {
         vm.loadUserPlaylists(context)
-        vm.loadHome(context, music)
+        val newRequest = consumedLinkRequest != linkRequestId
+        if (initialLink != null && (newRequest || (vm.results.value[music].isNullOrEmpty() && !vm.searching.value))) {
+            consumedLinkRequest = linkRequestId
+            query = (de.mm20.launcher2.comms.youtube.flow.parseYouTubeLink(initialLink) as?
+                de.mm20.launcher2.comms.youtube.flow.YouTubeLink.Search)?.query ?: initialLink
+            searchExpanded = true
+            vm.openLink(context, initialLink, music, autoplay = newRequest)
+        } else if (initialLink == null) {
+            vm.loadHome(context, music)
+        }
     }
 
     var shelf by rememberSaveable(music) { mutableStateOf("search") }
@@ -346,6 +358,20 @@ fun YouTubeScreen(music: Boolean, vm: YouTubeViewModel) {
             text = {
                 Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(12.dp)) {
                     Text(stringResource(I18nR.string.media_native_account_help), style = MaterialTheme.typography.bodyMedium)
+                    OutlinedButton(
+                        enabled = !registeringLinks,
+                        onClick = {
+                            registeringLinks = true
+                            scope.launch {
+                                try {
+                                    linkStatus = if (registerYouTubeLinks(context)) I18nR.string.hc_done
+                                        else I18nR.string.youtube_links_registration_failed
+                                } finally { registeringLinks = false }
+                            }
+                        }, modifier = Modifier.fillMaxWidth(),
+                    ) { Text(stringResource(I18nR.string.youtube_register_links_shizuku)) }
+                    linkStatus?.let { Text(stringResource(it)) }
+
 
                     Button(
                         onClick = { loginPanel = true },

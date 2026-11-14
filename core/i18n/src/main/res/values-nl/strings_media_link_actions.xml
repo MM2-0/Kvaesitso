@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_auto_listen">Automatisch luisteren bij openen</string>
+    <string name="youtube_register_links_shizuku">Links openen met Shizuku</string>
+    <string name="youtube_links_registration_failed">Instellen van links mislukt. Controleer de Shizuku-toestemming.</string>
+</resources>

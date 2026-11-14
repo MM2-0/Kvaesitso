@@ -21,6 +21,8 @@ object SettingsDeepLinkContract {
     const val ROUTE_MUSIC = "settings/music"
     const val ROUTE_YOUTUBE = "settings/youtube"
     const val ROUTE_YOUTUBE_MUSIC = "settings/youtube_music"
+    const val EXTRA_YOUTUBE_LINK = "de.mm20.launcher2.settings.YOUTUBE_LINK"
+    const val EXTRA_YOUTUBE_LINK_REQUEST = "de.mm20.launcher2.settings.YOUTUBE_LINK_REQUEST"
     const val ROUTE_VIDEO = "settings/video"
     /** Telos TV space inside Telos Media */
     const val ROUTE_TV = "settings/tv"

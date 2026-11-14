@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_auto_listen">開啟時自動聆聽</string>
+    <string name="youtube_register_links_shizuku">透過 Shizuku 開啟連結</string>
+    <string name="youtube_links_registration_failed">連結設定失敗。請檢查 Shizuku 授權。</string>
+</resources>

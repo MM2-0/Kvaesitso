@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_auto_listen">Kuula avamisel automaatselt</string>
+    <string name="youtube_register_links_shizuku">Ava lingid Shizuku abil</string>
+    <string name="youtube_links_registration_failed">Linkide seadistamine ebaõnnestus. Kontrolli Shizuku õigust.</string>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_auto_listen">Aŭtomate aŭskulti ĉe malfermo</string>
+    <string name="youtube_register_links_shizuku">Malfermi ligilojn per Shizuku</string>
+    <string name="youtube_links_registration_failed">Agordo de ligiloj malsukcesis. Kontrolu la rajtigon de Shizuku.</string>
+</resources>

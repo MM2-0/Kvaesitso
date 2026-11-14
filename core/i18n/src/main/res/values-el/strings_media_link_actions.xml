@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_auto_listen">Αυτόματη ακρόαση στο άνοιγμα</string>
+    <string name="youtube_register_links_shizuku">Άνοιγμα συνδέσμων μέσω Shizuku</string>
+    <string name="youtube_links_registration_failed">Η ρύθμιση συνδέσμων απέτυχε. Ελέγξτε την εξουσιοδότηση Shizuku.</string>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_auto_listen">Dengar secara automatik apabila dibuka</string>
+    <string name="youtube_register_links_shizuku">Buka pautan dengan Shizuku</string>
+    <string name="youtube_links_registration_failed">Persediaan pautan gagal. Semak kebenaran Shizuku.</string>
+</resources>

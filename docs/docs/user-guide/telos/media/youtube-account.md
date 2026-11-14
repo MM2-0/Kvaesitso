@@ -25,3 +25,22 @@ References: [Google OAuth policies](https://developers.google.com/identity/proto
 Η σύνδεση ισχύει για τον browser. **Δεν συγχρονίζει τον λογαριασμό στον εγγενή player του Telos.** Οι συνδρομές, οι προσωπικές λίστες και οι προτάσεις δεν εισάγονται στο Telos. Η εγγενής αναζήτηση και η αναπαραγωγή στο παρασκήνιο συνεχίζουν χωρίς λογαριασμό. Το Telos δεν διαβάζει κωδικούς ή cookies και δεν εμφανίζει ψευδή ένδειξη σύνδεσης.
 
 Για εγγενείς λειτουργίες λογαριασμού χρειάζεται πρώτα καταχώριση της εφαρμογής στο Google Cloud από τον διαχειριστή του project και σχεδιασμός των συγκεκριμένων λειτουργιών που υποστηρίζει το επίσημο API. Η υπάρχουσα υποστήριξη cookies του Flow δεν αποτελεί έτοιμη σύνδεση μέσω browser.
+
+## Open YouTube links in Telos
+
+Android can offer **Telos YouTube** for `youtube.com`, `www.youtube.com`, `m.youtube.com` and
+`youtu.be`, and **Telos YouTube Music** for `music.youtube.com`. Link handlers enter the normal
+Telos Media task and app-lock flow; video links open the video space, and music links open
+Music. Watch/short links resolve the selected video; search and playlist links open their
+corresponding results. Unsupported or unavailable content can still fail at the upstream service.
+
+In the account panel of either space, choose **Open links with Shizuku** after starting and
+authorizing Shizuku. Telos enables link handling and selects these five domains for the current
+Android user, then reads the result back before showing **Done**. This may replace another app’s
+user selection for those domains. It does not change unrelated domains or pretend that YouTube
+has verified Telos ownership. If Shizuku is unavailable or Android rejects a command, the UI
+reports failure. There is no root fallback for this action. Android’s app **Open by default**
+settings remain available for manual selection and undoing the choice.
+
+Recognition results in Άκου also offer the official YouTube Music app when installed. That
+explicit destination is independent of the selected web-link default.

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_auto_listen">Lyt automatisk ved åbning</string>
+    <string name="youtube_register_links_shizuku">Åbn links med Shizuku</string>
+    <string name="youtube_links_registration_failed">Opsætning af links mislykkedes. Kontrollér Shizuku-tilladelsen.</string>
+</resources>

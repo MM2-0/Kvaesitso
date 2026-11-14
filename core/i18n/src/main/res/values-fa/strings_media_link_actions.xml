@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_auto_listen">گوش دادن خودکار هنگام باز شدن</string>
+    <string name="youtube_register_links_shizuku">باز کردن پیوندها با Shizuku</string>
+    <string name="youtube_links_registration_failed">تنظیم پیوندها ناموفق بود. مجوز Shizuku را بررسی کنید.</string>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_auto_listen">খোলার সময় স্বয়ংক্রিয়ভাবে শুনুন</string>
+    <string name="youtube_register_links_shizuku">Shizuku দিয়ে লিঙ্ক খুলুন</string>
+    <string name="youtube_links_registration_failed">লিঙ্ক সেটআপ ব্যর্থ হয়েছে। Shizuku অনুমোদন পরীক্ষা করুন।</string>
+</resources>

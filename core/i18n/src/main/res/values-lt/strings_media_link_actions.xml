@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_auto_listen">Automatiškai klausytis atidarius</string>
+    <string name="youtube_register_links_shizuku">Atverti nuorodas per Shizuku</string>
+    <string name="youtube_links_registration_failed">Nepavyko nustatyti nuorodų. Patikrinkite Shizuku leidimą.</string>
+</resources>

@@ -199,6 +199,10 @@ private fun pathLink(
             first.takeIf(HANDLE::matches)?.let(YouTubeLink::ChannelHandle)
         }
 
+        first == "search" && isMusic -> {
+            query["q"]?.trim()?.takeIf(String::isNotEmpty)?.let(YouTubeLink::Search)
+        }
+
         first == "results" -> {
             query["search_query"]?.trim()?.takeIf(String::isNotEmpty)?.let(YouTubeLink::Search)
         }

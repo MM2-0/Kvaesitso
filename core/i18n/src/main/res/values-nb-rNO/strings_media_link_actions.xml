@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_auto_listen">Lytt automatisk ved åpning</string>
+    <string name="youtube_register_links_shizuku">Åpne lenker med Shizuku</string>
+    <string name="youtube_links_registration_failed">Oppsett av lenker mislyktes. Kontroller Shizuku-tillatelsen.</string>
+</resources>

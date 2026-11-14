@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_auto_listen">Dengarkan otomatis saat dibuka</string>
+    <string name="youtube_register_links_shizuku">Buka tautan dengan Shizuku</string>
+    <string name="youtube_links_registration_failed">Penyiapan tautan gagal. Periksa izin Shizuku.</string>
+</resources>

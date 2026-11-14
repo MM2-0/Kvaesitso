@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_auto_listen">Ascultă automat la deschidere</string>
+    <string name="youtube_register_links_shizuku">Deschide linkuri cu Shizuku</string>
+    <string name="youtube_links_registration_failed">Configurarea linkurilor a eșuat. Verifică autorizarea Shizuku.</string>
+</resources>

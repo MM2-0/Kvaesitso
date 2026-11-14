@@ -136,6 +136,7 @@ object TelosShellEngine {
         timeoutMs: Long = 30_000L,
         maxOutputBytes: Int = DEFAULT_MAX_OUTPUT_BYTES,
         retryAfterFailure: Boolean = true,
+        allowRoot: Boolean = true,
     ): ShellResult = withContext(Dispatchers.IO) {
         if (args.isEmpty()) {
             return@withContext ShellResult(-1, "", "Empty command arguments")
@@ -153,6 +154,7 @@ object TelosShellEngine {
                 }
             }
 
+            if (!allowRoot) return@withPermit ShellResult(-1, "", "Authorized Shizuku execution unavailable")
             val escapedCmd = args.joinToString(" ") { "'" + it.replace("'", "'\\''") + "'" }
             runCatching {
                 val proc = ProcessBuilder("su", "-c", escapedCmd).start()

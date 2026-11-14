@@ -431,7 +431,7 @@ open class SettingsActivity : BaseActivity() {
                 de.mm20.launcher2.ui.media.docs.ViewerScreen()
             }
             entry<de.mm20.launcher2.ui.media.hub.MediaHubRoute> {
-                de.mm20.launcher2.ui.media.hub.MediaHubScreen(it.space)
+                de.mm20.launcher2.ui.media.hub.MediaHubScreen(it.space, it.link, it.requestId)
             }
             entry<de.mm20.launcher2.ui.media.video.VideoRoute> {
                 de.mm20.launcher2.ui.media.video.VideoScreen()
@@ -933,8 +933,16 @@ open class SettingsActivity : BaseActivity() {
             }
             ROUTE_RADIO -> de.mm20.launcher2.ui.media.hub.MediaHubRoute("radio")
             ROUTE_MUSIC -> de.mm20.launcher2.ui.media.hub.MediaHubRoute("music")
-            SettingsDeepLinkContract.ROUTE_YOUTUBE -> de.mm20.launcher2.ui.media.hub.MediaHubRoute("youtube")
-            SettingsDeepLinkContract.ROUTE_YOUTUBE_MUSIC -> de.mm20.launcher2.ui.media.hub.MediaHubRoute("youtube_music")
+            SettingsDeepLinkContract.ROUTE_YOUTUBE -> de.mm20.launcher2.ui.media.hub.MediaHubRoute(
+                "youtube", intent.getStringExtra(SettingsDeepLinkContract.EXTRA_YOUTUBE_LINK)?.takeIf {
+                    de.mm20.launcher2.comms.youtube.YouTubeWebLinks.musicTarget(it) != null
+                }, intent.getLongExtra(SettingsDeepLinkContract.EXTRA_YOUTUBE_LINK_REQUEST, 0L),
+            )
+            SettingsDeepLinkContract.ROUTE_YOUTUBE_MUSIC -> de.mm20.launcher2.ui.media.hub.MediaHubRoute(
+                "youtube_music", intent.getStringExtra(SettingsDeepLinkContract.EXTRA_YOUTUBE_LINK)?.takeIf {
+                    de.mm20.launcher2.comms.youtube.YouTubeWebLinks.musicTarget(it) != null
+                }, intent.getLongExtra(SettingsDeepLinkContract.EXTRA_YOUTUBE_LINK_REQUEST, 0L),
+            )
             ROUTE_VIDEO -> de.mm20.launcher2.ui.media.hub.MediaHubRoute("video")
             SettingsDeepLinkContract.ROUTE_TV -> de.mm20.launcher2.ui.media.hub.MediaHubRoute("tv")
             "settings/stremio" -> de.mm20.launcher2.ui.media.hub.MediaHubRoute("stremio")

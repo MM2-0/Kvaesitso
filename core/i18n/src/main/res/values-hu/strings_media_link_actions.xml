@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_auto_listen">Automatikus hallgatás megnyitáskor</string>
+    <string name="youtube_register_links_shizuku">Hivatkozások megnyitása Shizukuval</string>
+    <string name="youtube_links_registration_failed">A hivatkozások beállítása sikertelen. Ellenőrizze a Shizuku engedélyét.</string>
+</resources>

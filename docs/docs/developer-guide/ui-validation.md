@@ -11,6 +11,28 @@ no new production library or replacement design framework is introduced.
 
 ## Execution evidence
 
+### Άκου automatic entry and Android YouTube link handlers
+
+The opt-in entry effect waits for preferences and a visible screen, consumes one attempt,
+checks microphone permission and avoids triggering merely because the toggle changes. The
+existing capture job is cancelled on stop/disposal; an outstanding cancelled job is joined before
+another automatic sample. Rotation retains the consumed attempt. Official YouTube Music
+availability is queried off Main and launches use an explicit package.
+
+`YouTubeWebLinks` restricts exported handlers to exact declared HTTP(S) hosts, rejects user-info,
+lookalikes and unexpected ports, builds current-user domain-selection commands, and verifies
+allowed/enabled state. The transient aliases dispatch only validated URLs into the existing Media
+identity and app-lock flow. Every explicit link gets a new request ID; restored navigation does
+not replay video autoplay. Shizuku selection disables both root fallback and ambiguous spawn replay.
+
+`validate-akou-links.yml` compiles the UI, runs communication unit tests and requires five emulator
+regressions: entry/permission gating, no toggle-triggered sample, resolver separation, stable Media
+task/fresh request ID, and shell domain selection/readback. Emulator shell execution validates the
+Android commands; it does not verify an actual Shizuku binder or OEM-specific permission policy.
+Live microphone matching, official-app interoperability, complete visual review and physical
+Android 17/Shizuku verification remain device checks. The local build cannot resolve the existing
+NewPipe JitPack dependency because the cloud proxy returns HTTP 403; CI performs compilation.
+
 ### System Apps freezer grid and AppOps/firewall fixes (2026-11-14)
 
 The System Apps tab now uses `FreezeDeskGrid`: adaptive rounded icon tiles, running/frozen badges,

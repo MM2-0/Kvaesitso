@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_auto_listen">Samodejno poslušaj ob odprtju</string>
+    <string name="youtube_register_links_shizuku">Odpri povezave prek Shizuku</string>
+    <string name="youtube_links_registration_failed">Nastavitev povezav ni uspela. Preverite dovoljenje za Shizuku.</string>
+</resources>

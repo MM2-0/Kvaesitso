@@ -16,6 +16,7 @@ import org.schabi.newpipe.extractor.downloader.Request
 import org.schabi.newpipe.extractor.localization.ContentCountry
 import org.schabi.newpipe.extractor.localization.Localization
 import org.schabi.newpipe.extractor.playlist.PlaylistInfo
+import org.schabi.newpipe.extractor.channel.ChannelInfo
 import org.schabi.newpipe.extractor.search.SearchInfo
 import org.schabi.newpipe.extractor.stream.StreamInfo
 import org.schabi.newpipe.extractor.stream.StreamInfoItem
@@ -375,8 +376,14 @@ class YouTubeRepository(private val context: Context) {
             val watchUrl = "https://" + "www.youtube.com/watch?v=$videoId"
             return@withContext listOf(entry(StreamInfo.getInfo(ServiceList.YouTube, watchUrl)))
         }
+        if (link is YouTubeLink.Channel || link is YouTubeLink.ChannelHandle || link is YouTubeLink.LegacyChannel) {
+            return@withContext ChannelInfo.getInfo(ServiceList.YouTube, query).relatedItems
+                .filterIsInstance<StreamInfoItem>().map {
+                    YouTubeEntry(it.url, it.name, it.uploaderName.orEmpty(), cleanThumbnailUrl(it.thumbnails.lastOrNull()?.url), it.duration)
+                }
+        }
         val service = ServiceList.YouTube
-        val handler = service.searchQHFactory.fromQuery(query, if (music) listOf("music_songs") else listOf("videos"), "")
+        val handler = service.searchQHFactory.fromQuery((link as? YouTubeLink.Search)?.query ?: query, if (music) listOf("music_songs") else listOf("videos"), "")
         SearchInfo.getInfo(service, handler).relatedItems.filterIsInstance<StreamInfoItem>().map {
             YouTubeEntry(it.url, it.name, it.uploaderName.orEmpty(), cleanThumbnailUrl(it.thumbnails.lastOrNull()?.url), it.duration)
         }

@@ -4,6 +4,7 @@
 
     <queries>
         <package android:name="com.termux" />
+        <package android:name="com.google.android.apps.youtube.music" />
         <package android:name="ai.x.grok" />
         <package android:name="com.x.android" />
         <package android:name="com.anthropic.claude" />
@@ -247,6 +248,39 @@
                 <data android:scheme="tel" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".media.youtube.YouTubeLinkActivity"
+            android:exported="false" android:noHistory="true"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+        <activity-alias android:name=".media.youtube.YouTubeLinkHandler"
+            android:targetActivity=".media.youtube.YouTubeLinkActivity"
+            android:exported="true" android:label="@string/telos_youtube_handler_label"
+            android:icon="@drawable/ic_app_youtube_full">
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https" />
+                <data android:scheme="http" />
+                <data android:host="youtube.com" />
+                <data android:host="www.youtube.com" />
+                <data android:host="m.youtube.com" />
+                <data android:host="youtu.be" />
+            </intent-filter>
+        </activity-alias>
+        <activity-alias android:name=".media.youtube.YouTubeMusicLinkHandler"
+            android:targetActivity=".media.youtube.YouTubeLinkActivity"
+            android:exported="true" android:label="@string/telos_youtube_music_handler_label"
+            android:icon="@drawable/ic_app_youtube_music_full">
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https" />
+                <data android:scheme="http" />
+                <data android:host="music.youtube.com" />
+            </intent-filter>
+        </activity-alias>
 
         <!-- One document task per virtual app; Settings keeps its own normal task. -->
         <activity

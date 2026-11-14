@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_auto_listen">Автоматично слухати під час відкриття</string>
+    <string name="youtube_register_links_shizuku">Відкривати посилання через Shizuku</string>
+    <string name="youtube_links_registration_failed">Не вдалося налаштувати посилання. Перевірте дозвіл Shizuku.</string>
+</resources>

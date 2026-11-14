@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_auto_listen">Éist go huathoibríoch nuair a osclaítear</string>
+    <string name="youtube_register_links_shizuku">Oscail naisc le Shizuku</string>
+    <string name="youtube_links_registration_failed">Theip ar shocrú na nasc. Seiceáil cead Shizuku.</string>
+</resources>

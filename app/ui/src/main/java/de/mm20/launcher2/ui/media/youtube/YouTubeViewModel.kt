@@ -47,6 +47,32 @@ class YouTubeViewModel : ViewModel(), KoinComponent {
         }
         override fun onPlayerError(error: PlaybackException) { message.value = playbackErrorMessage }
     }
+    fun openLink(context: Context, url: String, music: Boolean, autoplay: Boolean = true) {
+        val parsed = de.mm20.launcher2.comms.youtube.flow.parseYouTubeLink(url)
+        when (parsed) {
+            is de.mm20.launcher2.comms.youtube.flow.YouTubeLink.Playlist,
+            is de.mm20.launcher2.comms.youtube.flow.YouTubeLink.Album -> selectPlaylist(context, url, music)
+            is de.mm20.launcher2.comms.youtube.flow.YouTubeLink.Video,
+            is de.mm20.launcher2.comms.youtube.flow.YouTubeLink.Short -> {
+                searchJob?.cancel()
+                searchJob = viewModelScope.launch {
+                    searching.value = true
+                    message.value = null
+                    try {
+                        val entries = repository.search(url, music)
+                        results.value = results.value + (music to entries)
+                        if (autoplay) entries.firstOrNull()?.let { play(context, it, music, entries) }
+                    } catch (cancelled: CancellationException) { throw cancelled }
+                    catch (_: Exception) { message.value = context.getString(I18nR.string.telos_youtube_play_failed) }
+                    finally { searching.value = false }
+                }
+            }
+            is de.mm20.launcher2.comms.youtube.flow.YouTubeLink.Search -> search(context, parsed.query, music)
+            null -> loadHome(context, music)
+            else -> search(context, url, music)
+        }
+    }
+
     fun search(context: Context, query: String, music: Boolean) {
         if (query.isBlank()) return
         searchJob?.cancel()
