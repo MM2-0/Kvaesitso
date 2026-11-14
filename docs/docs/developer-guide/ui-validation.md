@@ -29,6 +29,13 @@ also passed. Final UI compilation and the two device layout tests run in `valida
 The final shell identity change also runs the app-management suite (including startup scripts)
 and disables root/spawn replay for AppOps commands after an ambiguous Shizuku failure.
 
+Release verification for 1.45.55: final code revision `ff3b07c6a` passed 433 local unit tests
+(328 AppOps, 75 Network, 30 app-management), with no failures/errors/skips.
+[CI run 43584628521](https://github.com/koukomin/Telos-Launcher/actions/runs/43584628521)
+passed native daemon protocol tests, Android test APK compilation, all three unit suites and
+both emulator layout tests; the report verifier confirms both cases ran without skips.
+This is automated layout evidence, not a visual review or physical Android 17 confirmation.
+
 The local full UI build is blocked by HTTP 403 from JitPack for the existing Tesseract dependency.
 The cloud has no KVM/desktop capability; no physical OnePlus Android 17 service command or visual
 review is claimed. Remaining visual coverage includes real icons, wallpaper contrast, IME,

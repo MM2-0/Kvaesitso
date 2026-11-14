@@ -1,0 +1,1 @@
+Thor-inspired System Apps freezer grid, frozen/running badges, list mode and app action sheet. Fixed per-package firewall links for offline/disabled apps and shared UIDs. Improved AppOps transport recovery and prevented ambiguous command replay.
