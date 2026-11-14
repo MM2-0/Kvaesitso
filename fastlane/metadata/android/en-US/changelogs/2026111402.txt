@@ -1,0 +1,1 @@
+Optional listening on opening Akou. Choose Telos YouTube Music or the installed official app. Android YouTube/YouTube Music link handlers with explicit Shizuku registration and verified resolver routing.

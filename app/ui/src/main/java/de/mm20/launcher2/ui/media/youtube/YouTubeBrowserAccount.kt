@@ -24,6 +24,8 @@ internal object YouTubeBrowserAccount {
             if (pkg != null && pkg != "com.android.vending" && pkg != "com.google.android.finsky") pkg else null
         }
 
+        // An implicit fallback would return to Telos itself after it becomes the link handler.
+        check(!targetPackage.isNullOrBlank() && targetPackage != context.packageName) { "Browser unavailable" }
         val tab = CustomTabsIntent.Builder().setShowTitle(true).build()
         if (targetPackage != null) {
             tab.intent.setPackage(targetPackage)
