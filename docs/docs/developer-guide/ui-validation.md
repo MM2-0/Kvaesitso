@@ -20,8 +20,9 @@ another automatic sample. Rotation retains the consumed attempt. Official YouTub
 availability is queried off Main and launches use an explicit package.
 
 `YouTubeWebLinks` restricts exported handlers to exact declared HTTP(S) hosts, rejects user-info,
-lookalikes and unexpected ports, builds current-user domain-selection commands, and verifies
-allowed/enabled state. The transient aliases dispatch only validated URLs into the existing Media
+lookalikes and unexpected ports, builds explicit shell-approval and current-user domain-selection commands, and verifies
+approved/allowed/enabled state plus the actual Android resolver. Shell approval is package-wide;
+user allowed/selection state is current-user only. The transient aliases dispatch only validated URLs into the existing Media
 identity and app-lock flow. Every explicit link gets a new request ID; restored navigation does
 not replay video autoplay. Shizuku selection disables both root fallback and ambiguous spawn replay.
 

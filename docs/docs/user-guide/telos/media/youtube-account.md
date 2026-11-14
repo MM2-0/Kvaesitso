@@ -35,10 +35,12 @@ Music. Watch/short links resolve the selected video; search and playlist links o
 corresponding results. Unsupported or unavailable content can still fail at the upstream service.
 
 In the account panel of either space, choose **Open links with Shizuku** after starting and
-authorizing Shizuku. Telos enables link handling and selects these five domains for the current
-Android user, then reads the result back before showing **Done**. This may replace another app’s
-user selection for those domains. It does not change unrelated domains or pretend that YouTube
-has verified Telos ownership. If Shizuku is unavailable or Android rejects a command, the UI
+authorizing Shizuku. Telos applies Android’s explicit shell approval to these five declared domains, enables link
+handling and selects them for the current Android user, then reads the result and checks the
+actual Android resolver before showing **Done**. Domain approval belongs to the installed APK
+across Android users; the enabled/selected settings are applied to the current user. This may replace another app’s
+user selection for those domains. It does not change unrelated domains or claim that YouTube has verified Telos ownership;
+this is a privileged manual override. If Shizuku is unavailable or Android rejects a command, the UI
 reports failure. There is no root fallback for this action. Android’s app **Open by default**
 settings remain available for manual selection and undoing the choice.
 

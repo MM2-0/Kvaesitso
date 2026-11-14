@@ -38,7 +38,7 @@ class YouTubeWebLinksTest {
     @Test
     fun registrationUsesTheActualUserAndRejectsInvalidInputs() {
         val commands = YouTubeWebLinks.registrationCommands("com.dimitris.telos.release", 10)
-        assertTrue(commands.all { it[it.indexOf("--user") + 1] == "10" })
+        assertTrue(commands.drop(1).all { it[it.indexOf("--user") + 1] == "10" })
         assertEquals(
             YouTubeWebLinks.allHosts,
             commands.last().takeLast(YouTubeWebLinks.allHosts.size),
@@ -50,12 +50,16 @@ class YouTubeWebLinksTest {
     @Test
     fun disabledOrUnselectedDomainsNeverReportSuccess() {
         val report =
-            "Verification link handling allowed: true\nSelection state:\n  Enabled:\n" +
+            YouTubeWebLinks.allHosts.joinToString("\n") { "$it: approved" } +
+                "\nVerification link handling allowed: true\nSelection state:\n  Enabled:\n" +
                 YouTubeWebLinks.allHosts.joinToString("\n") +
                 "\n  Disabled:\nexample.com"
         assertTrue(YouTubeWebLinks.registrationVerified(report))
         assertFalse(
             YouTubeWebLinks.registrationVerified(report.replace("allowed: true", "allowed: false"))
+        )
+        assertFalse(
+            YouTubeWebLinks.registrationVerified(report.replace(": approved", ": verified"))
         )
         assertFalse(
             YouTubeWebLinks.registrationVerified(report.replace("  Enabled:", "  Disabled:"))

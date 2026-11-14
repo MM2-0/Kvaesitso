@@ -87,7 +87,32 @@ class YouTubeLinkHandlerTest {
                     )
                 )
             assertTrue(report, YouTubeWebLinks.registrationVerified(report))
+            for (host in YouTubeWebLinks.allHosts) {
+                @Suppress("DEPRECATION")
+                val chosen =
+                    context.packageManager
+                        .resolveActivity(
+                            Intent(
+                                    Intent.ACTION_VIEW,
+                                    Uri.parse("https://$host/watch?v=dQw4w9WgXcQ"),
+                                )
+                                .addCategory(Intent.CATEGORY_BROWSABLE),
+                            PackageManager.MATCH_DEFAULT_ONLY,
+                        )
+                        ?.activityInfo
+                assertEquals(host, context.packageName, chosen?.packageName)
+            }
         } finally {
+            shell(
+                listOf(
+                    "/system/bin/cmd",
+                    "package",
+                    "set-app-links",
+                    "--package",
+                    context.packageName,
+                    "0",
+                ) + YouTubeWebLinks.allHosts
+            )
             shell(
                 listOf(
                     "/system/bin/cmd",

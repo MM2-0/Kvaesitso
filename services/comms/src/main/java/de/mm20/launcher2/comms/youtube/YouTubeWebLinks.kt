@@ -32,6 +32,8 @@ object YouTubeWebLinks {
         val prefix = listOf("/system/bin/cmd", "package")
         val target = listOf("--user", userId.toString(), "--package", packageName)
         return listOf(
+            // Android's explicit shell approval, not a claim of Digital Asset Links ownership.
+            prefix + "set-app-links" + listOf("--package", packageName, "2") + allHosts,
             prefix + "set-app-links-allowed" + target + "true",
             prefix + "set-app-links-user-selection" + target + "true" + allHosts,
         )
@@ -39,6 +41,8 @@ object YouTubeWebLinks {
 
     fun registrationVerified(output: String): Boolean {
         if (!output.lineSequence().any { it.trim() == "Verification link handling allowed: true" })
+            return false
+        if (!allHosts.all { host -> output.lineSequence().any { it.trim() == "$host: approved" } })
             return false
         var enabled = false
         val selected = mutableSetOf<String>()

@@ -17,6 +17,7 @@ import org.schabi.newpipe.extractor.localization.ContentCountry
 import org.schabi.newpipe.extractor.localization.Localization
 import org.schabi.newpipe.extractor.playlist.PlaylistInfo
 import org.schabi.newpipe.extractor.channel.ChannelInfo
+import org.schabi.newpipe.extractor.channel.tabs.ChannelTabInfo
 import org.schabi.newpipe.extractor.search.SearchInfo
 import org.schabi.newpipe.extractor.stream.StreamInfo
 import org.schabi.newpipe.extractor.stream.StreamInfoItem
@@ -377,7 +378,10 @@ class YouTubeRepository(private val context: Context) {
             return@withContext listOf(entry(StreamInfo.getInfo(ServiceList.YouTube, watchUrl)))
         }
         if (link is YouTubeLink.Channel || link is YouTubeLink.ChannelHandle || link is YouTubeLink.LegacyChannel) {
-            return@withContext ChannelInfo.getInfo(ServiceList.YouTube, query).relatedItems
+            val channel = ChannelInfo.getInfo(ServiceList.YouTube, query)
+            val videos = channel.tabs.firstOrNull { "videos" in it.contentFilters } ?: channel.tabs.firstOrNull()
+                ?: return@withContext emptyList()
+            return@withContext ChannelTabInfo.getInfo(ServiceList.YouTube, videos).relatedItems
                 .filterIsInstance<StreamInfoItem>().map {
                     YouTubeEntry(it.url, it.name, it.uploaderName.orEmpty(), cleanThumbnailUrl(it.thumbnails.lastOrNull()?.url), it.duration)
                 }

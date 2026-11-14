@@ -41,7 +41,24 @@ internal suspend fun registerYouTubeLinks(context: Context): Boolean =
                     retryAfterFailure = false,
                     allowRoot = false,
                 )
-            result.isSuccess && YouTubeWebLinks.registrationVerified(result.stdout)
+            result.isSuccess &&
+                YouTubeWebLinks.registrationVerified(result.stdout) &&
+                YouTubeWebLinks.allHosts.all { host ->
+                    @Suppress("DEPRECATION")
+                    val handler =
+                        context.packageManager
+                            .resolveActivity(
+                                android.content
+                                    .Intent(
+                                        android.content.Intent.ACTION_VIEW,
+                                        android.net.Uri.parse("https://$host/watch?v=dQw4w9WgXcQ"),
+                                    )
+                                    .addCategory(android.content.Intent.CATEGORY_BROWSABLE),
+                                android.content.pm.PackageManager.MATCH_DEFAULT_ONLY,
+                            )
+                            ?.activityInfo
+                    handler?.packageName == context.packageName
+                }
         } catch (cancelled: CancellationException) {
             throw cancelled
         } catch (_: Exception) {

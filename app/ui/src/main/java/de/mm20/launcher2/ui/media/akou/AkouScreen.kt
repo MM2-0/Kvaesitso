@@ -329,6 +329,7 @@ fun AkouScreen() {
                     Row(verticalAlignment = androidx.compose.ui.Alignment.CenterVertically) {
                         Switch(
                             checked = autoListen,
+                    enabled = preferencesLoaded,
                             onCheckedChange = {
                                 autoListen = it
                                 prefs.edit().putBoolean("auto_listen", it).apply()
