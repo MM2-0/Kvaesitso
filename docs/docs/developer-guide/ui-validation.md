@@ -30,6 +30,13 @@ not replay video autoplay. Shizuku selection disables both root fallback and amb
 regressions: entry/permission gating, no toggle-triggered sample, resolver separation, stable Media
 task/fresh request ID, and shell domain selection/readback. Emulator shell execution validates the
 Android commands; it does not verify an actual Shizuku binder or OEM-specific permission policy.
+[CI run 43640775841](https://github.com/koukomin/Telos-Launcher/actions/runs/43640775841)
+passed on source revision `d2df55121`: communication unit tests, Android test APK compilation and
+all five Android 35 x86_64 emulator cases. The verifier found every expected case without
+failure/error/skip. The shell test approved the declared domains, selected them and confirmed the
+actual resolver chose Telos for all five hosts. Four new pure policy/parser tests also passed
+locally with the cached Kotlin compiler and JUnit against the exact repository sources.
+
 Live microphone matching, official-app interoperability, complete visual review and physical
 Android 17/Shizuku verification remain device checks. The local build cannot resolve the existing
 NewPipe JitPack dependency because the cloud proxy returns HTTP 403; CI performs compilation.
