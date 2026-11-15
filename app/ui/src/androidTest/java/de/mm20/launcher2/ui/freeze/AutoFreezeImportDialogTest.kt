@@ -24,12 +24,12 @@ class AutoFreezeImportDialogTest {
             assertEquals(0, imports)
             assertEquals(0, skips)
         }
-        compose.onNodeWithText(context.getString(android.R.string.no)).performClick()
+        compose.onNodeWithText(context.getString(de.mm20.launcher2.i18n.R.string.skip)).performClick()
         compose.runOnIdle {
             assertEquals(0, imports)
             assertEquals(1, skips)
         }
-        compose.onNodeWithText(context.getString(android.R.string.yes)).performClick()
+        compose.onNodeWithText(context.getString(de.mm20.launcher2.i18n.R.string.action_import)).performClick()
         compose.runOnIdle {
             assertEquals(1, imports)
             assertEquals(1, skips)

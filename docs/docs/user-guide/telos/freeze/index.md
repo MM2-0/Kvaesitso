@@ -221,7 +221,7 @@ Recents removal observation now supports Root when Root is the selected freeze b
 
 ## Import existing frozen apps
 
-When enabling auto-freeze, Telos scans already frozen apps and offers to add eligible current-user apps that are not already candidates or excluded. **Yes** imports and enables together. **No** enables using the existing list. Dismissing the question leaves auto-freeze disabled. Never-freeze still wins if its settings change while the question is open.
+When enabling auto-freeze, Telos scans already frozen apps and offers to add eligible current-user apps that are not already candidates or excluded. **Import** imports and enables together. **Skip** enables using the existing list. Dismissing the question leaves auto-freeze disabled. Never-freeze still wins if its settings change while the question is open.
 
 Companion rules are read when an app is opened, even if no settings screen is observing them. For Gemini → Google, select Google in Gemini’s companion picker and enable the rule; the suggested dependency alone does not enable it.
 

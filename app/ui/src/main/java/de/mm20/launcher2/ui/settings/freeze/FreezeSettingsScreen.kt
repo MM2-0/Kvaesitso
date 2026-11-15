@@ -454,8 +454,8 @@ internal fun AutoFreezeImportDialog(count: Int, onImport: () -> Unit, onSkip: ()
         onDismissRequest = onCancel,
         title = { TelosCyberHeading {  Text(stringResource(I18nR.string.preference_freeze_auto_category))  } },
         text = { Text(stringResource(I18nR.string.freeze_auto_import_existing, count)) },
-        confirmButton = { TextButton(onClick = onImport) { Text(stringResource(android.R.string.yes)) } },
-        dismissButton = { TextButton(onClick = onSkip) { Text(stringResource(android.R.string.no)) } },
+        confirmButton = { TextButton(onClick = onImport) { Text(stringResource(I18nR.string.action_import)) } },
+        dismissButton = { TextButton(onClick = onSkip) { Text(stringResource(I18nR.string.skip)) } },
         containerColor = de.mm20.launcher2.ui.component.virtualAppPopup(),
     )
 }
