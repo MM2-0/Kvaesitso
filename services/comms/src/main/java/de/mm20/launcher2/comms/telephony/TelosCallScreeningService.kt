@@ -1,98 +1,101 @@
-// === TELOS_PENDING_REVIEW_START: telephony_encryption_suite ===
 package de.mm20.launcher2.comms.telephony
 
-import de.mm20.launcher2.base.containedScope
-import android.net.Uri
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
+import android.os.Process
 import android.telecom.Call
 import android.telecom.CallScreeningService
-import android.telephony.PhoneNumberUtils
-import android.util.Log
-import de.mm20.launcher2.comms.repository.ContactDirectoryRepository
-import de.mm20.launcher2.comms.repository.SpamRepository
-import de.mm20.launcher2.preferences.comms.CommsSettings
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.first
+import de.mm20.launcher2.base.containedScope
+import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.LinkedBlockingQueue
+import java.util.concurrent.ThreadPoolExecutor
+import java.util.concurrent.TimeUnit
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.asCoroutineDispatcher
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
+import kotlinx.coroutines.withTimeoutOrNull
 
-class TelosCallScreeningService : CallScreeningService(), KoinComponent {
-
-    private val commsSettings: CommsSettings by inject()
-    private val spamRepository: SpamRepository by inject()
-    private val contacts: ContactDirectoryRepository by inject()
-    private val scope = containedScope(Dispatchers.IO)
-
+/** Event-driven screening: no polling, wake lock or permanent foreground service. */
+class TelosCallScreeningService : CallScreeningService() {
+    private val deadlineHandler = Handler(Looper.getMainLooper())
+    private val pending = ConcurrentHashMap.newKeySet<ScreeningDecision>()
+    private val dispatcher =
+        ThreadPoolExecutor(
+                2,
+                2,
+                30,
+                TimeUnit.SECONDS,
+                LinkedBlockingQueue<Runnable>(),
+                { task ->
+                    Thread(
+                            {
+                                // Priority applies only to these short-lived screening workers,
+                                // never the UI,
+                                // networking pools, compilation jobs or the rest of the device.
+                                runCatching { Process.setThreadPriority(Process.THREAD_PRIORITY_FOREGROUND) }
+                                task.run()
+                            },
+                            "Telos-call-screening",
+                        )
+                        .apply { isDaemon = true }
+                },
+            )
+            .apply { allowCoreThreadTimeOut(true) }
+            .asCoroutineDispatcher()
+    private val scope = containedScope(dispatcher)
 
     override fun onScreenCall(callDetails: Call.Details) {
-        // only incoming calls are screened: outgoing calls (also emergency calls) always go through
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q &&
-            callDetails.callDirection != Call.Details.DIRECTION_INCOMING
+        if (
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q &&
+                callDetails.callDirection != Call.Details.DIRECTION_INCOMING
         ) {
             respondToCall(callDetails, CallResponse.Builder().build())
             return
         }
-        val handle: Uri? = callDetails.handle
-        val phoneNumber = handle?.schemeSpecificPart ?: ""
-        
-        val presentation = callDetails.handlePresentation
+        lateinit var decision: ScreeningDecision
+        val fallback = Runnable { decision.complete(false) }
+        decision = ScreeningDecision { block ->
+            deadlineHandler.removeCallbacks(fallback)
+            pending.remove(decision)
+            respondToCall(
+                callDetails,
+                CallResponse.Builder()
+                    .setDisallowCall(block)
+                    .setRejectCall(block)
+                    .setSkipCallLog(block)
+                    .setSkipNotification(block)
+                    .build(),
+            )
+        }
+        pending.add(decision)
+        // Independent of the worker queue and blocking provider/SQLCipher calls. Telecom has
+        // a five-second response limit; retain headroom and allow calls on failure.
+        deadlineHandler.postDelayed(fallback, 3500)
         scope.launch {
-            // a failing lookup must never leave the call without an answer
-            val block = kotlinx.coroutines.withTimeoutOrNull(3500) {
-                runCatching {
-                    CallBlockEngine.shouldBlock(phoneNumber, presentation, incoming = true)
-                }.getOrDefault(false)
-            } ?: false
-            if (block) {
-                Log.i("TelosCallScreening", "Silently rejecting a call")
-                val response = CallResponse.Builder()
-                    .setDisallowCall(true)
-                    .setRejectCall(true)
-                    .setSkipCallLog(true)
-                    .setSkipNotification(true)
-                    .build()
-                respondToCall(callDetails, response)
-            } else {
-                val response = CallResponse.Builder()
-                    .setDisallowCall(false)
-                    .setRejectCall(false)
-                    .setSkipCallLog(false)
-                    .setSkipNotification(false)
-                    .build()
-                respondToCall(callDetails, response)
-            }
+            val block =
+                try {
+                    withTimeoutOrNull(3500) {
+                        CallBlockEngine.shouldBlock(
+                            callDetails.handle?.schemeSpecificPart.orEmpty(),
+                            callDetails.handlePresentation,
+                            incoming = true,
+                        )
+                    } ?: false
+                } catch (cancelled: CancellationException) {
+                    throw cancelled
+                } catch (_: Exception) {
+                    false
+                }
+            decision.complete(block)
         }
     }
 
-    private suspend fun shouldBlock(number: String, presentation: Int): Boolean {
-        val hidden = number.isBlank() ||
-            presentation == android.telecom.TelecomManager.PRESENTATION_RESTRICTED ||
-            presentation == android.telecom.TelecomManager.PRESENTATION_UNKNOWN
-        if (hidden && commsSettings.blockHiddenNumbers.first()) return true
-
-        if (number.isNotBlank()) {
-            if (commsSettings.enableSpamBlocking.first() && spamRepository.isPersonallyBlocked(number)) return true
-            if (commsSettings.systemSpamBlocking.first() && spamRepository.isSystemBlocked(number)) return true
-        }
-
-        if (commsSettings.blockUnknownNumbers.first() &&
-            number.isNotBlank() &&
-            !contacts.containsNumber(number)
-        ) return true
-
-        if (commsSettings.blockInternational.first() && isInternational(number)) return true
-
-        return false
-    }
-
-    private suspend fun isInternational(number: String): Boolean {
-        if (number.none { it.isDigit() }) return false
-        if (PhoneNumberUtils.isEmergencyNumber(number)) return false
-        val home = HomeCountry.resolve(this, commsSettings.homeCountry.first())
-        return HomeCountry.isInternational(number, home)
+    override fun onDestroy() {
+        pending.toList().forEach { it.complete(false) }
+        scope.cancel()
+        dispatcher.close()
+        super.onDestroy()
     }
 }
-// === TELOS_PENDING_REVIEW_END: telephony_encryption_suite ===

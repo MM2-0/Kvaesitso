@@ -42,6 +42,22 @@ object TelosDialer {
         activity.startActivity(intent)
     }
 
+    fun canRequestCallScreening(context: Context): Boolean =
+        Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q &&
+            context.getSystemService(RoleManager::class.java)
+                ?.isRoleAvailable(RoleManager.ROLE_CALL_SCREENING) == true
+
+    fun isCallScreeningApp(context: Context): Boolean =
+        Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q &&
+            context.getSystemService(RoleManager::class.java)
+                ?.isRoleHeld(RoleManager.ROLE_CALL_SCREENING) == true
+
+    fun requestCallScreening(activity: Activity) {
+        if (!canRequestCallScreening(activity) || isCallScreeningApp(activity)) return
+        val manager = activity.getSystemService(RoleManager::class.java) ?: return
+        activity.startActivity(manager.createRequestRoleIntent(RoleManager.ROLE_CALL_SCREENING))
+    }
+
     data class SimLine(val handle: PhoneAccountHandle, val label: String)
 
     fun callCapableSims(context: Context): List<SimLine> {

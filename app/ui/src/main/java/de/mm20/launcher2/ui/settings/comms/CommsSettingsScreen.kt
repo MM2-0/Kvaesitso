@@ -903,6 +903,31 @@ fun CommsSettingsScreen() {
         }
 
         item {
+            PreferenceCategory(title = stringResource(I18nR.string.caller_privacy_title)) {
+                if (de.mm20.launcher2.comms.telephony.TelosDialer.canRequestCallScreening(context)) {
+                    var screeningHeld by remember { mutableStateOf(false) }
+                    androidx.lifecycle.compose.LifecycleResumeEffect(Unit) {
+                        screeningHeld = de.mm20.launcher2.comms.telephony.TelosDialer.isCallScreeningApp(context)
+                        onPauseOrDispose { }
+                    }
+                    Preference(
+                        title = stringResource(I18nR.string.caller_privacy_title),
+                        summary = stringResource(if (screeningHeld) I18nR.string.freeze_permission_granted else I18nR.string.freeze_permission_not_granted),
+                        onClick = { (context as? android.app.Activity)?.let {
+                            de.mm20.launcher2.comms.telephony.TelosDialer.requestCallScreening(it)
+                        } },
+                    )
+                }
+                Preference(
+                    title = stringResource(I18nR.string.net_settings_battery),
+                    onClick = {
+                        context.startActivity(android.content.Intent(android.provider.Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS))
+                    },
+                )
+            }
+        }
+
+        item {
             PreferenceCategory(title = stringResource(I18nR.string.hc_default_phone_app)) {
                 val context = LocalContext.current
                 var isDefault by remember {

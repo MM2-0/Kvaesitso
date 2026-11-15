@@ -5,6 +5,7 @@ on:
   pull_request:
     paths:
       - 'services/freeze/**'
+      - 'services/comms/**'
       - 'core/preferences/**'
       - 'app/ui/src/main/java/de/mm20/launcher2/ui/component/**'
       - 'app/ui/src/main/java/de/mm20/launcher2/ui/settings/**'
@@ -37,7 +38,7 @@ jobs:
       - name: Compile UI and test freeze policies and task continuity
         run: |
           BUILD_STATUS=0
-          bash ./gradlew :services:freeze:testDebugUnitTest :core:preferences:testDebugUnitTest :app:ui:testDefaultDebugUnitTest :app:ui:assembleDefaultDebugAndroidTest --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process -Dorg.gradle.jvmargs=-Xmx3072m --stacktrace > "$RUNNER_TEMP/system-compile.log" 2>&1 || BUILD_STATUS=$?
+          bash ./gradlew :services:freeze:testDebugUnitTest :services:comms:testDebugUnitTest :core:preferences:testDebugUnitTest :app:ui:testDefaultDebugUnitTest :app:ui:assembleDefaultDebugAndroidTest --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process -Dorg.gradle.jvmargs=-Xmx3072m --stacktrace > "$RUNNER_TEMP/system-compile.log" 2>&1 || BUILD_STATUS=$?
           cat "$RUNNER_TEMP/system-compile.log"
           if [ "$BUILD_STATUS" -ne 0 ]; then
             python3 - <<'PY'
@@ -96,6 +97,7 @@ jobs:
           name: freeze-fonts-continuity-test-results
           path: |
             services/freeze/build/reports/tests/
+            services/comms/build/reports/tests/
             core/preferences/build/reports/tests/
             app/ui/build/reports/tests/
             app/ui/build/outputs/androidTest-results/

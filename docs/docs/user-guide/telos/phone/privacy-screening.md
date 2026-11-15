@@ -185,3 +185,11 @@ snapshot, unlike the launcher-wide settings backup, which leaves out passwords, 
 Unknown Greek callers can optionally be checked against an exact-number white-pages.gr page. This sends the number to that service. Saved and hidden contacts are excluded. A suggested name or community spam warning identifies its source; online reports do not automatically block a call. A manual exact-number Google search is also available.
 
 Personal and Android system blocklists are enabled by default. Blocking attempts both writes independently and reports partial failures, including missing system permissions. A denied system lookup does not skip the other screening rules.
+
+## Fast screening without a permanent background loop
+
+In Phone settings, use **Caller identification & blocking** to grant Android’s screening role where available (Android 10+). This is separate from the default-phone role. A battery-optimization shortcut opens Android’s settings; Telos does not silently change your exemption.
+
+The screening service uses its own short-lived foreground-priority workers rather than sharing a busy general-purpose IO queue. Rules are read as one consistent settings snapshot. A separate deadline allows a call if a lookup stalls, and a completed decision cannot be overridden by a later timeout or result. Worker threads expire after 30 seconds without work. No polling, wake lock, permanent foreground notification or root permission is needed for this path.
+
+Default-phone handling rejects the specific blocked call; it does not call the global “end current call” operation that could affect another call. Root/Shizuku availability does not promise instant modem or OEM behavior, and device latency and battery measurements remain to be verified.
