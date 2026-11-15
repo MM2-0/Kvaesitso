@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.system
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
@@ -247,7 +249,7 @@ fun SavedWifiPasswordsPreference() {
     selectedQrPayload?.let { payload ->
         AlertDialog(
             onDismissRequest = { selectedQrPayload = null },
-            title = { Text(stringResource(I18nR.string.hc_qr_code)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.hc_qr_code))  } },
             text = {
                 Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
                     ContactQrImage(payload, Modifier.size(220.dp).padding(12.dp))
@@ -261,7 +263,7 @@ fun SavedWifiPasswordsPreference() {
         var draft by remember(target.ssid) { mutableStateOf(PrivilegedWifiStore.noteFor(context, target.ssid)) }
         AlertDialog(
             onDismissRequest = { noteTarget = null },
-            title = { Text(stringResource(I18nR.string.telos_system_wifi_note)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.telos_system_wifi_note))  } },
             text = {
                 OutlinedTextField(value = draft, onValueChange = { draft = it }, modifier = Modifier.fillMaxWidth(), minLines = 3)
             },
@@ -279,7 +281,7 @@ fun SavedWifiPasswordsPreference() {
     forgetTarget?.let { target ->
         AlertDialog(
             onDismissRequest = { forgetTarget = null },
-            title = { Text(stringResource(I18nR.string.telos_system_wifi_forget)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.telos_system_wifi_forget))  } },
             text = { Text(stringResource(I18nR.string.telos_system_wifi_forget_confirm, target.ssid)) },
             confirmButton = {
                 TextButton(onClick = {
@@ -300,7 +302,7 @@ fun SavedWifiPasswordsPreference() {
     if (forgetAll) {
         AlertDialog(
             onDismissRequest = { forgetAll = false },
-            title = { Text(stringResource(I18nR.string.telos_system_wifi_forget_all)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.telos_system_wifi_forget_all))  } },
             text = { Text(stringResource(I18nR.string.telos_system_wifi_forget_all_confirm)) },
             confirmButton = {
                 TextButton(onClick = {
@@ -322,7 +324,7 @@ fun SavedWifiPasswordsPreference() {
     pendingImport?.let { bytes ->
         AlertDialog(
             onDismissRequest = { pendingImport = null; importPassword = "" },
-            title = { Text(stringResource(I18nR.string.telos_system_wifi_import)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.telos_system_wifi_import))  } },
             text = {
                 OutlinedTextField(
                     value = importPassword,

@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.files
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.foundation.horizontalScroll
@@ -37,7 +39,7 @@ internal fun FilesSearchDialog(vm: FilesViewModel, onDismiss: () -> Unit) {
         (after.isBlank() || start != null) && (before.isBlank() || end != null) &&
         (min == null || max == null || min <= max) && (start == null || end == null || start <= end) &&
         extensionSet.size <= 32 && extensionSet.all { it.length <= 32 && '/' !in it && '\\' !in it }
-    AlertDialog(onDismissRequest = onDismiss, title = { Text(stringResource(I18nR.string.telos_files_search_filters)) }, text = {
+    AlertDialog(onDismissRequest = onDismiss, title = { TelosCyberHeading {  Text(stringResource(I18nR.string.telos_files_search_filters))  } }, text = {
         Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                 FilterChip(kind == null, { kind = null }, label = { Text(stringResource(I18nR.string.hf_store_filter_all)) })

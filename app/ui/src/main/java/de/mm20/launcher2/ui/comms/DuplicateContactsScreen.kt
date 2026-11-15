@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.comms
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.ui.res.pluralStringResource
@@ -92,7 +94,7 @@ fun DuplicateContactsScreen() {
         val count = viewModel.idsToDelete(toClean).size
         androidx.compose.material3.AlertDialog(
             onDismissRequest = { pending = null },
-            title = { Text(pluralStringResource(I18nR.plurals.hc_delete_contacts_question, count, count)) },
+            title = { TelosCyberHeading {  Text(pluralStringResource(I18nR.plurals.hc_delete_contacts_question, count, count))  } },
             text = { Text(stringResource(I18nR.string.hc_delete_duplicates_message, count)) },
             confirmButton = {
                 TextButton(onClick = {

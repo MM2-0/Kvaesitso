@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.media
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
@@ -97,7 +99,7 @@ fun MediaFrame(
             CenterAlignedTopAppBar(
                 modifier = Modifier.virtualAppGlass(blur, bar),
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent),
-                title = { Text(title, maxLines = 1, overflow = TextOverflow.Ellipsis) },
+                title = { TelosCyberHeading {  Text(title, maxLines = 1, overflow = TextOverflow.Ellipsis)  } },
                 navigationIcon = {
                     if (backStack.size > 1) {
                         IconButton(onClick = { backStack.removeLastOrNull() }) {

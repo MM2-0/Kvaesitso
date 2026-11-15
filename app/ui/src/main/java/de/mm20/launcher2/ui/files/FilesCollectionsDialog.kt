@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.files
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 
 import android.os.Environment
@@ -64,7 +66,7 @@ internal fun FilesCollectionsDialog(vm: FilesViewModel, onDismiss: () -> Unit, o
         catch (_: Exception) { failed = true; result = FilesCollectionResult(emptyList(), false) }
         finally { loading = false }
     }
-    AlertDialog(onDismissRequest = onDismiss, title = { Text(stringResource(I18nR.string.telos_files_collections)) },
+    AlertDialog(onDismissRequest = onDismiss, title = { TelosCyberHeading {  Text(stringResource(I18nR.string.telos_files_collections))  } },
         text = { Column(Modifier.fillMaxWidth().heightIn(max = 480.dp)) {
             Text(stringResource(I18nR.string.telos_files_collections_scope, root.path), style = MaterialTheme.typography.bodySmall)
             Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(6.dp)) {

@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.launcher.widgets
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.material3.AlertDialog
@@ -33,7 +35,7 @@ fun WidgetsTutorialOverlay(onFinished: () -> Unit) {
 
     AlertDialog(
         onDismissRequest = onFinished,
-        title = { Text(stringResource(titleRes)) },
+        title = { TelosCyberHeading {  Text(stringResource(titleRes))  } },
         text = { Text(stringResource(textRes)) },
         confirmButton = {
             TextButton(onClick = {

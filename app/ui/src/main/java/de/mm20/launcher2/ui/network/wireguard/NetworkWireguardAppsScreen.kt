@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.network.wireguard
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -85,7 +87,9 @@ fun NetworkWireguardAppsScreen() {
             TopAppBar(
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
                 title = {
-                    Text(if (selected.isEmpty()) stringResource(I18nR.string.nwg_apps_title) else stringResource(I18nR.string.nwg_selected, selected.size))
+                    TelosCyberHeading {
+                        Text(if (selected.isEmpty()) stringResource(I18nR.string.nwg_apps_title) else stringResource(I18nR.string.nwg_selected, selected.size))
+                    }
                 },
                 navigationIcon = {
                     IconButton(onClick = { if (selected.isEmpty()) backStack.removeLastOrNull() else selected.clear() }) {

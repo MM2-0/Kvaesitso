@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.network
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
@@ -73,7 +75,7 @@ fun NetworkProxiesScreen() {
         }
     }
     remove?.let { id ->
-        AlertDialog(onDismissRequest = { remove = null }, title = { Text(stringResource(I18nR.string.pdft_remove)) },
+        AlertDialog(onDismissRequest = { remove = null }, title = { TelosCyberHeading {  Text(stringResource(I18nR.string.pdft_remove))  } },
             text = { Text(stringResource(I18nR.string.netproxy_remove_hint)) },
             confirmButton = { TextButton(onClick = { remove = null; perform { controller.remove(id) } }) { Text(stringResource(I18nR.string.pdft_remove)) } },
             dismissButton = { TextButton(onClick = { remove = null }) { Text(stringResource(I18nR.string.hc_cancel)) } })
@@ -82,7 +84,7 @@ fun NetworkProxiesScreen() {
         var name by remember { mutableStateOf(editing?.name.orEmpty()) }; var host by remember { mutableStateOf(editing?.host.orEmpty()) }; var port by remember { mutableStateOf(editing?.port?.toString() ?: "1080") }
         var username by remember { mutableStateOf("") }; var password by remember { mutableStateOf("") }; var kind by remember { mutableStateOf(editing?.kind ?: ProxyKind.Socks5) }
         var ja3Fingerprint by remember { mutableStateOf(editing?.ja3Fingerprint.orEmpty()) }
-        AlertDialog(onDismissRequest = { if (!busy) adding = false }, title = { Text(stringResource(I18nR.string.netproxy_title)) },
+        AlertDialog(onDismissRequest = { if (!busy) adding = false }, title = { TelosCyberHeading {  Text(stringResource(I18nR.string.netproxy_title))  } },
             text = { Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 if (editing != null) Text(stringResource(I18nR.string.netproxy_reenter_credentials), style = MaterialTheme.typography.bodySmall)
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {

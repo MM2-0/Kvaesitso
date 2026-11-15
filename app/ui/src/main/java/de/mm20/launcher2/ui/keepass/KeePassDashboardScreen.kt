@@ -1,5 +1,7 @@
 package de.mm20.launcher2.ui.keepass
 
+import de.mm20.launcher2.ui.component.TelosCyberHeading
+
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
@@ -253,7 +255,7 @@ private fun EntryDetailPane(
     AlertDialog(
         onDismissRequest = onClose,
         containerColor = virtualAppPopup(),
-        title = { Text(title) },
+        title = { TelosCyberHeading {  Text(title)  } },
         text = {
             Column(
                 modifier = Modifier

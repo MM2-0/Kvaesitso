@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.launcher.sheets
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
@@ -131,17 +133,19 @@ fun EditTagSheet(
         Column {
             CenterAlignedTopAppBar(
                 title = {
-                    when (viewModel.page) {
-                        EditTagSheetPage.CreateTag,
-                        EditTagSheetPage.CustomizeTag -> {
-                            Text(stringResource(if (isCreatingNewTag) I18nR.string.create_tag_title else I18nR.string.edit_tag_title))
-                        }
+                    TelosCyberHeading {
+                        when (viewModel.page) {
+                            EditTagSheetPage.CreateTag,
+                            EditTagSheetPage.CustomizeTag -> {
+                                Text(stringResource(if (isCreatingNewTag) I18nR.string.create_tag_title else I18nR.string.edit_tag_title))
+                            }
 
-                        EditTagSheetPage.PickItems -> {
-                            Text(stringResource(I18nR.string.tag_select_items))
-                        }
+                            EditTagSheetPage.PickItems -> {
+                                Text(stringResource(I18nR.string.tag_select_items))
+                            }
 
-                        else -> {}
+                            else -> {}
+                        }
                     }
                 },
                 navigationIcon = {

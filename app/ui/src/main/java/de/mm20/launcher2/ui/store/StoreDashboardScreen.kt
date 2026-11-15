@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.store
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
@@ -178,7 +180,7 @@ fun StoreDashboardScreen(initialLink: String = "", initialQuery: String = "") {
 
     installationError?.let { error ->
         AlertDialog(onDismissRequest = viewModel::consumeInstallationError,
-            title = { Text(stringResource(I18nR.string.au_store_msg_install_failed)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.au_store_msg_install_failed))  } },
             text = { androidx.compose.foundation.text.selection.SelectionContainer {
                 Text(error, modifier = Modifier.verticalScroll(rememberScrollState()))
             } },
@@ -610,7 +612,7 @@ private fun AppsTab(
         }
         if (showFilters) AlertDialog(
             onDismissRequest = { showFilters = false },
-            title = { Text(stringResource(I18nR.string.telos_store_filters)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.telos_store_filters))  } },
             text = {
                 Column(Modifier.verticalScroll(rememberScrollState())) {
                     StoreFilter.entries.forEach { f ->
@@ -1217,7 +1219,7 @@ private fun AddAppDialog(viewModel: StoreViewModel, prefill: String, onDismiss: 
     var busy by remember { mutableStateOf(false) }
     AlertDialog(
         onDismissRequest = { if (!busy) onDismiss() },
-        title = { Text(stringResource(I18nR.string.hc_add_an_app)) },
+        title = { TelosCyberHeading {  Text(stringResource(I18nR.string.hc_add_an_app))  } },
         text = {
             Column {
                 Text(
@@ -1260,7 +1262,7 @@ private fun StoreSettingsDialog(viewModel: StoreViewModel, onDismiss: () -> Unit
     val hoursLabel = { h: Int -> context.getString(I18nR.string.au_store_hours_short, h) }
     AlertDialog(
         onDismissRequest = { viewModel.setGlobal { it.copy(githubToken = token.trim()) }; onDismiss() },
-        title = { Text(stringResource(I18nR.string.hc_store_settings)) },
+        title = { TelosCyberHeading {  Text(stringResource(I18nR.string.hc_store_settings))  } },
         text = {
             Column(Modifier.verticalScroll(rememberScrollState())) {
                 Text(stringResource(I18nR.string.hc_check_for_updates), style = MaterialTheme.typography.titleSmall)
@@ -1356,7 +1358,7 @@ private fun InstalledAppsDialog(viewModel: StoreViewModel, onDismiss: () -> Unit
     LaunchedEffect(Unit) { candidates = viewModel.installedCandidates() }
     AlertDialog(
         onDismissRequest = { if (!busy) onDismiss() },
-        title = { Text(stringResource(I18nR.string.hc_add_installed_apps)) },
+        title = { TelosCyberHeading {  Text(stringResource(I18nR.string.hc_add_installed_apps))  } },
         text = {
             Column {
                 Text(

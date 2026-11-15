@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.component.preferences
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.foundation.layout.*
@@ -50,10 +52,12 @@ fun ColorPreference(
             onDismissRequest = { showDialog = false },
             containerColor = de.mm20.launcher2.ui.component.virtualAppPopup(),
             title = {
-                Text(
-                    text = title,
-                    style = MaterialTheme.typography.titleLarge
-                )
+                TelosCyberHeading {
+                    Text(
+                        text = title,
+                        style = MaterialTheme.typography.titleLarge
+                    )
+                }
             },
             text = {
                 Column(

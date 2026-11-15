@@ -187,7 +187,7 @@ private fun AddCustomDialog(kind: BlockListKind, onDismiss: () -> Unit) {
     var invalid by remember { mutableStateOf(false) }
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(stringResource(I18nR.string.blocklists_add_custom)) },
+        title = { TelosCyberHeading {  Text(stringResource(I18nR.string.blocklists_add_custom))  } },
         text = {
             Column {
                 OutlinedTextField(name, { name = it }, label = { Text(stringResource(I18nR.string.blocklists_custom_name)) }, singleLine = true, modifier = Modifier.fillMaxWidth())

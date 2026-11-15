@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.media.trim
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Context
@@ -136,10 +138,12 @@ fun MediaTrimmerScreen(
         topBar = {
             TopAppBar(
                 title = {
-                    Text(
-                        if (isVideo) "LibreCuts Video Editor" else "LibreCuts Audio Editor",
-                        fontWeight = FontWeight.Bold,
-                    )
+                    TelosCyberHeading {
+                        Text(
+                            if (isVideo) "LibreCuts Video Editor" else "LibreCuts Audio Editor",
+                            fontWeight = FontWeight.Bold,
+                        )
+                    }
                 },
                 navigationIcon = {
                     IconButton(onClick = onClose) {

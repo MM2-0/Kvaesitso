@@ -1,5 +1,7 @@
 // === TELOS_PENDING_REVIEW_START: comms_settings_engine ===
 package de.mm20.launcher2.ui.settings.comms
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.ui.res.stringResource
@@ -165,7 +167,7 @@ fun CommsSettingsScreen() {
         var pin by remember { mutableStateOf("") }
         AlertDialog(
             onDismissRequest = { showPinDialog = false },
-            title = { Text(stringResource(I18nR.string.hc_hidden_contacts_pin)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.hc_hidden_contacts_pin))  } },
             text = {
                 OutlinedTextField(
                     value = pin,
@@ -191,7 +193,7 @@ fun CommsSettingsScreen() {
         var input by rememberSaveable { mutableStateOf(rejectSmsTemplate) }
         AlertDialog(
             onDismissRequest = { showRejectSms = false },
-            title = { Text(stringResource(I18nR.string.hc_reject_with_sms)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.hc_reject_with_sms))  } },
             text = {
                 OutlinedTextField(
                     value = input,
@@ -877,7 +879,7 @@ fun CommsSettingsScreen() {
                         var input by rememberSaveable { mutableStateOf(clirPrefix) }
                         AlertDialog(
                             onDismissRequest = { editClir = false },
-                            title = { Text(stringResource(I18nR.string.hc_custom_clir_prefix)) },
+                            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.hc_custom_clir_prefix))  } },
                             text = {
                                 OutlinedTextField(
                                     value = input,
@@ -995,7 +997,7 @@ fun CommsSettingsScreen() {
         var inputNumber by rememberSaveable(digit) { mutableStateOf(speedDials[digit] ?: "") }
         AlertDialog(
             onDismissRequest = { showSpeedDialDialogFor = null },
-            title = { Text(stringResource(I18nR.string.hc_set_speed_dial_digit, digit)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.hc_set_speed_dial_digit, digit))  } },
             text = {
                 OutlinedTextField(
                     value = inputNumber,
@@ -1031,7 +1033,7 @@ fun CommsSettingsScreen() {
     if (showExportPassword) {
         AlertDialog(
             onDismissRequest = { showExportPassword = false; pendingExportUri = null },
-            title = { Text(stringResource(I18nR.string.hc_backup_password)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.hc_backup_password))  } },
             text = {
                 OutlinedTextField(
                     value = backupPassword,
@@ -1078,7 +1080,7 @@ fun CommsSettingsScreen() {
     if (showImportPassword) {
         AlertDialog(
             onDismissRequest = { showImportPassword = false; pendingImportText = null },
-            title = { Text(stringResource(I18nR.string.hc_restore_password)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.hc_restore_password))  } },
             text = {
                 OutlinedTextField(
                     value = backupPassword,

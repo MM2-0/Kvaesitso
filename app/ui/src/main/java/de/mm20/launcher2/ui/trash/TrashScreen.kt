@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.trash
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
@@ -125,13 +127,15 @@ fun TrashScreen() {
             topBar = {
                 TopAppBar(
                     title = {
-                        Column {
-                            Text(stringResource(I18nR.string.telos_trash_title))
-                            TelosDotMatrixText(
-                                stringResource(if (junk.isNotEmpty()) I18nR.string.trash_hero_ready else I18nR.string.trash_hero_bin),
-                                fontSize = 9.sp,
-                                color = MaterialTheme.colorScheme.primary,
-                            )
+                        TelosCyberHeading {
+                            Column {
+                                Text(stringResource(I18nR.string.telos_trash_title))
+                                TelosDotMatrixText(
+                                    stringResource(if (junk.isNotEmpty()) I18nR.string.trash_hero_ready else I18nR.string.trash_hero_bin),
+                                    fontSize = 9.sp,
+                                    color = MaterialTheme.colorScheme.primary,
+                                )
+                            }
                         }
                     },
                     navigationIcon = {
@@ -368,7 +372,7 @@ fun TrashScreen() {
         AlertDialog(
             onDismissRequest = { warnPriv = false },
             containerColor = virtualAppPopup(),
-            title = { Text(stringResource(I18nR.string.trash_clean_priv_warn_title)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.trash_clean_priv_warn_title))  } },
             text = { Text(stringResource(I18nR.string.trash_clean_priv_warn_text)) },
             confirmButton = {
                 TextButton(onClick = {

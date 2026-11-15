@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.media.video
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Context
@@ -278,7 +280,7 @@ internal fun NetworkSourcesDialog(onDismiss: () -> Unit) {
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(stringResource(I18nR.string.vn_network_scan_title)) },
+        title = { TelosCyberHeading {  Text(stringResource(I18nR.string.vn_network_scan_title))  } },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 val b = browsing

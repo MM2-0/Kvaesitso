@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.files
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.foundation.layout.*
@@ -39,7 +41,7 @@ fun FilesEncryptionDialog(source: File, decrypt: Boolean, onDismiss: () -> Unit,
     }
     AlertDialog(onDismissRequest = { if (job?.isActive != true) dismiss() },
         properties = DialogProperties(securePolicy = SecureFlagPolicy.SecureOn, dismissOnBackPress = job?.isActive != true, dismissOnClickOutside = job?.isActive != true),
-        title = { Text(stringResource(if (decrypt) I18nR.string.telos_files_decrypt else I18nR.string.telos_files_encrypt)) },
+        title = { TelosCyberHeading {  Text(stringResource(if (decrypt) I18nR.string.telos_files_decrypt else I18nR.string.telos_files_encrypt))  } },
         text = {
             Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(10.dp)) {
                 Text(source.name, style = MaterialTheme.typography.titleSmall)

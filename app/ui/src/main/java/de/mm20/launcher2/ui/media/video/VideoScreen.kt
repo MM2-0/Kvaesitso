@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.media.video
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
@@ -241,7 +243,7 @@ fun VideoScreen() {
     confirmShare?.let { video ->
         AlertDialog(
             onDismissRequest = { confirmShare = null },
-            title = { Text(stringResource(I18nR.string.au10_video_share_large_title)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.au10_video_share_large_title))  } },
             text = { Text(stringResource(I18nR.string.au10_video_share_large_message, de.mm20.launcher2.ui.files.formatSize(video.sizeBytes))) },
             confirmButton = { TextButton(onClick = { confirmShare = null; performShare(video) }) { Text(stringResource(I18nR.string.au10_video_share_large_confirm)) } },
             dismissButton = { TextButton(onClick = { confirmShare = null }) { Text(stringResource(I18nR.string.hc_cancel)) } },

@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.freeze
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
@@ -450,7 +452,7 @@ private fun FreezeSettingsContent(section: Int, tabs: @Composable () -> Unit) {
 internal fun AutoFreezeImportDialog(count: Int, onImport: () -> Unit, onSkip: () -> Unit, onCancel: () -> Unit) {
     AlertDialog(
         onDismissRequest = onCancel,
-        title = { Text(stringResource(I18nR.string.preference_freeze_auto_category)) },
+        title = { TelosCyberHeading {  Text(stringResource(I18nR.string.preference_freeze_auto_category))  } },
         text = { Text(stringResource(I18nR.string.freeze_auto_import_existing, count)) },
         confirmButton = { TextButton(onClick = onImport) { Text(stringResource(android.R.string.yes)) } },
         dismissButton = { TextButton(onClick = onSkip) { Text(stringResource(android.R.string.no)) } },

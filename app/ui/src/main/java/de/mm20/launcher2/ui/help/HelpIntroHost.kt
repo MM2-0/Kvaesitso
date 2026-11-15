@@ -1,5 +1,7 @@
 package de.mm20.launcher2.ui.help
 
+import de.mm20.launcher2.ui.component.TelosCyberHeading
+
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -20,7 +22,7 @@ fun HelpIntroHost() {
     if (shown) return
     AlertDialog(
         onDismissRequest = { uiSettings.setHelpIntroShown(true) },
-        title = { Text(stringResource(I18nR.string.telos_help_intro_title)) },
+        title = { TelosCyberHeading {  Text(stringResource(I18nR.string.telos_help_intro_title))  } },
         text = { Text(stringResource(I18nR.string.telos_help_intro_body)) },
         confirmButton = {
             TextButton(onClick = {

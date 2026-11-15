@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.files.remote
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.foundation.layout.Column
@@ -42,7 +44,7 @@ fun FilesFtpServerDialog(path: String, onDismiss: () -> Unit) {
         lifecycle.addObserver(observer)
         onDispose { disposed.set(true); lifecycle.removeObserver(observer); pending.getAndSet(null)?.close(); server?.close() }
     }
-    AlertDialog(onDismissRequest = onDismiss, title = { Text("FTP") }, text = {
+    AlertDialog(onDismissRequest = onDismiss, title = { TelosCyberHeading {  Text("FTP")  } }, text = {
         Column(Modifier.verticalScroll(rememberScrollState())) {
             Text(stringResource(I18nR.string.nf_ftp_scope))
             Text(path, Modifier.padding(vertical = 8.dp))

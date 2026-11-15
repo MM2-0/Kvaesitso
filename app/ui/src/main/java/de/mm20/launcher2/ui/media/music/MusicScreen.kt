@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.media.music
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
@@ -569,7 +571,7 @@ private fun NowPlayingScreen(viewModel: MusicViewModel, library: List<MusicTrack
     if (showSleep) {
         AlertDialog(
             onDismissRequest = { showSleep = false },
-            title = { Text(stringResource(I18nR.string.hc_sleep_timer)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.hc_sleep_timer))  } },
             text = {
                 Column {
                     listOf(15, 30, 45, 60, 90).forEach { minutes ->
@@ -915,7 +917,7 @@ private fun TagEditDialog(
     var track by remember { mutableStateOf(tags.trackNumber) }
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(stringResource(I18nR.string.hc_edit_tags)) },
+        title = { TelosCyberHeading {  Text(stringResource(I18nR.string.hc_edit_tags))  } },
         text = {
             LazyColumn {
                 item {
@@ -997,7 +999,7 @@ fun AudioFxDialog(onDismiss: () -> Unit) {
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Telos Audio Effects & 200% Boost") },
+        title = { TelosCyberHeading {  Text("Telos Audio Effects & 200% Boost")  } },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
                 Column {

@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.launcher
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
@@ -41,7 +43,7 @@ class TelosRecentsActivity : BaseActivity() {
                         Scaffold(
                             topBar = {
                                 TopAppBar(
-                                    title = { Text(stringResource(I18nR.string.telos_recents_title)) },
+                                    title = { TelosCyberHeading {  Text(stringResource(I18nR.string.telos_recents_title))  } },
                                     navigationIcon = {
                                         IconButton(onClick = { finish() }) {
                                             Icon(

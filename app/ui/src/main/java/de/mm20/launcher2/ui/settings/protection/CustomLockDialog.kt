@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.protection
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.foundation.layout.Column
@@ -37,7 +39,7 @@ fun CustomLockDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(if (isConfirming) confirmTitle ?: title else title) },
+        title = { TelosCyberHeading {  Text(if (isConfirming) confirmTitle ?: title else title)  } },
         text = {
             Column {
                 TextField(

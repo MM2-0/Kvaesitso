@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.notes
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
@@ -342,7 +344,7 @@ private fun NoteEditor(note: Note, labels: List<String>, onChange: (Note) -> Uni
         AlertDialog(
             onDismissRequest = { labelDialog = false },
         containerColor = virtualAppPopup(),
-            title = { Text(stringResource(I18nR.string.notes_labels)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.notes_labels))  } },
             text = {
                 Column {
                     OutlinedTextField(text, { text = it }, singleLine = true, placeholder = { Text(stringResource(I18nR.string.notes_labels_hint)) })
@@ -374,7 +376,7 @@ private fun SyncDialog(vm: NotesViewModel, onDismiss: () -> Unit) {
     AlertDialog(
         onDismissRequest = onDismiss,
         containerColor = virtualAppPopup(),
-        title = { Text(stringResource(I18nR.string.notes_sync_settings)) },
+        title = { TelosCyberHeading {  Text(stringResource(I18nR.string.notes_sync_settings))  } },
         text = {
             Column(Modifier.verticalScrollCompat(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(stringResource(I18nR.string.notes_sync_folder), style = MaterialTheme.typography.titleSmall)

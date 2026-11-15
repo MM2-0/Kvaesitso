@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.license
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
@@ -60,7 +62,9 @@ fun LicenseScreen(libraryName: String?) {
         topBar = {
             LargeTopAppBar(
                 title = {
-                    Text(library.name)
+                    TelosCyberHeading {
+                        Text(library.name)
+                    }
                 },
                 navigationIcon = {
                     IconButton(onClick = {

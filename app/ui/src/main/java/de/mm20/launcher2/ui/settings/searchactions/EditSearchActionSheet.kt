@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.searchactions
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
@@ -157,16 +159,18 @@ fun EditSearchActionSheet(
         ) {
             CenterAlignedTopAppBar(
                 title = {
-                    if (page != EditSearchActionPage.PickIcon) {
-                        Text(
-                            stringResource(
-                                if (createNew) {
-                                    I18nR.string.create_search_action_title
-                                } else {
-                                    I18nR.string.edit_search_action_title
-                                }
+                    TelosCyberHeading {
+                        if (page != EditSearchActionPage.PickIcon) {
+                            Text(
+                                stringResource(
+                                    if (createNew) {
+                                        I18nR.string.create_search_action_title
+                                    } else {
+                                        I18nR.string.edit_search_action_title
+                                    }
+                                )
                             )
-                        )
+                        }
                     }
                 },
                 navigationIcon = {

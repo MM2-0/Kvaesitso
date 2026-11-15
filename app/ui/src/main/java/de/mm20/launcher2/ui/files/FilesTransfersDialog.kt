@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.files
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.foundation.layout.*
@@ -15,7 +17,7 @@ import de.mm20.launcher2.ui.R
 fun FilesTransfersDialog(queue: FilesTransferQueue, onDismiss: () -> Unit) {
     val transfers by queue.items.collectAsState()
     AlertDialog(onDismissRequest = onDismiss,
-        title = { Text(stringResource(I18nR.string.telos_files_transfers_title)) },
+        title = { TelosCyberHeading {  Text(stringResource(I18nR.string.telos_files_transfers_title))  } },
         text = {
             Column {
                 Text(stringResource(I18nR.string.telos_files_transfers_note), style = MaterialTheme.typography.bodySmall)

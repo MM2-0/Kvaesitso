@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.trash
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.foundation.layout.*
@@ -49,7 +51,7 @@ fun TrashDialog(onDismiss: () -> Unit, onChanged: () -> Unit = {}) {
     AlertDialog(
         onDismissRequest = onDismiss,
         containerColor = de.mm20.launcher2.ui.component.virtualAppPopup(),
-        title = { Text(stringResource(I18nR.string.telos_trash_title)) },
+        title = { TelosCyberHeading {  Text(stringResource(I18nR.string.telos_trash_title))  } },
         text = { Column(Modifier.heightIn(max = 500.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             if (busy) LinearProgressIndicator(Modifier.fillMaxWidth())
             if (error) Text(stringResource(I18nR.string.telos_trash_restore_failed), color = MaterialTheme.colorScheme.error)

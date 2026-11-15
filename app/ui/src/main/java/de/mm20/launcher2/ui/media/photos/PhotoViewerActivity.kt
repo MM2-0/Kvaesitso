@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.media.photos
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
@@ -243,7 +245,7 @@ private fun PhotoViewer(uris: List<Uri>, start: Int, onClose: () -> Unit) {
     val wallpapers = org.koin.compose.koinInject<de.mm20.launcher2.wallpapers.WallpapersService>()
     wallpaperUri?.let { selectedUri ->
         AlertDialog(onDismissRequest = { if (!settingWallpaper) wallpaperUri = null },
-            title = { Text(stringResource(I18nR.string.wallpaper_target_dialog_title)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.wallpaper_target_dialog_title))  } },
             text = { Column {
                 staticPhotoWallpaperTargets.forEach { (label, target) ->
                     TextButton(enabled = !settingWallpaper, onClick = {
@@ -444,7 +446,7 @@ private fun ExifDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(stringResource(I18nR.string.hc_details)) },
+        title = { TelosCyberHeading {  Text(stringResource(I18nR.string.hc_details))  } },
         text = {
             Column(Modifier.verticalScroll(rememberScrollState())) {
                 if (info == null) {

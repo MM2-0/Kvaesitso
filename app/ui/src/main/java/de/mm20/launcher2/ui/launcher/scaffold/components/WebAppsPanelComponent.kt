@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.launcher.scaffold.components
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 import de.mm20.launcher2.icons.TelosIcons
@@ -247,7 +249,7 @@ internal object WebAppsPanelComponent : ScaffoldComponent() {
                 exit = shrinkVertically(shrinkTowards = Alignment.Top) + fadeOut(),
             ) {
                 CenterAlignedTopAppBar(
-                    title = { Text(stringResource(I18nR.string.web_apps_panel_edit)) },
+                    title = { TelosCyberHeading {  Text(stringResource(I18nR.string.web_apps_panel_edit))  } },
                     navigationIcon = {
                         IconButton(onClick = {
                             editMode = false

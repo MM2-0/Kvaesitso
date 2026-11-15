@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.voice
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
@@ -605,7 +607,7 @@ fun VoiceRecorderScreen() {
         AlertDialog(
             onDismissRequest = { renaming = null },
             containerColor = virtualAppPopup(),
-            title = { Text(stringResource(I18nR.string.voice_rename)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.voice_rename))  } },
             text = { OutlinedTextField(value = name, onValueChange = { name = it }, singleLine = true) },
             confirmButton = {
                 TextButton(onClick = {

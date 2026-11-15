@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.launcher.scaffold.components
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.icons.TelosIcons
 
@@ -160,7 +162,7 @@ internal class WidgetsComponent(
             exit = shrinkVertically(shrinkTowards = Alignment.Top) + fadeOut(),
         ) {
             CenterAlignedTopAppBar(
-                title = { Text(stringResource(I18nR.string.menu_edit_widgets)) },
+                title = { TelosCyberHeading {  Text(stringResource(I18nR.string.menu_edit_widgets))  } },
                 navigationIcon = {
                     IconButton(
                         onClick = {

@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.files.remote
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 
 import de.mm20.launcher2.ui.R
@@ -142,7 +144,7 @@ private fun ConnectionEditor(initial: RemoteConnection, isNew: Boolean, onSave: 
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(if (isNew) stringResource(I18nR.string.hf_remote_new_connection, type.label) else c.name) },
+        title = { TelosCyberHeading {  Text(if (isNew) stringResource(I18nR.string.hf_remote_new_connection, type.label) else c.name)  } },
         text = {
             Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(type.hint, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)

@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.store
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 
 import de.mm20.launcher2.ui.system.UadRepository
@@ -318,7 +320,7 @@ fun AppDetailsScreen(itemId: String) {
         if (confirmRemove) {
             AlertDialog(
                 onDismissRequest = { confirmRemove = false },
-                title = { Text(stringResource(I18nR.string.hc_remove_item_question, item.displayName)) },
+                title = { TelosCyberHeading {  Text(stringResource(I18nR.string.hc_remove_item_question, item.displayName))  } },
                 text = { Text(stringResource(I18nR.string.hc_it_is_only_removed_from_this_list_the_in)) },
                 confirmButton = {
                     TextButton(onClick = { viewModel.remove(item); confirmRemove = false; backStack.removeLastOrNull() }) { Text(stringResource(I18nR.string.hc_remove)) }
@@ -330,7 +332,7 @@ fun AppDetailsScreen(itemId: String) {
             var name by remember { mutableStateOf(item.displayName) }
             AlertDialog(
                 onDismissRequest = { renaming = false },
-                title = { Text(stringResource(I18nR.string.hc_rename)) },
+                title = { TelosCyberHeading {  Text(stringResource(I18nR.string.hc_rename))  } },
                 text = { OutlinedTextField(name, { name = it }, singleLine = true, modifier = Modifier.fillMaxWidth()) },
                 confirmButton = { TextButton(onClick = { viewModel.rename(item, name); renaming = false }) { Text(stringResource(I18nR.string.hc_save)) } },
                 dismissButton = { TextButton(onClick = { renaming = false }) { Text(stringResource(I18nR.string.hc_cancel)) } },

@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.media.video
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.ContentValues
@@ -82,7 +84,7 @@ internal fun VideoOrganizeDialog(items: List<VideoItem>, onClose: (Boolean) -> U
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
         AlertDialog(
             onDismissRequest = { onClose(false) },
-            title = { Text(stringResource(I18nR.string.au7_vidfolders_title)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.au7_vidfolders_title))  } },
             text = { Text(stringResource(I18nR.string.au7_vidfolders_unsupported)) },
             confirmButton = { TextButton(onClick = { onClose(false) }) { Text(stringResource(I18nR.string.hc_cancel)) } },
         )
@@ -119,7 +121,7 @@ internal fun VideoOrganizeDialog(items: List<VideoItem>, onClose: (Boolean) -> U
     if (moves.isEmpty()) {
         AlertDialog(
             onDismissRequest = { onClose(false) },
-            title = { Text(stringResource(I18nR.string.au7_vidfolders_title)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.au7_vidfolders_title))  } },
             text = { Text(stringResource(I18nR.string.au7_vidfolders_nothing)) },
             confirmButton = { TextButton(onClick = { onClose(false) }) { Text(stringResource(I18nR.string.hc_cancel)) } },
         )
@@ -129,7 +131,7 @@ internal fun VideoOrganizeDialog(items: List<VideoItem>, onClose: (Boolean) -> U
     val episodes = moves.count { it.series }
     AlertDialog(
         onDismissRequest = { onClose(false) },
-        title = { Text(stringResource(I18nR.string.au7_vidfolders_title)) },
+        title = { TelosCyberHeading {  Text(stringResource(I18nR.string.au7_vidfolders_title))  } },
         text = {
             Text(
                 stringResource(I18nR.string.au7_vidfolders_confirm, films, episodes) + "\n\n" +

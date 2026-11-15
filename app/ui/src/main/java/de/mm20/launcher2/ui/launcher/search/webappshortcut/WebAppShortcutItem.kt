@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.launcher.search.webappshortcut
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
@@ -159,7 +161,7 @@ fun WebAppShortcutItem(
         if (showDeleteDialog) {
             AlertDialog(
                 onDismissRequest = { showDeleteDialog = false },
-                title = { Text(stringResource(I18nR.string.web_app_delete_title)) },
+                title = { TelosCyberHeading {  Text(stringResource(I18nR.string.web_app_delete_title))  } },
                 text = { Text(stringResource(I18nR.string.web_app_delete_message, shortcut.labelOverride ?: shortcut.label)) },
                 confirmButton = {
                     TextButton(onClick = {

@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.camera
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
@@ -207,7 +209,7 @@ fun CameraScreen() {
         AlertDialog(
             onDismissRequest = { detectedCode = null },
             containerColor = de.mm20.launcher2.ui.component.virtualAppPopup(),
-            title = { Text(stringResource(I18nR.string.camera_scan_code)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.camera_scan_code))  } },
             text = { androidx.compose.foundation.text.selection.SelectionContainer {
                 Text(code.text, Modifier.heightIn(max = 280.dp).verticalScroll(rememberScrollState()))
             } },
@@ -227,20 +229,22 @@ fun CameraScreen() {
     Scaffold(containerColor = Color.Black, contentColor = Color.White, topBar = {
         TopAppBar(
             title = {
-                Column {
-                    Text("TELOS", color = Color.White, fontWeight = androidx.compose.ui.text.font.FontWeight.SemiBold)
-                    TelosDotMatrixText(
-                        text = stringResource(
-                            when {
-                                recording -> I18nR.string.camera_native_record
-                                scanMode -> I18nR.string.camera_scan_pdf
-                                mode == NativeCamera.MODE_VIDEO -> I18nR.string.camera_mode_video
-                                else -> I18nR.string.camera_mode_photo
-                            }
-                        ).uppercase(),
-                        fontSize = 9.sp,
-                        color = if (recording) TelosCyber.NeonMagenta else TelosCyber.NeonCyan,
-                    )
+                TelosCyberHeading {
+                    Column {
+                        Text("TELOS", color = Color.White, fontWeight = androidx.compose.ui.text.font.FontWeight.SemiBold)
+                        TelosDotMatrixText(
+                            text = stringResource(
+                                when {
+                                    recording -> I18nR.string.camera_native_record
+                                    scanMode -> I18nR.string.camera_scan_pdf
+                                    mode == NativeCamera.MODE_VIDEO -> I18nR.string.camera_mode_video
+                                    else -> I18nR.string.camera_mode_photo
+                                }
+                            ).uppercase(),
+                            fontSize = 9.sp,
+                            color = if (recording) TelosCyber.NeonMagenta else TelosCyber.NeonCyan,
+                        )
+                    }
                 }
             },
             navigationIcon = {

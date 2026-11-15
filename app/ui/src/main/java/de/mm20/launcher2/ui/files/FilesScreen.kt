@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.files
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
@@ -565,7 +567,7 @@ private fun FilesDialogs(vm: FilesViewModel, dialog: FilesDialog?, onDismiss: ()
         )
         is FilesDialog.ShareLarge -> AlertDialog(
             onDismissRequest = onDismiss,
-            title = { Text(stringResource(I18nR.string.au9_share_large_title)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.au9_share_large_title))  } },
             text = { Text(stringResource(I18nR.string.au9_share_large_message, formatSize(dialog.bytes))) },
             confirmButton = { TextButton(onClick = { vm.shareEntries(dialog.entries); onDismiss() }) { Text(stringResource(I18nR.string.au9_share_large_confirm)) } },
             dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(I18nR.string.hc_cancel)) } },
@@ -574,7 +576,7 @@ private fun FilesDialogs(vm: FilesViewModel, dialog: FilesDialog?, onDismiss: ()
         FilesDialog.EnableRoot -> RootWarningDialog(onDismiss) { vm.enableRoot { onDismiss() } }
         is FilesDialog.Archive -> AlertDialog(
             onDismissRequest = onDismiss,
-            title = { Text(dialog.entry.name) },
+            title = { TelosCyberHeading {  Text(dialog.entry.name)  } },
             text = { Text(stringResource(I18nR.string.hc_look_inside_the_archive_or_unpack_it_int)) },
             confirmButton = { TextButton(onClick = { vm.open(ArchivePath.build(dialog.entry.path, "/")); onDismiss() }) { Text(stringResource(I18nR.string.hc_browse)) } },
             dismissButton = {
@@ -599,7 +601,7 @@ private fun ArchivePasswordDialog(vm: FilesViewModel, prompt: ArchivePrompt) {
     var busy by remember(prompt) { mutableStateOf(false) }
     AlertDialog(
         onDismissRequest = { if (!busy) vm.cancelArchivePrompt() },
-        title = { Text(stringResource(I18nR.string.au21_arch_pw_title)) },
+        title = { TelosCyberHeading {  Text(stringResource(I18nR.string.au21_arch_pw_title))  } },
         text = {
             Column {
                 Text(stringResource(I18nR.string.au21_arch_pw_info, nameOf(prompt.archive)))
@@ -638,7 +640,7 @@ private fun CompressDialog(vm: FilesViewModel, entries: List<FsEntry>, onDismiss
     val hide = if (visible) androidx.compose.ui.text.input.VisualTransformation.None else androidx.compose.ui.text.input.PasswordVisualTransformation()
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(stringResource(I18nR.string.au21_arch_compress)) },
+        title = { TelosCyberHeading {  Text(stringResource(I18nR.string.au21_arch_compress))  } },
         text = {
             Column(Modifier.verticalScroll(rememberScrollState())) {
                 OutlinedTextField(name, { name = it }, singleLine = true, modifier = Modifier.fillMaxWidth())
@@ -694,7 +696,7 @@ private fun NameDialog(title: String, initial: String, action: String, onDismiss
     var text by remember { mutableStateOf(initial) }
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(title) },
+        title = { TelosCyberHeading {  Text(title)  } },
         text = { OutlinedTextField(text, { text = it }, singleLine = true, modifier = Modifier.fillMaxWidth()) },
         confirmButton = { TextButton(enabled = text.isNotBlank() && '/' !in text, onClick = { onDone(text.trim()) }) { Text(action) } },
         dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(I18nR.string.hc_cancel)) } },
@@ -705,7 +707,7 @@ private fun NameDialog(title: String, initial: String, action: String, onDismiss
 private fun SortDialog(vm: FilesViewModel, onDismiss: () -> Unit) {
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(stringResource(I18nR.string.hc_sort_by)) },
+        title = { TelosCyberHeading {  Text(stringResource(I18nR.string.hc_sort_by))  } },
         text = {
             Column {
                 SortKey.values().forEach { key ->
@@ -740,7 +742,7 @@ private fun RootWarningDialog(onDismiss: () -> Unit, onConfirm: () -> Unit) {
     AlertDialog(
         onDismissRequest = onDismiss,
         icon = { Icon(painterResource(Icons.terminal_24px), contentDescription = null, tint = MaterialTheme.colorScheme.error) },
-        title = { Text(stringResource(I18nR.string.hc_root_explorer)) },
+        title = { TelosCyberHeading {  Text(stringResource(I18nR.string.hc_root_explorer))  } },
         text = {
             Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(stringResource(I18nR.string.hc_telos_files_will_ask_for_superuser_acces))
@@ -776,7 +778,7 @@ private fun PropertiesDialog(vm: FilesViewModel, entry: FsEntry, onDismiss: () -
     }
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(entry.name, maxLines = 2, overflow = TextOverflow.Ellipsis) },
+        title = { TelosCyberHeading {  Text(entry.name, maxLines = 2, overflow = TextOverflow.Ellipsis)  } },
         text = {
             Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(10.dp)) {
                 Detail(stringResource(I18nR.string.hf_files_prop_type), stringResource(entry.kind.labelRes) + if (entry.extension.isNotEmpty()) " (.${entry.extension})" else "")
@@ -840,7 +842,7 @@ private fun SelectionBar(
 ) {
     var more by remember { mutableStateOf(false) }
     TopAppBar(
-        title = { Text(stringResource(I18nR.string.au_files_selected_count, count)) },
+        title = { TelosCyberHeading {  Text(stringResource(I18nR.string.au_files_selected_count, count))  } },
         navigationIcon = { IconButton(onClick = onClose) { Icon(painterResource(Icons.close_24px), contentDescription = stringResource(I18nR.string.hc_close)) } },
         actions = {
             IconButton(onClick = onShare) { Icon(painterResource(Icons.share_24px), contentDescription = stringResource(I18nR.string.hc_share)) }
@@ -876,11 +878,13 @@ private fun SelectionBar(
 private fun SearchBar(query: String, onQuery: (String) -> Unit, onClose: () -> Unit, onFilters: () -> Unit) {
     TopAppBar(
         title = {
-            de.mm20.launcher2.ui.component.TelosSearchTopBar(
-                value = query, onValueChange = onQuery,
-                placeholder = stringResource(I18nR.string.hc_search_in_this_folder),
-                autoFocus = true,
-            )
+            TelosCyberHeading {
+                de.mm20.launcher2.ui.component.TelosSearchTopBar(
+                    value = query, onValueChange = onQuery,
+                    placeholder = stringResource(I18nR.string.hc_search_in_this_folder),
+                    autoFocus = true,
+                )
+            }
         },
         navigationIcon = { IconButton(onClick = onClose) { Icon(painterResource(Icons.arrow_back_24px), contentDescription = stringResource(I18nR.string.hc_back)) } },
         actions = { IconButton(onClick = onFilters) { Icon(painterResource(Icons.tune_24px), contentDescription = stringResource(I18nR.string.telos_files_search_filters)) } },
@@ -1255,7 +1259,7 @@ private fun UnlockVaultDialog(vm: FilesViewModel, entry: FsEntry, onDismiss: () 
     var busy by remember { mutableStateOf(false) }
     AlertDialog(
         onDismissRequest = { if (!busy) onDismiss() },
-        title = { Text(stringResource(I18nR.string.hc_unlock_vault)) },
+        title = { TelosCyberHeading {  Text(stringResource(I18nR.string.hc_unlock_vault))  } },
         text = {
             Column {
                 Text(stringResource(I18nR.string.hf_files_vault_info, entry.name))

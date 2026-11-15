@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.plugins
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
@@ -138,7 +140,7 @@ fun PluginSettingsScreen(pluginId: String) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = {},
+                title = { TelosCyberHeading {  } },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.surfaceContainer,
                     scrolledContainerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
@@ -182,7 +184,7 @@ fun PluginSettingsScreen(pluginId: String) {
                     if (confirmUninstall) {
                         AlertDialog(
                             onDismissRequest = { confirmUninstall = false },
-                            title = { Text(stringResource(I18nR.string.au4_confirms_plugin_title)) },
+                            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.au4_confirms_plugin_title))  } },
                             text = { Text(stringResource(I18nR.string.au4_confirms_plugin_message)) },
                             confirmButton = {
                                 TextButton(onClick = {

@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.files
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.pm.PackageManager
@@ -82,7 +84,7 @@ fun FilesAppManagerDialog(onDismiss: () -> Unit) {
         }
     }
     val shown = remember(apps, query) { apps.filter { de.mm20.launcher2.comms.search.TelosSearch.matches(query, it.label, it.packageName) } }
-    AlertDialog(onDismissRequest = onDismiss, title = { Text(stringResource(I18nR.string.hc_apps)) }, text = {
+    AlertDialog(onDismissRequest = onDismiss, title = { TelosCyberHeading {  Text(stringResource(I18nR.string.hc_apps))  } }, text = {
         LazyColumn(Modifier.fillMaxWidth().heightIn(max = 500.dp)) {
             item {
                 Text(stringResource(I18nR.string.nf_apk_export_scope))

@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.media.youtube
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
@@ -292,7 +294,7 @@ fun YouTubeScreen(music: Boolean, vm: YouTubeViewModel, initialLink: String? = n
     playlistTarget?.let { entry ->
         AlertDialog(
             onDismissRequest = { playlistTarget = null },
-            title = { Text(stringResource(I18nR.string.telos_youtube_add_playlist)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.telos_youtube_add_playlist))  } },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                     OutlinedTextField(
@@ -355,7 +357,7 @@ fun YouTubeScreen(music: Boolean, vm: YouTubeViewModel, initialLink: String? = n
 
         AlertDialog(
             onDismissRequest = { accountPanel = false },
-            title = { Text(stringResource(I18nR.string.hc_account)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.hc_account))  } },
             text = {
                 Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(12.dp)) {
                     Text(stringResource(I18nR.string.media_native_account_help), style = MaterialTheme.typography.bodyMedium)

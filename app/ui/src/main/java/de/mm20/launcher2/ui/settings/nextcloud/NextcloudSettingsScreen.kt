@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.nextcloud
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
@@ -114,7 +116,7 @@ fun NextcloudSettingsScreen() {
                     if (confirmSignOut) {
                         AlertDialog(
                             onDismissRequest = { confirmSignOut = false },
-                            title = { Text(stringResource(I18nR.string.au4_confirms_nc_title)) },
+                            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.au4_confirms_nc_title))  } },
                             text = { Text(stringResource(I18nR.string.au4_confirms_nc_message)) },
                             confirmButton = {
                                 TextButton(onClick = {

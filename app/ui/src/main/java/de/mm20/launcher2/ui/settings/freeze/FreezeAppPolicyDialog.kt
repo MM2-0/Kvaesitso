@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.freeze
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 
 import android.os.Process
@@ -47,7 +49,7 @@ internal fun FreezePackagePolicyDialog(pkg: String, label: String, user: android
     val state = appFreezeState(pkg, candidates, never)
     val method = appFreezeMethod(pkg, methods)
     val description = descriptions[pkg]
-    AlertDialog(onDismissRequest = close, title = { Text(label) },
+    AlertDialog(onDismissRequest = close, title = { TelosCyberHeading {  Text(label)  } },
         confirmButton = { TextButton(onClick = close) { Text(stringResource(android.R.string.ok)) } },
         text = {
             Column(Modifier.fillMaxWidth().verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(12.dp)) {
@@ -100,7 +102,7 @@ private fun CompanionPicker(choices: List<Pair<String, String>>, initial: Set<St
     var query by rememberSaveable { mutableStateOf("") }
     var chosen by rememberSaveable { mutableStateOf(initial.toList()) }
     val shown = remember(choices, query) { choices.filter { it.first.contains(query, true) || it.second.contains(query, true) } }
-    AlertDialog(onDismissRequest = close, title = { Text(stringResource(I18nR.string.freeze_hub_companions)) },
+    AlertDialog(onDismissRequest = close, title = { TelosCyberHeading {  Text(stringResource(I18nR.string.freeze_hub_companions))  } },
         confirmButton = { TextButton(onClick = { save(chosen.toSet()) }) { Text(stringResource(I18nR.string.hc_apply)) } },
         dismissButton = { TextButton(onClick = close) { Text(stringResource(android.R.string.cancel)) } },
         text = {

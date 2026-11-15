@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.owncloud
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
@@ -107,7 +109,7 @@ fun OwncloudSettingsScreen() {
                     if (confirmSignOut) {
                         AlertDialog(
                             onDismissRequest = { confirmSignOut = false },
-                            title = { Text(stringResource(I18nR.string.au4_confirms_oc_title)) },
+                            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.au4_confirms_oc_title))  } },
                             text = { Text(stringResource(I18nR.string.au4_confirms_oc_message)) },
                             confirmButton = {
                                 TextButton(onClick = {

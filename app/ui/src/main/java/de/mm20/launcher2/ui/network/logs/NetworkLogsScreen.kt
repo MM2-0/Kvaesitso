@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.network.logs
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 
 import android.widget.Toast
@@ -150,7 +152,7 @@ fun NetworkLogsScreen() {
     if (confirmClear) {
         AlertDialog(
             onDismissRequest = { confirmClear = false },
-            title = { Text(stringResource(I18nR.string.netfw_l_clear)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.netfw_l_clear))  } },
             text = { Text(stringResource(I18nR.string.au2_netsec_clear_logs_message)) },
             confirmButton = {
                 TextButton(onClick = {
@@ -170,7 +172,7 @@ fun NetworkLogsScreen() {
     confirmClearApp?.let { id ->
         AlertDialog(
             onDismissRequest = { confirmClearApp = null },
-            title = { Text(stringResource(I18nR.string.netfw_l_clear_app, directory.labelFor(id))) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.netfw_l_clear_app, directory.labelFor(id)))  } },
             text = { Text(stringResource(I18nR.string.au2_netsec_clear_app_logs_message, directory.labelFor(id))) },
             confirmButton = {
                 TextButton(onClick = {

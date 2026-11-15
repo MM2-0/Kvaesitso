@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.camera
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
@@ -132,7 +134,7 @@ internal fun DocumentScannerDialog(vm: DocumentScannerViewModel, onDismiss: () -
     if (languagePicker) {
         var search by remember { mutableStateOf("") }
         val options = remember(search) { CameraOcrModels.languages.filter { it.name.contains(search, true) || it.code.contains(search, true) }.sortedBy { it.name } }
-        AlertDialog(onDismissRequest = { languagePicker = false }, title = { Text(stringResource(I18nR.string.camera_scan_ocr)) },
+        AlertDialog(onDismissRequest = { languagePicker = false }, title = { TelosCyberHeading {  Text(stringResource(I18nR.string.camera_scan_ocr))  } },
             text = { Column {
                 Text(stringResource(I18nR.string.camera_scan_ocr_hint))
                 OutlinedTextField(search, { search = it }, label = { Text(stringResource(I18nR.string.au12_tvui_languages)) }, modifier = Modifier.fillMaxWidth())

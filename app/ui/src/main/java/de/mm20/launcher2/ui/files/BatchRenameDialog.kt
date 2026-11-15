@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.files
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.foundation.layout.*
@@ -27,7 +29,7 @@ internal fun BatchRenameDialog(vm: FilesViewModel, items: List<FsEntry>, onDismi
     }
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(stringResource(I18nR.string.telos_files_batch_rename)) },
+        title = { TelosCyberHeading {  Text(stringResource(I18nR.string.telos_files_batch_rename))  } },
         text = {
             Column(Modifier.heightIn(max = 420.dp).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(stringResource(I18nR.string.telos_files_rename_tokens), style = MaterialTheme.typography.bodySmall)

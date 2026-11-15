@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.media.stremio
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
@@ -123,7 +125,7 @@ fun StremioScreen() {
 
     if (showNetworkRules) androidx.compose.material3.AlertDialog(
         onDismissRequest = { showNetworkRules = false },
-        title = { Text(stringResource(I18nR.string.dl_settings_rules)) },
+        title = { TelosCyberHeading {  Text(stringResource(I18nR.string.dl_settings_rules))  } },
         text = { Column(Modifier.verticalScroll(rememberScrollState())) {
             de.mm20.launcher2.ui.downloads.TransferNetworkPreferences("torrent")
         } },

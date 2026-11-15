@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.media.video
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 
 import de.mm20.launcher2.ui.R
@@ -68,7 +70,7 @@ internal fun OpenSourceDialog(onDismiss: () -> Unit) {
     }
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(stringResource(I18nR.string.hc_play_from_the_web)) },
+        title = { TelosCyberHeading {  Text(stringResource(I18nR.string.hc_play_from_the_web))  } },
         text = {
             Column {
                 Text(
@@ -145,7 +147,7 @@ internal fun VideoServicesDialog(onDismiss: () -> Unit) {
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(stringResource(I18nR.string.hc_video_services)) },
+        title = { TelosCyberHeading {  Text(stringResource(I18nR.string.hc_video_services))  } },
         text = {
             Column(Modifier.verticalScroll(rememberScrollState())) {
                 Text(stringResource(I18nR.string.hc_posters_and_descriptions), style = MaterialTheme.typography.titleSmall)

@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.downloads
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.foundation.layout.Box
@@ -121,7 +123,7 @@ private fun TorrentNetworkCategory() {
         val valid = text.isEmpty() || (value != null && value in 1024..65535)
         AlertDialog(
             onDismissRequest = { editPort = false },
-            title = { Text(stringResource(I18nR.string.dl_t_set_port)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.dl_t_set_port))  } },
             text = {
                 OutlinedTextField(
                     text, { text = it.filter(Char::isDigit).take(5) }, Modifier.fillMaxWidth(), singleLine = true, isError = !valid,

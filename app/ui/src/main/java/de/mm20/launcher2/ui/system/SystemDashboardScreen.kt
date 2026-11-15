@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.system
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
@@ -170,7 +172,7 @@ fun SystemDashboardScreen(initialTab: String = "") {
     if (explainRestart) {
         androidx.compose.material3.AlertDialog(
             onDismissRequest = { explainRestart = false },
-            title = { Text(stringResource(I18nR.string.hc_graphics_api)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.hc_graphics_api))  } },
             text = { Text(stringResource(I18nR.string.app_polish_renderer_restart)) },
             confirmButton = {
                 androidx.compose.material3.TextButton(onClick = { explainRestart = false }) {

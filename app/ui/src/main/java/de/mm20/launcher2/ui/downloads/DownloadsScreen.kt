@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.downloads
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
@@ -613,7 +615,7 @@ private fun DeleteDialog(task: DownloadTask, onDismiss: () -> Unit, onConfirm: (
     }
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(stringResource(I18nR.string.dl_delete_title)) },
+        title = { TelosCyberHeading {  Text(stringResource(I18nR.string.dl_delete_title))  } },
         text = { Text(stringResource(if (done) I18nR.string.dl_delete_text_done else I18nR.string.dl_delete_text_partial, task.displayName)) },
         confirmButton = {
             Row {

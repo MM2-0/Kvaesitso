@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.calendar
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
@@ -300,7 +302,7 @@ private fun CalendarContent(vm: CalendarViewModel) {
         confirmDelete?.let { id ->
             AlertDialog(
                 onDismissRequest = { confirmDelete = null },
-                title = { Text(stringResource(I18nR.string.au_planner_delete_series_title)) },
+                title = { TelosCyberHeading {  Text(stringResource(I18nR.string.au_planner_delete_series_title))  } },
                 text = { Text(stringResource(I18nR.string.au_planner_delete_series_message)) },
                 confirmButton = { TextButton(onClick = { confirmDelete = null; vm.io { vm.repo.delete(id) }; draft = null }) { Text(stringResource(I18nR.string.cal_delete)) } },
                 dismissButton = { TextButton(onClick = { confirmDelete = null }) { Text(stringResource(I18nR.string.cal_cancel)) } },
@@ -321,7 +323,7 @@ private fun CalendarContent(vm: CalendarViewModel) {
                 if (showQuickAdd) {
                     AlertDialog(
                         onDismissRequest = { showQuickAdd = false },
-                        title = { Text(stringResource(I18nR.string.quick_event_title)) },
+                        title = { TelosCyberHeading {  Text(stringResource(I18nR.string.quick_event_title))  } },
                         text = {
                             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                                 Text(stringResource(I18nR.string.quick_event_desc), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
@@ -637,7 +639,7 @@ private fun CalendarsDialog(vm: CalendarViewModel, calendars: List<DeviceCalenda
     var name by remember { mutableStateOf("") }
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(stringResource(I18nR.string.cal_calendars)) },
+        title = { TelosCyberHeading {  Text(stringResource(I18nR.string.cal_calendars))  } },
         text = {
             Column(Modifier.verticalScroll(rememberScrollState())) {
                 calendars.groupBy { it.account to it.accountType }.forEach { (acc, list) ->
@@ -671,7 +673,7 @@ private fun MonthYearDialog(initial: YearMonth, onChoose: (YearMonth) -> Unit, o
     val locale = androidx.compose.ui.platform.LocalConfiguration.current.locales[0]
     val names = remember(locale) { java.text.DateFormatSymbols(locale).months.take(12).toTypedArray() }
     AlertDialog(onDismissRequest = onDismiss,
-        title = { Text(initial.atDay(1).format(DateTimeFormatter.ofPattern("LLLL yyyy", locale))) },
+        title = { TelosCyberHeading {  Text(initial.atDay(1).format(DateTimeFormatter.ofPattern("LLLL yyyy", locale)))  } },
         text = {
             Row(Modifier.fillMaxWidth()) {
                 androidx.compose.ui.viewinterop.AndroidView(modifier = Modifier.weight(1f).height(180.dp), factory = { context ->

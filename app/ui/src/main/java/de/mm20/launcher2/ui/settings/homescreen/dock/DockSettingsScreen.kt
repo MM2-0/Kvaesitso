@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.homescreen.dock
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
@@ -313,7 +315,7 @@ fun DockSettingsScreen() {
             containerColor = de.mm20.launcher2.ui.component.virtualAppPopup(),
             onDismissRequest = { showChoiceDialog = false },
             // === TELOS_PENDING_REVIEW_START: ui_i18n_and_features_batch ===
-            title = { Text(stringResource(I18nR.string.dock_pick_item_type)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.dock_pick_item_type))  } },
             text = { Text(stringResource(I18nR.string.dock_pick_item_message)) },
             confirmButton = {
                 TextButton(onClick = {

@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.network
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.foundation.layout.Arrangement
@@ -244,7 +246,7 @@ fun NetworkSpeedTestScreen() {
     if (showServerPicker) {
         AlertDialog(
             onDismissRequest = { showServerPicker = false },
-            title = { Text(stringResource(I18nR.string.nsp_select_server)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.nsp_select_server))  } },
             text = {
                 LazyColumn {
                     items(servers, key = { it.pingUrl.toString() }) { server ->

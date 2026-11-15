@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.comms
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
@@ -341,7 +343,7 @@ fun ContactsScreen(
         pendingCall?.let { number ->
             AlertDialog(
                 onDismissRequest = { pendingCall = null },
-                title = { Text(stringResource(I18nR.string.hc_place_call)) },
+                title = { TelosCyberHeading {  Text(stringResource(I18nR.string.hc_place_call))  } },
                 text = { Text(number) },
                 confirmButton = {
                     TextButton(onClick = {
@@ -356,7 +358,7 @@ fun ContactsScreen(
         }
         if (showAccounts) AlertDialog(
             onDismissRequest = { showAccounts = false },
-            title = { Text(stringResource(I18nR.string.contacts_accounts)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.contacts_accounts))  } },
             text = {
                 androidx.compose.foundation.rememberScrollState().let { scroll ->
                     Column(Modifier.heightIn(max = 420.dp).verticalScroll(scroll)) {

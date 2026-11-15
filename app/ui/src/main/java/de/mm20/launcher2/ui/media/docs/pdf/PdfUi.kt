@@ -14,6 +14,8 @@
  */
 
 package de.mm20.launcher2.ui.media.docs.pdf
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
@@ -390,7 +392,7 @@ fun ToolFrame(
         containerColor = MaterialTheme.colorScheme.surface,
         topBar = {
             TopAppBar(
-                title = { Text(title, maxLines = 1, overflow = TextOverflow.Ellipsis) },
+                title = { TelosCyberHeading {  Text(title, maxLines = 1, overflow = TextOverflow.Ellipsis)  } },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Ico(BaseR.drawable.arrow_back_24px, description = stringResource(I18nR.string.pdft_back))
@@ -508,7 +510,7 @@ fun PasswordDialog(name: String, wrong: Boolean, onSubmit: (String) -> Unit, onC
     var password by remember { mutableStateOf("") }
     AlertDialog(
         onDismissRequest = onCancel,
-        title = { Text(stringResource(I18nR.string.pdft_password_title)) },
+        title = { TelosCyberHeading {  Text(stringResource(I18nR.string.pdft_password_title))  } },
         text = {
             Column {
                 Text(stringResource(I18nR.string.pdft_password_text, name), style = MaterialTheme.typography.bodyMedium)

@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.downloads
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Intent
@@ -269,7 +271,7 @@ fun DownloadsSettingsScreen() {
         var text by remember { mutableStateOf(s.userAgent) }
         AlertDialog(
             onDismissRequest = { editUserAgent = false },
-            title = { Text(stringResource(I18nR.string.dl_user_agent)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.dl_user_agent))  } },
             text = {
                 OutlinedTextField(text, { text = it }, Modifier.fillMaxWidth(), placeholder = { Text(stringResource(I18nR.string.dl_user_agent_default)) })
             },
@@ -284,7 +286,7 @@ fun DownloadsSettingsScreen() {
         var wgId by remember { mutableStateOf(s.torrentWgConfigId) }
         AlertDialog(
             onDismissRequest = { editProxy = false },
-            title = { Text(stringResource(I18nR.string.dl_proxy)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.dl_proxy))  } },
             text = {
                 Column {
                     androidx.compose.foundation.layout.FlowRow {

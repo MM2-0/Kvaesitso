@@ -1,5 +1,7 @@
 package de.mm20.launcher2.ui.component.preferences
 
+import de.mm20.launcher2.ui.component.TelosCyberHeading
+
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -28,7 +30,9 @@ fun TextPreference(
             onDismissRequest = { showDialog = false },
             containerColor = de.mm20.launcher2.ui.component.virtualAppPopup(),
             title = {
-                Text(text = title, style = MaterialTheme.typography.titleLarge)
+                TelosCyberHeading {
+                    Text(text = title, style = MaterialTheme.typography.titleLarge)
+                }
             },
             text = {
                 OutlinedTextField(

@@ -1,6 +1,8 @@
 /* SPDX-License-Identifier: GPL-3.0-or-later */
 package de.mm20.launcher2.ui.system
 
+import de.mm20.launcher2.ui.component.TelosCyberHeading
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
@@ -93,7 +95,7 @@ fun StartupScriptsPreference() {
     editing?.let { id ->
         AlertDialog(
             onDismissRequest = { editing = null },
-            title = { Text(stringResource(I18nR.string.startup_scripts_title)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.startup_scripts_title))  } },
             text = {
                 Column(Modifier.heightIn(max = 480.dp).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(12.dp)) {
                     OutlinedTextField(name, { if (it.length <= 80) name = it }, label = { Text(stringResource(I18nR.string.hc_name_optional)) }, modifier = Modifier.fillMaxWidth())

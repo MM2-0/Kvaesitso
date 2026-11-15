@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.network.blocklists
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 
 import android.text.format.Formatter
@@ -200,7 +202,7 @@ fun NetworkBlocklistsScreen() {
                 if (confirmResetCounts) {
                     AlertDialog(
                         onDismissRequest = { confirmResetCounts = false },
-                        title = { Text(stringResource(I18nR.string.au4_confirms_counts_title)) },
+                        title = { TelosCyberHeading {  Text(stringResource(I18nR.string.au4_confirms_counts_title))  } },
                         text = { Text(stringResource(I18nR.string.au4_confirms_counts_message)) },
                         confirmButton = {
                             TextButton(onClick = {

@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.files
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 
 import android.app.Application
@@ -162,7 +164,7 @@ private fun FilesScreenBody() {
     var dropped by remember { mutableStateOf<Triple<FilesViewModel, FilesInternalDrag, String>?>(null) }
     val dragScope = remember(workspace) { FilesDragScope(java.util.UUID.randomUUID().toString()) { target, data -> target.path?.let { dropped = Triple(target, data, it) } } }
     dropped?.let { (target, data, destination) ->
-        AlertDialog(onDismissRequest = { dropped = null }, title = { Text(stringResource(I18nR.string.telos_files_drop_title, data.paths.size)) },
+        AlertDialog(onDismissRequest = { dropped = null }, title = { TelosCyberHeading {  Text(stringResource(I18nR.string.telos_files_drop_title, data.paths.size))  } },
             text = { Text(nameOf(destination)) },
             confirmButton = { TextButton(onClick = { target.transferDragged(data.paths, data.root, false, destination, data.shizuku); dropped = null }) { Text(stringResource(I18nR.string.hf_files_paste_here)) } },
             dismissButton = { Row {

@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.store
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.foundation.layout.*
@@ -63,7 +65,7 @@ internal fun StoreUpdateConsent(viewModel: StoreViewModel) {
     if (pending.isEmpty()) return
     AlertDialog(
         onDismissRequest = viewModel::dismissUpdates,
-        title = { Text(stringResource(I18nR.string.telos_store_auto_title)) },
+        title = { TelosCyberHeading {  Text(stringResource(I18nR.string.telos_store_auto_title))  } },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 Text(stringResource(I18nR.string.telos_store_auto_explanation))

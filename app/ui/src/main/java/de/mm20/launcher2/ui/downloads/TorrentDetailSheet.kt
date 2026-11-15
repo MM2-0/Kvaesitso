@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.downloads
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Intent
@@ -222,7 +224,7 @@ private fun AddTrackerDialog(onDismiss: () -> Unit, onAdd: (String) -> Unit) {
     var url by remember { mutableStateOf("") }
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(stringResource(I18nR.string.dl_t_add_tracker)) },
+        title = { TelosCyberHeading {  Text(stringResource(I18nR.string.dl_t_add_tracker))  } },
         text = {
             OutlinedTextField(
                 url, { url = it }, Modifier.fillMaxWidth(), singleLine = true,
@@ -287,7 +289,7 @@ private fun SeedLimitsDialog(ratio: Int, minutes: Int, stop: Boolean, onDismiss:
     var s by remember { mutableStateOf(stop) }
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(stringResource(I18nR.string.dl_t_seed_edit)) },
+        title = { TelosCyberHeading {  Text(stringResource(I18nR.string.dl_t_seed_edit))  } },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 SwitchRow(stringResource(I18nR.string.dl_t_stop_at_done), s) { s = it }

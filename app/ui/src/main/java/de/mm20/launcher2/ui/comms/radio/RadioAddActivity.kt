@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.comms.radio
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 
 import android.os.Bundle
@@ -62,7 +64,7 @@ class RadioAddActivity : BaseActivity() {
         val cleanUrl = RadioShare.cleanUrl(url)
         AlertDialog(
             onDismissRequest = { finish() },
-            title = { Text(stringResource(I18nR.string.au10_radio_add_title, RadioShare.cleanName(name))) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.au10_radio_add_title, RadioShare.cleanName(name)))  } },
             text = {
                 Column {
                     OutlinedTextField(

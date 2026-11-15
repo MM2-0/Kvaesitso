@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.files
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.foundation.clickable
@@ -32,7 +34,7 @@ internal fun StorageAnalysisDialog(path: String, onOpenFolder: (String) -> Unit,
         finally { busy = false }
     }
     AlertDialog(onDismissRequest = onDismiss,
-        title = { Text(stringResource(I18nR.string.telos_files_analyze)) },
+        title = { TelosCyberHeading {  Text(stringResource(I18nR.string.telos_files_analyze))  } },
         text = {
             Column(Modifier.fillMaxWidth().heightIn(max = 500.dp).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 if (busy) { LinearProgressIndicator(Modifier.fillMaxWidth()); Text(stringResource(I18nR.string.telos_files_analyzing)) }

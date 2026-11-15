@@ -263,3 +263,7 @@ Shared preference rows use fine Cyber-Tech borders over opaque tonal fills; cate
 Validation: freeze and preference JVM suites pass locally. Android compilation and the continuous-drag, enrollment and privileged-helper emulator regressions are defined in `validate-freeze.yml`; their execution results must be checked before release. Physical-device visual validation remains outstanding.
 
 Cyber-Tech follow-up: shared launcher cards carry a fine cyan outline only when their configured surface has nonzero opacity. Transparent clock/search/dock treatments remain free of a new plate. Inner cards, app search pills and common preference headers share the accent system; Radio settings, cloud connections, Akou and WireGuard reuse the app-bar title. This is common chrome coverage, with per-screen visual review still pending.
+
+### Common title chrome coverage
+
+App bars and alert-dialog titles now reuse `TelosCyberHeading` across launcher sheets, Telos apps and detailed settings. The heading adds a small themed accent rail and flexible content bounds, preserving each existing title, accessibility text and action callback. The initial pass updates 213 title slots in 122 source files, including Files, TV, camera controls, notifications, account dialogs and settings pickers. Content areas such as video, camera preview and message bodies keep their original rendering. This count records source coverage; it is not a completed visual acceptance report.

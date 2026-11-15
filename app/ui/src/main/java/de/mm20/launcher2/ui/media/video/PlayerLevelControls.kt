@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.media.video
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
@@ -135,7 +137,7 @@ internal fun PlayerLevelControls(
             if (showBoostWarning) {
                 androidx.compose.material3.AlertDialog(
                     onDismissRequest = { showBoostWarning = false },
-                    title = { Text(stringResource(I18nR.string.hc_high_volume_warning_title)) },
+                    title = { TelosCyberHeading {  Text(stringResource(I18nR.string.hc_high_volume_warning_title))  } },
                     text = { Text(stringResource(I18nR.string.hc_high_volume_warning_text)) },
                     confirmButton = {
                         androidx.compose.material3.TextButton(onClick = { showBoostWarning = false }) {

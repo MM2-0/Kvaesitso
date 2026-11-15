@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.launcher.widgets.notes
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
@@ -124,7 +126,7 @@ fun NotesWidget(
     if (showLinkChooser) {
         AlertDialog(
             onDismissRequest = { showLinkChooser = false },
-            title = { Text(stringResource(I18nR.string.note_widget_link_file)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.note_widget_link_file))  } },
             text = {
                 Column {
                     TextButton(onClick = {

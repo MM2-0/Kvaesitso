@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.network.wireguard
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Context
@@ -238,7 +240,7 @@ fun NetworkWireguardScreen() {
         var text by remember { mutableStateOf("") }
         AlertDialog(
             onDismissRequest = { pasting = false },
-            title = { Text(stringResource(I18nR.string.nwg_add_paste)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.nwg_add_paste))  } },
             text = {
                 OutlinedTextField(value = text, onValueChange = { text = it }, minLines = 6, modifier = Modifier.fillMaxWidth())
             },

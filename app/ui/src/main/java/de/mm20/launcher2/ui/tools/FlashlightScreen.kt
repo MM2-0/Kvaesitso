@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.tools
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
@@ -322,15 +324,17 @@ fun FlashlightScreen() {
         topBar = {
             TopAppBar(
                 title = {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Text(stringResource(I18nR.string.telos_flashlight_app_label), color = MaterialTheme.colorScheme.onSurface)
-                        Spacer(Modifier.width(8.dp))
-                        TelosDotMatrixText(
-                            if (isTorchOn || isScreenFlashOn) stringResource(I18nR.string.net_hub_state_on)
-                            else stringResource(I18nR.string.hc_off),
-                            fontSize = 9.sp,
-                            color = if (isTorchOn || isScreenFlashOn) neonGreen else neonCyan,
-                        )
+                    TelosCyberHeading {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Text(stringResource(I18nR.string.telos_flashlight_app_label), color = MaterialTheme.colorScheme.onSurface)
+                            Spacer(Modifier.width(8.dp))
+                            TelosDotMatrixText(
+                                if (isTorchOn || isScreenFlashOn) stringResource(I18nR.string.net_hub_state_on)
+                                else stringResource(I18nR.string.hc_off),
+                                fontSize = 9.sp,
+                                color = if (isTorchOn || isScreenFlashOn) neonGreen else neonCyan,
+                            )
+                        }
                     }
                 },
                 navigationIcon = {

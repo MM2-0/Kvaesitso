@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.trash
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 
 import android.app.Activity
@@ -55,7 +57,7 @@ fun UriDeleteDialog(uris: List<Uri>, onDeleted: () -> Unit, onDismiss: () -> Uni
     if (resolved && !confirming && busy && !nativePending) androidx.compose.material3.AlertDialog(
         onDismissRequest = {},
         containerColor = de.mm20.launcher2.ui.component.virtualAppPopup(),
-        title = { androidx.compose.material3.Text(androidx.compose.ui.res.stringResource(I18nR.string.telos_trash_working)) },
+        title = { TelosCyberHeading {  androidx.compose.material3.Text(androidx.compose.ui.res.stringResource(I18nR.string.telos_trash_working))  } },
         text = { androidx.compose.material3.LinearProgressIndicator() }, confirmButton = {})
     fun failed() { Toast.makeText(context, I18nR.string.telos_trash_move_failed, Toast.LENGTH_LONG).show(); onDismiss() }
     if (resolved && confirming) TrashDeleteDialog(uris.size, localTrash || systemTrash,

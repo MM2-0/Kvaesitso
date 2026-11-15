@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.comms
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
@@ -490,7 +492,7 @@ fun CommsDashboardScreen(
         AlertDialog(
             onDismissRequest = { showClearHistoryDialog = false },
             containerColor = virtualAppPopup(),
-            title = { Text("Clear Call History") },
+            title = { TelosCyberHeading {  Text("Clear Call History")  } },
             text = {
                 Column {
                     listOf("Last hour", "Last day", "Last week", "Last month", "All time").forEach { interval ->

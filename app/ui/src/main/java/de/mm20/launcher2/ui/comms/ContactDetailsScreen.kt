@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.comms
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
@@ -918,7 +920,7 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
     if (showReminder && contact != null) {
         AlertDialog(
             onDismissRequest = { showReminder = false },
-            title = { Text(stringResource(I18nR.string.hc_remind_me_to_call_back)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.hc_remind_me_to_call_back))  } },
             text = {
                 Column {
                     listOf(5, 15, 30, 60, 180).forEach { minutes ->
@@ -944,7 +946,7 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
     if (showQr && contact != null) {
         AlertDialog(
             onDismissRequest = { showQr = false },
-            title = { Text(contact.displayName) },
+            title = { TelosCyberHeading {  Text(contact.displayName)  } },
             text = {
                 ContactQrImage(
                     payload = contactVcard(contact.displayName, contact.phoneNumbers, contact.emails),
@@ -958,7 +960,7 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
     if (showSpeedDial && contact != null) {
         AlertDialog(
             onDismissRequest = { showSpeedDial = false },
-            title = { Text(stringResource(I18nR.string.hc_assign_to_speed_dial)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.hc_assign_to_speed_dial))  } },
             text = {
                 Column {
                     Text(stringResource(I18nR.string.hc_long_press_digit_to_call, contact.displayName))
@@ -990,7 +992,7 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
         val accounts = remember { android.accounts.AccountManager.get(context).accounts }
         AlertDialog(
             onDismissRequest = { showMoveAccount = false },
-            title = { Text(stringResource(I18nR.string.hc_account)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.hc_account))  } },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     TextButton(
@@ -1035,7 +1037,7 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
         var draft by remember(primary) { mutableStateOf(notes[primary].orEmpty()) }
         AlertDialog(
             onDismissRequest = { editingNote = false },
-            title = { Text(stringResource(I18nR.string.hc_notes)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.hc_notes))  } },
             text = {
                 OutlinedTextField(
                     value = draft,
@@ -1061,7 +1063,7 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
     if (confirmDelete && contact != null) {
         AlertDialog(
             onDismissRequest = { confirmDelete = false },
-            title = { Text(stringResource(I18nR.string.comms_clear_history)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.comms_clear_history))  } },
             confirmButton = {
                 TextButton(onClick = {
                     viewModel.deleteHistory(contact.phoneNumbers)

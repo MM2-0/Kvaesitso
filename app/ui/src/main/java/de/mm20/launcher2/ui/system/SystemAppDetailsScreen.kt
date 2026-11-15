@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.system
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.ComponentName
@@ -204,7 +206,7 @@ fun SystemAppDetailsScreen(packageName: String) {
     }
     if (showPolicy) FreezePackagePolicyDialog(packageName, details?.label ?: packageName, Process.myUserHandle(), policy) { showPolicy = false }
     pending?.let { change ->
-        AlertDialog(onDismissRequest = { pending = null }, title = { Text(stringResource(I18nR.string.store_component_blocker)) },
+        AlertDialog(onDismissRequest = { pending = null }, title = { TelosCyberHeading {  Text(stringResource(I18nR.string.store_component_blocker))  } },
             text = { Text(change.first.flattenToString()) },
             confirmButton = { TextButton(onClick = { pending = null; action { freeze.setComponentState(change.first, change.second) } }) { Text(stringResource(I18nR.string.hc_apply)) } },
             dismissButton = { TextButton(onClick = { pending = null }) { Text(stringResource(android.R.string.cancel)) } })

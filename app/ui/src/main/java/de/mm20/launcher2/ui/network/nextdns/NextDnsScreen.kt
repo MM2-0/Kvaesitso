@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.network.nextdns
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
@@ -419,12 +421,12 @@ fun NextDnsScreen() {
                 profileId = state.profileId.orEmpty(),
             )
         }
-    remove?.let { target -> AlertDialog(onDismissRequest = { remove = null }, title = { Text(stringResource(I18nR.string.hc_remove)) }, text = {
+    remove?.let { target -> AlertDialog(onDismissRequest = { remove = null }, title = { TelosCyberHeading {  Text(stringResource(I18nR.string.hc_remove))  } }, text = {
         Text("${state.profileId.orEmpty()} · ${target.second}\n${stringResource(if (target.first) I18nR.string.nd_allowlist else I18nR.string.nd_denylist)}\n${stringResource(I18nR.string.nd_intro)}")
     }, confirmButton = { TextButton(enabled = !state.loading, onClick = { vm.delete(target.first, target.second); remove = null }) { Text(stringResource(I18nR.string.hc_remove)) } }, dismissButton = { TextButton(onClick = { remove = null }) { Text(stringResource(I18nR.string.hc_cancel)) } }) }
     if (editRewrite) AlertDialog(
         onDismissRequest = { editRewrite = false },
-        title = { Text(stringResource(I18nR.string.nd_rule_title)) },
+        title = { TelosCyberHeading {  Text(stringResource(I18nR.string.nd_rule_title))  } },
         text = {
             Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 OutlinedTextField(
@@ -459,7 +461,7 @@ fun NextDnsScreen() {
     removeRewrite?.let { rewrite ->
         AlertDialog(
             onDismissRequest = { removeRewrite = null },
-            title = { Text(stringResource(I18nR.string.hc_remove)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.hc_remove))  } },
             text = { Text("${rewrite.name} → ${rewrite.content}") },
             confirmButton = {
                 TextButton(
@@ -477,7 +479,7 @@ fun NextDnsScreen() {
             },
         )
     }
-    if (forget) AlertDialog(onDismissRequest = { forget = false }, title = { Text(stringResource(I18nR.string.nd_disconnect)) }, text = { Text(state.profileId.orEmpty()) },
+    if (forget) AlertDialog(onDismissRequest = { forget = false }, title = { TelosCyberHeading {  Text(stringResource(I18nR.string.nd_disconnect))  } }, text = { Text(state.profileId.orEmpty()) },
         confirmButton = { TextButton(enabled = !state.loading, onClick = { vm.disconnect(); key = ""; settings = false; forget = false }) { Text(stringResource(I18nR.string.hc_remove)) } }, dismissButton = { TextButton(onClick = { forget = false }) { Text(stringResource(I18nR.string.hc_cancel)) } })
 }
 
@@ -518,7 +520,7 @@ private fun EditDomainDialog(
     var editAllow by remember(allow) { mutableStateOf(allow) }
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(stringResource(I18nR.string.nd_rule_title)) },
+        title = { TelosCyberHeading {  Text(stringResource(I18nR.string.nd_rule_title))  } },
         text = {
             Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 Text("${stringResource(I18nR.string.nd_profile)}: $profileId")

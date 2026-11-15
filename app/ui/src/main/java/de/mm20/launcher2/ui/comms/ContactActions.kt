@@ -1,5 +1,7 @@
 package de.mm20.launcher2.ui.comms
 
+import de.mm20.launcher2.ui.component.TelosCyberHeading
+
 import android.content.ContentUris
 import android.content.Context
 import android.content.Intent
@@ -117,7 +119,7 @@ internal fun DeleteContactDialog(
     }
     androidx.compose.material3.AlertDialog(
         onDismissRequest = { if (!deleting.value) onDismiss() },
-        title = { androidx.compose.material3.Text(androidx.compose.ui.res.stringResource(de.mm20.launcher2.i18n.R.string.hc_delete)) },
+        title = { TelosCyberHeading {  androidx.compose.material3.Text(androidx.compose.ui.res.stringResource(de.mm20.launcher2.i18n.R.string.hc_delete))  } },
         text = { androidx.compose.material3.Text(androidx.compose.ui.res.stringResource(de.mm20.launcher2.i18n.R.string.contacts_delete_confirm, contact.displayName)) },
         confirmButton = {
             androidx.compose.material3.TextButton(enabled = !deleting.value, onClick = {

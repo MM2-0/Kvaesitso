@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.network.firewall
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 
 import android.widget.Toast
@@ -297,7 +299,7 @@ internal fun AddRuleDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(title ?: stringResource(if (isIp) I18nR.string.netfw_c_add_ip else I18nR.string.netfw_c_add_domain)) },
+        title = { TelosCyberHeading {  Text(title ?: stringResource(if (isIp) I18nR.string.netfw_c_add_ip else I18nR.string.netfw_c_add_domain))  } },
         text = {
             Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 OutlinedTextField(

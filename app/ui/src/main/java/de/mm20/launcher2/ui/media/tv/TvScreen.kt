@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.media.tv
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
@@ -240,7 +242,7 @@ fun TvScreen() {
     deleteTarget?.let { ch ->
         AlertDialog(
             onDismissRequest = { deleteTarget = null },
-            title = { Text(ch.name, maxLines = 2, overflow = TextOverflow.Ellipsis) },
+            title = { TelosCyberHeading {  Text(ch.name, maxLines = 2, overflow = TextOverflow.Ellipsis)  } },
             confirmButton = {
                 TextButton(onClick = { vm.deleteCustom(ch.id); deleteTarget = null }) { Text(stringResource(I18nR.string.hc_delete)) }
             },
@@ -875,7 +877,9 @@ private fun TvChannelDialog(vm: TvViewModel, channel: TvChannel?, onDismiss: () 
     AlertDialog(
         onDismissRequest = onDismiss,
         title = {
-            Text(stringResource(if (channel == null) I18nR.string.au12_tvui_add_channel else I18nR.string.au12_tvui_edit_channel))
+            TelosCyberHeading {
+                Text(stringResource(if (channel == null) I18nR.string.au12_tvui_add_channel else I18nR.string.au12_tvui_edit_channel))
+            }
         },
         text = {
             Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(8.dp)) {

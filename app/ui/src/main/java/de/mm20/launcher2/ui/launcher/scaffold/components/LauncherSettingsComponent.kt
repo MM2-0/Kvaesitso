@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.launcher.scaffold.components
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
@@ -60,7 +62,9 @@ internal class LauncherSettingsComponent(
             topBar = {
                 CenterAlignedTopAppBar(
                     title = {
-                        Text(stringResource(I18nR.string.settings))
+                        TelosCyberHeading {
+                            Text(stringResource(I18nR.string.settings))
+                        }
                     },
                     colors = TopAppBarDefaults.topAppBarColors(
                         containerColor = MaterialTheme.colorScheme.surfaceContainer,

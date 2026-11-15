@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.comms
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 
 import de.mm20.launcher2.ui.R
@@ -87,7 +89,7 @@ fun RemotePhonebookSettings() {
         var passInput by remember { mutableStateOf(SecretBox.decrypt(passwordEnc)) }
         AlertDialog(
             onDismissRequest = { showDialog = false },
-            title = { Text(stringResource(I18nR.string.hc_fritz_box_connection)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.hc_fritz_box_connection))  } },
             text = {
                 Column {
                     OutlinedTextField(

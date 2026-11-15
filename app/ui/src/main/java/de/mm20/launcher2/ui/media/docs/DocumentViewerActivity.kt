@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.media.docs
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Context
@@ -376,7 +378,7 @@ private fun DocumentScreen(uri: Uri, name: String, onClose: () -> Unit) {
             TopAppBar(
                 modifier = Modifier.virtualAppGlass(blur, bar),
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = androidx.compose.ui.graphics.Color.Transparent),
-                title = { Text(curName, maxLines = 1) },
+                title = { TelosCyberHeading {  Text(curName, maxLines = 1)  } },
                 navigationIcon = { IconButton(onClick = onClose) { Icon(painterResource(de.mm20.launcher2.base.R.drawable.arrow_back_24px), contentDescription = stringResource(I18nR.string.hc_back)) } },
                 actions = {
                     val s = state
@@ -523,7 +525,7 @@ private fun DocumentScreen(uri: Uri, name: String, onClose: () -> Unit) {
     if (confirmDiscard && (office != null || editing)) {
         AlertDialog(
             onDismissRequest = { confirmDiscard = false },
-            title = { Text(stringResource(I18nR.string.od_discard_title)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.od_discard_title))  } },
             text = { Text(stringResource(I18nR.string.od_discard_text)) },
             confirmButton = { TextButton(onClick = { confirmDiscard = false; if (office != null) office.discard() else editing = false }) { Text(stringResource(I18nR.string.od_discard)) } },
             dismissButton = { TextButton(onClick = { confirmDiscard = false }) { Text(stringResource(I18nR.string.od_keep_editing)) } },
@@ -566,7 +568,7 @@ private fun DocumentScreen(uri: Uri, name: String, onClose: () -> Unit) {
         }
         AlertDialog(
             onDismissRequest = { showJump = false },
-            title = { Text(stringResource(I18nR.string.od_go_to_page)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.od_go_to_page))  } },
             text = {
                 OutlinedTextField(
                     input, { input = it.filter { c -> c.isDigit() }.take(6) }, singleLine = true,
@@ -604,7 +606,7 @@ private fun PdfSearchDialog(
     }
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(stringResource(I18nR.string.od_search_pdf)) },
+        title = { TelosCyberHeading {  Text(stringResource(I18nR.string.od_search_pdf))  } },
         text = {
             Column {
                 de.mm20.launcher2.ui.component.TelosSearchBar(

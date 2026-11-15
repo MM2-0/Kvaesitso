@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.comms
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
@@ -408,7 +410,7 @@ fun MessagesScreen(
         var number by remember { mutableStateOf("") }
         AlertDialog(
             onDismissRequest = { newMessage = false },
-            title = { Text(stringResource(I18nR.string.hc_new_message)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.hc_new_message))  } },
             text = { OutlinedTextField(number, { number = it }, label = { Text(stringResource(I18nR.string.hc_number)) }, singleLine = true) },
             confirmButton = {
                 TextButton(enabled = number.isNotBlank(), onClick = {
@@ -480,7 +482,7 @@ private fun ThreadView(
                 var draft by remember { mutableStateOf(title) }
                 AlertDialog(
                     onDismissRequest = { rename = false },
-                    title = { Text(stringResource(I18nR.string.comms_rename_conversation)) },
+                    title = { TelosCyberHeading {  Text(stringResource(I18nR.string.comms_rename_conversation))  } },
                     text = { OutlinedTextField(draft, { draft = it }, singleLine = true) },
                     confirmButton = {
                         TextButton(onClick = { settings.setConversationName(conversation.address, draft); rename = false }) {
@@ -681,7 +683,7 @@ private fun ThreadView(
                 var whenText by remember { mutableStateOf(fmt.format(java.util.Date(System.currentTimeMillis() + 3_600_000L))) }
                 AlertDialog(
                     onDismissRequest = { scheduleOpen = false },
-                    title = { Text(stringResource(I18nR.string.comms_schedule_send)) },
+                    title = { TelosCyberHeading {  Text(stringResource(I18nR.string.comms_schedule_send))  } },
                     text = {
                         OutlinedTextField(whenText, { whenText = it }, label = { Text("yyyy-MM-dd HH:mm") }, singleLine = true)
                     },

@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.media.docs
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
@@ -685,7 +687,7 @@ internal fun DocumentsScreen(embedded: Boolean = false) {
             onDismissRequest = { info = null },
             containerColor = virtualAppPopup(),
             confirmButton = { TextButton(onClick = { info = null }) { Text(stringResource(android.R.string.ok)) } },
-            title = { Text(t.name, maxLines = 2, overflow = TextOverflow.Ellipsis) },
+            title = { TelosCyberHeading {  Text(t.name, maxLines = 2, overflow = TextOverflow.Ellipsis)  } },
             text = {
                 val ext = DocumentTypes.ext(t.name)
                 val cat = DocCategory.of(ext)?.let { stringResource(it.labelRes) }

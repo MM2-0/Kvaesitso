@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.advanced
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 
 import android.widget.Toast
@@ -134,7 +136,9 @@ private fun RestartNoticeDialog(onDismiss: () -> Unit) {
     androidx.compose.material3.AlertDialog(
         onDismissRequest = onDismiss,
         title = {
-            androidx.compose.material3.Text(text = stringResource(I18nR.string.hc_graphics_api))
+            TelosCyberHeading {
+                androidx.compose.material3.Text(text = stringResource(I18nR.string.hc_graphics_api))
+            }
         },
         text = {
             androidx.compose.material3.Text(text = stringResource(I18nR.string.app_polish_renderer_restart))

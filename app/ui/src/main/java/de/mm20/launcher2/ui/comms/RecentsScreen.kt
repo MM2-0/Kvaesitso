@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.comms
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
@@ -288,7 +290,7 @@ fun RecentsScreen(searchQuery: String = "", showFilters: Boolean = false) {
             AlertDialog(
                 onDismissRequest = { pendingCall = null },
                 containerColor = virtualAppPopup(),
-                title = { Text(stringResource(I18nR.string.hc_place_call)) },
+                title = { TelosCyberHeading {  Text(stringResource(I18nR.string.hc_place_call))  } },
                 text = { Text(number) },
                 confirmButton = {
                     TextButton(onClick = {

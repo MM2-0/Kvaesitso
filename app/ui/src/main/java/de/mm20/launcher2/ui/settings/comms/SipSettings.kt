@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.comms
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 
 import de.mm20.launcher2.ui.R
@@ -107,7 +109,7 @@ fun SipSettings() {
         var verify by remember { mutableStateOf(if (current.sipUser.isBlank()) true else current.sipVerifyServer) }
         AlertDialog(
             onDismissRequest = { showDialog = false },
-            title = { Text(stringResource(I18nR.string.hc_sip_account)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.hc_sip_account))  } },
             text = {
                 Column {
                     OutlinedTextField(

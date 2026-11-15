@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.media.video
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.ClipData
@@ -91,7 +93,7 @@ internal fun TraktDialog(onDismiss: () -> Unit) {
 
     AlertDialog(
         onDismissRequest = { job?.cancel(); onDismiss() },
-        title = { Text(stringResource(I18nR.string.au7_trakt_title)) },
+        title = { TelosCyberHeading {  Text(stringResource(I18nR.string.au7_trakt_title))  } },
         text = {
             Column(verticalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(8.dp), modifier = Modifier.verticalScroll(rememberScrollState())) {
                 Text(stringResource(I18nR.string.au8_traktweb_howto), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)

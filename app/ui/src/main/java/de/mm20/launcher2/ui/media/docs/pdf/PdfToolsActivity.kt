@@ -14,6 +14,8 @@
  */
 
 package de.mm20.launcher2.ui.media.docs.pdf
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
@@ -383,7 +385,7 @@ fun PdfToolsApp(vm: PdfToolsViewModel, onFinish: () -> Unit) {
         val p = vm.progress
         AlertDialog(
             onDismissRequest = {},
-            title = { Text(stringResource(I18nR.string.pdft_working)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.pdft_working))  } },
             text = {
                 Column {
                     if (p != null && p.second > 0) {
@@ -416,7 +418,7 @@ fun PdfToolsApp(vm: PdfToolsViewModel, onFinish: () -> Unit) {
     vm.error?.let { msg ->
         AlertDialog(
             onDismissRequest = { vm.error = null },
-            title = { Text(stringResource(I18nR.string.pdft_error_title)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.pdft_error_title))  } },
             text = { Text(msg) },
             confirmButton = { TextButton(onClick = { vm.error = null }) { Text(stringResource(I18nR.string.pdft_ok)) } },
         )
@@ -434,7 +436,7 @@ private fun HomeScreen(vm: PdfToolsViewModel, snackbar: SnackbarHostState, onFin
         containerColor = MaterialTheme.colorScheme.surface,
         topBar = {
             TopAppBar(
-                title = { Text(stringResource(I18nR.string.pdft_title)) },
+                title = { TelosCyberHeading {  Text(stringResource(I18nR.string.pdft_title))  } },
                 navigationIcon = {
                     IconButton(onClick = onFinish) {
                         Ico(BaseR.drawable.arrow_back_24px, description = stringResource(I18nR.string.pdft_back))

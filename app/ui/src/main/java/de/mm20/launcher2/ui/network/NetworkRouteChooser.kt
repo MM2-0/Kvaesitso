@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.network
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
@@ -42,7 +44,7 @@ fun NetworkRouteChooser() {
         Icon(painterResource(BaseR.drawable.arrow_drop_down_24px), null)
     }
     if (expanded) AlertDialog(onDismissRequest = { expanded = false },
-        title = { Text(stringResource(I18nR.string.nwg_system_default)) },
+        title = { TelosCyberHeading {  Text(stringResource(I18nR.string.nwg_system_default))  } },
         text = { Column(Modifier.fillMaxWidth().heightIn(max = 420.dp).verticalScroll(rememberScrollState())) {
             Text(stringResource(I18nR.string.nwg_system_default_summary), style = MaterialTheme.typography.bodySmall)
             fun choose(tor: Boolean, id: Int?) {

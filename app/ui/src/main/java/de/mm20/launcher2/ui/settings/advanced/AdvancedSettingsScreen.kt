@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.advanced
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
@@ -241,7 +243,7 @@ private fun ShizukuDiagnosticDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(stringResource(I18nR.string.settings_shizuku_dialog_title)) },
+        title = { TelosCyberHeading {  Text(stringResource(I18nR.string.settings_shizuku_dialog_title))  } },
         text = {
             Column(
                 modifier = Modifier

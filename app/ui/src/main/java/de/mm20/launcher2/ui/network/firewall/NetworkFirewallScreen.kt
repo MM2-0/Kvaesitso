@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.network.firewall
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Intent
@@ -174,7 +176,7 @@ fun NetworkFirewallScreen(packageName: String? = null) {
     pendingBulk?.let { kind ->
         AlertDialog(
             onDismissRequest = { pendingBulk = null },
-            title = { Text(stringResource(I18nR.string.au4_confirms_bulk_title)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.au4_confirms_bulk_title))  } },
             text = { Text(stringResource(when (kind) {
                 0 -> I18nR.string.au4_confirms_bulk_block_all
                 1 -> I18nR.string.au4_confirms_bulk_allow_all
@@ -199,7 +201,7 @@ fun NetworkFirewallScreen(packageName: String? = null) {
     if (confirmReset) {
         AlertDialog(
             onDismissRequest = { confirmReset = false },
-            title = { Text(stringResource(I18nR.string.netfw_bulk_reset)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.netfw_bulk_reset))  } },
             text = { Text(stringResource(I18nR.string.au2_netsec_reset_message, shown.size)) },
             confirmButton = {
                 TextButton(onClick = {
@@ -481,7 +483,7 @@ private fun AppRuleRow(
                 if (editNote) {
                     var note by remember { mutableStateOf(rule.note) }
                     AlertDialog(onDismissRequest = { editNote = false },
-                        title = { Text(stringResource(I18nR.string.hc_notes)) },
+                        title = { TelosCyberHeading {  Text(stringResource(I18nR.string.hc_notes))  } },
                         text = { OutlinedTextField(note, { note = it }, modifier = Modifier.fillMaxWidth()) },
                         confirmButton = { TextButton(onClick = { onRule(rule.copy(note = note.trim())); editNote = false }) { Text(stringResource(I18nR.string.hc_save)) } },
                         dismissButton = { TextButton(onClick = { editNote = false }) { Text(stringResource(I18nR.string.hc_cancel)) } })

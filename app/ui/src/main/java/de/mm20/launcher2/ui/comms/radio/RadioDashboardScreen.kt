@@ -1,5 +1,7 @@
 // === TELOS_PENDING_REVIEW_START: radio_browser_ktor ===
 package de.mm20.launcher2.ui.comms.radio
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
@@ -137,7 +139,7 @@ private fun RadioDashboardContent(
         AlertDialog(
             onDismissRequest = { pendingRestore = null },
             containerColor = virtualAppPopup(),
-            title = { Text(stringResource(I18nR.string.hc_restore_backup)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.hc_restore_backup))  } },
             text = { Text(stringResource(I18nR.string.radio_restore_replace_summary)) },
             confirmButton = { TextButton(onClick = { viewModel.restoreBackup(context, uri, replace = true); pendingRestore = null }) { Text(stringResource(I18nR.string.hc_restore_backup)) } },
             dismissButton = { TextButton(onClick = { pendingRestore = null }) { Text(stringResource(I18nR.string.hc_cancel)) } })
@@ -376,7 +378,7 @@ private fun RadioDashboardContent(
         var address by remember { mutableStateOf("") }
         AlertDialog(
             onDismissRequest = { showAdd = false },
-            title = { Text(stringResource(I18nR.string.hc_add_station)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.hc_add_station))  } },
             text = {
                 Column {
                     OutlinedTextField(
@@ -408,7 +410,7 @@ private fun RadioDashboardContent(
     if (showSleep) {
         AlertDialog(
             onDismissRequest = { showSleep = false },
-            title = { Text(stringResource(I18nR.string.hc_sleep_timer)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.hc_sleep_timer))  } },
             text = {
                 Column {
                     listOf(15, 30, 45, 60, 90).forEach { minutes ->
@@ -439,7 +441,7 @@ private fun RadioDashboardContent(
             val saved = favorites.any { it.id == station.id }
             AlertDialog(
                 onDismissRequest = { editTarget = null },
-                title = { Text(station.name) },
+                title = { TelosCyberHeading {  Text(station.name)  } },
                 text = {
                     Column {
                         Text(station.streamUrl, style = MaterialTheme.typography.bodySmall, maxLines = 2, overflow = TextOverflow.Ellipsis)
@@ -467,7 +469,7 @@ private fun RadioDashboardContent(
         } else {
             AlertDialog(
                 onDismissRequest = { editTarget = null },
-                title = { Text(stringResource(if (values.editMetadata || values.editStreamUrls) I18nR.string.hc_edit else I18nR.string.hc_rename_station)) },
+                title = { TelosCyberHeading {  Text(stringResource(if (values.editMetadata || values.editStreamUrls) I18nR.string.hc_edit else I18nR.string.hc_rename_station))  } },
                 text = {
                     Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     OutlinedTextField(

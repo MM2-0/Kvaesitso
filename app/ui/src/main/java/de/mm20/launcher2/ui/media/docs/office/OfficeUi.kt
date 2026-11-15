@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.media.docs.office
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 
 import android.graphics.Bitmap
@@ -291,7 +293,7 @@ private fun SheetView(c: OfficeController) {
         var text by remember(r, col, index) { mutableStateOf(initial) }
         AlertDialog(
             onDismissRequest = { editCell = null },
-            title = { Text(stringResource(I18nR.string.od_edit_cell, colName(col) + (r + 1))) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.od_edit_cell, colName(col) + (r + 1)))  } },
             text = {
                 Column {
                     OutlinedTextField(text, { text = it }, label = { Text(stringResource(I18nR.string.od_cell_value)) }, modifier = Modifier.fillMaxWidth())

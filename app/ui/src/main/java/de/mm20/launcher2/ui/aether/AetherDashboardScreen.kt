@@ -1,5 +1,7 @@
 package de.mm20.launcher2.ui.aether
 
+import de.mm20.launcher2.ui.component.TelosCyberHeading
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -93,11 +95,13 @@ fun AetherDashboardScreen(route: AetherDashboardRoute = AetherDashboardRoute()) 
             onDismissRequest = { showComposeDialog = false },
             containerColor = de.mm20.launcher2.ui.component.virtualAppPopup(),
             title = {
-                Text(
-                    stringResource(I18nR.string.aether_compose_title),
-                    fontWeight = FontWeight.Bold,
-                    color = purple,
-                )
+                TelosCyberHeading {
+                    Text(
+                        stringResource(I18nR.string.aether_compose_title),
+                        fontWeight = FontWeight.Bold,
+                        color = purple,
+                    )
+                }
             },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -146,14 +150,16 @@ fun AetherDashboardScreen(route: AetherDashboardRoute = AetherDashboardRoute()) 
                 TopAppBar(
                     colors = TopAppBarDefaults.topAppBarColors(containerColor = Color(0xFF0D0E15).copy(alpha = 0.92f)),
                     title = {
-                        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                            Box(
-                                modifier = Modifier
-                                    .size(10.dp)
-                                    .clip(CircleShape)
-                                    .background(Color(0xFF10B981))
-                            )
-                            TelosDotMatrixText(stringResource(I18nR.string.aether_title).uppercase(), fontSize = 16.sp, color = purple)
+                        TelosCyberHeading {
+                            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                                Box(
+                                    modifier = Modifier
+                                        .size(10.dp)
+                                        .clip(CircleShape)
+                                        .background(Color(0xFF10B981))
+                                )
+                                TelosDotMatrixText(stringResource(I18nR.string.aether_title).uppercase(), fontSize = 16.sp, color = purple)
+                            }
                         }
                     },
                     actions = {

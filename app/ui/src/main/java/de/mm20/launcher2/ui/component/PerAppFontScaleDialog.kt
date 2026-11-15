@@ -41,8 +41,10 @@ fun PerAppFontScaleDialog(
             containerColor = virtualAppPopup(),
             onDismissRequest = onDismiss,
             title = {
-                PerAppFontControls {
-                    Text(stringResource(I18nR.string.per_app_font_dialog_title, appName))
+                TelosCyberHeading {
+                    PerAppFontControls {
+                        Text(stringResource(I18nR.string.per_app_font_dialog_title, appName))
+                    }
                 }
             },
             text = {

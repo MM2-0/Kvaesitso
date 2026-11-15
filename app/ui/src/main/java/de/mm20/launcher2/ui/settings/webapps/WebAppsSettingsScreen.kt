@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.webapps
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
@@ -390,7 +392,7 @@ fun WebAppsSettingsScreen() {
         AlertDialog(
             containerColor = de.mm20.launcher2.ui.component.virtualAppPopup(),
             onDismissRequest = { showCustomUserAgentDialog = false },
-            title = { Text(stringResource(I18nR.string.au4_webapps2_user_agent_custom_title)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.au4_webapps2_user_agent_custom_title))  } },
             text = {
                 OutlinedTextField(
                     value = userAgentText,
@@ -418,7 +420,7 @@ fun WebAppsSettingsScreen() {
         AlertDialog(
             containerColor = de.mm20.launcher2.ui.component.virtualAppPopup(),
             onDismissRequest = { showClearCookiesDialog = false },
-            title = { Text(stringResource(I18nR.string.au4_webapps2_clear_cookies)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.au4_webapps2_clear_cookies))  } },
             text = { Text(stringResource(I18nR.string.au4_webapps2_clear_cookies_confirm)) },
             confirmButton = {
                 TextButton(onClick = {
@@ -445,7 +447,7 @@ fun WebAppsSettingsScreen() {
         AlertDialog(
             containerColor = de.mm20.launcher2.ui.component.virtualAppPopup(),
             onDismissRequest = { showCreateGroupDialog = false },
-            title = { Text(stringResource(I18nR.string.web_app_group_create_title)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.web_app_group_create_title))  } },
             text = {
                 OutlinedTextField(
                     value = groupName,
@@ -479,7 +481,7 @@ fun WebAppsSettingsScreen() {
         AlertDialog(
             containerColor = de.mm20.launcher2.ui.component.virtualAppPopup(),
             onDismissRequest = { groupToRename = null },
-            title = { Text(stringResource(I18nR.string.web_app_group_rename_title)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.web_app_group_rename_title))  } },
             text = {
                 OutlinedTextField(
                     value = groupName,
@@ -512,7 +514,7 @@ fun WebAppsSettingsScreen() {
         AlertDialog(
             containerColor = de.mm20.launcher2.ui.component.virtualAppPopup(),
             onDismissRequest = { groupToDelete = null },
-            title = { Text(stringResource(I18nR.string.web_app_group_delete_title)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.web_app_group_delete_title))  } },
             text = { Text(stringResource(I18nR.string.web_app_group_delete_message, group.name)) },
             confirmButton = {
                 TextButton(onClick = {
@@ -532,7 +534,7 @@ fun WebAppsSettingsScreen() {
         AlertDialog(
             containerColor = de.mm20.launcher2.ui.component.virtualAppPopup(),
             onDismissRequest = { shortcutToDelete = null },
-            title = { Text(stringResource(I18nR.string.web_app_delete_title)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.web_app_delete_title))  } },
             text = { Text(stringResource(I18nR.string.web_app_delete_message, shortcut.labelOverride ?: shortcut.label)) },
             confirmButton = {
                 TextButton(onClick = {
@@ -556,7 +558,7 @@ fun WebAppsSettingsScreen() {
             containerColor = de.mm20.launcher2.ui.component.virtualAppPopup(),
             onDismissRequest = { presetToAdd = null },
             icon = { Icon(painterResource(category.iconRes), null) },
-            title = { Text(stringResource(I18nR.string.web_app_preset_dialog_title, categoryName)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.web_app_preset_dialog_title, categoryName))  } },
             text = {
                 Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
                     Text(

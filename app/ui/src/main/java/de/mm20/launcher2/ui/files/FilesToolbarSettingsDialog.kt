@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.files
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
@@ -16,7 +18,7 @@ import de.mm20.launcher2.ui.R
 fun FilesToolbarSettingsDialog(initial: FilesToolbarConfig, onDismiss: () -> Unit, onSave: (FilesToolbarConfig) -> Unit) {
     var config by remember(initial) { mutableStateOf(initial) }
     AlertDialog(onDismissRequest = onDismiss,
-        title = { Text(stringResource(I18nR.string.telos_files_toolbar_title)) },
+        title = { TelosCyberHeading {  Text(stringResource(I18nR.string.telos_files_toolbar_title))  } },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(stringResource(I18nR.string.telos_files_toolbar_info, FilesToolbarConfig.MAX_ACTIONS))

@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.network.dns
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 
 import android.widget.Toast
@@ -302,7 +304,7 @@ private fun DnsDetailsSheet(
     if (confirmRemove) {
         AlertDialog(
             onDismissRequest = { confirmRemove = false },
-            title = { Text(stringResource(I18nR.string.net_dns_remove_title)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.net_dns_remove_title))  } },
             text = { Text(stringResource(I18nR.string.net_dns_remove_message, server.name)) },
             confirmButton = { TextButton(onClick = { confirmRemove = false; onRemove() }) { Text(stringResource(I18nR.string.net_dns_action_remove)) } },
             dismissButton = { TextButton(onClick = { confirmRemove = false }) { Text(stringResource(I18nR.string.net_dns_cancel)) } },

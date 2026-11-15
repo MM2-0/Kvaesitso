@@ -1,5 +1,7 @@
 package de.mm20.launcher2.ui.media.akou
 
+import de.mm20.launcher2.ui.component.TelosCyberHeading
+
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -281,7 +283,7 @@ fun AkouScreen() {
         val url = "https://music.youtube.com/search?q=" + Uri.encode("${song.artist} ${song.title}")
         AlertDialog(
             onDismissRequest = { songTarget = null },
-            title = { Text(stringResource(I18nR.string.akou_youtube_music)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.akou_youtube_music))  } },
             text = {
                 Column {
                     TextButton(
@@ -321,7 +323,7 @@ fun AkouScreen() {
     if (showAbout)
         AlertDialog(
             onDismissRequest = { showAbout = false },
-            title = { Text(stringResource(I18nR.string.telos_akou_app_label)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.telos_akou_app_label))  } },
             containerColor = de.mm20.launcher2.ui.component.virtualAppPopup(),
             text = {
                 Column(Modifier.verticalScroll(rememberScrollState())) {

@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.homescreen.wallpaper
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
@@ -77,7 +79,7 @@ fun WallpaperLibraryScreen(appendVideo: Boolean = false) {
     pendingImageUri?.let { uri ->
         AlertDialog(
             onDismissRequest = { pendingImageUri = null },
-            title = { Text(stringResource(I18nR.string.wallpaper_target_dialog_title)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.wallpaper_target_dialog_title))  } },
             text = {
                 Column {
                     TextButton(modifier = Modifier.fillMaxWidth(), onClick = {
@@ -167,7 +169,7 @@ fun WallpaperSettingsScreen() {
     pendingImageUri?.let { uri ->
         AlertDialog(
             onDismissRequest = { pendingImageUri = null },
-            title = { Text(stringResource(I18nR.string.wallpaper_target_dialog_title)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.wallpaper_target_dialog_title))  } },
             text = {
                 Column {
                     TextButton(

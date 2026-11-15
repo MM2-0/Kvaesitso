@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.launcher.search.unitconverter
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
@@ -99,7 +101,7 @@ fun LazyListScope.UnitConverterResults(
                                             Text(text = stringResource(id = I18nR.string.close))
                                         }
                                     },
-                                    title = { Text(stringResource(id = I18nR.string.disclaimer)) },
+                                    title = { TelosCyberHeading {  Text(stringResource(id = I18nR.string.disclaimer))  } },
                                     text = {
                                         Text(
                                             stringResource(

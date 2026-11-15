@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.media.video
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
@@ -196,7 +198,7 @@ internal fun PlaybackMenu(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(stringResource(I18nR.string.hc_playback)) },
+        title = { TelosCyberHeading {  Text(stringResource(I18nR.string.hc_playback))  } },
         text = {
             Column(Modifier.verticalScroll(rememberScrollState())) {
                 Text(stringResource(I18nR.string.hc_speed), style = MaterialTheme.typography.titleSmall)

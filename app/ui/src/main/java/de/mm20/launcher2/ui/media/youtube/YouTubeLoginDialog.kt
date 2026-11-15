@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.media.youtube
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 
 import android.annotation.SuppressLint
@@ -35,7 +37,7 @@ fun YouTubeLoginDialog(
         onDismissRequest = onDismiss,
         properties = DialogProperties(usePlatformDefaultWidth = false),
         modifier = Modifier.fillMaxWidth(0.95f),
-        title = { Text(androidx.compose.ui.res.stringResource(I18nR.string.au7_trakt_sign_in) + " · YouTube") },
+        title = { TelosCyberHeading {  Text(androidx.compose.ui.res.stringResource(I18nR.string.au7_trakt_sign_in) + " · YouTube")  } },
         text = {
             AndroidView(
                 modifier = Modifier

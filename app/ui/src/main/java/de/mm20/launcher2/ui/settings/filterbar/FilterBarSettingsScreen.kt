@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.filterbar
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 import de.mm20.launcher2.icons.TelosIcons
@@ -87,12 +89,14 @@ fun FilterBarSettingsScreen() {
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
-                    Text(
-                        stringResource(id = I18nR.string.preference_customize_filter_bar),
-                        overflow = TextOverflow.Ellipsis,
-                        modifier = Modifier.padding(horizontal = 16.dp),
-                        maxLines = 1
-                    )
+                    TelosCyberHeading {
+                        Text(
+                            stringResource(id = I18nR.string.preference_customize_filter_bar),
+                            overflow = TextOverflow.Ellipsis,
+                            modifier = Modifier.padding(horizontal = 16.dp),
+                            maxLines = 1
+                        )
+                    }
                 },
                 navigationIcon = {
                     IconButton(onClick = {

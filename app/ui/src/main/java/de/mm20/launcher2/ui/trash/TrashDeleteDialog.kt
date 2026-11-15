@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.trash
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.foundation.clickable
@@ -23,7 +25,7 @@ fun TrashDeleteDialog(count: Int, canTrash: Boolean, onTrash: () -> Unit, onPerm
     AlertDialog(
         onDismissRequest = onDismiss,
         containerColor = virtualAppPopup(),
-        title = { Text(stringResource(I18nR.string.telos_trash_delete_title, count)) },
+        title = { TelosCyberHeading {  Text(stringResource(I18nR.string.telos_trash_delete_title, count))  } },
         text = { Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
             if (canTrash) {
                 Row(Modifier.fillMaxWidth().clickable { permanent = false }, verticalAlignment = Alignment.CenterVertically) {

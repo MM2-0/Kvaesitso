@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.network.dns
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.foundation.horizontalScroll
@@ -79,7 +81,7 @@ internal fun DnsServerForm(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(stringResource(if (isNew) I18nR.string.net_dns_form_add else I18nR.string.net_dns_form_edit)) },
+        title = { TelosCyberHeading {  Text(stringResource(if (isNew) I18nR.string.net_dns_form_add else I18nR.string.net_dns_form_edit))  } },
         text = {
             Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -179,7 +181,7 @@ internal fun NextDnsDialog(onAdd: (DnsServer) -> Unit, onDismiss: () -> Unit) {
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(stringResource(I18nR.string.net_dns_nextdns)) },
+        title = { TelosCyberHeading {  Text(stringResource(I18nR.string.net_dns_nextdns))  } },
         text = {
             Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(stringResource(I18nR.string.net_dns_nextdns_intro), style = MaterialTheme.typography.bodyMedium)

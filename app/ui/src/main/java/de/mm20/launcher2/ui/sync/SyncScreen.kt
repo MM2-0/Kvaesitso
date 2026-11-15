@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.sync
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
@@ -175,7 +177,7 @@ fun SyncScreen() {
         AlertDialog(
             onDismissRequest = { showAddFolderDialog = false },
             containerColor = de.mm20.launcher2.ui.component.virtualAppPopup(),
-            title = { Text(stringResource(I18nR.string.telos_sync_add_folder)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.telos_sync_add_folder))  } },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     OutlinedTextField(
@@ -215,7 +217,7 @@ fun SyncScreen() {
         AlertDialog(
             onDismissRequest = { showAddDeviceDialog = false },
             containerColor = de.mm20.launcher2.ui.component.virtualAppPopup(),
-            title = { Text(stringResource(I18nR.string.telos_sync_add_device)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.telos_sync_add_device))  } },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     OutlinedTextField(
@@ -588,7 +590,7 @@ private fun SettingsTab(
         AlertDialog(
             onDismissRequest = { showModeDialog = false },
             containerColor = de.mm20.launcher2.ui.component.virtualAppPopup(),
-            title = { Text(stringResource(I18nR.string.telos_sync_network_mode)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.telos_sync_network_mode))  } },
             text = {
                 Column {
                     val modes = listOf(

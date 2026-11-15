@@ -1,5 +1,7 @@
 package de.mm20.launcher2.ui.fit
 
+import de.mm20.launcher2.ui.component.TelosCyberHeading
+
 import android.content.Context
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -172,22 +174,24 @@ fun FitDashboardScreen() {
             topBar = {
                 TopAppBar(
                     title = {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Text("Telos Fit", fontWeight = FontWeight.Bold)
-                            Spacer(modifier = Modifier.width(8.dp))
-                            TelosDotMatrixText(
-                                when {
-                                    healthConnectSynced -> stringResource(I18nR.string.fit_status_synced)
-                                    isHealthConnectAvailable -> stringResource(I18nR.string.fit_status_partial)
-                                    else -> stringResource(I18nR.string.fit_status_local_demo)
-                                },
-                                fontSize = 9.sp,
-                                color = when {
-                                    healthConnectSynced -> neonCyan
-                                    isHealthConnectAvailable -> neonOrange
-                                    else -> neonGreen
-                                },
-                            )
+                        TelosCyberHeading {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Text("Telos Fit", fontWeight = FontWeight.Bold)
+                                Spacer(modifier = Modifier.width(8.dp))
+                                TelosDotMatrixText(
+                                    when {
+                                        healthConnectSynced -> stringResource(I18nR.string.fit_status_synced)
+                                        isHealthConnectAvailable -> stringResource(I18nR.string.fit_status_partial)
+                                        else -> stringResource(I18nR.string.fit_status_local_demo)
+                                    },
+                                    fontSize = 9.sp,
+                                    color = when {
+                                        healthConnectSynced -> neonCyan
+                                        isHealthConnectAvailable -> neonOrange
+                                        else -> neonGreen
+                                    },
+                                )
+                            }
                         }
                     },
                     actions = {
@@ -501,7 +505,7 @@ private fun FoodSearchDialog(
     AlertDialog(
         onDismissRequest = onDismiss,
         containerColor = de.mm20.launcher2.ui.component.virtualAppPopup(),
-        title = { Text(stringResource(I18nR.string.fit_food_search_title)) },
+        title = { TelosCyberHeading {  Text(stringResource(I18nR.string.fit_food_search_title))  } },
         text = {
             Column(modifier = Modifier.fillMaxWidth()) {
                 OutlinedTextField(

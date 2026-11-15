@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.ermis
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
@@ -264,7 +266,7 @@ private fun ErmisMailbox() {
         }
       }
     }
-    if (accounts) AlertDialog(onDismissRequest = { accounts = false }, title = { Text(stringResource(I18nR.string.ermis_accounts)) }, text = {
+    if (accounts) AlertDialog(onDismissRequest = { accounts = false }, title = { TelosCyberHeading {  Text(stringResource(I18nR.string.ermis_accounts))  } }, text = {
         Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(12.dp)) {
             state.accounts.forEach { account ->
                 Text(account.email, style = MaterialTheme.typography.titleMedium)
@@ -308,7 +310,7 @@ private fun ErmisMailbox() {
         onMoveAny = { moving = message; task { repository.loadFolders(message.accountId) } },
         onSaveNote = { task { repository.saveNote(message.accountId, message.uid, it, message.folder); selected = selected?.copy(note = it) } },
         onDownload = { attachment, uri -> task { repository.downloadAttachment(message.accountId, message.uid, attachment.index, uri, message.folder) } }) }
-    if (foldersOpen) AlertDialog(onDismissRequest = { foldersOpen = false }, title = { Text(stringResource(I18nR.string.ermis_folders)) }, text = {
+    if (foldersOpen) AlertDialog(onDismissRequest = { foldersOpen = false }, title = { TelosCyberHeading {  Text(stringResource(I18nR.string.ermis_folders))  } }, text = {
         LazyColumn(Modifier.heightIn(max = 480.dp)) {
             if (accountId == null) {
                 item { Text(stringResource(I18nR.string.ermis_select_account)) }
@@ -329,7 +331,7 @@ private fun ErmisMailbox() {
         }
     }, confirmButton = { TextButton(onClick = { foldersOpen = false }) { Text(stringResource(I18nR.string.hc_close)) } })
     if (folderEditorOpen) AlertDialog(onDismissRequest = { if (!state.loading) folderEditorOpen = false },
-        title = { Text(stringResource(if (editingFolder == null) I18nR.string.hc_new_folder else I18nR.string.hf_folder_rename)) },
+        title = { TelosCyberHeading {  Text(stringResource(if (editingFolder == null) I18nR.string.hc_new_folder else I18nR.string.hf_folder_rename))  } },
         text = { OutlinedTextField(folderName, { folderName = it }, enabled = !state.loading,
             label = { Text(stringResource(I18nR.string.hf_folder_name)) }, singleLine = true) },
         confirmButton = { TextButton(enabled = !state.loading && folderName.isNotBlank() && accountId != null, onClick = {
@@ -350,19 +352,19 @@ private fun ErmisMailbox() {
         dismissButton = { TextButton(enabled = !state.loading, onClick = { folderEditorOpen = false }) { Text(stringResource(I18nR.string.hc_cancel)) } })
     moving?.let { message ->
         val choices = remember(state.folders, message.accountId, message.folder) { state.folders.filter { it.accountId == message.accountId && it.id != message.folder } }
-        AlertDialog(onDismissRequest = { moving = null }, title = { Text(stringResource(I18nR.string.ermis_move)) }, text = {
+        AlertDialog(onDismissRequest = { moving = null }, title = { TelosCyberHeading {  Text(stringResource(I18nR.string.ermis_move))  } }, text = {
             LazyColumn(Modifier.heightIn(max = 480.dp)) { items(choices, key = { it.id }) { folder ->
                 TextButton(enabled = !state.loading, onClick = { moving = null; moveTarget = message to folder }) { Text(folder.name) }
             } }
         }, confirmButton = { TextButton(onClick = { moving = null }) { Text(stringResource(I18nR.string.hc_cancel)) } })
     }
-    moveTarget?.let { (message, target) -> AlertDialog(onDismissRequest = { moveTarget = null }, title = { Text(stringResource(I18nR.string.ermis_move)) }, text = {
+    moveTarget?.let { (message, target) -> AlertDialog(onDismissRequest = { moveTarget = null }, title = { TelosCyberHeading {  Text(stringResource(I18nR.string.ermis_move))  } }, text = {
         Text(message.subject + "\n" + target.name)
     }, confirmButton = { TextButton(enabled = !state.loading, onClick = { task {
         repository.moveMessage(message.accountId, message.uid, message.folder, target.id)
         moveTarget = null; selected = null; serverResults = null; repository.sync(accountId, mailboxId)
     } }) { Text(stringResource(I18nR.string.hc_save)) } }, dismissButton = { TextButton(onClick = { moveTarget = null }) { Text(stringResource(I18nR.string.hc_cancel)) } }) }
-    error?.let { detail -> AlertDialog(onDismissRequest = { error = null }, title = { Text(stringResource(I18nR.string.ermis_operation_failed)) }, text = { Text(detail, Modifier.verticalScroll(rememberScrollState())) }, confirmButton = { TextButton(onClick = { error = null }) { Text(stringResource(I18nR.string.hc_close)) } }) }
+    error?.let { detail -> AlertDialog(onDismissRequest = { error = null }, title = { TelosCyberHeading {  Text(stringResource(I18nR.string.ermis_operation_failed))  } }, text = { Text(detail, Modifier.verticalScroll(rememberScrollState())) }, confirmButton = { TextButton(onClick = { error = null }) { Text(stringResource(I18nR.string.hc_close)) } }) }
 }
 
 @Composable
@@ -384,7 +386,7 @@ private fun AddAccountDialog(busy: Boolean, onDismiss: () -> Unit, onAuthError: 
     var email by rememberSaveable { mutableStateOf("") }; var password by remember { mutableStateOf("") }
     var username by rememberSaveable { mutableStateOf("") }; var imap by rememberSaveable { mutableStateOf("") }; var smtp by rememberSaveable { mutableStateOf("") }
     var imapPort by rememberSaveable { mutableStateOf("993") }; var smtpPort by rememberSaveable { mutableStateOf("465") }; var startTls by rememberSaveable { mutableStateOf(false) }
-    AlertDialog(onDismissRequest = onDismiss, title = { Text(stringResource(I18nR.string.ermis_add_account)) }, text = {
+    AlertDialog(onDismissRequest = onDismiss, title = { TelosCyberHeading {  Text(stringResource(I18nR.string.ermis_add_account))  } }, text = {
         Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(10.dp)) {
             Text(stringResource(I18nR.string.ermis_tls_help))
             OutlinedButton(enabled = !busy && !authenticating && activity != null, onClick = {
@@ -495,7 +497,7 @@ private fun ComposeDialog(accounts: List<ErmisAccount>, initialAccount: String?,
             }
         }
     }
-    if (confirmClose) AlertDialog(onDismissRequest = { confirmClose = false }, title = { Text(stringResource(I18nR.string.ermis_drafts)) },
+    if (confirmClose) AlertDialog(onDismissRequest = { confirmClose = false }, title = { TelosCyberHeading {  Text(stringResource(I18nR.string.ermis_drafts))  } },
         text = { Text(subject.ifBlank { stringResource(I18nR.string.ermis_no_subject) }) },
         confirmButton = { TextButton(enabled = !busy && account != null, onClick = { onSave(draftId, currentDraft()) }) { Text(stringResource(I18nR.string.hc_save)) } },
         dismissButton = { FlowRow { TextButton(onClick = { confirmClose = false }) { Text(stringResource(I18nR.string.hc_cancel)) }; TextButton(enabled = !busy, onClick = { onDiscard(draftId) }) { Text(stringResource(I18nR.string.ermis_remove)) } } })
@@ -583,7 +585,7 @@ private fun MessageDialog(message: ErmisMessage, conversation: List<ErmisMessage
             TextButton(onClick = { onSaveNote(note) }) { Text(stringResource(I18nR.string.ermis_note_save)) }
         }
     }
-    if (conversationOpen) AlertDialog(onDismissRequest = { conversationOpen = false }, title = { Text(stringResource(I18nR.string.ermis_conversation_count, conversation.size)) }, text = {
+    if (conversationOpen) AlertDialog(onDismissRequest = { conversationOpen = false }, title = { TelosCyberHeading {  Text(stringResource(I18nR.string.ermis_conversation_count, conversation.size))  } }, text = {
         LazyColumn(Modifier.heightIn(max = 480.dp)) { items(conversation, key = { "${it.accountId}:${it.folder}:${it.uid}" }) { other ->
             TextButton(onClick = { conversationOpen = false; onSelect(other) }) { Text(other.from + "\n" + other.subject) }
         } }

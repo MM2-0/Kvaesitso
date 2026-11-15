@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.files
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -66,7 +68,7 @@ internal fun FilesSettingsTransferButton(workspace: FilesWorkspaceViewModel) {
     }
     }
     pending?.let { settings ->
-        AlertDialog(onDismissRequest = { pending = null }, title = { Text(stringResource(I18nR.string.telos_files_settings_import)) },
+        AlertDialog(onDismissRequest = { pending = null }, title = { TelosCyberHeading {  Text(stringResource(I18nR.string.telos_files_settings_import))  } },
             text = { Text(stringResource(I18nR.string.telos_files_settings_confirm) + if (!importAllowed) "\n\n" + stringResource(I18nR.string.telos_files_settings_busy) else "") },
             confirmButton = { TextButton(enabled = importAllowed, onClick = {
                 result = runCatching { workspace.importSettings(settings) }.fold({ I18nR.string.telos_files_settings_imported }, { I18nR.string.telos_files_settings_failed })

@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.network.wireguard
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 
 import android.widget.Toast
@@ -96,7 +98,7 @@ internal fun WireguardEditor(initial: WireguardConfig, isNew: Boolean, wg: Wireg
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(stringResource(if (isNew) I18nR.string.nwg_new_title else I18nR.string.nwg_edit_title)) },
+        title = { TelosCyberHeading {  Text(stringResource(if (isNew) I18nR.string.nwg_new_title else I18nR.string.nwg_edit_title))  } },
         text = {
             Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Field(stringResource(I18nR.string.nwg_name), name) { name = it }
@@ -170,7 +172,7 @@ internal fun WireguardEditor(initial: WireguardConfig, isNew: Boolean, wg: Wireg
     if (confirmDelete) {
         AlertDialog(
             onDismissRequest = { confirmDelete = false },
-            title = { Text(stringResource(I18nR.string.nwg_delete)) },
+            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.nwg_delete))  } },
             text = { Text(initial.name) },
             confirmButton = {
                 TextButton(onClick = {

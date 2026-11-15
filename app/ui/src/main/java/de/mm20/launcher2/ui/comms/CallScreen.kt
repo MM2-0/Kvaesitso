@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.comms
+
+import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
@@ -249,7 +251,7 @@ fun CallScreen(
             AlertDialog(
                 onDismissRequest = { showNotes = false },
                 containerColor = virtualAppPopup(),
-                title = { Text(stringResource(I18nR.string.hc_call_note)) },
+                title = { TelosCyberHeading {  Text(stringResource(I18nR.string.hc_call_note))  } },
                 text = {
                     OutlinedTextField(
                         value = draft,
@@ -448,7 +450,7 @@ internal fun IncomingCallActions(rejectSms: String, answerStyle: String,
         }) { Text(stringResource(I18nR.string.hc_reject_sms)) }
     }
     if (remindOpen) AlertDialog(onDismissRequest = { remindOpen = false },
-        title = { Text(stringResource(I18nR.string.hc_remind_me_to_call_back)) },
+        title = { TelosCyberHeading {  Text(stringResource(I18nR.string.hc_remind_me_to_call_back))  } },
         text = { Column(Modifier.verticalScroll(rememberScrollState())) {
             listOf(5, 15, 30, 60).forEach { minutes ->
                 TextButton(onClick = {
