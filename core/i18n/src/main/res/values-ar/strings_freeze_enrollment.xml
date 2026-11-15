@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="freeze_auto_import_existing">هل تريد إضافة %1$d تطبيقات مجمّدة بالفعل إلى قائمة التجميد التلقائي؟</string>
+</resources>

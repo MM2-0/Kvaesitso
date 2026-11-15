@@ -1,5 +1,7 @@
 package de.mm20.launcher2.freeze
 
+import kotlinx.coroutines.ensureActive
+
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
@@ -239,6 +241,17 @@ class FreezeManager internal constructor(
         }
     }
 
+    /** Only a current, privileged task snapshot may replace the stale UsageStats foreground hint. */
+    internal suspend fun freezeAfterTaskRemoval(packageName: String, stillRemoved: suspend () -> Boolean) {
+        if (_activeBackend.value == FreezeBackendType.Island) return // Recents monitoring requires Shizuku/root.
+        val changed = operationMutex.withLock {
+            if (!stillRemoved()) return@withLock emptySet<String>()
+            applySuspended(listOf(packageName), true, Process.myUid() / 100000,
+                respectMaintenance = true, taskRemovalProof = stillRemoved)
+        }
+        freezeHeldCompanions(changed, Process.myUid() / 100000)
+    }
+
     private suspend fun freezeHeldCompanions(masters: Set<String>, userId: Int) {
         if (masters.isEmpty() || userId != Process.myUid() / 100000) return
         companionMutex.withLock {
@@ -306,6 +319,7 @@ class FreezeManager internal constructor(
         packageNames: List<String>, suspended: Boolean, userId: Int,
         methodOverride: Map<String, FreezeMethod>? = null,
         respectMaintenance: Boolean = false,
+        taskRemovalProof: (suspend () -> Boolean)? = null,
     ): Set<String> {
         if (packageNames.isEmpty()) return emptySet()
 
@@ -314,7 +328,7 @@ class FreezeManager internal constructor(
         // well-formed package name is dropped here rather than trusted.
         val held = if (respectMaintenance) settings.maintenance.first().values.map { it.packageName }.toSet() else emptySet()
         val companionHolds = if (suspended) settings.companionHolds.first().keys else emptySet()
-        val foreground = if (suspended && userId == Process.myUid() / 100000 && settings.excludeForeground.first()) usageStats.currentForegroundPackage() else null
+        val foreground = if (taskRemovalProof == null && suspended && userId == Process.myUid() / 100000 && settings.excludeForeground.first()) usageStats.currentForegroundPackage() else null
         val safePackages = packageNames.filter { VALID_PACKAGE_NAME.matches(it) }
             .filterNot { (suspended && PROTECTED_PACKAGES.contains(it)) || it in held || it in companionHolds || it == foreground }
         if (safePackages.isEmpty()) {
@@ -341,6 +355,9 @@ class FreezeManager internal constructor(
             return emptySet()
         }
         val methods = methodOverride ?: settings.freezeMethods.first()
+        kotlinx.coroutines.currentCoroutineContext()[kotlinx.coroutines.Job]?.ensureActive()
+        if (taskRemovalProof != null && (!taskRemovalProof() ||
+            targetPackages.any { it in settings.neverFreezeApps.first() })) return emptySet()
         val succeeded = if (backend == FreezeBackendType.Island) {
             if (islandProvider.setPackagesSuspended(targetPackages, suspended, userId)) targetPackages.toSet()
             else emptySet()

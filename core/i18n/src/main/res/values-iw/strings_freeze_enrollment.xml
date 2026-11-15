@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="freeze_auto_import_existing">להוסיף %1$d אפליקציות שכבר הוקפאו לרשימת ההקפאה האוטומטית?</string>
+</resources>

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="freeze_auto_import_existing">Да се добавят ли %1$d вече замразени приложения към списъка за автоматично замразяване?</string>
+</resources>

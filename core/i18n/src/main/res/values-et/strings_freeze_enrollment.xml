@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="freeze_auto_import_existing">Kas lisada %1$d juba külmutatud rakendust automaatse külmutamise loendisse?</string>
+</resources>

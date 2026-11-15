@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="freeze_auto_import_existing">Hozzáadja a(z) %1$d már befagyasztott alkalmazást az automatikus befagyasztási listához?</string>
+</resources>

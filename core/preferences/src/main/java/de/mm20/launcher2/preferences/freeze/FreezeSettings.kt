@@ -79,6 +79,13 @@ class FreezeSettings internal constructor(
         dataStore.update { it.copy(freeze = it.freeze.copy(freezeOnBatterySaver = enabled)) }
     }
 
+    /** Enrol only after confirmation, in the same transaction that enables the master switch. */
+    suspend fun enableAutoFreezeWithImports(packages: Set<String>) {
+        dataStore.updateAndWait { current ->
+            current.copy(freeze = current.freeze.withAutoFreezeImports(packages))
+        }
+    }
+
     val candidates
         get() = dataStore.data.map { it.freeze.freezeCandidates }
 
@@ -396,3 +403,8 @@ class FreezeSettings internal constructor(
 }
 
 private fun Set<String>.takeLastBounded(): Set<String> = if (size <= 1000) this else toList().takeLast(1000).toSet()
+
+internal fun de.mm20.launcher2.preferences.FreezeGroup.withAutoFreezeImports(packages: Set<String>) = copy(
+    freezeAutoFreezeEnabled = true,
+    freezeCandidates = freezeCandidates + (packages - freezeNeverFreezeApps),
+)

@@ -218,3 +218,11 @@ Android’s callback reports task removal, including an app calling finishAndRem
 
 
 Recents removal observation now supports Root when Root is the selected freeze backend, as well as Shizuku. Enable the existing Recents removal option and authorize the selected backend. Telos only freezes an eligible package after a real removal callback and a fresh complete snapshot confirm its last task is gone. Other remaining windows, maintenance/update holds and safety exclusions still prevent freezing.
+
+## Import existing frozen apps
+
+When enabling auto-freeze, Telos scans already frozen apps and offers to add eligible current-user apps that are not already candidates or excluded. **Yes** imports and enables together. **No** enables using the existing list. Dismissing the question leaves auto-freeze disabled. Never-freeze still wins if its settings change while the question is open.
+
+Companion rules are read when an app is opened, even if no settings screen is observing them. For Gemini → Google, select Google in Gemini’s companion picker and enable the rule; the suggested dependency alone does not enable it.
+
+The Recents listener uses a privileged helper for both Shizuku and root. Clear-all removal checks proceed independently, with bounded concurrency. A fresh task snapshot must confirm the last task is gone. Stale foreground usage history alone does not veto this confirmed removal; active playback, notifications, network policy, Never-freeze and maintenance holds remain in force. Missing task visibility fails closed.

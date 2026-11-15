@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="freeze_auto_import_existing">Ajouter %1$d applications déjà gelées à la liste de gel automatique ?</string>
+</resources>

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="freeze_auto_import_existing">Να προστεθούν %1$d ήδη παγωμένες εφαρμογές στη λίστα αυτόματου παγώματος;</string>
+</resources>

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="freeze_auto_import_existing">%1$d al bevroren apps toevoegen aan de lijst voor automatisch bevriezen?</string>
+</resources>

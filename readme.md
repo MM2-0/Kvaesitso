@@ -122,6 +122,11 @@ Telos includes the Shizuku **server** (starter + `libshizuku.so`, from [Shizuku-
 
 **System Apps / Freeze Desk:** adaptive icon grid with frozen/running badges, list mode, search and user/system filters. Tap a tile for freeze/unfreeze, AppOps, firewall and app details. Package firewall links resolve offline and disabled apps too. Failed AppOps reads retry through the privileged shell; writes are never automatically retried.
 
+Smart Freeze can offer to import existing frozen apps when auto-freeze is enabled. Import and enable happen together; skipping keeps the existing list. Companion launch rules are read from saved preferences at launch time, including Gemini → Google when that rule is explicitly enabled. Recents removal checks run per package with fresh privileged snapshots and respect multiple tasks, profiles and safety holds.
+
+Built-in app root Back backgrounds its document task, retaining its navigation and saveable state in Recents. Font-size controls keep stable gesture bounds while their preview and app text update during the drag; preferences are saved on release. Shared preference rows and category labels use Cyber-Tech chrome with opaque fills, and tech pills retain readable text and minimum touch height.
+
+
 **Startup scripts and reconnection:** Telos System → Shizuku lets you create up to ten private shell scripts, choose Telos/Shizuku/root identity, run manually and separately opt into running once per launcher process. Editing disables automatic execution. Commands run sequentially off the UI thread with time/output limits and no privilege fallback. Shizuku Autostart reconnects with the paired local ADB identity; non-root Android still requires wireless debugging and Wi-Fi approval after reboot. An optional switch turns wireless debugging off only after a verified successful server start. See the [complete startup guide](docs/docs/developer-guide/startup-scripts.md), including older-Android descendant cleanup limits. The reconnection approach is informed by [Shizuku discussion #462](https://github.com/RikkaApps/Shizuku/discussions/462); no discussion script is copied and no Termux/nmap dependency is added.
 
 

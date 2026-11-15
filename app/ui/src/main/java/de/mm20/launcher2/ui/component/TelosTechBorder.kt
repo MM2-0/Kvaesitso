@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.text.font.FontFamily
@@ -49,12 +50,14 @@ fun TelosTechPill(
     icon: Painter? = null,
     accentColor: Color = Color(0xFF00E676)
 ) {
-    val bg = if (isSelected) accentColor.copy(alpha = 0.22f) else TelosSurfaceTokens.techPill()
+    val container = TelosSurfaceTokens.techPill()
+    val bg = if (isSelected) accentColor.copy(alpha = 0.16f).compositeOver(container) else container
     val borderCol = if (isSelected) accentColor else MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.35f)
-    val textCol = if (isSelected) accentColor else MaterialTheme.colorScheme.onSurfaceVariant
+    val textCol = if (isSelected) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.onSurfaceVariant
 
     Surface(
         modifier = modifier
+            .heightIn(min = 48.dp)
             .clip(CircleShape)
             .border(1.2.dp, borderCol, CircleShape)
             .clickable { onClick() },

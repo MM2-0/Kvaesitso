@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="freeze_auto_import_existing">Добавить %1$d уже замороженных приложений в список автоматической заморозки?</string>
+</resources>

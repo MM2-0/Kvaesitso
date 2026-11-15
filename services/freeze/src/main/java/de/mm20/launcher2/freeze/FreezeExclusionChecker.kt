@@ -33,7 +33,7 @@ internal class FreezeExclusionChecker(
     @Volatile
     var pinnedScreenOffPackage: String? = null
 
-    suspend fun isExcluded(packageName: String): Boolean {
+    suspend fun isExcluded(packageName: String, confirmedTaskRemoval: Boolean = false): Boolean {
         if (settings.neverFreezeApps.first().contains(packageName)) return true // per-app override
         if (isAndroidAutoActive()) return true
 
@@ -54,11 +54,11 @@ internal class FreezeExclusionChecker(
             notifications.any { it.mediaSessionToken != null }
         ) return true
 
-        if (settings.excludeForeground.first() && isForeground(packageName)) return true // optional rule 1
+        if (!confirmedTaskRemoval && settings.excludeForeground.first() && isForeground(packageName)) return true // optional rule 1
         // Screen-off clears usage "foreground"; only skip the pinned foreground app if screen is still interactive/on.
         val powerManager = context.getSystemService<android.os.PowerManager>()
         val screenOn = powerManager?.isInteractive != false
-        if (screenOn && pinnedScreenOffPackage == packageName) return true
+        if (!confirmedTaskRemoval && screenOn && pinnedScreenOffPackage == packageName) return true
 
         if (settings.excludeMusic.first() && isMusicActive()) return true
         if (settings.excludeNetwork.first() && isNetworkActive(packageName)) return true

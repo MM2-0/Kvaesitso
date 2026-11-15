@@ -251,3 +251,13 @@ MediaToolbarHeader hosts one horizontally scrollable, width-bounded action strip
 MediaSearchAction and MediaSearchBar separate the icon from the controlled search field; nested panels can use self-contained search. Expansion is saveable, Back closes the field, existing query owners and YouTube submission callbacks remain authoritative. TelosSearchBar supplies the single padding layer, focus, IME search, query clear and optional submit/close actions. StremioBrowseControls keeps tabs and search in one bounded row; poster widths stay independent of font size while captions grow. TV filter chrome uses an opaque container instead of overlapping translucent text.
 
 Compact search expansion is immediate, avoiding extra motion and intermediate layouts at large fonts. YouTube submit remains disabled while a request is running, preserving its prior enabled-state behavior.
+
+## Root Back and stable font controls
+
+Standalone Telos app hosts intercept root system Back and shared navigation-header Back to background their document task without popping its root entry. Child Back continues to pop normally. Explicit task finish and swipe-away keep their existing removal behavior. This preserves the current composed screen and saveable state while the task lives; it does not guarantee restoration of arbitrary in-memory state after process death.
+
+Per-app font controls use the inherited base density for their window and gesture geometry. The sample reserves its measured maximum-size height and applies the live app multiplier inside that stable area. App content follows live changes; persistence remains on gesture completion.
+
+Shared preference rows use fine Cyber-Tech borders over opaque tonal fills; category labels use the shared technical heading with the theme foreground accent. Tech-pill selected fills are composited over the opaque container, with paired readable text and a minimum 48 dp touch height. These shared changes are not a claim that every individual screen has completed visual review.
+
+Validation: freeze and preference JVM suites pass locally. Android compilation and the continuous-drag, enrollment and privileged-helper emulator regressions are defined in `validate-freeze.yml`; their execution results must be checked before release. Physical-device visual validation remains outstanding.

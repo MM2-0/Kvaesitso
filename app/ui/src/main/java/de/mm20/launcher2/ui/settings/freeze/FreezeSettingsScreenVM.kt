@@ -242,7 +242,49 @@ class FreezeSettingsScreenVM : ViewModel(), KoinComponent {
         }
     }
 
-    fun setAutoFreezeEnabled(enabled: Boolean) = freezeSettings.setAutoFreezeEnabled(enabled)
+    private val _autoFreezeImports = MutableStateFlow<Set<String>?>(null)
+    val autoFreezeImports = _autoFreezeImports.asStateFlow()
+    private val _autoFreezeEnrollmentBusy = MutableStateFlow(false)
+    val autoFreezeEnrollmentBusy = _autoFreezeEnrollmentBusy.asStateFlow()
+    private var enrollmentJob: kotlinx.coroutines.Job? = null
+
+    fun setAutoFreezeEnabled(enabled: Boolean) {
+        if (!enabled) {
+            enrollmentJob?.cancel()
+            _autoFreezeImports.value = null
+            freezeSettings.setAutoFreezeEnabled(false)
+            return
+        }
+        if (_autoFreezeEnrollmentBusy.value || _autoFreezeImports.value != null) return
+        enrollmentJob = viewModelScope.launch {
+            _autoFreezeEnrollmentBusy.value = true
+            try {
+                val inventory = freezeManager.scanFrozenApps()
+                val imports = de.mm20.launcher2.freeze.autoFreezeImportCandidates(
+                    inventory, android.os.Process.myUid() / 100000,
+                    freezeSettings.candidates.first(), freezeSettings.neverFreezeApps.first(), context.packageName,
+                )
+                if (imports.isEmpty()) freezeSettings.enableAutoFreezeWithImports(emptySet())
+                else _autoFreezeImports.value = imports
+            } catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled }
+            catch (_: Exception) { showPolicyError() }
+            finally { _autoFreezeEnrollmentBusy.value = false }
+        }
+    }
+
+    fun cancelAutoFreezeEnrollment() { _autoFreezeImports.value = null }
+
+    fun confirmAutoFreezeEnrollment(importFrozen: Boolean) {
+        val pending = _autoFreezeImports.value ?: return
+        _autoFreezeImports.value = null
+        _autoFreezeEnrollmentBusy.value = true
+        enrollmentJob = viewModelScope.launch {
+            try { freezeSettings.enableAutoFreezeWithImports(if (importFrozen) pending else emptySet()) }
+            catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled }
+            catch (_: Exception) { showPolicyError() }
+            finally { _autoFreezeEnrollmentBusy.value = false }
+        }
+    }
     fun setFreezeOnScreenOff(enabled: Boolean) = freezeSettings.setFreezeOnScreenOff(enabled)
     fun setFreezeOnIdle(enabled: Boolean) = freezeSettings.setFreezeOnIdle(enabled)
     fun setIdleTimeoutMinutes(minutes: Int) = freezeSettings.setIdleTimeoutMinutes(minutes)

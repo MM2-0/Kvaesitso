@@ -36,30 +36,35 @@ fun PerAppFontScaleSetting(
     val fontSettings = remember(context) { AppFontSettings(context) }
     var fontScale by remember(appKey) { mutableFloatStateOf(fontSettings.getFontScale(appKey)) }
 
-    Surface(
-        shape = RoundedCornerShape(16.dp),
-        color = MaterialTheme.colorScheme.surfaceContainerLow,
-        modifier = modifier.fillMaxWidth().padding(vertical = 6.dp),
-    ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-            ) {
-                Column(Modifier.weight(1f)) {
-                    Text(
-                        text = stringResource(I18nR.string.per_app_font_size),
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Bold,
-                    )
-                    Text(
-                        text = stringResource(I18nR.string.per_app_font_scale_percent, (fontScale * 100).roundToInt()),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                }
-                if (fontScale != 1.0f) {
+    PerAppFontControls {
+        Surface(
+            shape = RoundedCornerShape(16.dp),
+            color = MaterialTheme.colorScheme.surfaceContainerLow,
+            modifier = modifier.fillMaxWidth().padding(vertical = 6.dp),
+        ) {
+            Column(modifier = Modifier.padding(16.dp)) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                ) {
+                    Column(Modifier.weight(1f)) {
+                        Text(
+                            text = stringResource(I18nR.string.per_app_font_size),
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold,
+                        )
+                        Text(
+                            text =
+                                stringResource(
+                                    I18nR.string.per_app_font_scale_percent,
+                                    (fontScale * 100).roundToInt(),
+                                ),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
                     TextButton(
+                        enabled = fontScale != 1.0f,
                         onClick = {
                             fontScale = 1.0f
                             fontSettings.persist(appKey, 1.0f)
@@ -68,24 +73,20 @@ fun PerAppFontScaleSetting(
                         Text(stringResource(I18nR.string.per_app_font_reset))
                     }
                 }
+                Spacer(Modifier.height(8.dp))
+                Slider(
+                    value = fontScale,
+                    onValueChange = {
+                        val next = (it * 100).roundToInt() / 100f
+                        fontScale = next
+                        fontSettings.setLive(appKey, next)
+                    },
+                    onValueChangeFinished = { fontSettings.persist(appKey, fontScale) },
+                    valueRange = AppFontSettings.MIN..AppFontSettings.MAX,
+                    modifier = Modifier.fillMaxWidth(),
+                )
+                PerAppFontPreview(fontScale, Modifier.padding(top = 8.dp))
             }
-            Spacer(Modifier.height(8.dp))
-            Slider(
-                value = fontScale,
-                onValueChange = {
-                    val next = (it * 100).roundToInt() / 100f
-                    fontScale = next
-                    fontSettings.setLive(appKey, next)
-                },
-                onValueChangeFinished = { fontSettings.persist(appKey, fontScale) },
-                valueRange = AppFontSettings.MIN..AppFontSettings.MAX,
-                modifier = Modifier.fillMaxWidth(),
-            )
-            Text(
-                text = stringResource(I18nR.string.per_app_font_preview),
-                style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.padding(top = 8.dp),
-            )
         }
     }
 }

@@ -1,35 +1,102 @@
-name: Validate freeze management
+name: Validate freeze, task continuity and live fonts
 on:
+  push:
+    branches: ['codex/autofreeze-recents-live-fonts']
   pull_request:
     paths:
       - 'services/freeze/**'
       - 'core/preferences/**'
-      - 'core/i18n/src/main/res/**/strings_freeze_hub.xml'
-      - 'app/ui/src/main/java/de/mm20/launcher2/ui/settings/freeze/**'
+      - 'app/ui/src/main/java/de/mm20/launcher2/ui/component/**'
+      - 'app/ui/src/main/java/de/mm20/launcher2/ui/settings/**'
       - 'app/ui/src/main/java/de/mm20/launcher2/ui/launcher/search/common/SearchableItemVM.kt'
       - '.github/workflows/validate-freeze.yml'
   workflow_dispatch:
+# Keep only the newest checks for this PR; published releases use their own workflow.
+concurrency:
+  group: freeze-fonts-continuity-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 permissions:
   contents: read
 jobs:
-  freeze:
+  freeze-fonts-continuity:
     runs-on: ubuntu-latest
-    timeout-minutes: 35
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-java@v6
         with:
           java-version: '21'
           distribution: temurin
+      - uses: actions/setup-go@v7
+        with:
+          go-version-file: libs/appops-next/daemon/go.mod
+          cache-dependency-path: libs/appops-next/daemon/go.mod
       - uses: gradle/actions/setup-gradle@v6
         with:
           cache-provider: basic
-      - name: Freeze policy regressions and UI compilation
-        run: bash ./gradlew :services:freeze:testDebugUnitTest :core:preferences:testDebugUnitTest :app:ui:compileDefaultDebugKotlin --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process -Dorg.gradle.jvmargs=-Xmx3072m --stacktrace
+      - name: Compile UI and test freeze policies and task continuity
+        run: |
+          BUILD_STATUS=0
+          bash ./gradlew :services:freeze:testDebugUnitTest :core:preferences:testDebugUnitTest :app:ui:testDefaultDebugUnitTest :app:ui:assembleDefaultDebugAndroidTest --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process -Dorg.gradle.jvmargs=-Xmx3072m --stacktrace > "$RUNNER_TEMP/system-compile.log" 2>&1 || BUILD_STATUS=$?
+          cat "$RUNNER_TEMP/system-compile.log"
+          if [ "$BUILD_STATUS" -ne 0 ]; then
+            python3 - <<'PY'
+          from pathlib import Path
+          import os
+          lines = Path(os.environ['RUNNER_TEMP'], 'system-compile.log').read_text().splitlines()
+          errors = [line for line in lines if line.startswith('e:') or 'error:' in line]
+          message = chr(10).join(errors or lines[-35:])[:6000]
+          message = message.replace('%', '%25').replace(chr(13), '%0D').replace(chr(10), '%0A')
+          print('::error title=Freeze and fonts compilation::' + message)
+          PY
+          fi
+          exit "$BUILD_STATUS"
+      - name: Enable emulator acceleration
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          arch: x86_64
+          target: google_apis
+          profile: pixel_7
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim
+          script: bash ./gradlew :app:ui:connectedDefaultDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=de.mm20.launcher2.ui.freeze.AutoFreezeImportDialogTest,de.mm20.launcher2.ui.freeze.RecentsBridgeTest,de.mm20.launcher2.ui.component.PerAppFontDragTest --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process -Dorg.gradle.jvmargs=-Xmx2048m
+      - name: Verify every freeze and live-font device regression ran
+        if: always()
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import xml.etree.ElementTree as ET
+          expected = {'importAndSkipRequireTheCorrespondingExplicitChoice', 'privilegedHelperRegistersAndReturnsACompleteSnapshot', 'inlineSliderKeepsDraggingAndPersistsOnlyOnRelease', 'dialogSliderKeepsDraggingWithoutMovingItsBounds'}
+          executed = set()
+          failed = False
+          for report in Path('app/ui/build/outputs/androidTest-results').rglob('TEST-*.xml'):
+              for case in ET.parse(report).getroot().iter('testcase'):
+                  if case.get('classname') not in {'de.mm20.launcher2.ui.freeze.AutoFreezeImportDialogTest', 'de.mm20.launcher2.ui.freeze.RecentsBridgeTest', 'de.mm20.launcher2.ui.component.PerAppFontDragTest'}:
+                      continue
+                  executed.add(case.get('name'))
+                  for tag in ('failure', 'error', 'skipped'):
+                      problem = case.find(tag)
+                      if problem is not None:
+                          failed = True
+                          message = (problem.text or problem.get('message') or tag)[:6000]
+                          message = message.replace('%', '%25').replace(chr(13), '%0D').replace(chr(10), '%0A')
+                          print('::error title=Freeze and fonts regression::' + message)
+          assert expected <= executed, f'Missing tests: {expected - executed}'
+          assert not failed, 'Freeze or live-font regression failed or was skipped'
+          print('::notice title=Freeze and fonts regression::All four enrollment, privileged Recents and continuous font-drag tests passed.')
+          PY
       - uses: actions/upload-artifact@v7
         if: always()
         with:
-          name: freeze-test-results
+          name: freeze-fonts-continuity-test-results
           path: |
             services/freeze/build/reports/tests/
             core/preferences/build/reports/tests/
+            app/ui/build/reports/tests/
+            app/ui/build/outputs/androidTest-results/
+            app/ui/build/reports/androidTests/

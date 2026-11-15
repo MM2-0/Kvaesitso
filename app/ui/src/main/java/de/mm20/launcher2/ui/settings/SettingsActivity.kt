@@ -724,6 +724,19 @@ open class SettingsActivity : BaseActivity() {
         setContent {
             val containerSize = androidx.compose.ui.platform.LocalWindowInfo.current.containerSize
             val backStack = rememberNavBackStack(MainRoute)
+            val navigation = androidx.compose.runtime.remember(backStack) {
+                if (this@SettingsActivity is TelosAppActivity) {
+                    BackgroundOnRootBackStack(backStack) {
+                        this@SettingsActivity.moveTaskToBack(true)
+                    }
+                } else backStack
+            }
+
+            androidx.activity.compose.BackHandler(
+                enabled = this@SettingsActivity is TelosAppActivity && backStack.size == 1,
+            ) {
+                this@SettingsActivity.moveTaskToBack(true)
+            }
 
             LaunchedEffect(initialRoute) {
                 if (initialRoute != null) {
@@ -741,7 +754,7 @@ open class SettingsActivity : BaseActivity() {
                     containerSize.width.toFloat(), containerSize.height.toFloat(),
                 ),
                 LocalWallpaperColors provides wallpaperColors,
-                LocalBackStack provides backStack,
+                LocalBackStack provides navigation,
             ) {
                 ProvideCompositionLocals {
                     LauncherTheme {
@@ -784,7 +797,7 @@ open class SettingsActivity : BaseActivity() {
                             val pageEffects = de.mm20.launcher2.ui.component.rememberVirtualAppPageEffects()
                             if (backStack.isNotEmpty()) NavDisplay(
                                 backStack = backStack,
-                                onBack = { backStack.removeLastOrNull() },
+                                onBack = { navigation.removeLastOrNull() },
                                 entryProvider = entryProvider,
                                 transitionSpec = {
                                     de.mm20.launcher2.ui.component.telosPageTransition(pageEffects)

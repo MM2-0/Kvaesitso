@@ -1,11 +1,9 @@
 package de.mm20.launcher2.ui.component.preferences
 
-import androidx.compose.foundation.selection.toggleable
-import androidx.compose.ui.semantics.Role
 import androidx.annotation.DrawableRes
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.LocalTextStyle
@@ -17,11 +15,12 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
+import de.mm20.launcher2.ui.component.TelosCyber
+import de.mm20.launcher2.ui.component.telosTechCard
 
 @Composable
 fun Preference(
@@ -36,9 +35,12 @@ fun Preference(
     toggleRole: Role = Role.Switch,
 ) {
     BoxWithConstraints(Modifier.fillMaxWidth()) {
-        val stacked = controls != null && de.mm20.launcher2.ui.layout.AdaptiveLayoutPolicy.stackPreference(
-            maxWidth.value, androidx.compose.ui.platform.LocalDensity.current.fontScale,
-        )
+        val stacked =
+            controls != null &&
+                de.mm20.launcher2.ui.layout.AdaptiveLayoutPolicy.stackPreference(
+                    maxWidth.value,
+                    androidx.compose.ui.platform.LocalDensity.current.fontScale,
+                )
         val text: @Composable () -> Unit = {
             Column(Modifier.padding(vertical = de.mm20.launcher2.ui.layout.UiSpacing.Content)) {
                 ProvideTextStyle(MaterialTheme.typography.titleMedium) { title() }
@@ -46,25 +48,47 @@ fun Preference(
                     CompositionLocalProvider(
                         LocalTextStyle provides MaterialTheme.typography.bodyMedium,
                         LocalContentColor provides MaterialTheme.colorScheme.onSurfaceVariant,
-                    ) { summary() }
+                    ) {
+                        summary()
+                    }
                 }
             }
         }
-        CompositionLocalProvider(LocalContentColor provides androidx.compose.material3.contentColorFor(containerColor)) {
+        CompositionLocalProvider(
+            LocalContentColor provides androidx.compose.material3.contentColorFor(containerColor)
+        ) {
             Column(
                 Modifier.fillMaxWidth()
-                    .clip(MaterialTheme.shapes.extraSmall)
-                    .background(containerColor)
-                    .then(if (toggleValue != null) Modifier.toggleable(
-                        value = toggleValue, enabled = enabled, role = toggleRole,
-                        onValueChange = { onClick() },
-                    ) else Modifier.clickable(enabled = enabled, onClick = onClick))
+                    .telosTechCard(
+                        borderColor = TelosCyber.NeonCyan,
+                        shape = MaterialTheme.shapes.small,
+                        borderWidth = 0.8.dp,
+                        alpha = if (enabled) 0.32f else 0.12f,
+                        backgroundColor = containerColor,
+                    )
+                    .then(
+                        if (toggleValue != null)
+                            Modifier.toggleable(
+                                value = toggleValue,
+                                enabled = enabled,
+                                role = toggleRole,
+                                onValueChange = { onClick() },
+                            )
+                        else Modifier.clickable(enabled = enabled, onClick = onClick)
+                    )
                     .heightIn(min = de.mm20.launcher2.ui.layout.UiSpacing.TouchTarget)
-                    .padding(horizontal = de.mm20.launcher2.ui.layout.UiSpacing.Content),
+                    .padding(horizontal = de.mm20.launcher2.ui.layout.UiSpacing.Content)
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     if (icon != null) {
-                        Box(Modifier.width(48.dp).padding(end = 8.dp).alpha(if (enabled) 1f else 0.38f), contentAlignment = Alignment.CenterStart) { icon() }
+                        Box(
+                            Modifier.width(48.dp)
+                                .padding(end = 8.dp)
+                                .alpha(if (enabled) 1f else 0.38f),
+                            contentAlignment = Alignment.CenterStart,
+                        ) {
+                            icon()
+                        }
                     }
                     Box(Modifier.weight(1f).alpha(if (enabled) 1f else 0.38f)) { text() }
                     if (controls != null && !stacked) {
@@ -96,11 +120,12 @@ fun Preference(
         title = {
             Text(text = title)
         },
-        summary = if (summary != null) {
-            {
-                Text(text = summary)
-            }
-        } else null,
+        summary =
+            if (summary != null) {
+                {
+                    Text(text = summary)
+                }
+            } else null,
         icon = if (iconPadding) icon else null,
         onClick = onClick,
         controls = controls,
@@ -109,7 +134,6 @@ fun Preference(
         toggleValue = toggleValue,
         toggleRole = toggleRole,
     )
-
 }
 
 @Composable
@@ -135,6 +159,14 @@ fun Preference(
                     tint = MaterialTheme.colorScheme.primary,
                 )
             }
-        }, iconPadding, summary, onClick, controls, enabled, containerColor, toggleValue, toggleRole,
+        },
+        iconPadding,
+        summary,
+        onClick,
+        controls,
+        enabled,
+        containerColor,
+        toggleValue,
+        toggleRole,
     )
 }

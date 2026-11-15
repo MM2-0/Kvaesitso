@@ -2,11 +2,6 @@ package de.mm20.launcher2.freeze
 
 import android.content.Context
 import android.content.pm.PackageManager
-import android.app.ActivityManager
-import android.os.Binder
-import android.os.IBinder
-import android.os.IInterface
-import android.os.Parcel
 import android.os.Process
 import android.os.Build
 import de.mm20.launcher2.preferences.freeze.FreezeSettings
@@ -16,11 +11,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
-import org.lsposed.hiddenapibypass.HiddenApiBypass
 import rikka.shizuku.Shizuku
-import rikka.shizuku.ShizukuBinderWrapper
-import rikka.shizuku.SystemServiceHelper
-import java.lang.reflect.Proxy
 
 private data class RecentsSignal(val id: Int, val task: RecentsTask? = null)
 
@@ -46,10 +37,17 @@ class RecentsFreezeMonitor internal constructor(
         if (events.trySend(signal).isFailure) overflowed.set(true)
     }
     private val known = linkedMapOf<Int, RecentsTask>()
+    private val removalScheduler by lazy {
+        RecentsRemovalScheduler(scope, userId,
+            enabled = { _connected.value && settings.freezeOnRecentsRemoval.first() },
+            snapshot = ::snapshot,
+            onRemoval = { pkg, proof -> autoFreeze.freezeAfterRecentsRemoval(pkg, proof) },
+            observationLost = { overflowed.set(true) },
+        )
+    }
+    private val session = java.util.concurrent.atomic.AtomicLong(0)
     private var root: RootRecentsConnection? = null
-    private var service: Any? = null
-    private var listener: Any? = null
-    private var binder: IBinder? = null
+    private var shizukuConnection = false
     private val userId = Process.myUid() / 100000
 
     init {
@@ -62,7 +60,7 @@ class RecentsFreezeMonitor internal constructor(
                         val shizukuReady = runCatching { Shizuku.pingBinder() &&
                             Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED }.getOrDefault(false)
                         if (_connected.value && root?.alive == false) disconnect()
-                        if (_connected.value && root == null && !shizukuReady) disconnect()
+                        if (_connected.value && shizukuConnection && !shizukuReady) disconnect()
                         if (!_connected.value) {
                             if (shizukuReady) connect()
                             if (!_connected.value && freezeManager.activeBackend.value == FreezeBackendType.Root) connectRoot()
@@ -83,54 +81,19 @@ class RecentsFreezeMonitor internal constructor(
         }
     }
 
-    private fun connect() {
+    private fun connect() = connectRoot(useShizuku = true)
+
+    private fun connectRoot(useShizuku: Boolean = false) {
         try {
-            HiddenApiBypass.addHiddenApiExemptions("Landroid/app/ITaskStackListener", "Landroid/app/IActivityTaskManager", "Landroid/app/TaskInfo", "Landroid/content/pm/ParceledListSlice", "Landroid/content/pm/BaseParceledListSlice")
-            val remote = ShizukuBinderWrapper(SystemServiceHelper.getSystemService("activity_task"))
-            val stub = Class.forName("android.app.IActivityTaskManager\$Stub")
-            val api = HiddenApiBypass.invoke(stub, null, "asInterface", remote) ?: return
-            val listenerType = Class.forName("android.app.ITaskStackListener")
-            val listenerStub = Class.forName("android.app.ITaskStackListener\$Stub")
-            fun transaction(name: String) = listenerStub.getDeclaredField("TRANSACTION_$name").also { it.isAccessible = true }.getInt(null)
-            val removed = transaction("onTaskRemoved")
-            val changed = transaction("onTaskStackChanged")
-            val created = transaction("onTaskCreated")
-            val removing = runCatching { transaction("onTaskRemovalStarted") }.getOrNull()
-            val callbackBinder = object : Binder() {
-                override fun onTransact(code: Int, data: Parcel, reply: Parcel?, flags: Int): Boolean {
-                    if (code == INTERFACE_TRANSACTION) return super.onTransact(code, data, reply, flags)
-                    // Accept callbacks only from Android system_server, never another application.
-                    if (getCallingUid() != SYSTEM_UID) return false
-                    data.enforceInterface("android.app.ITaskStackListener")
-                    when (code) {
-                        removed -> offer(RecentsSignal(data.readInt()))
-                        created -> offer(RecentsSignal(REFRESH))
-                        removing -> {
-                            val info = if (data.readInt() != 0) ActivityManager.RunningTaskInfo.CREATOR.createFromParcel(data) else null
-                            val pkg = info?.baseIntent?.component?.packageName ?: info?.baseActivity?.packageName
-                            if (info != null && pkg != null) offer(RecentsSignal(info.taskId, RecentsTask(info.taskId, pkg,
-                                runCatching { info.javaClass.getField("userId").getInt(info) }.getOrDefault(-1))))
-                        }
-                        changed -> offer(RecentsSignal(REFRESH))
-                    }
-                    return true
-                }
+            val observedSession = session.get()
+            val connection = RootRecentsConnection(context, userId, useShizuku) { id, task ->
+                if (session.get() == observedSession) offer(RecentsSignal(id, task))
             }
-            val callback = Proxy.newProxyInstance(listenerType.classLoader ?: javaClass.classLoader, arrayOf(listenerType)) { proxy, method, args ->
-                when (method.name) {
-                    "asBinder" -> callbackBinder
-                    "hashCode" -> System.identityHashCode(proxy)
-                    "equals" -> proxy === args?.firstOrNull()
-                    "toString" -> "TelosRecentsFreezeListener"
-                    else -> null
-                }
-            }
-            callbackBinder.attachInterface(callback as IInterface, "android.app.ITaskStackListener")
-            service = api; listener = callback; binder = remote
-            // Seed before registering. Unknown/racing task IDs are ignored rather than guessed.
-            val initial = snapshot() ?: error("Recent task read unavailable")
+            root = connection
+            shizukuConnection = useShizuku
+            check(connection.awaitReady()) { "Privileged task listener unavailable" }
+            val initial = connection.snapshot() ?: error("Privileged task snapshot unavailable")
             known.clear(); initial.forEach { known[it.id] = it }
-            HiddenApiBypass.invoke(api.javaClass, api, "registerTaskStackListener", callback)
             _connected.value = true
         } catch (error: Exception) {
             android.util.Log.w("RecentsFreeze", "Task removal detection unavailable", error)
@@ -138,50 +101,19 @@ class RecentsFreezeMonitor internal constructor(
         }
     }
 
-    private fun connectRoot() {
-        try {
-            val connection = RootRecentsConnection(context, userId) { id, task -> offer(RecentsSignal(id, task)) }
-            root = connection
-            check(connection.awaitReady()) { "Root task listener unavailable" }
-            val initial = connection.snapshot() ?: error("Root task snapshot unavailable")
-            known.clear(); initial.forEach { known[it.id] = it }
-            _connected.value = true
-        } catch (error: Exception) {
-            android.util.Log.w("RecentsFreeze", "Root task removal detection unavailable", error)
-            disconnect()
-        }
-    }
-
     private fun disconnect() {
+        session.incrementAndGet()
+        removalScheduler.reset()
         root?.close(); root = null
-        val api = service
-        val callback = listener
-        if (api != null && callback != null) runCatching {
-            HiddenApiBypass.invoke(api.javaClass, api, "unregisterTaskStackListener", callback)
-        }
         _connected.value = false
-        service = null; listener = null; binder = null
+        shizukuConnection = false
         known.clear()
         refreshQueued.set(false)
         overflowed.set(false)
         while (events.tryReceive().isSuccess) { /* discard old-session callbacks */ }
     }
 
-    private fun snapshot(): List<RecentsTask>? = runCatching {
-        if (Build.VERSION.SDK_INT < 29) return null
-        root?.let { return it.snapshot() }
-        val api = service ?: return null
-        val slice = HiddenApiBypass.invoke(api.javaClass, api, "getRecentTasks", 256, 0, userId) ?: return null
-        val tasks = slice.javaClass.getMethod("getList").invoke(slice) as? List<*> ?: return null
-        if (tasks.size >= 256) return null // A full page cannot prove another task is absent.
-        tasks.map { value ->
-            val task = value as? ActivityManager.RecentTaskInfo ?: return null
-            val pkg = task.baseIntent.component?.packageName ?: task.baseActivity?.packageName
-                ?: task.baseIntent.`package` ?: return null
-            val owner = task.javaClass.getField("userId").getInt(task)
-            RecentsTask(task.taskId, pkg, owner)
-        }
-    }.getOrNull()
+    private fun snapshot(): List<RecentsTask>? = root?.snapshot()
 
     private suspend fun processEvent(signal: RecentsSignal) {
         val id = signal.id
@@ -194,24 +126,7 @@ class RecentsFreezeMonitor internal constructor(
             return
         }
         val removed = known[id] ?: return
-        delay(750) // Wait for the Recents animation; a removal-start event is not absence yet.
-        if (!settings.freezeOnRecentsRemoval.first()) return
-        var remaining = snapshot() ?: run { disconnect(); return }
-        repeat(2) {
-            if (remaining.any { it.id == id && it.userId == removed.userId }) {
-                delay(500)
-                remaining = snapshot() ?: run { disconnect(); return }
-            }
-        }
-        remaining.forEach { known[it.id] = it }
-        if (remaining.none { it.id == id && it.userId == removed.userId }) known.remove(id)
-        if (removedLastTask(removed, remaining, userId)) {
-            autoFreeze.freezeAfterRecentsRemoval(removed.packageName) {
-                // Exclusion checks may take time. A reopened app must not be frozen using an old snapshot.
-                val latest = snapshot() ?: return@freezeAfterRecentsRemoval false
-                latest.none { it.packageName == removed.packageName && it.userId == userId }
-            }
-        }
+        if (!removalScheduler.submit(removed)) overflowed.set(true)
     }
 
     companion object {

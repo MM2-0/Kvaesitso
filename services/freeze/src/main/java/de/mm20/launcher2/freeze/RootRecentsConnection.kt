@@ -5,9 +5,13 @@ import org.json.JSONArray
 import java.util.concurrent.LinkedBlockingQueue
 import java.util.concurrent.TimeUnit
 
-/** Owns one root helper; EOF closes its listener. No shell text incorporates package names. */
-internal class RootRecentsConnection(context: Context, userId: Int, onEvent: (Int, RecentsTask?) -> Unit) {
-    private val process = Runtime.getRuntime().exec(arrayOf("su", "-c",
+/** Owns one privileged helper for Shizuku or root; EOF closes its listener. */
+internal class RootRecentsConnection(context: Context, userId: Int, useShizuku: Boolean = false, onEvent: (Int, RecentsTask?) -> Unit) {
+    private val process = if (useShizuku) de.mm20.launcher2.ktx.ShizukuProcesses.start(
+        arrayOf("/system/bin/env", "CLASSPATH=${context.applicationInfo.sourceDir}",
+            "/system/bin/app_process", "/system/bin", RootRecentsBridge::class.java.name, userId.toString()),
+        retryOnSpawnFailure = false,
+    ) else Runtime.getRuntime().exec(arrayOf("su", "-c",
         "CLASSPATH='${context.applicationInfo.sourceDir.replace("'", "'\\''")}' /system/bin/app_process /system/bin de.mm20.launcher2.freeze.RootRecentsBridge $userId"))
     private val replies = LinkedBlockingQueue<String>(4)
     private val ready = java.util.concurrent.CountDownLatch(1)

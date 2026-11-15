@@ -10,6 +10,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.MaterialTheme
@@ -83,6 +86,15 @@ private fun FreezeSettingsContent(section: Int, tabs: @Composable () -> Unit) {
     val hasPermission by viewModel.hasPermission.collectAsStateWithLifecycle()
 
     val autoFreezeEnabled by viewModel.autoFreezeEnabled.collectAsStateWithLifecycle()
+    val importFrozen by viewModel.autoFreezeImports.collectAsStateWithLifecycle()
+    val enrollmentBusy by viewModel.autoFreezeEnrollmentBusy.collectAsStateWithLifecycle()
+    importFrozen?.let { pending ->
+        AutoFreezeImportDialog(pending.size,
+            onImport = { viewModel.confirmAutoFreezeEnrollment(true) },
+            onSkip = { viewModel.confirmAutoFreezeEnrollment(false) },
+            onCancel = viewModel::cancelAutoFreezeEnrollment)
+    }
+
     val profile by viewModel.profile.collectAsStateWithLifecycle()
     val exclusionStrictness by viewModel.exclusionStrictness.collectAsStateWithLifecycle()
     val freezeOnScreenOff by viewModel.freezeOnScreenOff.collectAsStateWithLifecycle()
@@ -264,8 +276,10 @@ private fun FreezeSettingsContent(section: Int, tabs: @Composable () -> Unit) {
                     title = stringResource(I18nR.string.preference_freeze_auto_enabled),
                     summary = stringResource(I18nR.string.preference_freeze_auto_enabled_summary),
                     value = autoFreezeEnabled == true,
+                    enabled = !enrollmentBusy && importFrozen == null,
                     onValueChanged = { viewModel.setAutoFreezeEnabled(it) }
                 )
+                if (enrollmentBusy) LinearProgressIndicator(androidx.compose.ui.Modifier.fillMaxWidth())
                 AnimatedVisibility(autoFreezeEnabled == true) {
                     Column {
                         ListPreference(
@@ -430,4 +444,16 @@ private fun FreezeSettingsContent(section: Int, tabs: @Composable () -> Unit) {
             }
         }
     }
+}
+
+@Composable
+internal fun AutoFreezeImportDialog(count: Int, onImport: () -> Unit, onSkip: () -> Unit, onCancel: () -> Unit) {
+    AlertDialog(
+        onDismissRequest = onCancel,
+        title = { Text(stringResource(I18nR.string.preference_freeze_auto_category)) },
+        text = { Text(stringResource(I18nR.string.freeze_auto_import_existing, count)) },
+        confirmButton = { TextButton(onClick = onImport) { Text(stringResource(android.R.string.yes)) } },
+        dismissButton = { TextButton(onClick = onSkip) { Text(stringResource(android.R.string.no)) } },
+        containerColor = de.mm20.launcher2.ui.component.virtualAppPopup(),
+    )
 }

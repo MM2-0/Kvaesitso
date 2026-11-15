@@ -461,16 +461,18 @@ class AutoFreezeController internal constructor(
 
     /** A confirmed last-task removal; independent of screen-off timing and the master auto switch. */
     suspend fun freezeAfterRecentsRemoval(packageName: String, stillRemoved: suspend () -> Boolean = { true }) {
-        if (!settings.freezeOnRecentsRemoval.first() || freezeManager.isFrozen(packageName)) return
+        if (!settings.freezeOnRecentsRemoval.first() || freezeManager.isFrozen(packageName) || !stillRemoved()) return
         if (packageName !in settings.candidates.first() && packageName !in settings.recentsThawed.first()) return
         if (packageName in settings.neverFreezeApps.first() ||
             packageName in settings.companionHolds.first() ||
             settings.maintenance.first().values.any { it.packageName == packageName } ||
             settings.playUpdatePauseUntil.first() > System.currentTimeMillis() ||
-            exclusionChecker.isExcluded(packageName)) return
+            exclusionChecker.isExcluded(packageName, confirmedTaskRemoval = true)) return
         freezeManager.refreshBackendState()
         if (!stillRemoved()) return
-        freezeManager.freezeInBackground(listOf(packageName))
+        freezeManager.freezeAfterTaskRemoval(packageName) {
+            settings.freezeOnRecentsRemoval.first() && stillRemoved()
+        }
     }
 
     private suspend fun freezableCandidates(): List<String> {

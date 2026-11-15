@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="freeze_auto_import_existing">¿Añadir %1$d aplicaciones ya congeladas a la lista de congelación automática?</string>
+</resources>

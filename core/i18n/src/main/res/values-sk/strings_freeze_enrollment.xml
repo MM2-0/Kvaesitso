@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="freeze_auto_import_existing">Pridať %1$d už zmrazených aplikácií do zoznamu automatického zmrazovania?</string>
+</resources>

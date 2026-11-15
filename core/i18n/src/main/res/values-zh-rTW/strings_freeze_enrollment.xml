@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="freeze_auto_import_existing">要將 %1$d 個已凍結的應用程式加入自動凍結清單嗎？</string>
+</resources>

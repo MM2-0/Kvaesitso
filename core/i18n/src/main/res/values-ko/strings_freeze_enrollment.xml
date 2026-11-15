@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="freeze_auto_import_existing">이미 동결된 앱 %1$d개를 자동 동결 목록에 추가할까요?</string>
+</resources>

@@ -5,7 +5,6 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.geometry.Size
-import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.preferences.MeasurementSystem
 import de.mm20.launcher2.preferences.TimeFormat
@@ -15,7 +14,7 @@ import de.mm20.launcher2.ui.theme.WallpaperColors
 
 val LocalWindowSize = compositionLocalOf { Size(0f, 0f) }
 
-val LocalBackStack = staticCompositionLocalOf< NavBackStack<NavKey>> { throw IllegalStateException("No backstack provided") }
+val LocalBackStack = staticCompositionLocalOf<MutableList<NavKey>> { throw IllegalStateException("No backstack provided") }
 
 val LocalCardStyle = compositionLocalOf { CardStyle() }
 

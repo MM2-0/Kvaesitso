@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="freeze_auto_import_existing">Tambah %1$d aplikasi yang sudah dibekukan ke senarai pembekuan automatik?</string>
+</resources>
