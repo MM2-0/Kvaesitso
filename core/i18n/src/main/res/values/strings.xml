@@ -405,6 +405,10 @@
         Used in Android 10+ because the required permission has changed from READ_EXTERNAL_STORAGE
         to MANAGE_EXTERNAL_STORAGE which is labeled differently in the Android OS -->
     <string name="missing_permission_file_search_settings_android10">All files access is required to search local files</string>
+    <!-- Missing file permission in homescreen settings screen.
+        Used when the launcher has to render the wallpaper itself, because the device does not
+        support cross window blur -->
+    <string name="missing_permission_wallpaper_blur">All files access is required to blur the wallpaper on this device</string>
     <!-- Missing notification permission, used in badge settings screen -->
     <string name="missing_permission_notification_badges">Notification access is required to display notification badges</string>
     <!-- Missing calendar permission, used in calendar widget -->

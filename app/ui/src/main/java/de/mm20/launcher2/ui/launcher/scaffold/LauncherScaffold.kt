@@ -177,6 +177,11 @@ internal data class ScaffoldConfiguration(
      */
     val wallpaperBlurRadius: Dp = 32.dp,
     /**
+     * Opacity of the black overlay that is drawn on top of the wallpaper. Only used when the
+     * launcher renders the wallpaper itself.
+     */
+    val wallpaperDim: Float = 0f,
+    /**
      * Show the navigation bar
      */
     val showNavBar: Boolean = true,
@@ -1145,10 +1150,13 @@ internal fun LauncherScaffold(
             }
         }
 
-        if (config.wallpaperBlurRadius > 0.dp) {
-            val maxRadius = config.wallpaperBlurRadius.toPixels()
-            WallpaperBlur { (maxRadius * state.currentProgress).toInt() }
-        }
+        val maxBlurRadius = config.wallpaperBlurRadius.toPixels()
+        WallpaperBlur(
+            enabled = config.wallpaperBlurRadius > 0.dp,
+            blurRadius = { (maxBlurRadius * state.currentProgress).toInt() },
+            dim = config.wallpaperDim,
+            modifier = Modifier.fillMaxSize(),
+        )
 
         if (!config.finishOnBack || state.currentProgress > 0) {
             PredictiveBackHandler {
