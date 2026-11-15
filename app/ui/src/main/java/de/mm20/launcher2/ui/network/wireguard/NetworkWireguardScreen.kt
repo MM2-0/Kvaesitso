@@ -123,7 +123,7 @@ fun NetworkWireguardScreen() {
         topBar = {
             TopAppBar(
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
-                title = { Text(stringResource(I18nR.string.nwg_title)) },
+                title = { de.mm20.launcher2.ui.component.TelosCyberAppBarTitle(stringResource(I18nR.string.nwg_title)) },
                 navigationIcon = {
                     IconButton(onClick = { backStack.removeLastOrNull() }) {
                         Icon(painterResource(IconsNetworkWireguardScreen.arrow_back_24px), contentDescription = stringResource(I18nR.string.nwg_back))

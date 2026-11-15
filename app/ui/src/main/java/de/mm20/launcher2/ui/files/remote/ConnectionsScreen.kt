@@ -77,7 +77,7 @@ fun ConnectionsScreen() {
         containerColor = MaterialTheme.colorScheme.surface,
         topBar = {
             TopAppBar(
-                title = { Text(stringResource(I18nR.string.hc_cloud_and_network_storage)) },
+                title = { de.mm20.launcher2.ui.component.TelosCyberAppBarTitle(stringResource(I18nR.string.hc_cloud_and_network_storage)) },
                 navigationIcon = { IconButton(onClick = { backStack.removeLastOrNull() }) { Icon(painterResource(Icons.arrow_back_24px), contentDescription = stringResource(I18nR.string.hc_back)) } },
             )
         },

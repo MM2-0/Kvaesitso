@@ -55,8 +55,8 @@ fun InnerCard(
         transitionSpec = { tween(500) }) {
         when (it) {
             InnerCardStyle.Raised -> Color.Transparent
-            InnerCardStyle.Highlighted -> MaterialTheme.colorScheme.secondary
-            InnerCardStyle.Default -> MaterialTheme.colorScheme.outlineVariant
+            InnerCardStyle.Highlighted -> TelosCyber.NeonGreen
+            InnerCardStyle.Default -> TelosCyber.NeonCyan.copy(alpha = 0.35f)
         }
     }
 

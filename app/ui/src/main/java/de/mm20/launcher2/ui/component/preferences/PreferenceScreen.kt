@@ -218,7 +218,7 @@ private fun PreferenceScreenTopBar(
 
     CenterAlignedTopAppBar(
         modifier = modifier,
-        title = title,
+        title = { de.mm20.launcher2.ui.component.TelosCyberHeading { title() } },
         expandedHeight = expandedHeight,
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = Color.Transparent,

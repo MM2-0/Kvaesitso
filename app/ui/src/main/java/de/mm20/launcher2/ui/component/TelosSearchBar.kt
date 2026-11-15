@@ -152,7 +152,7 @@ private fun SearchPill(
     val keyboard = LocalSoftwareKeyboardController.current
 
     val ringColor by animateColorAsState(
-        if (focused) MaterialTheme.colorScheme.primary.copy(alpha = 0.35f) else Color.Transparent,
+        if (focused) TelosCyber.NeonCyan.copy(alpha = 0.8f) else TelosCyber.NeonCyan.copy(alpha = 0.25f),
         label = "searchRing",
     )
 
@@ -167,7 +167,7 @@ private fun SearchPill(
     }
 
     Surface(
-        modifier = modifier.heightIn(min = height),
+        modifier = modifier.heightIn(min = maxOf(height, 48.dp)),
         shape = CircleShape,
         color = MaterialTheme.colorScheme.surfaceContainerHigh,
         contentColor = MaterialTheme.colorScheme.onSurfaceVariant,

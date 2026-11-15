@@ -58,7 +58,7 @@ internal fun RadioSettingsScreen(
 ) {
     BackHandler(onBack = onBack)
     Scaffold(containerColor = MaterialTheme.colorScheme.surface, topBar = {
-        TopAppBar(title = { Text(stringResource(I18nR.string.hc_settings)) }, navigationIcon = {
+        TopAppBar(title = { de.mm20.launcher2.ui.component.TelosCyberAppBarTitle(stringResource(I18nR.string.hc_settings)) }, navigationIcon = {
             IconButton(onClick = onBack) { Icon(painterResource(BaseR.drawable.arrow_back_24px), stringResource(I18nR.string.hc_back)) }
         })
     }) { padding ->

@@ -51,6 +51,9 @@ fun LauncherCard(
             Surface(
                 modifier = if (frosted) modifier.frostedGlass(color, shape) else modifier,
                 shape = shape,
+                border = if (color.alpha > 0f) androidx.compose.foundation.BorderStroke(
+                    1.dp, TelosCyber.NeonCyan.copy(alpha = 0.48f),
+                ) else null,
                 content = content,
                 contentColor = resolvedContent,
                 color = if (frosted) Color.Transparent else color,

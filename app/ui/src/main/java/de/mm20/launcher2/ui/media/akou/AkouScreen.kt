@@ -150,7 +150,7 @@ fun AkouScreen() {
         containerColor = MaterialTheme.colorScheme.surface,
         topBar = {
             TopAppBar(
-                title = { Text(stringResource(I18nR.string.telos_akou_app_label)) },
+                title = { de.mm20.launcher2.ui.component.TelosCyberAppBarTitle(stringResource(I18nR.string.telos_akou_app_label)) },
                 navigationIcon = {
                     if (backStack.size > 1) {
                         IconButton(onClick = { backStack.removeLastOrNull() }) {
