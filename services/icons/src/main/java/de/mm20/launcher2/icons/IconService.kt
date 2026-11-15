@@ -411,7 +411,7 @@ class IconService(
 
                 val transformed = icon.transform(defaultTransformations)
                 CustomIconWithPreview(
-                    preview = (transformed as? StaticLauncherIcon)?.hardware() ?: transformed,
+                    preview = transformed,
                     customIcon = it,
                 )
 
@@ -428,9 +428,11 @@ class IconService(
     ): CustomIconWithPreview? {
         val icon = iconProviders.first().getFirstIcon(searchable, size)
             ?.transform(transformations.first()) ?: return null
+        // The picker displays through ShapedLauncherIcon's software composition pipeline.
+        // Keep its software source instead of uploading to the GPU and immediately reading back.
         return CustomIconWithPreview(
             customIcon = null,
-            preview = (icon as? StaticLauncherIcon)?.hardware() ?: icon
+            preview = icon
         )
     }
 
@@ -439,10 +441,10 @@ class IconService(
         val iconPackIcons = iconPackManager.searchIconPackIcon(query, iconPack).flatMap {
             val themedIcon = if (it.themed) {
                 iconPackManager.getIcon(it.iconPack, it, true)
-                    ?.transform(transformations)?.let { ic -> (ic as? StaticLauncherIcon)?.hardware() ?: ic }
+                    ?.transform(transformations)
             } else null
             val unthemedIcon = iconPackManager.getIcon(it.iconPack, it, false)
-                ?.transform(transformations)?.let { ic -> (ic as? StaticLauncherIcon)?.hardware() ?: ic }
+                ?.transform(transformations)
 
             buildList {
                 val ent = it.toDatabaseEntity()
