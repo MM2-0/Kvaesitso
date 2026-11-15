@@ -7,6 +7,8 @@ on:
       - 'services/freeze/**'
       - 'services/comms/**'
       - 'core/preferences/**'
+      - 'core/base/src/main/java/de/mm20/launcher2/icons/**'
+      - 'app/ui/src/androidTest/java/de/mm20/launcher2/ui/component/**'
       - 'app/ui/src/main/java/de/mm20/launcher2/ui/component/**'
       - 'app/ui/src/main/java/de/mm20/launcher2/ui/settings/**'
       - 'app/ui/src/main/java/de/mm20/launcher2/ui/launcher/search/common/SearchableItemVM.kt'
@@ -52,6 +54,25 @@ jobs:
           PY
           fi
           exit "$BUILD_STATUS"
+      - name: Summarize completed JVM regressions
+        if: always()
+        run: |
+          python3 - <<'PYTEST'
+          from pathlib import Path
+          import xml.etree.ElementTree as ET
+          total = 0
+          failed = 0
+          for module in ('services/freeze', 'services/comms', 'core/preferences', 'app/ui'):
+              tests = errors = 0
+              for report in Path(module, 'build/test-results').rglob('TEST-*.xml'):
+                  suite = ET.parse(report).getroot()
+                  tests += int(suite.get('tests', 0))
+                  errors += int(suite.get('failures', 0)) + int(suite.get('errors', 0))
+              total += tests
+              failed += errors
+              print(f'::notice title=JVM regressions::{module}: {tests} tests, {errors} failures/errors')
+          assert total > 0 and failed == 0, 'JVM regression results are absent or failed'
+          PYTEST
       - name: Enable emulator acceleration
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
@@ -65,19 +86,19 @@ jobs:
           profile: pixel_7
           disable-animations: true
           emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim
-          script: bash ./gradlew :app:ui:connectedDefaultDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=de.mm20.launcher2.ui.freeze.AutoFreezeImportDialogTest,de.mm20.launcher2.ui.freeze.RecentsBridgeTest,de.mm20.launcher2.ui.component.PerAppFontDragTest --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process -Dorg.gradle.jvmargs=-Xmx2048m
+          script: bash ./gradlew :app:ui:connectedDefaultDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=de.mm20.launcher2.ui.freeze.AutoFreezeImportDialogTest,de.mm20.launcher2.ui.freeze.RecentsBridgeTest,de.mm20.launcher2.ui.component.PerAppFontDragTest,de.mm20.launcher2.ui.component.HardwareIconRenderingTest --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process -Dorg.gradle.jvmargs=-Xmx2048m
       - name: Verify every freeze and live-font device regression ran
         if: always()
         run: |
           python3 - <<'PY'
           from pathlib import Path
           import xml.etree.ElementTree as ET
-          expected = {'importAndSkipRequireTheCorrespondingExplicitChoice', 'privilegedHelperRegistersAndReturnsACompleteSnapshot', 'inlineSliderKeepsDraggingAndPersistsOnlyOnRelease', 'dialogSliderKeepsDraggingWithoutMovingItsBounds'}
+          expected = {'importAndSkipRequireTheCorrespondingExplicitChoice', 'privilegedHelperRegistersAndReturnsACompleteSnapshot', 'inlineSliderKeepsDraggingAndPersistsOnlyOnRelease', 'dialogSliderKeepsDraggingWithoutMovingItsBounds', 'hardwarePreviewCanBeRenderedAgainAtAnotherSize', 'nestedFolderGridComposesHardwareLayersWithoutRecyclingTheSource'}
           executed = set()
           failed = False
           for report in Path('app/ui/build/outputs/androidTest-results').rglob('TEST-*.xml'):
               for case in ET.parse(report).getroot().iter('testcase'):
-                  if case.get('classname') not in {'de.mm20.launcher2.ui.freeze.AutoFreezeImportDialogTest', 'de.mm20.launcher2.ui.freeze.RecentsBridgeTest', 'de.mm20.launcher2.ui.component.PerAppFontDragTest'}:
+                  if case.get('classname') not in {'de.mm20.launcher2.ui.freeze.AutoFreezeImportDialogTest', 'de.mm20.launcher2.ui.freeze.RecentsBridgeTest', 'de.mm20.launcher2.ui.component.PerAppFontDragTest', 'de.mm20.launcher2.ui.component.HardwareIconRenderingTest'}:
                       continue
                   executed.add(case.get('name'))
                   for tag in ('failure', 'error', 'skipped'):
@@ -89,7 +110,7 @@ jobs:
                           print('::error title=Freeze and fonts regression::' + message)
           assert expected <= executed, f'Missing tests: {expected - executed}'
           assert not failed, 'Freeze or live-font regression failed or was skipped'
-          print('::notice title=Freeze and fonts regression::All four enrollment, privileged Recents and continuous font-drag tests passed.')
+          print('::notice title=Freeze and fonts regression::All six enrollment, privileged Recents, continuous font-drag and hardware bitmap tests passed.')
           PY
       - uses: actions/upload-artifact@v7
         if: always()

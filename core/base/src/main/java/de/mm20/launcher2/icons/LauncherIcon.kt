@@ -98,9 +98,20 @@ data class StaticLauncherIcon(
                 }
             }
             is BitmapLayer -> {
-                val scale = minOf(canvas.width.toFloat() / layer.bitmap.width, canvas.height.toFloat() / layer.bitmap.height)
-                canvas.withScale(scale, scale, canvas.width / 2f, canvas.height / 2f) {
-                    canvas.drawBitmap(layer.bitmap, canvas.width / 2f - layer.bitmap.width / 2f, canvas.height / 2f - layer.bitmap.height / 2f, null)
+                // hardware() previews can later be rendered again (including inside folder grids).
+                // Canvas(Bitmap) is software-only. Keep the shared GPU source intact and read back
+                // just this layer for the off-main composition, rather than disabling GPU icons.
+                val source = layer.bitmap
+                val drawable = if (source.config == Bitmap.Config.HARDWARE) {
+                    checkNotNull(source.copy(Bitmap.Config.ARGB_8888, false))
+                } else source
+                try {
+                    val scale = minOf(canvas.width.toFloat() / drawable.width, canvas.height.toFloat() / drawable.height)
+                    canvas.withScale(scale, scale, canvas.width / 2f, canvas.height / 2f) {
+                        canvas.drawBitmap(drawable, canvas.width / 2f - drawable.width / 2f, canvas.height / 2f - drawable.height / 2f, null)
+                    }
+                } finally {
+                    if (drawable !== source) drawable.recycle()
                 }
             }
             is TextLayer -> {

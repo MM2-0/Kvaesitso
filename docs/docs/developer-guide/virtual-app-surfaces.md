@@ -267,3 +267,7 @@ Cyber-Tech follow-up: shared launcher cards carry a fine cyan outline only when 
 ### Common title chrome coverage
 
 App bars and alert-dialog titles now reuse `TelosCyberHeading` across launcher sheets, Telos apps and detailed settings. The heading adds a small themed accent rail and flexible content bounds, preserving each existing title, accessibility text and action callback. The initial pass updates 213 title slots in 122 source files, including Files, TV, camera controls, notifications, account dialogs and settings pickers. Content areas such as video, camera preview and message bodies keep their original rendering. This count records source coverage; it is not a completed visual acceptance report.
+
+### Hardware icon recomposition
+
+`StaticLauncherIcon.hardware()` produces GPU-backed preview layers. A later `render()` may need to composite those layers into a software bitmap, including recursively nested folder grids. Bitmap layers now create a temporary ARGB copy only when the source is hardware-backed, on the existing Default render dispatcher; the temporary copy is released after drawing and the shared GPU source remains intact. Direct GPU display remains supported. Android regressions cover re-rendering a hardware preview at another size, output-cache reuse and nested grid composition.

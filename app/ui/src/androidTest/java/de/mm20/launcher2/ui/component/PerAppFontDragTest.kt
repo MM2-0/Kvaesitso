@@ -8,6 +8,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.unit.Density
@@ -58,18 +59,18 @@ class PerAppFontDragTest {
         compose.waitForIdle()
         settings.register(listener)
         try {
-            val slider = compose.onNode(hasSetProgressAction())
+            val slider = compose.onNode(SemanticsMatcher.keyIsDefined(SemanticsActions.SetProgress))
             val initialBounds = slider.fetchSemanticsNode().boundsInRoot
             slider.performTouchInput {
-                down(Offset(size.width * .34f, center.y))
-                moveTo(Offset(size.width * .60f, center.y), delayMillis = 100)
+                down(Offset(width.toFloat() * .34f, center.y))
+                moveTo(Offset(width.toFloat() * .60f, center.y), delayMillis = 100)
             }
             compose.waitForIdle()
             val middle = settings.getFontScale(key)
             assertTrue("Live value must change before pointer up", middle > 1.08f)
             assertEquals(0, writes.get())
             slider.performTouchInput {
-                moveTo(Offset(size.width * .88f, center.y), delayMillis = 100)
+                moveTo(Offset(width.toFloat() * .88f, center.y), delayMillis = 100)
             }
             compose.waitForIdle()
             val last = settings.getFontScale(key)
