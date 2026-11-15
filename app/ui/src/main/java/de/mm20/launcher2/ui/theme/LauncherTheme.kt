@@ -1,11 +1,11 @@
 package de.mm20.launcher2.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialExpressiveTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MotionScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.material3.LocalContentColor
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -16,6 +16,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Density
+import de.mm20.launcher2.preferences.ColorScheme as ColorSchemePref
 import de.mm20.launcher2.preferences.ui.BadgeSettings
 import de.mm20.launcher2.preferences.ui.PerformanceSettings
 import de.mm20.launcher2.preferences.ui.UiSettings
@@ -29,16 +30,16 @@ import de.mm20.launcher2.ui.theme.shapes.shapesOf
 import de.mm20.launcher2.ui.theme.transparency.LocalTransparencyScheme
 import de.mm20.launcher2.ui.theme.transparency.transparencySchemeOf
 import de.mm20.launcher2.ui.theme.typography.typographyOf
+import java.time.LocalTime
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.flatMapLatest
 import org.koin.compose.koinInject
-import java.time.LocalTime
-import de.mm20.launcher2.preferences.ColorScheme as ColorSchemePref
-
 
 @Composable
 fun LauncherTheme(
-    content: @Composable () -> Unit
+    wallpaperGlass: Boolean = true,
+    loadingContent: @Composable () -> Unit = {},
+    content: @Composable () -> Unit,
 ) {
     val uiSettings: UiSettings = koinInject()
     val themeRepository: ThemeRepository = koinInject()
@@ -54,55 +55,67 @@ fun LauncherTheme(
         uiSettings.colorsId.flatMapLatest {
             themeRepository.colors.getOrDefault(it)
         }
-    }.collectAsState(null)
+    }
+        .collectAsState(null)
 
     val themeShapes by remember {
         uiSettings.shapesId.flatMapLatest {
             themeRepository.shapes.getOrDefault(it)
         }
-    }.collectAsState(null)
+    }
+        .collectAsState(null)
 
     val themeTypography by remember {
         uiSettings.typographyId.flatMapLatest {
             themeRepository.typographies.getOrDefault(it)
         }
-    }.collectAsState(null)
+    }
+        .collectAsState(null)
 
     val themeTransparencies by remember {
         uiSettings.transparenciesId.flatMapLatest {
             themeRepository.transparencies.getOrDefault(it)
         }
-    }.collectAsState(null)
+    }
+        .collectAsState(null)
 
-    val colorSchemePref by remember { uiSettings.colorScheme }.collectAsState(
-        ColorSchemePref.System
-    )
+    val colorSchemePref by remember {
+        uiSettings.colorScheme
+    }
+        .collectAsState(ColorSchemePref.System)
     val nightStart by remember { uiSettings.colorSchemeNightStart }.collectAsState(20)
     val dayStart by remember { uiSettings.colorSchemeDayStart }.collectAsState(7)
     val fontScale by remember { uiSettings.fontScale }.collectAsState(1f)
 
-    val darkTheme = when (colorSchemePref) {
-        ColorSchemePref.Dark -> true
-        ColorSchemePref.Light -> false
-        ColorSchemePref.System -> isSystemInDarkTheme()
-        ColorSchemePref.Time -> rememberIsNight(nightStart, dayStart)
-    }
+    val darkTheme =
+        when (colorSchemePref) {
+            ColorSchemePref.Dark -> true
+            ColorSchemePref.Light -> false
+            ColorSchemePref.System -> isSystemInDarkTheme()
+            ColorSchemePref.Time -> rememberIsNight(nightStart, dayStart)
+        }
 
-    if (themeColors == null || themeShapes == null || themeTransparencies == null || themeTypography == null) {
+    if (
+        themeColors == null ||
+            themeShapes == null ||
+            themeTransparencies == null ||
+            themeTypography == null
+    ) {
+        loadingContent()
         return
     }
 
-    val colorScheme = if (darkTheme) {
-        darkColorSchemeOf(themeColors!!)
-    } else {
-        lightColorSchemeOf(themeColors!!)
-    }
+    val colorScheme =
+        if (darkTheme) {
+            darkColorSchemeOf(themeColors!!)
+        } else {
+            lightColorSchemeOf(themeColors!!)
+        }
 
     val shapes = shapesOf(themeShapes!!)
     val typography = typographyOf(themeTypography!!)
 
     val transparencyScheme = transparencySchemeOf(themeTransparencies!!, darkTheme)
-
 
     val baseDensity = LocalDensity.current
     val view = androidx.compose.ui.platform.LocalView.current
@@ -131,9 +144,10 @@ fun LauncherTheme(
             colorScheme = colorScheme,
             typography = typography,
             shapes = shapes,
-            motionScheme = remember(reduceAnimations, animationSpeed) {
-                MotionScheme.expressive().scaledBy(!reduceAnimations, animationSpeed)
-            },
+            motionScheme =
+                remember(reduceAnimations, animationSpeed) {
+                    MotionScheme.expressive().scaledBy(!reduceAnimations, animationSpeed)
+                },
             content = {
                 // Compose's default content colour is black. Without this, icons and texts that sit
                 // on a plain background (not in a Surface or Scaffold) are black on the dark theme.
@@ -141,26 +155,32 @@ fun LauncherTheme(
                     LocalContentColor provides MaterialTheme.colorScheme.onSurface,
                     content = {
                         val context = androidx.compose.ui.platform.LocalContext.current
-                        de.mm20.launcher2.ui.component.FrostedGlassProvider {
-                            if (context is de.mm20.launcher2.ui.settings.SettingsActivity) {
-                                de.mm20.launcher2.ui.component.VirtualAppTheme(content = content)
-                            } else content()
-                        }
+                        if (wallpaperGlass) {
+                            de.mm20.launcher2.ui.component.FrostedGlassProvider {
+                                if (context is de.mm20.launcher2.ui.settings.SettingsActivity) {
+                                    de.mm20.launcher2.ui.component.VirtualAppTheme(
+                                        content = content
+                                    )
+                                } else content()
+                            }
+                        } else content()
                     },
                 )
-            }
+            },
         )
     }
 }
 
 /**
- * True while the current time falls in the dark ("night") window that starts at [nightStart]
- * and ends at [dayStart] (hours of day, wrapping past midnight). Re-checks every minute so the
- * theme flips at the boundary without restarting the launcher.
+ * True while the current time falls in the dark ("night") window that starts at [nightStart] and
+ * ends at [dayStart] (hours of day, wrapping past midnight). Re-checks every minute so the theme
+ * flips at the boundary without restarting the launcher.
  */
 @Composable
 private fun rememberIsNight(nightStart: Int, dayStart: Int): Boolean {
-    var isNight by remember { mutableStateOf(computeIsNight(LocalTime.now().hour, nightStart, dayStart)) }
+    var isNight by remember {
+        mutableStateOf(computeIsNight(LocalTime.now().hour, nightStart, dayStart))
+    }
     LaunchedEffect(nightStart, dayStart) {
         while (true) {
             isNight = computeIsNight(LocalTime.now().hour, nightStart, dayStart)
@@ -176,4 +196,3 @@ private fun computeIsNight(hour: Int, nightStart: Int, dayStart: Int): Boolean {
     val offset = ((hour - nightStart) + 24) % 24
     return offset < nightLength
 }
-

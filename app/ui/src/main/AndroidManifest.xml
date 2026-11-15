@@ -45,6 +45,19 @@
     <uses-sdk tools:overrideLibrary="com.kieronquinn.app.smartspacer.sdk,com.kieronquinn.app.smartspacer.sdk.client,dev.izumi.appopsnext" />
 
     <application>
+        <service
+            android:name="de.mm20.launcher2.ui.keyboard.TelosKeyboardService"
+            android:exported="true"
+            android:label="Telos Keyboard"
+            android:permission="android.permission.BIND_INPUT_METHOD">
+            <intent-filter>
+                <action android:name="android.view.InputMethod" />
+            </intent-filter>
+            <meta-data
+                android:name="android.view.im"
+                android:resource="@xml/method" />
+        </service>
+
         <activity android:name="de.mm20.launcher2.ui.system.AppOpsActivity" android:exported="false" />
         <activity android:name=".trash.FileDeleteActivity" android:exported="false" android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
 

@@ -34,8 +34,7 @@ import de.mm20.launcher2.ui.component.telosTechSurface
 import de.mm20.launcher2.ui.locals.LocalBackStack
 import kotlinx.serialization.Serializable
 
-@Serializable
-data object TelosKeyboardRoute : NavKey
+@Serializable data object TelosKeyboardRoute : NavKey
 
 @Composable
 fun TelosKeyboardSettingsScreen() {
@@ -44,10 +43,8 @@ fun TelosKeyboardSettingsScreen() {
 
     VirtualAppWindow {
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+            modifier = Modifier.fillMaxSize().padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -69,13 +66,19 @@ fun TelosKeyboardSettingsScreen() {
                 )
             }
 
-            TelosCyberSectionLabel(stringResource(I18nR.string.keyboard_enable_title), accent = TelosCyber.NeonGreen)
+            TelosCyberSectionLabel(
+                stringResource(I18nR.string.keyboard_enable_title),
+                accent = TelosCyber.NeonGreen,
+            )
 
             Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .telosTechSurface(borderColor = TelosCyber.NeonCyan, shape = RoundedCornerShape(18.dp))
-                    .padding(16.dp),
+                modifier =
+                    Modifier.fillMaxWidth()
+                        .telosTechSurface(
+                            borderColor = TelosCyber.NeonCyan,
+                            shape = RoundedCornerShape(18.dp),
+                        )
+                        .padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 Text(
@@ -92,11 +95,22 @@ fun TelosKeyboardSettingsScreen() {
                     onClick = {
                         context.startActivity(
                             Intent(Settings.ACTION_INPUT_METHOD_SETTINGS)
-                                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+                                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                         )
-                    },
+                    }
                 ) {
                     Text(stringResource(I18nR.string.keyboard_enable_action))
+                }
+                androidx.compose.material3.OutlinedButton(
+                    onClick = {
+                        context
+                            .getSystemService(
+                                android.view.inputmethod.InputMethodManager::class.java
+                            )
+                            ?.showInputMethodPicker()
+                    }
+                ) {
+                    Text(stringResource(I18nR.string.keyboard_choose_action))
                 }
             }
 

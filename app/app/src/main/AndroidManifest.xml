@@ -138,18 +138,7 @@
             android:foregroundServiceType="specialUse" />
         <!-- === TELOS_PENDING_REVIEW_END: smart_freeze_permissions === -->
 
-        <service
-            android:name="de.mm20.launcher2.ui.keyboard.TelosKeyboardService"
-            android:exported="true"
-            android:label="Telos Keyboard"
-            android:permission="android.permission.BIND_INPUT_METHOD">
-            <intent-filter>
-                <action android:name="android.view.InputMethod" />
-            </intent-filter>
-            <meta-data
-                android:name="android.view.im"
-                android:resource="@xml/method" />
-        </service>
+
 
         <!-- === TELOS_PENDING_REVIEW_START: sandbox_cloning_and_bridge === -->
         <service

@@ -112,6 +112,7 @@ status HUDs and gauges) on opaque Material containers over the single frosted wa
 | **Telos Video** | Library, player, web streams, torrents, subtitles, Trakt; Media3 plus official NextLib FFmpeg decoders (AC3, DTS, TrueHD) inside Telos | [Video](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/video/) |
 | **Telos Radio** | Internet radio with station search, sleep timer and stream recording; Media3 plus official NextLib FFmpeg decoders | [Radio](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/radio/) |
 | **Telos Store** | Install and update apps from GitHub, F-Droid and more, manages the Telos apps, and lists Play Store apps when Play is installed. Opening Store with Play installed goes to Play updates, scans, and **Unfreeze and update in Play Store** thaws frozen apps, can block their network, and opens Play on the updates list | [Store](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/store/) |
+| **Keyboard** | Greek/English direct typing, Android setup and chooser, numeric editors, standard editor actions and private-input handling | [Keyboard](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/keyboard/) |
 | **Smart Freeze** | Freeze or hide apps through Shizuku, root, device owner or Island (a launcher feature in Settings, not a Telos app) | [Smart Freeze](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/freeze/) |
 
 ### Built-in Shizuku (no extra Shizuku app)
@@ -127,6 +128,9 @@ Smart Freeze can offer to import existing frozen apps when auto-freeze is enable
 Built-in app root Back backgrounds its document task, retaining its navigation and saveable state in Recents. Font-size controls keep stable gesture bounds while their preview and app text update during the drag; preferences are saved on release. Shared preference rows and category labels use Cyber-Tech chrome with opaque fills. Launcher cards, inner cards, app search pills, app bars and alert-dialog titles across launcher sheets, apps and detailed settings share Cyber-Tech chrome; transparent home treatments remain unplated. Tech pills retain readable text and minimum touch height. Changing an icon from the drawer avoids a redundant GPU upload/readback. Hardware-backed icon sources can also be recomposed into software-rendered previews and folder grids without recycling their shared source.
 
 Phone settings expose Android’s caller-identification/blocking role on supported devices and a battery-optimization settings shortcut. Incoming screening uses dedicated foreground-priority workers that expire after inactivity, one settings snapshot per decision, a separate response deadline, and exactly one response per call. No permanent polling service or wake lock is added; root and Shizuku are not required for this screening path. Actual latency remains device-dependent.
+
+Telos Keyboard setup offers both Android input settings and the input-method chooser. The IME installs Compose owners on its window, recreates input views safely, routes taps directly to its keys, uses numeric layouts for numeric editors and honors Search/Done/Send actions. Password/PIN and no-learning editors keep their privacy requirement independently of the manual incognito switch and clear transient word/clipboard state when editors change.
+
 
 
 

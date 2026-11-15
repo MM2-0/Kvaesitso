@@ -5,6 +5,8 @@ on:
   pull_request:
     paths:
       - 'services/freeze/**'
+      - 'services/icons/**'
+      - 'app/ui/src/main/java/de/mm20/launcher2/ui/keyboard/**'
       - 'services/comms/**'
       - 'core/preferences/**'
       - 'core/base/src/main/java/de/mm20/launcher2/icons/**'
@@ -86,19 +88,19 @@ jobs:
           profile: pixel_7
           disable-animations: true
           emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim
-          script: bash ./gradlew :app:ui:connectedDefaultDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=de.mm20.launcher2.ui.freeze.AutoFreezeImportDialogTest,de.mm20.launcher2.ui.freeze.RecentsBridgeTest,de.mm20.launcher2.ui.component.PerAppFontDragTest,de.mm20.launcher2.ui.component.HardwareIconRenderingTest --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process -Dorg.gradle.jvmargs=-Xmx2048m
+          script: bash ./gradlew :app:ui:connectedDefaultDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=de.mm20.launcher2.ui.freeze.AutoFreezeImportDialogTest,de.mm20.launcher2.ui.freeze.RecentsBridgeTest,de.mm20.launcher2.ui.component.PerAppFontDragTest,de.mm20.launcher2.ui.component.HardwareIconRenderingTest,de.mm20.launcher2.ui.component.KeyboardTouchTest,de.mm20.launcher2.ui.component.KeyboardImeTest --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process -Dorg.gradle.jvmargs=-Xmx2048m
       - name: Verify every freeze and live-font device regression ran
         if: always()
         run: |
           python3 - <<'PY'
           from pathlib import Path
           import xml.etree.ElementTree as ET
-          expected = {'importAndSkipRequireTheCorrespondingExplicitChoice', 'privilegedHelperRegistersAndReturnsACompleteSnapshot', 'inlineSliderKeepsDraggingAndPersistsOnlyOnRelease', 'dialogSliderKeepsDraggingWithoutMovingItsBounds', 'hardwarePreviewCanBeRenderedAgainAtAnotherSize', 'nestedFolderGridComposesHardwareLayersWithoutRecyclingTheSource'}
+          expected = {'importAndSkipRequireTheCorrespondingExplicitChoice', 'privilegedHelperRegistersAndReturnsACompleteSnapshot', 'inlineSliderKeepsDraggingAndPersistsOnlyOnRelease', 'dialogSliderKeepsDraggingWithoutMovingItsBounds', 'hardwarePreviewCanBeRenderedAgainAtAnotherSize', 'nestedFolderGridComposesHardwareLayersWithoutRecyclingTheSource', 'physicalKeyTapsReachGreekEnglishAndNumberKeys', 'firstImeWindowOpensAndTypesAgainAfterHideAndShow'}
           executed = set()
           failed = False
           for report in Path('app/ui/build/outputs/androidTest-results').rglob('TEST-*.xml'):
               for case in ET.parse(report).getroot().iter('testcase'):
-                  if case.get('classname') not in {'de.mm20.launcher2.ui.freeze.AutoFreezeImportDialogTest', 'de.mm20.launcher2.ui.freeze.RecentsBridgeTest', 'de.mm20.launcher2.ui.component.PerAppFontDragTest', 'de.mm20.launcher2.ui.component.HardwareIconRenderingTest'}:
+                  if case.get('classname') not in {'de.mm20.launcher2.ui.freeze.AutoFreezeImportDialogTest', 'de.mm20.launcher2.ui.freeze.RecentsBridgeTest', 'de.mm20.launcher2.ui.component.PerAppFontDragTest', 'de.mm20.launcher2.ui.component.HardwareIconRenderingTest', 'de.mm20.launcher2.ui.component.KeyboardTouchTest', 'de.mm20.launcher2.ui.component.KeyboardImeTest'}:
                       continue
                   executed.add(case.get('name'))
                   for tag in ('failure', 'error', 'skipped'):
@@ -110,7 +112,7 @@ jobs:
                           print('::error title=Freeze and fonts regression::' + message)
           assert expected <= executed, f'Missing tests: {expected - executed}'
           assert not failed, 'Freeze or live-font regression failed or was skipped'
-          print('::notice title=Freeze and fonts regression::All six enrollment, privileged Recents, continuous font-drag and hardware bitmap tests passed.')
+          print('::notice title=Freeze and fonts regression::All eight enrollment, privileged Recents, continuous font-drag, hardware bitmap, keyboard touch and real IME window tests passed.')
           PY
       - uses: actions/upload-artifact@v7
         if: always()
