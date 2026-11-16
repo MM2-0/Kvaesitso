@@ -135,5 +135,8 @@ class WallpaperSettingsScreenVM : ViewModel(), KoinComponent {
         }
     }
 
-    fun getActivationIntent(): Intent = wallpapersService.getActivationIntent()
+    fun getActivationIntent(): Intent {
+        wallpaperSettings.setLiveWallpaperWanted(true)
+        return wallpapersService.getActivationIntent()
+    }
 }
