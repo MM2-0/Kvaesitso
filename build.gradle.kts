@@ -60,6 +60,9 @@ allprojects {
             substitute(module("com.vitorpamplona.quartz:quartz"))
                 .using(module("com.github.vitorpamplona.quartz:quartz:009e4c8dcb23578638f10f66ebc42c04ebaf0c88"))
                 .because("Maven Central has no quartz 2.17.0; Telos APK uses the Amethyst JitPack pin")
+            substitute(module("com.google.crypto.tink:tink"))
+                .using(module("com.google.crypto.tink:tink-android:1.17.0"))
+                .because("Quartz pulls tink JVM; Telos already ships tink-android")
         }
     }
 
