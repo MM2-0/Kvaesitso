@@ -28,7 +28,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build F-Droid Release APK
-        run: ./gradlew :app:app:assembleFdroidRelease
+        run: ./gradlew :app:app:assembleFdroidRelease --no-configuration-cache --stacktrace
 
       - name: Collect Release APKs
         run: |

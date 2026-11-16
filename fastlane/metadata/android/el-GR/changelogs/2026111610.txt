@@ -1,0 +1,1 @@
+Διόρθωση build APK όταν πέφτει το JetBrains Space DNS. Το Kotlin έρχεται από Maven Central.

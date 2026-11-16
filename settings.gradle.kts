@@ -3,7 +3,9 @@ pluginManagement {
         google()
         mavenCentral()
         gradlePluginPortal()
-        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
+        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev") {
+            content { includeGroupByRegex("org\\.jetbrains\\.compose.*") }
+        }
     }
 }
 
@@ -13,9 +15,11 @@ dependencyResolutionManagement {
             content { includeGroup("info.guardianproject") }
         }
         maven("https://jitpack.io") { content { includeGroup("com.github.TeamNewPipe"); includeGroup("cz.adaptech.tesseract4android") } }
-        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
         google()
         mavenCentral()
+        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev") {
+            content { includeGroupByRegex("org\\.jetbrains\\.compose.*") }
+        }
     }
 }
 

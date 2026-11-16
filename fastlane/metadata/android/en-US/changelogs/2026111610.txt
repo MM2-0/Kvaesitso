@@ -1,0 +1,1 @@
+Fix release APK builds when JetBrains Space DNS fails; Kotlin comes from Maven Central.
