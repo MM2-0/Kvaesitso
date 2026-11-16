@@ -1,0 +1,5 @@
+# virtio data disk. fileencryption enables FBE (AES-256-XTS + AES-256-CTS filenames).
+# The lockscreen PIN/pattern/password is the synthetic password / CE unwrap key.
+
+/devices/pci0000:00/*/virtio*/block/vd* auto auto defaults voldmanaged=userdata:auto,encryptable=userdata,fileencryption=aes-256-xts:aes-256-cts:v2
+/dev/block/vda /data ext4 noatime,nosuid,nodev,nomblk_io_submit,errors=panic wait,check,quota,reservedsize=128M,formattable,encryptable=/dev/block/vda,fileencryption=aes-256-xts:aes-256-cts:v2,keydirectory=/metadata/vold/metadata_encryption

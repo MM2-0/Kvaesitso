@@ -12,6 +12,9 @@ based on" table in `readme.md`.
 | [Shizuku-Next](https://github.com/rushiranpise/Shizuku-Next) (server, starter, JNI; based on [RikkaApps/Shizuku](https://github.com/RikkaApps/Shizuku) and thedjchi's fork) | Apache-2.0 | Copyright of RikkaW / RikkaApps, thedjchi, rushiranpise and Shizuku-Next contributors. Vendored under `libs/shizuku-next`. |
 | [Kvaesitso](https://github.com/MM2-0/Kvaesitso) | GPL-3.0 | Copyright (C) 2021-2026 MM2-0 and the Kvaesitso contributors |
 | [Compose Multiplatform](https://github.com/JetBrains/compose-multiplatform) | Apache-2.0 | Copyright 2020-2026 JetBrains s.r.o. and Kotlin Programming Language contributors. Used only by `:desktop-linux` |
+| [QEMU](https://www.qemu.org/) (Windows builds from [qemu.weilnetz.de](https://qemu.weilnetz.de/)) | GPL-2.0 | Copyright the QEMU authors and Stefan Weil. Downloaded by `tools/windows-qemu-android/fetch-toolchain.sh` into gitignored `vendor/qemu`; not shipped in the Android APK. |
+| [scrcpy](https://github.com/Genymobile/scrcpy) | Apache-2.0 | Copyright Genymobile / Romain Vimont. Downloaded into gitignored `vendor/scrcpy` with platform-tools adb. |
+| [BlissOS x86](https://blissos.org/) / [android-x86](https://www.android-x86.org/) | Apache-2.0 / GPL | Guest ISO downloaded into gitignored `images/`; not redistributed by the Telos APK. |
 | [labwc](https://github.com/labwc/labwc) | GPL-2.0 | Host Wayland compositor for the Telos Linux session. Not bundled; the user installs the distro package. |
 | [Right Dialer (Goodwy/Dialer)](https://github.com/Goodwy/Dialer) | GPL-3.0 | Based by its author on [Simple Dialer](https://github.com/SimpleMobileTools/Simple-Dialer) and [Fossify Phone](https://github.com/FossifyOrg/Phone) |
 | [Secure Dialer](https://github.com/Secure-Phone-apps/Secure-Dialer) | GPL-3.0 | Copyright (C) 2026 MovStore |

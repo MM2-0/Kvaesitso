@@ -38,6 +38,10 @@ export const DeveloperGuideSidebar: DefaultTheme.SidebarItem[] = [
     link: '/docs/developer-guide/desktop-linux',
   },
   {
+    text: 'Windows QEMU + scrcpy',
+    link: '/docs/developer-guide/windows-qemu-scrcpy',
+  },
+  {
     text: 'Telos Desktop cold start',
     link: '/docs/developer-guide/desktop-startup',
   },

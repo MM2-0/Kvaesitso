@@ -1,0 +1,11 @@
+# Applied into the live ISO/initrd overlay (see patch-android-boot.sh).
+# File-based encryption: lockscreen credential unwraps CE keys on later boots.
+
+ro.setupwizard.mode=ENABLED
+ro.setupwizard.require_network=no
+ro.com.google.gms.setupwizard.optional=false
+persist.sys.setupwizard=ENABLED
+ro.crypto.state=encrypted
+ro.crypto.type=file
+ro.crypto.volume.filenames_mode=aes-256-cts
+persist.sys.telos.fbe=1

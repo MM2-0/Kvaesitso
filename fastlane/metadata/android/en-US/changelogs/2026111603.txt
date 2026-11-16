@@ -1,0 +1,1 @@
+Add a portable Windows QEMU + scrcpy runner (TelosAndroidVm.exe) that boots BlissOS x86_64 headless with a 16 GiB QCOW2 disk, first-boot Setup Wizard and lockscreen encryption hooks, then shows the guest in a borderless scrcpy window.

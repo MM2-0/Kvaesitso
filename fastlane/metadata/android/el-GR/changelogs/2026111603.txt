@@ -1,0 +1,1 @@
+Προσθήκη portable Windows QEMU + scrcpy runner (TelosAndroidVm.exe): headless BlissOS x86_64 με QCOW2 16 GiB, Setup Wizard και κλείδωμα/κρυπτογράφηση στο πρώτο boot, εμφάνιση του guest σε παράθυρο scrcpy χωρίς πλαίσιο.

@@ -1300,6 +1300,7 @@ adapted, the original license is respected.
 | [libarchive](https://libarchive.org) with [libarchive-android](https://github.com/zhanghai/libarchive-android) | BSD-2-Clause, Apache-2.0 | RAR and RAR5 reading in Telos Files (standard version only, prebuilt library, used unchanged) |
 | [Kvaesitso](https://github.com/MM2-0/Kvaesitso) | GPL-3.0 | The whole launcher, plugin SDK and architecture |
 | [Compose Multiplatform](https://github.com/JetBrains/compose-multiplatform) | Apache-2.0 | JVM desktop shell in `:desktop-linux` only (not packaged in the Android APK) |
+| [QEMU](https://www.qemu.org/) + [scrcpy](https://github.com/Genymobile/scrcpy) + [BlissOS](https://blissos.org/) | GPL-2.0 / Apache-2.0 / Apache-2.0 | Optional portable Windows guest runner in `tools/windows-qemu-android/` (gitignored vendor binaries; not in the APK) |
 | [BreezeX_Cursor](https://github.com/ful1e5/BreezeX_Cursor) / [Bibata_Cursor](https://github.com/ful1e5/Bibata_Cursor) | GPL-3.0-or-later | Optional Telos Desktop XCursor theme downloads (not bundled; user-initiated) |
 | [Papirus](https://github.com/PapirusDevelopmentTeam/papirus-icon-theme) / [Tela](https://github.com/vinceliuice/Tela-icon-theme) / [candy-icons](https://github.com/EliverLara/candy-icons) | GPL-3.0 | Optional Telos Desktop icon-theme catalog downloads (not bundled); CandyCyber chrome glyphs are Telos originals |
 | [QUIK](https://github.com/quik-sms/quik) | GPL-3.0 | Ideas for Telos Messages: pin, archive, delayed send, any-file attachments, speech-to-text (written in Compose, no QUIK code copied) |

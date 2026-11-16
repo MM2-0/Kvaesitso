@@ -1,0 +1,10 @@
+on early-fs
+    setprop ro.crypto.state encrypted
+    setprop ro.crypto.type file
+
+on post-fs-data
+    setprop ro.setupwizard.mode ENABLED
+    setprop persist.sys.setupwizard ENABLED
+
+on property:sys.boot_completed=1
+    exec_background -- /system/bin/sh /data/local/tmp/first-boot-lock.sh

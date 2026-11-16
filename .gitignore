@@ -314,6 +314,13 @@ sip-native/*/
 *.raw
 *.iso
 
+# Portable QEMU/scrcpy Windows vendor (downloaded, not committed)
+tools/windows-qemu-android/vendor/
+tools/windows-qemu-android/images/
+tools/windows-qemu-android/TelosAndroidVm.exe
+tools/windows-qemu-android/TelosAndroidVm.pdb
+tools/windows-qemu-android/.dotnet-sdk/
+
 # Binaries & portable builds
 /bin/
 /qemu/
