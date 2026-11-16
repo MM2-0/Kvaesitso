@@ -48,13 +48,19 @@ class MainActivity : AppCompatActivity() {
         // have their own lifecycle, so MainActivity is paused while they're up.
         @Volatile
         var isResumed: Boolean = false
-            private set
+            internal set
     }
 
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
+        AetherHostBridge.redirect(applicationContext, intent)?.let { target ->
+            startActivity(target)
+            finishAndRemoveTask()
+            return
+        }
+
 
         Log.d("ActivityLifecycle") { "MainActivity.onCreate $this" }
 
@@ -69,6 +75,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        if (AetherHostBridge.createHostIntent != null) return
         isResumed = true
 
         Log.d("ActivityLifecycle") { "MainActivity.onResume $this" }
@@ -92,8 +99,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onPause() {
+        if (AetherHostBridge.createHostIntent != null) {
+            super.onPause()
+            return
+        }
         isResumed = false
         Log.d("ActivityLifecycle") { "MainActivity.onPause $this" }
+
+        if (!Amethyst.isInitialized) {
+            super.onPause()
+            return
+        }
 
         Amethyst.instance.applicationIOScope.launch {
             LanguageTranslatorService.clear()
@@ -114,6 +130,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
+        if (AetherHostBridge.createHostIntent != null) {
+            super.onDestroy()
+            return
+        }
         Log.d("ActivityLifecycle") { "MainActivity.onDestroy $this" }
 
         BackgroundMedia.removeBackgroundControllerAndReleaseIt()

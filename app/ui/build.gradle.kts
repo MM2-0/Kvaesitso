@@ -24,6 +24,7 @@ android {
 
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
+        missingDimensionStrategy("distribution", "fdroid")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -51,13 +52,13 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
 
     kotlin {
         compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_11)
+            jvmTarget.set(JvmTarget.JVM_21)
             optIn.add("androidx.compose.ui.ExperimentalComposeUiApi")
             optIn.add("androidx.compose.foundation.ExperimentalFoundationApi")
             optIn.add("androidx.compose.ui.text.ExperimentalTextApi")
@@ -90,6 +91,7 @@ android {
 
 
 dependencies {
+    implementation("com.telos.amethyst:amethyst:1.21.0")
     implementation(project(":libs:appops-next"))
     implementation("cz.adaptech.tesseract4android:tesseract4android:4.9.0")
     // CameraX

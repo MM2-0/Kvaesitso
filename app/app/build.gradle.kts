@@ -84,6 +84,7 @@ android {
     defaultConfig {
         applicationId = "com.dimitris.telos"
         minSdk = libs.versions.minSdk.get().toInt()
+        missingDimensionStrategy("distribution", "fdroid")
         targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = System.getenv("VERSION_CODE_OVERRIDE")?.toIntOrNull() ?: releaseVersion.getProperty("versionCode").toInt()
         // Stable Android, desktop and GitHub tags share version.properties.
@@ -153,12 +154,12 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
     kotlin {
         compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_11)
+            jvmTarget.set(JvmTarget.JVM_21)
         }
     }
 
@@ -180,6 +181,7 @@ android {
 
 
 dependencies {
+    implementation("com.telos.amethyst:amethyst:1.21.0")
     implementation(libs.bundles.kotlin)
 
     // Android Jetpack & Optimization

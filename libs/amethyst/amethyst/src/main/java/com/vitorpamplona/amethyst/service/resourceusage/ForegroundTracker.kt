@@ -42,11 +42,19 @@ class ForegroundTracker : Application.ActivityLifecycleCallbacks {
     val isForeground: StateFlow<Boolean> = _isForeground.asStateFlow()
 
     override fun onActivityStarted(activity: Activity) {
+        if (activity.javaClass.name.startsWith("com.vitorpamplona.amethyst.")) embeddedHostStarted()
+    }
+
+    fun embeddedHostStarted() {
         startedActivities++
         _isForeground.value = startedActivities > 0
     }
 
     override fun onActivityStopped(activity: Activity) {
+        if (activity.javaClass.name.startsWith("com.vitorpamplona.amethyst.")) embeddedHostStopped()
+    }
+
+    fun embeddedHostStopped() {
         startedActivities = (startedActivities - 1).coerceAtLeast(0)
         _isForeground.value = startedActivities > 0
     }

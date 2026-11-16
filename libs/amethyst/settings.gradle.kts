@@ -38,7 +38,6 @@ dependencyResolutionManagement {
             "com.github.vitorpamplona.libschnorr256k1-kotlin", // quartz's pure-Kotlin secp256k1, from JitPack for now
         )
     repositories {
-        mavenLocal()
         google { content { jitpackOnly.forEach { excludeGroup(it) } } }
         mavenCentral { content { jitpackOnly.forEach { excludeGroup(it) } } }
         maven { url = uri("https://jitpack.io") }

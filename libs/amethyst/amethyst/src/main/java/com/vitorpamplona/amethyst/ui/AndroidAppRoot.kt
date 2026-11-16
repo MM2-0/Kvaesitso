@@ -68,6 +68,9 @@ object AndroidAppRoot : AppRoot {
     /** Android's window size is the configuration's, which already excludes system decorations. */
     @Composable
     override fun rememberScreenLayoutSpec(): ScreenLayoutSpec {
+        LocalAetherHostSize.current?.let {
+            return rememberScreenLayoutSpec(it.width.value.toInt(), it.height.value.toInt())
+        }
         val configuration = LocalConfiguration.current
         return rememberScreenLayoutSpec(configuration.screenWidthDp, configuration.screenHeightDp)
     }

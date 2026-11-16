@@ -122,6 +122,7 @@ class NotificationCatchUpWorker(
     }
 
     override suspend fun doWork(): Result {
+        Amethyst.initialize(applicationContext)
         Log.d(TAG, "Starting notification catch-up")
         runCatching { Amethyst.instance.resourceUsage.add(UsageKeys.workerRuns("notificationCatchUp"), 1) }
 

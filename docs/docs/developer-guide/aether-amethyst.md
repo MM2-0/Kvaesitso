@@ -24,10 +24,10 @@ initializes the runtime on IO and serializes concurrent initialization.
 A host can override `initializeOnCreate` only after the cold-entry paths below
 are handled; the current upstream application startup remains the default.
 
-## Required before enabling or releasing
+## Integration and remaining release checks
 
-- Connect the included build, dependency substitution and variant selection.
-- Connect LauncherApplication and the guarded Aether route to runtime startup.
+- Included build, dependency substitution and F-Droid variant selection are connected; combined APK compilation is under verification.
+- LauncherApplication defers client initialization; Aether opens the real client UI, and main-activity links/shares redirect through the existing Telos document host.
 - Ensure every cold worker, receiver, foreground service and auxiliary activity
   awaits initialization; preserve the keyless `:napplet` sandbox.
 - Forward upstream main-activity intents through the Telos virtual-app guard,
@@ -48,3 +48,12 @@ Initial GitHub Actions run `43934837665` built the Android library and executed
 restored; a fresh Actions run must verify the correction.
 
 No Telos host, device, account or release validation has passed for this integration.
+
+
+The corrected library run `43937277261` passed the build and host suite.
+The next revision adds an application-private storage context: client files and
+databases live under `noBackupFilesDir/aether`, while legacy preferences and
+Tink keysets use separate namespaces in `aether_private.xml`. Both Android backup
+formats explicitly exclude that file. Android instrumentation tests exercise real
+encrypted preferences, account isolation, editor reuse and SQLite paths. These
+new tests and the combined Telos build have not passed yet.

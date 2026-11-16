@@ -5,6 +5,9 @@ on:
   pull_request:
     paths:
       - 'libs/amethyst/**'
+      - 'app/app/**'
+      - 'app/ui/src/main/java/de/mm20/launcher2/ui/aether/**'
+      - 'settings.gradle.kts'
       - '.github/workflows/validate-aether.yml'
   workflow_dispatch:
 permissions:
@@ -73,3 +76,92 @@ jobs:
             /tmp/aether-build.log
             libs/amethyst/amethyst/build/reports/tests/
             libs/amethyst/amethyst/build/test-results/
+
+  telos-apk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: actions/setup-go@v7
+        with:
+          go-version-file: libs/appops-next/daemon/go.mod
+          cache-dependency-path: libs/appops-next/daemon/go.sum
+      - uses: gradle/actions/setup-gradle@v6
+        with:
+          cache-provider: basic
+          cache-read-only: false
+      - name: Compile the actual Telos APK with Aether embedded
+        shell: bash
+        run: |
+          set -o pipefail
+          ./gradlew :app:app:assembleDefaultDebug -Ptelos.abi=arm64-v8a \
+            --no-daemon --max-workers=1 --console=plain \
+            -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process \
+            '-Dorg.gradle.jvmargs=-Xmx7g -Dfile.encoding=UTF-8' 2>&1 | tee /tmp/telos-aether-build.log
+      - name: Report compilation failures
+        if: failure()
+        run: |
+          python3 - <<'PYCODE'
+          from pathlib import Path
+          log = Path('/tmp/telos-aether-build.log')
+          lines = log.read_text(errors='replace').splitlines() if log.exists() else ['No build log']
+          selected = [line for line in lines if line.startswith('e: ') or 'Could not resolve' in line or 'Could not find ' in line or 'Error:' in line]
+          for line in (selected[-30:] or lines[-30:]):
+              print('::error title=Telos Aether compile::' + line.replace('%', '%25').replace('\r', '%0D').replace('\n', '%0A'))
+          PYCODE
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: telos-aether-build-validation
+          if-no-files-found: ignore
+          path: /tmp/telos-aether-build.log
+
+  aether-storage-device:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: gradle/actions/setup-gradle@v6
+        with:
+          cache-provider: basic
+          cache-read-only: false
+      - name: Compile storage device tests
+        run: >-
+          ./gradlew -p libs/amethyst :amethyst:assembleFdroidDebugAndroidTest
+          --no-daemon --max-workers=1 --console=plain
+          -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process
+          '-Dorg.gradle.jvmargs=-Xmx6g -Dfile.encoding=UTF-8'
+      - name: Enable emulator acceleration
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          arch: x86_64
+          target: google_apis
+          profile: pixel_7
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim
+          script: >-
+            ./gradlew -p libs/amethyst :amethyst:connectedFdroidDebugAndroidTest
+            -Pandroid.testInstrumentationRunnerArguments.class=com.vitorpamplona.amethyst.AetherStorageContextTest
+            --no-daemon --max-workers=1 --console=plain -Dorg.gradle.parallel=false
+            -Pkotlin.compiler.execution.strategy=in-process '-Dorg.gradle.jvmargs=-Xmx6g -Dfile.encoding=UTF-8'
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: aether-storage-device-results
+          if-no-files-found: ignore
+          path: |
+            libs/amethyst/amethyst/build/outputs/androidTest-results/
+            libs/amethyst/amethyst/build/reports/androidTests/

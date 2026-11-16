@@ -59,6 +59,7 @@ class CalendarReminderWorker(
     params: WorkerParameters,
 ) : CoroutineWorker(appContext, params) {
     override suspend fun doWork(): Result {
+        Amethyst.initialize(applicationContext)
         runCatching { Amethyst.instance.resourceUsage.add(UsageKeys.workerRuns("calendarReminder"), 1) }
         val settings = calendarReminderSettings().load()
         if (!settings.enabled) {

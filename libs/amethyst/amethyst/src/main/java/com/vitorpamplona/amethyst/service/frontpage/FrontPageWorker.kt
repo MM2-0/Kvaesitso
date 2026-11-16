@@ -171,6 +171,7 @@ class FrontPageWorker(
     params: WorkerParameters,
 ) : CoroutineWorker(appContext, params) {
     override suspend fun doWork(): Result {
+        Amethyst.initialize(applicationContext)
         val account = inputData.getString(KEY_ACCOUNT) ?: return Result.success()
         val catchUp = inputData.getBoolean(KEY_CATCH_UP, false)
         val startedAt = TimeUtils.now()

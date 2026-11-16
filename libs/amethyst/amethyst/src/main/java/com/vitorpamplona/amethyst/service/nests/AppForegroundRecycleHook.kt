@@ -138,12 +138,16 @@ class AppForegroundRecycleHook(
     private val counter = AppForegroundCounter(backgroundThresholdMs, publishEvent, nowMillis)
 
     override fun onActivityStarted(activity: Activity) {
-        counter.onActivityStarted()
+        if (activity.javaClass.name.startsWith("com.vitorpamplona.amethyst.")) embeddedHostStarted()
     }
 
     override fun onActivityStopped(activity: Activity) {
-        counter.onActivityStopped()
+        if (activity.javaClass.name.startsWith("com.vitorpamplona.amethyst.")) embeddedHostStopped()
     }
+
+    fun embeddedHostStarted() = counter.onActivityStarted()
+
+    fun embeddedHostStopped() = counter.onActivityStopped()
 
     override fun onActivityCreated(
         activity: Activity,

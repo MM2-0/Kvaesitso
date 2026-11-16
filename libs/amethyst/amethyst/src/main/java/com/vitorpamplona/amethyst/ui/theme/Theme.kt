@@ -21,6 +21,8 @@
 package com.vitorpamplona.amethyst.ui.theme
 
 import android.app.Activity
+import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.SideEffect
@@ -44,6 +46,7 @@ import com.vitorpamplona.amethyst.commons.ui.platform.LocalAppServices
 import com.vitorpamplona.amethyst.commons.ui.richtext.LocalRichTextPlatform
 import com.vitorpamplona.amethyst.commons.ui.screen.DisplaySettings
 import com.vitorpamplona.amethyst.commons.ui.screen.collectDisplaySettings
+import com.vitorpamplona.amethyst.commons.ui.theme.DefaultTypography
 import com.vitorpamplona.amethyst.commons.ui.theme.AmethystMaterialTheme
 import com.vitorpamplona.amethyst.commons.ui.theme.amethystDarkColors
 import com.vitorpamplona.amethyst.commons.ui.theme.amethystLightColors
@@ -52,6 +55,7 @@ import com.vitorpamplona.amethyst.commons.ui.theme.isDarkTheme
 import com.vitorpamplona.amethyst.commons.ui.theme.transparentBackground
 import com.vitorpamplona.amethyst.ui.components.AndroidRichTextPlatform
 import com.vitorpamplona.amethyst.ui.components.FlavorTranslationPlatform
+import com.vitorpamplona.amethyst.ui.AetherRuntimeGate
 import com.vitorpamplona.amethyst.ui.note.platform.AndroidNotePlatform
 import com.vitorpamplona.amethyst.ui.platform.AndroidAppPlatform
 import com.vitorpamplona.amethyst.ui.platform.AndroidAppServices
@@ -64,8 +68,16 @@ import com.vitorpamplona.quartz.nip01Core.core.HexKey
 @Composable
 fun AmethystTheme(
     accountPubKey: HexKey? = null,
+    hostColors: ColorScheme? = null,
+    hostTypography: Typography? = null,
+    updateWindow: Boolean = true,
     content: @Composable () -> Unit,
 ) {
+    AetherRuntimeGate { ReadyAmethystTheme(accountPubKey, hostColors, hostTypography, updateWindow, content) }
+}
+
+@Composable
+private fun ReadyAmethystTheme(accountPubKey: HexKey?, hostColors: ColorScheme?, hostTypography: Typography?, updateWindow: Boolean, content: @Composable () -> Unit) {
     val uiPrefs = Amethyst.instance.uiPrefs.value
     val theme by uiPrefs.theme.collectAsStateWithLifecycle()
     val accentColor = collectAccentColor(Amethyst.instance.sessionManager, uiPrefs.accentColor, accountPubKey)
@@ -73,7 +85,13 @@ fun AmethystTheme(
     val fontSize by uiPrefs.fontSize.collectAsStateWithLifecycle()
     val displaySettings = collectDisplaySettings(Amethyst.instance.uiState)
 
-    AmethystTheme(theme, accentColor, fontFamily, fontSize, displaySettings, content)
+    AmethystTheme(
+        theme, accentColor, fontFamily, fontSize, displaySettings,
+        colorsOverride = hostColors.takeIf { theme == ThemeType.SYSTEM && accentColor == AccentColorType.PURPLE },
+        baseTypography = hostTypography ?: DefaultTypography,
+        updateWindow = updateWindow,
+        content = content,
+    )
 }
 
 /**
@@ -87,6 +105,9 @@ fun AmethystTheme(
     fontFamily: FontFamilyType = FontFamilyType.SYSTEM,
     fontSize: FontSizeType = FontSizeType.NORMAL,
     displaySettings: DisplaySettings = DisplaySettings(),
+    colorsOverride: ColorScheme? = null,
+    baseTypography: Typography = DefaultTypography,
+    updateWindow: Boolean = true,
     content: @Composable () -> Unit,
 ) {
     // Deliberately no UiModeManager.nightMode write: changing the device night mode needs
@@ -107,7 +128,9 @@ fun AmethystTheme(
         displaySettings = displaySettings,
         // ImageLoaderSetup registers the avatar thumbnail cache and the local Blossom bridge.
         profilePictureCache = true,
-        colors = colors,
+        colors = colorsOverride ?: colors,
+        typography = baseTypography,
+        systemFontFamily = baseTypography.bodyLarge.fontFamily,
     ) {
         // The platform halves of the shared note and rich-text renderers: media, LaTeX, payments,
         // link previews, the quoted-note card, the note types built on platform engines and the
@@ -124,7 +147,7 @@ fun AmethystTheme(
     }
 
     val view = LocalView.current
-    if (!view.isInEditMode) {
+    if (updateWindow && !view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
             val insets = WindowCompat.getInsetsController(window, view)

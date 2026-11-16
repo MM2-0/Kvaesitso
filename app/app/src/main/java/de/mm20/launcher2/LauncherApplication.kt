@@ -1,6 +1,7 @@
 package de.mm20.launcher2
 
-import android.app.Application
+import com.vitorpamplona.amethyst.Amethyst
+import com.vitorpamplona.amethyst.ui.AetherHostBridge
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -90,7 +91,9 @@ import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
 import kotlin.coroutines.CoroutineContext
 
-class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
+class LauncherApplication : Amethyst(), CoroutineScope, ImageLoaderFactory {
+
+    override val initializeOnCreate: Boolean = false
 
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + SupervisorJob()
@@ -102,6 +105,12 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
 
         // The video player's own process needs none of the launcher
         if (ProcessInfo.init(this)) return
+
+        AetherHostBridge.createHostIntent = { context ->
+            Intent().setClassName(context, SettingsDeepLinkContract.ACTIVITY_CLASS_NAME)
+                .putExtra(SettingsDeepLinkContract.EXTRA_ROUTE, SettingsDeepLinkContract.ROUTE_AETHER)
+        }
+
 
         // Self-optimize Telos bytecode via ART speed profile in background if updated
         de.mm20.launcher2.art.TelosSelfOptimizer.checkAndSelfCompileAsync(this, this)

@@ -22,6 +22,7 @@ package com.vitorpamplona.amethyst
 
 import android.app.Application
 import android.content.ComponentCallbacks2
+import android.content.Context
 import android.os.Build
 import com.vitorpamplona.amethyst.commons.favorites.FavoriteApp
 import com.vitorpamplona.amethyst.commons.service.QuicLogBridge
@@ -41,6 +42,7 @@ import com.vitorpamplona.quartz.utils.Log
 import com.vitorpamplona.quartz.utils.LogLevel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -112,6 +114,10 @@ open class Amethyst : Application() {
 
         val isInitialized: Boolean
             get() = clientReady
+
+        suspend fun initialize(context: Context) {
+            (AetherStorageContext.applicationBase(context) as Amethyst).initializeEmbedded()
+        }
     }
 
     /**
@@ -121,6 +127,8 @@ open class Amethyst : Application() {
      * otherwise touch the unset [instance].
      */
     private val isNappletSandbox by lazy { isNappletSandboxProcess() }
+
+    val foregroundRecycleHook = AppForegroundRecycleHook()
 
     private val initializationMutex = Mutex()
 
@@ -132,7 +140,7 @@ open class Amethyst : Application() {
         if (initializeOnCreate && !isNappletSandbox) initializeClient()
     }
 
-    suspend fun initializeEmbedded() = withContext(Dispatchers.IO) {
+    suspend fun initializeEmbedded() = withContext(NonCancellable + Dispatchers.IO) {
         check(!isNappletSandbox) { "The browser sandbox cannot initialize an account" }
         initializationMutex.withLock {
             if (!isInitialized) initializeClient()
@@ -167,7 +175,7 @@ open class Amethyst : Application() {
         MediaCallEventListener.verboseLogging = isDebug
         HttpClientEnvironment.isEmulator = isEmulator()
 
-        instance = AppModules(this)
+        instance = AppModules(AetherStorageContext(this))
 
         // Keeps the ~650 relay/ingest worker threads a cold start spawns from starving the UI
         // thread out of its frames — worth ~45% off time-to-first-paint on a release build.
@@ -215,7 +223,7 @@ open class Amethyst : Application() {
         // `NestForegroundService` doesn't fire there because the
         // network itself is still up. See `AppForegroundRecycleHook`'s
         // kdoc for the threshold rationale.
-        registerActivityLifecycleCallbacks(AppForegroundRecycleHook())
+        registerActivityLifecycleCallbacks(foregroundRecycleHook)
 
         // Foreground signal for the resource-usage ledger (fg/bg attribution
         // of bytes and connection-time). Main process only.

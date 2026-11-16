@@ -12,7 +12,17 @@ dependencyResolutionManagement {
         maven("https://raw.githubusercontent.com/guardianproject/gpmaven/master") {
             content { includeGroup("info.guardianproject") }
         }
-        maven("https://jitpack.io") { content { includeGroup("com.github.TeamNewPipe"); includeGroup("cz.adaptech.tesseract4android") } }
+        maven("https://jitpack.io") {
+            content {
+                includeGroup("com.github.TeamNewPipe")
+                includeGroup("cz.adaptech.tesseract4android")
+                includeGroup("com.github.UnifiedPush")
+                includeGroup("com.github.davotoula")
+                includeGroup("com.github.lincollincol")
+                includeGroup("com.github.rikkahub.jlatexmath-android")
+                includeGroupByRegex("com\\.github\\.vitorpamplona(\\..*)?")
+            }
+        }
         maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
         google()
         mavenCentral()
@@ -155,3 +165,10 @@ if (!isFdroidBuild) {
     include(":desktop-linux")
 }
 include(":services:keepasstl")
+
+// The full Aether client is compiled from source into the Telos APK.
+includeBuild("libs/amethyst") {
+    dependencySubstitution {
+        substitute(module("com.telos.amethyst:amethyst")).using(project(":amethyst"))
+    }
+}

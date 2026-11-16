@@ -7,6 +7,10 @@ plugins {
     alias(libs.plugins.googleKsp)
 }
 
+val hostVersion = java.util.Properties().apply {
+    rootProject.file("../../version.properties").takeIf { it.isFile }?.inputStream()?.use { load(it) }
+}
+
 android {
     namespace = "com.vitorpamplona.amethyst"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
@@ -14,8 +18,8 @@ android {
         minSdk = libs.versions.android.minSdk.get().toInt()
         consumerProguardFiles("proguard-rules.pro")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "VERSION_NAME", "\"${libs.versions.app.get()}\"")
-        buildConfigField("int", "VERSION_CODE", libs.versions.appCode.get())
+        buildConfigField("String", "VERSION_NAME", "\"${hostVersion.getProperty("versionName", libs.versions.app.get())}\"")
+        buildConfigField("int", "VERSION_CODE", hostVersion.getProperty("versionCode", libs.versions.appCode.get()))
         buildConfigField("String", "RELEASE_NOTES_ID", "\"bcaae03cfea84ac9f8f045202a3b8ee643c9fd51c9c674a87acadd4a03e16046\"")
         manifestPlaceholders["memtagMode"] = "async"
     }

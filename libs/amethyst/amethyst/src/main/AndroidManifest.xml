@@ -181,22 +181,7 @@
         android:maxSdkVersion="28"
         tools:ignore="ScopedStorage" />
 
-    <application
-        android:allowBackup="false"
-        android:name=".Amethyst"
-        android:dataExtractionRules="@xml/data_extraction_rules"
-        android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:enableOnBackInvokedCallback="true"
-        android:supportsRtl="true"
-        android:theme="@style/Theme.Amethyst"
-        android:largeHeap="true"
-        android:networkSecurityConfig="@xml/network_security_config"
-        android:hardwareAccelerated="true"
-        android:localeConfig="@xml/locales_config"
-        android:memtagMode="${memtagMode}"
-        tools:targetApi="34">
+    <application>
         <activity
             android:name=".ui.MainActivity"
             android:exported="true"
@@ -206,10 +191,7 @@
             android:supportsPictureInPicture="true"
             android:theme="@style/Theme.Amethyst">
 
-            <intent-filter android:label="Amethyst">
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
 
             <!-- Long-press the launcher icon to scan a QR code. The shortcut fires a VIEW intent
                  at nostr:scanqr, which the nostr-scheme filter below already catches, so it needs
@@ -642,13 +624,13 @@
             android:exported="false" />
 
         <provider
-            android:name="androidx.core.content.FileProvider"
+            android:name="com.vitorpamplona.amethyst.AetherFileProvider"
             android:authorities="${applicationId}.provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
+                android:resource="@xml/aether_file_paths" />
         </provider>
 
         <service

@@ -2,6 +2,7 @@
 <!-- Android 12+ cloud backup and device transfer. Keeps secrets, tokens and private recordings out. -->
 <data-extraction-rules>
     <cloud-backup>
+        <exclude domain="sharedpref" path="aether_private.xml" />
         <exclude domain="sharedpref" path="telos_vault_prefs.xml" />
         <exclude domain="sharedpref" path="nextcloud.xml" />
         <exclude domain="sharedpref" path="owncloud.xml" />
@@ -21,6 +22,7 @@
         <exclude domain="sharedpref" path="akou_recognition.xml" />
     </cloud-backup>
     <device-transfer>
+        <exclude domain="sharedpref" path="aether_private.xml" />
         <exclude domain="sharedpref" path="telos_vault_prefs.xml" />
         <exclude domain="sharedpref" path="nextcloud.xml" />
         <exclude domain="sharedpref" path="owncloud.xml" />

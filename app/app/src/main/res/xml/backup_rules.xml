@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Auto backup (Android 11 and lower). Keeps secrets, tokens and private recordings out of cloud backups. -->
 <full-backup-content>
+    <!-- Aether accounts and encryption keysets share this explicitly private file. -->
+    <exclude domain="sharedpref" path="aether_private.xml" />
     <exclude domain="sharedpref" path="telos_vault_prefs.xml" />
     <exclude domain="sharedpref" path="nextcloud.xml" />
     <exclude domain="sharedpref" path="owncloud.xml" />

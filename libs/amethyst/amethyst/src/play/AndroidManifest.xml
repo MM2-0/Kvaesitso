@@ -9,8 +9,7 @@
          LNP and ignore the unknown permission. -->
     <uses-permission android:name="android.permission.ACCESS_LOCAL_NETWORK" />
 
-    <application
-        android:name=".Amethyst">
+    <application>
 
         <service
             android:name=".service.notifications.PushNotificationReceiverService"

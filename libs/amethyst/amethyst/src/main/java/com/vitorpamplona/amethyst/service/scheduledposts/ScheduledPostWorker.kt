@@ -128,6 +128,7 @@ class ScheduledPostWorker(
     }
 
     override suspend fun doWork(): Result {
+        Amethyst.initialize(applicationContext)
         val nowSec = System.currentTimeMillis() / 1000
         Log.d(TAG) { "doWork() ENTER nowSec=$nowSec runAttempt=$runAttemptCount tags=$tags" }
         runCatching { Amethyst.instance.resourceUsage.add(UsageKeys.workerRuns("scheduledPost"), 1) }

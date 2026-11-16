@@ -20,6 +20,7 @@ val quartzJitpack =
         .takeIf { it.isNotBlank() && !providers.gradleProperty("quartzDir").isPresent }
 
 allprojects {
+    group = "com.telos.amethyst"
     version = appVersion
 
     configurations.configureEach {

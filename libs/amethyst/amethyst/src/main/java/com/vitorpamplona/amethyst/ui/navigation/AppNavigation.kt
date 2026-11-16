@@ -22,6 +22,7 @@ package com.vitorpamplona.amethyst.ui.navigation
 
 import android.content.Intent
 import android.net.Uri
+import com.vitorpamplona.amethyst.ui.AetherHostBridge
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -155,9 +156,10 @@ internal fun NavigateIfIntentRequested(
     accountSessionManager: AccountSessionManager,
 ) {
     val activity = LocalContext.current.getActivity()
+    val clientIntent = AetherHostBridge.clientIntent(activity.intent)
 
-    if (activity.intent.isShareAction()) {
-        val target = ShareIntentRouting.targetOf(activity.intent.component?.className)
+    if (clientIntent.isShareAction()) {
+        val target = ShareIntentRouting.targetOf(clientIntent.component?.className)
 
         // avoids restarting the destination screen when the intent is for the screen.
         // Microsoft's swift key sends Gifs as new actions.
@@ -183,13 +185,13 @@ internal fun NavigateIfIntentRequested(
             // The composer this share opened is already up (the activity was restored with the
             // share still in its intent). Consume the intent, so a later pass can't reopen the
             // composer once the user leaves it, and so the listener below takes over.
-            activity.intent.action = null
+            clientIntent.action = null
             return
         }
 
         // saves the intent to avoid processing again
-        val message = remember { activity.intent.sharedText() }
-        val attachments = remember { activity.intent.sharedStreamUris() }
+        val message = remember { clientIntent.sharedText() }
+        val attachments = remember { clientIntent.sharedStreamUris() }
 
         when (target) {
             ShareTarget.HIGHLIGHT -> {
@@ -220,13 +222,13 @@ internal fun NavigateIfIntentRequested(
         // e.g. into a chat via the one-shot picker). Clearing the action also
         // lets the else-branch register the onNewIntent listener for the rest
         // of this session.
-        activity.intent.action = null
+        clientIntent.action = null
     } else {
         var newAccount by remember { mutableStateOf<String?>(null) }
 
         var currentIntentNextPage by remember {
             mutableStateOf(
-                activity.intent
+                clientIntent
                     ?.data
                     ?.toString()
                     ?.ifBlank { null },
@@ -277,7 +279,8 @@ internal fun NavigateIfIntentRequested(
 
         DisposableEffect(nav, activity) {
             val consumer =
-                Consumer<Intent> { intent ->
+                Consumer<Intent> { incoming ->
+                    val intent = AetherHostBridge.clientIntent(incoming)
                     if (intent.isShareAction()) {
                         val target = ShareIntentRouting.targetOf(intent.component?.className)
                         val message = intent.sharedText()

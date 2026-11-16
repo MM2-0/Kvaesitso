@@ -49,6 +49,7 @@ class TrustNetworkSyncWorker(
     workerParams: WorkerParameters,
 ) : CoroutineWorker(appContext, workerParams) {
     override suspend fun doWork(): Result {
+        Amethyst.initialize(applicationContext)
         // A cold process has no accounts loaded yet: load the ones that can sign, like the
         // always-on notification service does.
         val cache = Amethyst.instance.accountsCache
