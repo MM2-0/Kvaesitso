@@ -1,0 +1,22 @@
+# Pinned upstream revisions for the cross-stack interop harness.
+#
+# These versions are what NativeMoqRelayHarness installs (via
+# `cargo install --version <v> --root <cache>`) and what our sidecar
+# crates pin against in Cargo.toml. Bump deliberately — a silent
+# upstream rev change can mask a regression.
+#
+# See: nestsClient/plans/2026-05-06-cross-stack-interop-test.md
+
+# https://github.com/kixelated/moq commit at the time this harness was
+# written. Used as the source-of-truth for the exact API shapes the
+# sidecar crates are coded against. Phase 1 doesn't compile against
+# upstream yet (sidecars are stubs); Phase 2 will pin the published
+# crate versions below to track this rev.
+KIXELATED_MOQ_GIT_REV=9e2461ee4941968f7b8c410e472448639d2aa4a3
+
+# Published crate versions on crates.io that come from the rev above.
+MOQ_RELAY_VERSION=0.10.25
+MOQ_TOKEN_CLI_VERSION=0.5.23
+HANG_VERSION=0.15.8
+MOQ_LITE_VERSION=0.15.15
+MOQ_NATIVE_VERSION=0.13

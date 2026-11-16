@@ -1,0 +1,346 @@
+[versions]
+# Amethyst app version — single source of truth consumed by both Android (amethyst/)
+# and Desktop (desktopApp/). `appCode` is the Android versionCode: a monotonic
+# integer that must increment on every release, even when `app` is unchanged.
+app = "1.21.0"
+appCode = "466"
+accompanistAdaptive = "0.37.3"
+# Pinned: 0.3.0 turns CacheMap.entries/keys/values into DeprecationLevel.ERROR (and
+# throws UnsupportedOperationException at runtime), which breaks quartz's appleMain
+# LargeCache/ConcurrentHashCache — they read those views directly and through the
+# stdlib Map operators (filter/map/groupBy/associate/count). Bumping needs a port to
+# the new forEach/forEachKey/forEachValue API, verified on an Apple target.
+composeMultiplatform = "1.12.2"
+activityCompose = "1.13.0"
+# 9.4.0's PerModuleBundleTask rejects an AAB entry whose name contains a colon, which every
+# .kotlin_module named after a Gradle project path has. Worked around in amethyst/build.gradle.kts
+# (stripColonNamedEntries) rather than by pinning to 9.3.1; drop that block if AGP fixes it.
+agp = "9.5.1"
+android-compileSdk = "37"
+android-minSdk = "26"
+android-targetSdk = "37"
+androidxJunit = "1.3.0"
+appcompat = "1.8.0"
+audiowaveform = "1.1.2"
+benchmark = "1.5.0"
+uiautomator = "2.4.0"
+biometricKtx = "1.4.0-alpha02"
+coil = "3.6.3"
+composeBom = "2026.09.00"
+tracingPerfetto = "1.0.1"
+coreKtx = "1.19.1"
+datastore = "1.3.0"
+espressoCore = "3.7.0"
+firebaseBom = "35.1.0"
+fragmentKtx = "1.9.1"
+gms = "4.5.0"
+healthConnect = "1.1.0"
+jackson = "2.22.4"
+jacksonModuleKotlin = "2.22.4"
+snakeyaml = "2.7"
+jna = "5.19.1"
+# Chromium (JCEF) for the desktop napplet host. jcefmaven is Apache-2.0; JCEF and CEF are BSD-3;
+# the native bundle it downloads on first use is Chromium, whose libcef.so includes FFmpeg (LGPL-2.1).
+jcefmaven = "152.0.6"
+# Hunspell spell checking for the desktop composers (pure Java, Apache-2.0).
+lucene = "10.6.0"
+javaKeyring = "1.0.4"
+kmpTorRuntime = "2.6.0"
+kmpTorResource = "409.5.0"
+kodeinEmoji = "2.5.0"
+junit = "4.13.2"
+kchesslib = "1.0.5"
+kotlin = "2.4.21"
+kotlinxCollectionsImmutable = "0.5.2"
+kotlinxCoroutinesCore = "1.11.0"
+kotlinxSerialization = "1.12.0"
+genaiProofreading = "1.0.0-beta1"
+genaiPrompt = "1.0.0-beta5"
+genaiRewriting = "1.0.0-beta1"
+genaiImageDescription = "1.0.0-beta1"
+languageId = "17.0.6"
+lifecycleRuntimeKtx = "2.11.0"
+lightcompressor-enhanced = "2.4.0"
+jlatexmath = "1.5"
+markdown = "4d3b3dd173"
+# What richtext-commonmark parses with, and the URL finder its autolink extension uses.
+# Keep in step with what those resolve to.
+commonmark = "0.26.0"
+autolink = "0.12.0"
+highlights = "1.1.0"
+okio = "3.18.2"
+# JetBrains material3 must track Compose Multiplatform's foundation: CMP 1.12.0 changed
+# the CustomStyle.applyStyle signature, so the stable 1.9.0 (and the 1.11.0-alpha07 that
+# kodein-emoji pulls in) crash at runtime with AbstractMethodError in OutlinedTextField.
+# 1.12.0-alpha03 is the first release built against foundation 1.12.x. Android keeps taking
+# androidx material3 from composeBom; this ref only drives desktop/iOS.
+material3 = "1.12.0-alpha03"
+media3 = "1.11.1"
+mockk = "1.14.11"
+kotlinx-coroutines-test = "1.11.0"
+# The Nostr protocol library, split out of this repo into vitorpamplona/quartz.
+# 2.13.0 reads and writes drss.io's listening progress as kind 30078 (DrssListenProgressAppDataEvent),
+# where drss moved it from 30054.
+quartzKmp = "2.17.0"
+# A quartz commit built by JitPack, used in place of the release above while Maven Central lacks it
+# (Central refused 2.17.0's upload for the month's release-size limit, which resets 2026-12-01).
+# Now: quartz main at vitorpamplona/quartz#110, on top of 2.17.0: the NIP-34 work, JVM bytecode target
+# 21, which every module here already targets, secp256k1 from libschnorr256k1-kotlin, also from JitPack
+# until it is on Maven Central, the Cashu nutzap-redeem fixes, and the trust network keyed by the whole
+# pubkey, not its first 128 bits, which let a made-up lookalike key take a real person's score. Quartz
+# main's jitpack.yml now also builds the iOS variants the metadata compiles need, so the pin is a plain
+# main commit. The root build swaps every quartz dependency for it, the bindings' included. Empty: the
+# release. -PquartzDir=../quartz still wins.
+quartzJitpack = "009e4c8dcb23578638f10f66ebc42c04ebaf0c88"
+# The two MLS bindings, split out of quartz into their own libraries: Marmot (vitorpamplona/marmot-kmp)
+# and cordn (vitorpamplona/cordn-kmp). Their current releases were built against quartz 2.7.3 and run on
+# the version above: 2.9.0 removed no public API they use.
+marmotKmp = "2.2.1"
+cordnKmp = "1.2.1"
+# Crypto primitives (vitorpamplona/crypto-kmp) come with quartz, the MLS engine (vitorpamplona/mls-kmp)
+# with marmot and cordn; commons also declares them because it imports them directly. Keep them at the
+# versions those libraries were built against.
+cryptoKmp = "2.1.0"
+# The fantasy-console cart runtime behind the note cart player (vitorpamplona/kiko-kmp): kiko runs a
+# cart, kiko-player plays it in real time (commons), kiko-compose shows it (commonsUI).
+kikoKmp = "0.2.4"
+mlsKmp = "1.3.0"
+# Pure-Kotlin QUIC v1 + HTTP/3 + WebTransport, split out of this repo into vitorpamplona/quic-kmp.
+quicKmp = "1.2.0"
+# Navigation 3, the Compose Multiplatform build (Apache-2.0): Android, desktop and iOS. The
+# ViewModel decorator scopes each back-stack entry's ViewModels; match it to the lifecycle version.
+navigation3 = "1.2.0"
+# What navigation3-ui 1.2.0 resolves to; commonsUI skikoMain uses it directly for PlatformBackHandler.
+jetbrainsNavigationevent = "1.1.0"
+lifecycleNavigation3 = "2.11.0"
+okhttp = "5.5.1"
+jsoup = "1.21.1"
+osmdroid = "6.1.20"
+runner = "1.7.0"
+# The JNI bindings must match the secp256k1-kmp version quartz is built against (its secp256k1Kmp).
+secp256k1KmpJniAndroid = "0.24.0"
+schnorr256k1Kmp = "1.0.5"
+securityCryptoKtx = "1.1.0"
+slf4j = "2.0.20"
+sonarqubeGradlePlugin = "7.5.0.8588"
+spotless = "8.10.4"
+streamWebrtcAndroid = "1.3.10"
+translate = "17.0.3"
+jetbrainsCompose = "1.12.2"
+unifiedpush = "3.0.10"
+playServicesCast = "23.0.0"
+vico-charts-compose = "3.3.1"
+zelory = "3.0.1"
+pdfbox = "3.0.8"
+zoomable = "2.16.0"
+composemediaplayer = "0.11.4"
+jcodec = "0.2.5"
+commonsImaging = "1.0.0-alpha6"
+thumbnailator = "0.4.21"
+zxing = "3.5.4"
+webkit = "1.18.0"
+# Cross-process UI embedding (SurfaceControlViewHost wrapper) for the in-app browser surface. Apache-2.0.
+privacysandboxUi = "1.0.0-alpha17"
+windowCoreAndroid = "1.5.1"
+workRuntime = "2.12.0"
+androidxCamera = "1.6.2"
+androidxCollection = "1.7.0"
+androidxProfileinstaller = "1.4.1"
+androidxExifinterface = "1.4.2"
+kotlinTest = "2.4.21"
+core = "1.7.0"
+sqlite = "2.7.1"
+ktor = "3.6.1"
+fourkoma = "1.2.0"
+
+# Phase 2 (Gemini App Functions) — both still pre-stable as of May 2026.
+# Scoped to the play flavor only (see amethyst/build.gradle.kts) so the
+# fdroid channel doesn't pull in Google alpha dependencies.
+# Held at alpha09, the last release with a separate `appfunctions-service`
+# (which pins `appfunctions` to exactly its own version). From alpha10 the
+# service lives in `appfunctions` itself, and beta01 needs a port: `@AppFunction`
+# became `@AppFunctionDeclaration` (with an explicit `isDescribedByKDoc`),
+# `AppFunctionContext` is gone, functions must sit in an `AppFunctionService`
+# marked `@AppFunctionServiceEntryPoint` that the app's manifest declares (the
+# library no longer merges one in), and `app_metadata`'s `description` is now
+# `instructions`. Drop `androidx-appfunctions-service` when porting, and check
+# on a device that Gemini still lists the functions.
+appfunctions = "1.0.0-alpha09"
+ksp = "2.3.13"
+
+[libraries]
+abedElazizShe-video-compressor-fork = { group = "com.github.davotoula", name = "LightCompressor-enhanced", version.ref = "lightcompressor-enhanced" }
+accompanist-adaptive = { group = "com.google.accompanist", name = "accompanist-adaptive", version.ref = "accompanistAdaptive" }
+accompanist-permissions = { group = "com.google.accompanist", name = "accompanist-permissions", version.ref = "accompanistAdaptive" }
+androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activityCompose" }
+androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+androidx-appfunctions = { group = "androidx.appfunctions", name = "appfunctions", version.ref = "appfunctions" }
+androidx-appfunctions-service = { group = "androidx.appfunctions", name = "appfunctions-service", version.ref = "appfunctions" }
+androidx-appfunctions-compiler = { group = "androidx.appfunctions", name = "appfunctions-compiler", version.ref = "appfunctions" }
+androidx-benchmark-junit4 = { group = "androidx.benchmark", name = "benchmark-junit4", version.ref = "benchmark" }
+androidx-benchmark-macro-junit4 = { group = "androidx.benchmark", name = "benchmark-macro-junit4", version.ref = "benchmark" }
+androidx-biometric-ktx = { group = "androidx.biometric", name = "biometric-ktx", version.ref = "biometricKtx" }
+androidx-camera-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "androidxCamera" }
+androidx-camera-core = { module = "androidx.camera:camera-core", version.ref = "androidxCamera" }
+androidx-camera-extensions = { module = "androidx.camera:camera-extensions", version.ref = "androidxCamera" }
+androidx-camera-view = { module = "androidx.camera:camera-view", version.ref = "androidxCamera" }
+androidx-camera-lifecycle = { module = "androidx.camera:camera-lifecycle", version.ref = "androidxCamera" }
+androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+androidx-compose-runtime-tracing = { group = "androidx.compose.runtime", name = "runtime-tracing" }
+androidx-tracing-perfetto = { group = "androidx.tracing", name = "tracing-perfetto", version.ref = "tracingPerfetto" }
+androidx-tracing-perfetto-binary = { group = "androidx.tracing", name = "tracing-perfetto-binary", version.ref = "tracingPerfetto" }
+androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation" }
+androidx-collection = { group = "androidx.collection", name = "collection", version.ref = "androidxCollection" }
+androidx-exifinterface = { group = "androidx.exifinterface", name = "exifinterface", version.ref = "androidxExifinterface" }
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-profileinstaller = { group = "androidx.profileinstaller", name = "profileinstaller", version.ref = "androidxProfileinstaller" }
+androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+androidx-fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", version.ref = "fragmentKtx" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidxJunit" }
+androidx-junit-ktx = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "androidxJunit" }
+androidx-lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "lifecycleRuntimeKtx" }
+androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
+androidx-lifecycle-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel", version.ref = "lifecycleRuntimeKtx" }
+androidx-lifecycle-viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycleRuntimeKtx" }
+androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
+androidx-material3-windowSize = { group = "androidx.compose.material3", name = "material3-window-size-class" }
+androidx-media3-datasource-okhttp = { group = "androidx.media3", name = "media3-datasource-okhttp", version.ref = "media3" }
+androidx-media3-exoplayer = { group = "androidx.media3", name = "media3-exoplayer", version.ref = "media3" }
+androidx-media3-exoplayer-hls = { group = "androidx.media3", name = "media3-exoplayer-hls", version.ref = "media3" }
+androidx-media3-session = { group = "androidx.media3", name = "media3-session", version.ref = "media3" }
+androidx-media3-ui-compose-material3 = { group = "androidx.media3", name = "media3-ui-compose-material3", version.ref = "media3" }
+jetbrains-navigation3-ui = { module = "org.jetbrains.androidx.navigation3:navigation3-ui", version.ref = "navigation3" }
+jetbrains-navigationevent-compose = { module = "org.jetbrains.androidx.navigationevent:navigationevent-compose", version.ref = "jetbrainsNavigationevent" }
+jetbrains-lifecycle-viewmodel-navigation3 = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-navigation3", version.ref = "lifecycleNavigation3" }
+androidx-runner = { group = "androidx.test", name = "runner", version.ref = "runner" }
+androidx-uiautomator = { group = "androidx.test.uiautomator", name = "uiautomator", version.ref = "uiautomator" }
+androidx-security-crypto-ktx = { group = "androidx.security", name = "security-crypto-ktx", version.ref = "securityCryptoKtx" }
+androidx-ui = { group = "androidx.compose.ui", name = "ui" }
+androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+audiowaveform = { group = "com.github.lincollincol", name = "compose-audiowaveform", version.ref = "audiowaveform" }
+coil-compose = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil" }
+coil-gif = { group = "io.coil-kt.coil3", name = "coil-gif", version.ref = "coil" }
+coil-svg = { group = "io.coil-kt.coil3", name = "coil-svg", version.ref = "coil" }
+coil-network-core = { group = "io.coil-kt.coil3", name = "coil-network-core", version.ref = "coil" }
+coil-okhttp = { group = "io.coil-kt.coil3", name = "coil-network-okhttp", version.ref = "coil" }
+coil-video = { group = "io.coil-kt.coil3", name = "coil-video", version.ref = "coil" }
+commons-imaging = { group = "org.apache.commons", name = "commons-imaging", version.ref = "commonsImaging" }
+thumbnailator = { group = "net.coobird", name = "thumbnailator", version.ref = "thumbnailator" }
+slf4j-nop = { module = "org.slf4j:slf4j-nop", version.ref = "slf4j" }
+composemediaplayer = { group = "io.github.kdroidfilter", name = "composemediaplayer", version.ref = "composemediaplayer" }
+composemediaplayer-audio = { group = "io.github.kdroidfilter", name = "composemediaplayer-audio", version.ref = "composemediaplayer" }
+jcodec = { group = "org.jcodec", name = "jcodec", version.ref = "jcodec" }
+jcodec-javase = { group = "org.jcodec", name = "jcodec-javase", version.ref = "jcodec" }
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
+firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging" }
+jetbrains-compose-components-resources = { module = "org.jetbrains.compose.components:components-resources", version.ref = "jetbrainsCompose" }
+jetbrains-compose-foundation = { module = "org.jetbrains.compose.foundation:foundation", version.ref = "jetbrainsCompose" }
+jetbrains-compose-material3 = { module = "org.jetbrains.compose.material3:material3", version.ref = "material3" }
+jetbrains-compose-runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "jetbrainsCompose" }
+jetbrains-compose-ui = { module = "org.jetbrains.compose.ui:ui", version.ref = "jetbrainsCompose" }
+jetbrains-compose-ui-tooling = { module = "org.jetbrains.compose.ui:ui-tooling", version.ref = "jetbrainsCompose" }
+jetbrains-compose-ui-tooling-preview = { module = "org.jetbrains.compose.ui:ui-tooling-preview", version.ref = "jetbrainsCompose" }
+jetbrains-compose-ui-test-junit4 = { module = "org.jetbrains.compose.ui:ui-test-junit4", version.ref = "jetbrainsCompose" }
+google-mlkit-genai-proofreading = { group = "com.google.mlkit", name = "genai-proofreading", version.ref = "genaiProofreading" }
+google-mlkit-genai-prompt = { group = "com.google.mlkit", name = "genai-prompt", version.ref = "genaiPrompt" }
+google-mlkit-genai-rewriting = { group = "com.google.mlkit", name = "genai-rewriting", version.ref = "genaiRewriting" }
+google-mlkit-genai-image-description = { group = "com.google.mlkit", name = "genai-image-description", version.ref = "genaiImageDescription" }
+google-mlkit-language-id = { group = "com.google.mlkit", name = "language-id", version.ref = "languageId" }
+google-mlkit-translate = { group = "com.google.mlkit", name = "translate", version.ref = "translate" }
+jackson-module-kotlin = { group = "com.fasterxml.jackson.module", name = "jackson-module-kotlin", version.ref = "jacksonModuleKotlin" }
+jackson-dataformat-yaml = { group = "com.fasterxml.jackson.dataformat", name = "jackson-dataformat-yaml", version.ref = "jackson" }
+snakeyaml = { group = "org.yaml", name = "snakeyaml", version.ref = "snakeyaml" }
+apksig = { group = "com.android.tools.build", name = "apksig", version.ref = "agp" }
+jna = { group = "net.java.dev.jna", name = "jna", version.ref = "jna" }
+jcefmaven = { group = "me.friwi", name = "jcefmaven", version.ref = "jcefmaven" }
+lucene-analysis-common = { group = "org.apache.lucene", name = "lucene-analysis-common", version.ref = "lucene" }
+java-keyring = { group = "com.github.javakeyring", name = "java-keyring", version.ref = "javaKeyring" }
+kmp-tor-runtime = { group = "io.matthewnelson.kmp-tor", name = "runtime", version.ref = "kmpTorRuntime" }
+kmp-tor-resource-exec-tor = { group = "io.matthewnelson.kmp-tor", name = "resource-exec-tor", version.ref = "kmpTorResource" }
+kodein-emoji-compose-m3 = { group = "org.kodein.emoji", name = "emoji-compose-m3", version.ref = "kodeinEmoji" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+kotlinx-collections-immutable = { group = "org.jetbrains.kotlinx", name = "kotlinx-collections-immutable", version.ref = "kotlinxCollectionsImmutable" }
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutinesCore" }
+kotlinx-coroutines-swing = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", version.ref = "kotlinxCoroutinesCore" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
+kotlinx-serialization-cbor = { module = "org.jetbrains.kotlinx:kotlinx-serialization-cbor", version.ref = "kotlinxSerialization" }
+jlatexmath-android = { module = "com.github.rikkahub.jlatexmath-android:jlatexmath", version.ref = "jlatexmath" }
+jlatexmath-font-greek = { module = "com.github.rikkahub.jlatexmath-android:jlatexmath-font-greek", version.ref = "jlatexmath" }
+jlatexmath-font-cyrillic = { module = "com.github.rikkahub.jlatexmath-android:jlatexmath-font-cyrillic", version.ref = "jlatexmath" }
+markdown-commonmark = { group = "com.github.vitorpamplona.compose-richtext", name = "richtext-commonmark", version.ref = "markdown" }
+markdown-ui = { group = "com.github.vitorpamplona.compose-richtext", name = "richtext-ui", version.ref = "markdown" }
+markdown-ui-material3 = { group = "com.github.vitorpamplona.compose-richtext", name = "richtext-ui-material3", version.ref = "markdown" }
+markdown-autolink = { group = "org.nibor.autolink", name = "autolink", version.ref = "autolink" }
+markdown-commonmark-core = { group = "org.commonmark", name = "commonmark", version.ref = "commonmark" }
+highlights = { group = "dev.snipme", name = "highlights", version.ref = "highlights" }
+okio = { group = "com.squareup.okio", name = "okio", version.ref = "okio" }
+mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
+mockk-android = { group = "io.mockk", name = "mockk-android", version.ref = "mockk" }
+kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinx-coroutines-test"}
+quartz = { module = "com.vitorpamplona.quartz:quartz", version.ref = "quartzKmp" }
+marmot = { module = "com.vitorpamplona.marmot:marmot", version.ref = "marmotKmp" }
+marmot-quic = { module = "com.vitorpamplona.marmot:marmot-quic", version.ref = "marmotKmp" }
+cordn = { module = "com.vitorpamplona.cordn:cordn", version.ref = "cordnKmp" }
+crypto = { module = "com.vitorpamplona.crypto:crypto", version.ref = "cryptoKmp" }
+kiko = { module = "com.vitorpamplona.kiko:kiko", version.ref = "kikoKmp" }
+kiko-compose = { module = "com.vitorpamplona.kiko:kiko-compose", version.ref = "kikoKmp" }
+kiko-player = { module = "com.vitorpamplona.kiko:kiko-player", version.ref = "kikoKmp" }
+mls-kmp = { module = "com.vitorpamplona.mls:mls", version.ref = "mlsKmp" }
+quic = { module = "com.vitorpamplona.quic:quic", version.ref = "quicKmp" }
+kchesslib = { module = "io.github.cvb941:kchesslib", version.ref = "kchesslib" }
+okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
+okhttpCoroutines = { group = "com.squareup.okhttp3", name = "okhttp-coroutines", version.ref = "okhttp" }
+jsoup = { group = "org.jsoup", name = "jsoup", version.ref = "jsoup" }
+osmdroid-android = { group = "org.osmdroid", name = "osmdroid-android", version.ref = "osmdroid" }
+ktor-server-core = { group = "io.ktor", name = "ktor-server-core", version.ref = "ktor" }
+ktor-server-cio = { group = "io.ktor", name = "ktor-server-cio", version.ref = "ktor" }
+ktor-server-websockets = { group = "io.ktor", name = "ktor-server-websockets", version.ref = "ktor" }
+fourkoma = { module = "cc.ekblad:4koma", version.ref = "fourkoma" }
+secp256k1-kmp-jni-android = { group = "fr.acinq.secp256k1", name = "secp256k1-kmp-jni-android", version.ref = "secp256k1KmpJniAndroid" }
+secp256k1-kmp-jni-jvm = { group = "fr.acinq.secp256k1", name = "secp256k1-kmp-jni-jvm", version.ref = "secp256k1KmpJniAndroid" }
+schnorr256k1-kmp = { group = "com.vitorpamplona.schnorr256k1", name = "schnorr256k1-kmp", version.ref = "schnorr256k1Kmp" }
+# Build-time only, gated behind the local.properties sonar opt-in in the root build script (LGPL-3.0).
+sonarqube-gradle-plugin = { group = "org.sonarsource.scanner.gradle", name = "sonarqube-gradle-plugin", version.ref = "sonarqubeGradlePlugin" }
+stream-webrtc-android = { group = "io.getstream", name = "stream-webrtc-android", version.ref = "streamWebrtcAndroid" }
+unifiedpush = { group = "com.github.UnifiedPush", name = "android-connector", version.ref = "unifiedpush" }
+play-services-cast-framework = { group = "com.google.android.gms", name = "play-services-cast-framework", version.ref = "playServicesCast" }
+vico-charts-compose = { group = "com.patrykandpatrick.vico", name = "compose", version.ref = "vico-charts-compose" }
+androidx-webkit = { group = "androidx.webkit", name = "webkit", version.ref = "webkit" }
+androidx-privacysandbox-ui-core = { group = "androidx.privacysandbox.ui", name = "ui-core", version.ref = "privacysandboxUi" }
+androidx-privacysandbox-ui-client = { group = "androidx.privacysandbox.ui", name = "ui-client", version.ref = "privacysandboxUi" }
+androidx-privacysandbox-ui-provider = { group = "androidx.privacysandbox.ui", name = "ui-provider", version.ref = "privacysandboxUi" }
+vico-charts-m3 = { group = "com.patrykandpatrick.vico", name = "compose-m3", version.ref = "vico-charts-compose" }
+zelory-image-compressor = { group = "id.zelory", name = "compressor", version.ref = "zelory" }
+pdfbox = { group = "org.apache.pdfbox", name = "pdfbox", version.ref = "pdfbox" }
+zoomable = { group = "net.engawapg.lib", name = "zoomable", version.ref = "zoomable" }
+zxing = { group = "com.google.zxing", name = "core", version.ref = "zxing" }
+androidx-window-core-android = { group = "androidx.window", name = "window-core-android", version.ref = "windowCoreAndroid" }
+kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
+kotlin-test = { group = "org.jetbrains.kotlin", name = "kotlin-test", version.ref = "kotlinTest" }
+androidx-core = { group = "androidx.test", name = "core", version.ref = "core" }
+androidx-sqlite = { group = "androidx.sqlite", name = "sqlite", version.ref = "sqlite" }
+androidx-sqlite-bundled-jvm = { module = "androidx.sqlite:sqlite-bundled-jvm", version.ref = "sqlite" }
+androidx-work-runtime-ktx = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "workRuntime" }
+androidx-health-connect-client = { group = "androidx.health.connect", name = "connect-client", version.ref = "healthConnect" }
+
+[plugins]
+androidApplication = { id = "com.android.application", version.ref = "agp" }
+androidBenchmark = { id = "androidx.benchmark", version.ref = "benchmark" }
+androidLibrary = { id = "com.android.library", version.ref = "agp" }
+androidTest = { id = "com.android.test", version.ref = "agp" }
+androidxBaselineProfile = { id = "androidx.baselineprofile", version.ref = "benchmark" }
+diffplugSpotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
+googleServices = { id = "com.google.gms.google-services", version.ref = "gms" }
+jetbrainsKotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+jetbrainsComposeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+serialization = { id = 'org.jetbrains.kotlin.plugin.serialization', version.ref = 'kotlin' }
+kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+androidKotlinMultiplatformLibrary = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
+composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "composeMultiplatform" }
+googleKsp = { id = "com.google.devtools.ksp", version.ref = "ksp" }

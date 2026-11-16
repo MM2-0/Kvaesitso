@@ -1,0 +1,26 @@
+[workspace]
+resolver = "2"
+members = [
+    "hang-listen",
+    "hang-publish",
+    "udp-loss-shim",
+]
+
+# Phase 1 ships these as stub binaries that compile cleanly but do
+# nothing. Phase 2 fills in real implementations against `hang` /
+# `moq-lite` / `web-transport-quinn`. Versions tracked in REV.
+[workspace.package]
+version = "0.0.1"
+edition = "2024"
+publish = false
+license = "MIT OR Apache-2.0"
+
+[workspace.dependencies]
+anyhow = "1"
+clap = { version = "4", features = ["derive"] }
+tokio = { version = "1", features = ["full"] }
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+strip = true

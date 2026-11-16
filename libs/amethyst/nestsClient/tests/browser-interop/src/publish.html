@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>nests browser-interop publisher</title>
+<style>
+  body { font: 14px monospace; padding: 8px; }
+  body[data-state="error"] { background: #fdd; }
+  body[data-state="done"] { background: #dfd; }
+  body[data-state="publishing"] { background: #ffe; }
+</style>
+</head>
+<body data-state="init">
+<h1>nests-browser-interop / publish</h1>
+<div id="status">init</div>
+<script type="module" src="./publish.js"></script>
+</body>
+</html>

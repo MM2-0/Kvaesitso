@@ -1,0 +1,3515 @@
+{
+ "identified": [
+  {
+   "kind": 37195,
+   "name": "FIPS Overlay Advert",
+   "app_or_protocol": "FIPS (Free Internetworking Peering System) mesh network; most publishers are Iris web clients via fips-ts",
+   "spec_url": "https://github.com/jmcorgan/fips/blob/master/docs/reference/nostr-events.md",
+   "source_urls": [
+    "https://github.com/jmcorgan/fips/blob/master/docs/reference/nostr-events.md",
+    "https://github.com/jmcorgan/fips",
+    "https://github.com/mmalmi/fips-ts/releases"
+   ],
+   "what_it_is": "Addressable 'overlay advert' that a FIPS node signs with its identity key (the Nostr key is the network identity) to publish how it can be reached. Tags: d and protocol = the rendezvous app id (spec default 'fips-overlay-v1'; 19/20 samples use 'iris-client'), version '1', NIP-40 expiration ~1h. Content JSON {identifier, version, endpoints:[{transport: udp|tcp|tor|webrtc, addr}], stunServers?, signalRelays?}. NAT hole-punch signaling then runs over NIP-59 gift-wrapped kind 21059 to the peer's kind 10050 inbox relays.",
+   "encrypted": false,
+   "confidence": "high",
+   "amethyst_relevance": "protocol-infra",
+   "suggested_quartz_package": null,
+   "notes": "Largest by authors in this batch (2,410 authors / 2,825 events) — almost all are Iris browser sessions using protocol='iris-client' with transport 'webrtc' and addr = the node's compressed secp256k1 pubkey. Pure P2P signalling noise for a social client; Amethyst only needs it if it ever joins the FIPS mesh. Sibling kind 37196 is the paid exit-route offer.",
+   "events": 2825,
+   "authors": 2410,
+   "class": "addressable"
+  },
+  {
+   "kind": 1060,
+   "name": "Double Ratchet message",
+   "app_or_protocol": "nostr-double-ratchet / Iris Chat (chat.iris.to), NIP-117 draft",
+   "spec_url": "https://github.com/nostr-protocol/nips/pull/1813",
+   "source_urls": [
+    "https://github.com/mmalmi/nostr-double-ratchet/blob/main/rust/crates/nostr-double-ratchet/src/wire.rs",
+    "https://github.com/nostr-protocol/nips/pull/1813"
+   ],
+   "what_it_is": "Signal-style Double Ratchet DM message (MESSAGE_EVENT_KIND = 1060). Signed by an ephemeral ratchet key (not the user's identity key); a `header` tag carries the NIP-44-encrypted ratchet header (next sender pubkey, message counters), a `p` tag points at the recipient's current ratchet pubkey, and content is the ratcheted ciphertext of an inner unsigned rumor (kind 14 chat, 7 reaction, 15 receipt, 25 typing, 10448 chat settings). Invites travel as kind 30078 (d `double-ratchet/invites`) and invite responses as kind 1059.",
+   "encrypted": true,
+   "confidence": "high",
+   "amethyst_relevance": "protocol-infra",
+   "suggested_quartz_package": "nip117DoubleRatchet/",
+   "notes": "Largest kind in the batch (93k events, 1.4k authors). Each author is a throwaway ratchet key, so the author count says little about the number of real users. The same kind is also used for group sender-key messages. Supporting it would make Amethyst interoperate with Iris Chat DMs. It needs the ratchet state machine, not just an event class.",
+   "events": 93095,
+   "authors": 1444,
+   "class": "regular"
+  },
+  {
+   "kind": 4333,
+   "name": "Unidentified fixed-size ephemeral-key packets",
+   "app_or_protocol": "unidentified",
+   "spec_url": null,
+   "source_urls": [
+    "SCRATCH/report/samples/kind-4333.jsonl",
+    "GitHub code search for 4333 + nostr (only UUID false positives)"
+   ],
+   "what_it_is": "Every event is signed by a fresh throwaway key (637 events / 637 authors), carries one `z` tag (16-byte hex, only a handful of distinct values shared across authors) and an `expiration` exactly 121 s after created_at. The content is NOT NIP-44: it is a fixed 347-byte binary frame `0x01 | 16 random bytes | the 16-byte z value | 4-byte big-endian expiration timestamp | 0x03 0x01 0x33 | 307 opaque bytes`. Batches for each z value arrive in lockstep every 1-2 minutes, which looks like mixnet/cover-traffic or a rendezvous beacon keyed by `z`.",
+   "encrypted": true,
+   "confidence": "low",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "Highest author count in the batch, but that count is inflated because every packet uses a new key. The crawl shape classifier labeled the content nip44, but the version byte is 0x01 and the header is cleartext. 4 events carried a `t` tag (none in the samples).",
+   "events": 637,
+   "authors": 637,
+   "class": "regular"
+  },
+  {
+   "kind": 7368,
+   "name": "Fact Op (FIPS peer link-quality rating)",
+   "app_or_protocol": "nostr-identity / nostr-social-memory fact ops (mmalmi), published by nostr-vpn nodes on the FIPS mesh",
+   "spec_url": "https://github.com/mmalmi/nostr-social-graph/blob/master/rust/crates/nostr-identity/src/lib.rs",
+   "source_urls": [
+    "https://github.com/mmalmi/nostr-social-graph/blob/master/rust/crates/nostr-identity/src/lib.rs",
+    "https://github.com/mmalmi/nostr-social-graph/blob/master/rust/crates/nostr-social-memory/src/nostr_event.rs",
+    "https://github.com/mmalmi/nostr-vpn/blob/master/crates/nostr-vpn-cli/src/main/paid_exit/rating_tests.rs",
+    "https://github.com/jmcorgan/fips",
+    "https://fips.network"
+   ],
+   "what_it_is": "Generic append-only 'fact operation' event (FACT_OP_KIND = 7368; addressable snapshots are 37368): the subject is a UUID in an ['i', <uuid>, 'subject'] tag, every other tag name is a predicate (type, schema, created_at, rater, subject, rating, min_rating, max_rating, scope, sample_count, window_end, reason, tag), and the referenced npubs and scope strings are repeated as extra 'i' tags so they can be filtered. Content is empty. All the observed traffic is type=rating, scope=fips.peer: each nostr-vpn/FIPS mesh node rates its direct peers 0-100 from measured link quality (the reason tag holds e.g. 'loss=0.006 delivery=1.000 etx=1.01 srtt_ms=840 goodput_bps=782') and republishes this every few seconds. nostr-vpn reads these to rank peers and paid exits ('best-rated').",
+   "encrypted": false,
+   "confidence": "high",
+   "amethyst_relevance": "protocol-infra",
+   "suggested_quartz_package": "nostrIdentityFacts/ (or ignore)",
+   "notes": "The busiest unsupported kind (~120k/day, 535 authors). It is machine telemetry: one event per peer link per interval, signed by mesh nodes whose keys are also FIPS network addresses. No merged NIP or open NIP PR was found; the only definition is the Rust constant. It does not overlap with NIP-85 or NIP-32. Two samples carried NIP-44 content and 'p' tags (probably another fact type). For Amethyst it is mostly a relay-load and storage concern: don't render it, and maybe add a known-kind stub so the relay/store layer and the `amy` census can name it.",
+   "events": 122548,
+   "authors": 537,
+   "class": "regular"
+  },
+  {
+   "kind": 30277,
+   "name": "Full Throttle rider level",
+   "app_or_protocol": "'Full Throttle' motorcycle racing game (unidentified web/mobile game)",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "Per-player progress/leaderboard record for a motorcycle racing game. Addressable with fixed d='full-throttle-level' and t='full-throttle-level-v1'; content JSON {v:1, name:'Rider####', mi:<miles ridden>, lv:<level>, c:<club?|null>}. Each player key keeps one latest record.",
+   "encrypted": false,
+   "confidence": "medium",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "234 authors, all throwaway-looking keys with auto names 'RiderNNNN'. Same authors publish kind 4277 (t='full-throttle-review-v1', in-game star rating with bike/map names like 'BMW M 1000 RR', 'Neon City', 'Dallas Freeway'). No public source/repo found; game identity is inferred from payloads only.",
+   "events": 252,
+   "authors": 234,
+   "class": "addressable"
+  },
+  {
+   "kind": 10377,
+   "name": "PlanX node beacon",
+   "app_or_protocol": "unidentified ('planx' network)",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "Replaceable presence beacon. Single tag ['i','planx:<uuid-like node id starting 2001002a->'] (NIP-73-style external id). Content JSON {payload:{type:'beacon', msgId, from:<node id>, to:'all', timestamp(ms), data:{roles:['server','client'], generation, status?:'leave'}}, signature:<base64 64-byte sig>} — an app-level signature inside the Nostr event, i.e. the Nostr event is just a carrier for a mesh/overlay node announcement.",
+   "encrypted": false,
+   "confidence": "low",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "214 authors. Node ids look like IPv6-prefix-derived identifiers (2001:002a…). No public source found; ignore.",
+   "events": 318,
+   "authors": 214,
+   "class": "replaceable"
+  },
+  {
+   "kind": 30789,
+   "name": "Population Census",
+   "app_or_protocol": "fount (AI character platform by steve02081504), NIP-F5 draft",
+   "spec_url": "https://github.com/nostr-protocol/nips/pull/2453",
+   "source_urls": [
+    "https://github.com/nostr-protocol/nips/pull/2453"
+   ],
+   "what_it_is": "Probabilistic node census for P2P overlays. Each node publishes at most one event per time window with inclusion probability p, and readers use a Horvitz-Thompson estimator to estimate how many nodes are online. Tags are `t`=<network scope> ('fount') and `x`='census', with no `d` tag (addressable at d=''). In the wild the content is base64 of JSON {nodeHash,nodePubKey,ts,p,sig}, where the inner sig is the network's own node signature.",
+   "encrypted": false,
+   "confidence": "high",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "The NIP says content is plain JSON, but the observed events base64-wrap it. 4 events in the census have a `d` tag and NIP-44 content, which is unrelated reuse of the kind.",
+   "events": 341,
+   "authors": 176,
+   "class": "addressable"
+  },
+  {
+   "kind": 30787,
+   "name": "fount P2P network advert",
+   "app_or_protocol": "fount (steve02081504/fount) via @steve02081504/fount-p2p",
+   "spec_url": "https://github.com/steve02081504/fount",
+   "source_urls": [
+    "https://registry.npmjs.org/@steve02081504/fount-p2p (v0.0.51 tarball: discovery/nostr/index.mjs)",
+    "https://github.com/steve02081504/fount/blob/master/src/scripts/p2p/docs/signaling.md"
+   ],
+   "what_it_is": "Addressable discovery advert (`NOSTR_ADVERT_KIND = 30787`) for nodes of the fount AI-character platform's P2P layer. Tags are `t=fount`, `t=<rendezvous key hash>`, `x=advert` and `d=<rendezvous key>`, so many nodes share the same d/t values. The content is base64 of JSON `{iv, authTag, ciphertext}` (AES-GCM under a room secret) and holds node hash, relay pool and listen relays. The same library uses kind 20787 for ephemeral WebRTC signalling and kind 30789 for a census (`t=fount`, `x=census`).",
+   "encrypted": true,
+   "confidence": "high",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "Verified in the published npm package source: `export const NOSTR_ADVERT_KIND = 30787`. 170 authors.",
+   "events": 263,
+   "authors": 170,
+   "class": "addressable"
+  },
+  {
+   "kind": 1460,
+   "name": "Unidentified encrypted blob with a random d-tag",
+   "app_or_protocol": "unknown",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "Regular kind, but with a 'd' tag holding 64 random hex chars. Content is a NIP-44 v2 payload (version byte 0x02) of fixed padded length (1284 or 1456 b64 chars), so the plaintext is roughly 0.9-1 KB. There is no 'p' tag, and 3 events carry an expiration. 111 of 140 authors published exactly once, which suggests throwaway or per-message keys. 22 of the 25 kind-1461 events share an exact created_at second with a 1460 from a different key, so the two kinds are published as a pair.",
+   "encrypted": true,
+   "confidence": "low",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "Searches for the kind number and on GitHub turned up no spec. The pattern (one-shot keys, a d-tag nonce, an encrypted payload with no recipient tag, a companion 1461 marker) looks like an anonymous mailbox/drop or sealed-envelope protocol in which the recipient finds the message by a precomputed d-tag. The 1461 d-tag is not sha256 of the 1460 id, pubkey or d-tag.",
+   "events": 202,
+   "authors": 140,
+   "class": "regular"
+  },
+  {
+   "kind": 37368,
+   "name": "Iris AppKeys roster snapshot / group roster",
+   "app_or_protocol": "Iris (irislib/nostr-double-ratchet, iris-chat-rs)",
+   "spec_url": "https://github.com/irislib/nostr-double-ratchet/blob/master/ts/src/app-keys/AppKeysEvents.ts",
+   "source_urls": [
+    "https://github.com/irislib/nostr-double-ratchet",
+    "https://github.com/irislib/iris-chat-rs"
+   ],
+   "what_it_is": "Addressable 'fact' event discriminated by a `type` tag. type=app_keys_roster_snapshot (most events): the owner identity publishes the list of device/app keys authorized to act for it in double-ratchet messaging: d/i=<uuid> 'subject', owner_pubkey, one `device` tag per device pubkey with added-at timestamp, `p` per device, schema=1. type=group_roster: group membership for Iris sender-key groups (protocol=sender_key_v1) with group_id, name, admin/member tags, revision, created_by/at, updated_at. Content empty.",
+   "encrypted": false,
+   "confidence": "high",
+   "amethyst_relevance": "protocol-infra",
+   "suggested_quartz_package": "experimental/irisDoubleRatchet/ (or alongside nip17Dm multi-device work)",
+   "notes": "APP_KEYS_SNAPSHOT_KIND = 37368 in both TS and Rust. Relevant only if Amethyst wants interop with Iris double-ratchet DMs/multi-device; otherwise ignore. Group roster names seen like 'Sample group', 'Project Hello' (test traffic).",
+   "events": 122,
+   "authors": 108,
+   "class": "addressable"
+  },
+  {
+   "kind": 4248,
+   "name": "Opaque p-tagged encrypted drop",
+   "app_or_protocol": "unidentified",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "Regular event from a fresh throwaway pubkey (96 events / 96 authors) with a single p tag to a recipient and ~860–1150 bytes of base64 ciphertext that is NOT NIP-44 v2 (no 0x02 version byte; 4 of 96 are NIP-44). Some recipient p values are obviously synthetic ('cdcd…cd', 'aeeee…000000'). Looks like a sealed-sender / anonymous mailbox or app RPC addressed to a recipient key.",
+   "encrypted": true,
+   "confidence": "low",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "One-author-per-event pattern implies ephemeral keys. Nothing human-readable.",
+   "events": 96,
+   "authors": 96,
+   "class": "regular"
+  },
+  {
+   "kind": 30388,
+   "name": "Anonymate encrypted account state",
+   "app_or_protocol": "anonymate (unknown app; collides with Corny Chat 'Slide Set')",
+   "spec_url": null,
+   "source_urls": [
+    "https://github.com/nostr-protocol/nips/commit/1c166044 (Corny Chat 30388 registration, later removed from README in 861675be 'fix: sanity', May 2026)",
+    "https://gitlab.com/soapbox-pub/ditto (src/lib/kindLabels.ts labels 30388 'Slide set')"
+   ],
+   "what_it_is": "Per-user encrypted settings sync. `d`=`account-state-v1:<dataset>` (e.g. manualPeers, followedChannels), `app`=anonymate, `dataset`=<name>, `p`=self, and content is NIP-04 ciphertext (`?iv=`) encrypted to the author's own key. This is NIP-78-style private app data on a dedicated kind.",
+   "encrypted": true,
+   "confidence": "medium",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "Kind 30388 was registered in the NIPs README as Corny Chat Slide Set until May 2026, and Ditto still labels it that way. The anonymate usage is a collision, so any parser must check the `app` tag. No public source for anonymate was found.",
+   "events": 276,
+   "authors": 90,
+   "class": "addressable"
+  },
+  {
+   "kind": 1463,
+   "name": "Unidentified NIP-44 blob keyed by d-tag",
+   "app_or_protocol": "unidentified",
+   "spec_url": null,
+   "source_urls": [
+    "SCRATCH/report/samples/kind-1463.jsonl",
+    "GitHub code search (no hits)"
+   ],
+   "what_it_is": "Regular (non-addressable) kind that still carries a single `d` tag holding a 64-hex value. The value is distinct per event and is not sha256(pubkey). The content is NIP-44 v2 ciphertext of a constant 388 base64 chars, so the plaintext is a small fixed-size record (at most about 224 bytes). There is no p tag, so it is most likely self-encrypted app state or a per-object secret.",
+   "encrypted": true,
+   "confidence": "low",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "83 authors and 151 events. Using a d-tag on a regular kind suggests an app that believes it is replaceable or uses `d` as a lookup key.",
+   "events": 151,
+   "authors": 83,
+   "class": "regular"
+  },
+  {
+   "kind": 13473,
+   "name": "Posting Streak",
+   "app_or_protocol": "Ditto (soapbox-pub)",
+   "spec_url": "https://github.com/soapbox-pub/ditto/blob/main/NIP.md#kind-13473-posting-streak",
+   "source_urls": [
+    "https://github.com/soapbox-pub/ditto/blob/main/NIP.md",
+    "https://gitlab.com/soapbox-pub/ditto/-/raw/main/NIP.md"
+   ],
+   "what_it_is": "Replaceable event (one per user) with the author's self-reported posting streak: 'start' and 'end' unix-second tags plus alt 'Posting streak'; content is empty. The streak is live while now - end <= 36h, and days = max(1, ceil((end-start)/86400)). Only 'creative' kinds (notes, articles, media, polls, etc.) extend it. The author's client maintains it and repairs it from the author's own events. The kind number keypad-spells 1-FIRE.",
+   "encrypted": false,
+   "confidence": "high",
+   "amethyst_relevance": "render-worthy",
+   "suggested_quartz_package": "dittoPostingStreak/ (or a ditto/ family package)",
+   "notes": "A small profile badge ('🔥 12 days'). Trust-based, and it only affects the author's own profile. Ditto adds a 'published_at' tag too.",
+   "events": 60,
+   "authors": 58,
+   "class": "replaceable"
+  },
+  {
+   "kind": 30310,
+   "name": "Anonymate profile",
+   "app_or_protocol": "Anonymate (unidentified anonymous social app, Portuguese-speaking users)",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "App-scoped profile record. Addressable with d=<username>, `u`=<username>, `app`='anonymate', and a `pfx` tag for every prefix of the username (2..n chars) so relays can do prefix/autocomplete search via #pfx filters. Content JSON {username, displayName, image, bannerImage, bio/about/description, activeProfileBadge, ts(ms)}; 2 events have NIP-44 content.",
+   "encrypted": false,
+   "confidence": "low",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "Same authors publish 30388 (d='account-state-v1:<dataset>', NIP-04-style '?iv=' encrypted app state), 34552 (action=join), 4551 (posts) and 30032, all tagged app=anonymate. No public source found. Effectively a parallel kind-0 inside one app; the 'pfx' prefix-index trick is notable.",
+   "events": 64,
+   "authors": 57,
+   "class": "addressable"
+  },
+  {
+   "kind": 30079,
+   "name": "Event Paths (NIP-116 draft) / de-facto generic app data",
+   "app_or_protocol": "Multiple apps: COURA (alias→pubkey registry), persona-bubble-field (io.github.lokuyow), 'bro-order' service marketplace, einundzwanzig-meetup-app, PixelPocket presence, an encrypted folder/drive app",
+   "spec_url": "https://github.com/nostr-protocol/nips/pull/1266",
+   "source_urls": [
+    "https://github.com/nostr-protocol/nips/pull/1266",
+    "https://github.com/nostr-protocol/nips/pull/2386"
+   ],
+   "what_it_is": "Kind 30079 was proposed in open NIP-116 (mmalmi) as an event identified by a human-readable path in its d tag (e.g. 'user/profile/name') with JSON content and an f 'directory' tag; separately open NIP-79 Stories PR #2386 reuses 30079 for 'story highlights'. In the wild it is used like a second NIP-78 (30078) arbitrary-app-data bucket: COURA publishes d=alias ('NNA-X54-8HM') + content {alias,pubkey}; persona-bubble-field stores game state under d='io.github.lokuyow.persona-bubble-field:profile-state:<event id>'; einundzwanzig-meetup-app records organizer/attendee role per meetup; an unnamed app stores encrypted folders (tags encrypted/key/wk, content {name:'probe-…',encrypted:true}); NIP-44 blobs from others.",
+   "encrypted": false,
+   "confidence": "medium",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "No single schema; 51 authors across ≥6 apps. Two conflicting open NIP PRs claim the number. Do not type it in Quartz beyond perhaps treating it like NIP-78 app data.",
+   "events": 121,
+   "authors": 51,
+   "class": "addressable"
+  },
+  {
+   "kind": 9421,
+   "name": "Myria signed spend/settlement record",
+   "app_or_protocol": "Myria (unidentified P2P fee-market network, 'test-myria-discovery-v1')",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "Testnet traffic of an unidentified protocol. Tags are `t`=test-myria-discovery-v1, `g`=network id hash, `o`=object/offer id, `s`=record hash. Content is `MYRS1:` plus base64url CBOR (magic 'MYR\\x01') holding transactions, fee-market profiles, spend intents, witness signatures and receipt chains. Sibling kinds 9420 (`MYRD1:` discovery) and 9424 (`MYRM1:`) carry the same tag family.",
+   "encrypted": false,
+   "confidence": "low",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "Each event has a fresh author (50 events, 50 authors), and the network is self-labelled 'test'. No public source was found.",
+   "events": 50,
+   "authors": 50,
+   "class": "regular"
+  },
+  {
+   "kind": 9420,
+   "name": "Myria discovery record (test)",
+   "app_or_protocol": "\"Myria\" (unidentified project), t=test-myria-discovery-v1",
+   "spec_url": null,
+   "source_urls": [
+    "SCRATCH/report/samples/kind-9420.jsonl"
+   ],
+   "what_it_is": "Discovery or announcement records tagged `t=test-myria-discovery-v1`. They have a `g` tag (64-hex group or namespace id shared by all events), an `s` tag (64-hex service id), and an optional `o` tag (owner) plus many `a` tags (64-hex, not NIP-01 coordinates). The content is `MYRD1:` followed by base64url CBOR that embeds the same hashes and catbox.moe .html URLs.",
+   "encrypted": false,
+   "confidence": "low",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "The name is explicitly a test (46 one-shot authors). The `a` tag is reused for raw hashes, so Amethyst's address parser would reject it. No public repository found.",
+   "events": 46,
+   "authors": 46,
+   "class": "regular"
+  },
+  {
+   "kind": 3927,
+   "name": "Page view counter update",
+   "app_or_protocol": "Citadel Wire (citadelwire.com) / Citadel Arcade (modl21)",
+   "spec_url": "https://github.com/modl21/citadelwire.com/blob/main/NIP.md",
+   "source_urls": [
+    "https://github.com/modl21/citadelwire.com/blob/main/NIP.md",
+    "https://github.com/modl21/citadelwire.com/blob/main/src/hooks/usePageViewCount.ts",
+    "https://github.com/modl21/citadelarcade/blob/main/src/hooks/useGameLeaderboard.ts"
+   ],
+   "what_it_is": "Regular event that a website's visitors publish to bump a shared page-view counter: 'd' = page id (e.g. com.citadelwire.page-views.home), 'u' = page URL, 't' view-count/citadel-wire, and an alt. Content is the new count as a plain integer string, which the client computes as the latest seen + 1.",
+   "encrypted": false,
+   "confidence": "high",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "41 authors because each visitor signs one, often with ad-hoc keys. A regular kind with a d tag means relays keep every increment. Not useful to Amethyst.",
+   "events": 60,
+   "authors": 41,
+   "class": "regular"
+  },
+  {
+   "kind": 37778,
+   "name": "'fidelity' UTXO outpoint claim",
+   "app_or_protocol": "unidentified (Bitcoin UTXO / fidelity-bond style announcement)",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "Addressable with d='fidelity:<txid>:<vout>' and content '<txid>:<vout>' (a Bitcoin outpoint), plus NIP-40 expiration 24h after creation. Each of 40 authors publishes one; the same few outpoints are announced by several different keys.",
+   "encrypted": false,
+   "confidence": "low",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "Looks like a JoinMarket-style 'fidelity bond' or UTXO-backed anti-sybil advertisement refreshed daily, but no proof/signature is in the event and no source code was found for kind 37778. Unidentified.",
+   "events": 40,
+   "authors": 40,
+   "class": "addressable"
+  },
+  {
+   "kind": 30085,
+   "name": "Biosenger presence / relay list",
+   "app_or_protocol": "Biosenger app (data-space.world 'Infinity' ecosystem, digitalforlifeagency)",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "Addressable, d='biosenger-presence', app='biosenger', empty content. Tags: ['relay', <connected>, <total>] counters and one 'relay-urls' tag listing the app's relay URLs (data-space.world relays, digitalforlifeagency workers.dev relays, plus public ones). Acts as an online-presence heartbeat + relay advertisement for the Biosenger messenger.",
+   "encrypted": false,
+   "confidence": "medium",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "Same authors also publish 30215/30218/30225-30228 'infinity-*' kinds (see 30218, 30226), so it is one app family squatting a block of 302xx kinds. No public spec found.",
+   "events": 53,
+   "authors": 35,
+   "class": "addressable"
+  },
+  {
+   "kind": 37779,
+   "name": "'fidelity' outpoint announcement",
+   "app_or_protocol": "unidentified (fidelity-bond style UTXO advert)",
+   "spec_url": null,
+   "source_urls": [
+    "https://mempool.space/api/tx/<txid> (txids not found on Bitcoin mainnet)"
+   ],
+   "what_it_is": "Short-lived addressable events with `d`=`fidelity:<txid>:<vout>`, content equal to the same `<txid>:<vout>`, and `expiration` 24h out. In the samples only 5 distinct outpoints appear, each published by 4 different pubkeys. Sibling kind 37778 has the identical shape.",
+   "encrypted": false,
+   "confidence": "low",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "Reads like a JoinMarket-style fidelity-bond / UTXO-ownership advert, but the txids are not on Bitcoin mainnet (they may be testnet/signet or another chain), and no spec or repo was found.",
+   "events": 35,
+   "authors": 35,
+   "class": "addressable"
+  },
+  {
+   "kind": 2023,
+   "name": "Unidentified p-tagged NIP-44 message",
+   "app_or_protocol": "unidentified",
+   "spec_url": null,
+   "source_urls": [
+    "SCRATCH/report/samples/kind-2023.jsonl"
+   ],
+   "what_it_is": "Each event has exactly one `p` tag and NIP-44 v2 content. In half the samples the p tag is the author (self-encrypted state) and in the rest it is another user. Ciphertext lengths cluster at 176, 220 and 944 chars, i.e. a few fixed message types. Possibly an app's encrypted sync or RPC between a user's own devices and peers.",
+   "encrypted": true,
+   "confidence": "low",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "31 authors and 142 events. The kind number may be chosen to sit next to NIP-23's 30023 but has no visible relation to it.",
+   "events": 142,
+   "authors": 31,
+   "class": "regular"
+  },
+  {
+   "kind": 10443,
+   "name": "MLS KeyPackage (Keychat legacy NIP-EE style)",
+   "app_or_protocol": "Keychat",
+   "spec_url": "https://github.com/keychat-io/keychat-app/blob/main/packages/app/lib/constants.dart",
+   "source_urls": [
+    "https://github.com/keychat-io/keychat-app/blob/main/packages/app/lib/constants.dart",
+    "https://github.com/keychat-io/keychat-app/blob/main/packages/app/lib/service/mls_group.service.dart",
+    "https://github.com/keychat-io/keychat-openclaw/blob/main/bridge/src/transport.rs"
+   ],
+   "what_it_is": "Replaceable event whose content is a hex-encoded MLS KeyPackage, published so others can invite the user to MLS large groups. Tags: mls_protocol_version '1.0', ciphersuite '1', extensions 'RequiredCapabilities,LastResort,RatchetTree,Unknown(62003)', relay list, client 'Keychat'. This is Keychat's pre-Marmot (NIP-EE era) key package kind, paired with Welcome kind 444.",
+   "encrypted": false,
+   "confidence": "high",
+   "amethyst_relevance": "protocol-infra",
+   "suggested_quartz_package": "marmot/mip00KeyPackages/ (legacy reader)",
+   "notes": "Quartz implements Marmot MIP-00 KeyPackages as addressable kind 30443 (+ 10051 relay list). Keychat still publishes replaceable 10443, so Amethyst can't find Keychat users' key packages. Keychat's KeyPackages require extension 0xF233 (Unknown(62003), the old NIP-EE group-data id), but Quartz's Marmot uses marmot_group_data 0xF2EE. A legacy reader alone therefore won't give working Marmot<->Keychat group interop. One sample from client 'meiso' instead holds a Signal-style JSON prekey bundle (identityKey/signedPrekey/oneTimePrekey), so the kind is also squatted for Signal X3DH bundles.",
+   "events": 27,
+   "authors": 27,
+   "class": "replaceable"
+  },
+  {
+   "kind": 38385,
+   "name": "Mostro instance info",
+   "app_or_protocol": "Mostro P2P (MostroP2P/mostro)",
+   "spec_url": "https://github.com/MostroP2P/protocol/blob/main/src/other_events.md",
+   "source_urls": [
+    "https://github.com/MostroP2P/mostro/blob/main/docs/SEPARATE_EVENT_KINDS_SPEC.md",
+    "https://github.com/MostroP2P/protocol/blob/main/src/other_events.md"
+   ],
+   "what_it_is": "Addressable info/status event of a Mostro P2P-exchange daemon (d=<mostro pubkey>, z='info', y=['mostro', <instance name>]). Tags carry config: mostro_version/commit, min/max order amount, fee, pow, pow_first_contact, protocol_version, expiration windows, fiat_currencies_accepted, LND node version/pubkey/alias/uris/network, bond_* anti-abuse settings, maintenance_mode. Content empty.",
+   "encrypted": false,
+   "confidence": "high",
+   "amethyst_relevance": "render-worthy",
+   "suggested_quartz_package": "nip69P2pOrderEvents/",
+   "notes": "Part of Mostro's split of its old single kind 38383 into 38383 orders / 38384 ratings / 38385 info / 38386 disputes. Quartz already has nip69P2pOrderEvents (38383); 38385 lets a P2P-order UI show which instance (fees, limits, currencies) published an order. Instance keys mined with leading zeros (PoW vanity).",
+   "events": 66,
+   "authors": 26,
+   "class": "addressable"
+  },
+  {
+   "kind": 38001,
+   "name": "SMJ prediction-market bet/position",
+   "app_or_protocol": "SMJ prediction market (agent/AI-labelled, 'demo' network)",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "Addressable bet record, d=64-hex position id. Heavily duplicated tags: market/m (market id), network/n ('demo'), status/s ('confirmed'), outcome/o (YES/NO/…), amount, price, side/x ('buy'), rail ('lightning'), fee, payout_address [id,'lnbits'], t 'smj-bet', smj 'true', NIP-32 labels L 'agent' / l 'ai'. Content JSON {amount, avgPrice, outcomeId, trader, rail, traderName, feeSats, feePercent, feeCurrency}. Sibling kind 38023 ('smj-pool') carries per-market pool totals.",
+   "encrypted": false,
+   "confidence": "medium",
+   "amethyst_relevance": "spam/noise",
+   "suggested_quartz_package": null,
+   "notes": "22,501 events from only 25 authors on network 'demo' with trader names like 'Bob5 Ecash' and L/l 'ai agent' labels — bot-generated test traffic flooding relays. No public spec found.",
+   "events": 22501,
+   "authors": 25,
+   "class": "addressable"
+  },
+  {
+   "kind": 3560,
+   "name": "Sealed mailbox message (unidentified)",
+   "app_or_protocol": "unidentified",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "Regular event with `s`=<32-byte hex routing tag> and `expiration`=+7 days. Content is base64 binary of fixed size (~1.6 KB, so padded): 0x03||33-byte compressed ephemeral secp256k1 pubkey, 32-byte salt/nonce, u32 inner kind (=3560), u32 0, then ciphertext. Authors are throwaway keys.",
+   "encrypted": true,
+   "confidence": "low",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "This is a custom envelope, not NIP-44. Its shape matches a sealed-sender / stealth-address mailbox where `s` is a recipient-derived lookup tag.",
+   "events": 121,
+   "authors": 25,
+   "class": "regular"
+  },
+  {
+   "kind": 31986,
+   "name": "RoboSats coordinator rating",
+   "app_or_protocol": "RoboSats federation (NIP-69 P2P orders)",
+   "spec_url": "https://github.com/RoboSats/robosats",
+   "source_urls": [
+    "https://github.com/RoboSats/robosats/blob/main/frontend/src/components/AGENTS.md",
+    "https://github.com/RoboSats/robosats/blob/main/docker/strfry/sync.sh",
+    "https://github.com/jerryfletcher21/roboauto/blob/main/roboauto/nostr.py"
+   ],
+   "what_it_is": "Addressable review of a RoboSats coordinator after a trade, published by the robot's key. `d=<coordinator shortAlias>:<orderId>` (lake, temple, freeport, bazaar, ...), `p=<coordinator pubkey>`, `rating=<0..1>` (stars/5), and `sig=<coordinator-signed token>` from `POST /api/review/` that proves the reviewer actually traded, which clients schnorr-verify. The content is empty.",
+   "encrypted": false,
+   "confidence": "high",
+   "amethyst_relevance": "protocol-infra",
+   "suggested_quartz_package": "nip69P2pOrderEvents/ (companion to P2POrderEvent 38383)",
+   "notes": "RoboSats coordinators sync kinds 38383, 31986 and 1059 between relays. Quartz already has NIP-69 kind 38383, so these ratings could feed coordinator reputation in an order view.",
+   "events": 27,
+   "authors": 25,
+   "class": "addressable"
+  },
+  {
+   "kind": 1461,
+   "name": "Unidentified companion marker to kind 1460",
+   "app_or_protocol": "unknown",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "Regular kind with only a 'd' tag (64 random hex chars) and plaintext content '{\"v\":1}'. Each one is signed by a throwaway key, and 22 of 25 share an exact created_at with a kind-1460 encrypted blob signed by a different key. Looks like a version/ack/announce marker in the same unknown drop protocol as 1460.",
+   "encrypted": false,
+   "confidence": "low",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "See 1460. No link to 1460 found in the tag values themselves (tested id, pubkey and d, raw and sha256).",
+   "events": 25,
+   "authors": 25,
+   "class": "regular"
+  },
+  {
+   "kind": 1077,
+   "name": "P2P swarm peer announce",
+   "app_or_protocol": "unidentified (topic-hash rendezvous; peer ids look like iroh-style 32-byte base32 node ids)",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "Regular event, single r tag = 64-hex topic/room hash. Content JSON {from:<52-char lowercase base32 peer id>, to:null, kind:'announce', peer_id, caps:['ptag']}. Used as a relay-based bootstrap/discovery channel where peers announce themselves on a topic so others can connect directly.",
+   "encrypted": false,
+   "confidence": "low",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "77 events / 23 authors; most announce on one topic hash. Peer-id encoding (RFC4648 base32, 52 chars) matches 32-byte keys like iroh node ids, but no source confirms.",
+   "events": 77,
+   "authors": 23,
+   "class": "regular"
+  },
+  {
+   "kind": 38501,
+   "name": "Bitflash node descriptor",
+   "app_or_protocol": "Bitflash (BTF, Bitcoin-0.1 revival over Tor)",
+   "spec_url": "https://github.com/bitflash-network/bitflash/blob/master/src/nostr.cpp",
+   "source_urls": [
+    "https://github.com/bitflash-network/bitflash",
+    "https://github.com/rhino11/bitflash"
+   ],
+   "what_it_is": "Peer-discovery record for a Bitflash full node. Addressable with d='btf-descriptor-2' (or '-testnet'); content JSON {v:3, pubkey, onion:'<v3>.onion:8433', enc:<encryption key>, meeting_node, created, sig, sig3} — a self-certifying descriptor signed by the key the node's .btf address derives from. Republished frequently.",
+   "encrypted": false,
+   "confidence": "high",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "23 nodes, 351 events. Kind 38503 (same authors) appears to be the pool announcement. Pure infrastructure for a separate altcoin's P2P layer.",
+   "events": 351,
+   "authors": 23,
+   "class": "addressable"
+  },
+  {
+   "kind": 4277,
+   "name": "Full Throttle game review",
+   "app_or_protocol": "Full Throttle (web motorcycle game)",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "Public in-game review. `t`=full-throttle-review-v1, and the content is JSON {v,rating,text,name ('Rider1234'),bike,map ('Neon City','Dallas Freeway'),device,rides,mins,when}. Each review is signed by a throwaway key.",
+   "encrypted": false,
+   "confidence": "medium",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "The data is self-describing, but no repo or site was found. These are app telemetry/feedback, not social posts.",
+   "events": 24,
+   "authors": 22,
+   "class": "regular"
+  },
+  {
+   "kind": 31242,
+   "name": "Unidentified shared-namespace blob (ns2v5/ns2v7)",
+   "app_or_protocol": "unidentified",
+   "spec_url": null,
+   "source_urls": [
+    "SCRATCH/report/samples/kind-31242.jsonl"
+   ],
+   "what_it_is": "Addressable events whose `d` tag is a shared namespace id (`ns2v5_d4051f6c4130b037`, `ns2v7_aadbaddff9b290c6`) used by many unrelated authors. Each carries an `expiration` 1 h out. The content is about 948 chars of raw base64 (not NIP-44 framed), presumably symmetric ciphertext under a namespace key. It behaves like a per-user presence or state slot within a versioned shared room.",
+   "encrypted": true,
+   "confidence": "low",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "22 authors with 1 event each.",
+   "events": 22,
+   "authors": 22,
+   "class": "addressable"
+  },
+  {
+   "kind": 37104,
+   "name": "Lana digital-being liveness heartbeat",
+   "app_or_protocol": "lana.is 'digital beings' (lana-kyc)",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "Addressable, d='heartbeat', t tags 'lana-kyc','liveness','public', status 'alive'. Content JSON {schema:'lana-being-heartbeat-v1', being_pubkey, being_name, being_domain (<name>.lana.is), status, adoptee_count, alive_at}. Each 'being' (AI persona with its own key and subdomain) republishes it to prove it is alive; sibling kind 39020 'lana-being-commons' is the being's public profile/presence.",
+   "encrypted": false,
+   "confidence": "medium",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "21 authors, all bots of one service. No public spec found.",
+   "events": 21,
+   "authors": 21,
+   "class": "addressable"
+  },
+  {
+   "kind": 39020,
+   "name": "Lana Being Commons presence card",
+   "app_or_protocol": "lana-being-commons protocol (lana.is 'digital beings')",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "Self-published presence/profile card for AI 'digital beings' hosted under *.lana.is. `d`=`presence:<pubkey>`, `protocol`=lana-being-commons 1.0.0, `p`=self, `name`, `domain`, and `t`=being-commons/digital-being/lana. Content is JSON {protocol,version,name,summary,domain,language,interests,capabilities,communication_policy{public_topics,dm_invites,rate limits},updated_at}.",
+   "encrypted": false,
+   "confidence": "medium",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "This is an agent directory for an AI-persona network (mostly Slovenian). It is self-describing and no external spec was found.",
+   "events": 21,
+   "authors": 21,
+   "class": "addressable"
+  },
+  {
+   "kind": 9424,
+   "name": "Myria discovery / mesh message (unidentified)",
+   "app_or_protocol": "'Myria' (unknown project, test traffic)",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "Two shapes. (1) 20 events tagged t='test-myria-discovery-v1' with hex 'g' (group/network id), 'o' (origin pubkey-like) and 'm' (message hash) tags. Content is 'MYRM1:' + base64url CBOR starting with the magic 'MYR\\x01', holding hash-addressed records, apparently a peer/peer-record discovery beacon. (2) 8 events with only an 'r' hex tag and short opaque base64 content, likely encrypted payloads in the same system.",
+   "encrypted": false,
+   "confidence": "low",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "No public source for 'myria'/'MYRM1' found on GitHub or the web. The 't' value says test/v1, so it's an experiment.",
+   "events": 28,
+   "authors": 21,
+   "class": "regular"
+  },
+  {
+   "kind": 1717,
+   "name": "unidentified opaque blob",
+   "app_or_protocol": "unidentified",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "Regular event with only a NIP-40 expiration tag (exactly 14 days). Content is standard base64 of a binary blob of fixed sizes (1052 or 4124 bytes) that is not NIP-44 (first byte varies) — looks like fixed-size cells/ciphertext. Many distinct fresh keys post at the same second.",
+   "encrypted": true,
+   "confidence": "low",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "Fixed cell sizes + throwaway keys + synchronized timestamps suggest a mixnet/dead-drop or anonymous mailbox system using one-shot keys. No source found.",
+   "events": 25,
+   "authors": 21,
+   "class": "regular"
+  },
+  {
+   "kind": 443,
+   "name": "Marmot KeyPackage (legacy, non-addressable)",
+   "app_or_protocol": "Marmot / MLS over Nostr (MDK = White Noise's Marmot Development Kit; also rizq, EpochShield)",
+   "spec_url": "https://github.com/marmot-protocol/marmot",
+   "source_urls": [
+    "SCRATCH/ref/nips_README.md",
+    "/home/user/amethyst/quartz/src/commonMain/kotlin/com/vitorpamplona/quartz/marmot/mip00KeyPackages/KeyPackageUtils.kt",
+    "/home/user/amethyst/quartz/src/commonMain/kotlin/com/vitorpamplona/quartz/marmot/MarmotFilters.kt"
+   ],
+   "what_it_is": "Legacy MIP-00 KeyPackage that predates the addressable kind 30443. Tags are `mls_protocol_version`, `mls_ciphersuite`, `mls_extensions`, `mls_proposals`, `relays`, `i` (KeyPackageRef), `encoding=base64` and `client`. The content is a base64 MLS KeyPackage, not NIP-44: it starts `00 01 00 01`, i.e. a bare KeyPackage without the MLSMessage envelope. Quartz has no typed class because it treats 443 only as a migration alias: `KeyPackageUtils.LEGACY_KIND = 443`, `isKeyPackageKind()`, and `MarmotFilters.keyPackagesMigration()` query [30443, 443]. EventFactory has no 443 branch, so these events parse as generic `Event`.",
+   "encrypted": false,
+   "confidence": "high",
+   "amethyst_relevance": "protocol-infra",
+   "suggested_quartz_package": "marmot/mip00KeyPackages/ (could map 443 to KeyPackageEvent-like reader or keep as legacy alias)",
+   "notes": "MDK/0.8.0 (18 of 26 events) still publishes kind 443, so in the wild legacy 443 dominates. `MarmotFilters.keyPackagesMigration()` has no callers, so Amethyst may never fetch these and cannot invite White Noise users who only have 443 KeyPackages. Bare (unframed) bytes are accepted by `KeyPackageUtils.decodeKeyPackage`. rizq publishes 443 with empty content and non-standard `ciphersuite`/`extensions` tag names (named extensions like `nostr_group_data`), which is non-conformant.",
+   "events": 26,
+   "authors": 20,
+   "class": "regular"
+  },
+  {
+   "kind": 5555,
+   "name": "Word5 game score",
+   "app_or_protocol": "Word5 (otherstuff.ai / humansinstitute)",
+   "spec_url": "https://github.com/humansinstitute/word5",
+   "source_urls": [
+    "https://github.com/humansinstitute/word5/blob/main/index.html",
+    "https://github.com/humansinstitute/word5/blob/main/src/word5.ts"
+   ],
+   "what_it_is": "Regular event recording a daily Wordle-like result. Tags: game=word5, schema=word5.score.v1, puzzle number, result (guess count or X), difficulty, streak, maxStreak, played, won, version, source URL, t word5/gaming. Content is the same data as JSON (game, puzzle, result, hardMode, streak, maxStreak, played, won, version). The app's server builds leaderboards from these.",
+   "encrypted": false,
+   "confidence": "high",
+   "amethyst_relevance": "render-worthy",
+   "suggested_quartz_package": null,
+   "notes": "Kind 5555 lies inside the NIP-90 DVM job-request range (5000-5999), so DVM-aware clients and relays may treat these as job requests. It could render as a small score card ('WORD5 #734 4/6'), but it's niche. The same app also posts kind-1 notes with the same schema tag.",
+   "events": 24,
+   "authors": 18,
+   "class": "regular"
+  },
+  {
+   "kind": 31903,
+   "name": "UPlanet Cookie Vault manifest / klatsch push registration (kind collision)",
+   "app_or_protocol": "UPlanet / Astroport.ONE ('NIP-101 Cookie Vault'); separately an unidentified 'Klatsch' app",
+   "spec_url": "https://github.com/papiche/Astroport.ONE/blob/master/IA/bro_watch_core.py.README.md",
+   "source_urls": [
+    "https://github.com/papiche/Astroport.ONE",
+    "https://github.com/papiche/UPassport"
+   ],
+   "what_it_is": "Two unrelated uses. (a) UPlanet/Astroport.ONE: d='cookies', t=['cookies','uplanet'], content JSON manifest mapping domain -> IPFS CID of a NaCl-encrypted browser cookie blob, plus '_bro_commands' (scraper config/last_check), republished on each write. (b) 13 events with t='klatsch-push-v1', d=<random 32-hex>, NIP-44 content — apparently push-notification registrations of an unidentified 'Klatsch' messenger.",
+   "encrypted": true,
+   "confidence": "medium",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "Collision between two apps. Cookie Vault manifests are in cleartext JSON (domains only, cookies themselves encrypted on IPFS).",
+   "events": 18,
+   "authors": 18,
+   "class": "addressable"
+  },
+  {
+   "kind": 1000,
+   "name": "Encrypted blob + WebRTC call signalling (mixed)",
+   "app_or_protocol": "unidentified (two unrelated uses)",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "Two uses: (a) ~75% of samples: no tags, content is a JSON array of two byte arrays '[[16 IV bytes],[ciphertext bytes]]' — AES-style ciphertext serialized as number arrays, i.e. an app's private encrypted storage/messages; (b) plaintext WebRTC signalling between two keys: p tag to the peer and content {type:'candidate'|'hangup'|offer/answer, data:{candidate,sdpMid,sdpMLineIndex}}, leaking ICE candidates (IPv6 addresses) in the clear.",
+   "encrypted": true,
+   "confidence": "low",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "814 events / 17 authors. Kind 1000 is just the first number of the regular range, so it is a popular 'default' pick for ad-hoc apps.",
+   "events": 814,
+   "authors": 17,
+   "class": "regular"
+  },
+  {
+   "kind": 36944,
+   "name": "DEN Chat server membership / key envelope",
+   "app_or_protocol": "DEN Chat (Discord-like Nostr chat; kinds 36942-36947)",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "Part of the DEN Chat family: 36942 is the server definition (roles and permissions JSON, relays, blossom servers), 36943 is a channel message (`h`=server UUID, `c`=channel UUID, `epoch`, client 'DEN Chat'), and 36946 is server status. A 36944 has `d`=server UUID (or the member's own pubkey with `a`=36942 coordinate + `version` 2) and NIP-44 content (or empty when cleared/`deleted`). All carry a NIP-13 `nonce` PoW (difficulty 15).",
+   "encrypted": true,
+   "confidence": "medium",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "Probably a per-member, per-server encrypted record (membership or group-key share). The family was identified from sibling kinds in the census, and no public repo was found.",
+   "events": 21,
+   "authors": 16,
+   "class": "addressable"
+  },
+  {
+   "kind": 30215,
+   "name": "Infinity Builder private profile",
+   "app_or_protocol": "\"Infinity Builder\" (unidentified app)",
+   "spec_url": null,
+   "source_urls": [
+    "SCRATCH/report/samples/kind-30215.jsonl"
+   ],
+   "what_it_is": "Addressable per-user settings/profile document with `d=infinity-builder-profile` and `visibility=private`. The content is `enc1:` followed by NIP-44 v2 ciphertext (self-encrypted). It is app-private profile or state storage, similar in shape to NIP-78 app data.",
+   "encrypted": true,
+   "confidence": "medium",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "The app is identified only from the d-tag. 16 authors. The `enc1:` prefix is an app convention that marks the format of the encrypted payload.",
+   "events": 16,
+   "authors": 16,
+   "class": "addressable"
+  },
+  {
+   "kind": 32022,
+   "name": "Kilojoin coinjoin pool",
+   "app_or_protocol": "Kilowallet (Kilojoin v1, BLAKE2b chain)",
+   "spec_url": "https://github.com/Kilombino/kilowallet/blob/main/app/src/main/java/com/kilombino/pyblockwatch/coinjoin/Protocol.kt",
+   "source_urls": [
+    "https://github.com/Kilombino/kilowallet/blob/main/app/src/main/java/com/kilombino/pyblockwatch/coinjoin/Protocol.kt"
+   ],
+   "what_it_is": "Addressable coinjoin-pool announcement modelled on Joinstr (whose pool kind is 2022): d = pool id, t='kilojoin', network='blake2b'. JSON content holds v, app 'kilowallet', network, id, public_key, denomination, fee_rate, min_peers, max_peers, private, timeout and state (open/aborted/...), plus the current peer count. Peers join over the relay, and no coordinator holds funds.",
+   "encrypted": false,
+   "confidence": "high",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "Not Bitcoin: it's for a BLAKE2b-based chain.",
+   "events": 15,
+   "authors": 15,
+   "class": "addressable"
+  },
+  {
+   "kind": 10222,
+   "name": "Communikey community definition",
+   "app_or_protocol": "Communikeys (edufeed.org / Flotilla-Budabit community spec)",
+   "spec_url": "https://github.com/edufeed-org/edufeed-app/blob/main/docs/nips/communikey-groups.md",
+   "source_urls": [
+    "https://github.com/edufeed-org/edufeed-app",
+    "https://github.com/Pleb5/flotilla-budabit/blob/master/docs/architecture/Communikeys.md",
+    "https://njump.me/nevent1qqsr5aw629m6ahnhl6vcal9eqsztxr00sqmmdzu0np4g3ydp63cmmtszyqw9lu724nvy9sqae28n0q33k9npw5tdy9x6whr6a2a7nc00a8q0v9sx269"
+   ],
+   "what_it_is": "Replaceable event that turns any keypair into a community: the community pubkey is the identifier. Tags list community relays (`r`), blossom servers, and named content sections: each `content` tag names a section (Calendar, Chat, Articles, Forum, Wikis, Learning, Polls, Social Bookmarks...) followed by `k` tags for the kinds it accepts and an `access` (e.g. members) rule; edufeed adds `membership` (id + membership service URL) and `strict`. Posts target the community with an `h` tag.",
+   "encrypted": false,
+   "confidence": "high",
+   "amethyst_relevance": "render-worthy",
+   "suggested_quartz_package": "nipXXCommunikeys/ (near nip72ModCommunities, nip29RelayGroups)",
+   "notes": "Unmerged community spec in active use by edufeed.org (German OER platform) and Flotilla-Budabit. 14 authors seen, all on relay.edufeed.org. Worth tracking as a third community model next to NIP-72 and NIP-29.",
+   "events": 14,
+   "authors": 14,
+   "class": "replaceable"
+  },
+  {
+   "kind": 1050,
+   "name": "YalaChat / 'israel-network' login ping + SOS e2ee messages",
+   "app_or_protocol": "YalaChat ('sos' app family, israel-network)",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "Regular events with t tags. Most are login pings: t 'login' + 'israel-network', content {type:'login', at:<ISO time>}. Others carry encrypted payloads: p tag + t 'yalachat' with content {family:'sos-e2ee', v:1, alg:'nip44', ct:<NIP-44 ciphertext>}, or p tag + t <32-hex room id> with opaque base64. Sibling kinds 1051/1054 (sos-global-identity) and 33051 (sos_trivia_v1 presence) come from the same authors.",
+   "encrypted": true,
+   "confidence": "low",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "13 authors. Login pings publicly leak per-user activity timestamps. No public spec found.",
+   "events": 48,
+   "authors": 13,
+   "class": "regular"
+  },
+  {
+   "kind": 4721,
+   "name": "OuroSwap escrow message",
+   "app_or_protocol": "OuroSwap (EVM escrow swap app)",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "Regular event with `t`=`ouroswap:<escrow contract address>` (or `ouroswap:accept:<hash>`) and `client`=ouroswap. Content is JSON {id,escrow,from (EVM address),createdAt,ciphertext (0x-hex ECIES-style blob)}. It is an encrypted coordination message between swap counterparties, using Nostr as a bulletin board.",
+   "encrypted": true,
+   "confidence": "medium",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "All samples have the same `from` EVM address. No public source was found.",
+   "events": 13,
+   "authors": 13,
+   "class": "regular"
+  },
+  {
+   "kind": 4545,
+   "name": "Group-scoped encrypted blob (y-tag)",
+   "app_or_protocol": "unidentified",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "Regular event from one-shot pubkeys, tags ['y', <32-hex group/room id>] and NIP-40 expiration (~6–7 days). Content is base64url ciphertext (not NIP-44; random-looking from byte 0) ranging 300 B to ~37 KB. Looks like an anonymous group/room message bus or file transfer keyed by a shared room id.",
+   "encrypted": true,
+   "confidence": "low",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "12 events / 12 authors, 2 room ids.",
+   "events": 12,
+   "authors": 12,
+   "class": "regular"
+  },
+  {
+   "kind": 9422,
+   "name": "r-tagged opaque blob (unidentified)",
+   "app_or_protocol": "unidentified",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "Regular event with a single `r`=<32-byte hex room/rendezvous id> and base64 ciphertext content (~70-100 bytes, no NIP-44 version byte). Several throwaway authors post to the same `r`. Sibling kinds 9423 and 9424 (r-tagged variants) have the same shape.",
+   "encrypted": true,
+   "confidence": "low",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "This looks like an anonymous shared-key group channel (room id = hash, symmetric encryption). The tag is not a NIP-01 URL `r`.",
+   "events": 12,
+   "authors": 12,
+   "class": "regular"
+  },
+  {
+   "kind": 36943,
+   "name": "DEN Chat encrypted channel message",
+   "app_or_protocol": "DEN Chat (client tag); no public spec found",
+   "spec_url": null,
+   "source_urls": [
+    "SCRATCH/report/samples/kind-36943.jsonl"
+   ],
+   "what_it_is": "Addressable (one d=UUID per message) encrypted group-chat message. `h=<group UUID>`, `c=<channel UUID>`, `epoch=<key epoch>`, `published_at`, `client=DEN Chat`, and a NIP-13 `nonce` at difficulty 15. Replies use NIP-01 `a` tags pointing at other 36943 messages with root/reply markers. The content is raw base64 symmetric ciphertext (key per group epoch), and `emoji`/`sticker` tags also carry encrypted values.",
+   "encrypted": true,
+   "confidence": "medium",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "135 events from 12 authors. Making each message addressable lets messages be edited in place. Unrelated to the 2023 denostr-lab/denny project as far as can be told.",
+   "events": 135,
+   "authors": 12,
+   "class": "addressable"
+  },
+  {
+   "kind": 16942,
+   "name": "Unidentified replaceable 'v' list (UUID + relay + index)",
+   "app_or_protocol": "unknown",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "Replaceable event whose tags are ['v', <uuid>, <relay-url>, <small integer index>] entries (1-3 per event). Content is empty (11) or NIP-44 (3). It looks like a per-user pointer list: UUID-identified items (vaults? votes? sessions?) and the relay each one lives on, with an ordinal. The same UUID shows up across users (e.g. 8a53bdbe... on wss://nostr.mom).",
+   "encrypted": false,
+   "confidence": "low",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "No source found for the kind number. 12 authors.",
+   "events": 14,
+   "authors": 12,
+   "class": "replaceable"
+  },
+  {
+   "kind": 1081,
+   "name": "SNS envelope? / encrypted key blob (contested)",
+   "app_or_protocol": "Possibly NIP-SNS Shared Note Storage (damus notedeck draft) or an app storing encrypted nsecs",
+   "spec_url": "https://github.com/damus-io/notedeck/blob/master/docs/nip-sns-sealed-shared-storage.md",
+   "source_urls": [
+    "https://github.com/damus-io/notedeck/blob/master/docs/nip-sns-sealed-shared-storage.md",
+    "https://github.com/nostr-protocol/nips/pull/1893"
+   ],
+   "what_it_is": "Regular event with no tags and NIP-44 v2 content, authored by an otherwise unused key — same shape as a PNS (1080) note. notedeck's NIP-SNS draft names 1081 the 'SNS envelope' (outer wrapper signed by a key derived from a shared team_root, carrying a kind-13 seal). But every observed event is exactly 163 bytes of ciphertext (<=96 bytes plaintext), too small to hold a signed seal.",
+   "encrypted": true,
+   "confidence": "low",
+   "amethyst_relevance": "protocol-infra",
+   "suggested_quartz_package": null,
+   "notes": "In the PNS PR thread, a commenter (sh1ftred) says they want to use 1081 to store encrypted nsecs; a ~64-96 byte plaintext fits that better. So the live traffic is probably not SNS.",
+   "events": 12,
+   "authors": 12,
+   "class": "regular"
+  },
+  {
+   "kind": 31124,
+   "name": "Blobbi virtual pet",
+   "app_or_protocol": "Ditto (soapbox-pub/ditto) Blobbi ecosystem",
+   "spec_url": "https://github.com/soapbox-pub/ditto/blob/main/docs/blobbi/blobbi-tag-schema.md",
+   "source_urls": [
+    "https://github.com/soapbox-pub/ditto/blob/main/docs/blobbi/blobbi-tag-schema.md",
+    "GitHub code search \"blobbi:ecosystem:v1\""
+   ],
+   "what_it_is": "Addressable Tamagotchi-style pet whose whole state lives in tags. `d=blobbi-<pubkey12>-<petId10>`, `b=blobbi:ecosystem:v1`, `name`, `seed`, `stage` (egg/baby/adult), `state`, stats (`hunger`, `happiness`, `health`, `hygiene`, `energy`), appearance (`base_color`, `secondary_color`, `eye_color`, `pattern`, `special_mark`, `size`), progression, care streak and `client=Ditto` with a 31990 handler. The content is JSON progression quests (`{evolution:[...]}`) or a short text description.",
+   "encrypted": false,
+   "confidence": "high",
+   "amethyst_relevance": "render-worthy",
+   "suggested_quartz_package": "experimental/blobbi/ (low priority)",
+   "notes": "Public, with a `visible_to_others` tag, and republished on every interaction (42 events from 11 authors). It could be shown as a profile card using the alt/content text or NIP-89 handoff to Ditto. Low priority.",
+   "events": 42,
+   "authors": 11,
+   "class": "addressable"
+  },
+  {
+   "kind": 11125,
+   "name": "Blobbonaut Profile (Blobbi virtual pet)",
+   "app_or_protocol": "Blobbi / nostr-pet (Danidfra), supported by Ditto",
+   "spec_url": "https://github.com/Danidfra/nostr-pet/blob/production/NIP.md",
+   "source_urls": [
+    "https://github.com/soapbox-pub/ditto/blob/main/NIP.md",
+    "https://github.com/Danidfra/nostr-pet/blob/production/NIP.md"
+   ],
+   "what_it_is": "Replaceable owner profile for the Blobbi virtual-pet game: d='blobbonaut-<pubkey prefix>', b='blobbi:ecosystem:v1', name, 'has' tags pointing at owned Blobbis (the pets are kind 31124 addressable states), pettingLevel, xp/coins/level, blobbi_onboarding_done, current_companion. Content is JSON with missions and room_furniture/room_layouts. Related kinds: 14919 interaction, 14920 breeding, 14921 lifecycle record, 31124 pet state, 1124 social interaction.",
+   "encrypted": false,
+   "confidence": "high",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": "blobbi/ (only if the pet game is wanted)",
+   "notes": "Game-save data. If anything is rendered, it would be the 31124 pet, not this profile.",
+   "events": 15,
+   "authors": 11,
+   "class": "replaceable"
+  },
+  {
+   "kind": 37701,
+   "name": "Fedi FMan advertisement",
+   "app_or_protocol": "Fedi Manifold (fedibtc/manifold) — Fedimint federation-manager marketplace",
+   "spec_url": "https://github.com/fedibtc/manifold/blob/master/crates/nostr/specs/SPEC-fman-nostr-events.md",
+   "source_urls": [
+    "https://github.com/fedibtc/manifold/blob/master/crates/nostr/specs/SPEC-fman-nostr-events.md"
+   ],
+   "what_it_is": "Addressable ad (d='fman-ad', t='fedi-fman') by an FMan (federation-manager) service so people setting up a Fedimint federation can find guardian hosting. Content JSON {payload:{version, fman_id_pubkey, service_pubkey, issued_at, expires_at(~1h), api_endpoints:[{transport:'iroh', url}], availability{fedimintd_version, federation_sizes}, plans[{InfiniteBestEffort:{price_msats}}], holder_authorizations[...]}, proof:{signature}}; the signature is over SHA256('fedi-fman-advertisement/v1\\0'||JCS(payload)).",
+   "encrypted": false,
+   "confidence": "high",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "Same spec reserves 37702-37708 (FLIP provider ad, attester issuer authority, credential revocation, holder authorization, encrypted backups, setup-payment federations). Tags are only indexing hints; verifiers must check the signed payload.",
+   "events": 12,
+   "authors": 11,
+   "class": "addressable"
+  },
+  {
+   "kind": 30218,
+   "name": "Infinity encrypted local-state backup",
+   "app_or_protocol": "Infinity / Biosenger app family (data-space.world)",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "Addressable, d='infinity-local-state', visibility 'private', optional backup 'blossom'. Content is 'enc1:' + NIP-44 v2 ciphertext (self-encrypted) of the app's local state, up to ~38 KB; when backup=blossom the payload is small (state stored on Blossom, event holds the pointer).",
+   "encrypted": true,
+   "confidence": "medium",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "Same author set as 30085 and 30226; part of a 302xx block (30215 'infinity-builder-profile', 30225-30228…).",
+   "events": 24,
+   "authors": 10,
+   "class": "addressable"
+  },
+  {
+   "kind": 38422,
+   "name": "Routstr provider analytics snapshot",
+   "app_or_protocol": "Routstr (pay-per-request LLM routing over Cashu/Lightning)",
+   "spec_url": "https://github.com/Routstr/routstr-core/blob/main/routstr/nostr/analytics.py",
+   "source_urls": [
+    "https://github.com/Routstr/routstr-core/blob/main/routstr/nostr/analytics.py",
+    "https://nostr.eu/nevent1qqs8g7qpvmsz7sq748pftqzec3cpzwasd6saekrqjefqds9kncf5r2cxg3203"
+   ],
+   "what_it_is": "ANALYTICS_KIND = 38422 in routstr-core, enabled by default. Each node publishes one replaceable usage snapshot with `d`=`<provider_id>:stats`, `provider`=<id>, `schema`=routstr.analytics.snapshot.v1. Content is JSON with endpoint_urls (clearnet + onion), windows, model_usage_mix (per-model counts, tokens, revenue msats), top models and summary. It feeds routstr.com/stats.",
+   "encrypted": false,
+   "confidence": "high",
+   "amethyst_relevance": "protocol-infra",
+   "suggested_quartz_package": null,
+   "notes": "This is the companion to the NIP-91 provider listing kind 38421 (Routstr). It is only relevant if Amethyst ever lists AI providers.",
+   "events": 17,
+   "authors": 10,
+   "class": "addressable"
+  },
+  {
+   "kind": 4454,
+   "name": "NIP-4E encryption-key transfer request",
+   "app_or_protocol": "NIP-4E decoupled encryption keys (draft); implemented by psstpsst (CodyTseng)",
+   "spec_url": "https://github.com/nostr-protocol/nips/pull/1647",
+   "source_urls": [
+    "https://github.com/CodyTseng/psstpsst/blob/master/docs/protocols/nip4e.md",
+    "https://github.com/nostr-protocol/nips/pull/2361",
+    "/home/user/amethyst/quartz/src/commonMain/kotlin/com/vitorpamplona/quartz/experimental/decoupling/setup/EncryptionKeyListEvent.kt"
+   ],
+   "what_it_is": "Signed by the identity key from a new device that lacks the decoupled encryption private key. It has empty content, `P=<requester client pubkey>` and an equal compatibility alias `pubkey=<same>`, plus optional `relay` and `n` (wanted encryption pubkey). Existing devices compare a pairing code out of band and answer with kind 4455: the encryption privkey NIP-44-encrypted from a sender client key to the requester client key. The requester accepts it only if it matches the `n` tag of the identity's kind 10044.",
+   "encrypted": false,
+   "confidence": "high",
+   "amethyst_relevance": "protocol-infra",
+   "suggested_quartz_package": "experimental/decoupling/ (next to EncryptionKeyListEvent 10044; add 4454 request + 4455 transfer)",
+   "notes": "Quartz already implements kind 10044 (`EncryptionKeyListEvent`) but not the 4454/4455 multi-device handshake, which is the piece needed to use decoupled keys on a second device. 10 authors.",
+   "events": 16,
+   "authors": 10,
+   "class": "regular"
+  },
+  {
+   "kind": 16767,
+   "name": "Active Profile Theme",
+   "app_or_protocol": "Ditto (also jotstr, Armada)",
+   "spec_url": "https://github.com/soapbox-pub/ditto/blob/main/NIP.md#kind-16767-active-profile-theme",
+   "source_urls": [
+    "https://github.com/soapbox-pub/ditto/blob/main/NIP.md"
+   ],
+   "what_it_is": "Replaceable event (one per user) holding the user's active profile theme: 'c' color tags (hex, role background/text/primary), 'f' font tags (family, woff2 URL, role body/title), optional 'bg' background image (imeta-style url/mode/m), 'title', and 'a'/'p' credit tags when the theme was adopted from a kind-36767 Theme Definition or another user. Content is empty, alt 'Active profile theme'. Clients fetch {kinds:[16767],authors:[pk],limit:1} when showing a profile.",
+   "encrypted": false,
+   "confidence": "high",
+   "amethyst_relevance": "render-worthy",
+   "suggested_quartz_package": "dittoThemes/ (36767 + 16767)",
+   "notes": "Already mentioned in Amethyst's commons/feeds/RepostRenderability.kt as a known untyped kind. Used by 3 clients. Could theme profile pages, or at least render the 36767 definitions as shareable theme cards.",
+   "events": 14,
+   "authors": 10,
+   "class": "replaceable"
+  },
+  {
+   "kind": 30032,
+   "name": "Anonymate post marker (like/bookmark?)",
+   "app_or_protocol": "Anonymate (unidentified app)",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "Addressable event with no d tag (so one per author), tags app='anonymate', e=<post id>, p=<post author>, k='30023'. Empty content. The referenced e is an Anonymate kind-4551 post, despite k=30023.",
+   "encrypted": false,
+   "confidence": "low",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "Probably a 'current/last liked/pinned post' marker; since there is no d tag, each new one replaces the previous one. Same author set as 30310/30388/34552.",
+   "events": 12,
+   "authors": 10,
+   "class": "addressable"
+  },
+  {
+   "kind": 4334,
+   "name": "Chunked encrypted file transfer",
+   "app_or_protocol": "unidentified",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "Regular event from one-shot pubkeys with x <32-hex transfer id>, c <chunk index> and NIP-40 expiration (~2 weeks). Content is ~58 KB base64 (44,028 bytes decoded) of opaque ciphertext — fixed-size chunks of an encrypted file streamed through relays.",
+   "encrypted": true,
+   "confidence": "medium",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "198 events / 9 authors in stats; uses relays as blob storage.",
+   "events": 198,
+   "authors": 9,
+   "class": "regular"
+  },
+  {
+   "kind": 9423,
+   "name": "r-tagged opaque blob (unidentified)",
+   "app_or_protocol": "unidentified (same family as 9422)",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "Same shape as 9422: `r`=<32-byte hex> plus ~100-byte base64 ciphertext, posted by many throwaway authors to the same r value.",
+   "encrypted": true,
+   "confidence": "low",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "See 9422.",
+   "events": 9,
+   "authors": 9,
+   "class": "regular"
+  },
+  {
+   "kind": 4242,
+   "name": "Grab-bag regular kind (encrypted room msgs, NIP-44 DMs, BetPod notice, Divine 'more like this')",
+   "app_or_protocol": "Multiple: unknown encrypted-room app, BetPod prediction markets, Divine (divine.video)",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "No single schema. (a) Most events: t <64-hex room hash> + opaque base64 ciphertext (encrypted group chat keyed by room hash); (b) p tag + NIP-44 v2 ciphertext (DM-like); (c) BetPod: d=<market uuid>, market-status 'voided', market-resolves-at, market-version, t prediction/wager/betpod, alt text, plain content 'This market was voided…'; (d) Divine client: ['direction','more'] + e/a/p/k=34236 pointing at a Divine video + its hashtags, empty content — a 'show me more like this' recommendation-feedback signal.",
+   "encrypted": true,
+   "confidence": "low",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "131 events / 8 authors. 4242 is a vanity number several apps picked independently; no spec found for any use. The Divine 'direction' signal is the only one an Amethyst video feed might care about.",
+   "events": 131,
+   "authors": 8,
+   "class": "regular"
+  },
+  {
+   "kind": 1124,
+   "name": "Blobbi social interaction",
+   "app_or_protocol": "Blobbi virtual pet (Ditto client)",
+   "spec_url": "https://gitlab.com/soapbox-pub/ditto/-/blob/main/NIP.md",
+   "source_urls": [
+    "https://gitlab.com/soapbox-pub/ditto/-/blob/main/NIP.md",
+    "https://github.com/Danidfra/nostr-pet/blob/production/NIP.md"
+   ],
+   "what_it_is": "Immutable interaction log for a Blobbi pet (kind 31124 is the pet's addressable state). Tags are `a`=31124:<owner>:<blobbi-d>, `p`=owner, `action` (feed|play|clean|medicate|boost), `source` (blobbi-page|companion), `blobbi`=short id, `item`=shop item, `alt` and `client`. Content is empty. The owner's client folds pending interactions into the 31124 state.",
+   "encrypted": false,
+   "confidence": "high",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "Only 8 authors (Ditto users). It could render as a small 'X fed Blobbi' activity line via `alt`, but the owning spec is the nostr-pet NIP-BB.",
+   "events": 104,
+   "authors": 8,
+   "class": "regular"
+  },
+  {
+   "kind": 30421,
+   "name": "Napstr audio catalogue entry (+ BetPod oracle node registration collision)",
+   "app_or_protocol": "Napstr (lnbits/napstr); colliding: betpod-oracle-poc",
+   "spec_url": "https://github.com/lnbits/napstr/blob/main/PROTOCOL.md",
+   "source_urls": [
+    "https://github.com/lnbits/napstr/blob/main/PROTOCOL.md",
+    "SCRATCH/report/samples/kind-30421.jsonl"
+   ],
+   "what_it_is": "Napstr is a P2P music-sharing app. Each kind 30421 entry is one shared audio file: `d`=`x`=sha256 file id, `t=napstr` plus up to 20 search-word `t` tags, `name`, `size`, `m` (audio MIME), `alt`. The content is JSON `{protocol:'napstr/1', fileId, filename, title, artist, album, format, mime, size, license, description, tags}`. A withdrawal replaces the entry with `{deleted:true}`; 1392 of 1646 events are withdrawals. Related kinds: 30422 (10-min seeding heartbeat) and 30423 (audiobook manifest), with negotiation over NIP-17/59. Separately, 13 events from betpod-oracle-poc reuse 30421 with `d=betpod-oracle-node:v1` to register AI-oracle nodes (ollama model, roles, FROST signer, stake).",
+   "encrypted": false,
+   "confidence": "high",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "This is a public catalogue, but it is useless without Napstr's P2P transfer. Kind collision between two unrelated apps. 8 authors produce 1646 events, so it is noisy for search indexes.",
+   "events": 1646,
+   "authors": 8,
+   "class": "addressable"
+  },
+  {
+   "kind": 1990,
+   "name": "Append-only list Add (nostr-mail senders list)",
+   "app_or_protocol": "nostr-mail (nogringo/nostr-mail-dart, nostr-mail-client); \"Append-Only Lists NIP\" (unpublished)",
+   "spec_url": "https://github.com/nogringo/nostr-mail-client/blob/main/docs/senders-and-spam.md",
+   "source_urls": [
+    "https://github.com/nogringo/nostr-mail-dart/blob/main/lib/src/constants.dart",
+    "https://github.com/nogringo/nostr-mail-client/blob/main/docs/senders-and-spam.md"
+   ],
+   "what_it_is": "An \"Add\" entry in an append-only list (kind 1991 = Remove). Only `d=nostr-mail/senders` was seen: the nostr-mail client's allow/block verdicts per sender (pubkey or pubkey+email for bridged mail). The `sender` entries live only inside NIP-44 encrypted content and are published to the user's NIP-65 write relays. Regular events accumulate instead of replacing a whole NIP-51 list.",
+   "encrypted": true,
+   "confidence": "high",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "The same project uses kind 1301 for email. The Append-Only Lists NIP is referenced by name only; no PR was found in nostr-protocol/nips. It could become protocol-infra if that NIP is proposed generally.",
+   "events": 10,
+   "authors": 8,
+   "class": "regular"
+  },
+  {
+   "kind": 38384,
+   "name": "Mostro user rating (collides with Paygress provider heartbeat)",
+   "app_or_protocol": "Mostro P2P (main use); Paygress (collision)",
+   "spec_url": "https://github.com/MostroP2P/protocol/blob/main/src/user_rating.md",
+   "source_urls": [
+    "https://github.com/MostroP2P/protocol/blob/main/src/user_rating.md",
+    "https://github.com/MostroP2P/mostro-core/blob/main/src/prelude.rs",
+    "https://github.com/MostroP2P/mostro/blob/main/README.md",
+    "https://github.com/DhananjayPurohit/Paygress/blob/main/src/nostr/kinds.rs"
+   ],
+   "what_it_is": "Mostro: addressable reputation snapshot signed by a Mostro daemon. d = the rated user's (trade) pubkey hex, z='rating', and tags total_reviews, total_rating (average), last_rating, max_rate, min_rate, days/since, plus a NIP-40 expiration (90 days by default). Content is empty. It is part of Mostro's 38383 orders / 38384 ratings / 38385 info / 38386 disputes / 38387 announcements family. Paygress (a Cashu-paid compute marketplace) reuses 38384 for provider heartbeats: d='paygress:heartbeat:v1:<npub>:<minute bucket>', t='paygress-heartbeat', JSON content with available_capacity and active_workloads.",
+   "encrypted": false,
+   "confidence": "high",
+   "amethyst_relevance": "protocol-infra",
+   "suggested_quartz_package": "nip69P2pOrderEvents/ (MostroRatingEvent next to P2POrderEvent)",
+   "notes": "Quartz already has P2POrderEvent (38383, NIP-69). Mostro's rating, info and dispute kinds sit beside it, and rating snapshots could be shown on a P2P order card ('4.9★ from 157 trades'). Paygress also uses 38383 for its compute offers, so P2POrderEvent parsing must tolerate non-Mostro 38383s. 98 of the sampled 448 events were Mostro ratings and 350 were Paygress heartbeats.",
+   "events": 448,
+   "authors": 8,
+   "class": "addressable"
+  },
+  {
+   "kind": 1002,
+   "name": "Unidentified paired encrypted exchange (v1, o/f/i tags)",
+   "app_or_protocol": "unknown",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "Regular event: v='v1', 'o' and 'f' hex pubkeys (in the reply the two values are swapped, so likely 'own/self' and 'from/peer'), an 'i' UUID session id, and base64 content whose first byte is 0x01 (a NIP-44-v1-style or custom AEAD payload, not v2). Events come in request/response pairs a few seconds apart between two keys sharing the same 'i'. Looks like an app's encrypted 1:1 session or handshake channel.",
+   "encrypted": true,
+   "confidence": "low",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "Kind 1002 sits next to NIP-11-adjacent numbers but has nothing to do with them. Source not found.",
+   "events": 8,
+   "authors": 8,
+   "class": "regular"
+  },
+  {
+   "kind": 30422,
+   "name": "Napstr seeder availability",
+   "app_or_protocol": "Napstr (lnbits/napstr) — P2P music/file sharing over Tor",
+   "spec_url": "https://github.com/lnbits/napstr/blob/main/PROTOCOL.md",
+   "source_urls": [
+    "https://github.com/lnbits/napstr/blob/main/PROTOCOL.md",
+    "https://github.com/knobcore/bopwire"
+   ],
+   "what_it_is": "Addressable heartbeat listing file IDs the author can seed right now. d='availability-NNNN' (groups of <=400 IDs) or 'availability-delta-<uuid>-NNNN', t='napstr-availability', expiration 10 minutes, republished every 4 minutes; content is a JSON array of lowercase SHA-256 file IDs. Consumers join it with the 30421 catalogue to find live seeders.",
+   "encrypted": false,
+   "confidence": "high",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "Part of Napstr: 30421 catalogue entries, 30422 availability, 30423 audiobook collections, NIP-17 for download negotiation, NIP-C7 kind 9 trollbox. 280 events from 8 authors (high churn because of the 4-min heartbeat).",
+   "events": 280,
+   "authors": 8,
+   "class": "addressable"
+  },
+  {
+   "kind": 30301,
+   "name": "Kanban board (NIP PR #1665) / WalletScrutiny build verification (collision)",
+   "app_or_protocol": "Kanbanstr (kanban boards); WalletScrutiny.com reproducible-build verifications; an encrypted day-planner app",
+   "spec_url": "https://github.com/nostr-protocol/nips/pull/1665",
+   "source_urls": [
+    "https://github.com/nostr-protocol/nips/pull/1665",
+    "https://walletscrutiny.com/verifications/",
+    "https://walletscrutiny.com/automated-build-server/"
+   ],
+   "what_it_is": "Three users: (1) Kanbanstr board definition per open NIP PR #1665: d, title, description, col ['col',id,name,order], p maintainers; cards are kind 30302 with s/rank/a→30301. (2) WalletScrutiny build-verification results: d '<appId>:<version>:<platform>:<sha256>', i <appId>, version, platform, status (reproducible|not_reproducible|ftbfs), x <binary sha256, filename>, file-attachment/output-file (terminal recording hashes), based-on, client WalletScrutiny.com; content JSON {description, content:<markdown report>}. (3) A planner app storing per-day tasks: b <board hash>, col 'day', status open/deleted/done, d like 'fasting-reminder:2026-11-02', NIP-44 content.",
+   "encrypted": false,
+   "confidence": "high",
+   "amethyst_relevance": "render-worthy",
+   "suggested_quartz_package": null,
+   "notes": "Board events (kanban) and WalletScrutiny reproducibility reports are both human-meaningful. WalletScrutiny status is real security-relevant info (render-worthy as an app/release attestation, could pair with zapstore/NIP-82 app events). Kind collision means any typed parser must disambiguate by tags (title+col → board; i+status+x → verification).",
+   "events": 69,
+   "authors": 7,
+   "class": "addressable"
+  },
+  {
+   "kind": 30226,
+   "name": "Infinity avatar photo pointer",
+   "app_or_protocol": "Infinity / Biosenger app family (data-space.world)",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "Addressable, d=<user pubkey hex>, visibility 'public', t 'infinity-avatar-photo', NIP-40 expiration. Content JSON {cid:<IPFS CIDv1 bafkrei…>, mime:'image/png', auto:true} or {off:true}. Points the app's avatar to an IPFS-hosted image.",
+   "encrypted": false,
+   "confidence": "medium",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "Same authors as 30085/30218. Could in theory be a profile-picture source, but it's app-scoped and expiring.",
+   "events": 14,
+   "authors": 7,
+   "class": "addressable"
+  },
+  {
+   "kind": 39844,
+   "name": "CI coordinator repository status",
+   "app_or_protocol": "Nostr CI / ngit-ci (NIP-C1, CI extension to NIP-34)",
+   "spec_url": "https://github.com/toon-protocol/rig/blob/main/docs/specs/nip-c1.md",
+   "source_urls": [
+    "https://github.com/toon-protocol/rig/blob/main/docs/specs/nip-c1.md"
+   ],
+   "what_it_is": "A CI coordinator advertises that it is acting for a NIP-34 repository. `d` and `a`=30617 repo coordinate(s), `s`=acting, `W`=runner family (act|nix), `workflow-path` globs (.ngit/act/workflows/*.yml), `R`=runner selectors, `secret`=secret names only (never values), and `expiration` within 24h. Content is empty. Same family: 19843 coordinator advert (software 'ngit-ci'), 19844 readiness list, 9840 manual trigger, 9841 job result, 9842 workflow result, 9843/9844 service request/stop, 39842 workflow progress, 29846 secret update.",
+   "encrypted": false,
+   "confidence": "high",
+   "amethyst_relevance": "protocol-infra",
+   "suggested_quartz_package": "nip34Git/ci/ (or nipC1Ci/)",
+   "notes": "Relevant if Amethyst's NIP-34 git screens want to show CI status. 9842 (workflow result) and 39842 (progress) are the render-worthy ones, and 39844 tells you which coordinator serves a repo. The spec is also published on nostrhub.io.",
+   "events": 35,
+   "authors": 7,
+   "class": "addressable"
+  },
+  {
+   "kind": 30228,
+   "name": "Infinity avatar personality profile",
+   "app_or_protocol": "'Infinity' avatar app (French; kinds 30225-30228)",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "`d`=author pubkey, `t`=infinity-avatar-personnalite, `visibility`=public, and a short `expiration`. Content is JSON personality sliders {v,aventure,sport,social,rythme,interets[]} or {off:true}. Siblings: 30225 avatar appearance (morph sliders), 30226 avatar photo (IPFS cid), 30227 directory entry ('infinity-annuaire').",
+   "encrypted": false,
+   "confidence": "medium",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "Self-describing and no public source was found.",
+   "events": 14,
+   "authors": 7,
+   "class": "addressable"
+  },
+  {
+   "kind": 30080,
+   "name": "Bro order status update",
+   "app_or_protocol": "Bro (Quizzicarol/bro-app, Brostr/bro) - pay Brazilian bills (PIX/boleto) with bitcoin",
+   "spec_url": "https://github.com/Quizzicarol/bro-app/blob/main/specs/BROSPEC-02-events.md",
+   "source_urls": [
+    "https://github.com/Quizzicarol/bro-app/blob/main/specs/BROSPEC-02-events.md"
+   ],
+   "what_it_is": "Order-status update in Bro's bill-payment marketplace. `d=<orderId>_<pubkey8>_update` (or `_billcode`), `t=bro-order`, `t=bro-update`/`bro-billcode`, `t=status-<x>`, `r`/`orderId`=order UUID, `p`=provider and user, and `expiration` 30 days. The content is JSON `{type:'bro_order_update', orderId, status, providerId, userPubkey, publishedBy, paymentProof, updatedAt}`; billcode variants carry a NIP-44 `billCode_nip44` field. Other events in the family: 30078 order, 30079 accept, 30081 complete, 30082 provider profile, 30085 review. Some events (`model`, `prompt_hash`, `world` tags with imageUrl JSON) appear to be a second, unrelated app reusing 30080.",
+   "encrypted": false,
+   "confidence": "high",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "Bro's order kind 30078 collides with NIP-78 app data. 7 authors.",
+   "events": 29,
+   "authors": 7,
+   "class": "addressable"
+  },
+  {
+   "kind": 30801,
+   "name": "Unidentified blinded hourly commitment",
+   "app_or_protocol": "unidentified",
+   "spec_url": null,
+   "source_urls": [
+    "SCRATCH/report/samples/kind-30801.jsonl"
+   ],
+   "what_it_is": "Addressable event with `d=<64-hex>` (sometimes shared by several authors), `commit=<sha256>`, `scheme=sha256-blind/1,nip44/2`, `window=3600`, `epoch=<floor(unix/3600)>`, and `expiration` about 24 h. The content is NIP-44 v2. It looks like an hourly commit-reveal or blinded-presence scheme in which the commitment is public and the opening is encrypted to someone.",
+   "encrypted": true,
+   "confidence": "low",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "7 authors. The epoch number equals the current hour index, which confirms the 3600 s window semantics.",
+   "events": 13,
+   "authors": 7,
+   "class": "addressable"
+  },
+  {
+   "kind": 30227,
+   "name": "Infinity directory entry (annuaire)",
+   "app_or_protocol": "'Infinity' (French community/territory app, unidentified)",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "Addressable event with d='infinity-annuaire' and t='infinity-annuaire'. JSON content {v:1, nom (display name), joignable (reachable: bool), avatar?}. It is the user's opt-in listing in the app's member directory.",
+   "encrypted": false,
+   "confidence": "medium",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "Same authors also publish 30051 (profile/passport) and 30052 (approximate position) with French vocabulary (territoire, compétences, abondance, passeport). Public project not found.",
+   "events": 15,
+   "authors": 7,
+   "class": "addressable"
+  },
+  {
+   "kind": 30081,
+   "name": "Contested kind: Bro order completion, plus other apps",
+   "app_or_protocol": "Bro / Brostr (P2P bill-pay / PIX for sats); also 'nostrwall', 'verge:shares', an unknown encrypted 'announce'",
+   "spec_url": "https://github.com/Brostr/bro/blob/main/lib/services/nostr_order_service.dart",
+   "source_urls": [
+    "https://github.com/Brostr/bro/blob/main/lib/services/nostr_order_service.dart",
+    "https://github.com/Quizzicarol/bro-app/blob/main/lib/services/nostr_order_service.dart"
+   ],
+   "what_it_is": "Several apps use this addressable kind. (1) Bro: kindBroComplete = 30081 (orders 30078, accept 30079, payment proof 30080, provider tier 30082). d='<orderId>_complete' or '_invoice_refresh', t='bro-order'/'bro-complete'/'bro-invoice-refresh', orderId, p (user), e (order event), expiration. JSON content has type, orderId, providerId, providerInvoice (bolt11), and proofImage or proofImage_nip44. (2) 4 events with t='announce', a 32-hex d and opaque (non-NIP-44) base64 content. (3) L='nostrwall' with d='bookworm', a curated list of 'e' tags with timestamps. (4) d='verge:shares' with JSON {shares:[]}.",
+   "encrypted": false,
+   "confidence": "medium",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "Bro also uses 30078 for orders, which collides with NIP-78 application-specific data, so Amethyst's NIP-78 handling will see Bro orders. Its PIX bill payments put payment data on public relays (partly NIP-44 encrypted).",
+   "events": 8,
+   "authors": 7,
+   "class": "addressable"
+  },
+  {
+   "kind": 1080,
+   "name": "PNS private note (Private Note Storage)",
+   "app_or_protocol": "NIP-PNS (jb55; Damus/notedeck/nostrdb)",
+   "spec_url": "https://github.com/nostr-protocol/nips/pull/1893",
+   "source_urls": [
+    "https://github.com/nostr-protocol/nips/pull/1893",
+    "https://github.com/jb55/nips/blob/pns/PNS.md",
+    "https://github.com/damus-io/notedeck/blob/master/docs/nip-sns-sealed-shared-storage.md"
+   ],
+   "what_it_is": "Encrypted private storage of the user's own notes and settings. pns_key = HKDF(device key or nsec, salt 'nip-pns'). The outer kind-1080 event is signed by a keypair derived from it, has NO tags, and its content is NIP-44 v2 under a symmetric key derived from the same secret. The plaintext is an inner Nostr event: an unsigned rumor by the real pubkey, or a signed event. Clients find their notes by querying kind 1080 authored by their derived PNS pubkey.",
+   "encrypted": true,
+   "confidence": "high",
+   "amethyst_relevance": "protocol-infra",
+   "suggested_quartz_package": "nipXXPrivateNoteStorage/ (alongside nip59Giftwrap)",
+   "notes": "Open NIP PR #1893 (jb55). nostrdb already auto-unwraps 1080. Useful to Amethyst for private drafts/settings backup synced across devices. 102 events from 7 derived keys, ciphertext 387-707 bytes, consistent with rumors.",
+   "events": 102,
+   "authors": 7,
+   "class": "regular"
+  },
+  {
+   "kind": 30225,
+   "name": "Infinity avatar appearance",
+   "app_or_protocol": "unidentified French 3D-avatar app (same author cluster as DATASPACE, data-space.world)",
+   "spec_url": null,
+   "source_urls": [
+    "https://data-space.world/"
+   ],
+   "what_it_is": "Addressable avatar-customization record: d=<author pubkey>, t='infinity-avatar-apparence', visibility='public', expiration about 7 days. Content JSON (French field names) of body and face morph parameters: genre, modele, stature, epaules, hanches, teinte, carnation, peau, tenue, tailleCm, ageAns, and a 'formes' map of slider weights (menton-*, levres-*, machoire-*, muscle+/-...).",
+   "encrypted": false,
+   "confidence": "low",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "The same 7 authors publish 30218, 30226, 30227, 30228, 30051, 30052, 30215, 30197 and 30210. That is one French ecosystem ('Infinity' / 'Biosenger'), possibly built around DATASPACE (data-space.world, a French private-relay and storage service). App not publicly documented.",
+   "events": 14,
+   "authors": 7,
+   "class": "addressable"
+  },
+  {
+   "kind": 30509,
+   "name": "Cryptographic Identity Proof (NIP-C1 draft)",
+   "app_or_protocol": "Zapstore (zapstore/relay, zsp, purplebase/models)",
+   "spec_url": "https://github.com/zapstore/relay/blob/master/pkg/events/identity_proof.go",
+   "source_urls": [
+    "https://github.com/zapstore/relay/blob/master/pkg/events/identity_proof.go",
+    "https://github.com/zapstore/zsp",
+    "https://github.com/purplebase/models/blob/master/lib/src/models/cryptographic_identity_proof.dart"
+   ],
+   "what_it_is": "Links a non-Nostr signing key (an Android APK-signing X.509 certificate) to the Nostr pubkey that publishes apps. d=<SHA-256 of the certificate's public key>, `signature` = base64 signature by that certificate key over the attestation (256 bytes, i.e. RSA-2048), `expiry` = unix time about 1 year out. Content empty. Zapstore uses it to check that a release's APK signer belongs to the publishing npub.",
+   "encrypted": false,
+   "confidence": "high",
+   "amethyst_relevance": "protocol-infra",
+   "suggested_quartz_package": "nipC1IdentityProof/ (near nip39ExtIdentities)",
+   "notes": "Draft 'NIP-C1' per Zapstore code (not merged). It is on Zapstore's relay allow-list next to 32267/30063/3063. Relevant if Amethyst ever verifies Zapstore app releases.",
+   "events": 7,
+   "authors": 7,
+   "class": "addressable"
+  },
+  {
+   "kind": 8571,
+   "name": "OC encrypted mailbox ('boîte') / probe",
+   "app_or_protocol": "unidentified (French-named 'oc-boite' / 'oc-sonde')",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "Regular event, x tag = mailbox id ('oc-boite-<32hex>') or probe id ('oc-sonde-…', 'oc-sonde-boite-8571-<date>'), optional expiration (~3 weeks). Content either 'OCB1.' + base64url(0x04 || 64-byte uncompressed EC pubkey || ciphertext) — ECIES-style sealed message — or plain base64 ciphertext for probes. Looks like an anonymous drop-box messaging system that is also testing relay retention ('sonde' = probe).",
+   "encrypted": true,
+   "confidence": "low",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "31 events / 6 authors; d-less, so x acts as the routing key.",
+   "events": 31,
+   "authors": 6,
+   "class": "regular"
+  },
+  {
+   "kind": 30100,
+   "name": "Grab-bag addressable (Snapstr read-state, kernl instance, job status)",
+   "app_or_protocol": "Snapstr (snapstr.app), kernl, unknown job runner",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "Mixed: (a) Snapstr: d 'Snapstr-Reads', client snapstr.app, NIP-13 PoW nonce tag ['nonce',n,'12'], NIP-44 content — encrypted per-user read/seen state; (b) kernl: d=<instance pubkey>, t 'kernl-instance', version, supports [directories, subs, posts, forums], content {schema, version, supports, active_at} — a server/instance advertisement; (c) d=<event id>, e=<same>, status 'completed' — a job-status marker tied to a kind 5101 result.",
+   "encrypted": true,
+   "confidence": "low",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "7 events / 6 authors.",
+   "events": 7,
+   "authors": 6,
+   "class": "addressable"
+  },
+  {
+   "kind": 34578,
+   "name": "Encrypted metadata / file record (Formstr Drive)",
+   "app_or_protocol": "NIP-Metadata + NIP-FS drafts (Formstr Drive)",
+   "spec_url": "https://github.com/nostr-protocol/nips/pull/2412",
+   "source_urls": [
+    "https://github.com/nostr-protocol/nips/pull/2412"
+   ],
+   "what_it_is": "Generic addressable 'metadata event' whose content is NIP-44 JSON encrypted to the author (or to a drive key). The `d` tag depends on the subtype: for the `files` subtype `d`=SHA-256 of the encrypted Blossom blob, and the plaintext holds name/size/type/folder/server/per-file key/chunks for a private encrypted drive. Samples show `d`=sha256 hex and ~220-byte NIP-44 content, without the `t` subtype tag the draft asks for.",
+   "encrypted": true,
+   "confidence": "medium",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "PR 2412 is by Formstr dev 'rama' (geralt-debugs). The samples omit the `t`/`encrypted`/`client` tags, so the match is on shape.",
+   "events": 18,
+   "authors": 6,
+   "class": "addressable"
+  },
+  {
+   "kind": 34237,
+   "name": "Video view (legacy NIP-71)",
+   "app_or_protocol": "NIP-71 (removed draft section)",
+   "spec_url": "https://github.com/nostr-protocol/nips/blob/85df9b0e89e23ed7c0dee73c29004f23b25020df/71.md",
+   "source_urls": [
+    "https://github.com/nostr-protocol/nips/blob/85df9b0e89e23ed7c0dee73c29004f23b25020df/71.md",
+    "https://github.com/nostr-protocol/nips/commit/e3afd7ac5b72c20fe209edf3ea84cd986d0bd4ef"
+   ],
+   "what_it_is": "Video view event from an earlier NIP-71. Tags were `a`/`d`=<34235|34236 coordinate of the viewed video>, optional `e`, and `viewed` start/end seconds, with an optional note as content. Live samples are sparse: mostly just an `e` tag (no `d`), and one with `d`/`a`=`22:<pubkey>:` (pointing at a kind-22 short video). Content is empty.",
+   "encrypted": false,
+   "confidence": "medium",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "The kind was removed from NIP-71 in Oct 2024 and survives in a few clients. It is view/watch-history telemetry and not worth rendering.",
+   "events": 7,
+   "authors": 6,
+   "class": "addressable"
+  },
+  {
+   "kind": 4471,
+   "name": "Unidentified group-scoped NIP-44 message",
+   "app_or_protocol": "unidentified",
+   "spec_url": null,
+   "source_urls": [
+    "SCRATCH/report/samples/kind-4471.jsonl"
+   ],
+   "what_it_is": "Regular event with a single `h` tag holding a 40-hex (20-byte, SHA-1/RIPEMD-sized) group id that is the same across all 6 authors, plus an `expiration` of 14 or 60 days. The content is NIP-44 v2 ciphertext. It looks like a small closed group's encrypted message or state stream that uses NIP-29-style `h` scoping without NIP-29 kinds.",
+   "encrypted": true,
+   "confidence": "low",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "Single group observed.",
+   "events": 10,
+   "authors": 6,
+   "class": "regular"
+  },
+  {
+   "kind": 34552,
+   "name": "anonymate room join/leave marker",
+   "app_or_protocol": "\"anonymate\" (app tag; no public source found)",
+   "spec_url": null,
+   "source_urls": [
+    "SCRATCH/report/samples/kind-34552.jsonl"
+   ],
+   "what_it_is": "Addressable membership marker: `d=<room/session UUID>`, `app=anonymate`, `action=join|leave`, with empty content. Each user keeps one event per room and the latest action wins. It is a public presence/membership signal for an anonymous-chat app.",
+   "encrypted": false,
+   "confidence": "medium",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "Self-describing via the `app` tag. 6 authors.",
+   "events": 6,
+   "authors": 6,
+   "class": "addressable"
+  },
+  {
+   "kind": 30052,
+   "name": "Infinity persona approximate position",
+   "app_or_protocol": "'Infinity' (French community app, unidentified)",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "Addressable event with d = the author's pubkey, visibility='public', t='infinity-persona-position'. JSON content {lat, lng, approx:true, prec (meters, ~25-30 km), decl:true, at (ms)}: a deliberately coarsened self-declared location for a member map.",
+   "encrypted": false,
+   "confidence": "medium",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "A privacy-conscious design: positions are blurred to tens of km. Companion of 30051/30227.",
+   "events": 10,
+   "authors": 6,
+   "class": "addressable"
+  },
+  {
+   "kind": 31991,
+   "name": "Agent Reach heartbeat (plus one-off service catalogue)",
+   "app_or_protocol": "Agent Reach (AustinEral/agent-reach) — AI-agent discovery; also BlindOracle",
+   "spec_url": "https://github.com/AustinEral/agent-reach/blob/main/NIP-DRAFT.md",
+   "source_urls": [
+    "https://github.com/AustinEral/agent-reach"
+   ],
+   "what_it_is": "Agent Reach heartbeat: addressable (d='<id>-v1'), with NIP-32 labels L='agent-reach' and l=['heartbeat','agent-reach'], s='available', content {\"status\":\"available\"}. It marks an AI agent online; its capabilities are in the paired kind 31990 'Service Card'. One other author (BlindOracle) used 31991 for a JSON service catalogue (d='blindoracle-v1-catalogue', t service-catalogue, x402 USDC pricing).",
+   "encrypted": false,
+   "confidence": "high",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "COLLISION: Agent Reach puts its Service Card on kind 31990, which is NIP-89's handler-information kind. Amethyst's NIP-89 code may see those cards; they can be told apart by the L/l 'agent-reach' labels.",
+   "events": 10,
+   "authors": 6,
+   "class": "addressable"
+  },
+  {
+   "kind": 30304,
+   "name": "imgtr image chunk",
+   "app_or_protocol": "imgtr (images stored directly on relays)",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "Addressable chunk of an image: d '<shortid>:<n>', chunk <n>, sha256 of the chunk, e → the manifest event. Content is raw base64 of the image bytes (first chunk begins with the PNG signature 'iVBORw0KGgo'), ~28 KB per chunk. Manifest is sibling kind 30303 (t 'imgtr', d <shortid>, sha256, mime; content {protocol:'imgtr', version:2, filename, mime, size, width, height, sha256, chunks, pubkey}).",
+   "encrypted": false,
+   "confidence": "medium",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "Uses relays as blob storage (78 events / 5 authors). Not encrypted (3 NIP-44 outliers). Could be rendered if ever popular, but Blossom is the supported path.",
+   "events": 78,
+   "authors": 5,
+   "class": "addressable"
+  },
+  {
+   "kind": 35713,
+   "name": "Opaque addressable blob (d = t = 32-hex id)",
+   "app_or_protocol": "unidentified",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "Addressable, d and t both equal the same 32-hex id; content is ~880 chars of base64 ciphertext (659 bytes, no NIP-44 version byte). Each author republishes a small number of ids. Looks like an app's encrypted record/state slot made discoverable by its id via the t tag.",
+   "encrypted": true,
+   "confidence": "low",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "14 events / 5 authors.",
+   "events": 14,
+   "authors": 5,
+   "class": "addressable"
+  },
+  {
+   "kind": 30800,
+   "name": "UPlanet DID document",
+   "app_or_protocol": "UPlanet / Astroport.ONE (papiche, Ğ1/Duniter ecosystem)",
+   "spec_url": null,
+   "source_urls": [
+    "https://opencollective.com/monnaie-libre/updates/lecosysteme-uplanet-astroport-one-analyse-comparative-face-aux-architectures-web3-aux-identites-detat-aux-monnaies-numeriques-et-au-nouveau-cadre-legislatif"
+   ],
+   "what_it_is": "Addressable W3C DID document for a did:nostr identity. Public form: d 'did', t 'uplanet','did-document', schema 'https://www.w3.org/TR/did-core/', published_at, email, contractStatus (e.g. active_rental, cooperative_member_satellite, astroport_captain). Content is a DID JSON-LD doc {@context, id:'did:nostr:<hex>', alsoKnownAs:[mailto:, did:g1:…, /ipns/…], verificationMethod, authentication, assertionMethod, keyAgreement, service, metadata}. Private form: d=<uuid>, encrypted 'nip44', NIP-44 content.",
+   "encrypted": false,
+   "confidence": "medium",
+   "amethyst_relevance": "protocol-infra",
+   "suggested_quartz_package": null,
+   "notes": "6 events / 5 authors. Publishes users' email addresses in a public tag. Related kinds seen from same authors: 30801, 31903, 10600. No NIP PR found; did:nostr itself is a separate W3C CG draft.",
+   "events": 6,
+   "authors": 5,
+   "class": "addressable"
+  },
+  {
+   "kind": 4272,
+   "name": "BetPod FROST oracle key-refresh commit",
+   "app_or_protocol": "BetPod (prediction markets with FROST threshold oracle)",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "Regular event, empty content, from each oracle node: frost-id (participant index as 32-byte hex), edition, base (old group key), new (refreshed group key), t 'betpod-oracle' and 'betpod-frost-refresh:<edition>'. Part of a FROST proactive key-refresh ceremony; siblings 4263 (round1 commitments), 4246/4251/4252/4264 and 30421 (oracle node registration: LLM model, roles) from the same keys; 4247 escrow-recovery records.",
+   "encrypted": false,
+   "confidence": "medium",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "5 events / 5 authors (one per signer).",
+   "events": 5,
+   "authors": 5,
+   "class": "regular"
+  },
+  {
+   "kind": 33333,
+   "name": "Sidestr chain tip / headers announcement",
+   "app_or_protocol": "sidestr (Bitcoin sidechain over Nostr, Melvin Carvalho; 'NIP-333')",
+   "spec_url": "https://github.com/sidestr/spec/blob/main/SPEC.md",
+   "source_urls": [
+    "https://github.com/sidestr/spec",
+    "https://docs.rs/sidestr-header",
+    "https://docs.rs/sidestr-agent"
+   ],
+   "what_it_is": "Tip announcement of a chain: `d`=`n`=chain alias (`sidestr:<name>` or `btc` for Bitcoin itself), `t`=sidestr, `tip`=height, `u`=mirror URLs serving the block file, `peg`, `e`=the kind-3500 chain document, and `alt`. Content is the hex of the last 12 block headers (80-byte SHA-256d or 164-byte BLAKE2b v2). One sample from 'holdbtc' reuses the kind for an unrelated game score attestation.",
+   "encrypted": false,
+   "confidence": "high",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "The sidestr reference code is AGPL-3.0, so do not copy it into Quartz without a licence check. The holdbtc 33333 is a collision.",
+   "events": 31,
+   "authors": 5,
+   "class": "addressable"
+  },
+  {
+   "kind": 35711,
+   "name": "Encrypted sharded blob (unidentified)",
+   "app_or_protocol": "unidentified",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "Addressable events with `d`='0.0'/'1.0' (index-like) and `t`=random 16-byte hex (a group/session id). Content is base64 binary: 0x01 version, u32 little-endian timestamp (≈created_at), padding/counter, then a 0.1-4 KB ciphertext. A few authors publish in lockstep.",
+   "encrypted": true,
+   "confidence": "low",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "Sibling 35713 (d=t=16-byte hex) is probably the same app.",
+   "events": 12,
+   "authors": 5,
+   "class": "addressable"
+  },
+  {
+   "kind": 1001,
+   "name": "v1 f-tagged encrypted message (unidentified)",
+   "app_or_protocol": "unidentified (family 1000-1002)",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "Regular event with `v`=v1 and `f`=<32-byte hex>. Content is base64 starting with version byte 0x01 (not NIP-44 v2), ~450 bytes. Sibling 1002 adds `o` (other party), `i` (UUID session) and swaps o/f between two authors within seconds, which looks like a handshake/signalling exchange. Sibling 1000 has JSON arrays of byte arrays.",
+   "encrypted": true,
+   "confidence": "low",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "Kinds 1000-1002 sit in the regular range and could collide with future NIPs.",
+   "events": 5,
+   "authors": 5,
+   "class": "regular"
+  },
+  {
+   "kind": 30303,
+   "name": "imgtr image manifest",
+   "app_or_protocol": "imgtr (images stored as chunked relay events)",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "Manifest for an image stored entirely on relays. `d`=6-char id, `t`=imgtr, `sha256`, `mime`. Content is JSON {protocol:'imgtr',version:2,filename,mime,size,width,height,sha256,chunks,pubkey}. The bytes live in kind 30304 chunk events (`d`=`<id>:<n>`, `chunk`, `sha256`, `e`=manifest, base64 content).",
+   "encrypted": false,
+   "confidence": "medium",
+   "amethyst_relevance": "spam/noise",
+   "suggested_quartz_package": null,
+   "notes": "Blob storage on relays. Also collides with NIP-BB 'Book' chapter (PR 2248) and GammaMarkets escrow-service (PR 2334/2335) drafts that both use 30303.",
+   "events": 5,
+   "authors": 5,
+   "class": "addressable"
+  },
+  {
+   "kind": 31510,
+   "name": "Pact HTLC atomic-swap offer",
+   "app_or_protocol": "Pact protocol / Satchel wallet (PoC-Consortium/satchel) - BTC <-> Bitcoin PoCX (btcx) swaps",
+   "spec_url": "https://github.com/PoC-Consortium/satchel/blob/main/spec/protocol.md",
+   "source_urls": [
+    "https://github.com/PoC-Consortium/satchel/blob/main/spec/protocol.md"
+   ],
+   "what_it_is": "Addressable public order-book offer for a cross-chain HTLC swap. `d=<swap_id>` (16 hex), `network`, `give`/`get` asset tags, and NIP-40 `expiration` = created + ttl. The content is a separately BIP-340-signed envelope `{v:1, type:'offer', swap_id, from, body:{give_asset, give_amount, get_asset, get_amount, protocol:'pact-htlc-v1', t1_secs, t2_secs, ttl_secs, wire}, sig}`. The rest of the handshake (take/init/accept/funded/redeemed/abort) travels in NIP-59 gift wraps.",
+   "encrypted": false,
+   "confidence": "high",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "5 authors. Comparable in purpose to NIP-69 P2P orders, but with its own envelope.",
+   "events": 25,
+   "authors": 5,
+   "class": "addressable"
+  },
+  {
+   "kind": 38421,
+   "name": "Routstr provider announcement (+ lnproxy-v1 collision)",
+   "app_or_protocol": "Routstr (pay-per-request AI over Cashu) RIP-02; also an `lnproxy-v1` Lightning invoice-wrapping service",
+   "spec_url": "https://github.com/Routstr/protocol/blob/main/RIP-02.md",
+   "source_urls": [
+    "https://github.com/Routstr/protocol/blob/main/RIP-02.md",
+    "https://github.com/SovranBitcoin/Sovran/blob/main/app/shared/lib/routstr/discovery.ts"
+   ],
+   "what_it_is": "Routstr form: addressable provider info with `d=<provider id>`, `u` endpoint URLs (https + .onion), `mint` (accepted Cashu mints), `version`, and kind-0-style content `{name, about}`. Users recommend providers with NIP-87 kind 38000 using `k=38421`. A second shape comes from `d=lnproxy-v1`: `n=<network>`, NIP-13 `nonce`, `expiration`, and JSON content with fee schedule, features (pay_bolt11, wrap_bolt11...), relays, onion URLs, node_pubkey and node_sig, advertising an LN proxy node.",
+   "encrypted": false,
+   "confidence": "high",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "Sovran's discovery code notes explicitly that kind 38421 is shared with lnproxy-v1. 5 authors.",
+   "events": 11,
+   "authors": 5,
+   "class": "addressable"
+  },
+  {
+   "kind": 3410,
+   "name": "maxplayer Cashu cross-mint trade listing",
+   "app_or_protocol": "maxplayer (MakePrisms/maxplayerai) - inferred",
+   "spec_url": null,
+   "source_urls": [
+    "https://github.com/MakePrisms/maxplayerai (uses kinds 23410/23411 for its mint RPC)",
+    "SCRATCH/report/samples/kind-3410.jsonl"
+   ],
+   "what_it_is": "Public trade offer to swap ecash between two Cashu mints. Tags: `t=maxplayer`, `v=1`, `g`=give mint URL, `w`=want mint URL, `u`/`x`=units, `expiration`. The content is JSON `{trade_v:1, give:{mint_url, unit, net}, want:{...}, maker_trade_pubkey, expires_at, deadline_policy, fee_policy:'sender-funds-net-v1'}`. Most observed events are `t=maxplayer-trade-probe` relay-capability probes with content `{diagnostic: '... NOT a listing', trade_v:0}`.",
+   "encrypted": false,
+   "confidence": "medium",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "The attribution to MakePrisms rests on the `maxplayer` name and that repo's adjacent 23410/23411 Cashu mint kinds. Only 5 events, mostly probes.",
+   "events": 5,
+   "authors": 5,
+   "class": "regular"
+  },
+  {
+   "kind": 30701,
+   "name": "Unidentified d=info encrypted record",
+   "app_or_protocol": "unidentified",
+   "spec_url": null,
+   "source_urls": [
+    "SCRATCH/report/samples/kind-30701.jsonl"
+   ],
+   "what_it_is": "Addressable `d=info` record per author. The content is about 125 bytes of base64url starting with version byte 0x01, with variable lengths of 123-126 bytes, so it is not NIP-44 (which pads). It is probably a custom AEAD (e.g. XChaCha20-Poly1305 with a version prefix) holding a small per-user info blob.",
+   "encrypted": true,
+   "confidence": "low",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "5 authors. The crawl labeled 2 of them nip44, but the shape matches none of NIP-44's padding.",
+   "events": 5,
+   "authors": 5,
+   "class": "addressable"
+  },
+  {
+   "kind": 9841,
+   "name": "CI Job Result",
+   "app_or_protocol": "ngit-ci / NIP-C1 working draft (also implemented by Hive-CI-aligned 'rig')",
+   "spec_url": "https://gitworkshop.dev/npub15qydau2hjma6ngxkl2cyar74wzyjshvl65za5k5rl69264ar2exs5cyejr/ngit-ci/tree/master/NIP.md",
+   "source_urls": [
+    "https://github.com/DanConwayDev/ngit-cli/blob/master/src/lib/ci/kinds.rs",
+    "https://github.com/DanConwayDev/ngit-cli/blob/master/docs/architecture/ci-trust.md",
+    "https://github.com/toon-protocol/rig/blob/main/docs/specs/nip-c1.md",
+    "https://github.com/DanConwayDev/gitworkshop/blob/master/NIP.md"
+   ],
+   "what_it_is": "Regular event signed by a CI compute provider with the result of one CI job run for a NIP-34 repo: 'a' = repo coordinate(s) 30617:..., 'c' commit, 'w' workflow file path + hash, 'o' trigger (push/pull_request), 'job', 'name', 'conclusion' (success/failure), 'logs' (Blossom URL), 'artifact' (Blossom URL, filename, release), queued_at/started_at, 'r' ref, 'q' pointing at the 39842 Workflow Progress, plus NIP-22-style E/K/P and e/k/p tags for the PR or patch. Content is the log tail. Family: 9840 manual trigger, 9842 workflow result, 9843 service request, 9844, 19843 coordinator advert, 29846 secret update, 39842 workflow progress.",
+   "encrypted": false,
+   "confidence": "high",
+   "amethyst_relevance": "render-worthy",
+   "suggested_quartz_package": "nip34Git/ci/ (NIP-C1 CI events)",
+   "notes": "Gitworkshop renders these as CI status badges on PRs and commits. Amethyst already has a NIP-34 git browser (quartz nip34Git, amy git), so CI status on PRs/patches is a natural add. The kind numbers are marked 'experimental placeholders' by ngit-ci.",
+   "events": 111,
+   "authors": 5,
+   "class": "regular"
+  },
+  {
+   "kind": 30779,
+   "name": "Unidentified 'CC' encrypted addressable records",
+   "app_or_protocol": "unknown",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "Addressable event with d tags 'cc1:<40-hex>:...', 'cc2:<40-hex>:{b|c|metas|m2026-08a|m2026-09b...}', 'cc3:...:r' and a 't' tag equal to the 40-hex id (a group/collection id). Content is a custom envelope 'CCD1.<keyid>.<alg>.<base64url ciphertext>' (also 'CCQ1.' and 'CCV1.' variants), which looks like an app-level encrypted document store (monthly shards 'm2026-09a', metadata 'metas'), shared by several pubkeys under one collection id.",
+   "encrypted": true,
+   "confidence": "low",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "No public source found for 'CCD1' or 'cc2:'.",
+   "events": 17,
+   "authors": 5,
+   "class": "addressable"
+  },
+  {
+   "kind": 1019,
+   "name": "Unidentified encrypted group message (t=topic hash, e=anchor)",
+   "app_or_protocol": "unknown (possibly same app as 31909)",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "Regular event: 't' = 64-hex topic/group hash, 'e' = an anchor event id, and short base64url ciphertext (100-200 chars) as content. Different authors post under the same t/e pair, so it reads as an encrypted group chat or comment thread keyed by a hashed topic.",
+   "encrypted": true,
+   "confidence": "low",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "Shares t-hash 7b105095... and e ids with kind 31909, so it is the same system.",
+   "events": 8,
+   "authors": 5,
+   "class": "regular"
+  },
+  {
+   "kind": 4263,
+   "name": "BetPod oracle FROST key-refresh round-1",
+   "app_or_protocol": "BetPod (betting oracle federation, unidentified source)",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "Regular event with empty content from members of a FROST threshold-signing oracle federation running a key refresh: frost-id (participant index, 32-byte hex), edition, round1 (hex commitment package), base (group/base key hash), coord-protocol='2', t='betpod-oracle' and t='betpod-frost-refresh:<edition>'.",
+   "encrypted": false,
+   "confidence": "medium",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "FROST DKG/refresh coordination for a betting oracle in public, probably feeding DLC-style attestations. No public repo found.",
+   "events": 5,
+   "authors": 5,
+   "class": "regular"
+  },
+  {
+   "kind": 9842,
+   "name": "ngit CI workflow result",
+   "app_or_protocol": "ngit / gitworkshop CI (DanConwayDev/ngit-cli 'ngit act')",
+   "spec_url": "https://github.com/DanConwayDev/ngit-cli/blob/master/src/lib/ci/kinds.rs",
+   "source_urls": [
+    "https://github.com/DanConwayDev/ngit-cli/blob/master/src/lib/ci/kinds.rs",
+    "https://github.com/DanConwayDev/ngit-cli/blob/master/docs/architecture/ci-trust.md",
+    "https://github.com/DanConwayDev/gitworkshop/blob/master/NIP.md"
+   ],
+   "what_it_is": "CI Workflow Result signed by the CI coordinator for a NIP-34 repo. Tags: `a` = 30617 repo announcement(s); `c` = commit; `w` = workflow file path + SHA-256; `o` = trigger (push / pull_request / manual); `r` = ref, or NIP-22 E/K/P + e/k/p pointing to the 1618 PR / 1619 update; `conclusion` (GitHub-style success/failure/...); queued_at/started_at; `q` tags quoting each kind-9841 Job Result and the service request. Content empty.",
+   "encrypted": false,
+   "confidence": "high",
+   "amethyst_relevance": "render-worthy",
+   "suggested_quartz_package": "nip34Git/ci/",
+   "notes": "Family: 9840 manual trigger, 9841 job result, 9842 workflow result, 9843 service request, 9844 service stop, 39842 workflow progress (expiring addressable). gitworkshop renders them as CI status on repos/PRs; Amethyst's NIP-34 views could show the same badge. Repos seen: soapbox.pub, gitworkshop, Amethyst-style android-lint/test jobs.",
+   "events": 101,
+   "authors": 5,
+   "class": "regular"
+  },
+  {
+   "kind": 31905,
+   "name": "unidentified German daily encrypted topic posts",
+   "app_or_protocol": "unidentified",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "Addressable with d='<64-hex group id>:<topic>:<YYYY-MM-DD>' where the topic is a German word with '.de' (buero.de, online.de, risky.de, sport.de, herz.de, zukunft.de, unterwegs.de, damals.de) or '~own'. A t tag holds a 64-hex group hash. Content is base64url ciphertext (custom, not NIP-44).",
+   "encrypted": true,
+   "confidence": "low",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "Same authors use 31902 (d='<group>:<date>', short ciphertext), 31909 (per topic per day with an e tag) and 1019 (regular, t+e). Looks like an encrypted group journal/check-in app with daily per-topic slots. Not found publicly.",
+   "events": 16,
+   "authors": 5,
+   "class": "addressable"
+  },
+  {
+   "kind": 3411,
+   "name": "MaxPlayer trade lot status",
+   "app_or_protocol": "MaxPlayer (unidentified game/marketplace)",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "Hash-chained trade-ledger update for a 'lot' (an item for sale). Content JSON {trade_v:1, lot_id:<event id of the lot listing>, seq, prev:<previous update id>, status:'sold'}; tags t='maxplayer', v='1', e=<lot id>. Most samples are relay capability probes (t='maxplayer-trade-probe', content {diagnostic:'... NOT a listing', trade_v:0}).",
+   "encrypted": false,
+   "confidence": "medium",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "Paired with kind 3410 (same 5 authors, probably the lot listing). Very low volume, test-like.",
+   "events": 6,
+   "authors": 5,
+   "class": "regular"
+  },
+  {
+   "kind": 4264,
+   "name": "Betpod FROST key-refresh packages",
+   "app_or_protocol": "Betpod oracle (unidentified betting oracle using FROST threshold signatures)",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "One FROST signer's distributed key-refresh round message. Tags: frost-id = participant identifier (32-byte scalar such as 0x...02), edition = refresh epoch (e.g. 970285, which looks like a block height), t='betpod-oracle' and t='betpod-frost-refresh:<edition>'. Content JSON {packages: {<recipient frost-id>: <NIP-44 ciphertext>}, commitments: ...}: per-recipient secret shares are NIP-44-encrypted, while the commitments are public.",
+   "encrypted": true,
+   "confidence": "medium",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "Same 5 authors publish 4263, 4272, 4246, 4251, 4252 and 30421 (napstr catalogue kind!?), so it is a whole threshold-oracle protocol family. No public repo found.",
+   "events": 5,
+   "authors": 5,
+   "class": "regular"
+  },
+  {
+   "kind": 37196,
+   "name": "FIPS paid route / internet-exit offer",
+   "app_or_protocol": "FIPS mesh — paid exit nodes (app 'fips/paid-route-offer', likely OpenTollGate / fips-tollgate)",
+   "spec_url": null,
+   "source_urls": [
+    "https://github.com/jmcorgan/fips",
+    "https://github.com/OpenTollGate/"
+   ],
+   "what_it_is": "Addressable offer, d 'internet-exit', app 'fips/paid-route-offer', v '4', NIP-40 expiration ~1h. Tags: service internet_exit, payment cashu_spilman (Cashu Spilman payment channel), price_msat_per_gb, mint (accepted mints, repeatable), max_channel_capacity_sat, channel_expiry_secs, free_probe_units, grace_units, receiver_pubkey, network_class, country, asn, ip, fips_endpoint, last_seen_unix. Content JSON mirrors it {offer_id, seller_npub, receiver_pubkey_hex, service, access, pricing, channel, location, ip_support, quality, fips_endpoints?}.",
+   "encrypted": false,
+   "confidence": "medium",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "Not in FIPS's own nostr-events.md (which only lists 37195/21059/10050), so it is an extension by the tollgate/exit-node projects. 11 events / 4 authors.",
+   "events": 11,
+   "authors": 4,
+   "class": "addressable"
+  },
+  {
+   "kind": 1401,
+   "name": "Binary-framed expiring blob (x-tag)",
+   "app_or_protocol": "unidentified",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "Regular event from one-shot pubkeys, x <32-hex id> + expiration (~1 day). Content base64 of a binary frame: 0x01 0x00 0x10 then the 16-byte id equal to the x tag, then type/length fields and ciphertext (~170–230 bytes). The detector flags it as nip44 but it is a custom framed format. Looks like an app's transport/RPC message keyed by a session id.",
+   "encrypted": true,
+   "confidence": "low",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "4 events / 4 authors, one shared x id.",
+   "events": 4,
+   "authors": 4,
+   "class": "regular"
+  },
+  {
+   "kind": 33457,
+   "name": "notestr encrypted note",
+   "app_or_protocol": "notestr (encrypted notes app)",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "Addressable, d = 6-char random note id, optional notestr-base <event id> (the version the edit is based on). Content NIP-44 v2 self-encrypted note body (~6 KB). Sibling kind 34579 holds NIP-44 entries whose d is an 'a' pointer '33457:<pubkey>:<d>' (sharing/key records).",
+   "encrypted": true,
+   "confidence": "medium",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "Name taken from the 'notestr-base' tag; no public source found. 4 events / 4 authors.",
+   "events": 4,
+   "authors": 4,
+   "class": "addressable"
+  },
+  {
+   "kind": 30700,
+   "name": "Encrypted keyed record (unidentified, 30700-30703 family)",
+   "app_or_protocol": "unidentified",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "`d`=16-byte hex. Content is base64url ciphertext with version byte 0x01 (not NIP-44 v2), 250-450 bytes, re-published frequently. Same authors also publish 30701 (`d`=info), 30702 (`d`=11-char base64url ids that look like YouTube video IDs) and 30703 (`d`=body).",
+   "encrypted": true,
+   "confidence": "low",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "This looks like one app's encrypted key-value store.",
+   "events": 8,
+   "authors": 4,
+   "class": "addressable"
+  },
+  {
+   "kind": 30092,
+   "name": "Encrypted p-tagged record (unidentified)",
+   "app_or_protocol": "unidentified",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "`d`=16-byte hex and `p`=recipient. Content is NIP-44 ciphertext (220 or 1116 chars), published in pairs at identical timestamps by different authors. Probably an encrypted invitation/handshake addressed to the p-tagged user.",
+   "encrypted": true,
+   "confidence": "low",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "There is no link to the French-language 30090/30093 kinds, which share a number range but not a shape.",
+   "events": 4,
+   "authors": 4,
+   "class": "addressable"
+  },
+  {
+   "kind": 39010,
+   "name": "Encrypted p-tagged record (unidentified)",
+   "app_or_protocol": "unidentified (collides with NIP-91 draft channel definition)",
+   "spec_url": null,
+   "source_urls": [
+    "https://github.com/nostr-protocol/nips/pull/2199"
+   ],
+   "what_it_is": "`d`=16-byte hex, `p`=recipient, NIP-44 content (~1.8-2.1 KB). It has the same structure as 30092. This is not the NIP-91 draft (PR 2191/2199) 'Group Channel Definition', which is relay-signed and public.",
+   "encrypted": true,
+   "confidence": "low",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "Collision with a proposed NIP-29-adjacent kind.",
+   "events": 4,
+   "authors": 4,
+   "class": "addressable"
+  },
+  {
+   "kind": 32123,
+   "name": "Unidentified 'zeitgeist' encrypted document",
+   "app_or_protocol": "unidentified (d=zeitgeist-main)",
+   "spec_url": null,
+   "source_urls": [
+    "SCRATCH/report/samples/kind-32123.jsonl"
+   ],
+   "what_it_is": "Addressable NIP-44 v2 self-encrypted document. The `d` is either `zeitgeist-main` or a random 30-hex id, which suggests a main document plus sub-documents of an app called Zeitgeist (notes/journal/feed-config style).",
+   "encrypted": true,
+   "confidence": "low",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "4 authors. The only repo hit for 32123 is a coordinate inside commons GeoRelayDirectory (false positive).",
+   "events": 6,
+   "authors": 4,
+   "class": "addressable"
+  },
+  {
+   "kind": 31902,
+   "name": "Unidentified daily per-user token",
+   "app_or_protocol": "unidentified",
+   "spec_url": null,
+   "source_urls": [
+    "SCRATCH/report/samples/kind-31902.jsonl"
+   ],
+   "what_it_is": "Addressable event with `d=<64-hex>:<YYYY-MM-DD>` and `t=<64-hex>`. The content is 48 bytes of base64url, which could be a daily blinded token, encrypted check-in, or proof-of-activity record.",
+   "encrypted": true,
+   "confidence": "low",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "4 authors, all on 2026-10-07.",
+   "events": 4,
+   "authors": 4,
+   "class": "addressable"
+  },
+  {
+   "kind": 38503,
+   "name": "Bitflash mining pool descriptor",
+   "app_or_protocol": "Bitflash (bitflash.network)",
+   "spec_url": "https://github.com/bitflash-network/bitflash/blob/main/src/nostr.cpp",
+   "source_urls": [
+    "https://github.com/bitflash-network/bitflash/blob/main/src/nostr.cpp",
+    "https://github.com/rhino11/bitflash/blob/main/src/nostr.cpp"
+   ],
+   "what_it_is": "Addressable 'rendezvous descriptor' that Bitflash pool nodes refresh every few minutes (BTF_POOL_KIND = 38503, d='btf-pool-2' or 'btf-pool-2-testnet', with a matching t). JSON content: name, btf (the node's '.btf' overlay address), fee_pct, hashrate, miners, blocks.",
+   "encrypted": false,
+   "confidence": "high",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "Miner discovery for a pool network. The max age is 3 minutes, so it is high churn.",
+   "events": 98,
+   "authors": 4,
+   "class": "addressable"
+  },
+  {
+   "kind": 30051,
+   "name": "Infinity profile / passport",
+   "app_or_protocol": "'Infinity' (French community app, unidentified)",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "Addressable event with d = the author's pubkey and tags visibility='public', lang='fr', access='mode1'. JSON content {updatedAt, profile:{territoire, displayName, alias, profession, devise, competences[]}, optional bio, gallery, abondance, passeport}. It is an extended skills/territory profile for a mutual-aid community directory.",
+   "encrypted": false,
+   "confidence": "medium",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "Companion of 30227/30052. Exposes a skills list and region publicly.",
+   "events": 5,
+   "authors": 4,
+   "class": "addressable"
+  },
+  {
+   "kind": 31909,
+   "name": "Unidentified encrypted daily record per domain",
+   "app_or_protocol": "unknown (same system as 1019)",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "Addressable event with d='<64-hex>:<domain or ~own>:<YYYY-MM-DD>' (e.g. 'unterwegs.de', 'risky.de'), 't' = 64-hex topic hash, 'e' = anchor event. Content is short base64url ciphertext. One record per member per domain per day under a shared group hash, so it might be per-site daily notes or ratings in an encrypted group.",
+   "encrypted": true,
+   "confidence": "low",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "German domains in the d-tag. No source found.",
+   "events": 4,
+   "authors": 4,
+   "class": "addressable"
+  },
+  {
+   "kind": 8383,
+   "name": "Mostro dev-fee payment receipt",
+   "app_or_protocol": "Mostro P2P",
+   "spec_url": "https://github.com/MostroP2P/protocol/blob/main/src/other_events.md",
+   "source_urls": [
+    "https://github.com/MostroP2P/mostro/blob/main/docs/DEV_FEE.md",
+    "https://github.com/MostroP2P/protocol/blob/main/src/other_events.md"
+   ],
+   "what_it_is": "Regular event that a Mostro instance publishes for every successful trade, recording the development-fee share it paid. Tags: order-id, amount (sats), hash (payment hash), destination (lightning address, e.g. dev@pay.mostro.foundation), network, y=['mostro', <instance name>], z='dev-fee-payment', expiration about 1 year. Content empty.",
+   "encrypted": false,
+   "confidence": "high",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": "nip69P2pOrderEvents/ (if modelling Mostro)",
+   "notes": "Transparency/audit log of Mostro's fee-sharing; little end-user value.",
+   "events": 30,
+   "authors": 4,
+   "class": "regular"
+  },
+  {
+   "kind": 39401,
+   "name": "Mycelium CandidateRelay dial announcement",
+   "app_or_protocol": "Mycelium Network (bmcllc/mycelium-network) 'Nostr QEL' transport",
+   "spec_url": "https://github.com/bmcllc/mycelium-network/blob/main/docs/candidate-relay.md",
+   "source_urls": [
+    "https://github.com/bmcllc/mycelium-network"
+   ],
+   "what_it_is": "NAT-traversal rendezvous for a libp2p-style network. An ephemeral 'GhostID' key publishes an addressable event: d='dial:<self>:<target>', p=<target>, qel='candidate-relay', qel-backchannel=<wss relay>, qel-transports='nostr-ws', and 'expires' = now + 300 s. Content JSON {ecdh_public, type:'candidate-relay', version:1}. Peers then tunnel data over Nostr using kind 39406.",
+   "encrypted": false,
+   "confidence": "high",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "Uses a custom 'expires' tag instead of NIP-40 'expiration', so relays never purge these events. The docs are in Portuguese.",
+   "events": 5,
+   "authors": 4,
+   "class": "addressable"
+  },
+  {
+   "kind": 32150,
+   "name": "TWENTY ONE esports clan",
+   "app_or_protocol": "TWENTY ONE esports (EINUNDZWANZIG Bitcoin community esports league)",
+   "spec_url": null,
+   "source_urls": [
+    "https://esports.einundzwanzig.space/"
+   ],
+   "what_it_is": "Addressable definition of a clan/team (d=slug). Tags: name, clantag (e.g. 'SVD', 'BMK'), picture, r = link to the Einundzwanzig meetup page, and p tags with roles ('captain', 'member'). Content is a free-text clan description; alt='Esports clan: <name> [<tag>]'.",
+   "encrypted": false,
+   "confidence": "medium",
+   "amethyst_relevance": "render-worthy",
+   "suggested_quartz_package": null,
+   "notes": "Players join with kind 12150 and the league runs chess and Rocket League ladders with Nostr login. 32151 appears too. Small (4 authors) but public, human-facing data, and the alt tags render fine as a fallback.",
+   "events": 4,
+   "authors": 4,
+   "class": "addressable"
+  },
+  {
+   "kind": 6472,
+   "name": "Icebreaker ICE-sighting alert",
+   "app_or_protocol": "icebreaker app (sightings sourced from iceout.org)",
+   "spec_url": null,
+   "source_urls": [
+    "https://www.androidheadlines.com/2026/01/new-ice-tracking-apps-find-place-on-google-play-store-again.html",
+    "https://www.bespacific.com/?p=120921"
+   ],
+   "what_it_is": "Regular event with NIP-32 label ['l','Ice'], client 'icebreaker', NIP-40 expiration (~12–24 h) and a full geohash ladder (g tags from 10 chars down to 1) for location-prefix queries. Content is a short place description, e.g. 'Escondido, CA, USA \\nsource: iceout.org', sometimes empty. Community alerts of US immigration-enforcement (ICE) activity at a location.",
+   "encrypted": false,
+   "confidence": "medium",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "28 events / 3 authors. Public, human-readable and geotagged, so it would technically show up in a geohash feed, but it is a single-purpose alert app with politically sensitive location data; the 'icebreaker' link to the Play-store ICEbreaker app is by name only.",
+   "events": 28,
+   "authors": 3,
+   "class": "regular"
+  },
+  {
+   "kind": 4178,
+   "name": "Opaque expiring blob (v=1)",
+   "app_or_protocol": "unidentified",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "Regular event, tags ['v','1'] and expiration (~1 week); content ~600 bytes of base64 ciphertext, random from byte 0 (no NIP-44 version byte). 3 authors republish several. Nothing indicates purpose: an app's private encrypted message/state.",
+   "encrypted": true,
+   "confidence": "low",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "8 events / 3 authors.",
+   "events": 8,
+   "authors": 3,
+   "class": "regular"
+  },
+  {
+   "kind": 15750,
+   "name": "WabiSabi coinjoin coordinator announcement",
+   "app_or_protocol": "WabiSabi coinjoin coordinators (BTCPay Server Wabisabi plugin, Wasabi Wallet coordinator discovery)",
+   "spec_url": "https://github.com/Kukks/BTCPayServerPlugins/blob/master/Plugins/BTCPayServer.Plugins.Wabisabi/Nostr.cs",
+   "source_urls": [
+    "https://raw.githubusercontent.com/Kukks/BTCPayServerPlugins/master/Plugins/BTCPayServer.Plugins.Wabisabi/Nostr.cs",
+    "https://docs.btcpayserver.org/Wabisabi/",
+    "https://blog.wasabiwallet.io/future-wasabi-wallet",
+    "https://github.com/nostr-protocol/nips/pull/2386"
+   ],
+   "what_it_is": "Replaceable coordinator advert (code: 'public static int Kind = 15750'). Tags: endpoint <coordinator URL>, type 'wabisabi', network 'mainnet' (chain name), plus newer optional name, absolutemininputcount, readmore. Content is a free-text description of the coordinator (fees, minimums). Wallets subscribe to discover coordinators.",
+   "encrypted": false,
+   "confidence": "high",
+   "amethyst_relevance": "protocol-infra",
+   "suggested_quartz_package": null,
+   "notes": "5 events / 3 authors (Coinjoiner, Kruw.io, OpenCoordinator.to). NOTE collision: open NIP-79 Stories PR #2386 proposes 15750 as 'story view receipt'. Could be render-worthy as a small directory card for bitcoin users, but it's niche.",
+   "events": 5,
+   "authors": 3,
+   "class": "replaceable"
+  },
+  {
+   "kind": 30736,
+   "name": "EVE trading leaderboard entry",
+   "app_or_protocol": "unidentified ('eventt-leaderboard-v2', apparently EVE Online trader P&L)",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "Addressable, d 'eventt-leaderboard-v2', tags trader_char (character name), trader_char_id (numeric character id), pnl_7d / pnl_30d / pnl_365d as float strings (ISK-scale values like 6.7E9). Content 'self-reported'. Players publish their trading profit/loss to a shared leaderboard.",
+   "encrypted": false,
+   "confidence": "low",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "4 events / 3 authors. Character names/ids look like EVE Online; inference only.",
+   "events": 4,
+   "authors": 3,
+   "class": "addressable"
+  },
+  {
+   "kind": 19844,
+   "name": "ngit-ci runner repo watch list",
+   "app_or_protocol": "ngit-ci (Nostr-native CI for NIP-34 git repos)",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "Replaceable, empty content, NIP-40 expiration (~hours): a list of a tags pointing to NIP-34 repository announcements ('30617:<pubkey>:<repo>') and optional p of the repo owner. Published by CI runner keys to say which repos they are currently serving. Siblings from the same keys: 19843 runner capability ad (software ngit-ci, W act|nix, R runner labels), 39844 per-repo runner config (s 'acting', workflow-path, secret), 9841 job result (conclusion, logs/artifacts on Blossom, q → 39842 run), 9842 run.",
+   "encrypted": false,
+   "confidence": "medium",
+   "amethyst_relevance": "protocol-infra",
+   "suggested_quartz_package": "nip34Git/ (alongside existing NIP-34 support) if the CI kinds get specified",
+   "notes": "3 events / 3 authors but tied to the ngit/gitworkshop ecosystem this repo itself uses. No published spec found yet; the 98xx/198xx/398xx family looks like a forthcoming NIP-34 CI extension worth watching (CI status on patches/PRs would be render-worthy).",
+   "events": 3,
+   "authors": 3,
+   "class": "replaceable"
+  },
+  {
+   "kind": 30702,
+   "name": "Encrypted record keyed by video-like id (unidentified)",
+   "app_or_protocol": "unidentified (30700-30703 family)",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "`d`=11-char base64url id (YouTube video-ID shape). Content is ~130-char base64url ciphertext with version byte 0x01, re-published every second by the same author with the same d. Most likely encrypted per-video state such as watch progress.",
+   "encrypted": true,
+   "confidence": "low",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "See 30700.",
+   "events": 27,
+   "authors": 3,
+   "class": "addressable"
+  },
+  {
+   "kind": 4278,
+   "name": "Full Throttle donation record",
+   "app_or_protocol": "Full Throttle (web motorcycle game)",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "`t`=full-throttle-donation-v1. Content is `<base64 12-byte IV>.<base64 AES-GCM ciphertext>` encrypted with an app-held key.",
+   "encrypted": true,
+   "confidence": "medium",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "Companion to 4277.",
+   "events": 8,
+   "authors": 3,
+   "class": "regular"
+  },
+  {
+   "kind": 16919,
+   "name": "Indexstr/Crawlstr node heartbeat",
+   "app_or_protocol": "Indexstr / Crawlstr (volunteer web crawler/indexer network)",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "Replaceable heartbeat. Tags are `v`=1, `shard`=<n>, `source`=indexstr/1|crawlstr/1, `alt`='Indexstr node heartbeat: shard N'. Content is JSON {v,shard,platform,network,charging,stats{pagesIndexed,queueSize,published}}.",
+   "encrypted": false,
+   "confidence": "medium",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "Self-describing and no public source was found. These are device-state telemetry from crawler nodes.",
+   "events": 5,
+   "authors": 3,
+   "class": "replaceable"
+  },
+  {
+   "kind": 36767,
+   "name": "Theme definition",
+   "app_or_protocol": "Ditto (soapbox.pub); also used by Armada",
+   "spec_url": "https://gitlab.com/soapbox-pub/ditto/-/blob/main/NIP.md",
+   "source_urls": [
+    "https://gitlab.com/soapbox-pub/ditto/-/blob/main/NIP.md"
+   ],
+   "what_it_is": "Shareable named UI theme. Tags are `d`=slug, `title`, `c`=<hex> with role background|text|primary (3 required), optional `f`=<family> <woff2 url> body|title, `bg`='url …' 'mode cover' 'm <mime>' 'dim WxH', `alt`, optional `description` and `t`=theme. Content is empty. The companion kind 16767 is the user's active profile theme.",
+   "encrypted": false,
+   "confidence": "high",
+   "amethyst_relevance": "render-worthy",
+   "suggested_quartz_package": "ditto/themes/ (or experimental/themes/)",
+   "notes": "This could render as a theme card (colour swatches + background) and enable 'apply theme' / profile theming via 16767. Two clients (Ditto, Armada) publish it.",
+   "events": 4,
+   "authors": 3,
+   "class": "addressable"
+  },
+  {
+   "kind": 31906,
+   "name": "Opaque addressable blob (unidentified)",
+   "app_or_protocol": "unidentified",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "`t`=32-byte hex and `d`=32-byte hex. Content is ~515-char base64url ciphertext without a version byte. Different authors publish the same d/t pair.",
+   "encrypted": true,
+   "confidence": "low",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "There is no clue to the app.",
+   "events": 3,
+   "authors": 3,
+   "class": "addressable"
+  },
+  {
+   "kind": 7575,
+   "name": "pprgb game oracle heartbeat",
+   "app_or_protocol": "\"pprgb\" (unidentified game/oracle bots)",
+   "spec_url": null,
+   "source_urls": [
+    "SCRATCH/report/samples/kind-7575.jsonl"
+   ],
+   "what_it_is": "Three bot keys each publish a periodic (~10 min) heartbeat tagged `t=pprgb-rps-v0` / `pprgb-prove-v0` / `pprgb-duel-v0`. The content is `{type:'oracle', game:'rps'|'prove', t:<ms>}` or `{type:'oracle', simulated:true, t}`. They advertise the liveness of game-oracle services (rock-paper-scissors, duel, prove).",
+   "encrypted": false,
+   "confidence": "medium",
+   "amethyst_relevance": "spam/noise",
+   "suggested_quartz_package": null,
+   "notes": "410 events from 3 authors. Pure liveness chatter.",
+   "events": 410,
+   "authors": 3,
+   "class": "regular"
+  },
+  {
+   "kind": 5128,
+   "name": "nsite manifest snapshot",
+   "app_or_protocol": "NIP-5A Static Websites (nsites)",
+   "spec_url": "https://github.com/nostr-protocol/nips/blob/master/5A.md",
+   "source_urls": [
+    "https://github.com/nostr-protocol/nips/blob/master/5A.md",
+    "SCRATCH/ref/nips_README.md",
+    "/home/user/amethyst/quartz/src/commonMain/kotlin/com/vitorpamplona/quartz/nip5aStaticWebsites/"
+   ],
+   "what_it_is": "Regular event that freezes a root (15128) or named (35128) nsite manifest at a point in time, so past versions are addressable by event id. It has exactly one `a` tag to the source site, copies of the source's `path` tags (path -> sha256), exactly one aggregate `x` tag that must equal the source's, optional `server`/`title`/`description`/`source`, and a copied `A` tag if present. created_at is the version timestamp and the content is empty.",
+   "encrypted": false,
+   "confidence": "high",
+   "amethyst_relevance": "protocol-infra",
+   "suggested_quartz_package": "nip5aStaticWebsites/ (SiteSnapshotEvent next to RootSiteEvent/NamedSiteEvent)",
+   "notes": "Quartz's nip5aStaticWebsites has RootSiteEvent (15128) and NamedSiteEvent (35128) plus SiteAggregateHash and a path resolver, but no 5128 class, and 5128 appears nowhere in the repo. It looks like the snapshot section of 5A landed after the package was written. The path/x/server tag parsers can likely be reused directly.",
+   "events": 15,
+   "authors": 3,
+   "class": "regular"
+  },
+  {
+   "kind": 1054,
+   "name": "SOS chat presence heartbeat",
+   "app_or_protocol": "SOS / YalaChat (Theicd/SOS, \"HYPER CORE TECH\")",
+   "spec_url": "https://github.com/Theicd/SOS",
+   "source_urls": [
+    "https://github.com/Theicd/SOS/blob/main/chat-presence.js",
+    "https://github.com/Theicd/SOS/blob/main/chat-e2ee.js",
+    "https://github.com/Theicd/SOS/blob/main/sos-crypto-signer.js"
+   ],
+   "what_it_is": "Encrypted per-peer online-presence ping (`PRESENCE_KIND = 1054`, type `chat_presence`, 45 s heartbeat, 90 s online TTL). It is p-tagged to the chat peer with app tags `t=yalachat`, `t=sos-global-identity`, `t=israel-network`. The content is the app's `sos-e2ee` envelope JSON `{family:'sos-e2ee', v:1, alg:'nip44', ct:<NIP-44 ciphertext>}`. The same app uses kind 1051 for read receipts.",
+   "encrypted": true,
+   "confidence": "high",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "Wrapping NIP-44 inside a JSON envelope rather than using the content directly is app-specific. Only 3 authors (one conversation).",
+   "events": 7,
+   "authors": 3,
+   "class": "regular"
+  },
+  {
+   "kind": 10037,
+   "name": "Ark address announcement (unconfirmed)",
+   "app_or_protocol": "unidentified; Ark / Arkade bitcoin L2 address",
+   "spec_url": null,
+   "source_urls": [
+    "SCRATCH/report/samples/kind-10037.jsonl"
+   ],
+   "what_it_is": "Replaceable event with `ark=<ark1... bech32m Ark address>` and `network=mainnet`, and empty content. It appears to publish the user's Ark (off-chain VTXO) receive address so others can pay them, similar in spirit to a payment-target list.",
+   "encrypted": false,
+   "confidence": "low",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "Only 3 authors. If a spec emerges, this could be useful next to zap/payment-target handling, but no source was found.",
+   "events": 4,
+   "authors": 3,
+   "class": "replaceable"
+  },
+  {
+   "kind": 1013,
+   "name": "Unidentified versioned binary payload",
+   "app_or_protocol": "unidentified",
+   "spec_url": null,
+   "source_urls": [
+    "SCRATCH/report/samples/kind-1013.jsonl"
+   ],
+   "what_it_is": "Regular event with `v=v1`, `o=<64-hex>` and `f=<64-hex>` (perhaps owner/object and file/fingerprint hashes). The content is base64 of 800-870 bytes of variable length that starts with version byte 0x01, so it is not NIP-44 v2 and is likely a custom AEAD blob.",
+   "encrypted": true,
+   "confidence": "low",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "3 authors and 3 events.",
+   "events": 3,
+   "authors": 3,
+   "class": "regular"
+  },
+  {
+   "kind": 1078,
+   "name": "Contested regular kind: Bisq pricenode attestation, Minecraft markers, encrypted group posts",
+   "app_or_protocol": "Bisq pricenode-attestation (BcnBitcoinOnly), plus an unidentified Minecraft 'fes_markers' mod and an h-tag group app",
+   "spec_url": "https://github.com/BcnBitcoinOnly/pricenode-attestation",
+   "source_urls": [
+    "https://github.com/BcnBitcoinOnly/pricenode-attestation/blob/master/README.md"
+   ],
+   "what_it_is": "(1) Most volume, 280 events from one key: signed attestations of a Bisq pricenode's /getAllMarketPrices response. t pricenode/bisq/bitcoin, NIP-32 L/l 'io.bisq.pricenode' attestation, 'pricenode' onion host, 'source' repo, one ['price', CCY, value, ts_ms] tag per currency; content is the raw pricenode JSON byte-for-byte. (2) t='fes_markers' with a d tag and author_mc/author_uuid/marker_id tags: Minecraft in-game location/player/storage markers (JSON with x/y/z, block, dimension, durationMs). (3) 3 events with an 'h' group tag and NIP-44 content.",
+   "encrypted": false,
+   "confidence": "medium",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "The Bisq attestations are verifiable price oracles and might interest a wallet, but they are not social content. It's a 'regular' kind on purpose, to keep history. Note the regular-range kind with a 'd' tag in use (2).",
+   "events": 293,
+   "authors": 3,
+   "class": "regular"
+  },
+  {
+   "kind": 32678,
+   "name": "Unidentified encrypted addressable records",
+   "app_or_protocol": "unknown",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "Addressable event with only a 'd' tag ('evt-<ms timestamp>' or 30 hex chars) and NIP-44 v2 content (300-600 b64 chars). Looks like an app's encrypted per-item storage (calendar/event drafts?) for 3 authors.",
+   "encrypted": true,
+   "confidence": "low",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "No source found.",
+   "events": 11,
+   "authors": 3,
+   "class": "addressable"
+  },
+  {
+   "kind": 1624,
+   "name": "Cover note (NIP-34 PR/issue description override)",
+   "app_or_protocol": "ngit / gitworkshop.dev (also notedeck headway, gittr)",
+   "spec_url": "https://github.com/DanConwayDev/gitworkshop/blob/master/NIP.md",
+   "source_urls": [
+    "https://github.com/DanConwayDev/ngit-cli/blob/master/src/lib/git_events.rs",
+    "https://github.com/DanConwayDev/ngit-cli/blob/master/CHANGELOG.md",
+    "https://github.com/DanConwayDev/gitworkshop/blob/master/src/actions/nip34.ts",
+    "https://github.com/damus-io/notedeck/blob/master/crates/headway/src/event/kinds.rs",
+    "https://github.com/toon-protocol/rig/blob/main/docs/research/ngit-nip34-vs-rig.md"
+   ],
+   "what_it_is": "Regular event with a markdown body that replaces the displayed description of a NIP-34 PR, patch or issue. Tags: lowercase 'e' = target root event (+ relay hint), 'p' = target author, alt 'cover note for PR' / 'cover note for issue', optional 'q' quotes and 'k' root kind. Only the latest note from the item's author or a repo maintainer is honoured (replaceable-like semantics with a hex-id tiebreak).",
+   "encrypted": false,
+   "confidence": "high",
+   "amethyst_relevance": "render-worthy",
+   "suggested_quartz_package": "nip34Git/ (CoverNoteEvent)",
+   "notes": "Amethyst's cli/ROADMAP.md already lists it as missing ('NIP-34 cover notes (1624, no quartz builder yet)'). An ngit invention, not yet in NIP-34 (related open PR nips#2324). Amethyst's NIP-34 issue/PR screens should show it in place of the original description.",
+   "events": 6,
+   "authors": 3,
+   "class": "regular"
+  },
+  {
+   "kind": 19843,
+   "name": "CI Coordinator Advertisement",
+   "app_or_protocol": "ngit-ci / NIP-C1 working draft",
+   "spec_url": "https://gitworkshop.dev/npub15qydau2hjma6ngxkl2cyar74wzyjshvl65za5k5rl69264ar2exs5cyejr/ngit-ci/tree/master/NIP.md",
+   "source_urls": [
+    "https://github.com/toon-protocol/rig/blob/main/docs/specs/nip-c1.md",
+    "https://github.com/DanConwayDev/ngit-cli/blob/master/src/lib/ci/kinds.rs"
+   ],
+   "what_it_is": "Replaceable, short-lived (NIP-40 expiration ~30 min) advertisement from a CI coordinator/runner: software 'ngit-ci <version>', W = workflow engines (act, nix), R = runner labels (act:ubuntu-24.04, nix:x86_64-linux), M = maintainer selection mode, X = execution policy (automatic / request-required), and optional 'secrets-key' (nip44-v2 pubkey + relays) for encrypted repository secrets. Content is empty.",
+   "encrypted": false,
+   "confidence": "high",
+   "amethyst_relevance": "protocol-infra",
+   "suggested_quartz_package": "nip34Git/ci/",
+   "notes": "Part of the same family as 9841. Only needed if Amethyst lets maintainers pick or trigger CI runners.",
+   "events": 4,
+   "authors": 3,
+   "class": "replaceable"
+  },
+  {
+   "kind": 10600,
+   "name": "UPlanet / Astroport analytics event",
+   "app_or_protocol": "UPlanet / Astroport.ONE (papiche, CopyLaRadio cooperative)",
+   "spec_url": "https://github.com/papiche/Astroport.ONE/blob/master/docs/reference/Analytics.README.md",
+   "source_urls": [
+    "https://github.com/papiche/Astroport.ONE/blob/master/docs/reference/Analytics.README.md",
+    "https://github.com/papiche/Astroport.ONE/blob/master/README.md",
+    "https://github.com/papiche/UPlanet/blob/master/earth/astro.js",
+    "https://github.com/papiche/UPassport/blob/master/test_analytics_ping.sh"
+   ],
+   "what_it_is": "Web-analytics event emitted by astro.js on UPlanet sites: t='analytics' + t=<event type> (page_view, youtube_api_view), 'source' (web/server), 'url', optional 'referer'. Content is either a human-readable report with an embedded JSON blob or raw JSON (type, page, current_url, user_agent, viewport, referer, timestamp; the server variant also has client_ip). The docs say the content is meant to be NIP-44 encrypted to the user, but the observed events are plaintext.",
+   "encrypted": false,
+   "confidence": "high",
+   "amethyst_relevance": "spam/noise",
+   "suggested_quartz_package": null,
+   "notes": "Privacy leak: these plaintext events on public relays expose visitors' IP addresses and user agents. Also a misuse of the replaceable range (10000-19999), so each server key keeps only its latest analytics event.",
+   "events": 3,
+   "authors": 3,
+   "class": "replaceable"
+  },
+  {
+   "kind": 30197,
+   "name": "Biosenger channel alias / Infinity user alias",
+   "app_or_protocol": "unidentified French app cluster ('biosenger', 'infinity'; same authors as 30225/30210)",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "Addressable name registration. t='biosenger-channel-alias': d=<slug>, ref=<root event id>, content {name, rootEventId, revoked:false}, mapping a human-readable channel alias to a channel's root event. t='infinity-user-alias' with scope='passport': d=<handle>, content {displayName, revoked}, a user-handle claim.",
+   "encrypted": false,
+   "confidence": "low",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "3 authors. Same French ecosystem as 30225 (avatars) and 30210 (DATASPACE relay pointer).",
+   "events": 54,
+   "authors": 3,
+   "class": "addressable"
+  },
+  {
+   "kind": 87201,
+   "name": "Rose room message",
+   "app_or_protocol": "Rose (client tags 'rose-app' / 'rose-agent'; unidentified, Lana community)",
+   "spec_url": null,
+   "source_urls": [],
+   "what_it_is": "Chat message inside a 'room' defined by addressable kind 32100 (d='room:<uuid>', p tags with roles owner/member/being, t='public'). Tags: a=<32100 room address>, client. Content JSON {v:1, type: text|audio|image, ts, text, transcript (for audio), media:[{sha256, mime, size, url:'/api/media/<sha256>'}], reply_to}. Some messages come from an AI agent ('rose-agent', p-role 'being').",
+   "encrypted": false,
+   "confidence": "medium",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "Kind 87211 carries agent actions (action='task-update'). Media URLs are relative to the app server, so the events cannot be rendered outside Rose. Content mentions the 'Lana' community (Slovenian text).",
+   "events": 10,
+   "authors": 3,
+   "class": "regular"
+  },
+  {
+   "kind": 9401,
+   "name": "WalletScrutiny asset bundle registration",
+   "app_or_protocol": "WalletScrutiny (WalletScrutiny/WalletScrutinyCom)",
+   "spec_url": "https://github.com/WalletScrutiny/WalletScrutinyCom/blob/master/docs/verifications.md",
+   "source_urls": [
+    "https://github.com/WalletScrutiny/WalletScrutinyCom/blob/master/docs/verifications.md",
+    "https://github.com/xrviv/bitcoinAppReproducibilityVerificationScripts/blob/main/apkextractor_sync.sh"
+   ],
+   "what_it_is": "Registers a set of release binaries for reproducible-build verification. Tags: i=<product id, e.g. io.bluewallet.bluewallet>, version, platform, one x=[sha256, filename] per artifact (base.apk plus split APKs), c='walletscrutiny', and a NIP-89 client tag. Content is a short description ('installed from Play Store, uploaded by ...'). Verification events then reference these hashes.",
+   "encrypted": false,
+   "confidence": "high",
+   "amethyst_relevance": "protocol-infra",
+   "suggested_quartz_package": null,
+   "notes": "Replaces WalletScrutiny's earlier use of NIP-94 kind 1063 for asset registration. The debug-site variant is kind 9605. Could back a 'reproducible build verified' badge for wallet apps (cf. Zapstore).",
+   "events": 5,
+   "authors": 3,
+   "class": "regular"
+  },
+  {
+   "kind": 30210,
+   "name": "DATASPACE relay/service pointer",
+   "app_or_protocol": "DATASPACE (data-space.world, French private relay + storage service)",
+   "spec_url": null,
+   "source_urls": [
+    "https://data-space.world/"
+   ],
+   "what_it_is": "Addressable service pointer: d='primary', relay='wss://data-space.world/relay', cap='nostr-relay', mirror='0'. It declares which DATASPACE relay (and whether it is a mirror) a user's app data lives on. Content empty.",
+   "encrypted": false,
+   "confidence": "medium",
+   "amethyst_relevance": "app-private",
+   "suggested_quartz_package": null,
+   "notes": "The relay's NIP-11 calls itself 'Relais d'index applicatif (NIP-78) pour DATASPACE'. Same authors as 30225/30197.",
+   "events": 4,
+   "authors": 3,
+   "class": "addressable"
+  },
+  {
+   "kind": 12150,
+   "name": "TWENTY ONE esports clan membership",
+   "app_or_protocol": "TWENTY ONE esports (EINUNDZWANZIG)",
+   "spec_url": null,
+   "source_urls": [
+    "https://esports.einundzwanzig.space/"
+   ],
+   "what_it_is": "Replaceable event declaring the author's current clan: a=['32150:<clan owner>:<slug>', ''] and alt='Esports clan membership'. Content empty. Paired with the clan's own 32150 p-tag roster for two-way confirmation.",
+   "encrypted": false,
+   "confidence": "medium",
+   "amethyst_relevance": "render-worthy",
+   "suggested_quartz_package": null,
+   "notes": "Could show as a profile badge-like 'member of clan X'.",
+   "events": 3,
+   "authors": 3,
+   "class": "replaceable"
+  }
+ ],
+ "long_tail": {
+  "clusters": [
+   {
+    "label": "LANA / LanaPays / BEF ecosystem (LanaCoin, Slovenia)",
+    "author_pubkeys": [
+     "016faf10deb0ea8804321b5542366cf50cd21649b2de75a625912cef46f3bef0",
+     "16a970069d63ca1f739c4e3b9a5f34bca6a93ead182dbf1e438a801aa03f4ef3",
+     "371fdbfb921d3cec27fda2d9cc442ae6fc3f1c8a60829ebb3699fb7b1d0d42b9",
+     "56e8670aa65491f8595dc3a71c94aa7445dcdca755ca5f77c07218498a362061",
+     "710045e90bbb21569e9eb60875c42427b1591b8a0e3ba76be9bc5eb5a87e82cf",
+     "79730aba75d71584e8a4f9d0cc1173085e75590ce489760078d2bf6f5210d692",
+     "816b8dcf93e0726f9e2ebab8c445cc7a721f2fc99c82904cdf6bfed672a8d78c",
+     "85e31bf5f5a1b30271a4f27e5a96079419c6cef93343cc272a434409d83236ef",
+     "981243e886c9761fd62ee5d17c88be67a40ebb20c8184ea53bf40528907bd72c",
+     "a4e72b2ceea0e6bc74773e5186dd55af995f8e5217b432aade157cbe5488fb62",
+     "a50cc80678ebdc7dcd5ddbdfd52b11543940aecb79c60e86ade844594ec373a4",
+     "bcb0cf91fb810b54c7cf18a1ababca455b008e2a7ebdf303a7c2a72bbc0f521e",
+     "ca6bb5de5b759f851257fe309e20ea0a5d15240e36e34fbb5bc2c09a69758f04",
+     "e01368761feeb32a8fbc5b85502847ecdbbbcb1256ae35da268416c755982ca0"
+    ],
+    "kinds": [
+     30889,
+     30901,
+     30902,
+     30903,
+     30933,
+     30934,
+     30935,
+     30938,
+     30939,
+     30940,
+     30960,
+     30961,
+     30970,
+     30974,
+     32100,
+     36677,
+     39022,
+     39991,
+     40970,
+     60200,
+     87002,
+     87006,
+     87070,
+     87211,
+     90901
+    ],
+    "what_it_is": "Many pubkeys of one LanaCoin economy: merchant units (30901), fee policies/quotas (30902/30903), cash tx + LANA payout orders (30933-30935), investor funds/ledgers/summaries (30938-30940), treasury mandates (30960/30961), BEF dealer customers/interest/mandate purchases (30970/30974/40970/87070), wallet registry confirmations (87002/87006, 30889 wallet lists), crowdfunding/subscription payments (60200/90901/39991), rose-app AI chat rooms + agent actions (32100/87211), community calendar-ish event (36677) and 'being commons' deliberation state (39022). Public ledger/bookkeeping, mostly tag-only.",
+    "relevance": "app-private"
+   },
+   {
+    "label": "Encrypted bot pair 9079f010 <-> 796a6bc4",
+    "author_pubkeys": [
+     "796a6bc4fa176af29c17d25eafe04325106d5a2ada6867eae1ced14da6b0ef3e",
+     "9079f0109e6870ccfcd253dfa68e1c818ed59c73428f197f232f1c6d40894ed8"
+    ],
+    "kinds": [
+     9413,
+     9431,
+     9432,
+     9435,
+     9436,
+     9464,
+     9465,
+     9477,
+     9478,
+     9486
+    ],
+    "what_it_is": "Two keys exchanging ~4.6k NIP-44 messages per kind (9413: 83k to a third key), one p tag only; paired request/response kind lanes. Machine-to-machine encrypted RPC/telemetry.",
+    "relevance": "app-private"
+   },
+   {
+    "label": "Vertex web-of-trust DVM results",
+    "author_pubkeys": [
+     "b0565a0d950477811f35ff76e5981ede67a90469a97feec13dc17f36290debfe"
+    ],
+    "kinds": [
+     6312,
+     6313,
+     6314,
+     6315
+    ],
+    "what_it_is": "NIP-90 job results for Vertex DVMs (5312 verify reputation, 5313 recommend follows, 5314 sort/rank authors, 5315 search profiles): JSON array of {pubkey,rank,follows,followers}, tags nodes/sort=globalPagerank/source.",
+    "relevance": "protocol-infra"
+   },
+   {
+    "label": "Blind-token questionnaire / election protocol (OptionA)",
+    "author_pubkeys": [
+     "11e84aee499edc9433558a419bf5ed24ebbd1669faafbdd2108cc1add3be6c23",
+     "fc409b84df8de72592c9dd8bf97e49ad5dc3ce5e3e6ca372dc79012a22909463"
+    ],
+    "kinds": [
+     6420,
+     6421,
+     6426,
+     31994,
+     34506
+    ],
+    "what_it_is": "Questionnaire definition/state/private invite status/participant count + worker delegation for an election coordinator (t=questionnaire_*, optiona_worker_delegation, responseMode blind_token).",
+    "relevance": "app-private"
+   },
+   {
+    "label": "Arborito learning-tree app sync",
+    "author_pubkeys": [
+     "293c5901015d71ea708177dd4a23973b30b7f1d69f89794537bb916e1e399cd1",
+     "a3155b1bc3a9bff858b1c9c0faafe727ee21a0cc09ca6c73be1ab6e8189cb50c"
+    ],
+    "kinds": [
+     30241,
+     30290,
+     30291,
+     30292
+    ],
+    "what_it_is": "app=arborito, d=arborito:progress/user:sources/privtree; chunked (role part/hdr, i/n) NIP-44 user data and network-pub mapping.",
+    "relevance": "app-private"
+   },
+   {
+    "label": "Epoch-keyed encrypted group (aaffea74)",
+    "author_pubkeys": [
+     "aaffea741bdb2e0b121424c64a2f1eb56767f0eb89e850861ff68617615469ec"
+    ],
+    "kinds": [
+     4472,
+     4473,
+     4474,
+     34472
+    ],
+    "what_it_is": "NIP-44 payloads tagged l=<group hash>, epoch=N: encrypted group messaging/state with key epochs.",
+    "relevance": "app-private"
+   },
+   {
+    "label": "v/o/f-tagged NIP-44 v1 envelopes",
+    "author_pubkeys": [
+     "0f83ddcf4a9988a88fe47f6e4634c5c48d3fcadb8687f14a07c7ada09bb3f0d3",
+     "15a44fe5c03a7fa3d612fdc8f134c1058c32fcdd32b7282a055d6e9b0c77349b",
+     "2b14ce1e2c62ad237fa019819921f7a57ad0784e4d279c71324a3b0ccdda487b",
+     "81c3c67090bac6debb00828f81cf1aba05900c0129f7db5e55aa0c395393efd3"
+    ],
+    "kinds": [
+     1003,
+     1004,
+     1005,
+     1014,
+     1015
+    ],
+    "what_it_is": "Tags v=v1, o=<hash>, f=<hash>; payload base64 with 0x01 version byte. Two separate pairs of keys using the same unknown encrypted-sync/messaging scheme.",
+    "relevance": "app-private"
+   },
+   {
+    "label": "BetPod prediction-market oracle/escrow",
+    "author_pubkeys": [
+     "90499909e6f2a683a6a2f1f35f36c269fe8658e682121594c83a1d336cdd219a",
+     "9dfddbeb9ac4c95e079c9c40d18242c0f777b4c2892d7df68e04ced909b078cf",
+     "d7d827cb386afd190f6828251af5bf9ca95d0a45a8b06ee80988080942c46498"
+    ],
+    "kinds": [
+     4246,
+     4247,
+     4251,
+     4252
+    ],
+    "what_it_is": "t=betpod/betpod-oracle: oracle commits/reveals/resolution (NO-CONSENSUS) anchored to BTC block, escrow recovery covenants on testnet.",
+    "relevance": "app-private"
+   },
+   {
+    "label": "Holler mental-poker card game",
+    "author_pubkeys": [
+     "1587f544e667d9b2119936963cf47b6c2598b5f8527d0bb03d6931c74614b0aa",
+     "204cf32758d466203663bc4bb1785d3cc9fd333ea1d3de219091df9f0dc687ac",
+     "29aefd1db56238b2a44215c951af9aebb508c69b84075369760d8e84608359c6",
+     "ca3fba411a14a3f8c540519576826e034c403cbdd5c3fe3302547122d29e6655"
+    ],
+    "kinds": [
+     7450,
+     7451,
+     7452,
+     7453,
+     37450
+    ],
+    "what_it_is": "game=holler: table (37450), seat join with deckKey+PoK, shuffle proofs (7452) and decryption shares (7453) chained with root/prev e-tags.",
+    "relevance": "app-private"
+   },
+   {
+    "label": "Echo transparency log / timelock ledger",
+    "author_pubkeys": [
+     "acd99123cb6cee6582b29a70cd5535015709237c6599908cfecd85ea7405d440",
+     "f8aaff5ad2d7472ed7741abaaf670f3455267db5a262d6d284ec310bf9de2696"
+    ],
+    "kinds": [
+     3140,
+     3141
+    ],
+    "what_it_is": "Signed tree-head checkpoints with witness cosignatures (vkey/operator tags, mirrors on ngit/GRASP) and age/tlock-encrypted 'echo-ledger-reveal' rounds.",
+    "relevance": "protocol-infra"
+   },
+   {
+    "label": "nostr-survey admin app",
+    "author_pubkeys": [
+     "5877220aaae6e54a6f974602d5995c0fe24a3ea7ddabd8644bec795b9da00743",
+     "724a45f4a4f2c843bffaf27219e3591af300635b0d59e261a3f15ce27eb90b13"
+    ],
+    "kinds": [
+     30087,
+     30090
+    ],
+    "what_it_is": "Encrypted/public survey index (d=admin:surveys, t=nostr-survey).",
+    "relevance": "app-private"
+   },
+   {
+    "label": "Offline messenger signalling",
+    "author_pubkeys": [
+     "121a82e180b6328e31cb706a5a545c3acb0db3da36ba5440137014a8a7f8f796",
+     "93e7df3376114cf83f0f0cc4f67381cbbf142d28dca00d116690d66ae921adb4"
+    ],
+    "kinds": [
+     105,
+     106
+    ],
+    "what_it_is": "Empty events t=offlinemessenger + p: presence/handshake pings.",
+    "relevance": "app-private"
+   },
+   {
+    "label": "SWING IPFS site hosting",
+    "author_pubkeys": [
+     "b202b12bc481c3773c5960dfbd4354586de444c251962ea98dbf6e861d21e9de",
+     "f91fe7987f152f33d147d3f8425a44062686e4aa90727941f5bde67109f3c8db"
+    ],
+    "kinds": [
+     35980,
+     35981
+    ],
+    "what_it_is": "Site announcements (d=domain, cid, url, size, title; content = note) and replica reports pinning CIDs, cross-referenced between two operators. Similar in spirit to NIP-5A nsites but IPFS-based.",
+    "relevance": "protocol-infra"
+   },
+   {
+    "label": "TPMSTempNet IoT weather station",
+    "author_pubkeys": [
+     "fdcc462bed091101187a5a5060d58c861a405a7279b64b6da49c6d3039006c59"
+    ],
+    "kinds": [
+     4223,
+     16158
+    ],
+    "what_it_is": "Station metadata (16158: name, geohash, sensors) + temperature readings (4223, temp tag) from RTL-SDR tyre-pressure sensors.",
+    "relevance": "app-private"
+   },
+   {
+    "label": "ngit CI (act workflows)",
+    "author_pubkeys": [
+     "9cd14d9acdbab7ca162b772c91fa514da8e3248f61f924bf3441e6e72c5f0dee",
+     "f294f947268d6574fffee3d59b99aa9f1b9fa99fa3714e50ac089158b3991103",
+     "f44fe248905f2dec1394e4efe888b3034f1b259d91e3b2e9cc59b19bf08dce47"
+    ],
+    "kinds": [
+     9840,
+     9843,
+     39842
+    ],
+    "what_it_is": "CI job requests/acks/run status for NIP-34 repos (a=30617, c=commit, w=.ngit/act/workflows/*.yml, status/conclusion).",
+    "relevance": "protocol-infra"
+   },
+   {
+    "label": "Infinity radio/TV (AI broadcasts)",
+    "author_pubkeys": [
+     "9a8098f002e03b14260cdced2a18e4068678880814f96ebb46ce7d1993bcbecd",
+     "db02f94a66c3845bcdc6b6d4488112920fdd82cf9d20edd341df00b326a37241"
+    ],
+    "kinds": [
+     30093,
+     30108,
+     30184,
+     30398
+    ],
+    "what_it_is": "AI-generated multi-language daily radio broadcasts (audio CID, turns, newsRefs), TV news episodes, music tracks, community list.",
+    "relevance": "app-private"
+   },
+   {
+    "label": "Ditto 'Logbook' AI narration",
+    "author_pubkeys": [
+     "775954f7314112489a4a29ec692b72386fd60bcceb0308d423101ea979c57a80"
+    ],
+    "kinds": [
+     4200,
+     34200
+    ],
+    "what_it_is": "AI narration audio clips per newsletter section (imeta-like audio JSON with waveform) + episode manifest for 'Logbook' issue 42.",
+    "relevance": "app-private"
+   },
+   {
+    "label": "Ditto client custom kinds",
+    "author_pubkeys": [
+     "3254cce6469a1fc9877f67141629d705afa07b4cf2988c2d8550e210f8efaf24",
+     "47206a649faf5782665a49017bba2f10d0d4920e6ce4b73d8499464fbf9dae55",
+     "7bbb6eba8fe6cb3e930f5390d4da409265ddd80f75867ac2c50216cef8d21566",
+     "9c0f113385c75fcd9ffb434139a184604a31f48fd7593c99e3c9be8ba02e47a0",
+     "ea709223ae3a4d3f2639467e9f79d75524251b34f37bbede64d6b49ca2cfde83"
+    ],
+    "kinds": [
+     2256,
+     8211,
+     16769,
+     18678
+    ],
+    "what_it_is": "Ditto (client tag 31990:781a1527…): daily tarot reading (2256), encrypted letter (8211), custom profile tabs as filters (16769), Top 8 favourite people (18678).",
+    "relevance": "render-worthy"
+   },
+   {
+    "label": "DEN Chat (Discord-like)",
+    "author_pubkeys": [
+     "3c1d69357854c6de53cdeb174f61342f459e850c3bb73dcdd11dc9a8e84dc625",
+     "60bed41dc1d7a9c7a3439c54c410a6e49fc376fa43a10cb598fd03b5e16feeb6"
+    ],
+    "kinds": [
+     30031,
+     36942
+    ],
+    "what_it_is": "Sticker pack with sfw/nsfw sticker URLs (30031, sibling of NIP-30 emoji pack 30030) and server definition with roles/channels/relays (36942).",
+    "relevance": "render-worthy"
+   },
+   {
+    "label": "Pokemon spawn feed bot",
+    "author_pubkeys": [
+     "c721cc68a699b5a7bde08cf5e5407692079bf4292a525a3f552219fb7cc82225"
+    ],
+    "kinds": [
+     31500,
+     31503
+    ],
+    "what_it_is": "Shiny spawn records (species, IVs, CP) with expiration + bot status heartbeat.",
+    "relevance": "app-private"
+   },
+   {
+    "label": "Nomad MUD game",
+    "author_pubkeys": [
+     "9fb90107374c227a0121cea3ac336663804bc54008db5e75c91aadc9a3972ab4"
+    ],
+    "kinds": [
+     30762,
+     31573
+    ],
+    "what_it_is": "game scoreboards (nomad-trophies/legend) and character sheet (hp, kills, zone).",
+    "relevance": "app-private"
+   },
+   {
+    "label": "Church node agent telemetry",
+    "author_pubkeys": [
+     "49f94697f1f6df8989d16d0adae66f4b1943dab8d1dd250f02c7b7d877a8208a"
+    ],
+    "kinds": [
+     39015,
+     39019,
+     39036
+    ],
+    "what_it_is": "church-node-agent heartbeats, capabilities (relay/ipfs/hls services), member roster.",
+    "relevance": "protocol-infra"
+   },
+   {
+    "label": "Relation-organism AI agent",
+    "author_pubkeys": [
+     "04b25d3efe1bc3bc8477666fa48c9ff216b710bbcfd95965c20c0af229ade43a"
+    ],
+    "kinds": [
+     38380,
+     38381
+    ],
+    "what_it_is": "AI agent 'knowledge offers' (epistemic type, confidence) and handshake beacons.",
+    "relevance": "spam/noise"
+   },
+   {
+    "label": "optionplus encrypted chat",
+    "author_pubkeys": [
+     "1fa2a797a74fa7eabb190b726c6fe391c869f798c27b739edd824be03bf5e142"
+    ],
+    "kinds": [
+     31603,
+     31604,
+     31605
+    ],
+    "what_it_is": "NIP-44 addressable records referencing a 31612 address (chat/app data).",
+    "relevance": "app-private"
+   },
+   {
+    "label": "Workspace self-index / wingman onboarding",
+    "author_pubkeys": [
+     "94215f42a96335c87fcb9e881a0bbb62b9a795519e109cf5f9d2ef617681f622"
+    ],
+    "kinds": [
+     33356,
+     33357
+    ],
+    "what_it_is": "NIP-44 workspace index and access grants (app_pub, protocol tags).",
+    "relevance": "app-private"
+   },
+   {
+    "label": "zap.stream stream images",
+    "author_pubkeys": [
+     "6e75f7972397ca3295e0f4ca0fbc6eb9cc79be85bafdd56bd378220ca8eee74e"
+    ],
+    "kinds": [
+     17777,
+     37777
+    ],
+    "what_it_is": "zap.stream client: image entries (image + r tag) and a replaceable list pointing at them (likely stream backgrounds/overlays).",
+    "relevance": "app-private"
+   },
+   {
+    "label": "tasklist (Telegram-bridged task list)",
+    "author_pubkeys": [
+     "165690a58c9f89ebebd9dc8ee8cc1757643ff15ea227d6e9e5cfe9cc4afde61a",
+     "783b29d7031779de976f539793e737deee91d20535c43f48109ba82ad3dbef5e",
+     "a1249d94b426f57f590f20ff00612ba04da18ffe2eeb9e59a32d4c4dfbe276af"
+    ],
+    "kinds": [
+     2100,
+     2101,
+     2102
+    ],
+    "what_it_is": "Tasks with client=tasklist/-telegram/-private, t=list id, 'TLENC1:' encrypted items, done actions.",
+    "relevance": "app-private"
+   },
+   {
+    "label": "Encrypted device/session sync",
+    "author_pubkeys": [
+     "099218e02caa89aae2ee0252ac3ce7ac18812596ad51e23d28a2849d3d00ad01",
+     "09bf8baa3c99c44edd165644adfafd7b605576c0d7a2bb7d27fe838130309146",
+     "0a9e4981f91c9015fdab0f8234f3d8d10f8a845fa7a9833d65a5203966d99bfe",
+     "0f22950ee0789e2cf529c78981114f8a717271e9ce01c106c1ae1f1bb94183d3",
+     "11f4021ab9040926dabbafe14a4ba260a7c846f049118ffbcc7dc44f6fad68ac",
+     "15f81e6c0633a2599d4cc57dd75624109020125783b94bfa3b18175c5d0a94bd",
+     "17f79b6a1f58da6fc9270f53cbad3729ab25dd84da03c00c7d9b0fc4b224efb3",
+     "19803f645800a53d0aefc7d9a2ecc77ad17a251131d759042bbfbba3d04718b0",
+     "1f40917f5a6bfe50aef3b5d83eefce41fae69e85b52c8a2327b4fe65e648bd94",
+     "243c0cb418dc0373281fab0463b4b2ab76572f7bd79b5f5f6c588660ba3aff1d",
+     "262b7ebfbc4534fd4a05e14efea3c130a26e66c0c6cfc7dca1ebde71d3d42efc",
+     "27154fb873badf69c3ea83a0da6e65d6a150d2bf8f7320fc3314248d74645c64",
+     "27f65464ba85956a4c0e9995c3358eca9341c4471685325b3cb7254ed5c6cc22",
+     "292b020529777eb8a41609b06a6845a5cdf3d6738c9094fbc3214a9887c145aa",
+     "2ddb18d82838778d84512b5ccac1d4004ae7cb3d0da0714b1b7d9bf901a650f1",
+     "2f527d8290f6fa6ae92c59d1cae46ca98d1581088da75b87abbefaf5514d564e",
+     "316ce34fbe73a3b99fd118447fcabdb34e5e35ede2cde66cdc24a412a2cf5c93",
+     "3b56aaa13b52fa23026980c4480699a8816b9ee154bf3ea4e6a99508db7eadba",
+     "3fc7fddc536d82497e69b930e43a9ce9dcf4bf289a0beef4cb3eeca9945625b1",
+     "428dec079cc58ea0db60779b3912138d763c47afcb1c353ddf4710e3f3685081",
+     "48dcff0caaa66abd59f1781b0462b95cc2ac436473ebcaad38cad36d7647870f",
+     "4f413f8e0aef7275efe44506cff804da559c0d96612f47d5c2952418209f121a",
+     "578415903bb76cbd7cecb144cc3131d0de5876c9f037a2f422fa5ed2cbf64019",
+     "59c2e15ad7bc0b5c97b8438b2763a5c409ff76ab985ab5f1f47c4bcdd25e6e8d",
+     "5ca48748d6ef4d06d57ba8bea12b5fde4aeef6f562fb5a280ba3fa72b2beefe4",
+     "61f18c026fabb27841f0224123fe777d784c3c021acdf472d32e832c8f7c2ab1",
+     "69df6de7f520cf249cf006ba95588acb080cf56d48e669b8e68e2e6958bb69a2",
+     "74bb6a478471c2b1c3d88237d216ddda0f5a855776938382150d40a766684012",
+     "78989b57c7d3190de8a153e37de4b1619b4fead583836662e7e4fac1d8d6cbe4",
+     "7ac2b0b18fbeeb9259447197437712b216102e3d06c52580116eaedb1c9f7ce4",
+     "7f038ca57625072b103831b70fd998e8595fbb0a38fc8b821ccd3615ad4a6ce2",
+     "83d89f92a2e71e9f43629efce088d811a6f64f42382bb98c4eb23e9a58d6ac52",
+     "9245de16878e5945f28b569d713051aa3b42c2f27139e117833affeacc7d7c71",
+     "a22dbe51e3c719ad8b2cdc3e4ffc2176f20373f3027b67a1dc6c6e976fbcd6d8",
+     "a3225c80d8a9f8f6a833618dd07b145b2a7502ee6045101857ceffe93b2be317",
+     "a82a9e6bff8e57b0af11cccef9106d389681d2d26a24b79691df160b156e1768",
+     "af41ce9a1990f5d956ef1323c60289572d1f78bd2e9da1445923ca2520d6123f",
+     "afd9ce7c47a634330d35c49ee745a9cf4deeadd6fd02b18c5a218ca0d392fde7",
+     "b70638dac7b97d03dfd5279a09b1d5c747a76b9f0a20d7e0a4dac9a01b7a02ec",
+     "c14156fdd00160ff55221dadd8616475a318f6d8ca17392dc9ea513b2bac38fe",
+     "c3f0468d44b8cdfb0b150f3d8764e7a63b2be2454a238256e192b44a270cba96",
+     "c6658d18f0ed388467a0cdc67df81dbe03313c156cfdd11403b166db00ef0bf9",
+     "d0ce01a6cd6288ab4fa4c52dc986fe6edf4afa407b1a6e8cfd08971e89b46ed4",
+     "d7c6d014b342815ba29c48f3449e4f0073df84f4ad580ae173538041a6abb6b8",
+     "d8d6cab326f312ec172d150358a3f1135810bc7c7aa98f0dcb248eb4c00c050e",
+     "dea693649125969f2ca000664658944563cea34116e2243714952c3678581fb8",
+     "e054d1131c9c5de5565662dd42584cdfc57bd1276b90ed0a28cfe5f921c54cb3",
+     "e0921d610ee655396cfac6c9907b6ad11f3a1dde5770029e1284e6cae0fe7bd5",
+     "e904232066c63b5ce70c232dcd11a82462cf70ec2c2239ef1f3fda2fd08e6f99",
+     "ee18d7c2a5004ce1211206b06d4581dedd11b9e4747957fd79813e0a64cba0e9",
+     "ef952a215cfdfbed5e5c17b22d3557cc2c6fa7cf179964a6902e3bcf6bc30f92",
+     "f1f3300a45164b562a82b86a9dcc0ee0e5f6c5b833a92e41cbf95b28b03ba848",
+     "f8f5dbb1816a5b4a6fdb4a36eec8314a39da440fc03bab513a03327a5dd914f3",
+     "faa3b7b3142b4f1a2ba6752f2ed375fa1bcab05fe3fd6248ef0a595cb5352307",
+     "fbb8f4d81bbd0198673b4231e406391df1721a049fcedb866cbb7f4ff4a1e83e",
+     "ffe4d44c9d409918a0bd56ff5f53d7339f85c8b742a982b0005fb4660064bebe"
+    ],
+    "kinds": [
+     123,
+     1051,
+     1058,
+     1351,
+     1707,
+     2727,
+     3210,
+     3434,
+     4373,
+     4516,
+     4711,
+     4850,
+     4859,
+     5310,
+     7007,
+     7700,
+     7710,
+     7711,
+     7878,
+     7880,
+     9372,
+     9444,
+     9741,
+     9807,
+     10318,
+     10444,
+     30084,
+     30278,
+     30506,
+     30515,
+     30520,
+     30703,
+     30790,
+     30791,
+     30815,
+     31222,
+     31602,
+     32069,
+     32681,
+     33272,
+     33838,
+     34579,
+     35714
+    ],
+    "what_it_is": "Assorted NIP-44 / custom-AEAD blobs: device sync (30515 d=laptop/desktop), goose AI agent sessions (30278), clipboard sync (cliprelay 9372), chunked transfers (9741), support tickets (7700), circle messages (7878/7880), hakari weight log (1351), yalachat SOS (1051), cross-chain key directory (7710/7711), game saves (30703/30790/30791 d=body/account/loadout), lnpay admin state, etc. No public content.",
+    "relevance": "app-private"
+   },
+   {
+    "label": "Games & quizzes (misc single apps)",
+    "author_pubkeys": [
+     "0adf67475ccc5ca456fd3022e46f5d526eb0af6284bf85494c0dd7847f3e5033",
+     "461f6a93e51f9214321c9de7b9c971caeeaa0af2b5f22a56ad94f513a302eb0f",
+     "4697740530647326ad0436afef7f197eaeb4209ff6399fc4e1a4a775a6c1a525",
+     "5e5a0ec28785152e9a3c474c1ce0d2ff7ace0ffa1d10770164a66ba517cddf78",
+     "6a0265da81f260b5a344c62dc9ad31bdf86b9aefbd7c4b5ff5fa4174b0b02004",
+     "9a0ee826ac98df045eb3c63594e2d507df5b1d1f07ebd1abb7feeb09f3d06988",
+     "a11a4f643d8ce63b096e2a880f27a8920b0dfaac22451abe1e9c4a5a4791c8e7",
+     "a2b1f4984cd8d9dd090a7f2e9c279b466ebecf613641e1bc3c5f45135a1a4a19",
+     "abc2e5d163ad407d49dc6027f9717fe77846fa47c8a6927df90ae0266f51f6e6",
+     "bbb5dda0e15567979f0543407bdc2033d6f0bbb30f72512a981cfdb2f09e2747",
+     "cec2981ceda2ec2ca59b417788175624d468427fca0b754c90269db0814d4f26",
+     "dcd363dc444d95f77a8290c0ea27cfdd9fe384625cc95e89ac6cef092fcc79cd",
+     "e81857e504a92d8094bfae49b427997d8d81c5db8693835c0bdb7ef5c933d425",
+     "ede1e7fabb758aca75ae548680a206a234c6d6b257834b111d284c3692e67601"
+    ],
+    "kinds": [
+     1420,
+     1888,
+     1889,
+     1989,
+     4663,
+     30211,
+     31780,
+     32151,
+     32600,
+     33051,
+     36946,
+     36947,
+     37070
+    ],
+    "what_it_is": "doodleduo scores, favilla game stats, Minesweeper result (1989, alt tag), fomoparty rooms, kickstr football predictions, esports lineups, schess engine announce, trivia presence, tag-game state, rvtissue, spatial audio room presence (Cloudflare).",
+    "relevance": "app-private"
+   },
+   {
+    "label": "Fitness",
+    "author_pubkeys": [
+     "1d6d0dc4cfafcf52036fc0770955696828fde3d34cfb3c9a691a7ca22f72412f",
+     "5246c95cf95782e8fc0bdf7847790f7c5231b7ca82c18019bcce63c56aabfa04",
+     "dd95e105188bae146ba39c817489a86972caad465181d514e56e82e6053c34b6",
+     "e29cab1e05a29f00d25bc145a8f070f0138d50da5413212a835b7cd5dfcf8b50"
+    ],
+    "kinds": [
+     6742,
+     9637,
+     33402
+    ],
+    "what_it_is": "gymply share images, gymsync workout JSON, POWR workout template (33402, NIP-101e draft).",
+    "relevance": "render-worthy"
+   },
+   {
+    "label": "AI agent / service marketplaces & task boards",
+    "author_pubkeys": [
+     "00fd420e08156b376f058c0a0e6d27f598a862fabff1a6d546370f2e16db144b",
+     "14e450badce00e31b5cdf0362c805a9b27408f80f081edf80a5b32a37a462e8a",
+     "2da7a3b184adb7aa63d8e4319a7fd3ba5640b91edb5596a1eb92031bffca9897",
+     "3c87911245d729f99005490dfb7a520b6c31ab7bb09279557c7b10432c544a33",
+     "4288e11159f5bf54fbb197cc3280b4cb162a59e148d77f8e8b2c0eee6be5199b",
+     "43595a79c5d5275269fe7777d03afb8ac5734ea91f4c237168fa4e5ddd120520",
+     "4bf150c3df7c821233a3525e2039cebaafa63504f4644304fc507a2cf0f121dd",
+     "56c8eae566c008b2a5d2ac7a81dea943bd6b9eba59b73cdc426b7eba61817a54",
+     "6c3e45a62048ab5886adc4b85216f7eddd034693bf550b8fcfed15f1f2b0618f",
+     "721e69c3f3f4e094a90ac00c3a4900c36271ee63aeebe67fbeedc112c31fb298",
+     "77c24341a7c8f1be578ed25517ac20a2338cdc2ac0dc5f8fde688becf9ac8abc",
+     "795ff98fa9921acc0e31065fb47728ec768602c17470f07c6850089011f33a57",
+     "ae6673d804ad325c7fbdad9413bc90f97ae26a5e16b6e4bf993ddc951cba889a",
+     "b376f853477ef86774315e8bb27e960b622f98d30b752a2d6c7db895c3f21cac",
+     "d16eb83ecdd37614b890b335f7b5bdac374b7e4761f81310a321680efe1d6c06",
+     "d23b09327c0fdad88c1a8a1b6e5fa7559a05094a59b800ac5e4c308af2fabbd0",
+     "d6bfe100d1600c0d8f769501676fc74c3809500bd131c8a549f88cf616c21f35",
+     "e18a1d171a59d874edd336472afeb3a614d3dc83397dd097e922a99dcee02133",
+     "e389b4273f3b9407da35f2df2611c83aa1a9d65e401a26aea7ca84180ef08459",
+     "e646656df6aeb6d3844017e7eb20cb2809e0806cfd6064b9f873de817187c8ed"
+    ],
+    "kinds": [
+     4444,
+     4903,
+     8555,
+     9911,
+     13922,
+     30013,
+     30220,
+     30302,
+     30333,
+     30495,
+     30560,
+     30900,
+     31000,
+     31402,
+     31971,
+     32107,
+     37702,
+     38023,
+     38111
+    ],
+    "what_it_is": "VIA buyer-demand briefs (x402), TOON L402 fetch service, inference-net onion providers, DVM worker status/prices, agent job queues, fedi-flip liquidity ad, loom worker telemetry, OAF agent 'intel' envelopes, task-state boards (cascadia/n4s/4a4 Kanban), AppWeaver plugin catalog, routstr issues, blindoracle proofs, smj prediction pools.",
+    "relevance": "spam/noise"
+   },
+   {
+    "label": "Infra / monitoring / anchoring",
+    "author_pubkeys": [
+     "000001204177f1e40e2732aa6a01648fc545b73883f2b0ea6fbc91d3ea5a5b9f",
+     "0623de1b0b0986e7098218331038786fc60fc5eb925bbcef2a1cef74c3debeaf",
+     "0657db86a81a6dea6a2cb3345c646d33415eb08377625354ecfa5c681424cdee",
+     "156428ce2c28626367f2d470fcefa6ea3149dd205d66688eda40d7538a5a7444",
+     "19e193d26ad8897868730e9785d8485195076146378ae9755cc1b7a2f003bb3a",
+     "2829917eb3982e5fe58e48ca2bcf4273eac94154b55f1cade50d9d9d44079984",
+     "356bcaa4ee2ea7729878d8045e8384a476fa38a9bc182a5bd8e36733b71cd993",
+     "3c31bfcba2918f84079fb002fe7bd46cf83112050d60b3a758e7b72d6c2fb4d3",
+     "4628c41ae25862ffa438c410123f48b0ccf22723d211ca2c3220111855bb6fe7",
+     "4b56bbf41c92e586e88927acb78836eb49f2b184081ef852625cf78be7d56bd6",
+     "532aceee51a63b3a7a242aca4e0b79f57352046b8743d0ea1833d135d2034ce6",
+     "6df093f08b707e5cb37069f5773827d4c85bc01753197d71e25f4e0a96da0082",
+     "7324e05a946c66a7818fd0c0aca80b60fb1e95fde32357ef1a2087303dd0185e",
+     "77ea1281848203e1bf58a8bafe457fd9c8863b2457786daf5bcb1f906989c8ac",
+     "78dc10720d41a3ab7e67ed06d256d63a11b0b9d8fbe19d3d033e6137e013def3",
+     "8ae7965af1b61347bb9900b91cfa9487e4da2400bdb063521ad0850706ff5f96",
+     "8dce13c6e959298dcd058206469a0d29efe208abbd8a4e28a518a14d48cf8aa8",
+     "9b0815a350503d5a7eb8fcf90213b9c8e9a90285470f1748592eabaa2d579d09",
+     "9bbbb845e5b6c831c29789900769843ab43bb5047abe697870cb50b6fc9bf923",
+     "afd7da3f794182dc3433c478c7e19735276faf16057a3ed8e58bf10944161041",
+     "b2d7e8358bd8d57100693b40e1e5a3be127a26e20b52e43fdb2e4a5f5654afed",
+     "bd9b0b60d5cd2a9df282fc504e88334995e6fac8b148fa89e0f8c09e2a570a84",
+     "c4668fc02e42fd21a4ce242b48fb9b2e6bb2c62b7a3423b90e0765f93c31d7eb",
+     "cbef055b7d6ed4dac63e53599702b4b393b006c0053c8cbf5e8ebc84fbe35d7a",
+     "d986b8a48cef4950fc62f7dc2e0d277ca505757b5aa73f0959b20659e71f7cac",
+     "eae5006e2d5e77de6d3af9e3f3a9df9c5a95890037f57d15833c3ff19bf2c941"
+    ],
+    "kinds": [
+     1066,
+     1623,
+     8181,
+     10010,
+     10110,
+     10442,
+     16440,
+     19004,
+     30072,
+     30381,
+     30666,
+     31111,
+     31310,
+     33337,
+     34101,
+     34393,
+     37572,
+     39697,
+     39802,
+     64600
+    ],
+    "what_it_is": "nostr.watch relaymon RTT checks (1066), relay health directory (30072), indexstr web-index observations (39697), bestiario Mostro metrics (30666), Touchstone bitcoin-anchored checkpoints (1623), cashu proof-of-liabilities (8181), node cert chain, threshold-signer operator sets (16440), p2p peer/onion/node discovery, PosterChan VM hosts, WoT config (37572), moderation HIDE_CONTENT actions (30381), large p-lists (19004/10010), cursors/reading progress/presence.",
+    "relevance": "protocol-infra"
+   },
+   {
+    "label": "Payments/escrow/commerce misc",
+    "author_pubkeys": [
+     "0000cc02101ec29eea9ce623258752b9d7da66c27845ed26846dd0b0fc736b40",
+     "064cb0f41a654179c3bbbfed5955a8c834717ce61f783e29c7e8c9c32886857d",
+     "0f428b16f1793991b2a9cc1da9b431c7afe119efc3b7f8eda321a86825fe1ee7",
+     "20986fb83e775d96d188ca5c9df10ce6d613e0eb7e5768a0f0b12b37cdac21b3",
+     "4648f15a28ef024edc1c5118fb9e5baaedfeeccf8fd72198a197bbb20a95c8a8",
+     "5f66ac39693c3c233316f141ff8bbdf43647c4854adb47a2da94fa855d7387e1",
+     "c949b2a0c81403a7c57116ac2631f4b62674c076335925c63fb7f0bc79d95fce",
+     "e2ae2beaf55b932c965543e436a5be400e6248f2bdcea4f82cb46f724ac2c3f9",
+     "f5f2bb8b88daef6eda3c00bb9a12142381534c01cfb99dcfa4fdbef1c4ab7a7e"
+    ],
+    "kinds": [
+     3031,
+     3314,
+     13196,
+     30164,
+     30321,
+     30361,
+     38103,
+     38107,
+     38386
+    ],
+    "what_it_is": "Wallet-provider fee announcement, Spark escrow config, payment score, yakihonne creator subscription gateway, chama escrow vote/cancel, TRON payment pings, Mostro dispute (38386), Armada group invite links.",
+    "relevance": "protocol-infra"
+   },
+   {
+    "label": "Single-author user-facing content",
+    "author_pubkeys": [
+     "0955d4241024ed1fb0fb5f0607741a3b82ceae940413e566322f9d61cc842def",
+     "0f4791c38e1236dc55f11acbf37a00da8879906d9374498378db8d6ea7952869",
+     "101a112c8adc2e69e0003114ff1c1d36b7fcde06d84d47968e599d558721b0df",
+     "11044110b8f3e14d4f901c75ca9f4b27938ed96d906a06cd10d18d3296850cfe",
+     "17e48d1919b1422aa31acf4da280d2369cd6b9ad7fabbd9599e2d2b7cc6d6f7f",
+     "2356a29692e094a6edd8b62f2117cfd70a5aee081b7183c7237582c7f5348a3c",
+     "50a63cca15b16b60d329b92f628c432c8c12689b40fe9d0495eb836b5f2df637",
+     "5844732074d626ff4a6626049aebe75b7ea4ae0f93ef782cd0182102c0516086",
+     "7416e2fc250b08731f9c669eeb1d9e4136fa02cc3dd6d77a78a76d92e0514f67",
+     "78e4cd752fe0d91b0b7e87eaa8163a8236a792f0ed0a711914925567a69930c2",
+     "7a2a9c6e7590e8eee41e74328b1bcb9208e671d453b92ed0c3e57d02e251d83c",
+     "8c0b3ac6c62bcf5a7d4989859ff1bce4952b8af6be578b9b87f5bf3c69dd0279",
+     "8d1bae510c6a08ac4d3de217592c3b32e743130a190703de24000db9918f12e6",
+     "a0e73529e04b4970a185e864b89e7d6e1ed148fdf08381b540ac020a742c62d5",
+     "a64ff413cdb954fc22a3e590d45d8874ec8c4482934ab954f73699f00ecc2848",
+     "a723805cda67251191c8786f4da58f797e6977582301354ba8e91bcb0342dc9c",
+     "dd664d5e4016433a8cd69f005ae1480804351789b59de5af06276de65633d319",
+     "ea1105ec9b1e2e03e9ced73c31ea07fc64141b56ed4218009a112d2476c8e908"
+    ],
+    "kinds": [
+     1090,
+     1738,
+     4551,
+     4747,
+     4817,
+     7078,
+     10333,
+     30024,
+     30027,
+     30086,
+     30427,
+     31338,
+     31342,
+     31926,
+     36669
+    ],
+    "what_it_is": "NIP-23 draft long-form (30024), Fanfares paid audio episode (31338), imwald reaction GIF clips (1090), Podcasting 2.0 favorites (10333), gratefulday reflection (36669), Cairn link (1738), anonymate comment (4551), MycoSoft encrypted post on x.com status (4747), kacti event map overlay (31342), Japanese earthquake early warnings (7078), cyprusnav flood reports (4817), Verge theme (30086), Nostrich (30027), napstr album covers (30427), Formstr calendar public busy list (31926).",
+    "relevance": "render-worthy"
+   },
+   {
+    "label": "Test / noise / misnumbered",
+    "author_pubkeys": [
+     "0daaadee6315d8e637879d2121fce0e05e3d90c2029207928a725b1533fd98be",
+     "2fb42541224a46db3ac2a89f19c6c197331bb0a5d81baffe34e37e233726ac35",
+     "7b354c52eb559cd7aba572415b778de129a15d080f9662f2c54c47ec53e8e84e",
+     "97ef5c6939bc50fe5477a5de5d0ab3f0d11d2c8c3d104ce2a3366b93fd6fc722",
+     "a6c47f0627c04e542e7d9cd9af53dab2d4f425b3a2b932817465f63186363313",
+     "ca55de60561aacee9c31f57c95bdac016b5b534a52823358c6d18bea2ce66257",
+     "ec42c765418b3db9c85abff3a88f4a3bbe57535eebbdc54522041fa5328c0600",
+     "fc7db725d569ddb5a885832351bb65fcedcacbda7d6bbd2e0b9d8ae77b2ba1e6"
+    ],
+    "kinds": [
+     36,
+     52,
+     112,
+     1349,
+     1818,
+     5101,
+     10218
+    ],
+    "what_it_is": "Kind-36 text with k tag only (JP users, likely mis-kinded reaction/note), SSH key dump (52), relay suitability test notes (112), junk (1818), reaction-like 👍 as replaceable (10218), DVM-range job result (5101 exit_code/stdout), NIP-submission wrapper embedding a 30817 event (1349).",
+    "relevance": "spam/noise"
+   }
+  ],
+  "notable": [
+   {
+    "kind": 33402,
+    "name": "Workout Template",
+    "app_or_protocol": "POWR / NIP-101e draft",
+    "spec_url": "https://github.com/nostr-protocol/nips/pull/1816",
+    "what_it_is": "Addressable workout template (title, type, ordered exercise tags pointing at 33401 exercise templates).",
+    "confidence": "high",
+    "amethyst_relevance": "Quartz already has experimental/fitness ExerciseTemplateEvent (33401) and WorkoutRecordEvent (1301); 33402 is the missing third kind of the same draft. Cheap, completes the set."
+   },
+   {
+    "kind": 6312,
+    "name": "Vertex DVM results (6312-6315)",
+    "app_or_protocol": "Vertex (vertexlab.io) NIP-90 DVMs",
+    "spec_url": "https://vertexlab.io/docs/",
+    "what_it_is": "Responses to 5312 verify-reputation / 5313 recommend-follows / 5314 rank/sort-profiles / 5315 search-profiles; content = JSON [{pubkey,rank,follows,followers}], tags sort=globalPagerank, nodes, source.",
+    "confidence": "high (kind-to-endpoint mapping from knowledge; Vertex docs list exactly these four endpoints)",
+    "amethyst_relevance": "Protocol-infra: useful as a WoT/ranking backend (follow suggestions, search ranking). Not rendered in feeds."
+   },
+   {
+    "kind": 38386,
+    "name": "Mostro dispute",
+    "app_or_protocol": "Mostro P2P exchange",
+    "spec_url": "https://docs.rs/crate/mostro/0.18.0",
+    "what_it_is": "Addressable dispute publication (s=seller-refunded/initiated, y=mostro instance, z=dispute). Siblings: 38384 ratings, 38385 node info; 38383 orders is NIP-69.",
+    "confidence": "high",
+    "amethyst_relevance": "Quartz has NIP-69 P2POrderEvent (38383); 38386 only matters if Amethyst shows Mostro order/dispute status. Low."
+   },
+   {
+    "kind": 31338,
+    "name": "Fanfares paid audio episode",
+    "app_or_protocol": "Fanfares (fanfares.live)",
+    "spec_url": "https://damus.io/nevent1qqst8ap6vxygw72wg8dluy4hjehuywjwr7rc65hzamnht2v53hatwuc8u7yff",
+    "what_it_is": "Addressable audio/podcast item with title, description, price (21 SATS), encrypted=aes-256-gcm + key-request URL, imeta pointing at encrypted Blossom files; unlocked by zapping.",
+    "confidence": "medium (kind number from sample; app described publicly, no spec)",
+    "amethyst_relevance": "Render-worthy (title/description/cover + 'paid, open in Fanfares'); full playback needs the non-standard key exchange."
+   },
+   {
+    "kind": 30024,
+    "name": "Long-form draft",
+    "app_or_protocol": "NIP-23",
+    "spec_url": "https://github.com/nostr-protocol/nips/blob/master/23.md",
+    "what_it_is": "NIP-23 draft of a 30023 article (here published unencrypted with title/summary/image/published_at).",
+    "confidence": "high",
+    "amethyst_relevance": "Quartz has LongFormContentEvent 30023 only. Drafts should not appear in public feeds; worth a typed class only for an article editor / own-drafts screen."
+   },
+   {
+    "kind": 10333,
+    "name": "Podcast favorites list",
+    "app_or_protocol": "Podcasting 2.0 client (alt 'PC 2.0 Favorites') using NIP-73 i-tags",
+    "spec_url": "https://github.com/nostr-protocol/nips/blob/master/73.md",
+    "what_it_is": "Replaceable list of i=podcast:guid:<feed> (optionally podcast:item:guid episode) with k=podcast:guid, medium=podcast.",
+    "confidence": "medium (no spec found; shape is self-describing NIP-51-style list over NIP-73 ids)",
+    "amethyst_relevance": "Could render as a 'favorite podcasts' profile section; low priority."
+   },
+   {
+    "kind": 1090,
+    "name": "Reaction clip (GIF)",
+    "app_or_protocol": "imwald",
+    "spec_url": "",
+    "what_it_is": "Regular event: GIF via imeta (url, m image/gif, x), NIP-32 L=emotion/l=joy|sadness labels, alt + t tags; content = caption. A shareable reaction-GIF library entry.",
+    "confidence": "medium",
+    "amethyst_relevance": "Render-worthy as a media post (imeta already supported); possible source for a GIF picker. Single author."
+   },
+   {
+    "kind": 18678,
+    "name": "Top 8",
+    "app_or_protocol": "Ditto",
+    "spec_url": "",
+    "what_it_is": "Replaceable ordered list of 8 favourite people (p tags), alt 'Top 8: this user's eight favorite people, in order'.",
+    "confidence": "medium (alt/client tags; no spec found)",
+    "amethyst_relevance": "Profile-render-worthy (MySpace-style top friends row)."
+   },
+   {
+    "kind": 16769,
+    "name": "Custom profile tabs",
+    "app_or_protocol": "Ditto",
+    "spec_url": "",
+    "what_it_is": "Replaceable list of tab=[label, NIP-01 filter JSON] defining a user's profile tabs (Posts, Replies, Media, Likes, Wall with kind 1111 #A).",
+    "confidence": "medium",
+    "amethyst_relevance": "Interesting for profile customization; Amethyst would need to evaluate arbitrary filters. Low-medium."
+   },
+   {
+    "kind": 8211,
+    "name": "Encrypted letter",
+    "app_or_protocol": "Ditto",
+    "spec_url": "",
+    "what_it_is": "NIP-44 'letter' to a p-tagged recipient (alt 'Encrypted letter'), a slow-mail style DM outside NIP-17.",
+    "confidence": "medium",
+    "amethyst_relevance": "Low; private, non-NIP-17."
+   },
+   {
+    "kind": 30031,
+    "name": "Sticker pack",
+    "app_or_protocol": "DEN Chat",
+    "spec_url": "",
+    "what_it_is": "Addressable sticker set: title + sticker=[shortcode,url,sfw|nsfw] tags. Mirror of NIP-30 emoji pack 30030 for larger stickers.",
+    "confidence": "medium",
+    "amethyst_relevance": "Quartz has EmojiPackEvent 30030; stickers would plug into the same picker. Watch for a NIP."
+   },
+   {
+    "kind": 31926,
+    "name": "Calendar public busy list",
+    "app_or_protocol": "Formstr nostr-calendar (NIP-52E proposal)",
+    "spec_url": "https://github.com/formstr-hq/nostr-calendar",
+    "what_it_is": "Addressable per-month (d=YYYY-MM) list of block=[start,end] busy intervals.",
+    "confidence": "high",
+    "amethyst_relevance": "Fits next to NIP-52 calendar classes in Quartz if Amethyst does scheduling; low."
+   },
+   {
+    "kind": 35980,
+    "name": "SWING site announcement (+35981 replica report)",
+    "app_or_protocol": "SWING (IPFS-hosted sites)",
+    "spec_url": "",
+    "what_it_is": "d=domain, cid, url, size, title + note content announcing a site version; 35981 replica reports list pinned CIDs.",
+    "confidence": "low (no public spec found)",
+    "amethyst_relevance": "Could render as a link card; analogous to NIP-5A nsites. Low."
+   },
+   {
+    "kind": 1066,
+    "name": "Relay RTT check",
+    "app_or_protocol": "nostr.watch relaymon (NIP-66 family)",
+    "spec_url": "https://github.com/nostr-protocol/nips/blob/master/66.md",
+    "what_it_is": "Empty event with r=relay, T=1h, rtt-open — per-check latency sample (19k events). nostr.watch publishes 30166/10166/1066/20166.",
+    "confidence": "medium",
+    "amethyst_relevance": "Quartz has 30166/10166; 1066 is high-volume telemetry, ignore."
+   },
+   {
+    "kind": 9840,
+    "name": "ngit CI job (9840/9843/39842)",
+    "app_or_protocol": "ngit + act CI runner (NIP-34 ecosystem)",
+    "spec_url": "",
+    "what_it_is": "CI trigger (a=30617 repo, c=commit, w=workflow file, r=ref), ack, and addressable run status (status in_progress/concluded, conclusion success).",
+    "confidence": "medium",
+    "amethyst_relevance": "Could show CI badges on NIP-34 patches/PRs in Amethyst's git screens; low-medium."
+   }
+  ]
+ }
+}

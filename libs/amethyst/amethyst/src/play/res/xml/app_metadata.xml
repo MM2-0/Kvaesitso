@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Natural-language description of the app for the AppFunctions agent
+  (Gemini and other system assistants). Resolved by the system via the
+  application-level `<property android:name="android.app.appfunctions.app_metadata">`
+  pointer in play/AndroidManifest.xml. Without this resource, system
+  logcat shows "Unable to resolve AppFunctionMetadata" and the agent
+  can't render a user-facing summary of what our functions do.
+
+  Keep descriptions short and Nostr-grounded so a user reading "What
+  can Amethyst do?" in the agent gets a useful answer. Update when
+  the @AppFunction surface grows.
+-->
+<AppFunctionAppMetadata xmlns:appfn="http://schemas.android.com/apk/res-auto"
+    appfn:description="Amethyst is a Nostr social client. The agent can read: search Nostr profiles, notes, hashtags, and long-form articles; look up any user's profile by npub; read recent posts from the signed-in user's follows or any specific user; summarize the feed for a time window (with top hashtags, top mentions, counts pre-extracted for AI digestion); read recent direct messages (decrypted); list NIP-57 zaps received and total sats earned in a time window; surface notes that mention or reply to the user; list currently-live audio/video streams; and report basic account info. The agent can also write: publish short text notes, follow or unfollow other users, send NIP-17 gift-wrapped direct messages, and zap users via Lightning or onchain Bitcoin (NIP-BC) — Lightning zaps auto-pay over NIP-47 when NWC is configured; onchain zaps broadcast a real Bitcoin transaction when a chain backend is set up. Specific notes can also be zapped via Lightning with NIP-57 zap splits honored. Sign-in required with a local key or NIP-46 bunker; NIP-55 external signers (Amber) are read-only from the agent for now."
+    appfn:displayDescription="Read, write, summarize, and zap Nostr (Lightning + onchain) through Amethyst" />

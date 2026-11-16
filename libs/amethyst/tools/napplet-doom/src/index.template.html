@@ -1,0 +1,1251 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>__TITLE__</title>
+<style>
+  :root { color-scheme: dark; --red: #b3241b; --fg: #e8e2d6; --dim: #9a9284; }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; height: 100%; background: #000; color: var(--fg); overflow: hidden;
+    font: 14px/1.4 system-ui, sans-serif; user-select: none; -webkit-user-select: none; touch-action: none; }
+  body { display: flex; flex-direction: column; }
+  #screen { flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; }
+  canvas { display: block; image-rendering: pixelated; background: #000; }
+  #start, #ended { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center;
+    justify-content: center; gap: 14px; padding: 24px; text-align: center; background: rgba(0, 0, 0, .86); z-index: 2; }
+  #start h1 { text-transform: uppercase; margin: 0; font-size: 40px; letter-spacing: 6px; color: var(--red); text-shadow: 0 3px 0 #3a0905; }
+  .sub { color: var(--dim); margin: 0; }
+  button.big { font: 600 18px system-ui, sans-serif; color: #fff; background: var(--red); border: 0; border-radius: 10px;
+    padding: 14px 40px; min-width: 200px; }
+  button.big:disabled { background: #444; color: #aaa; }
+  .help { color: var(--dim); font-size: 12px; max-width: 460px; margin: 0; }
+  .help kbd { color: var(--fg); font: 12px ui-monospace, monospace; }
+  /* --b: one control button; six of them plus the middle column fit a 360px-wide phone. */
+  #touch { --b: min(58px, calc((100vw - 112px) / 6)); display: none; flex: none; gap: 8px;
+    padding: 8px calc(10px + env(safe-area-inset-right)) calc(10px + env(safe-area-inset-bottom)) calc(10px + env(safe-area-inset-left));
+    justify-content: space-between; align-items: center; }
+  body.touch #touch { display: flex; }
+  .pad, .actions { display: grid; grid-template-columns: repeat(3, var(--b)); grid-template-rows: repeat(3, var(--b)); gap: 4px; }
+  .mid { display: flex; flex-direction: column; gap: 6px; }
+  #touch button { font: 600 11px system-ui, sans-serif; color: var(--fg); background: rgba(255, 255, 255, .1);
+    border: 1px solid rgba(255, 255, 255, .18); border-radius: 10px; padding: 0; touch-action: none;
+    -webkit-touch-callout: none; }
+  #touch .mid button { height: 34px; width: 56px; }
+  /* Landscape: the game takes the full height and the controls float over its sides. */
+  @media (orientation: landscape) {
+    body.touch #touch { position: fixed; left: 0; right: 0; bottom: 0; pointer-events: none; --b: min(58px, 15vh); }
+    body.touch #touch button { pointer-events: auto; background: rgba(40, 40, 40, .55); }
+    /* The whole pad takes the finger, its empty corners too: they are the diagonals. */
+    body.touch #touch .pad { pointer-events: auto; }
+    body.touch .mid { position: fixed; top: 8px; left: 50%; transform: translateX(-50%); flex-direction: row; }
+  }
+  #touch button.down { background: rgba(179, 36, 27, .7); }
+  #touch .fire { grid-column: 2 / 4; grid-row: 2 / 4; border-radius: 50%; font-size: 15px; }
+  #toast { position: fixed; left: 50%; top: 12px; transform: translateX(-50%); background: rgba(30, 30, 30, .92);
+    padding: 8px 14px; border-radius: 8px; font-size: 13px; opacity: 0; transition: opacity .3s; z-index: 3; pointer-events: none; }
+  #toast.show { opacity: 1; }
+  #ended[hidden], #start[hidden] { display: none; }
+  .touch-help, body.touch .key-help { display: none; }
+  body.touch .touch-help { display: block; }
+  #ended pre { white-space: pre-wrap; color: var(--dim); font-size: 12px; max-width: 520px; }
+  #mods { width: min(460px, 100%); text-align: left; font-size: 13px; }
+  #mods summary { cursor: pointer; color: var(--fg); text-align: center; }
+  #mods[hidden] { display: none; }
+  .mod-row { display: flex; gap: 6px; margin-top: 8px; }
+  .mod-row input[type=text] { flex: 1; min-width: 0; font: 13px ui-monospace, monospace; padding: 8px; border-radius: 8px;
+    border: 1px solid #444; background: #111; color: var(--fg); user-select: text; -webkit-user-select: text; }
+  .mod-row button, #mod-list button { font: 600 13px system-ui, sans-serif; color: var(--fg); background: #333; border: 0;
+    border-radius: 8px; padding: 8px 12px; }
+  #mod-list { list-style: none; margin: 8px 0 0; padding: 0; }
+  #mod-list li { display: flex; align-items: center; gap: 8px; padding: 6px 0; border-top: 1px solid #222; }
+  #mod-list li span { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  #mod-list li small { color: var(--dim); }
+  #mod-list li.failed small { color: #e57373; }
+</style>
+</head>
+<body>
+<div id="screen"><canvas id="canvas" width="__RESX__" height="__RESY__"></canvas></div>
+<div id="touch">
+  <div class="pad">
+    <span></span><button data-key="0xad">&#9650;</button><span></span>
+    <button data-key="0xac">&#9664;</button><span></span><button data-key="0xae">&#9654;</button>
+    <span></span><button data-key="0xaf">&#9660;</button><span></span>
+  </div>
+  <div class="mid">
+    <button data-key="27">MENU</button>
+    <button data-key="13">ENTER</button>
+    <button data-key="121">YES</button>
+    <button data-key="9">MAP</button>
+    <button data-key="0xb6" data-toggle>RUN</button>
+  </div>
+  <div class="actions">
+    <button data-key="91">&#9664;WPN</button><button data-key="93">WPN&#9654;</button><button data-key="0xa2">USE</button>
+    <button data-key="0xa0">&#8656;</button><button class="fire" data-key="0xa3">FIRE</button>
+    <button data-key="0xa1">&#8658;</button>
+  </div>
+</div>
+<div id="start">
+  <h1>__TITLE__</h1>
+  <p class="sub">doomgeneric on WebAssembly, played inside a Nostr napplet</p>
+  <button id="play" class="big" disabled>Loading&hellip;</button>
+  <details id="mods" hidden>
+    <summary>Mods</summary>
+    <p class="help" id="mods-help">Paste a link to a PWAD: a <code>nostr:</code> note or file event that links one, a
+      <code>blossom:</code> URI or an <code>https:</code> URL (up to 10 MB). Mods load in order, on top of the game.</p>
+    <div class="mod-row"><input type="text" id="mod-ref" placeholder="nostr:nevent1&hellip; or blossom:&hellip;" autocomplete="off" spellcheck="false">
+      <button id="mod-add">Add</button></div>
+    <div class="mod-row"><input type="file" id="mod-file" accept=".wad,.WAD"></div>
+    <ul id="mod-list"></ul>
+  </details>
+  <p class="help touch-help">Use the on-screen controls: slide a finger around the pad to move (its corners
+    move and turn at once), FIRE shoots, USE opens doors.
+    MENU, ENTER and YES drive the menus; a keyboard or gamepad works too.</p>
+  <p class="help key-help">Arrows move &middot; <kbd>Ctrl</kbd> fire &middot; <kbd>Space</kbd> open &middot; <kbd>Shift</kbd> run &middot;
+    <kbd>Alt</kbd>/<kbd>,</kbd><kbd>.</kbd> strafe &middot; <kbd>1</kbd>&ndash;<kbd>7</kbd>, <kbd>[</kbd><kbd>]</kbd> weapons &middot;
+    <kbd>Tab</kbd> map &middot; <kbd>Esc</kbd> menu. Gamepads work too.</p>
+</div>
+<div id="ended" hidden><p id="ended-title" class="sub"></p><pre id="ended-log"></pre><button id="restart" class="big">Play again</button></div>
+<div id="toast"></div>
+<script type="application/octet-stream" id="wasm-data">__WASM_GZ_BASE64__</script>
+<script type="application/octet-stream" id="wad-data">__WAD_GZ_BASE64__</script>
+<script>
+'use strict';
+// DOOM-engine napplet loader. The engine (doomgeneric, compiled to wasm32-wasi) and the IWAD are
+// embedded above as gzip+base64, because a napplet has no network (CSP connect-src 'none').
+// This script supplies the engine's WASI file system, its frame buffer, input and audio, and
+// keeps save games in window.napplet.storage when the host grants it.
+(function () {
+  const WAD_NAME = '/__WAD_NAME__';
+  const RESX = __RESX__, RESY = __RESY__;
+  // Read by tools/napplet-doom/doom.test.mjs; harmless to anyone else.
+  const status = window.doomStatus = { phase: 'loading', frames: 0, tics: 0, sounds: 0, songs: 0, notes: 0, message: '' };
+
+  // ---- Bytes ---------------------------------------------------------------------------------
+  function fromBase64(text) {
+    if (Uint8Array.fromBase64) return Uint8Array.fromBase64(text);
+    const bin = atob(text), out = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
+    return out;
+  }
+  function toBase64(bytes) {
+    if (bytes.toBase64) return bytes.toBase64();
+    let s = '';
+    for (let i = 0; i < bytes.length; i += 0x8000) s += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
+    return btoa(s);
+  }
+  async function pipe(bytes, transform) {
+    const stream = new Blob([bytes]).stream().pipeThrough(transform);
+    return new Uint8Array(await new Response(stream).arrayBuffer());
+  }
+  const gunzip = bytes => pipe(bytes, new DecompressionStream('gzip'));
+  const gzip = bytes => pipe(bytes, new CompressionStream('gzip'));
+  function takeEmbedded(id) {
+    const el = document.getElementById(id);
+    const text = el.textContent.trim();
+    el.remove();
+    return fromBase64(text);
+  }
+
+  let toastTimer = 0;
+  function toast(text) {
+    const el = document.getElementById('toast');
+    el.textContent = text;
+    el.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => el.classList.remove('show'), 3500);
+  }
+
+  // ---- In-memory file system -----------------------------------------------------------------
+  // path -> { data: Uint8Array (capacity), size }
+  const files = new Map();
+  const dirs = new Set(['/']);
+  function normalize(path) {
+    const out = [];
+    for (const part of path.split('/')) {
+      if (!part || part === '.') continue;
+      if (part === '..') out.pop(); else out.push(part);
+    }
+    return '/' + out.join('/');
+  }
+  const parentOf = path => path.slice(0, path.lastIndexOf('/')) || '/';
+  const fileEntry = bytes => ({ data: bytes, size: bytes.length });
+  status.files = () => [...files.keys()];
+
+  // ---- Save games and config in napplet storage ------------------------------------------------
+  const store = window.napplet && window.napplet.storage;
+  const PERSISTED = /\.(dsg|cfg)$/;
+  // Saves and settings are kept per set of mods: a save from one mod never loads into another.
+  // The vanilla game keeps the plain prefix, so saves from before mods existed still load.
+  let namespace = 'fs:';
+  // Every stored value, by key, as read at boot and as written since.
+  const stored = new Map();
+  let storageUsable = !!store;
+  let warnedStorage = false;
+  const persistTimers = new Map();
+  function storageFailed(err) {
+    storageUsable = false;
+    if (!warnedStorage) toast('Saves last until you close the game: ' + ((err && err.message) || 'storage unavailable'));
+    warnedStorage = true;
+  }
+  function loadSaved() {
+    if (!store) return Promise.resolve();
+    return store.keys().then(async keys => {
+      for (const key of keys) {
+        if (!key.startsWith('fs:') && key !== MODS_KEY) continue;
+        const value = await store.getItem(key);
+        // A value the game already wrote this session is newer than the stored copy.
+        if (value && !stored.has(key)) stored.set(key, value);
+      }
+      await mountMissing();
+    }).catch(storageFailed);
+  }
+  // Swaps the saves and settings in the file system for those of [ns].
+  async function mountNamespace(ns) {
+    namespace = ns;
+    for (const path of [...files.keys()]) if (PERSISTED.test(path)) files.delete(path);
+    await mountMissing();
+  }
+  // Adds the current namespace's stored files the file system does not have yet: storage can
+  // answer after the game started, and a file the game wrote since is newer.
+  async function mountMissing() {
+    for (const [key, value] of [...stored]) {
+      const path = key.slice(namespace.length);
+      if (!key.startsWith(namespace) || !path.startsWith('/') || files.has(path)) continue;
+      try { files.set(path, fileEntry(await gunzip(fromBase64(value)))); } catch (err) { console.warn('Unreadable save', key, err); }
+    }
+  }
+  function persist(path) {
+    if (!storageUsable || !PERSISTED.test(path)) return;
+    clearTimeout(persistTimers.get(path));
+    persistTimers.set(path, setTimeout(async () => {
+      persistTimers.delete(path);
+      const entry = files.get(path);
+      const key = namespace + path;
+      try {
+        if (entry) {
+          const value = toBase64(await gzip(entry.data.slice(0, entry.size)));
+          stored.set(key, value);
+          await store.setItem(key, value);
+          if (/\.dsg$/.test(path)) toast('Game saved');
+        } else {
+          stored.delete(key);
+          await store.removeItem(key);
+        }
+      } catch (err) { storageFailed(err); }
+    }, 300));
+  }
+
+  // ---- WASI (wasi_snapshot_preview1), just what the engine imports --------------------------
+  const E = { SUCCESS: 0, BADF: 8, EXIST: 20, INVAL: 28, ISDIR: 31, NOENT: 44, NOSYS: 52, NOTDIR: 54 };
+  const O = { CREAT: 1, DIRECTORY: 2, EXCL: 4, TRUNC: 8 };
+  const ALL_RIGHTS = 0xffffffffffffffffn;
+  class Exit extends Error { constructor(code) { super('exit ' + code); this.code = code; } }
+
+  let memory = null;
+  const view = () => new DataView(memory.buffer);
+  const heap = () => new Uint8Array(memory.buffer);
+  const text = (ptr, len) => new TextDecoder().decode(heap().subarray(ptr, ptr + len));
+  const fds = new Map();
+  let nextFd = 4;
+  const console_ = { 1: '', 2: '' };
+  const log = [];
+  function resetFds() {
+    fds.clear();
+    fds.set(0, { kind: 'tty' }); fds.set(1, { kind: 'tty' }); fds.set(2, { kind: 'tty' });
+    fds.set(3, { kind: 'dir', path: '/' });
+    nextFd = 4;
+  }
+  function openFd(entry, outPtr) {
+    const fd = nextFd++;
+    fds.set(fd, entry);
+    view().setUint32(outPtr, fd, true);
+    return E.SUCCESS;
+  }
+  function resolve(dirfd, ptr, len) {
+    const dir = fds.get(dirfd);
+    if (!dir || dir.kind !== 'dir') return null;
+    return normalize(dir.path + '/' + text(ptr, len));
+  }
+  function emit(fd, bytes) {
+    console_[fd] += new TextDecoder().decode(bytes);
+    let nl;
+    while ((nl = console_[fd].indexOf('\n')) >= 0) {
+      const line = console_[fd].slice(0, nl);
+      console_[fd] = console_[fd].slice(nl + 1);
+      log.push(line);
+      if (log.length > 40) log.shift();
+      (fd === 2 ? console.warn : console.log)('[doom] ' + line);
+    }
+  }
+
+  const wasi = {
+    fd_prestat_get(fd, buf) {
+      if (fd !== 3) return E.BADF;
+      view().setUint8(buf, 0);
+      view().setUint32(buf + 4, 1, true);
+      return E.SUCCESS;
+    },
+    fd_prestat_dir_name(fd, ptr, len) {
+      if (fd !== 3 || len < 1) return E.BADF;
+      heap()[ptr] = 0x2f;
+      return E.SUCCESS;
+    },
+    fd_fdstat_get(fd, buf) {
+      const f = fds.get(fd);
+      if (!f) return E.BADF;
+      const v = view();
+      v.setUint8(buf, f.kind === 'dir' ? 3 : f.kind === 'tty' ? 2 : 4);
+      v.setUint16(buf + 2, 0, true);
+      v.setBigUint64(buf + 8, ALL_RIGHTS, true);
+      v.setBigUint64(buf + 16, ALL_RIGHTS, true);
+      return E.SUCCESS;
+    },
+    fd_fdstat_set_flags() { return E.SUCCESS; },
+    path_open(dirfd, dirflags, pathPtr, pathLen, oflags, rightsBase, rightsInheriting, fdflags, outPtr) {
+      const path = resolve(dirfd, pathPtr, pathLen);
+      if (path === null) return E.BADF;
+      if (dirs.has(path)) {
+        if ((oflags & O.CREAT) && (oflags & O.EXCL)) return E.EXIST;
+        return openFd({ kind: 'dir', path }, outPtr);
+      }
+      if (oflags & O.DIRECTORY) return files.has(path) ? E.NOTDIR : E.NOENT;
+      let entry = files.get(path);
+      if (!entry) {
+        if (!(oflags & O.CREAT) || !dirs.has(parentOf(path))) return E.NOENT;
+        entry = fileEntry(new Uint8Array(0));
+        files.set(path, entry);
+      } else if ((oflags & O.CREAT) && (oflags & O.EXCL)) {
+        return E.EXIST;
+      }
+      if (oflags & O.TRUNC) entry.size = 0;
+      return openFd({ kind: 'file', path, entry, pos: 0, append: (fdflags & 1) !== 0, wrote: false }, outPtr);
+    },
+    fd_read(fd, iovs, iovsLen, outPtr) {
+      const f = fds.get(fd);
+      if (!f) return E.BADF;
+      if (f.kind !== 'file') { view().setUint32(outPtr, 0, true); return f.kind === 'dir' ? E.ISDIR : E.SUCCESS; }
+      const v = view(), h = heap();
+      let total = 0;
+      for (let i = 0; i < iovsLen; i++) {
+        const ptr = v.getUint32(iovs + i * 8, true), len = v.getUint32(iovs + i * 8 + 4, true);
+        const n = Math.max(0, Math.min(len, f.entry.size - f.pos));
+        h.set(f.entry.data.subarray(f.pos, f.pos + n), ptr);
+        f.pos += n; total += n;
+        if (n < len) break;
+      }
+      v.setUint32(outPtr, total, true);
+      return E.SUCCESS;
+    },
+    fd_write(fd, iovs, iovsLen, outPtr) {
+      const f = fds.get(fd);
+      if (!f) return E.BADF;
+      const v = view(), h = heap();
+      let total = 0;
+      for (let i = 0; i < iovsLen; i++) {
+        const ptr = v.getUint32(iovs + i * 8, true), len = v.getUint32(iovs + i * 8 + 4, true);
+        const bytes = h.subarray(ptr, ptr + len);
+        if (f.kind === 'tty') {
+          emit(fd, bytes);
+        } else if (f.kind === 'file') {
+          const e = f.entry;
+          if (f.append) f.pos = e.size;
+          const end = f.pos + len;
+          if (end > e.data.length) {
+            const grown = new Uint8Array(Math.max(end, e.data.length * 2, 4096));
+            grown.set(e.data.subarray(0, e.size));
+            e.data = grown;
+          }
+          e.data.set(bytes, f.pos);
+          f.pos = end;
+          e.size = Math.max(e.size, end);
+          f.wrote = true;
+        } else {
+          return E.BADF;
+        }
+        total += len;
+      }
+      v.setUint32(outPtr, total, true);
+      return E.SUCCESS;
+    },
+    fd_seek(fd, offset, whence, outPtr) {
+      const f = fds.get(fd);
+      if (!f || f.kind !== 'file') return E.BADF;
+      const base = whence === 0 ? 0 : whence === 1 ? f.pos : f.entry.size;
+      const pos = base + Number(offset);
+      if (pos < 0) return E.INVAL;
+      f.pos = pos;
+      view().setBigUint64(outPtr, BigInt(pos), true);
+      return E.SUCCESS;
+    },
+    fd_close(fd) {
+      const f = fds.get(fd);
+      if (!f || fd < 3) return f ? E.SUCCESS : E.BADF;
+      fds.delete(fd);
+      if (f.kind === 'file' && f.wrote) persist(f.path);
+      return E.SUCCESS;
+    },
+    path_create_directory(dirfd, ptr, len) {
+      const path = resolve(dirfd, ptr, len);
+      if (path === null) return E.BADF;
+      if (dirs.has(path) || files.has(path)) return E.EXIST;
+      if (!dirs.has(parentOf(path))) return E.NOENT;
+      dirs.add(path);
+      return E.SUCCESS;
+    },
+    path_remove_directory(dirfd, ptr, len) {
+      const path = resolve(dirfd, ptr, len);
+      if (path === null) return E.BADF;
+      return dirs.delete(path) ? E.SUCCESS : E.NOENT;
+    },
+    path_unlink_file(dirfd, ptr, len) {
+      const path = resolve(dirfd, ptr, len);
+      if (path === null) return E.BADF;
+      if (!files.delete(path)) return E.NOENT;
+      persist(path);
+      return E.SUCCESS;
+    },
+    path_rename(fromFd, fromPtr, fromLen, toFd, toPtr, toLen) {
+      const from = resolve(fromFd, fromPtr, fromLen), to = resolve(toFd, toPtr, toLen);
+      if (from === null || to === null) return E.BADF;
+      const entry = files.get(from);
+      if (!entry) return E.NOENT;
+      files.delete(from);
+      files.set(to, entry);
+      persist(from);
+      persist(to);
+      return E.SUCCESS;
+    },
+    proc_exit(code) { throw new Exit(code); },
+  };
+
+  // ---- Video ---------------------------------------------------------------------------------
+  const canvas = document.getElementById('canvas');
+  const ctx2d = canvas.getContext('2d', { alpha: false });
+  const image = ctx2d.createImageData(RESX, RESY);
+  const out32 = new Uint32Array(image.data.buffer);
+  function drawFrame(ptr, width, height) {
+    // The engine writes 0x00RRGGBB; ImageData wants R, G, B, A in memory order.
+    const src = new Uint32Array(memory.buffer, ptr, width * height);
+    for (let i = 0; i < src.length; i++) {
+      const p = src[i];
+      out32[i] = 0xff000000 | ((p & 0xff) << 16) | (p & 0xff00) | ((p >>> 16) & 0xff);
+    }
+    ctx2d.putImageData(image, 0, 0);
+    status.frames++;
+  }
+  function fitCanvas() {
+    // Doom's 320x200 was shown on 4:3 monitors, so its pixels are taller than wide.
+    const box = document.getElementById('screen');
+    const w = box.clientWidth, h = box.clientHeight;
+    const width = Math.min(w, h * 4 / 3);
+    canvas.style.width = Math.floor(width) + 'px';
+    canvas.style.height = Math.floor(width * 3 / 4) + 'px';
+  }
+  addEventListener('resize', fitCanvas);
+
+  // ---- Clock ---------------------------------------------------------------------------------
+  // Time the page spends hidden or stalled (a level load, a backgrounded app) is not game time,
+  // so the engine does not fast-forward to catch up when it comes back.
+  let skipped = 0, lastFrame = 0;
+  const ticksMs = () => (performance.now() - skipped) >>> 0;
+
+  // ---- Sound effects -------------------------------------------------------------------------
+  let audio = null, sfxOut = null, music = null;
+  const sfxCache = new Map();
+  const channels = [];
+  function decodeDmx(d) {
+    // DMX sound lump: u16 format (3), u16 rate, u32 sample count, 16 pad bytes, u8 samples, 16 pad bytes.
+    if (d.length < 8 || d[0] !== 3 || d[1] !== 0) return null;
+    const rate = d[2] | (d[3] << 8);
+    let count = (d[4] | (d[5] << 8) | (d[6] << 16) | (d[7] << 24)) >>> 0;
+    count = Math.min(count, d.length - 8);
+    let start = 8;
+    if (count > 48) { start += 16; count -= 32; }
+    if (count <= 0 || rate < 3000) return null;
+    const buffer = audio.createBuffer(1, count, rate);
+    const pcm = buffer.getChannelData(0);
+    for (let i = 0; i < count; i++) pcm[i] = (d[start + i] - 128) / 128;
+    return buffer;
+  }
+  function applyParams(ch, vol, sep) {
+    ch.gain.gain.value = Math.max(0, Math.min(127, vol)) / 127;
+    ch.pan.pan.value = Math.max(-1, Math.min(1, (sep - 127) / 127));
+  }
+  function sfxStop(channel) {
+    const ch = channels[channel];
+    if (!ch) return;
+    channels[channel] = null;
+    try { ch.src.stop(); } catch (_) {}
+  }
+  function sfxStart(channel, lump, ptr, length, vol, sep) {
+    if (!audio) return;
+    let buffer = sfxCache.get(lump);
+    if (buffer === undefined) {
+      buffer = decodeDmx(heap().slice(ptr, ptr + length));
+      sfxCache.set(lump, buffer);
+    }
+    sfxStop(channel);
+    if (!buffer) return;
+    const src = audio.createBufferSource();
+    src.buffer = buffer;
+    const ch = { src, gain: audio.createGain(), pan: audio.createStereoPanner(), done: false };
+    src.connect(ch.gain).connect(ch.pan).connect(sfxOut);
+    applyParams(ch, vol, sep);
+    src.onended = () => { ch.done = true; };
+    channels[channel] = ch;
+    src.start();
+    status.sounds++;
+  }
+
+  // ---- Music: a tiny General MIDI synth for the MIDI the engine converts from MUS ----------
+  function parseMidi(d) {
+    let p = 0;
+    const u32 = () => ((d[p++] << 24) | (d[p++] << 16) | (d[p++] << 8) | d[p++]) >>> 0;
+    const u16 = () => (d[p++] << 8) | d[p++];
+    const vlq = () => { let v = 0, b; do { b = d[p++]; v = (v << 7) | (b & 0x7f); } while (b & 0x80 && p < d.length); return v; };
+    if (d.length < 14 || u32() !== 0x4d546864) return null;
+    const headerLength = u32();
+    u16();
+    const tracks = u16(), division = u16();
+    if (division & 0x8000 || division === 0) return null;
+    p = 8 + headerLength;
+    const events = [];
+    for (let t = 0; t < tracks && p + 8 <= d.length; t++) {
+      if (u32() !== 0x4d54726b) break;
+      const length = u32();
+      const end = Math.min(d.length, p + length);
+      let tick = 0, running = 0;
+      while (p < end) {
+        tick += vlq();
+        let b = d[p];
+        if (b === 0xff) {
+          p++;
+          const type = d[p++], len = vlq();
+          if (type === 0x51 && len === 3) events.push({ tick, tempo: (d[p] << 16) | (d[p + 1] << 8) | d[p + 2] });
+          p += len;
+          continue;
+        }
+        if (b === 0xf0 || b === 0xf7) { p++; p += vlq(); continue; }
+        if (b & 0x80) { running = b; p++; }
+        if (!running) break;
+        const type = running >> 4, ch = running & 15;
+        const a = d[p++];
+        const v = (type === 0xc || type === 0xd) ? 0 : d[p++];
+        events.push({ tick, type, ch, a, v });
+      }
+      p = end;
+    }
+    events.sort((x, y) => x.tick - y.tick);
+    let tempo = 500000, lastTick = 0, time = 0;
+    for (const e of events) {
+      time += (e.tick - lastTick) * tempo / 1e6 / division;
+      lastTick = e.tick;
+      e.time = time;
+      if (e.tempo) tempo = e.tempo;
+    }
+    return { events, duration: time };
+  }
+
+  class MusicPlayer {
+    constructor(ctx, out) {
+      this.ctx = ctx;
+      this.master = ctx.createGain();
+      this.master.connect(out);
+      this.volume = 0.6;
+      this.paused = false;
+      this.song = null;
+      this.timer = 0;
+      this.voices = [];
+      this.noise = ctx.createBuffer(1, ctx.sampleRate, ctx.sampleRate);
+      const n = this.noise.getChannelData(0);
+      for (let i = 0; i < n.length; i++) n[i] = Math.random() * 2 - 1;
+      this.resetChannels();
+    }
+    resetChannels() {
+      this.channels = [];
+      for (let i = 0; i < 16; i++) {
+        const pan = this.ctx.createStereoPanner();
+        pan.connect(this.master);
+        this.channels.push({ program: 0, volume: 100 / 127, expression: 1, bend: 0, pan });
+      }
+    }
+    setVolume(v) {
+      this.volume = Math.max(0, Math.min(127, v)) / 127 * 0.6;
+      this.master.gain.value = this.paused ? 0 : this.volume;
+    }
+    play(bytes, loop) {
+      this.stop();
+      const song = parseMidi(bytes);
+      if (!song || !song.events.length || !(song.duration > 0)) return;
+      this.song = song;
+      this.loop = loop;
+      this.index = 0;
+      this.origin = this.ctx.currentTime + 0.05;
+      this.timer = setInterval(() => this.pump(), 25);
+      status.songs++;
+      this.pump();
+    }
+    stop() {
+      clearInterval(this.timer);
+      this.timer = 0;
+      this.song = null;
+      this.silence();
+      for (const ch of this.channels) ch.pan.disconnect();
+      this.resetChannels();
+    }
+    pause(paused) {
+      if (paused === this.paused) return;
+      this.paused = paused;
+      if (paused) {
+        this.pausedAt = this.ctx.currentTime;
+        this.silence();
+      } else if (this.song) {
+        this.origin += this.ctx.currentTime - this.pausedAt;
+      }
+      this.master.gain.value = paused ? 0 : this.volume;
+    }
+    silence() {
+      for (const v of this.voices) { try { v.src.stop(); } catch (_) {} }
+      this.voices = [];
+    }
+    pump() {
+      if (!this.song || this.paused) return;
+      const events = this.song.events, horizon = this.ctx.currentTime + 0.2;
+      for (;;) {
+        if (this.index >= events.length) {
+          if (!this.loop) { clearInterval(this.timer); this.timer = 0; return; }
+          this.origin += this.song.duration;
+          this.index = 0;
+        }
+        const e = events[this.index];
+        const at = this.origin + e.time;
+        if (at > horizon) return;
+        this.index++;
+        if (e.type !== undefined) this.dispatch(e, Math.max(at, this.ctx.currentTime));
+      }
+    }
+    dispatch(e, at) {
+      const ch = this.channels[e.ch];
+      switch (e.type) {
+        case 0x9:
+          // A note on with velocity 0 is a note off.
+          if (e.v > 0) this.noteOn(e.ch, e.a, e.v, at); else this.noteOff(e.ch, e.a, at);
+          break;
+        case 0x8: this.noteOff(e.ch, e.a, at); break;
+        case 0xc: ch.program = e.a; break;
+        case 0xe: {
+          ch.bend = (((e.v << 7) | e.a) - 8192) / 8192 * 200;
+          for (const v of this.voices) if (v.ch === e.ch && v.osc) v.osc.detune.setValueAtTime(ch.bend, at);
+          break;
+        }
+        case 0xb:
+          if (e.a === 7) ch.volume = e.v / 127;
+          else if (e.a === 11) ch.expression = e.v / 127;
+          else if (e.a === 10) ch.pan.pan.setValueAtTime((e.v - 64) / 64, at);
+          else if (e.a === 120 || e.a === 123) for (const v of this.voices) if (v.ch === e.ch) this.release(v, at);
+          break;
+      }
+    }
+    voiceShape(program) {
+      // [waveform, lowpass Hz or 0, sustained]
+      if (program < 8) return ['triangle', 0, false];        // pianos
+      if (program < 16) return ['sine', 0, false];           // chromatic percussion
+      if (program < 24) return ['square', 2400, true];       // organs
+      if (program < 32) return ['sawtooth', program >= 29 ? 2200 : 1800, program >= 29]; // guitars, overdrive/distortion sustain
+      if (program < 40) return ['triangle', 0, false];       // basses
+      if (program < 56) return ['sawtooth', 2600, true];     // strings, ensembles
+      if (program < 64) return ['sawtooth', 3000, true];     // brass
+      if (program < 80) return ['square', 2000, true];       // reeds, pipes
+      if (program < 88) return ['square', 3200, true];       // leads
+      return ['triangle', 0, true];                          // pads and effects
+    }
+    noteOn(chIndex, note, velocity, at) {
+      if (chIndex === 9) { this.drum(note, velocity, at); return; }
+      const ch = this.channels[chIndex];
+      const [wave, cutoff, sustained] = this.voiceShape(ch.program);
+      const osc = this.ctx.createOscillator();
+      osc.type = wave;
+      osc.frequency.value = 440 * Math.pow(2, (note - 69) / 12);
+      osc.detune.value = ch.bend;
+      const gain = this.ctx.createGain();
+      const peak = (velocity / 127) * ch.volume * ch.expression * (wave === 'square' || wave === 'sawtooth' ? 0.09 : 0.16);
+      gain.gain.setValueAtTime(0, at);
+      gain.gain.linearRampToValueAtTime(peak, at + 0.006);
+      gain.gain.setTargetAtTime(sustained ? peak * 0.7 : peak * 0.05, at + 0.006, sustained ? 0.25 : 0.5);
+      let node = osc;
+      if (cutoff) {
+        const filter = this.ctx.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.value = cutoff;
+        osc.connect(filter);
+        node = filter;
+      }
+      node.connect(gain).connect(ch.pan);
+      osc.start(at);
+      status.notes++;
+      this.track({ ch: chIndex, note, src: osc, osc, gain, released: false });
+    }
+    noteOff(chIndex, note, at) {
+      for (const v of this.voices) if (v.ch === chIndex && v.note === note && !v.released) { this.release(v, at); return; }
+    }
+    release(v, at) {
+      if (v.released) return;
+      v.released = true;
+      v.gain.gain.cancelScheduledValues(at);
+      v.gain.gain.setTargetAtTime(0, at, 0.04);
+      try { v.src.stop(at + 0.25); } catch (_) {}
+    }
+    track(v) {
+      v.src.onended = () => { const i = this.voices.indexOf(v); if (i >= 0) this.voices.splice(i, 1); };
+      this.voices.push(v);
+      if (this.voices.length > 48) { const old = this.voices.shift(); try { old.src.stop(); } catch (_) {} }
+    }
+    drum(note, velocity, at) {
+      const ctx = this.ctx, ch = this.channels[9];
+      const level = (velocity / 127) * ch.volume * ch.expression * 0.5;
+      const gain = ctx.createGain();
+      gain.connect(ch.pan);
+      const isKick = note === 35 || note === 36;
+      const isTom = [41, 43, 45, 47, 48, 50].includes(note);
+      if (isKick || isTom) {
+        const osc = ctx.createOscillator();
+        const f = isKick ? 120 : 90 + (note - 41) * 18;
+        osc.frequency.setValueAtTime(f, at);
+        osc.frequency.exponentialRampToValueAtTime(f * 0.35, at + (isKick ? 0.12 : 0.25));
+        gain.gain.setValueAtTime(level * 1.4, at);
+        gain.gain.exponentialRampToValueAtTime(0.001, at + (isKick ? 0.3 : 0.4));
+        osc.connect(gain);
+        osc.start(at);
+        osc.stop(at + 0.45);
+        this.track({ ch: 9, note, src: osc, gain, released: true });
+        return;
+      }
+      const src = ctx.createBufferSource();
+      src.buffer = this.noise;
+      const filter = ctx.createBiquadFilter();
+      let decay = 0.12;
+      if (note === 38 || note === 40) { filter.type = 'bandpass'; filter.frequency.value = 1800; filter.Q.value = 0.7; decay = 0.16; }
+      else if (note === 42 || note === 44) { filter.type = 'highpass'; filter.frequency.value = 7000; decay = 0.05; }
+      else if (note === 46) { filter.type = 'highpass'; filter.frequency.value = 7000; decay = 0.3; }
+      else if (note === 49 || note === 57 || note === 55 || note === 52) { filter.type = 'highpass'; filter.frequency.value = 5000; decay = 1.0; }
+      else if (note === 51 || note === 59 || note === 53) { filter.type = 'highpass'; filter.frequency.value = 6000; decay = 0.4; }
+      else { filter.type = 'bandpass'; filter.frequency.value = 3000; }
+      gain.gain.setValueAtTime(level, at);
+      gain.gain.exponentialRampToValueAtTime(0.001, at + decay);
+      src.connect(filter).connect(gain);
+      src.start(at);
+      src.stop(at + decay + 0.05);
+      this.track({ ch: 9, note, src, gain, released: true });
+    }
+  }
+
+  // ---- Input ---------------------------------------------------------------------------------
+  const KEY = { RIGHT: 0xae, LEFT: 0xac, UP: 0xad, DOWN: 0xaf, STRAFE_L: 0xa0, STRAFE_R: 0xa1, USE: 0xa2, FIRE: 0xa3,
+    ESCAPE: 27, ENTER: 13, TAB: 9, BACKSPACE: 0x7f, PAUSE: 0xff, RSHIFT: 0xb6, RALT: 0xb8 };
+  const BY_KEY = { ArrowUp: KEY.UP, ArrowDown: KEY.DOWN, ArrowLeft: KEY.LEFT, ArrowRight: KEY.RIGHT, Control: KEY.FIRE,
+    ' ': KEY.USE, Shift: KEY.RSHIFT, Alt: KEY.RALT, Escape: KEY.ESCAPE, Enter: KEY.ENTER, Tab: KEY.TAB,
+    Backspace: KEY.BACKSPACE, Pause: KEY.PAUSE };
+  const BY_CODE = { Comma: KEY.STRAFE_L, Period: KEY.STRAFE_R, Equal: 0x3d, Minus: 0x2d, BracketLeft: 91, BracketRight: 93 };
+  const F_KEYS = [0, 0xbb, 0xbc, 0xbd, 0xbe, 0xbf, 0xc0, 0xc1, 0xc2, 0xc3, 0xc4, 0xd7, 0xd8];
+  function doomKey(e) {
+    if (e.key in BY_KEY) return BY_KEY[e.key];
+    if (e.code in BY_CODE) return BY_CODE[e.code];
+    const f = /^F(\d\d?)$/.exec(e.key);
+    if (f) return F_KEYS[+f[1]] || 0;
+    if (e.key.length === 1) {
+      const c = e.key.toLowerCase().charCodeAt(0);
+      if (c > 31 && c < 127) return c;
+    }
+    return 0;
+  }
+  let engine = null;
+  const sendKey = (pressed, key) => { if (engine && key) engine.dg_key(pressed ? 1 : 0, key); };
+  addEventListener('keydown', e => {
+    const key = doomKey(e);
+    if (!key || !engine) return;
+    e.preventDefault();
+    if (!e.repeat) sendKey(true, key);
+  });
+  addEventListener('keyup', e => {
+    const key = doomKey(e);
+    if (!key || !engine) return;
+    e.preventDefault();
+    sendKey(false, key);
+  });
+
+  // The pad is one control, not four buttons: a finger held on it moves wherever it slides, with no
+  // need to lift it between directions. Its row picks forward/back and its column the turn, so a
+  // corner is both (run forward while turning); past the pad's edge it keeps the nearest direction.
+  // Its middle stops: USE lives with FIRE, where a sliding finger can't press it by passing through.
+  const pad = document.querySelector('.pad');
+  const padButton = {};
+  for (const b of pad.querySelectorAll('button')) padButton[Number(b.dataset.key)] = b;
+  const padFingers = new Map();
+  const touchPadHeld = new Set();
+  function padCell(e) {
+    const r = pad.getBoundingClientRect();
+    const at = (v, start, size) => Math.min(2, Math.max(0, Math.floor((v - start) / (size / 3))));
+    return { col: at(e.clientX, r.left, r.width), row: at(e.clientY, r.top, r.height) };
+  }
+  function padKeysFor(finger) {
+    const { col, row } = finger.cell;
+    const keys = [];
+    if (row === 0) keys.push(KEY.UP); else if (row === 2) keys.push(KEY.DOWN);
+    if (col === 0) keys.push(KEY.LEFT); else if (col === 2) keys.push(KEY.RIGHT);
+    return keys;
+  }
+  function padSync() {
+    const want = new Set();
+    for (const finger of padFingers.values()) for (const key of padKeysFor(finger)) want.add(key);
+    for (const key of [...touchPadHeld]) {
+      if (want.has(key)) continue;
+      touchPadHeld.delete(key);
+      if (padButton[key]) padButton[key].classList.remove('down');
+      sendKey(false, key);
+    }
+    for (const key of want) {
+      if (touchPadHeld.has(key)) continue;
+      touchPadHeld.add(key);
+      if (padButton[key]) padButton[key].classList.add('down');
+      sendKey(true, key);
+    }
+  }
+  pad.addEventListener('pointerdown', e => {
+    e.preventDefault();
+    pad.setPointerCapture && pad.setPointerCapture(e.pointerId);
+    const cell = padCell(e);
+    padFingers.set(e.pointerId, { cell });
+    padSync();
+  });
+  pad.addEventListener('pointermove', e => {
+    const finger = padFingers.get(e.pointerId);
+    if (!finger) return;
+    e.preventDefault();
+    const cell = padCell(e);
+    if (cell.col === finger.cell.col && cell.row === finger.cell.row) return;
+    finger.cell = cell;
+    padSync();
+  });
+  const padLift = e => {
+    if (!padFingers.delete(e.pointerId)) return;
+    e.preventDefault();
+    padSync();
+  };
+  pad.addEventListener('pointerup', padLift);
+  pad.addEventListener('pointercancel', padLift);
+  pad.addEventListener('lostpointercapture', padLift);
+
+  // A finger held still on a control is a long press to Android's WebView, which buzzes for it (and
+  // would open a menu). The controls run on pointer events, which still fire when the touch's own
+  // default is cancelled; cancelling it is what keeps the WebView from seeing a long press at all.
+  const touchControls = document.getElementById('touch');
+  touchControls.addEventListener('touchstart', e => { if (e.cancelable) e.preventDefault(); }, { passive: false });
+  touchControls.addEventListener('contextmenu', e => e.preventDefault());
+
+  // The other controls: each button holds its key while a pointer is down on it; RUN latches.
+  for (const button of document.querySelectorAll('#touch button:not(.pad button)')) {
+    const key = Number(button.dataset.key);
+    const toggle = button.hasAttribute('data-toggle');
+    let held = false;
+    const press = e => {
+      e.preventDefault();
+      if (toggle) { held = !held; button.classList.toggle('down', held); sendKey(held, key); return; }
+      button.setPointerCapture && button.setPointerCapture(e.pointerId);
+      if (!held) { held = true; button.classList.add('down'); sendKey(true, key); }
+    };
+    const lift = e => {
+      if (toggle || !held) return;
+      e.preventDefault();
+      held = false;
+      button.classList.remove('down');
+      sendKey(false, key);
+    };
+    button.addEventListener('pointerdown', press);
+    button.addEventListener('pointerup', lift);
+    button.addEventListener('pointercancel', lift);
+    button.addEventListener('lostpointercapture', lift);
+  }
+  if (matchMedia('(pointer: coarse)').matches) document.body.classList.add('touch');
+  addEventListener('touchstart', () => { if (!document.body.classList.contains('touch')) { document.body.classList.add('touch'); fitCanvas(); } }, { passive: true });
+
+  // Standard-mapping gamepads: left stick / d-pad move, right stick strafes, RT fire, A use,
+  // X run, LB/RB weapons, Start menu, Back map.
+  const padHeld = new Map();
+  function padSet(id, pressed, key) {
+    if (!!padHeld.get(id) === pressed) return;
+    padHeld.set(id, pressed);
+    sendKey(pressed, key);
+  }
+  function pollGamepads() {
+    let pads;
+    try { pads = navigator.getGamepads ? navigator.getGamepads() : []; } catch (_) { return; }
+    for (const pad of pads) {
+      if (!pad || pad.mapping !== 'standard') continue;
+      const b = i => !!(pad.buttons[i] && (pad.buttons[i].pressed || pad.buttons[i].value > 0.4));
+      const ax = i => pad.axes[i] || 0;
+      padSet('up', b(12) || ax(1) < -0.4, KEY.UP);
+      padSet('down', b(13) || ax(1) > 0.4, KEY.DOWN);
+      padSet('left', b(14) || ax(0) < -0.4, KEY.LEFT);
+      padSet('right', b(15) || ax(0) > 0.4, KEY.RIGHT);
+      padSet('sl', ax(2) < -0.4, KEY.STRAFE_L);
+      padSet('sr', ax(2) > 0.4, KEY.STRAFE_R);
+      padSet('fire', b(7), KEY.FIRE);
+      padSet('use', b(0), KEY.USE);
+      padSet('run', b(2) || b(6), KEY.RSHIFT);
+      padSet('prev', b(4), 91);
+      padSet('next', b(5), 93);
+      padSet('menu', b(9), KEY.ESCAPE);
+      padSet('enter', b(1), KEY.ENTER);
+      padSet('map', b(8), KEY.TAB);
+      padSet('yes', b(3), 121);
+      break;
+    }
+  }
+
+  // ---- Mods: PWADs fetched through the host's resource capability ---------------------------
+  const MODS_KEY = 'mods';
+  const MAX_MODS = 8;
+  // The host's resource.bytes cap (NappletBroker.RESOURCE_MAX_BYTES).
+  const MAX_MOD_BYTES = 10 * 1024 * 1024;
+  const resource = window.napplet && window.napplet.resource;
+  // { ref (null for a local file), name, id, bytes, state: 'loading' | 'ready' | 'failed', error }
+  const mods = [];
+  status.mods = () => mods.map(m => ({ name: m.name, state: m.state, error: m.error || '' }));
+  const utf8 = text => new TextEncoder().encode(text);
+
+  function fnvHex(bytes) {
+    let h = 0x811c9dc5;
+    for (let i = 0; i < bytes.length; i++) h = Math.imul(h ^ bytes[i], 0x01000193);
+    return (h >>> 0).toString(16).padStart(8, '0');
+  }
+  async function sha256Hex(bytes) {
+    try {
+      const digest = new Uint8Array(await crypto.subtle.digest('SHA-256', bytes));
+      return Array.from(digest, b => b.toString(16).padStart(2, '0')).join('');
+    } catch (_) {
+      return null;
+    }
+  }
+  function wadDirectory(bytes) {
+    const tag = String.fromCharCode(bytes[0], bytes[1], bytes[2], bytes[3]);
+    if (bytes.length < 12 || (tag !== 'PWAD' && tag !== 'IWAD')) throw new Error('Not a WAD file');
+    const v = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+    const count = v.getInt32(4, true), dir = v.getInt32(8, true);
+    if (count < 0 || dir < 12 || dir + count * 16 > bytes.length) throw new Error('Damaged WAD directory');
+    const names = new Set();
+    for (let i = 0; i < count; i++) {
+      let name = '';
+      for (let j = 0; j < 8; j++) { const c = bytes[dir + i * 16 + 8 + j]; if (!c) break; name += String.fromCharCode(c); }
+      names.add(name.toUpperCase());
+    }
+    return { tag, names };
+  }
+  // Vanilla refuses PWADs on top of the shareware episode, by design; don't offer them there.
+  function isShareware(iwad) {
+    try { const { names } = wadDirectory(iwad); return !names.has('E2M1') && !names.has('MAP01'); } catch (_) { return false; }
+  }
+
+  // Finds the WAD an event links: NIP-94 url/x tags, imeta, or a blossom:/https:...wad link in its text.
+  function wadLinkOf(event) {
+    let url = null, hash = null, name = null;
+    for (const t of Array.isArray(event.tags) ? event.tags : []) {
+      if (!Array.isArray(t) || typeof t[1] !== 'string') continue;
+      if (t[0] === 'url') url = url || t[1];
+      else if (t[0] === 'x' && /^[0-9a-f]{64}$/i.test(t[1])) hash = hash || t[1].toLowerCase();
+      else if (t[0] === 'title' || t[0] === 'name' || t[0] === 'alt') name = name || t[1];
+      else if (t[0] === 'imeta') {
+        for (const field of t.slice(1)) {
+          const space = String(field).indexOf(' ');
+          const key = String(field).slice(0, space), value = String(field).slice(space + 1);
+          if (key === 'url') url = url || value;
+          if (key === 'x' && /^[0-9a-f]{64}$/i.test(value)) hash = hash || value.toLowerCase();
+        }
+      }
+    }
+    const content = typeof event.content === 'string' ? event.content : '';
+    if (!url) {
+      const link = content.match(/blossom:[0-9a-f]{64}\S*/i) || content.match(/https:\/\/\S+?\.wad\b\S*/i);
+      if (link) url = link[0];
+    }
+    if (!url && hash) url = 'blossom:' + hash + '.wad';
+    if (!url) return null;
+    if (!hash) { const h = url.match(/[0-9a-f]{64}/i); if (h) hash = h[0].toLowerCase(); }
+    if (!name) name = content.split('\n')[0].replace(/(blossom|https?):\S+/gi, '').trim().slice(0, 60) || null;
+    return { url, hash, name };
+  }
+  function nameFromUrl(url) {
+    const last = url.split(/[/?#:]/).filter(Boolean).pop() || url;
+    return /^[0-9a-f]{64}/i.test(last) ? 'mod ' + last.slice(0, 8) : last.slice(0, 60);
+  }
+  async function fetchBytes(url) {
+    const blob = await resource.bytes(url);
+    if (blob.size > MAX_MOD_BYTES) throw new Error('Larger than 10 MB');
+    return new Uint8Array(await blob.arrayBuffer());
+  }
+  // ref is a nostr: event that links a WAD, or a direct blossom:/https: link to one.
+  async function resolveMod(ref) {
+    let target = { url: ref, hash: null, name: null };
+    if (/^nostr:/i.test(ref)) {
+      let event;
+      try { event = JSON.parse(new TextDecoder().decode(await fetchBytes(ref))); } catch (err) { throw new Error('Could not read that event: ' + (err.message || err)); }
+      target = wadLinkOf(event);
+      if (!target) throw new Error('That event links no WAD');
+    } else {
+      const h = ref.match(/[0-9a-f]{64}/i);
+      if (h) target.hash = h[0].toLowerCase();
+    }
+    const bytes = await fetchBytes(target.url);
+    acceptMod(bytes);
+    const digest = await sha256Hex(bytes);
+    if (target.hash && digest && digest !== target.hash) throw new Error('Hash mismatch: not the file the link names');
+    return { bytes, name: target.name || nameFromUrl(target.url), id: digest || fnvHex(bytes) };
+  }
+  function acceptMod(bytes) {
+    if (wadDirectory(bytes).tag === 'IWAD') throw new Error('That is a whole game (IWAD), not a mod');
+  }
+  function normalizeRef(text) {
+    const ref = text.trim();
+    return /^(nevent|naddr|note)1[0-9a-z]+$/i.test(ref) ? 'nostr:' + ref : ref;
+  }
+
+  async function loadMod(mod) {
+    mod.state = 'loading';
+    renderMods();
+    try {
+      Object.assign(mod, await resolveMod(mod.ref));
+      mod.state = 'ready';
+      if (mods.includes(mod)) saveModList();   // now with the name the event gives it
+    } catch (err) {
+      mod.state = 'failed';
+      mod.error = (err && err.message) || String(err);
+    }
+    renderMods();
+  }
+  function saveModList() {
+    if (!storageUsable) return;
+    const value = JSON.stringify(mods.filter(m => m.ref).map(m => ({ ref: m.ref, name: m.name })));
+    stored.set(MODS_KEY, value);
+    store.setItem(MODS_KEY, value).catch(storageFailed);
+  }
+  function addMod(mod) {
+    if (mods.length >= MAX_MODS) { toast('At most ' + MAX_MODS + ' mods'); return null; }
+    mods.push(mod);
+    renderMods();
+    return mod;
+  }
+  function renderMods() {
+    const list = document.getElementById('mod-list');
+    list.textContent = '';
+    // Whatever is loaded stays in view, so nobody plays a mod by surprise.
+    if (mods.length) document.getElementById('mods').open = true;
+    mods.forEach((mod, i) => {
+      const li = document.createElement('li');
+      li.className = mod.state;
+      const name = document.createElement('span');
+      name.textContent = mod.name || mod.ref;
+      name.title = mod.ref || mod.name;
+      const note = document.createElement('small');
+      note.textContent = mod.state === 'ready' ? (mod.bytes.length / 1048576).toFixed(1) + ' MB' : mod.state === 'loading' ? 'loading…' : mod.error;
+      const remove = document.createElement('button');
+      remove.textContent = 'Remove';
+      remove.addEventListener('click', () => { mods.splice(i, 1); saveModList(); renderMods(); });
+      li.append(name, note, remove);
+      list.append(li);
+    });
+  }
+  function setUpMods(iwad) {
+    const panel = document.getElementById('mods');
+    panel.hidden = false;
+    if (isShareware(iwad)) {
+      document.getElementById('mods-help').textContent = 'Mods need the full game: the shareware episode does not load them.';
+      for (const row of panel.querySelectorAll('.mod-row')) row.hidden = true;
+      return;
+    }
+    const input = document.getElementById('mod-ref');
+    if (!resource) {
+      input.parentElement.hidden = true;
+      document.getElementById('mods-help').textContent = 'This host cannot fetch links; pick a PWAD file instead.';
+    }
+    const add = () => {
+      const ref = normalizeRef(input.value);
+      if (!ref) return;
+      input.value = '';
+      const mod = addMod({ ref, name: nameFromUrl(ref), state: 'loading' });
+      if (!mod) return;
+      saveModList();
+      loadMod(mod);
+    };
+    document.getElementById('mod-add').addEventListener('click', add);
+    input.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); add(); } });
+    document.getElementById('mod-file').addEventListener('change', async e => {
+      const file = e.target.files && e.target.files[0];
+      e.target.value = '';
+      if (!file) return;
+      // A local file is for this session only: storage cannot hold a WAD, and there is no link to fetch again.
+      const mod = addMod({ ref: null, name: file.name, state: 'loading' });
+      if (!mod) return;
+      try {
+        const bytes = new Uint8Array(await file.arrayBuffer());
+        acceptMod(bytes);
+        Object.assign(mod, { bytes, id: (await sha256Hex(bytes)) || fnvHex(bytes), state: 'ready' });
+      } catch (err) {
+        Object.assign(mod, { state: 'failed', error: (err && err.message) || String(err) });
+      }
+      renderMods();
+    });
+  }
+  // Brings back the mods chosen last time; they are fetched again, by their links.
+  function restoreMods() {
+    let saved = [];
+    try { saved = JSON.parse(stored.get(MODS_KEY) || '[]'); } catch (_) {}
+    if (!resource) return;
+    for (const entry of saved) {
+      if (!entry || typeof entry.ref !== 'string') continue;
+      const mod = addMod({ ref: entry.ref, name: entry.name || nameFromUrl(entry.ref), state: 'loading' });
+      if (mod) loadMod(mod);
+    }
+  }
+  async function modsSettled() {
+    while (mods.some(m => m.state === 'loading')) await new Promise(r => setTimeout(r, 100));
+  }
+
+  // ---- Main loop -----------------------------------------------------------------------------
+  let module = null, wad = null, running = false, lastTic = -1;
+  const TICRATE = 35;
+  function frame(now) {
+    if (!running) return;
+    requestAnimationFrame(frame);
+    const gap = now - lastFrame;
+    if (lastFrame && gap > 250) skipped += gap - 1000 / 60;
+    lastFrame = now;
+    pollGamepads();
+    const tic = Math.floor(ticksMs() * TICRATE / 1000);
+    if (tic === lastTic) return;
+    lastTic = tic;
+    try {
+      engine.dg_tick();
+      status.tics++;
+    } catch (err) {
+      ended(err);
+    }
+  }
+  function ended(err) {
+    running = false;
+    engine = null;
+    if (music) music.stop();
+    for (let i = 0; i < channels.length; i++) sfxStop(i);
+    const quit = err instanceof Exit && err.code === 0;
+    status.phase = quit ? 'exited' : 'error';
+    status.message = quit ? '' : String(err && err.message || err);
+    document.getElementById('ended-title').textContent = quit ? 'Thanks for playing.' : 'The engine stopped: ' + status.message;
+    document.getElementById('ended-log').textContent = quit ? '' : log.slice(-8).join('\n');
+    document.getElementById('ended').hidden = false;
+    if (!quit) console.error(err);
+  }
+
+  async function startEngine() {
+    // Fresh linear memory each run; the file system (and so the saves) outlives it.
+    files.set(WAD_NAME, fileEntry(wad));
+    const active = mods.filter(m => m.state === 'ready');
+    for (const path of [...files.keys()]) if (/^\/mod\d+\.wad$/.test(path)) files.delete(path);
+    active.forEach((m, i) => files.set('/mod' + (i + 1) + '.wad', fileEntry(m.bytes)));
+    await mountNamespace(active.length ? 'fs:' + fnvHex(utf8(active.map(m => m.id).join(','))) + ':' : 'fs:');
+    resetFds();
+    lastTic = -1;
+    const doom = {
+      draw_frame: drawFrame,
+      ticks_ms: ticksMs,
+      sfx_start: sfxStart,
+      sfx_update: (channel, vol, sep) => { const ch = channels[channel]; if (ch) applyParams(ch, vol, sep); },
+      sfx_stop: sfxStop,
+      sfx_playing: channel => (channels[channel] && !channels[channel].done) ? 1 : 0,
+      music_play: (ptr, len, loop) => { if (music) music.play(heap().slice(ptr, ptr + len), !!loop); },
+      music_stop: () => { if (music) music.stop(); },
+      music_volume: v => { if (music) music.setVolume(v); },
+      music_pause: paused => { if (music) music.pause(!!paused); },
+    };
+    const imports = { doom, wasi_snapshot_preview1: {} };
+    for (const imp of WebAssembly.Module.imports(module)) {
+      if (imp.module !== 'wasi_snapshot_preview1') continue;
+      imports.wasi_snapshot_preview1[imp.name] = wasi[imp.name] || (() => E.NOSYS);
+    }
+    const instance = await WebAssembly.instantiate(module, imports);
+    memory = instance.exports.memory;
+    instance.exports._initialize();
+    const name = new TextEncoder().encode(WAD_NAME.slice(1).slice(0, 63) + '\0');
+    heap().set(name, instance.exports.dg_iwad_name());
+    active.forEach((m, i) => heap().set(utf8('mod' + (i + 1) + '.wad\0'), instance.exports.dg_pwad_name(i)));
+    engine = instance.exports;
+    status.phase = 'running';
+    running = true;
+    try {
+      engine.dg_start();
+    } catch (err) {
+      ended(err);
+      return;
+    }
+    requestAnimationFrame(frame);
+  }
+
+  function startAudio() {
+    try {
+      if (!audio) {
+        audio = new AudioContext();
+        sfxOut = audio.createGain();
+        sfxOut.connect(audio.destination);
+        music = new MusicPlayer(audio, audio.destination);
+      }
+      audio.resume();
+    } catch (err) {
+      console.warn('No audio', err);
+    }
+  }
+
+  document.addEventListener('visibilitychange', () => {
+    if (!audio) return;
+    if (document.hidden) audio.suspend(); else audio.resume();
+  });
+
+  async function boot() {
+    fitCanvas();
+    const play = document.getElementById('play');
+    // Ask for the saves while the player reads the title screen; the game never waits on it.
+    const saves = loadSaved();
+    try {
+      const [wasmBytes, wadBytes] = await Promise.all([gunzip(takeEmbedded('wasm-data')), gunzip(takeEmbedded('wad-data'))]);
+      module = await WebAssembly.compile(wasmBytes);
+      wad = wadBytes;
+    } catch (err) {
+      status.phase = 'error';
+      status.message = String(err && err.message || err);
+      play.textContent = 'Could not load: ' + status.message;
+      return;
+    }
+    setUpMods(wad);
+    saves.then(restoreMods);
+    status.phase = 'ready';
+    play.disabled = false;
+    play.textContent = 'Play';
+    play.addEventListener('click', async () => {
+      startAudio();
+      play.disabled = true;
+      await Promise.race([saves, new Promise(r => setTimeout(r, 300))]);
+      if (mods.some(m => m.state === 'loading')) { play.textContent = 'Loading mods…'; await modsSettled(); }
+      const failed = mods.filter(m => m.state === 'failed');
+      if (failed.length) toast('Skipping ' + failed.map(m => m.name).join(', '));
+      document.getElementById('start').hidden = true;
+      fitCanvas();
+      startEngine();
+    }, { once: true });
+    document.getElementById('restart').addEventListener('click', () => {
+      document.getElementById('ended').hidden = true;
+      startAudio();
+      startEngine();
+    });
+  }
+  boot();
+})();
+</script>
+</body>
+</html>

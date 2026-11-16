@@ -1,0 +1,146 @@
+# What must survive R8 with its ORIGINAL name, and why.
+#
+# R8 cannot see reflection. Every line here is a place where something outside
+# the DEX — a .so, a manifest attribute, a JSON file on disk, WorkManager's
+# database, a DataStore value written by an older install — looks a name up at
+# runtime. Rename or remove it and the app compiles, ships, and fails only on a
+# user's device.
+#
+# `verify_reflection_contract.py` checks each line against a release build's
+# mapping.txt, so a keep rule that silently stops matching (a moved class, a
+# renamed package, a deleted rule) fails the release instead of the user.
+#
+# Adding reflection? Add the keep rule in amethyst/proguard-rules.pro AND a line
+# here. A rule with no line here is unverified; a line here with no rule fails.
+#
+# CAN THE REFLECTION ITSELF BE REMOVED?
+# Reviewed entry by entry. A keep rule you do not need is better than one you
+# verify, so the standing answer per mechanism:
+#
+#   JNI class+method names        IRREDUCIBLE. `Java_<class>_<method>` is
+#                                 compiled into libarti_android.so. Costs us
+#                                 nothing anyway — AGP's default
+#                                 `native <methods>` rule covers it.
+#   Rust -> Kotlin callback       Removable only by inverting the flow (Kotlin
+#                                 polls a native queue instead of Rust pushing
+#                                 by GetMethodID). One interface, one method —
+#                                 not obviously worth the threading change.
+#   Cast OptionsProvider          IRREDUCIBLE. Play Services reads the class
+#                                 name out of a manifest <meta-data> value and
+#                                 Class.forName()s it. Google's API, not ours.
+#   WorkManager workers           ALREADY GONE. androidx.work ships the keep
+#                                 itself; our duplicate rule was deleted and
+#                                 these entries now verify the library's.
+#   Jackson NWC + CLINK           DONE — both package keeps deleted. The types
+#                                 route at the hand-written kotlinx serializers
+#                                 on every target now, and the Jackson
+#                                 (de)serializers for them are gone.
+#   Class name as a value         REMOVED. requireInProcessSigner() compared
+#                                 `signer::class.qualifiedName` against the FQN
+#                                 of NostrSignerExternal. R8 renames that class,
+#                                 so the branch never ran in a release build. It
+#                                 is a plain `is` check now — nothing to keep.
+#   Platform-class reflection     IRREDUCIBLE AND FREE. quic's
+#                                 JdkCertificateValidator probes the JDK/Android
+#                                 trust manager for the 3-arg
+#                                 checkServerTrusted(chain, authType, host).
+#                                 That class ships in the platform, not in our
+#                                 DEX, so R8 never renames it — no rule needed.
+#   libscrypt / NetCipher /       GONE. Their keep rules matched zero classes:
+#   LazySodium / JNA              libsodium is a pure-Kotlin implementation now
+#                                 and Tor runs through arti. Rules deleted.
+#   Jackson on-disk stores        REMOVABLE. Plain data classes; @Serializable
+#                                 + kotlinx gives compile-time literal names.
+#                                 App-private files, so no interop risk.
+#   Enum constants                REMOVABLE WITH NO MIGRATION. Give each
+#                                 persisted enum an explicit `val code: String`
+#                                 and store that instead of `.name`. Set the
+#                                 codes equal to today's constant names and
+#                                 every existing DataStore value keeps working,
+#                                 while the literal is untouchable by R8. That
+#                                 deletes the one blanket rule left
+#                                 (`-keepclassmembers enum *`), which today
+#                                 blocks enum unboxing across all 707 enums.
+#
+# Format — one per line, `#` comments to end of line:
+#   [@play|@fdroid]              optional leading scope: check this line only on
+#                                that flavor. Play-only code is absent from the
+#                                F-Droid APK, and "absent" reads as "R8 deleted
+#                                it" — an unscoped line would fail that release.
+#   class  <fqn>                 class must keep its exact name
+#   method <fqn> <name>...       those methods must keep their names
+#   fields <fqn>                 class name AND every field name preserved
+#   enum   <fqn> <CONST>...      those constants keep their names (class may be renamed)
+
+# --- JNI: the symbol name Java_<class>_<method> lives in libarti_android.so ---
+class  com.vitorpamplona.amethyst.ui.tor.ArtiNative
+# Rust calls back by name: GetMethodID("onLogLine") in tools/arti-build/src/lib.rs
+method com.vitorpamplona.amethyst.ui.tor.ArtiLogCallback onLogLine
+
+# zxing-cpp's JNI half, vendored into amethyst/src/main/java/zxingcpp. The .so
+# exports Java_zxingcpp_BarcodeReader_readYBuffer, so the class name and both
+# native method names are the lookup. AGP's default
+# `-keepclasseswithmembernames class * { native <methods>; }` should cover this on
+# its own and the explicit `-keep class zxingcpp.**` is belt-and-braces; these
+# lines are what proves at least one of them still matches. A rename fails
+# silently — no build error, no warning, the QR scanner just never starts.
+class  zxingcpp.BarcodeReader
+method zxingcpp.BarcodeReader readYBuffer readBitmap
+
+# --- Named from outside the DEX ----------------------------------------------
+# No keep rule of ours backs the three workers below: androidx.work's own
+# consumer rules do. They stay listed so that if the library ever drops them,
+# the release fails here instead of on a user's phone.
+# <meta-data android:value> in the play manifest; the Cast framework
+# Class.forName()s it. AGP generates keeps for component android:name, not for
+# meta-data values, so nothing but an explicit rule protects this one.
+@play class com.vitorpamplona.amethyst.service.cast.chromecast.AmethystCastOptionsProvider
+# WorkManager stores the class name in its own DB and instantiates it by name on
+# a later process start — including after an update that reshuffled the mapping.
+class  com.vitorpamplona.amethyst.service.scheduledposts.ScheduledPostWorker
+class  com.vitorpamplona.amethyst.service.notifications.NotificationCatchUpWorker
+class  com.vitorpamplona.amethyst.service.calendar.CalendarReminderWorker
+
+# The AppFunctions bridge is kept whole by a package rule, so this asserts the
+# rule still matches something. androidx.appfunctions reflects over the generated
+# inventories and @AppFunctionSerializable types; play-only source set.
+@play class com.vitorpamplona.amethyst.appfunctions.AmethystAppFunctions
+
+# --- Jackson reflective data binding: field names ARE the wire format ---------
+# NIP-47 and CLINK used to be listed here. They are not data-bound reflectively
+# any more — OptimizedJsonMapper routes them at kotlinx serializers that write
+# every field name as a string literal — so there is no rule to verify.
+
+
+# --- Enum constants persisted as strings -------------------------------------
+# The preference stores write `enum.name` into DataStore and read it back with
+# valueOf(). A renamed constant resets that setting for every existing user on
+# the first launch after the update — silently, and only in a release build.
+# The enum CLASS is still renamed; only the constant names are pinned.
+enum com.vitorpamplona.amethyst.commons.tor.TorType INTERNAL
+
+# Not a preference: these constant names ARE the NIP-47 wire strings. The
+# response parser does NwcErrorCode.valueOf(json["code"]) on a string another
+# wallet wrote, so a rename turns every typed error into a null code and the
+# UI loses the reason a payment failed. Falls back quietly (try/catch), which
+# is exactly why it would never be noticed.
+enum com.vitorpamplona.quartz.nip47WalletConnect.rpc.NwcErrorCode RATE_LIMITED NOT_IMPLEMENTED INSUFFICIENT_BALANCE PAYMENT_FAILED QUOTA_EXCEEDED RESTRICTED UNAUTHORIZED INTERNAL UNSUPPORTED_ENCRYPTION BAD_REQUEST NOT_FOUND EXPIRED UNSUPPORTED_PAYMENT_INSTRUCTION UNSUPPORTED_NETWORK OTHER
+
+enum com.vitorpamplona.amethyst.commons.model.ThemeType SYSTEM LIGHT DARK
+enum com.vitorpamplona.amethyst.commons.model.BooleanType ALWAYS NEVER
+enum com.vitorpamplona.amethyst.commons.model.ConnectivityType ALWAYS NEVER
+enum com.vitorpamplona.amethyst.commons.model.FeatureSetType SIMPLIFIED
+enum com.vitorpamplona.amethyst.commons.model.FontFamilyType SYSTEM
+enum com.vitorpamplona.amethyst.commons.model.FontSizeType NORMAL
+enum com.vitorpamplona.amethyst.commons.model.AccentColorType PURPLE
+enum com.vitorpamplona.amethyst.commons.model.ProfileGalleryType CLASSIC
+enum com.vitorpamplona.quartz.nip05DnsIdentifiers.namecoin.NamecoinBackend
+enum com.vitorpamplona.quartz.nipACWebRtcCalls.tags.CallType
+enum com.vitorpamplona.amethyst.commons.ui.screen.loggedIn.chats.publicChannels.concord.ChannelExpand
+# Still listed after ScheduledPost moved to kotlinx: this one is also the on-disk
+# format of the scheduled-post file, and a plain @Serializable enum is not obviously
+# immune — kotlinx builds its descriptor from the entries, and it has not been proven
+# here that those names are literals rather than Enum.name read at runtime. Keeping
+# the constants costs nothing (the blanket enum rule already provides them) and the
+# failure mode — every queued post's status unreadable — is not worth guessing at.
+enum com.vitorpamplona.amethyst.commons.scheduledposts.ScheduledPostStatus PENDING PUBLISHING SENT FAILED CANCELLED

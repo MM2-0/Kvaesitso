@@ -1,0 +1,272 @@
+# Example config for geode. Section layout mirrors
+# nostr-rs-relay's config.toml so existing operators can port across.
+#
+# Run with:
+#   ./gradlew :geode:run --args="--config /etc/geode.toml"
+#
+# CLI flags override individual values: e.g. `--port 8888` wins over
+# `[network].port`.
+
+[info]
+# The wss:// URL clients use to reach this relay (mandatory for NIP-42
+# AUTH challenges). If not set, the relay synthesises one from the
+# [network] section.
+relay_url = "wss://relay.example.com/"
+name = "Example Geode"
+description = "A geode deployment."
+contact = "admin@example.com"
+# Operator pubkey (NIP-11). Optional.
+# pubkey = "..."
+# Override the supported NIPs advertised on the NIP-11 endpoint. If
+# omitted, the relay advertises the NIPs it actually implements.
+# Hex-named NIPs go in as strings.
+# supported_nips = [1, 9, 11, 40, 42, 45, 50, 62, "FE"]
+
+[network]
+host = "0.0.0.0"
+port = 7447
+path = "/"
+# Ktor CIO event-loop pool sizing. Leave commented-out for sensible
+# per-CPU defaults (typical for <2k concurrent connections). Lift on
+# big-VM deployments targeting 10k+ connections — over-threading at
+# low connection counts hurts L1/L2 cache locality, so always
+# benchmark before/after when tuning these.
+#
+# Operators targeting >1k concurrent WebSockets should also raise the
+# OS file-descriptor limit: `ulimit -n 65536` (or higher) before
+# launching, plus a matching `LimitNOFILE=` in any systemd unit. The
+# default of 1024 on most distros caps the relay well below 1k FDs
+# (one per WS plus DB and listening sockets).
+# connection_group_size = 4
+# worker_group_size = 16
+# call_group_size = 64
+
+[database]
+# Which IEventStore implementation backs the relay. Default "sqlite".
+#   - "sqlite": quartz's SQLite store — honours every knob below. Best for
+#     real traffic. CLI: --store sqlite.
+#   - "fs": quartz's filesystem store — one JSON file per event under the
+#     directory named by `file` (a directory, not a db file, in this mode).
+#     Human-inspectable with cat/jq; the SQLite-only knobs are ignored, and
+#     it always needs `file`. CLI: --store fs.
+# Any other value is the fully-qualified class name of a custom IEventStore
+# on the classpath, instantiated reflectively (needs a public constructor
+# `(NormalizedRelayUrl?, IndexingStrategy)`, `(NormalizedRelayUrl?)`, or `()`).
+# backend = "sqlite"
+
+# True keeps an in-memory SQLite db (events vanish on restart). Useful
+# for tests; set false + `file = "..."` for persistent storage. Ignored
+# by the "fs" backend, which always writes to the `file` directory.
+in_memory = false
+file = "/var/lib/geode/events.db"
+
+# NOTE: the four knobs below measured as pure noise in relayBench A/B
+# runs on 4-core container hardware at 50k events (see
+# geode/plans/2026-07-04-sqlite-knobs-ab.md) — their value is
+# hardware-dependent, so benchmark on YOUR box before enabling.
+#
+# Reader-connection pool size (file-backed stores only). Default 4.
+# readers = 4
+
+# PRAGMA mmap_size in bytes — maps the db file into memory so reads
+# skip the pread syscall. Off by default (SQLite default).
+# mmap_size = 268435456
+
+# PRAGMA temp_store = MEMORY — RAM instead of temp files for large
+# sorts. Off by default.
+# temp_store_memory = true
+
+# Refresh query-planner statistics (PRAGMA optimize) every N seconds.
+# Incremental and usually a no-op; keeps the planner from drifting
+# onto the wrong index as the corpus grows. Off by default.
+# optimize_interval_seconds = 3600
+
+[options]
+# Drop events whose Schnorr signature does not verify. Strongly
+# recommended for any relay accepting traffic from real clients.
+# Verify Schnorr signatures on every EVENT. Default: true. Disable
+# only for trusted-input scenarios (test fixtures, mirror replays).
+verify_signatures = true
+
+# Run signature verification in parallel inside the IngestQueue
+# (across all CPU cores) instead of serially on each connection's
+# WebSocket pump. Default: true. Set false to fall back to the
+# legacy in-policy verify path.
+# parallel_verify = true
+
+# NIP-50 full-text search. Default: true. When false no FTS index is
+# built or maintained (inserts skip tokenization — a measurable share
+# of ingest cost), NIP-11 stops advertising NIP-50, and REQ filters
+# with a `search` term match nothing. CLI: --no-search.
+# full_text_search = true
+
+# Require clients to NIP-42 AUTH before REQ/EVENT/COUNT.
+require_auth = false
+
+# Advertise NIP-42 AUTH without requiring it: the relay sends the
+# challenge and records clients that authenticate (so downstream
+# policies can gate on identity), but REQ/EVENT/COUNT still work for
+# clients that never AUTH. Ignored when require_auth = true.
+# optional_auth = false
+
+# Reject events whose `created_at` is more than this many seconds in
+# the future. Enforced by RejectFutureEventsPolicy.
+# reject_future_seconds = 1800
+
+# Path for the JSON file that remembers what the [[mirror]] catch-up
+# has already synced (per upstream, per scope), so a restart resumes
+# instead of re-downloading each upstream's whole backfill window.
+# Defaults to "<database file>.sync-coverage.json" next to the event
+# store; only written when the store itself is file-backed (an
+# in-memory store keeps no resume state — saved coverage would
+# describe events that no longer exist).
+# mirror_sync_state_file = "/var/lib/geode/events.db.sync-coverage.json"
+
+[authorization]
+# Allow / deny lists. Allow is a permissive ceiling; deny still
+# removes specific entries inside it. Enforced by Pubkey/KindAllowDenyPolicy.
+# pubkey_whitelist = ["abcdef...64hex..."]
+# pubkey_blacklist = []
+# kind_whitelist = [0, 1, 3, 7, 1059, 30023]
+# kind_blacklist = [4]
+
+# Mirror upstream relays (strfry-router style, "down" direction): the
+# relay dials each [[mirror]] url, subscribes to everything newer than
+# now - backfill_seconds, and ingests the stream alongside client
+# publishes. Reconnects and re-subscribes automatically.
+#
+# `trusted = true` is the relay-to-relay trust switch: events from that
+# upstream skip Schnorr signature verification (the upstream already
+# verified its own ingest; re-verifying burns ~8% of ingest CPU). The
+# trusted identity is the URL *this* relay dialed — TLS-authenticated
+# for wss:// — so an inbound client can never claim it. Default false:
+# mirror-but-verify. Only trust relays you operate or whose ingest
+# discipline you'd stake your own db on.
+#
+# `filter` (optional) scopes an upstream, as a NIP-01 filter JSON
+# object — same idea as strfry-router's per-stream filter. It shapes
+# the REQ sent upstream AND every delivered event is re-checked
+# against it before ingest, so even a trusted upstream can only
+# inject events inside the declared scope. `since`/`limit` inside it
+# are ignored (backfill_seconds owns the time window). Omit to mirror
+# everything; for several disjoint scopes, repeat [[mirror]] with the
+# same url. The keys are validated at boot (a typo like `kindss` or a
+# scalar where an array belongs fails startup) precisely because this
+# filter is the trust boundary for `trusted = true`.
+#
+# `dir` (strfry-router parity) sets the flow direction: "down" pulls
+# from the upstream (default), "up" pushes this relay's matching
+# events to it, "both" does both with echo suppression so the two
+# directions don't ping-pong the same event.
+#
+# [[mirror]]
+# url = "wss://upstream.example.com/"
+# dir = "both"
+# trusted = true
+# backfill_seconds = 3600
+# filter = '{"kinds":[0,1,3,7],"#t":["nostr"]}'
+
+[http]
+# NIP-FE: relay commands over HTTP. One REQ, COUNT or EVENT frame per
+# POST to the relay URL, exactly as it would go on the websocket,
+# answered as NDJSON (application/x-ndjson) in the socket's own frames and
+# streamed as it is found; nothing stays open afterwards. NIP-86 calls
+# share the URL, told apart by their application/nostr+json+rpc type.
+# NIP-98 `Authorization: Nostr ...` headers sign a request in, exactly as
+# NIP-42 AUTH would on the socket. On by default; turning it off also
+# drops "FE" from the default NIP-11 list.
+enabled = true
+# Every request is its own connection, so the websocket's
+# per-connection limits don't bound HTTP clients. These do: over the
+# per-client cap a request gets 429, over the global cap 503, both with
+# Retry-After. 0 = no limit.
+max_concurrent_requests = 256
+max_requests_per_client = 16
+# A body still arriving after this is dropped with 408, freeing its slot.
+body_timeout_seconds = 10
+# An answer still running after this ends on a CLOSED line.
+deadline_seconds = 30
+max_body_bytes = 524288
+# Gzip streamed answers for clients that send Accept-Encoding: gzip. Each
+# batch of lines is sync-flushed, so events still arrive as they are
+# found. Turn off if a proxy in front already compresses.
+gzip = true
+retry_after_seconds = 1
+# Other addresses this relay is reachable at: a NIP-98 token may name
+# any of them, as well as [info].relay_url.
+# alternate_urls = ["ws://youraddress.onion/"]
+# Behind a reverse proxy every request comes from the proxy's address.
+# List the proxies here and the per-client cap counts the address the
+# proxy writes in client_address_header instead (its last entry). The
+# header is ignored from anyone else. Also set `proxy_buffering off`
+# (nginx) or equivalent; the relay sends X-Accel-Buffering: no.
+# trusted_proxies = ["127.0.0.1"]
+# client_address_header = "X-Forwarded-For"
+# The same proxy settings decide who a websocket counts against for
+# [rate_limits], so set them even with NIP-FE off.
+
+[rate_limits]
+# Per-client command rates, counted across all of a client's websockets
+# and HTTP commands (the client is its address, or the one a trusted
+# proxy reports). Over a rate the command is refused as NIP-01
+# `rate-limited:` with the back-off in milliseconds as the frame's last
+# element, e.g. ["OK", id, false, "rate-limited: ...", "1500"] or
+# ["CLOSED", sub, "rate-limited: ...", "1500"]; a client that waits it
+# out gets through. Over HTTP the refusal is a 429 whose Retry-After is
+# that back-off in seconds. 0 = no limit (the default).
+#
+# EVENTs. AUTH is never limited.
+events_per_minute = 0
+# How many a quiet client may send at once. 0 = events_per_minute.
+event_burst = 0
+# REQs, COUNTs and NEG-OPENs. CLOSE is never limited.
+reqs_per_minute = 0
+req_burst = 0
+
+[admin]
+# NIP-86 relay management API. When `pubkeys` is non-empty, the relay
+# accepts HTTP POST application/nostr+json+rpc on the same URL,
+# authenticated with NIP-98 HTTP-Auth. Only events signed by one of
+# the listed pubkeys can run admin RPCs (banpubkey / banevent /
+# changerelayname / …). Empty (the default) disables the endpoint.
+#
+# NIP-98 binds admin tokens to the relay's HTTP URL, which is derived
+# from [info].relay_url with the scheme swapped (ws -> http, wss ->
+# https) per NIP-86. Make sure [info].relay_url is set to the
+# canonical public URL when behind TLS termination or a reverse proxy.
+# pubkeys = ["abcdef...64hex..."]
+
+# Path for the JSON snapshot that persists NIP-86 admin state (ban
+# lists + the live NIP-11 doc) across restarts. When unset, admin
+# state is in-memory only and forgotten on every restart. Convention
+# is to place this next to the SQLite event-store file.
+# state_file = "/var/lib/geode/events.db.admin.json"
+
+[identity]
+# The relay's own Nostr key — advertised as `self` in the NIP-11 doc and
+# used to sign relay-authored events (NIP-43 member lists and roles).
+# Either the key itself (nsec1… or 64-char hex; wins if both are set) …
+# secret_key = "nsec1..."
+# … or a file holding it, created with a fresh key (mode 0600) when
+# missing. With neither set, and [membership] enabled, geode keeps a
+# generated key at "<[admin].state_file>.relay-key" (in memory only,
+# with a warning, when there is no state file).
+# secret_key_file = "/var/lib/geode/relay.key"
+
+[membership]
+# NIP-43 relay membership. When enabled:
+#  - writes are members-only; the NIP-86 pubkey allow list IS the member
+#    list (allowpubkey / unallowpubkey / banpubkey change membership) and
+#    gates writes even while empty;
+#  - kind 28934 join requests carrying an invite code (NIP-86
+#    createclaim; codes stay valid until deleteclaim) add the author,
+#    kind 28936 leave requests (with a NIP-70 "-" tag) remove them;
+#  - the relay publishes, signed by [identity]: kind 13534 (members +
+#    their role ids), 33534 (roles from createrole/editrole; deleterole
+#    publishes a NIP-09 deletion), 8000 / 8001 (member added / removed);
+#  - NIP-11 advertises 43, and the NIP-86 role/claim methods are offered
+#    (they are not advertised at all while this is off).
+# See geode/plans/2026-09-27-nip43-membership.md.
+# enabled = false
+# How far a join/leave request's created_at may be from the relay's clock.
+# request_window_seconds = 300

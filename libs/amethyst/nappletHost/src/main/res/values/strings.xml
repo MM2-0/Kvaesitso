@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Sandbox host (`:napplet` process) UI. Kept here so the sandbox module needs no app resources. -->
+    <string name="napplet_invalid">Invalid nApplet.</string>
+    <string name="napplet_webview_too_old">This device\'s WebView is too old to run nApplets safely.</string>
+
+    <!-- Live "allow always" action notices -->
+    <string name="napplet_action_published">“%1$s” published a note as you</string>
+    <string name="napplet_action_uploaded">“%1$s” uploaded a file</string>
+    <string name="napplet_action_paid">“%1$s” made a payment</string>
+
+    <!-- Loading / unavailable screens -->
+    <string name="napplet_unavailable_title">Couldn\'t load “%1$s”</string>
+    <string name="napplet_unavailable_subtitle">The publisher\'s servers may be offline, or you\'re not connected. You can try again.</string>
+    <string name="napplet_unavailable_retry">Try again</string>
+
+    <!-- Developer console: page-load failures surfaced as console errors -->
+    <string name="napplet_console_load_error">Failed to load (%1$d): %2$s</string>
+    <string name="napplet_console_http_error">HTTP %1$d %2$s</string>
+    <!-- Shown by the full-screen browser / napplet (in the sandbox process, where compose resources can't be
+         read outside composition) when a page is not loaded because its Tor route can't be honored. -->
+    <string name="napplet_route_blocked">Not loaded: Tor isn\'t available for this page yet. Try again in a moment.</string>
+
+</resources>

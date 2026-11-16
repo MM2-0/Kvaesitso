@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--
+      Android 11+ package visibility. Without these the sandbox cannot resolve the camera apps, which
+      it must do to name them in grantUriPermission before handing over the capture file. Launching an
+      implicit intent is unaffected; only querying is.
+    -->
+    <queries>
+        <intent>
+            <action android:name="android.media.action.IMAGE_CAPTURE" />
+        </intent>
+        <intent>
+            <action android:name="android.media.action.VIDEO_CAPTURE" />
+        </intent>
+    </queries>
+
+    <application>
+        <!--
+          Hands a camera app the single empty file a WebView capture will be written to. Its own
+          provider with its own authority rather than the app's general-purpose one, so the exposed
+          surface is one cache subdirectory instead of all of cache/ and external files.
+        -->
+        <provider
+            android:name="com.vitorpamplona.amethyst.napplethost.NappletCaptureFileProvider"
+            android:authorities="${applicationId}.napplethost.captures"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/napplet_capture_paths" />
+        </provider>
+    </application>
+
+</manifest>

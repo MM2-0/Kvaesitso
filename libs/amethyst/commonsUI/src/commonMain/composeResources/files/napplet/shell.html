@@ -1,0 +1,131 @@
+<!doctype html>
+<!--
+  Trusted napplet shell page (served on the shell origin https://napplet.local at /__shell__).
+  It hosts untrusted content and relays capability messages between the child (a MessagePort the
+  child's shim hands over in napplet.hello) and the origin-restricted native bridge (__nappletBridge). For NIP-5D the child receives verified,
+  prelude-injected bytes through srcdoc and has only sandbox="allow-scripts" (opaque origin). NIP-5A
+  websites retain Amethyst's separate-origin website posture and are navigated normally.
+-->
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <title>Napplet</title>
+    <style>
+      html, body, iframe { margin: 0; padding: 0; border: 0; width: 100%; height: 100%; background: #fff; }
+      /* Block, so the iframe sits flush: inline, its baseline gap overflowed the page into a scrollbar. */
+      html, body { overflow: hidden; }
+      iframe { display: block; }
+    </style>
+  </head>
+  <body>
+    <iframe id="app" sandbox="__APP_SANDBOX__" referrerpolicy="no-referrer"></iframe>
+    <script>
+      (function () {
+        var iframe = document.getElementById('app');
+        var bridge = window.__nappletBridge;
+
+        // applet -> native. The injected NAP binding posts structured-clone JSON objects. The
+        // native bridge carries only strings, so serialize objects here. (Requests carry no Blobs.)
+        function forward(data) {
+          if (typeof data !== 'string') {
+            try { data = JSON.stringify(data); } catch (_) { return; }
+          }
+          if (bridge) bridge.postMessage(data);
+        }
+        function fromApplet(data) {
+          // upload.upload carries a Blob/ArrayBuffer in request.data that JSON can't serialize —
+          // inline it as base64 (request.dataBase64) before forwarding to native.
+          if (data && data.type === 'upload.upload' && data.request &&
+              (data.request.data instanceof Blob || data.request.data instanceof ArrayBuffer)) {
+            var blob = data.request.data instanceof Blob ? data.request.data : new Blob([data.request.data]);
+            var reader = new FileReader();
+            reader.onloadend = function () {
+              if (revoked) return;
+              data.request.dataBase64 = String(reader.result).split(',')[1] || '';
+              delete data.request.data;
+              forward(data);
+            };
+            reader.onerror = function () { /* drop a blob we can't read */ };
+            reader.readAsDataURL(blob);
+            return;
+          }
+          forward(data);
+        }
+
+        // NAP travels over a MessagePort the applet's injected shim makes before any of its own
+        // scripts run, handed over once in a window-level `napplet.hello` (NIP-5D Transport). The
+        // port lives only in the document that made it, so binding to it binds to that document.
+        var port = null;
+        var helloSeen = false;
+        var oneDocument = false;
+        var revoked = false;
+
+        function bind(p) {
+          port = p;
+          p.onmessage = function (e) { if (port === p) fromApplet(e.data); };
+          p.onmessageerror = function () { if (port === p) replaced(); };
+          // Fires when the other end's document goes away (where the browser supports it).
+          p.addEventListener('close', function () { if (port === p) replaced(); });
+        }
+        function unbind() {
+          var p = port;
+          port = null;
+          if (p) { p.onmessage = null; try { p.close(); } catch (_) {} }
+        }
+
+        // A NIP-5D napplet's identity belongs to the one document the host verified and injected.
+        // Another document in this frame (a reload, or a navigation to bytes nobody verified) gets
+        // no channel: the port closes and the frame is removed. Nothing is ever bound to it again.
+        function replaced() {
+          if (revoked || !oneDocument) return;
+          revoked = true;
+          unbind();
+          if (iframe.parentNode) iframe.parentNode.removeChild(iframe);
+        }
+
+        // Called by a napplet's bootstrap before it assigns the verified srcdoc.
+        function bindOneDocument() {
+          oneDocument = true;
+          var loaded = false;
+          // The verified document says hello while it parses, before its own load event. A load
+          // before any hello is the frame's initial blank page; a second one after it is a new document.
+          iframe.addEventListener('load', function () {
+            if (!helloSeen) return;
+            if (loaded) replaced(); else loaded = true;
+          });
+        }
+
+        // Only the handoff arrives at the window, and only from our applet iframe.
+        window.addEventListener('message', function (e) {
+          if (revoked || e.source !== iframe.contentWindow) return;
+          var hello = e.data && e.data.type === 'napplet.hello' && e.ports && e.ports.length === 1;
+          if (oneDocument) {
+            // Exactly one hello per frame. A second one, or any other window-level message, means
+            // the verified document is no longer the one talking.
+            if (hello && !helloSeen) { helloSeen = true; bind(e.ports[0]); } else { replaced(); }
+            return;
+          }
+          // A NIP-5A site keeps its own origin and moves between its own pages: each page's hello
+          // replaces the previous page's port.
+          if (hello) { helloSeen = true; unbind(); bind(e.ports[0]); }
+        });
+
+        // native -> applet: hand the broker's reply (or a subscription push) to the bound document
+        // as a structured-clone object, which is what the SDK expects (it reads e.data.type, not a string).
+        if (bridge) {
+          bridge.onmessage = function (e) {
+            if (!port) return;
+            var msg;
+            try { msg = JSON.parse(e.data); } catch (_) { return; }
+            // NAP-RESOURCE wire blobs are canonical base64 strings. The injected domain binding
+            // decodes them into browser Blobs; keep the transport envelope unchanged.
+            port.postMessage(msg);
+          };
+        }
+
+        __APP_BOOTSTRAP__
+      })();
+    </script>
+  </body>
+</html>

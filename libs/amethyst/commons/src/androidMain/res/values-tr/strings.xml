@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="browser_address_hint">Ara veya adres gir</string>
+    <string name="browser_console_title_short">Konsol</string>
+    <string name="browser_console_title">Konsol (%1$d)</string>
+    <string name="browser_console_clear">Temizle</string>
+    <string name="napplet_untitled">Başlıksız nApplet</string>
+</resources>

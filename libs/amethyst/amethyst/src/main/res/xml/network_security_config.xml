@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Cleartext traffic is permitted globally so user-configured ws:// relays keep working.
+    The explicit localhost domain-config keeps NetworkSecurityPolicy.isCleartextTrafficPermitted()
+    happy for loopback services (the Tor SOCKS proxy on 127.0.0.1:17392, the local Blossom cache
+    on :24242). Note: this does NOT silence StrictMode's detectCleartextNetwork() — that detector
+    runs in netd at the packet level and ignores this allowlist, which is why we don't enable it
+    (see Logging.kt).
+-->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="false">127.0.0.1</domain>
+        <domain includeSubdomains="false">localhost</domain>
+    </domain-config>
+</network-security-config>

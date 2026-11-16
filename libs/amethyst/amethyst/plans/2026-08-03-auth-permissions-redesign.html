@@ -1,0 +1,1623 @@
+<title>Relay AUTH permissions — state review &amp; redesign</title>
+
+<style>
+/* ============================================================ tokens */
+:root {
+  --ground:    #F7F5FA;
+  --ground-2:  #FFFFFF;
+  --ground-3:  #EFEBF4;
+  --ink:       #181322;
+  --ink-2:     #4A4258;
+  --muted:     #6E657F;
+  --hair:      #DDD6E6;
+  --hair-2:    #C9C0D6;
+  --accent:    #5B21D6;
+  --accent-dim:#EDE6FB;
+  --flag:      #B23A28;
+  --flag-dim:  #F6E4E0;
+  --good:      #146E52;
+  --good-dim:  #DDEFE7;
+
+  --f-ui:   ui-sans-serif, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --f-read: ui-serif, Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --f-code: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  --f-droid: Roboto, "Noto Sans", system-ui, sans-serif;
+
+  --measure: 64ch;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ground:    #0B0910;
+    --ground-2:  #14111C;
+    --ground-3:  #1C1826;
+    --ink:       #EDE8F5;
+    --ink-2:     #B9B0C9;
+    --muted:     #8B8199;
+    --hair:      #2A2436;
+    --hair-2:    #3B3349;
+    --accent:    #BB86FC;
+    --accent-dim:#241A38;
+    --flag:      #F0866F;
+    --flag-dim:  #33201B;
+    --good:      #6FCFA6;
+    --good-dim:  #142B23;
+  }
+}
+:root[data-theme="light"] {
+  --ground:#F7F5FA; --ground-2:#FFFFFF; --ground-3:#EFEBF4;
+  --ink:#181322; --ink-2:#4A4258; --muted:#6E657F;
+  --hair:#DDD6E6; --hair-2:#C9C0D6;
+  --accent:#5B21D6; --accent-dim:#EDE6FB;
+  --flag:#B23A28; --flag-dim:#F6E4E0;
+  --good:#146E52; --good-dim:#DDEFE7;
+}
+:root[data-theme="dark"] {
+  --ground:#0B0910; --ground-2:#14111C; --ground-3:#1C1826;
+  --ink:#EDE8F5; --ink-2:#B9B0C9; --muted:#8B8199;
+  --hair:#2A2436; --hair-2:#3B3349;
+  --accent:#BB86FC; --accent-dim:#241A38;
+  --flag:#F0866F; --flag-dim:#33201B;
+  --good:#6FCFA6; --good-dim:#142B23;
+}
+
+/* ============================================================ base */
+body {
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--f-ui);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+* { box-sizing: border-box; }
+a { color: var(--accent); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 3px; }
+
+.wrap {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr);
+  gap: 56px;
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 32px 140px;
+  align-items: start;
+}
+@media (max-width: 1080px) { .wrap { grid-template-columns: 1fr; gap: 0; padding: 0 20px 90px; } }
+
+/* ============================================================ masthead */
+.masthead {
+  border-bottom: 1px solid var(--hair);
+  padding: 64px 32px 30px;
+  max-width: 1320px;
+  margin: 0 auto 44px;
+}
+@media (max-width: 1080px) { .masthead { padding: 44px 20px 24px; } }
+.eyebrow {
+  font-family: var(--f-code);
+  font-size: 11px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.masthead h1 {
+  font-size: clamp(2rem, 4.6vw, 3.1rem);
+  line-height: 1.02;
+  letter-spacing: -.035em;
+  font-weight: 760;
+  text-wrap: balance;
+  margin: 14px 0 0;
+  max-width: 22ch;
+}
+.masthead h1 em { font-style: normal; color: var(--accent); }
+.standfirst {
+  font-family: var(--f-read);
+  font-size: 1.13rem;
+  line-height: 1.6;
+  color: var(--ink-2);
+  max-width: var(--measure);
+  margin: 20px 0 0;
+}
+.mast-meta {
+  display: flex; flex-wrap: wrap; gap: 8px 26px;
+  margin-top: 26px;
+  font-family: var(--f-code); font-size: 11.5px; color: var(--muted);
+}
+.mast-meta b { color: var(--ink-2); font-weight: 500; }
+
+/* ============================================================ rail */
+.rail { position: sticky; top: 24px; }
+@media (max-width: 1080px) { .rail { position: static; margin-bottom: 40px; } }
+.rail ol { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
+.rail a {
+  display: flex; gap: 10px;
+  font-size: 13px; text-decoration: none; color: var(--ink-2);
+  padding: 5px 0; border-bottom: 1px solid transparent;
+}
+.rail a:hover { color: var(--accent); }
+.rail .n { font-family: var(--f-code); font-size: 11px; color: var(--muted); padding-top: 2px; }
+.rail .grp {
+  font-family: var(--f-code); font-size: 10.5px; letter-spacing: .16em;
+  text-transform: uppercase; color: var(--muted);
+  margin: 22px 0 6px; padding-bottom: 5px; border-bottom: 1px solid var(--hair);
+}
+.rail .grp:first-child { margin-top: 0; }
+
+/* ============================================================ sections */
+section { scroll-margin-top: 20px; }
+section + section { margin-top: 86px; }
+.sec-head { border-top: 2px solid var(--ink); padding-top: 14px; margin-bottom: 30px; }
+.sec-head h2 {
+  font-size: clamp(1.5rem, 2.6vw, 2rem);
+  letter-spacing: -.03em; font-weight: 720; margin: 6px 0 0; text-wrap: balance;
+}
+.sec-head p { font-family: var(--f-read); color: var(--ink-2); max-width: var(--measure); margin: 12px 0 0; }
+h3.sub {
+  font-size: 1.06rem; letter-spacing: -.015em; font-weight: 680;
+  margin: 54px 0 18px; padding-bottom: 8px; border-bottom: 1px solid var(--hair);
+}
+p.read { font-family: var(--f-read); color: var(--ink-2); max-width: var(--measure); }
+code {
+  font-family: var(--f-code); font-size: .855em;
+  background: var(--ground-3); padding: 1px 5px; border-radius: 4px; color: var(--ink);
+}
+
+/* ============================================================ tables */
+.tbl-scroll { overflow-x: auto; margin: 18px 0 0; border: 1px solid var(--hair); border-radius: 10px; background: var(--ground-2); }
+table { border-collapse: collapse; width: 100%; font-size: 13.5px; min-width: 620px; }
+th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--hair); vertical-align: top; }
+th {
+  font-family: var(--f-code); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--muted); font-weight: 500; background: var(--ground-3); white-space: nowrap;
+}
+tr:last-child td { border-bottom: 0; }
+td.id { font-family: var(--f-code); font-size: 12px; color: var(--accent); white-space: nowrap; }
+td.k { font-family: var(--f-code); font-size: 11.5px; color: var(--ink-2); }
+.tag {
+  display: inline-block; font-family: var(--f-code); font-size: 10px; letter-spacing: .06em;
+  text-transform: uppercase; padding: 2px 6px; border-radius: 4px; white-space: nowrap;
+}
+.tag.bad  { background: var(--flag-dim); color: var(--flag); }
+.tag.ok   { background: var(--good-dim); color: var(--good); }
+.tag.neu  { background: var(--ground-3); color: var(--muted); }
+
+/* ============================================================ specimen layout */
+.spec { display: grid; grid-template-columns: 372px minmax(0, 1fr); gap: 40px; align-items: start; margin-top: 30px; }
+@media (max-width: 860px) { .spec { grid-template-columns: 1fr; gap: 26px; } }
+.spec + .spec { margin-top: 56px; padding-top: 56px; border-top: 1px dashed var(--hair-2); }
+
+.spec-id {
+  display: flex; align-items: baseline; gap: 12px; margin-bottom: 12px;
+}
+.spec-id .sid {
+  font-family: var(--f-code); font-size: 12px; font-weight: 600;
+  color: var(--ground); background: var(--ink);
+  padding: 2px 7px; border-radius: 4px; letter-spacing: .04em;
+}
+.spec-id h4 { font-size: 1.02rem; font-weight: 660; letter-spacing: -.015em; margin: 0; }
+.spec-note { font-family: var(--f-read); color: var(--ink-2); font-size: 15px; }
+.spec-note p { margin: 0 0 12px; }
+.spec-note p:last-child { margin-bottom: 0; }
+
+/* problem legend */
+.legend { list-style: none; margin: 14px 0 0; padding: 0; display: flex; flex-direction: column; gap: 9px; }
+.legend li { display: grid; grid-template-columns: 22px 1fr; gap: 10px; font-family: var(--f-read); font-size: 14.5px; color: var(--ink-2); }
+.pin-n {
+  width: 22px; height: 22px; border-radius: 50%;
+  display: grid; place-items: center;
+  font-family: var(--f-ui); font-size: 11px; font-weight: 700;
+  background: var(--flag); color: #fff;
+}
+.legend.ok .pin-n { background: var(--good); }
+
+/* ============================================================ device frame */
+.frame { position: relative; width: 360px; max-width: 100%; }
+.screen {
+  position: relative;
+  border-radius: 30px;
+  padding: 14px;
+  border: 1px solid var(--hair-2);
+  font-family: var(--f-droid);
+  overflow: hidden;
+}
+/* Amethyst dark theme tokens (product default) */
+.screen {
+  --s:        #000000;
+  --s-c-low:  #131016;
+  --s-c:      #1A161F;
+  --s-var:    #2A2431;
+  --on-s:     #E9E3F0;
+  --on-s-var: #A79FB4;
+  --pri:      #BB86FC;
+  --on-pri:   #1A0033;
+  --pri-cont: #34215A;
+  --on-pri-c: #E5D4FF;
+  --err:      #F34747;
+  --err-cont: #4A1E1E;
+  --on-err-c: #FFD9D6;
+  background: var(--s);
+  color: var(--on-s);
+}
+.screen.light {
+  --s:        #FDFDFD;
+  --s-c-low:  #F2EFF6;
+  --s-c:      #EAE5F1;
+  --s-var:    #E0DAE9;
+  --on-s:     #18131F;
+  --on-s-var: #5C5468;
+  --pri:      #6200EE;
+  --on-pri:   #FFFFFF;
+  --pri-cont: #E6DAFB;
+  --on-pri-c: #22005D;
+  --err:      #C62828;
+  --err-cont: #FBDCDA;
+  --on-err-c: #5C0F0F;
+}
+.screen.tall { min-height: 620px; }
+
+/* frame caption */
+.frame-cap {
+  font-family: var(--f-code); font-size: 10.5px; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--muted); margin-top: 10px;
+}
+
+/* pins overlaid on the screen */
+.pin {
+  position: absolute; z-index: 5;
+  width: 21px; height: 21px; border-radius: 50%;
+  background: var(--flag); color: #fff;
+  font-size: 11px; font-weight: 700; line-height: 21px; text-align: center;
+  box-shadow: 0 0 0 3px var(--ground);
+  font-family: var(--f-ui);
+}
+.pin.good { background: var(--good); }
+
+/* ============================================================ M3 dialog parts */
+.dlg {
+  background: var(--s-c-low); border-radius: 26px; padding: 22px;
+  display: flex; flex-direction: column; gap: 14px;
+}
+.dlg-shield { align-self: center; color: var(--pri); }
+.dlg-title { font-size: 1.32rem; line-height: 1.25; font-weight: 500; margin: 0; letter-spacing: -.01em; text-wrap: balance; }
+.dlg-title.center { text-align: center; }
+.dlg-body { font-size: .875rem; line-height: 1.45; color: var(--on-s-var); margin: 0; }
+.dlg-err { font-size: .875rem; line-height: 1.45; color: var(--err); margin: 0; }
+.relaychip {
+  align-self: flex-start; background: var(--s-var); color: var(--on-s);
+  border-radius: 8px; padding: 6px 10px; font-size: .8rem; font-weight: 500;
+  max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.reason-label {
+  font-size: .8rem; font-weight: 500; color: var(--on-s-var); letter-spacing: .01em;
+}
+.who { display: flex; align-items: center; gap: 9px; font-size: .93rem; }
+.who .nm { font-weight: 600; }
+.btnstack { display: flex; flex-direction: column; gap: 5px; margin-top: 4px; }
+.btn {
+  border: 0; border-radius: 100px; padding: 10px 18px;
+  font-family: inherit; font-size: .875rem; font-weight: 500; cursor: default;
+  width: 100%; text-align: center;
+}
+.btn.filled { background: var(--pri); color: var(--on-pri); }
+.btn.tonal  { background: var(--pri-cont); color: var(--on-pri-c); }
+.btn.text   { background: transparent; color: var(--pri); }
+.btn.danger { background: transparent; color: var(--err); }
+.btn.outline { background: transparent; color: var(--on-s); border: 1px solid var(--s-var); }
+.btnrow { display: flex; gap: 8px; }
+.btnrow .btn { width: auto; flex: 1; }
+
+/* avatars */
+.av {
+  width: 32px; height: 32px; border-radius: 50%; flex: none;
+  display: grid; place-items: center;
+  font-size: .72rem; font-weight: 700; color: #12091f;
+  font-family: var(--f-ui);
+}
+.av.sm { width: 26px; height: 26px; font-size: .62rem; }
+.av.xs { width: 20px; height: 20px; font-size: .55rem; }
+.av.a1 { background: linear-gradient(140deg,#FFD79A,#F2994A); }
+.av.a2 { background: linear-gradient(140deg,#A8E6CF,#3D9970); }
+.av.a3 { background: linear-gradient(140deg,#C5B3FF,#7B5BE0); color:#fff; }
+.av.a4 { background: linear-gradient(140deg,#FFB3C9,#D6336C); color:#fff; }
+.av.a5 { background: linear-gradient(140deg,#9AD8FF,#2B7FD4); color:#fff; }
+.av.a6 { background: linear-gradient(140deg,#EDE3B4,#B0A160); }
+.facepile { display: flex; align-items: center; }
+.facepile .av { border: 2px solid var(--s-c-low); margin-right: -8px; }
+.facepile .more { margin-left: 16px; font-size: .8rem; color: var(--on-s-var); font-weight: 500; }
+.av-inline { display: inline-grid; vertical-align: -5px; margin: 0 2px; }
+
+/* relay favicon squares */
+.relayicon {
+  width: 34px; height: 34px; border-radius: 9px; flex: none;
+  display: grid; place-items: center; font-size: .72rem; font-weight: 700;
+  font-family: var(--f-ui); filter: saturate(.5);
+}
+.relayicon.r1 { background: linear-gradient(140deg,#8E7CC3,#4A3B7A); color:#fff; }
+.relayicon.r2 { background: linear-gradient(140deg,#7FB3A0,#2E6B57); color:#fff; }
+.relayicon.r3 { background: linear-gradient(140deg,#C79A6B,#7A5230); color:#fff; }
+.relayicon.r4 { background: linear-gradient(140deg,#6B8FC7,#33507E); color:#fff; }
+.relayicon.sm { width: 24px; height: 24px; border-radius: 7px; font-size: .58rem; }
+
+/* ============================================================ M3 settings parts */
+.appbar { display: flex; align-items: center; gap: 14px; padding: 6px 2px 16px; }
+.appbar h5 { font-size: 1.32rem; font-weight: 500; margin: 0; letter-spacing: -.01em; }
+.grouphead {
+  font-size: .8rem; font-weight: 600; color: var(--pri);
+  padding: 0 4px; margin: 20px 0 8px; letter-spacing: .01em;
+}
+.grouphead:first-child { margin-top: 0; }
+.card { background: var(--s-c-low); border-radius: 20px; overflow: hidden; }
+.card + .card { margin-top: 8px; }
+.divider { height: 1px; background: var(--s-var); }
+.tile { display: flex; gap: 13px; padding: 13px 15px; align-items: flex-start; }
+.tile .tx { flex: 1; min-width: 0; }
+.tile .tt { font-size: .93rem; font-weight: 500; line-height: 1.3; }
+.tile .td { font-size: .79rem; color: var(--on-s-var); line-height: 1.4; margin-top: 3px; }
+.policycard {
+  display: flex; gap: 13px; padding: 14px 15px; align-items: flex-start;
+  border-radius: 18px; background: var(--s-c-low); border: 1px solid transparent;
+}
+.policycard.sel { background: var(--pri-cont); border-color: var(--pri); }
+.policycard + .policycard { margin-top: 7px; }
+.sw {
+  width: 44px; height: 25px; border-radius: 100px; flex: none; position: relative;
+  background: var(--s-var); border: 2px solid var(--on-s-var); margin-top: 2px;
+}
+.sw::after { content:""; position: absolute; width: 15px; height: 15px; border-radius: 50%; background: var(--on-s-var); top: 3px; left: 4px; }
+.sw.on { background: var(--pri); border-color: var(--pri); }
+.sw.on::after { background: var(--on-pri); width: 19px; height: 19px; top: 1px; left: 21px; }
+.radio { width: 19px; height: 19px; border-radius: 50%; border: 2px solid var(--on-s-var); flex: none; margin-top: 3px; position: relative; }
+.radio.on { border-color: var(--pri); }
+.radio.on::after { content:""; position:absolute; inset: 3px; border-radius: 50%; background: var(--pri); }
+.pill {
+  display: inline-block; border-radius: 100px; padding: 3px 10px;
+  font-size: .69rem; font-weight: 600; letter-spacing: .02em; white-space: nowrap;
+}
+.pill.allow { background: var(--pri-cont); color: var(--on-pri-c); }
+.pill.deny  { background: var(--err-cont); color: var(--on-err-c); }
+.pill.auto  { background: var(--s-var); color: var(--on-s-var); }
+.seg { display: flex; border: 1px solid var(--s-var); border-radius: 100px; overflow: hidden; flex: none; }
+.seg span { font-size: .68rem; font-weight: 600; padding: 4px 9px; color: var(--on-s-var); white-space: nowrap; }
+.seg span.on { background: var(--pri); color: var(--on-pri); }
+.seg span.on.no { background: var(--err); color: #fff; }
+.relayrow { display: flex; gap: 12px; padding: 11px 8px 11px 14px; align-items: center; }
+.relayrow .meta { flex: 1; min-width: 0; }
+.relayrow .url { font-size: .95rem; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.relayrow .sub { font-size: .76rem; color: var(--on-s-var); margin-top: 2px; }
+.emptycard { background: var(--s-c-low); border-radius: 20px; padding: 16px; font-size: .84rem; color: var(--on-s-var); line-height: 1.45; }
+.snackbar {
+  display: flex; align-items: center; gap: 14px;
+  background: var(--on-s); color: var(--s);
+  border-radius: 12px; padding: 12px 14px; margin-top: 10px;
+  font-size: .82rem; line-height: 1.35;
+}
+.snackbar .undo { color: var(--pri); font-weight: 700; flex: none; }
+.screen.light .snackbar .undo { color: #D0BCFF; }
+.purposechips { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 5px; }
+.pchip { font-size: .68rem; padding: 2px 8px; border-radius: 100px; background: var(--s-var); color: var(--on-s-var); }
+.icon { color: var(--on-s-var); flex: none; }
+.icon.pri { color: var(--pri); }
+
+/* ============================================================ callouts */
+.callout {
+  border-left: 3px solid var(--flag);
+  background: var(--flag-dim);
+  padding: 14px 18px; border-radius: 0 10px 10px 0;
+  margin: 22px 0; max-width: var(--measure);
+}
+.callout.good { border-left-color: var(--good); background: var(--good-dim); }
+.callout h5 {
+  margin: 0 0 6px; font-size: .78rem; font-family: var(--f-code);
+  letter-spacing: .1em; text-transform: uppercase; color: var(--flag); font-weight: 600;
+}
+.callout.good h5 { color: var(--good); }
+.callout p { margin: 0; font-family: var(--f-read); font-size: 15px; color: var(--ink-2); }
+.callout p + p { margin-top: 10px; }
+
+/* two-up compare */
+.compare { display: grid; grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); gap: 34px; margin-top: 26px; }
+.compare .frame { width: 100%; }
+
+/* copy deck */
+.deck { display: flex; flex-direction: column; gap: 0; margin-top: 20px; border-top: 1px solid var(--hair); }
+.deck-row { display: grid; grid-template-columns: 168px 1fr; gap: 20px; padding: 14px 0; border-bottom: 1px solid var(--hair); }
+@media (max-width: 700px) { .deck-row { grid-template-columns: 1fr; gap: 8px; } }
+.deck-key { font-family: var(--f-code); font-size: 11.5px; color: var(--muted); line-height: 1.5; word-break: break-all; }
+.deck-old { font-family: var(--f-read); font-size: 14.5px; color: var(--muted); text-decoration: line-through; text-decoration-color: var(--flag); }
+.deck-new { font-family: var(--f-read); font-size: 15px; color: var(--ink); margin-top: 5px; }
+.deck-new::before { content: "→ "; color: var(--good); font-family: var(--f-ui); }
+.deck-cut { font-family: var(--f-read); font-size: 14.5px; color: var(--muted); margin-top: 5px; }
+.deck-cut::before { content: "✕ cut — "; font-family: var(--f-code); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--flag); }
+</style>
+
+<header class="masthead">
+  <div class="eyebrow">Amethyst · design review · 2026-08-03</div>
+  <h1>The relay AUTH prompt says the same thing four times — and sometimes <em>says it wrong</em>.</h1>
+  <p class="standfirst">
+    A full state inventory of the two NIP-42 permission surfaces as built, the duplication and
+    mis-attribution each one carries, and a proposed redesign for every state. Specimens are live
+    HTML rendered with Amethyst's own Material 3 tokens, shown in the product's default dark theme
+    unless labelled otherwise.
+  </p>
+  <div class="mast-meta">
+    <span><b>Surfaces</b> RelayAuthPromptHost · RelayAuthSettingsScreen</span>
+    <span><b>States</b> 11 prompt · 9 settings</span>
+    <span><b>Status</b> proposal — no code changed</span>
+  </div>
+</header>
+
+<div class="wrap">
+  <nav class="rail" aria-label="Contents">
+    <ol>
+      <li class="grp">Findings</li>
+      <li><a href="#findings"><span class="n">00</span> What's wrong</a></li>
+      <li class="grp">The prompt</li>
+      <li><a href="#p-states"><span class="n">01</span> State inventory</a></li>
+      <li><a href="#p-asis"><span class="n">02</span> As built</a></li>
+      <li><a href="#p-wrong"><span class="n">03</span> Wrong information</a></li>
+      <li><a href="#p-new"><span class="n">04</span> Proposed</a></li>
+      <li class="grp">The settings</li>
+      <li><a href="#s-states"><span class="n">05</span> State inventory</a></li>
+      <li><a href="#s-asis"><span class="n">06</span> As built</a></li>
+      <li><a href="#s-new"><span class="n">07</span> Proposed</a></li>
+      <li class="grp">Handover</li>
+      <li><a href="#copy"><span class="n">08</span> Copy deck</a></li>
+      <li><a href="#next"><span class="n">09</span> What this needs</a></li>
+    </ol>
+  </nav>
+
+  <main>
+
+  <!-- ================================================== FINDINGS -->
+  <section id="findings">
+    <div class="sec-head">
+      <div class="eyebrow">00 — Findings</div>
+      <h2>Three problems, in the order they hurt</h2>
+      <p>
+        Everything below traces to one of these. The first two are what you'd notice looking at the
+        screen; the third is what a user would notice, and it is the one that matters most.
+      </p>
+    </div>
+
+    <div class="callout">
+      <h5>1 · The same fact, restated up to four times</h5>
+      <p>
+        On the commonest prompt — sending a DM — the recipient's name appears in the title
+        (<em>"Send your message to Alice?"</em>), again in the purpose label
+        (<em>"Send your private message to:"</em>), again as the avatar row underneath, and a fourth
+        time in the red consequence line (<em>"If you don't, your message to Alice won't be
+        delivered."</em>). Six stacked blocks — icon, title, boilerplate paragraph, relay chip,
+        person row, consequence — to ask one yes/no question.
+      </p>
+    </div>
+
+    <div class="callout">
+      <h5>2 · Four buttons, three of which mean yes</h5>
+      <p>
+        <em>Allow once</em>, <em>Always deliver my messages</em>, <em>Always allow this relay</em>,
+        <em>Block this relay</em>. Two of the yeses have completely different blast radii and nothing
+        on screen says so: one remembers a relay, the other silently switches the global policy to
+        <code>CUSTOM</code> and flips two account-wide toggles on. A dialog button should not rewrite
+        settings the user can't see.
+      </p>
+    </div>
+
+    <div class="callout">
+      <h5>3 · The reason shown is often not the reason</h5>
+      <p>
+        <code>RelayAuthPurposeDeriver</code> re-guesses intent from the raw shape of the filters in
+        flight — <code>authors</code> → reading someone, <code>#e</code> → a room, <code>p</code>-tags
+        on a pending event → notifying someone. Downloading your own replies and zaps is
+        <code>#p</code>&nbsp;=&nbsp;me with no <code>authors</code>, which matches nothing, so the
+        prompt either falls back to the blank <em>"Use this relay"</em> or borrows the
+        <em>"Notify:"</em> label and facepile from unrelated traffic that happens to share the socket.
+      </p>
+      <p>
+        Worse, engagement queries fetch reactions and zaps by <code>#e</code> against note ids
+        (<code>ReactionsFilterAssembler</code>), which the deriver classifies as
+        <code>READ_VENUE</code>. The prompt then asks <em>"Open 3f8a12c9?"</em> — and
+        <code>rememberVenueLabel</code> get-or-creates a phantom public-chat channel in
+        <code>LocalCache</code> for a note id that was never a room.
+      </p>
+    </div>
+
+    <div class="callout good">
+      <h5>The fix is upstream, and it already exists</h5>
+      <p>
+        <code>ExplainedFilter</code> already carries <code>purpose: SubPurpose</code>,
+        <code>accountPubKeys</code> and <code>entityIds</code> on every filter the app opens —
+        <code>NOTIFICATIONS</code>, <code>DIRECT_MESSAGES</code>, <code>ENGAGEMENT</code>,
+        <code>PUBLIC_CHATS</code> and the rest are named at the point they're built. The auth path
+        throws that away and re-infers from tag shape. Reading the purpose the filter already declares
+        removes the entire class of mis-attribution below, and unlocks the two states the prompt
+        currently cannot express at all: <em>your own inbox</em> and <em>this conversation</em>.
+      </p>
+    </div>
+  </section>
+
+  <!-- ================================================== P STATES -->
+  <section id="p-states">
+    <div class="sec-head">
+      <div class="eyebrow">01 — The prompt</div>
+      <h2>Every state the dialog can be in</h2>
+      <p>
+        Driven by <code>primaryNamed()</code>, which picks one purpose from the derived list in a
+        fixed precedence order, then by counterparty count and whether more than one purpose is live.
+      </p>
+    </div>
+
+    <div class="tbl-scroll">
+      <table>
+        <thead>
+          <tr><th>ID</th><th>Trigger</th><th>Title today</th><th>Verdict</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="id">P1</td><td class="k">SEND_DM · 1 recipient</td><td>Send your message to Alice?</td><td><span class="tag bad">redundant</span></td></tr>
+          <tr><td class="id">P2</td><td class="k">SEND_DM · 3+ recipients</td><td>Send your message to Alice and others?</td><td><span class="tag bad">redundant</span></td></tr>
+          <tr><td class="id">P3</td><td class="k">NOTIFY_INBOX</td><td>Notify Alice?</td><td><span class="tag bad">often wrong</span></td></tr>
+          <tr><td class="id">P4</td><td class="k">READ_OUTBOX</td><td>Load profile, posts and engagement from Alice?</td><td><span class="tag bad">verbose</span></td></tr>
+          <tr><td class="id">P5</td><td class="k">POST_VENUE</td><td>Post to Bitcoin Devs?</td><td><span class="tag bad">empty body</span></td></tr>
+          <tr><td class="id">P6</td><td class="k">READ_VENUE</td><td>Open Bitcoin Devs?</td><td><span class="tag bad">empty body</span></td></tr>
+          <tr><td class="id">P7</td><td class="k">2+ purposes live</td><td>title of the winner only</td><td><span class="tag bad">stacks</span></td></tr>
+          <tr><td class="id">P8</td><td class="k">OTHER / unattributable</td><td>Confirm it's you to this relay?</td><td><span class="tag neu">honest but blank</span></td></tr>
+          <tr><td class="id">P9</td><td class="k">metadata not loaded yet</td><td>Send your message to a1b2c3d4?</td><td><span class="tag bad">raw hex</span></td></tr>
+          <tr><td class="id">P10</td><td class="k">#p = me read (own inbox)</td><td class="k">— falls to P8 or borrows P3 —</td><td><span class="tag bad">unexpressible</span></td></tr>
+          <tr><td class="id">P11</td><td class="k">#e read on note ids</td><td>Open 3f8a12c9?</td><td><span class="tag bad">wrong + side effect</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="read" style="margin-top:20px">
+      Two more states exist but never render. <code>MY_OWN_RELAY</code> has a string
+      (<em>"Connect to your own relay"</em>) and a branch in the ledger, but the deriver never
+      produces it, so <code>primaryNamed()</code> can never select it. And the whole dialog resolves
+      itself to <code>DISMISS</code> after 60 seconds — a silent deny the user never sees, with the
+      queued event left pending in the outbox forever.
+    </p>
+  </section>
+
+  <!-- ================================================== P AS-IS -->
+  <section id="p-asis">
+    <div class="sec-head">
+      <div class="eyebrow">02 — The prompt</div>
+      <h2>As built</h2>
+      <p>Rendered from <code>RelayAuthPromptHost.kt</code> and <code>values/strings.xml</code> as they stand today.</p>
+    </div>
+
+    <div class="spec">
+      <div>
+        <div class="frame">
+          <div class="screen">
+            <span class="pin" style="top:24px; left:150px">1</span>
+            <span class="pin" style="top:118px; left:-9px">2</span>
+            <span class="pin" style="top:206px; left:-9px">3</span>
+            <span class="pin" style="top:272px; left:-9px">4</span>
+            <span class="pin" style="top:340px; left:-9px">5</span>
+            <div class="dlg">
+              <svg class="dlg-shield" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2 4 5v6.1c0 4.7 3.4 9.1 8 10.9 4.6-1.8 8-6.2 8-10.9V5l-8-3z"/></svg>
+              <h3 class="dlg-title center">Send your message to Alice Nakamoto?</h3>
+              <p class="dlg-body">This relay wants to confirm it's really you first. Its operator will see which account you are.</p>
+              <div class="relaychip">wss://inbox.nostr.wine</div>
+              <div class="who"><span class="av a1">AN</span><span class="nm">Alice Nakamoto</span></div>
+              <p class="dlg-err">If you don't, your message to Alice Nakamoto won't be delivered.</p>
+              <div class="btnstack">
+                <button class="btn filled">Allow once</button>
+                <button class="btn tonal">Always deliver my messages</button>
+                <button class="btn tonal">Always allow this relay</button>
+                <button class="btn danger">Block this relay</button>
+              </div>
+            </div>
+          </div>
+          <div class="frame-cap">P1 · send_dm · one recipient</div>
+        </div>
+      </div>
+      <div>
+        <div class="spec-id"><span class="sid">P1</span><h4>Sending a DM to one person</h4></div>
+        <div class="spec-note">
+          <p>
+            The most frequent prompt in the app, and the densest. Alice is named four times and the
+            question is asked three times. Strip the repetition and one sentence carries all of it.
+          </p>
+        </div>
+        <ul class="legend">
+          <li><span class="pin-n">1</span><span>Name, mention 1 of 4. The title also re-asks the question the buttons already answer.</span></li>
+          <li><span class="pin-n">2</span><span>Boilerplate shown on <em>every</em> prompt regardless of state — and the one genuinely privacy-relevant fact in it, <em>which</em> account gets revealed, is never named. The app is multi-account and answers AUTH per account.</span></li>
+          <li><span class="pin-n">3</span><span>Name, mention 2 of 4. The label is suppressed when only one purpose is live, so this row is a bare avatar with no explanation of what it is.</span></li>
+          <li><span class="pin-n">4</span><span>Name, mention 3 of 4, in error red for a routine outbound message. Error colour on a state that isn't an error.</span></li>
+          <li><span class="pin-n">5</span><span>Four full-width buttons, three of them yes. <em>Always deliver my messages</em> switches the global policy to <code>CUSTOM</code> and turns on two account-wide toggles — an invisible settings write from a dialog.</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div>
+        <div class="frame">
+          <div class="screen">
+            <span class="pin" style="top:196px; left:-9px">6</span>
+            <div class="dlg">
+              <svg class="dlg-shield" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2 4 5v6.1c0 4.7 3.4 9.1 8 10.9 4.6-1.8 8-6.2 8-10.9V5l-8-3z"/></svg>
+              <h3 class="dlg-title center">Post to Bitcoin Devs?</h3>
+              <p class="dlg-body">This relay wants to confirm it's really you first. Its operator will see which account you are.</p>
+              <div class="relaychip">wss://relay.bitcoindevs.xyz</div>
+              <div style="height:6px"></div>
+              <p class="dlg-err">If you don't, your message to Bitcoin Devs won't be posted.</p>
+              <div class="btnstack">
+                <button class="btn filled">Allow once</button>
+                <button class="btn tonal">Always allow this relay</button>
+                <button class="btn danger">Block this relay</button>
+              </div>
+            </div>
+          </div>
+          <div class="frame-cap">P5 · post_venue</div>
+        </div>
+      </div>
+      <div>
+        <div class="spec-id"><span class="sid">P5 P6</span><h4>Posting to / opening a room</h4></div>
+        <div class="spec-note">
+          <p>
+            Venue purposes carry <code>venues</code>, never <code>counterparties</code> — but the body
+            loop iterates counterparties. So the middle of the dialog is a labelled heading with
+            nothing under it, or, when only one purpose is live and labels are suppressed, literally
+            an empty <code>Column</code>.
+          </p>
+        </div>
+        <ul class="legend">
+          <li><span class="pin-n">6</span><span>Dead space where the "who" block should be. The room name exists — it's in the title — but the body has no branch that can render a venue.</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div>
+        <div class="frame">
+          <div class="screen">
+            <span class="pin" style="top:150px; left:-9px">7</span>
+            <span class="pin" style="top:298px; left:-9px">8</span>
+            <div class="dlg">
+              <svg class="dlg-shield" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2 4 5v6.1c0 4.7 3.4 9.1 8 10.9 4.6-1.8 8-6.2 8-10.9V5l-8-3z"/></svg>
+              <h3 class="dlg-title center">Send your message to Alice Nakamoto and others?</h3>
+              <p class="dlg-body">This relay wants to confirm it's really you first. Its operator will see which account you are.</p>
+              <div class="relaychip">wss://inbox.nostr.wine</div>
+              <div style="display:flex;flex-direction:column;gap:6px">
+                <span class="reason-label">Send your private message to:</span>
+                <div class="facepile">
+                  <span class="av sm a1">AN</span><span class="av sm a2">JD</span><span class="av sm a3">MK</span><span class="av sm a4">RS</span><span class="av sm a5">TP</span>
+                  <span class="more">+3</span>
+                </div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:6px">
+                <span class="reason-label">Download profile information, posts and engagement from:</span>
+                <div class="who"><span class="av a6">a1</span><span class="nm">a1b2c3d4</span></div>
+              </div>
+              <p class="dlg-err">If you don't, your message to Alice Nakamoto and others won't be delivered.</p>
+              <div class="btnstack">
+                <button class="btn filled">Allow once</button>
+                <button class="btn tonal">Always deliver my messages</button>
+                <button class="btn tonal">Always allow this relay</button>
+                <button class="btn danger">Block this relay</button>
+              </div>
+            </div>
+          </div>
+          <div class="frame-cap">P2 + P7 + P9 · multi-purpose, unresolved name</div>
+        </div>
+      </div>
+      <div>
+        <div class="spec-id"><span class="sid">P2 P7 P9</span><h4>Many people, many purposes, names still loading</h4></div>
+        <div class="spec-note">
+          <p>
+            The worst case, and not a rare one: one socket serving several jobs at once. The dialog
+            scrolls, the buttons fall below the fold, and the title describes only the winning purpose
+            while the body lists all of them.
+          </p>
+        </div>
+        <ul class="legend">
+          <li><span class="pin-n">7</span><span>Purpose labels appear only when more than one purpose is live — so the same avatar row is unlabelled in P1 and labelled here. The layout changes meaning based on a condition the user can't see.</span></li>
+          <li><span class="pin-n">8</span><span>Metadata hasn't arrived, so a pubkey prefix renders as a person's name — in the title too, when this purpose wins. Nothing distinguishes "loading" from "this is what they're called".</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================== P WRONG -->
+  <section id="p-wrong">
+    <div class="sec-head">
+      <div class="eyebrow">03 — The prompt</div>
+      <h2>Where the copy is simply not true</h2>
+      <p>
+        These two are the states worth redesigning the surface for. Both are common — they fire on
+        ordinary scrolling and on opening a thread — and both describe something the user is not doing.
+      </p>
+    </div>
+
+    <div class="compare">
+      <div>
+        <div class="frame">
+          <div class="screen">
+            <span class="pin" style="top:60px; left:-9px">9</span>
+            <div class="dlg">
+              <svg class="dlg-shield" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2 4 5v6.1c0 4.7 3.4 9.1 8 10.9 4.6-1.8 8-6.2 8-10.9V5l-8-3z"/></svg>
+              <h3 class="dlg-title center">Notify Alice Nakamoto?</h3>
+              <p class="dlg-body">This relay wants to confirm it's really you first. Its operator will see which account you are.</p>
+              <div class="relaychip">wss://inbox.nostr.wine</div>
+              <div class="who"><span class="av a1">AN</span><span class="nm">Alice Nakamoto</span></div>
+              <p class="dlg-err">If you don't, Alice Nakamoto won't be notified about this.</p>
+              <div class="btnstack">
+                <button class="btn filled">Allow once</button>
+                <button class="btn tonal">Always allow this relay</button>
+                <button class="btn danger">Block this relay</button>
+              </div>
+            </div>
+          </div>
+          <div class="frame-cap">P10 · what you actually see</div>
+        </div>
+      </div>
+      <div>
+        <div class="spec-id"><span class="sid">P10</span><h4>You were downloading your own replies and zaps</h4></div>
+        <div class="spec-note">
+          <p>
+            The subscription that stalled is <code>filterNotificationsToPubkey</code> —
+            <code>#p&nbsp;=&nbsp;me</code>, no <code>authors</code>, on your own inbox relay. The
+            deriver has no branch for it, so it contributes nothing. What the prompt shows instead is
+            whatever <em>else</em> was queued on that socket: a pending reply with <code>p</code>-tags
+            becomes <code>NOTIFY_INBOX</code>, and the dialog announces you're about to notify
+            somebody.
+          </p>
+          <p>
+            The user is reading. The dialog says they're writing. Denying it doesn't stop a
+            notification — it stops their notification tab from loading, and nothing on screen says so.
+          </p>
+        </div>
+        <ul class="legend">
+          <li><span class="pin-n">9</span><span>Title, body and consequence all describe an outbound notification that isn't what's blocked. <code>SubPurpose.NOTIFICATIONS</code> is on the filter that stalled and would have said exactly the right thing.</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="compare" style="margin-top:56px">
+      <div>
+        <div class="frame">
+          <div class="screen">
+            <span class="pin" style="top:60px; left:-9px">10</span>
+            <span class="pin" style="top:196px; left:-9px">11</span>
+            <div class="dlg">
+              <svg class="dlg-shield" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2 4 5v6.1c0 4.7 3.4 9.1 8 10.9 4.6-1.8 8-6.2 8-10.9V5l-8-3z"/></svg>
+              <h3 class="dlg-title center">Open 3f8a12c9?</h3>
+              <p class="dlg-body">This relay wants to confirm it's really you first. Its operator will see which account you are.</p>
+              <div class="relaychip">wss://relay.damus.io</div>
+              <div style="height:6px"></div>
+              <p class="dlg-err">If you don't, you won't see 3f8a12c9 here.</p>
+              <div class="btnstack">
+                <button class="btn filled">Allow once</button>
+                <button class="btn tonal">Always allow this relay</button>
+                <button class="btn danger">Block this relay</button>
+              </div>
+            </div>
+          </div>
+          <div class="frame-cap">P11 · what you actually see</div>
+        </div>
+      </div>
+      <div>
+        <div class="spec-id"><span class="sid">P11</span><h4>You had opened a thread</h4></div>
+        <div class="spec-note">
+          <p>
+            <code>ReactionsFilterAssembler</code> fetches likes, zaps and reposts with
+            <code>#e&nbsp;=&nbsp;[noteIds]</code>. The deriver reads any <code>#e</code> filter as a
+            venue, so a note id is presented as a room, named by its first eight hex characters.
+          </p>
+          <p>
+            There is a side effect too: <code>rememberVenueLabel</code> treats any 64-hex venue id as a
+            NIP-28 channel and calls <code>checkGetOrCreatePublicChatChannel</code> on it — minting a
+            phantom channel in <code>LocalCache</code> for a note that was never a chat, and opening a
+            subscription for its metadata.
+          </p>
+        </div>
+        <ul class="legend">
+          <li><span class="pin-n">10</span><span>A note id rendered as a room name. "Open" is the wrong verb; there is nothing to open.</span></li>
+          <li><span class="pin-n">11</span><span>Empty body again — venues never populate the counterparty loop.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================== P NEW -->
+  <section id="p-new">
+    <div class="sec-head">
+      <div class="eyebrow">04 — The prompt</div>
+      <h2>Proposed: one title, one sentence, two buttons</h2>
+      <p>
+        The title becomes constant and states the only thing that is constant — you are about to
+        identify yourself, and here is <em>as whom</em>. Everything variable collapses into a single
+        sentence that names the relay's refusal and the person or thing it concerns, with the avatar
+        set inline. That one sentence replaces the old title, the purpose label, the avatar row and
+        the red consequence line.
+      </p>
+    </div>
+
+    <div class="callout good">
+      <h5>The shape</h5>
+      <p>
+        <strong>Relay identity</strong> (icon + host, the thing being trusted) ·
+        <strong>"Log in as @you?"</strong> (the disclosure, named for the first time — and nothing
+        else, because the verb already says what logging in does) ·
+        <strong>one reason sentence</strong> (varies by state) ·
+        <strong>Remember for this relay</strong> (a switch, not a third button) ·
+        <strong>Not now / Log in</strong> ·
+        <strong>Never allow · How Amethyst decides</strong> (text links).
+      </p>
+      <p>
+        Four buttons become two plus a switch. The dialog no longer writes global settings; the link
+        goes to the settings screen where those toggles live and are visible.
+      </p>
+    </div>
+
+    <div class="spec">
+      <div>
+        <div class="frame">
+          <div class="screen">
+            <span class="pin good" style="top:44px; left:-9px">1</span>
+            <span class="pin good" style="top:96px; left:-9px">2</span>
+            <span class="pin good" style="top:141px; left:-9px">3</span>
+            <span class="pin good" style="top:219px; left:-9px">4</span>
+            <span class="pin good" style="top:281px; left:-9px">5</span>
+            <div class="dlg">
+              <div style="display:flex;align-items:center;gap:11px">
+                <span class="relayicon r1">nw</span>
+                <div style="min-width:0">
+                  <div style="font-size:.95rem;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">inbox.nostr.wine</div>
+                  <div style="font-size:.73rem;color:var(--on-s-var)">asks who you are</div>
+                </div>
+              </div>
+              <h3 class="dlg-title" style="margin-top:2px">Log in as <span style="color:var(--pri)">@vitor</span>?</h3>
+              <p class="dlg-body" style="font-size:.92rem;color:var(--on-s)">
+                It won't accept your message for
+                <span class="av xs a1 av-inline">AN</span><strong>Alice Nakamoto</strong>
+                from someone it can't identify.
+              </p>
+              <div style="display:flex;align-items:center;gap:11px;padding:11px 13px;background:var(--s-var);border-radius:14px">
+                <div style="flex:1;font-size:.86rem">Remember for this relay</div>
+                <span class="sw"></span>
+              </div>
+              <div class="btnrow">
+                <button class="btn outline">Not now</button>
+                <button class="btn filled">Log in</button>
+              </div>
+              <div style="display:flex;justify-content:space-between;gap:8px;padding-top:2px">
+                <button class="btn danger" style="width:auto;padding:6px 0;font-size:.8rem">Never allow</button>
+                <button class="btn text" style="width:auto;padding:6px 0;font-size:.8rem">How Amethyst decides</button>
+              </div>
+            </div>
+          </div>
+          <div class="frame-cap">P1′ · send_dm · proposed</div>
+        </div>
+      </div>
+      <div>
+        <div class="spec-id"><span class="sid">P1′</span><h4>The canonical layout</h4></div>
+        <div class="spec-note">
+          <p>
+            Alice is named once. The question is asked once. The consequence is inside the reason —
+            <em>"won't accept … from someone it can't identify"</em> already says what happens if you
+            decline, so no separate red line is needed.
+          </p>
+        </div>
+        <ul class="legend ok">
+          <li><span class="pin-n">1</span><span>The relay leads, because the relay is the thing being trusted. Its NIP-11 icon is already loaded elsewhere in the app and reused here.</span></li>
+          <li><span class="pin-n">2</span><span>The account is named — new. This is the actual disclosure, and on a multi-account device it is the one thing the user cannot infer. Nothing sits under it: no sentence explaining that logging in identifies you, because "log in" is that sentence, and no npub, because a truncated key can't be verified by eye and the handle already names the account.</span></li>
+          <li><span class="pin-n">3</span><span>The only variable line. Avatar inline, at text size, so it reads as part of the sentence rather than a separate block to parse.</span></li>
+          <li><span class="pin-n">4</span><span>Remember becomes a switch, so "allow" and "allow forever" stop competing as two buttons. Default off — a one-time allow stays the cheap answer.</span></li>
+          <li><span class="pin-n">5</span><span>Destructive and navigational actions demoted to text, out of the tap path. Nothing here rewrites a global setting.</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 class="sub">The reason sentence, per state</h3>
+    <p class="read">
+      Everything else about the dialog is fixed. Two states are new and cannot be expressed today —
+      they need <code>SubPurpose</code> read at the auth path instead of tag-shape inference.
+    </p>
+
+    <div class="tbl-scroll">
+      <table>
+        <thead><tr><th>ID</th><th>State</th><th>Reason sentence</th></tr></thead>
+        <tbody>
+          <tr><td class="id">P1′</td><td class="k">SEND_DM</td><td>It won't accept your message for <strong>Alice</strong> from someone it can't identify.</td></tr>
+          <tr><td class="id">P2′</td><td class="k">SEND_DM · many</td><td>It won't accept your message for <strong>Alice and 4 others</strong> from someone it can't identify.</td></tr>
+          <tr><td class="id">P3′</td><td class="k">NOTIFY_INBOX</td><td><strong>Alice</strong> won't hear about your reply unless it can identify the sender.</td></tr>
+          <tr><td class="id">P4′</td><td class="k">READ_OUTBOX</td><td>It won't serve <strong>Alice</strong>'s posts to readers it can't identify.</td></tr>
+          <tr><td class="id">P5′</td><td class="k">POST_VENUE</td><td>It won't accept your post in <strong>Bitcoin Devs</strong> from someone it can't identify.</td></tr>
+          <tr><td class="id">P6′</td><td class="k">READ_VENUE</td><td>It won't serve <strong>Bitcoin Devs</strong> to readers it can't identify.</td></tr>
+          <tr><td class="id">P8′</td><td class="k">OTHER</td><td>It asks everyone to log in. Amethyst can't tell what it's holding back.</td></tr>
+          <tr><td class="id">P9′</td><td class="k">name loading</td><td>…for <strong>someone you haven't loaded yet</strong> — <em>never a hex prefix dressed as a name</em>.</td></tr>
+          <tr><td class="id" style="color:var(--good)">P10′</td><td class="k">MY_INBOX <span class="tag ok">new</span></td><td>It won't serve <strong>your replies, zaps and mentions</strong> to readers it can't identify.</td></tr>
+          <tr><td class="id" style="color:var(--good)">P11′</td><td class="k">THREAD <span class="tag ok">new</span></td><td>It won't serve <strong>the rest of this conversation</strong> to readers it can't identify.</td></tr>
+          <tr><td class="id" style="color:var(--good)">P12′</td><td class="k">MY_OWN_RELAY <span class="tag ok">unreachable today</span></td><td>This is one of <strong>your own relays</strong>, and it asks everyone to log in.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="compare" style="margin-top:44px">
+      <div class="frame">
+        <div class="screen">
+          <div class="dlg">
+            <div style="display:flex;align-items:center;gap:11px">
+              <span class="relayicon r2">nw</span>
+              <div style="min-width:0">
+                <div style="font-size:.95rem;font-weight:600">inbox.nostr.wine</div>
+                <div style="font-size:.73rem;color:var(--on-s-var)">asks who you are</div>
+              </div>
+            </div>
+            <h3 class="dlg-title" style="margin-top:2px">Log in as <span style="color:var(--pri)">@vitor</span>?</h3>
+            <p class="dlg-body" style="font-size:.92rem;color:var(--on-s)">
+              It won't serve <strong>your replies, zaps and mentions</strong> to readers it can't identify.
+            </p>
+            <div style="display:flex;align-items:center;gap:11px;padding:11px 13px;background:var(--s-var);border-radius:14px">
+              <div style="flex:1;font-size:.86rem">Remember for this relay</div><span class="sw on"></span>
+            </div>
+            <div class="btnrow"><button class="btn outline">Not now</button><button class="btn filled">Log in</button></div>
+            <div style="display:flex;justify-content:space-between;gap:8px;padding-top:2px">
+              <button class="btn danger" style="width:auto;padding:6px 0;font-size:.8rem">Never allow</button>
+              <button class="btn text" style="width:auto;padding:6px 0;font-size:.8rem">How Amethyst decides</button>
+            </div>
+          </div>
+        </div>
+        <div class="frame-cap">P10′ · your own inbox — the state that couldn't be said</div>
+      </div>
+
+      <div class="frame">
+        <div class="screen">
+          <div class="dlg">
+            <div style="display:flex;align-items:center;gap:11px">
+              <span class="relayicon r3">rd</span>
+              <div style="min-width:0">
+                <div style="font-size:.95rem;font-weight:600">relay.damus.io</div>
+                <div style="font-size:.73rem;color:var(--on-s-var)">asks who you are</div>
+              </div>
+            </div>
+            <h3 class="dlg-title" style="margin-top:2px">Log in as <span style="color:var(--pri)">@vitor</span>?</h3>
+            <p class="dlg-body" style="font-size:.92rem;color:var(--on-s)">
+              It won't accept your message for
+              <span class="av xs a1 av-inline">AN</span><strong>Alice and 4 others</strong>
+              from someone it can't identify.
+            </p>
+            <button style="all:unset;display:flex;align-items:center;gap:8px;cursor:default">
+              <span class="facepile">
+                <span class="av xs a1">AN</span><span class="av xs a2">JD</span><span class="av xs a3">MK</span><span class="av xs a5">TP</span>
+              </span>
+              <span style="margin-left:14px;font-size:.78rem;color:var(--pri)">Also reading 2 people you follow ⌄</span>
+            </button>
+            <div style="display:flex;align-items:center;gap:11px;padding:11px 13px;background:var(--s-var);border-radius:14px">
+              <div style="flex:1;font-size:.86rem">Remember for this relay</div><span class="sw"></span>
+            </div>
+            <div class="btnrow"><button class="btn outline">Not now</button><button class="btn filled">Log in</button></div>
+            <div style="display:flex;justify-content:space-between;gap:8px;padding-top:2px">
+              <button class="btn danger" style="width:auto;padding:6px 0;font-size:.8rem">Never allow</button>
+              <button class="btn text" style="width:auto;padding:6px 0;font-size:.8rem">How Amethyst decides</button>
+            </div>
+          </div>
+        </div>
+        <div class="frame-cap">P2′ + P7′ · many people, several purposes</div>
+      </div>
+    </div>
+
+    <p class="read" style="margin-top:26px">
+      Multi-purpose stops stacking labelled sections. The winning purpose keeps the sentence; the
+      rest collapse to one disclosure line that expands on tap. The dialog stays a fixed height and
+      the buttons never leave the fold.
+    </p>
+
+    <div class="compare" style="margin-top:44px">
+      <div class="frame">
+        <div class="screen light">
+          <div class="dlg">
+            <div style="display:flex;align-items:center;gap:11px">
+              <span class="relayicon r4">bd</span>
+              <div style="min-width:0">
+                <div style="font-size:.95rem;font-weight:600">relay.bitcoindevs.xyz</div>
+                <div style="font-size:.73rem;color:var(--on-s-var)">asks who you are</div>
+              </div>
+            </div>
+            <h3 class="dlg-title" style="margin-top:2px">Log in as <span style="color:var(--pri)">@vitor</span>?</h3>
+            <p class="dlg-body" style="font-size:.92rem;color:var(--on-s)">
+              It won't accept your post in <strong>Bitcoin Devs</strong> from someone it can't identify.
+            </p>
+            <div style="display:flex;align-items:center;gap:11px;padding:11px 13px;background:var(--s-var);border-radius:14px">
+              <div style="flex:1;font-size:.86rem">Remember for this relay</div><span class="sw"></span>
+            </div>
+            <div class="btnrow"><button class="btn outline">Not now</button><button class="btn filled">Log in</button></div>
+            <div style="display:flex;justify-content:space-between;gap:8px;padding-top:2px">
+              <button class="btn danger" style="width:auto;padding:6px 0;font-size:.8rem">Never allow</button>
+              <button class="btn text" style="width:auto;padding:6px 0;font-size:.8rem">How Amethyst decides</button>
+            </div>
+          </div>
+        </div>
+        <div class="frame-cap">P5′ · venue · Amethyst light theme</div>
+      </div>
+
+      <div class="frame">
+        <div class="screen">
+          <div class="dlg">
+            <div style="display:flex;align-items:center;gap:11px">
+              <span class="relayicon r1">?</span>
+              <div style="min-width:0">
+                <div style="font-size:.95rem;font-weight:600">relay.unknown.example</div>
+                <div style="font-size:.73rem;color:var(--on-s-var)">asks who you are</div>
+              </div>
+            </div>
+            <h3 class="dlg-title" style="margin-top:2px">Log in as <span style="color:var(--pri)">@vitor</span>?</h3>
+            <p class="dlg-body" style="font-size:.92rem;color:var(--on-s)">
+              It asks everyone to log in. Amethyst can't tell what it's holding back.
+            </p>
+            <div style="display:flex;align-items:center;gap:11px;padding:11px 13px;background:var(--s-var);border-radius:14px">
+              <div style="flex:1;font-size:.86rem">Remember for this relay</div><span class="sw"></span>
+            </div>
+            <div class="btnrow"><button class="btn outline">Not now</button><button class="btn filled">Log in</button></div>
+            <div style="display:flex;justify-content:space-between;gap:8px;padding-top:2px">
+              <button class="btn danger" style="width:auto;padding:6px 0;font-size:.8rem">Never allow</button>
+              <button class="btn text" style="width:auto;padding:6px 0;font-size:.8rem">How Amethyst decides</button>
+            </div>
+          </div>
+        </div>
+        <div class="frame-cap">P8′ · unattributable — honest, not blank</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================== S STATES -->
+  <section id="s-states">
+    <div class="sec-head">
+      <div class="eyebrow">05 — The settings</div>
+      <h2>Every state the settings screen can be in</h2>
+      <p>
+        Three policy modes crossed with the per-relay list, which is the union of three different
+        sources: explicit overrides, recorded grant rationale, and last-used timestamps.
+      </p>
+    </div>
+
+    <div class="tbl-scroll">
+      <table>
+        <thead><tr><th>ID</th><th>Condition</th><th>What renders</th><th>Verdict</th></tr></thead>
+        <tbody>
+          <tr><td class="id">S1</td><td class="k">policy = ALWAYS</td><td>3 policy cards, no toggles, relay list</td><td><span class="tag neu">ok</span></td></tr>
+          <tr><td class="id">S2</td><td class="k">policy = NEVER</td><td>3 policy cards, no toggles, relay list</td><td><span class="tag neu">ok</span></td></tr>
+          <tr><td class="id">S3</td><td class="k">policy = CUSTOM (default)</td><td>3 cards + 4 switch tiles + relay list</td><td><span class="tag bad">7 paragraphs</span></td></tr>
+          <tr><td class="id">S4</td><td class="k">list empty</td><td>"Nothing here yet — your global policy applies…"</td><td><span class="tag neu">ok</span></td></tr>
+          <tr><td class="id">S5</td><td class="k">decision = null (policy-allowed)</td><td>green <em>Allow</em> chip</td><td><span class="tag bad">indistinguishable</span></td></tr>
+          <tr><td class="id">S6</td><td class="k">decision = ALLOW (explicit)</td><td>green <em>Allow</em> chip — identical to S5</td><td><span class="tag bad">indistinguishable</span></td></tr>
+          <tr><td class="id">S7</td><td class="k">decision = DENY</td><td>red <em>Deny</em> chip</td><td><span class="tag neu">ok</span></td></tr>
+          <tr><td class="id">S8</td><td class="k">rationale present / absent</td><td>facepile or nothing; last-used or nothing</td><td><span class="tag bad">unlabelled</span></td></tr>
+          <tr><td class="id">S9</td><td class="k">relay on block list (10006)</td><td>— nothing; hard DENY is invisible —</td><td><span class="tag bad">missing</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ================================================== S AS-IS -->
+  <section id="s-asis">
+    <div class="sec-head">
+      <div class="eyebrow">06 — The settings</div>
+      <h2>As built</h2>
+      <p>State S3 — the default for a new install, and the densest.</p>
+    </div>
+
+    <div class="spec">
+      <div>
+        <div class="frame">
+          <div class="screen tall">
+            <span class="pin" style="top:64px; left:-9px">1</span>
+            <span class="pin" style="top:214px; left:-9px">2</span>
+            <span class="pin" style="top:296px; left:-9px">3</span>
+            <span class="pin" style="top:470px; left:-9px">4</span>
+            <span class="pin" style="top:530px; left:220px">5</span>
+            <span class="pin" style="top:530px; left:296px">6</span>
+            <div class="appbar">
+              <svg class="icon" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 11H7.8l5.6-5.6L12 4l-8 8 8 8 1.4-1.4L7.8 13H20v-2z"/></svg>
+              <h5>Relay Authentication</h5>
+            </div>
+            <div class="grouphead">When to authenticate</div>
+            <div class="policycard">
+              <svg class="icon" width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm6-9h-1V6a5 5 0 0 0-9.6-2h2.2A3 3 0 0 1 15 6v2H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2z"/></svg>
+              <div class="tx"><div class="tt">Always authenticate</div><div class="td">Sign auth challenges for every relay that requests it</div></div>
+            </div>
+            <div class="policycard">
+              <svg class="icon" width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 8h-1V6A5 5 0 0 0 7 6v2H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2zM9 6a3 3 0 0 1 6 0v2H9V6zm3 11a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"/></svg>
+              <div class="tx"><div class="tt">Never authenticate</div><div class="td">Ignore auth challenges from all relays</div></div>
+            </div>
+            <div class="policycard sel">
+              <svg class="icon pri" width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 17v2h6v-2H3zM3 5v2h10V5H3zm10 16v-2h8v-2h-8v-2h-2v6h2zM7 9v2H3v2h4v2h2V9H7zm14 4v-2H11v2h10zm-6-4h2V7h4V5h-4V3h-2v6z"/></svg>
+              <div class="tx"><div class="tt">Custom</div><div class="td">Choose exactly which relays to log in to. You'll be asked about anything you haven't allowed below.</div></div>
+            </div>
+            <div class="grouphead">What to log in to</div>
+            <div class="card">
+              <div class="tile">
+                <svg class="icon" width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 13H4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2zM7 19a2 2 0 1 1 0-4 2 2 0 0 1 0 4zM20 3H4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zM7 9a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"/></svg>
+                <div class="tx"><div class="tt">My relays and venues</div><div class="td">Log in to your own relays and to public chats, communities and live streams you've joined or favorited.</div></div>
+                <span class="sw on"></span>
+              </div>
+              <div class="divider"></div>
+              <div class="tile">
+                <svg class="icon" width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+                <div class="tx"><div class="tt">Read posts from people I follow</div><div class="td">Log in to a follow's relays to download their profile information, posts and post engagement.</div></div>
+                <span class="sw on"></span>
+              </div>
+              <div class="divider"></div>
+              <div class="tile">
+                <svg class="icon" width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                <div class="tx"><div class="tt">Message people I follow</div><div class="td">Log in to a follow's relays to send DMs, replies and notifications.</div></div>
+                <span class="sw on"></span>
+              </div>
+              <div class="divider"></div>
+              <div class="tile">
+                <svg class="icon" width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm-1 17.9A8 8 0 0 1 4 12c0-.6.1-1.2.2-1.8L9 15v1a2 2 0 0 0 2 2v1.9zm6.9-2.5A2 2 0 0 0 16 16h-1v-3a1 1 0 0 0-1-1H8v-2h2a1 1 0 0 0 1-1V7h2a2 2 0 0 0 2-2v-.4a8 8 0 0 1 2.9 12.8z"/></svg>
+                <div class="tx"><div class="tt">Message anyone</div><div class="td">Log in to strangers' relays to send DMs, replies and notifications. Off by default; you'll be asked each time instead.</div></div>
+                <span class="sw"></span>
+              </div>
+            </div>
+            <div class="grouphead">Per-relay overrides</div>
+            <div class="card">
+              <div class="relayrow">
+                <span class="relayicon r1">nw</span>
+                <div class="meta">
+                  <div class="url">inbox.nostr.wine</div>
+                  <div class="facepile" style="margin-top:4px"><span class="av xs a1">AN</span><span class="av xs a2">JD</span><span class="av xs a3">MK</span><span class="more" style="font-size:.72rem">+6</span></div>
+                  <div class="sub">Last used 2 m ago</div>
+                </div>
+                <span class="pill allow">Allow</span>
+                <svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m19 6.4-1.4-1.4-5.6 5.6L6.4 5 5 6.4l5.6 5.6L5 17.6 6.4 19l5.6-5.6 5.6 5.6 1.4-1.4-5.6-5.6z"/></svg>
+              </div>
+              <div class="divider"></div>
+              <div class="relayrow">
+                <span class="relayicon r3">rd</span>
+                <div class="meta"><div class="url">relay.damus.io</div><div class="sub">Last used 1 h ago</div></div>
+                <span class="pill allow">Allow</span>
+                <svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m19 6.4-1.4-1.4-5.6 5.6L6.4 5 5 6.4l5.6 5.6L5 17.6 6.4 19l5.6-5.6 5.6 5.6 1.4-1.4-5.6-5.6z"/></svg>
+              </div>
+              <div class="divider"></div>
+              <div class="relayrow">
+                <span class="relayicon r2">pv</span>
+                <div class="meta"><div class="url">private.relay.example</div></div>
+                <span class="pill deny">Deny</span>
+                <svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m19 6.4-1.4-1.4-5.6 5.6L6.4 5 5 6.4l5.6 5.6L5 17.6 6.4 19l5.6-5.6 5.6 5.6 1.4-1.4-5.6-5.6z"/></svg>
+              </div>
+            </div>
+          </div>
+          <div class="frame-cap">S3 + S5 + S6 + S7 + S8 · policy = custom</div>
+        </div>
+      </div>
+      <div>
+        <div class="spec-id"><span class="sid">S3</span><h4>The default screen</h4></div>
+        <div class="spec-note">
+          <p>
+            Seven descriptive paragraphs stand between the top of the screen and the first relay. Most
+            of them restate their own title — <em>"Never authenticate / Ignore auth challenges from
+            all relays"</em> — and the <em>Custom</em> card describes the toggle group that is already
+            visible underneath it.
+          </p>
+        </div>
+        <ul class="legend">
+          <li><span class="pin-n">1</span><span>Two headers, <em>When to authenticate</em> and <em>What to log in to</em>, for one decision. The second group only exists as a child of the third card in the first group, and nothing shows that relationship.</span></li>
+          <li><span class="pin-n">2</span><span>Every switch title is a complete sentence and every description repeats it in longer form. Four of these in a row is the wall of text.</span></li>
+          <li><span class="pin-n">3</span><span>"Message anyone" buries the one fact that matters — it is off, and that is deliberate — at the end of the fourth line.</span></li>
+          <li><span class="pin-n">4</span><span>Header says <em>Per-relay overrides</em>, but the list is the union of overrides, recorded rationale and last-used timestamps. Most rows are not overrides — they are a usage log wearing the wrong label.</span></li>
+          <li><span class="pin-n">5</span><span>The chip reads <em>Allow</em> for both "explicitly allowed" and "allowed by your current policy". The underlying model has three states; the control has two, and the user can't tell which relays would change if they switched policy.</span></li>
+          <li><span class="pin-n">6</span><span>A bare ✕ next to a red chip reads as "block". It actually forgets both the override <em>and</em> the recorded reason, so the row silently returns the next time the relay is used.</span></li>
+        </ul>
+        <p class="spec-note" style="margin-top:16px">
+          Two states are missing entirely: relays hard-denied by your block list (kind 10006), which
+          outrank every control on this screen; and which account these decisions belong to, on a
+          device where AUTH is answered per account.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================== S NEW -->
+  <section id="s-new">
+    <div class="sec-head">
+      <div class="eyebrow">07 — The settings</div>
+      <h2>Proposed: one decision, then two honest lists</h2>
+      <p>
+        The policy group loses its second header and its restating descriptions. The toggles become
+        sentence completions, so the group header carries the grammar and each row is three or four
+        words. The single mislabelled list splits into what it actually contains — exceptions you set,
+        relays your block list forbids, and a recent-activity log.
+      </p>
+    </div>
+
+    <div class="spec">
+      <div>
+        <div class="frame">
+          <div class="screen tall">
+            <span class="pin good" style="top:64px; left:-9px">1</span>
+            <span class="pin good" style="top:196px; left:-9px">2</span>
+            <span class="pin good" style="top:340px; left:-9px">3</span>
+            <span class="pin good" style="top:452px; left:-9px">4</span>
+            <span class="pin good" style="top:552px; left:-9px">5</span>
+            <div class="appbar">
+              <svg class="icon" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 11H7.8l5.6-5.6L12 4l-8 8 8 8 1.4-1.4L7.8 13H20v-2z"/></svg>
+              <h5 style="flex:1">Relay login</h5>
+              <span style="display:flex;align-items:center;gap:6px;background:var(--s-var);border-radius:100px;padding:3px 10px 3px 3px">
+                <span class="av xs a3">V</span><span style="font-size:.76rem">@vitor</span>
+              </span>
+            </div>
+            <div class="grouphead">When a relay asks who you are</div>
+            <div class="card">
+              <div class="tile">
+                <span class="radio"></span>
+                <div class="tx"><div class="tt">Always log in</div><div class="td">Every relay that asks.</div></div>
+              </div>
+              <div class="divider"></div>
+              <div class="tile">
+                <span class="radio on"></span>
+                <div class="tx"><div class="tt">Decide per relay</div><div class="td">Allow the cases below, ask about the rest.</div></div>
+              </div>
+              <div class="divider"></div>
+              <div class="tile">
+                <span class="radio"></span>
+                <div class="tx"><div class="tt">Never log in</div><div class="td">Some relays will refuse to serve you.</div></div>
+              </div>
+            </div>
+            <div class="grouphead">Log in without asking when…</div>
+            <div class="card">
+              <div class="tile"><div class="tx"><div class="tt">…it's my relay, or a room I joined</div></div><span class="sw on"></span></div>
+              <div class="divider"></div>
+              <div class="tile"><div class="tx"><div class="tt">…I'm reading someone I follow</div></div><span class="sw on"></span></div>
+              <div class="divider"></div>
+              <div class="tile"><div class="tx"><div class="tt">…I'm messaging someone I follow</div></div><span class="sw on"></span></div>
+              <div class="divider"></div>
+              <div class="tile"><div class="tx"><div class="tt">…I'm messaging anyone else</div><div class="td">Off — you'll be asked each time.</div></div><span class="sw"></span></div>
+            </div>
+            <div class="grouphead">Exceptions</div>
+            <div class="card">
+              <div class="relayrow">
+                <span class="relayicon r1">nw</span>
+                <div class="meta"><div class="url">inbox.nostr.wine</div><div class="sub">Always, since 12 Jul</div></div>
+                <span class="seg"><span class="on">Always</span><span>Never</span></span>
+                <svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="currentColor" role="img" aria-label="Remove exception"><path d="m19 6.4-1.4-1.4-5.6 5.6L6.4 5 5 6.4l5.6 5.6L5 17.6 6.4 19l5.6-5.6 5.6 5.6 1.4-1.4-5.6-5.6z"/></svg>
+              </div>
+              <div class="divider"></div>
+              <div class="relayrow">
+                <span class="relayicon r2">pv</span>
+                <div class="meta"><div class="url">private.relay.example</div><div class="sub">Never, since 28 Jul</div></div>
+                <span class="seg"><span>Always</span><span class="on no">Never</span></span>
+                <svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="currentColor" role="img" aria-label="Remove exception"><path d="m19 6.4-1.4-1.4-5.6 5.6L6.4 5 5 6.4l5.6 5.6L5 17.6 6.4 19l5.6-5.6 5.6 5.6 1.4-1.4-5.6-5.6z"/></svg>
+              </div>
+            </div>
+            <div class="snackbar">
+              <span>Exception removed. inbox.nostr.wine follows your rules again.</span>
+              <span class="undo">Undo</span>
+            </div>
+            <div class="grouphead">Blocked by your block list</div>
+            <div class="card">
+              <div class="relayrow">
+                <span class="relayicon r4">sp</span>
+                <div class="meta"><div class="url">spam.relay.example</div><div class="sub">Amethyst never logs in to blocked relays.</div></div>
+                <svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 8h-1V6A5 5 0 0 0 7 6v2H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2zM9 6a3 3 0 0 1 6 0v2H9V6z"/></svg>
+              </div>
+            </div>
+          </div>
+          <div class="frame-cap">S3′ · proposed default</div>
+        </div>
+      </div>
+      <div>
+        <div class="spec-id"><span class="sid">S3′</span><h4>The proposed default</h4></div>
+        <div class="spec-note">
+          <p>
+            Same controls, same behaviour, roughly half the words. Nothing below the fold changed
+            meaning — the lists just stopped claiming to be something they weren't.
+          </p>
+        </div>
+        <ul class="legend ok">
+          <li><span class="pin-n">1</span><span>The account is on the bar. Decisions are stored per account, so the screen should say whose it is — and switching accounts should switch the lists.</span></li>
+          <li><span class="pin-n">2</span><span>Policy cards become a plain radio group. Each description is one clause and adds a fact the title doesn't have; the mode formerly called <em>Custom</em> is named for what it does.</span></li>
+          <li><span class="pin-n">3</span><span>The group header carries the grammar — "Log in without asking when…" — so each row is a completion, three or four words, no descriptions. The one row with a non-obvious default keeps a single short line.</span></li>
+          <li><span class="pin-n">4</span><span><em>Exceptions</em> contains only explicit overrides, so the header is true. A two-way segmented control replaces the ambiguous chip — a relay is here because you put it here, and the control shows which way. <strong>✕ removes the exception</strong>, dropping the relay back to your rules so it can ask again; an undo snackbar names what just happened. This is the old <em>Forget</em>, kept but disambiguated: it no longer sits beside a red chip that also looks like a block, and it no longer wipes the usage history, which now lives in its own list.</span></li>
+          <li><span class="pin-n">5</span><span>Block-list relays get their own locked group. They outrank every control above them and were previously invisible.</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="compare" style="margin-top:56px">
+      <div class="frame">
+        <div class="screen tall" style="min-height:auto">
+          <div class="grouphead" style="margin-top:0">Recent logins</div>
+          <div class="card">
+            <div class="relayrow">
+              <span class="relayicon r1">nw</span>
+              <div class="meta">
+                <div class="url">inbox.nostr.wine</div>
+                <div class="purposechips"><span class="pchip">your inbox</span><span class="pchip">DMs to 9 people</span></div>
+                <div class="sub">2 m ago · allowed by your rules</div>
+              </div>
+              <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm0 2a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm0 6a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/></svg>
+            </div>
+            <div class="divider"></div>
+            <div class="relayrow">
+              <span class="relayicon r3">rd</span>
+              <div class="meta">
+                <div class="url">relay.damus.io</div>
+                <div class="purposechips"><span class="pchip">reading 4 follows</span><span class="pchip">a conversation</span></div>
+                <div class="sub">1 h ago · allowed by your rules</div>
+              </div>
+              <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm0 2a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm0 6a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/></svg>
+            </div>
+            <div class="divider"></div>
+            <div class="relayrow">
+              <span class="relayicon r4">bd</span>
+              <div class="meta">
+                <div class="url">relay.bitcoindevs.xyz</div>
+                <div class="purposechips"><span class="pchip">Bitcoin Devs</span></div>
+                <div class="sub">Yesterday · you allowed once</div>
+              </div>
+              <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm0 2a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm0 6a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="frame-cap">S8′ · the log, given its own name</div>
+      </div>
+
+      <div class="frame">
+        <div class="screen tall" style="min-height:auto">
+          <div class="grouphead" style="margin-top:0">Exceptions</div>
+          <div class="emptycard">No exceptions yet. Every relay follows the rules above.</div>
+          <div class="grouphead">Blocked by your block list</div>
+          <div class="emptycard">Nothing blocked. Relays you block will never be logged in to, whatever you set here.</div>
+          <div class="grouphead">Recent logins</div>
+          <div class="emptycard">No relay has asked you to log in yet.</div>
+        </div>
+        <div class="frame-cap">S4′ · empty states, one per list</div>
+      </div>
+    </div>
+
+    <p class="read" style="margin-top:26px">
+      The facepile moves out of the exceptions list and into the log, where it belongs — an exception
+      is a rule you set about a relay, not a record of who it served. In the log, purpose chips
+      replace the anonymous avatar row: <em>"your inbox"</em>, <em>"a conversation"</em>,
+      <em>"reading 4 follows"</em> say what the app actually did, and each one is a
+      <code>SubPurpose</code> the filter already declared. The overflow on each row offers the only
+      two useful actions — <em>Always allow</em> and <em>Never allow</em> — which promote the row into
+      the Exceptions list above.
+    </p>
+  </section>
+
+  <!-- ================================================== COPY -->
+  <section id="copy">
+    <div class="sec-head">
+      <div class="eyebrow">08 — Handover</div>
+      <h2>Copy deck</h2>
+      <p>
+        Every string in <code>values/strings.xml</code> touched by this proposal. Nine are cut
+        outright; the rest shorten. Placeholders keep their positional indices.
+      </p>
+    </div>
+
+    <h3 class="sub">The prompt</h3>
+    <div class="deck">
+      <div class="deck-row">
+        <div class="deck-key">relay_auth_prompt_title</div>
+        <div>
+          <div class="deck-old">Confirm it's you to this relay?</div>
+          <div class="deck-new">Log in as %1$s? <span style="color:var(--muted);font-size:13px">— now constant across all states; %1$s is the account handle</span></div>
+        </div>
+      </div>
+      <div class="deck-row">
+        <div class="deck-key">relay_auth_prompt_message</div>
+        <div>
+          <div class="deck-old">This relay wants to confirm it's really you first. Its operator will see which account you are.</div>
+          <div class="deck-cut">"log in" already means "identify yourself", and the title names the account. Nothing replaces it — an npub under the title was tried and dropped: truncated, it can't be verified by eye, so it is decoration on every single prompt</div>
+        </div>
+      </div>
+      <div class="deck-row">
+        <div class="deck-key">relay_auth_title_send_dm<br>relay_auth_title_notify<br>relay_auth_title_read<br>relay_auth_title_post_venue<br>relay_auth_title_read_venue</div>
+        <div>
+          <div class="deck-cut">the title no longer varies by purpose</div>
+        </div>
+      </div>
+      <div class="deck-row">
+        <div class="deck-key">relay_auth_consequence_*<br><span style="opacity:.6">(5 strings)</span></div>
+        <div>
+          <div class="deck-cut">the consequence is inside the reason sentence</div>
+        </div>
+      </div>
+      <div class="deck-row">
+        <div class="deck-key">relay_auth_reason_send_dm</div>
+        <div>
+          <div class="deck-old">Send your private message to:</div>
+          <div class="deck-new">It won't accept your message for %1$s from someone it can't identify.</div>
+        </div>
+      </div>
+      <div class="deck-row">
+        <div class="deck-key">relay_auth_reason_notify_inbox</div>
+        <div>
+          <div class="deck-old">Notify:</div>
+          <div class="deck-new">%1$s won't hear about your reply unless it can identify the sender.</div>
+        </div>
+      </div>
+      <div class="deck-row">
+        <div class="deck-key">relay_auth_reason_read_outbox</div>
+        <div>
+          <div class="deck-old">Download profile information, posts and engagement from:</div>
+          <div class="deck-new">It won't serve %1$s's posts to readers it can't identify.</div>
+        </div>
+      </div>
+      <div class="deck-row">
+        <div class="deck-key">relay_auth_reason_post_venue</div>
+        <div>
+          <div class="deck-old">Post to this room</div>
+          <div class="deck-new">It won't accept your post in %1$s from someone it can't identify.</div>
+        </div>
+      </div>
+      <div class="deck-row">
+        <div class="deck-key">relay_auth_reason_read_venue</div>
+        <div>
+          <div class="deck-old">Open this room</div>
+          <div class="deck-new">It won't serve %1$s to readers it can't identify.</div>
+        </div>
+      </div>
+      <div class="deck-row">
+        <div class="deck-key">relay_auth_reason_other</div>
+        <div>
+          <div class="deck-old">Use this relay</div>
+          <div class="deck-new">It asks everyone to log in. Amethyst can't tell what it's holding back.</div>
+        </div>
+      </div>
+      <div class="deck-row">
+        <div class="deck-key">relay_auth_reason_my_inbox<br><span class="tag ok">new</span></div>
+        <div><div class="deck-new">It won't serve your replies, zaps and mentions to readers it can't identify.</div></div>
+      </div>
+      <div class="deck-row">
+        <div class="deck-key">relay_auth_reason_thread<br><span class="tag ok">new</span></div>
+        <div><div class="deck-new">It won't serve the rest of this conversation to readers it can't identify.</div></div>
+      </div>
+      <div class="deck-row">
+        <div class="deck-key">relay_auth_reason_my_own_relay</div>
+        <div>
+          <div class="deck-old">Connect to your own relay</div>
+          <div class="deck-new">This is one of your own relays, and it asks everyone to log in.</div>
+        </div>
+      </div>
+      <div class="deck-row">
+        <div class="deck-key">relay_auth_allow_once<br>relay_auth_always_allow</div>
+        <div>
+          <div class="deck-old">Allow once · Always allow this relay</div>
+          <div class="deck-new">Log in · Not now · Remember for this relay <span style="color:var(--muted);font-size:13px">— two buttons and a switch</span></div>
+        </div>
+      </div>
+      <div class="deck-row">
+        <div class="deck-key">relay_auth_always_deliver</div>
+        <div>
+          <div class="deck-cut">a dialog button must not rewrite the global policy</div>
+          <div class="deck-new">How Amethyst decides <span style="color:var(--muted);font-size:13px">— a link to the settings screen instead</span></div>
+        </div>
+      </div>
+      <div class="deck-row">
+        <div class="deck-key">relay_auth_block</div>
+        <div>
+          <div class="deck-old">Block this relay</div>
+          <div class="deck-new">Never allow</div>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="sub">The settings</h3>
+    <div class="deck">
+      <div class="deck-row">
+        <div class="deck-key">relay_auth_settings_title</div>
+        <div><div class="deck-old">Relay Authentication</div><div class="deck-new">Relay login</div></div>
+      </div>
+      <div class="deck-row">
+        <div class="deck-key">relay_auth_global_policy</div>
+        <div><div class="deck-old">When to authenticate</div><div class="deck-new">When a relay asks who you are</div></div>
+      </div>
+      <div class="deck-row">
+        <div class="deck-key">relay_auth_custom_section</div>
+        <div><div class="deck-old">What to log in to</div><div class="deck-new">Log in without asking when…</div></div>
+      </div>
+      <div class="deck-row">
+        <div class="deck-key">relay_auth_policy_always<br>…_desc</div>
+        <div><div class="deck-old">Always authenticate — Sign auth challenges for every relay that requests it</div><div class="deck-new">Always log in — Every relay that asks.</div></div>
+      </div>
+      <div class="deck-row">
+        <div class="deck-key">relay_auth_policy_never<br>…_desc</div>
+        <div><div class="deck-old">Never authenticate — Ignore auth challenges from all relays</div><div class="deck-new">Never log in — Some relays will refuse to serve you.</div></div>
+      </div>
+      <div class="deck-row">
+        <div class="deck-key">relay_auth_policy_custom<br>…_desc</div>
+        <div><div class="deck-old">Custom — Choose exactly which relays to log in to. You'll be asked about anything you haven't allowed below.</div><div class="deck-new">Decide per relay — Allow the cases below, ask about the rest.</div></div>
+      </div>
+      <div class="deck-row">
+        <div class="deck-key">relay_auth_toggle_my_relays<br>…_desc</div>
+        <div><div class="deck-old">My relays and venues — Log in to your own relays and to public chats, communities and live streams you've joined or favorited.</div><div class="deck-new">…it's my relay, or a room I joined</div></div>
+      </div>
+      <div class="deck-row">
+        <div class="deck-key">relay_auth_toggle_read_follows<br>…_desc</div>
+        <div><div class="deck-old">Read posts from people I follow — Log in to a follow's relays to download their profile information, posts and post engagement.</div><div class="deck-new">…I'm reading someone I follow</div></div>
+      </div>
+      <div class="deck-row">
+        <div class="deck-key">relay_auth_toggle_message_follows<br>…_desc</div>
+        <div><div class="deck-old">Message people I follow — Log in to a follow's relays to send DMs, replies and notifications.</div><div class="deck-new">…I'm messaging someone I follow</div></div>
+      </div>
+      <div class="deck-row">
+        <div class="deck-key">relay_auth_toggle_message_strangers<br>…_desc</div>
+        <div><div class="deck-old">Message anyone — Log in to strangers' relays to send DMs, replies and notifications. Off by default; you'll be asked each time instead.</div><div class="deck-new">…I'm messaging anyone else — Off — you'll be asked each time.</div></div>
+      </div>
+      <div class="deck-row">
+        <div class="deck-key">relay_auth_per_relay_overrides</div>
+        <div><div class="deck-old">Per-relay overrides <span style="color:var(--muted);font-size:13px">— one list, three sources</span></div><div class="deck-new">Exceptions · Blocked by your block list · Recent logins</div></div>
+      </div>
+      <div class="deck-row">
+        <div class="deck-key">relay_auth_no_overrides</div>
+        <div><div class="deck-old">Nothing here yet — your global policy applies to every relay.</div><div class="deck-new">No exceptions yet. Every relay follows the rules above.</div></div>
+      </div>
+      <div class="deck-row">
+        <div class="deck-key">relay_auth_decision_allow<br>relay_auth_decision_deny</div>
+        <div><div class="deck-old">Allow · Deny</div><div class="deck-new">Always · Never <span style="color:var(--muted);font-size:13px">— a two-way segmented control, so "allowed by policy" is no longer drawn as an explicit allow</span></div></div>
+      </div>
+      <div class="deck-row">
+        <div class="deck-key">relay_auth_forget</div>
+        <div><div class="deck-old">Forget</div><div class="deck-new">Remove exception <span style="color:var(--muted);font-size:13px">— kept, retitled for what it does; clears the override only, and the relay asks again next time</span></div></div>
+      </div>
+      <div class="deck-row">
+        <div class="deck-key">relay_auth_exception_removed<br><span class="tag ok">new</span></div>
+        <div><div class="deck-new">Exception removed. %1$s follows your rules again. <span style="color:var(--muted);font-size:13px">— undo snackbar</span></div></div>
+      </div>
+      <div class="deck-row">
+        <div class="deck-key">relay_auth_last_used</div>
+        <div><div class="deck-old">Last used %1$s ago</div><div class="deck-new">%1$s ago · allowed by your rules <span style="color:var(--muted);font-size:13px">— log rows only</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================== NEXT -->
+  <section id="next">
+    <div class="sec-head">
+      <div class="eyebrow">09 — Handover</div>
+      <h2>What this needs before it can be built</h2>
+      <p>Ordered by dependency. The first item is the one that makes the copy true.</p>
+    </div>
+
+    <div class="tbl-scroll">
+      <table>
+        <thead><tr><th>#</th><th>Change</th><th>Where</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="id">1</td>
+            <td>Read the declared purpose instead of re-inferring it. Downcast the filters from <code>activeRequests</code> to <code>ExplainedFilter</code> and map <code>SubPurpose</code> → <code>AuthPurposeKind</code>; fall back to tag-shape inference only for plain <code>Filter</code>s. Kills P10 and P11, and the phantom-channel side effect with them.</td>
+            <td class="k">RelayAuthPurposeDeriver.kt</td>
+          </tr>
+          <tr>
+            <td class="id">2</td>
+            <td>Add <code>MY_INBOX</code> and <code>THREAD</code> kinds; make <code>MY_OWN_RELAY</code> reachable from the deriver so its existing string and ledger branch stop being dead.</td>
+            <td class="k">AuthPurpose.kt</td>
+          </tr>
+          <tr>
+            <td class="id">3</td>
+            <td>Guard <code>rememberVenueLabel</code> so only ids that are actually NIP-28 channels get <code>checkGetOrCreatePublicChatChannel</code> — a venue purpose should carry its kind rather than being sniffed from string length.</td>
+            <td class="k">RelayAuthPromptHost.kt</td>
+          </tr>
+          <tr>
+            <td class="id">4</td>
+            <td>Pass the account into the prompt. <code>AuthCoordinator</code> already decides per account and <code>askChoice</code> is reused across them — the dialog needs to name whose identity is at stake, and the shared-answer shortcut needs re-examining once it does.</td>
+            <td class="k">AuthCoordinator.kt · RelayAuthPromptBus.kt</td>
+          </tr>
+          <tr>
+            <td class="id">5</td>
+            <td>Split the settings list at the source: <code>allDecisions()</code> for Exceptions, the blocked-relay list for the locked group, <code>allRationales()</code> + <code>allLastUsed()</code> for the log.</td>
+            <td class="k">RelayAuthSettingsScreen.kt</td>
+          </tr>
+          <tr>
+            <td class="id">6</td>
+            <td>Decide what a 60-second silent <code>DISMISS</code> should look like. Today the prompt vanishes, the event stays pending in the outbox forever, and the user is told nothing — the known limitation in the original plan is now also a UI gap.</td>
+            <td class="k">RelayAuthPromptBus.kt</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="read" style="margin-top:26px">
+      Nothing here changes the decision model: the precedence ladder in
+      <code>RelayAuthResolver</code>, the per-relay gate, and the four custom toggles all stay exactly
+      as they are. This is a copy and layout proposal on top of them, plus one upstream correction so
+      the copy describes what is actually happening.
+    </p>
+  </section>
+
+  </main>
+</div>

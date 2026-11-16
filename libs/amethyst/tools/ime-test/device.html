@@ -1,0 +1,36 @@
+<!doctype html><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1">
+<title>IME device fixtures</title>
+<style>body{font:16px sans-serif;margin:12px} input,textarea,[contenteditable]{display:block;width:95%;margin:6px 0 14px;font:16px sans-serif;border:1px solid #888;padding:6px;min-height:22px} label{font-size:12px;color:#555}</style>
+<script>window.__out=[]</script>
+<label>form: name / email / bio (Enter = Next, last submits)</label>
+<form id="form"><input id="fname" placeholder="name"><input id="femail" type="email" placeholder="email"><input id="fcity" placeholder="city"></form>
+<label>chips (type "tag:x " ; Backspace after chip; Enter searches)</label>
+<div id="chips" contenteditable="true" style="white-space:pre-wrap"></div>
+<label>normal contenteditable (Enter = new line)</label>
+<div id="ce" contenteditable="true"></div>
+<label>maxlength 5</label>
+<input id="max" maxlength="5">
+<label>paste cleaner (paste replaces spaces with -)</label>
+<input id="pc">
+<label>chat (Enter sends, Shift+Enter newline)</label>
+<textarea id="chat" rows="1"></textarea>
+<script>
+document.getElementById('form').addEventListener('submit', function(e){ e.preventDefault(); __out.push('submit') })
+var chat = document.getElementById('chat'); chat.addEventListener('keydown', function(e){ if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); __out.push('sent ' + chat.value); chat.value = '' } })
+var pc = document.getElementById('pc'); pc.addEventListener('paste', function(e){ e.preventDefault(); var t = e.clipboardData.getData('text/plain').replace(/\s+/g, '-'); pc.setRangeText(t, pc.selectionStart, pc.selectionEnd, 'end'); __out.push('cleaned') })
+var f = document.getElementById('chips')
+function value(){ var s = ''; f.childNodes.forEach(function(n){ s += n.nodeType === 3 ? n.data : (n.dataset.token || '') }); return s }
+function caretOffset(){ var sel = getSelection(); if (!sel.rangeCount) return value().length; var r = sel.getRangeAt(0), o = 0
+  for (var n of f.childNodes) { if (n === r.startContainer || n.contains(r.startContainer)) return o + (n.nodeType === 3 ? r.startOffset : (n.dataset.token || '').length); o += n.nodeType === 3 ? n.data.length : (n.dataset.token || '').length } return o }
+function render(text, caret){ f.innerHTML = ''; var re = /tag:(\w+)(?= )/g, last = 0, m, cn = null, ca = 0
+  while ((m = re.exec(text))) { if (m.index > last) f.appendChild(document.createTextNode(text.slice(last, m.index))); var chip = document.createElement('span'); chip.contentEditable = 'false'; chip.dataset.token = m[0]; chip.textContent = '#' + m[1]; chip.style.cssText = 'background:#cde;border-radius:8px;padding:0 4px'; f.appendChild(chip); last = m.index + m[0].length }
+  if (last < text.length) f.appendChild(document.createTextNode(text.slice(last)))
+  var o = 0; for (var n of f.childNodes) { var len = n.nodeType === 3 ? n.data.length : n.dataset.token.length; if (n.nodeType === 3 && caret <= o + len) { cn = n; ca = caret - o; break } o += len }
+  if (!cn) { cn = document.createTextNode(''); f.appendChild(cn) } var r = document.createRange(); r.setStart(cn, ca); r.collapse(true); var sel = getSelection(); sel.removeAllRanges(); sel.addRange(r) }
+f.addEventListener('input', function(e){ if (e.isComposing) return; var v = value(), c = caretOffset(); if ((v.match(/tag:\w+(?= )/g)||[]).length !== f.querySelectorAll('[data-token]').length) render(v, c) })
+f.addEventListener('beforeinput', function(e){
+  if (e.inputType === 'insertParagraph' || e.inputType === 'insertLineBreak') { e.preventDefault(); __out.push('search ' + value()); return }
+  if (e.inputType === 'deleteContentBackward') { var sel = getSelection(), r = sel.rangeCount && sel.getRangeAt(0)
+    if (r && r.collapsed && r.startContainer.nodeType === 3 && r.startContainer.parentNode === f && /^ *$/.test(r.startContainer.data.slice(0, r.startOffset))) { var chip = r.startContainer.previousSibling
+      if (chip && chip.dataset && chip.dataset.token) { e.preventDefault(); var v = value(), c = caretOffset(), start = c - r.startOffset - chip.dataset.token.length; render(v.slice(0, start) + v.slice(c), start); __out.push('chip removed') } } } })
+</script>

@@ -1,0 +1,23 @@
+# Pin the exact Rust toolchain used to build libarti_android.so.
+#
+# Reproducibility: rustc output is only stable for a fixed compiler version, so
+# everyone who rebuilds the shipped .so (us, F-Droid, an independent verifier)
+# must use this exact toolchain. rustup reads this file automatically and
+# installs the pinned version + the Android targets on first invocation of the
+# build scripts. Bump this in lockstep with ARTI_VERSION / Cargo.lock and
+# re-verify (see README.md → "Reproducible builds").
+[toolchain]
+channel = "1.98.1"
+profile = "minimal"
+components = ["rustc", "cargo", "rust-std"]
+# One per ABI the APK is split for (see amethyst/build.gradle.kts -> splits.abi):
+# every split that ships native code ships libarti_android.so too, or Tor is dead
+# on that ABI for the life of the install. The `verifyArtiAbis` Gradle task holds
+# the two lists together. check_prerequisites also adds any missing target on the
+# fly.
+targets = [
+    "aarch64-linux-android",
+    "x86_64-linux-android",
+    "armv7-linux-androideabi",
+    "i686-linux-android",
+]

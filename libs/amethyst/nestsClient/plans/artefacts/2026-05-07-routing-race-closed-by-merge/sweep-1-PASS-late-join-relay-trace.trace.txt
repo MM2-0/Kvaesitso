@@ -1,0 +1,177 @@
+2026-05-07T20:14:15.338009Z TRACE moq_relay::config: final config config=Config { server: ServerConfig { bind: Some("127.0.0.1:45797"), backend: None, quic_lb_id: None, quic_lb_nonce: None, max_streams: None, version: [], tls: ServerTlsConfig { cert: [], key: [], generate: ["localhost"], root: [] } }, client: ClientConfig { bind: 127.0.0.1:0, backend: None, max_streams: None, version: [], tls: ClientTls { root: [], cert: None, key: None, disable_verify: None }, backoff: Backoff { initial: 1s, multiplier: 2, max: 30s, timeout: None }, websocket: ClientWebSocket { enabled: true, delay: Some(200ms) } }, log: Log { level: Level(Info) }, cluster: ClusterConfig { root: None, token: None, node: None, prefix: "internal/origins" }, auth: AuthConfig { key: None, key_dir: None, tls: AuthTls { root: [], cert: None, key: None, disable_verify: None }, public: Some(Simple([""])), public_subscribe: None, public_publish: None, public_api: None }, web: WebConfig { http: HttpConfig { listen: None }, https: HttpsConfig { listen: None, cert: None, key: None }, ws: true }, file: None, iroh: IrohEndpointConfig { enabled: None, secret: None, bind_v4: None, bind_v6: None, disable_relay: None } }
+2026-05-07T20:14:15.386710Z  INFO moq_relay: listening addr=127.0.0.1:45797
+2026-05-07T20:14:15.386894Z  INFO moq_relay::cluster: running as root, accepting leaf nodes
+2026-05-07T20:14:15.392937Z  WARN rustls::msgs::handshake: Illegal SNI extension: ignoring IP address presented as hostname (3132372e302e302e31)
+2026-05-07T20:14:15.393061Z  WARN moq_native::tls: no SNI certificate found server_name=None
+2026-05-07T20:14:15.393760Z DEBUG moq_native::quinn: accepting host= ip=127.0.0.1:59692 alpn=h3
+2026-05-07T20:14:15.396392Z DEBUG moq_native::quinn: accepted host= ip=127.0.0.1:59692 alpn=h3
+2026-05-07T20:14:15.396703Z  INFO conn{id=0}: moq_relay::connection: session accepted transport="quic" root=nests/30312:258d2776243d6c47889bfeedc69596d2093ab9110a7fbadbdb5bfb87f44a8199:rt-bf3f3712-21a4-4de3-b78f-5c041c591d99 publish= subscribe=
+2026-05-07T20:14:15.397010Z  INFO conn{id=0}: moq_relay::connection: negotiated version=moq-lite-03 transport="quic"
+2026-05-07T20:14:15.397096Z TRACE conn{id=0}: moq_lite::lite::message: encoding self=AnnounceInterest { prefix: Path(""), exclude_hop: 0 }
+2026-05-07T20:14:15.398518Z TRACE conn{id=0}: moq_lite::lite::message: decoded result=Active { suffix: Path("258d2776243d6c47889bfeedc69596d2093ab9110a7fbadbdb5bfb87f44a8199"), hops: [] }
+2026-05-07T20:14:15.398551Z DEBUG conn{id=0}: moq_lite::lite::subscriber: announce broadcast=nests/30312:258d2776243d6c47889bfeedc69596d2093ab9110a7fbadbdb5bfb87f44a8199:rt-bf3f3712-21a4-4de3-b78f-5c041c591d99/258d2776243d6c47889bfeedc69596d2093ab9110a7fbadbdb5bfb87f44a8199
+2026-05-07T20:14:15.399069Z TRACE conn{id=0}: moq_lite::lite::message: decoded result=Probe { bitrate: 32000, rtt: None }
+2026-05-07T20:14:15.399094Z DEBUG conn{id=0}: moq_lite::lite::subscriber: probe stream closed
+2026-05-07T20:14:17.454976Z  WARN moq_native::tls: no SNI certificate found server_name=None
+2026-05-07T20:14:17.456677Z DEBUG moq_native::quinn: accepting host= ip=127.0.0.1:55811 alpn=h3
+2026-05-07T20:14:17.456714Z DEBUG moq_native::quinn: accepted host= ip=127.0.0.1:55811 alpn=h3
+2026-05-07T20:14:17.457649Z  INFO conn{id=1}: moq_relay::connection: session accepted transport="quic" root=nests/30312:258d2776243d6c47889bfeedc69596d2093ab9110a7fbadbdb5bfb87f44a8199:rt-bf3f3712-21a4-4de3-b78f-5c041c591d99 publish= subscribe=
+2026-05-07T20:14:17.457853Z  INFO conn{id=1}: moq_relay::connection: negotiated version=moq-lite-03 transport="quic"
+2026-05-07T20:14:17.457990Z TRACE conn{id=1}: moq_lite::lite::message: encoding self=AnnounceInterest { prefix: Path(""), exclude_hop: 0 }
+2026-05-07T20:14:17.459439Z TRACE conn{id=1}: moq_lite::lite::message: decoded result=AnnounceInterest { prefix: Path(""), exclude_hop: 0 }
+2026-05-07T20:14:17.459542Z DEBUG conn{id=1}: moq_lite::lite::publisher: announce broadcast=nests/30312:258d2776243d6c47889bfeedc69596d2093ab9110a7fbadbdb5bfb87f44a8199:rt-bf3f3712-21a4-4de3-b78f-5c041c591d99/258d2776243d6c47889bfeedc69596d2093ab9110a7fbadbdb5bfb87f44a8199
+2026-05-07T20:14:17.459555Z TRACE conn{id=1}: moq_lite::lite::message: encoding self=Active { suffix: Path("258d2776243d6c47889bfeedc69596d2093ab9110a7fbadbdb5bfb87f44a8199"), hops: [] }
+2026-05-07T20:14:17.460293Z TRACE conn{id=1}: moq_lite::lite::message: decoded result=Subscribe { id: 0, broadcast: Path("258d2776243d6c47889bfeedc69596d2093ab9110a7fbadbdb5bfb87f44a8199"), track: "catalog.json", priority: 100, ordered: true, max_latency: 0ns, start_group: None, end_group: None }
+2026-05-07T20:14:17.460320Z TRACE conn{id=1}: moq_lite::lite::message: encoding self=Probe { bitrate: 164484956, rtt: Some(0) }
+2026-05-07T20:14:17.460334Z  INFO conn{id=1}: moq_lite::lite::publisher: subscribed started id=0 broadcast=nests/30312:258d2776243d6c47889bfeedc69596d2093ab9110a7fbadbdb5bfb87f44a8199:rt-bf3f3712-21a4-4de3-b78f-5c041c591d99/258d2776243d6c47889bfeedc69596d2093ab9110a7fbadbdb5bfb87f44a8199 track=catalog.json
+2026-05-07T20:14:17.460567Z  INFO conn{id=0}: moq_lite::lite::subscriber: subscribe started id=0 broadcast=nests/30312:258d2776243d6c47889bfeedc69596d2093ab9110a7fbadbdb5bfb87f44a8199:rt-bf3f3712-21a4-4de3-b78f-5c041c591d99/258d2776243d6c47889bfeedc69596d2093ab9110a7fbadbdb5bfb87f44a8199 track=catalog.json
+2026-05-07T20:14:17.460575Z TRACE conn{id=1}: moq_lite::lite::message: decoded result=Probe { bitrate: 27838166, rtt: None }
+2026-05-07T20:14:17.460585Z TRACE conn{id=0}: moq_lite::lite::message: encoding self=Subscribe { id: 0, broadcast: Path("258d2776243d6c47889bfeedc69596d2093ab9110a7fbadbdb5bfb87f44a8199"), track: "catalog.json", priority: 100, ordered: true, max_latency: 0ns, start_group: None, end_group: None }
+2026-05-07T20:14:17.462141Z TRACE conn{id=0}: moq_lite::lite::message: decoded result=SubscribeOk { priority: 100, ordered: true, max_latency: 0ns, start_group: None, end_group: None }
+2026-05-07T20:14:17.462446Z TRACE conn{id=0}: moq_lite::lite::message: decoded result=Group { subscribe: 0, sequence: 0 }
+2026-05-07T20:14:17.462474Z DEBUG conn{id=1}: moq_lite::lite::publisher: serving group subscribe=0 track=catalog.json sequence=0
+2026-05-07T20:14:17.462544Z TRACE conn{id=1}: moq_lite::lite::message: encoding self=Group { subscribe: 0, sequence: 0 }
+2026-05-07T20:14:17.463302Z TRACE conn{id=1}: moq_lite::lite::message: decoded result=Subscribe { id: 1, broadcast: Path("258d2776243d6c47889bfeedc69596d2093ab9110a7fbadbdb5bfb87f44a8199"), track: "audio/data", priority: 1, ordered: true, max_latency: 0ns, start_group: None, end_group: None }
+2026-05-07T20:14:17.463319Z  INFO conn{id=1}: moq_lite::lite::publisher: subscribed started id=1 broadcast=nests/30312:258d2776243d6c47889bfeedc69596d2093ab9110a7fbadbdb5bfb87f44a8199:rt-bf3f3712-21a4-4de3-b78f-5c041c591d99/258d2776243d6c47889bfeedc69596d2093ab9110a7fbadbdb5bfb87f44a8199 track=audio/data
+2026-05-07T20:14:17.463375Z  INFO conn{id=0}: moq_lite::lite::subscriber: subscribe started id=1 broadcast=nests/30312:258d2776243d6c47889bfeedc69596d2093ab9110a7fbadbdb5bfb87f44a8199:rt-bf3f3712-21a4-4de3-b78f-5c041c591d99/258d2776243d6c47889bfeedc69596d2093ab9110a7fbadbdb5bfb87f44a8199 track=audio/data
+2026-05-07T20:14:17.463400Z TRACE conn{id=0}: moq_lite::lite::message: encoding self=Subscribe { id: 1, broadcast: Path("258d2776243d6c47889bfeedc69596d2093ab9110a7fbadbdb5bfb87f44a8199"), track: "audio/data", priority: 1, ordered: true, max_latency: 0ns, start_group: None, end_group: None }
+2026-05-07T20:14:17.463571Z DEBUG conn{id=1}: moq_lite::lite::publisher: finished group sequence=0
+2026-05-07T20:14:17.465078Z TRACE conn{id=0}: moq_lite::lite::message: decoded result=SubscribeOk { priority: 1, ordered: true, max_latency: 0ns, start_group: None, end_group: None }
+2026-05-07T20:14:17.478181Z TRACE conn{id=0}: moq_lite::lite::message: decoded result=Group { subscribe: 1, sequence: 0 }
+2026-05-07T20:14:17.478238Z DEBUG conn{id=1}: moq_lite::lite::publisher: serving group subscribe=1 track=audio/data sequence=0
+2026-05-07T20:14:17.478263Z TRACE conn{id=1}: moq_lite::lite::message: encoding self=Group { subscribe: 1, sequence: 0 }
+2026-05-07T20:14:17.497911Z DEBUG conn{id=1}: moq_lite::lite::publisher: finished group sequence=0
+2026-05-07T20:14:17.518127Z TRACE conn{id=0}: moq_lite::lite::message: decoded result=Group { subscribe: 1, sequence: 1 }
+2026-05-07T20:14:17.518184Z DEBUG conn{id=1}: moq_lite::lite::publisher: serving group subscribe=1 track=audio/data sequence=1
+2026-05-07T20:14:17.518203Z TRACE conn{id=1}: moq_lite::lite::message: encoding self=Group { subscribe: 1, sequence: 1 }
+2026-05-07T20:14:17.560752Z TRACE conn{id=1}: moq_lite::lite::message: encoding self=Probe { bitrate: 244064900, rtt: Some(0) }
+2026-05-07T20:14:17.560911Z TRACE conn{id=1}: moq_lite::lite::message: decoded result=Probe { bitrate: 35904185, rtt: None }
+2026-05-07T20:14:17.598245Z DEBUG conn{id=1}: moq_lite::lite::publisher: finished group sequence=1
+2026-05-07T20:14:17.617735Z TRACE conn{id=0}: moq_lite::lite::message: decoded result=Group { subscribe: 1, sequence: 2 }
+2026-05-07T20:14:17.617847Z DEBUG conn{id=1}: moq_lite::lite::publisher: serving group subscribe=1 track=audio/data sequence=2
+2026-05-07T20:14:17.617878Z TRACE conn{id=1}: moq_lite::lite::message: encoding self=Group { subscribe: 1, sequence: 2 }
+2026-05-07T20:14:17.660400Z TRACE conn{id=1}: moq_lite::lite::message: encoding self=Probe { bitrate: 308030944, rtt: Some(0) }
+2026-05-07T20:14:17.718285Z TRACE conn{id=0}: moq_lite::lite::message: decoded result=Group { subscribe: 1, sequence: 3 }
+2026-05-07T20:14:17.718383Z DEBUG conn{id=1}: moq_lite::lite::publisher: serving group subscribe=1 track=audio/data sequence=3
+2026-05-07T20:14:17.718425Z TRACE conn{id=1}: moq_lite::lite::message: encoding self=Group { subscribe: 1, sequence: 3 }
+2026-05-07T20:14:17.718707Z DEBUG conn{id=1}: moq_lite::lite::publisher: finished group sequence=2
+2026-05-07T20:14:17.760552Z TRACE conn{id=1}: moq_lite::lite::message: encoding self=Probe { bitrate: 399896693, rtt: Some(0) }
+2026-05-07T20:14:17.798301Z DEBUG conn{id=1}: moq_lite::lite::publisher: finished group sequence=3
+2026-05-07T20:14:17.817769Z TRACE conn{id=0}: moq_lite::lite::message: decoded result=Group { subscribe: 1, sequence: 4 }
+2026-05-07T20:14:17.817846Z DEBUG conn{id=1}: moq_lite::lite::publisher: serving group subscribe=1 track=audio/data sequence=4
+2026-05-07T20:14:17.817868Z TRACE conn{id=1}: moq_lite::lite::message: encoding self=Group { subscribe: 1, sequence: 4 }
+2026-05-07T20:14:17.917877Z TRACE conn{id=0}: moq_lite::lite::message: decoded result=Group { subscribe: 1, sequence: 5 }
+2026-05-07T20:14:17.917958Z DEBUG conn{id=1}: moq_lite::lite::publisher: serving group subscribe=1 track=audio/data sequence=5
+2026-05-07T20:14:17.918009Z TRACE conn{id=1}: moq_lite::lite::message: encoding self=Group { subscribe: 1, sequence: 5 }
+2026-05-07T20:14:17.918274Z DEBUG conn{id=1}: moq_lite::lite::publisher: finished group sequence=4
+2026-05-07T20:14:17.998219Z DEBUG conn{id=1}: moq_lite::lite::publisher: finished group sequence=5
+2026-05-07T20:14:18.017660Z TRACE conn{id=0}: moq_lite::lite::message: decoded result=Group { subscribe: 1, sequence: 6 }
+2026-05-07T20:14:18.017714Z DEBUG conn{id=1}: moq_lite::lite::publisher: serving group subscribe=1 track=audio/data sequence=6
+2026-05-07T20:14:18.017742Z TRACE conn{id=1}: moq_lite::lite::message: encoding self=Group { subscribe: 1, sequence: 6 }
+2026-05-07T20:14:18.061214Z TRACE conn{id=1}: moq_lite::lite::message: encoding self=Probe { bitrate: 513594196, rtt: Some(0) }
+2026-05-07T20:14:18.118316Z TRACE conn{id=0}: moq_lite::lite::message: decoded result=Group { subscribe: 1, sequence: 7 }
+2026-05-07T20:14:18.118403Z DEBUG conn{id=1}: moq_lite::lite::publisher: serving group subscribe=1 track=audio/data sequence=7
+2026-05-07T20:14:18.118433Z TRACE conn{id=1}: moq_lite::lite::message: encoding self=Group { subscribe: 1, sequence: 7 }
+2026-05-07T20:14:18.118681Z DEBUG conn{id=1}: moq_lite::lite::publisher: finished group sequence=6
+2026-05-07T20:14:18.198330Z DEBUG conn{id=1}: moq_lite::lite::publisher: finished group sequence=7
+2026-05-07T20:14:18.217629Z TRACE conn{id=0}: moq_lite::lite::message: decoded result=Group { subscribe: 1, sequence: 8 }
+2026-05-07T20:14:18.217666Z DEBUG conn{id=1}: moq_lite::lite::publisher: serving group subscribe=1 track=audio/data sequence=8
+2026-05-07T20:14:18.217683Z TRACE conn{id=1}: moq_lite::lite::message: encoding self=Group { subscribe: 1, sequence: 8 }
+2026-05-07T20:14:18.297588Z DEBUG conn{id=1}: moq_lite::lite::publisher: finished group sequence=8
+2026-05-07T20:14:18.318082Z TRACE conn{id=0}: moq_lite::lite::message: decoded result=Group { subscribe: 1, sequence: 9 }
+2026-05-07T20:14:18.318145Z DEBUG conn{id=1}: moq_lite::lite::publisher: serving group subscribe=1 track=audio/data sequence=9
+2026-05-07T20:14:18.318183Z TRACE conn{id=1}: moq_lite::lite::message: encoding self=Group { subscribe: 1, sequence: 9 }
+2026-05-07T20:14:18.360514Z TRACE conn{id=1}: moq_lite::lite::message: encoding self=Probe { bitrate: 639752628, rtt: Some(0) }
+2026-05-07T20:14:18.398076Z DEBUG conn{id=1}: moq_lite::lite::publisher: finished group sequence=9
+2026-05-07T20:14:18.417498Z TRACE conn{id=0}: moq_lite::lite::message: decoded result=Group { subscribe: 1, sequence: 10 }
+2026-05-07T20:14:18.417550Z DEBUG conn{id=1}: moq_lite::lite::publisher: serving group subscribe=1 track=audio/data sequence=10
+2026-05-07T20:14:18.417575Z TRACE conn{id=1}: moq_lite::lite::message: encoding self=Group { subscribe: 1, sequence: 10 }
+2026-05-07T20:14:18.497791Z DEBUG conn{id=1}: moq_lite::lite::publisher: finished group sequence=10
+2026-05-07T20:14:18.518092Z TRACE conn{id=0}: moq_lite::lite::message: decoded result=Group { subscribe: 1, sequence: 11 }
+2026-05-07T20:14:18.518178Z DEBUG conn{id=1}: moq_lite::lite::publisher: serving group subscribe=1 track=audio/data sequence=11
+2026-05-07T20:14:18.518213Z TRACE conn{id=1}: moq_lite::lite::message: encoding self=Group { subscribe: 1, sequence: 11 }
+2026-05-07T20:14:18.598453Z DEBUG conn{id=1}: moq_lite::lite::publisher: finished group sequence=11
+2026-05-07T20:14:18.617800Z TRACE conn{id=0}: moq_lite::lite::message: decoded result=Group { subscribe: 1, sequence: 12 }
+2026-05-07T20:14:18.617870Z DEBUG conn{id=1}: moq_lite::lite::publisher: serving group subscribe=1 track=audio/data sequence=12
+2026-05-07T20:14:18.617891Z TRACE conn{id=1}: moq_lite::lite::message: encoding self=Group { subscribe: 1, sequence: 12 }
+2026-05-07T20:14:18.718280Z TRACE conn{id=0}: moq_lite::lite::message: decoded result=Group { subscribe: 1, sequence: 13 }
+2026-05-07T20:14:18.718318Z DEBUG conn{id=1}: moq_lite::lite::publisher: serving group subscribe=1 track=audio/data sequence=13
+2026-05-07T20:14:18.718349Z TRACE conn{id=1}: moq_lite::lite::message: encoding self=Group { subscribe: 1, sequence: 13 }
+2026-05-07T20:14:18.718664Z DEBUG conn{id=1}: moq_lite::lite::publisher: finished group sequence=12
+2026-05-07T20:14:18.797517Z DEBUG conn{id=1}: moq_lite::lite::publisher: finished group sequence=13
+2026-05-07T20:14:18.818160Z TRACE conn{id=0}: moq_lite::lite::message: decoded result=Group { subscribe: 1, sequence: 14 }
+2026-05-07T20:14:18.818216Z DEBUG conn{id=1}: moq_lite::lite::publisher: serving group subscribe=1 track=audio/data sequence=14
+2026-05-07T20:14:18.818235Z TRACE conn{id=1}: moq_lite::lite::message: encoding self=Group { subscribe: 1, sequence: 14 }
+2026-05-07T20:14:18.917563Z TRACE conn{id=0}: moq_lite::lite::message: decoded result=Group { subscribe: 1, sequence: 15 }
+2026-05-07T20:14:18.917627Z DEBUG conn{id=1}: moq_lite::lite::publisher: serving group subscribe=1 track=audio/data sequence=15
+2026-05-07T20:14:18.917649Z TRACE conn{id=1}: moq_lite::lite::message: encoding self=Group { subscribe: 1, sequence: 15 }
+2026-05-07T20:14:18.917976Z DEBUG conn{id=1}: moq_lite::lite::publisher: finished group sequence=14
+2026-05-07T20:14:19.018411Z TRACE conn{id=0}: moq_lite::lite::message: decoded result=Group { subscribe: 1, sequence: 16 }
+2026-05-07T20:14:19.018519Z DEBUG conn{id=1}: moq_lite::lite::publisher: serving group subscribe=1 track=audio/data sequence=16
+2026-05-07T20:14:19.018701Z TRACE conn{id=1}: moq_lite::lite::message: encoding self=Group { subscribe: 1, sequence: 16 }
+2026-05-07T20:14:19.018888Z DEBUG conn{id=1}: moq_lite::lite::publisher: finished group sequence=15
+2026-05-07T20:14:19.098367Z DEBUG conn{id=1}: moq_lite::lite::publisher: finished group sequence=16
+2026-05-07T20:14:19.117746Z TRACE conn{id=0}: moq_lite::lite::message: decoded result=Group { subscribe: 1, sequence: 17 }
+2026-05-07T20:14:19.117816Z DEBUG conn{id=1}: moq_lite::lite::publisher: serving group subscribe=1 track=audio/data sequence=17
+2026-05-07T20:14:19.117858Z TRACE conn{id=1}: moq_lite::lite::message: encoding self=Group { subscribe: 1, sequence: 17 }
+2026-05-07T20:14:19.198007Z DEBUG conn{id=1}: moq_lite::lite::publisher: finished group sequence=17
+2026-05-07T20:14:19.218259Z TRACE conn{id=0}: moq_lite::lite::message: decoded result=Group { subscribe: 1, sequence: 18 }
+2026-05-07T20:14:19.218301Z DEBUG conn{id=1}: moq_lite::lite::publisher: serving group subscribe=1 track=audio/data sequence=18
+2026-05-07T20:14:19.218325Z TRACE conn{id=1}: moq_lite::lite::message: encoding self=Group { subscribe: 1, sequence: 18 }
+2026-05-07T20:14:19.317918Z TRACE conn{id=0}: moq_lite::lite::message: decoded result=Group { subscribe: 1, sequence: 19 }
+2026-05-07T20:14:19.317967Z DEBUG conn{id=1}: moq_lite::lite::publisher: serving group subscribe=1 track=audio/data sequence=19
+2026-05-07T20:14:19.317989Z TRACE conn{id=1}: moq_lite::lite::message: encoding self=Group { subscribe: 1, sequence: 19 }
+2026-05-07T20:14:19.318220Z DEBUG conn{id=1}: moq_lite::lite::publisher: finished group sequence=18
+2026-05-07T20:14:19.397999Z DEBUG conn{id=1}: moq_lite::lite::publisher: finished group sequence=19
+2026-05-07T20:14:19.417524Z TRACE conn{id=0}: moq_lite::lite::message: decoded result=Group { subscribe: 1, sequence: 20 }
+2026-05-07T20:14:19.417599Z DEBUG conn{id=1}: moq_lite::lite::publisher: serving group subscribe=1 track=audio/data sequence=20
+2026-05-07T20:14:19.417694Z TRACE conn{id=1}: moq_lite::lite::message: encoding self=Group { subscribe: 1, sequence: 20 }
+2026-05-07T20:14:19.518390Z TRACE conn{id=0}: moq_lite::lite::message: decoded result=Group { subscribe: 1, sequence: 21 }
+2026-05-07T20:14:19.518468Z DEBUG conn{id=1}: moq_lite::lite::publisher: serving group subscribe=1 track=audio/data sequence=21
+2026-05-07T20:14:19.518510Z TRACE conn{id=1}: moq_lite::lite::message: encoding self=Group { subscribe: 1, sequence: 21 }
+2026-05-07T20:14:19.518761Z DEBUG conn{id=1}: moq_lite::lite::publisher: finished group sequence=20
+2026-05-07T20:14:19.597858Z DEBUG conn{id=1}: moq_lite::lite::publisher: finished group sequence=21
+2026-05-07T20:14:19.618180Z TRACE conn{id=0}: moq_lite::lite::message: decoded result=Group { subscribe: 1, sequence: 22 }
+2026-05-07T20:14:19.618251Z DEBUG conn{id=1}: moq_lite::lite::publisher: serving group subscribe=1 track=audio/data sequence=22
+2026-05-07T20:14:19.618289Z TRACE conn{id=1}: moq_lite::lite::message: encoding self=Group { subscribe: 1, sequence: 22 }
+2026-05-07T20:14:19.717988Z TRACE conn{id=0}: moq_lite::lite::message: decoded result=Group { subscribe: 1, sequence: 23 }
+2026-05-07T20:14:19.718068Z DEBUG conn{id=1}: moq_lite::lite::publisher: serving group subscribe=1 track=audio/data sequence=23
+2026-05-07T20:14:19.718123Z TRACE conn{id=1}: moq_lite::lite::message: encoding self=Group { subscribe: 1, sequence: 23 }
+2026-05-07T20:14:19.718458Z DEBUG conn{id=1}: moq_lite::lite::publisher: finished group sequence=22
+2026-05-07T20:14:19.798257Z DEBUG conn{id=1}: moq_lite::lite::publisher: finished group sequence=23
+2026-05-07T20:14:19.817650Z TRACE conn{id=0}: moq_lite::lite::message: decoded result=Group { subscribe: 1, sequence: 24 }
+2026-05-07T20:14:19.817726Z DEBUG conn{id=1}: moq_lite::lite::publisher: serving group subscribe=1 track=audio/data sequence=24
+2026-05-07T20:14:19.817774Z TRACE conn{id=1}: moq_lite::lite::message: encoding self=Group { subscribe: 1, sequence: 24 }
+2026-05-07T20:14:19.918070Z TRACE conn{id=0}: moq_lite::lite::message: decoded result=Group { subscribe: 1, sequence: 25 }
+2026-05-07T20:14:19.918168Z DEBUG conn{id=1}: moq_lite::lite::publisher: serving group subscribe=1 track=audio/data sequence=25
+2026-05-07T20:14:19.918198Z TRACE conn{id=1}: moq_lite::lite::message: encoding self=Group { subscribe: 1, sequence: 25 }
+2026-05-07T20:14:19.918530Z DEBUG conn{id=1}: moq_lite::lite::publisher: finished group sequence=24
+2026-05-07T20:14:19.998531Z DEBUG conn{id=1}: moq_lite::lite::publisher: finished group sequence=25
+2026-05-07T20:14:20.017894Z TRACE conn{id=0}: moq_lite::lite::message: decoded result=Group { subscribe: 1, sequence: 26 }
+2026-05-07T20:14:20.017933Z DEBUG conn{id=1}: moq_lite::lite::publisher: serving group subscribe=1 track=audio/data sequence=26
+2026-05-07T20:14:20.017953Z TRACE conn{id=1}: moq_lite::lite::message: encoding self=Group { subscribe: 1, sequence: 26 }
+2026-05-07T20:14:20.098237Z DEBUG conn{id=1}: moq_lite::lite::publisher: finished group sequence=26
+2026-05-07T20:14:20.117609Z TRACE conn{id=0}: moq_lite::lite::message: decoded result=Group { subscribe: 1, sequence: 27 }
+2026-05-07T20:14:20.117660Z DEBUG conn{id=1}: moq_lite::lite::publisher: serving group subscribe=1 track=audio/data sequence=27
+2026-05-07T20:14:20.117681Z TRACE conn{id=1}: moq_lite::lite::message: encoding self=Group { subscribe: 1, sequence: 27 }
+2026-05-07T20:14:20.217796Z TRACE conn{id=0}: moq_lite::lite::message: decoded result=Group { subscribe: 1, sequence: 28 }
+2026-05-07T20:14:20.217838Z DEBUG conn{id=1}: moq_lite::lite::publisher: serving group subscribe=1 track=audio/data sequence=28
+2026-05-07T20:14:20.217862Z TRACE conn{id=1}: moq_lite::lite::message: encoding self=Group { subscribe: 1, sequence: 28 }
+2026-05-07T20:14:20.218242Z DEBUG conn{id=1}: moq_lite::lite::publisher: finished group sequence=27
+2026-05-07T20:14:20.318144Z TRACE conn{id=0}: moq_lite::lite::message: decoded result=Group { subscribe: 1, sequence: 29 }
+2026-05-07T20:14:20.318232Z DEBUG conn{id=1}: moq_lite::lite::publisher: serving group subscribe=1 track=audio/data sequence=29
+2026-05-07T20:14:20.318271Z TRACE conn{id=1}: moq_lite::lite::message: encoding self=Group { subscribe: 1, sequence: 29 }
+2026-05-07T20:14:20.318651Z DEBUG conn{id=1}: moq_lite::lite::publisher: finished group sequence=28
+2026-05-07T20:14:20.398613Z DEBUG conn{id=1}: moq_lite::lite::publisher: finished group sequence=29
+2026-05-07T20:14:20.401417Z TRACE conn{id=0}: moq_lite::lite::message: decoded result=Ended { suffix: Path("258d2776243d6c47889bfeedc69596d2093ab9110a7fbadbdb5bfb87f44a8199"), hops: [] }
+2026-05-07T20:14:20.401446Z DEBUG conn{id=0}: moq_lite::lite::subscriber: unannounced broadcast=nests/30312:258d2776243d6c47889bfeedc69596d2093ab9110a7fbadbdb5bfb87f44a8199:rt-bf3f3712-21a4-4de3-b78f-5c041c591d99/258d2776243d6c47889bfeedc69596d2093ab9110a7fbadbdb5bfb87f44a8199
+2026-05-07T20:14:20.401669Z  INFO conn{id=1}: moq_lite::lite::publisher: subscribed cancelled id=0 broadcast=nests/30312:258d2776243d6c47889bfeedc69596d2093ab9110a7fbadbdb5bfb87f44a8199:rt-bf3f3712-21a4-4de3-b78f-5c041c591d99/258d2776243d6c47889bfeedc69596d2093ab9110a7fbadbdb5bfb87f44a8199 track=catalog.json
+2026-05-07T20:14:20.401736Z DEBUG conn{id=0}: moq_lite::lite::subscriber: broadcast closed err=cancelled
+2026-05-07T20:14:20.401770Z DEBUG conn{id=1}: moq_lite::lite::publisher: unannounce broadcast=nests/30312:258d2776243d6c47889bfeedc69596d2093ab9110a7fbadbdb5bfb87f44a8199:rt-bf3f3712-21a4-4de3-b78f-5c041c591d99/258d2776243d6c47889bfeedc69596d2093ab9110a7fbadbdb5bfb87f44a8199
+2026-05-07T20:14:20.401775Z TRACE conn{id=1}: moq_lite::lite::message: encoding self=Ended { suffix: Path("258d2776243d6c47889bfeedc69596d2093ab9110a7fbadbdb5bfb87f44a8199"), hops: [] }
+2026-05-07T20:14:20.401800Z  INFO conn{id=0}: moq_lite::lite::subscriber: subscribe cancelled id=0 broadcast=nests/30312:258d2776243d6c47889bfeedc69596d2093ab9110a7fbadbdb5bfb87f44a8199:rt-bf3f3712-21a4-4de3-b78f-5c041c591d99/258d2776243d6c47889bfeedc69596d2093ab9110a7fbadbdb5bfb87f44a8199 track=catalog.json
+2026-05-07T20:14:20.401825Z  INFO conn{id=0}: moq_lite::lite::subscriber: subscribe cancelled id=1 broadcast=nests/30312:258d2776243d6c47889bfeedc69596d2093ab9110a7fbadbdb5bfb87f44a8199:rt-bf3f3712-21a4-4de3-b78f-5c041c591d99/258d2776243d6c47889bfeedc69596d2093ab9110a7fbadbdb5bfb87f44a8199 track=audio/data
+2026-05-07T20:14:20.401912Z  INFO conn{id=1}: moq_lite::lite::publisher: subscribed cancelled id=1 broadcast=nests/30312:258d2776243d6c47889bfeedc69596d2093ab9110a7fbadbdb5bfb87f44a8199:rt-bf3f3712-21a4-4de3-b78f-5c041c591d99/258d2776243d6c47889bfeedc69596d2093ab9110a7fbadbdb5bfb87f44a8199 track=audio/data
+2026-05-07T20:14:20.402444Z  WARN web_transport_quinn::session: failed to read capsule e=UnexpectedEnd
+2026-05-07T20:14:20.402484Z  INFO conn{id=0}: moq_lite::lite::session: session terminated
+2026-05-07T20:14:20.402664Z  WARN moq_relay: connection closed err=transport: connection error: closed

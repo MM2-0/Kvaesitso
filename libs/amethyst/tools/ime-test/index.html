@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IME Test</title>
+<style>
+  body { font-family: sans-serif; padding: 16px; background:#f4f4fa; }
+  h2 { margin: 24px 0 6px; }
+  input, textarea { width: 100%; font-size: 18px; padding: 12px; box-sizing: border-box; border: 2px solid #88a; border-radius: 8px; }
+  #log { white-space: pre-wrap; font: 11px monospace; background:#111; color:#0f0; padding:8px; height:200px; overflow:auto; margin-top:16px; border-radius:6px; }
+</style>
+</head>
+<body>
+  <h2>Plain text input</h2>
+  <input id="inp" type="text" placeholder="type here" value="hello world">
+  <h2>Textarea</h2>
+  <textarea id="ta" rows="2" placeholder="type here">hello world</textarea>
+  <div id="log"></div>
+  <!-- Tall spacer so the page scrolls — lets us verify the host hides selection UI during scroll. -->
+  <div style="height:2000px; padding-top:16px; color:#888;">scroll region — drag up/down here</div>
+<script>
+(function(){
+  var t0 = performance.now();
+  function ts(){ return (performance.now() - t0).toFixed(0); }
+  var logEl = document.getElementById('log');
+  function log(m){
+    var line = '[ImeDiag] +' + ts() + 'ms ' + m;
+    try { console.log(line); } catch(_){}
+    if (logEl) { logEl.textContent += line + '\n'; logEl.scrollTop = logEl.scrollHeight; }
+  }
+  function selOf(n){ return (n && n.selectionStart != null) ? (n.selectionStart + '..' + n.selectionEnd) : '?'; }
+  function active(){ var a = document.activeElement; return a ? (a.tagName + '#' + (a.id||'')) : 'none'; }
+
+  ['inp','ta'].forEach(function(id){
+    var n = document.getElementById(id);
+    n.addEventListener('focus', function(){ log(id + ' FOCUS hasFocus=' + document.hasFocus()); });
+    n.addEventListener('blur',  function(){ log(id + ' BLUR'); });
+    n.addEventListener('keydown', function(e){ log(id + ' keydown key=' + e.key + ' isComposing=' + e.isComposing); });
+    n.addEventListener('beforeinput', function(e){ log(id + ' beforeinput type=' + e.inputType + ' data=' + JSON.stringify(e.data) + ' isComposing=' + e.isComposing); });
+    n.addEventListener('input', function(e){
+      log(id + ' INPUT type=' + e.inputType + ' data=' + JSON.stringify(e.data) + ' isComposing=' + e.isComposing + ' val=' + JSON.stringify(n.value) + ' sel=' + selOf(n));
+      // Objective paint-latency: how long until the NEXT frame is produced after this DOM change.
+      var t = performance.now();
+      requestAnimationFrame(function(){ log(id + ' PAINT-LATENCY ' + (performance.now() - t).toFixed(0) + 'ms (DOM change -> next frame)'); });
+    });
+    n.addEventListener('compositionstart', function(e){ log(id + ' compositionSTART data=' + JSON.stringify(e.data)); });
+    n.addEventListener('compositionupdate', function(e){ log(id + ' compositionUPDATE data=' + JSON.stringify(e.data)); });
+    n.addEventListener('compositionend', function(e){ log(id + ' compositionEND data=' + JSON.stringify(e.data)); });
+    n.addEventListener('select', function(){ log(id + ' SELECT event sel=' + selOf(n)); });
+  });
+
+  document.addEventListener('selectionchange', function(){
+    var a = document.activeElement;
+    if (a && (a.id === 'inp' || a.id === 'ta')) log('selectionchange ' + a.id + ' sel=' + selOf(a) + ' hasFocus=' + document.hasFocus());
+  }, true);
+
+  window.addEventListener('focus', function(){ log('WINDOW focus hasFocus=' + document.hasFocus()); }, true);
+  window.addEventListener('blur',  function(){ log('WINDOW blur hasFocus=' + document.hasFocus()); }, true);
+  document.addEventListener('visibilitychange', function(){ log('visibilitychange hidden=' + document.hidden); });
+
+  // Heartbeat: detect any spontaneous oscillation of focus/selection while idle.
+  var last = '';
+  setInterval(function(){
+    var a = document.activeElement;
+    var snap = 'hasFocus=' + document.hasFocus() + ' vis=' + document.visibilityState + ' active=' + active() + ' sel=' + (a && a.selectionStart != null ? selOf(a) : '-');
+    if (snap !== last) { last = snap; log('HEARTBEAT ' + snap); }
+  }, 250);
+
+  // Long-task observer: catches any >50ms block of the WebView main thread and its attribution.
+  try {
+    new PerformanceObserver(function(list){
+      list.getEntries().forEach(function(e){
+        var attr = (e.attribution && e.attribution[0]) ? (e.attribution[0].name + '/' + e.attribution[0].containerType) : '';
+        log('LONGTASK ' + e.duration.toFixed(0) + 'ms name=' + e.name + ' ' + attr);
+      });
+    }).observe({ entryTypes: ['longtask'] });
+  } catch(_) { log('no longtask observer'); }
+
+  // Main-thread block detector via MessageChannel (fires a macrotask ASAP each tick; if it's late, main was blocked).
+  var mc = new MessageChannel();
+  var tickExpected = performance.now();
+  mc.port1.onmessage = function(){
+    var now = performance.now(), late = now - tickExpected;
+    if (late > 150) log('MAINTHREAD BLOCKED ~' + late.toFixed(0) + 'ms');
+    tickExpected = now + 8;
+    setTimeout(function(){ mc.port2.postMessage(0); }, 8);
+  };
+  mc.port2.postMessage(0);
+
+  log('test page loaded vis=' + document.visibilityState);
+})();
+</script>
+</body>
+</html>

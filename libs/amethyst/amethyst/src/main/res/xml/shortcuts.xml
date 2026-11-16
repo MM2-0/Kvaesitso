@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Launcher shortcuts (long-press the app icon).
+
+    "Scan QR code" exists because scanning was three taps deep - profile, then the QR screen, then
+    a Scan button - which is a long way to reach the thing you do while standing in front of
+    someone. The intent carries no targetPackage on purpose: debug and benchmark builds append an
+    applicationId suffix, so a hardcoded one would resolve to nothing, and manifest placeholders
+    are not substituted in resource XML, so ${applicationId} does not work here either.
+
+    The scheme is `amethyst:`, not `nostr:`, precisely because this intent is implicit: any app
+    that registers a nostr: VIEW handler could win the chooser and swallow the shortcut. Both
+    schemes are declared on MainActivity's existing filter, and `amethyst:` is ours. That narrows
+    the hijack surface to apps deliberately claiming our scheme rather than to every Nostr client
+    on the device; it does not eliminate it, which is the price of a static shortcut.
+-->
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="scan_qr"
+        android:enabled="true"
+        android:icon="@drawable/ic_qrcode"
+        android:shortcutShortLabel="@string/shortcut_scan_qr_short"
+        android:shortcutLongLabel="@string/shortcut_scan_qr_long">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:data="amethyst:scanqr" />
+    </shortcut>
+</shortcuts>

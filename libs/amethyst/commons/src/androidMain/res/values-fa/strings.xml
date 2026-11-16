@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="browser_address_hint">جستجو یا وارد کردن آدرس</string>
+    <string name="browser_console_title_short">کنسول</string>
+    <string name="browser_console_title">کنسول (%1$d)</string>
+    <string name="browser_console_clear">پاک کردن</string>
+    <string name="napplet_untitled">nApplet بی‌عنوان</string>
+</resources>

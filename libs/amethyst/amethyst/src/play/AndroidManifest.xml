@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Android 17 (API 37) Local Network Protection gates the mDNS/multicast
+         device discovery the Cast SDK relies on behind this dangerous runtime
+         permission; without it the picker silently finds zero receivers.
+         Play flavor only — F-Droid ships no casting at all. Older OSes have no
+         LNP and ignore the unknown permission. -->
+    <uses-permission android:name="android.permission.ACCESS_LOCAL_NETWORK" />
+
+    <application
+        android:name=".Amethyst">
+
+        <service
+            android:name=".service.notifications.PushNotificationReceiverService"
+            android:exported="true"
+            tools:ignore="ExportedService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+
+        <!--Remove Firebase Logging-->
+        <service
+            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService" tools:node="remove">
+        </service>
+
+        <meta-data android:name="firebase_analytics_collection_enabled" android:value="false"/>
+
+        <meta-data android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/amethyst" />
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/purple_500" />
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/app_notification_channel_id" />
+
+        <!-- Google Cast SDK options provider. Only declared in the play
+             flavor because the SDK hard-depends on Google Play services. -->
+        <meta-data
+            android:name="com.google.android.gms.cast.framework.OPTIONS_PROVIDER_CLASS_NAME"
+            android:value="com.vitorpamplona.amethyst.service.cast.chromecast.AmethystCastOptionsProvider" />
+
+        <!-- Gemini / system-agent bridge via androidx.appfunctions
+             (pre-stable as of May 2026). The androidx-provided
+             PlatformAppFunctionService (registered automatically via
+             manifest merging by the library) dispatches to plain Kotlin
+             classes annotated with @AppFunction (see
+             com.vitorpamplona.amethyst.appfunctions.AmethystAppFunctions).
+             Play flavor only — the F-Droid channel ships without the
+             alpha Google AI dependency.
+
+             The `app_metadata` property below gives the system agent a
+             user-facing summary of what this app exposes. Without it,
+             system logcat logs "Unable to resolve AppFunctionMetadata"
+             and our functions never make it into Gemini's tool picker. -->
+        <property
+            android:name="android.app.appfunctions.app_metadata"
+            android:resource="@xml/app_metadata" />
+
+    </application>
+
+</manifest>

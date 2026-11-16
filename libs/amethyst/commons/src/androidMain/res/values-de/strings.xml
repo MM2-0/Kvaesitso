@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="browser_address_hint">Suchen oder Adresse eingeben</string>
+    <string name="browser_console_title_short">Konsole</string>
+    <string name="browser_console_title">Konsole (%1$d)</string>
+    <string name="browser_console_clear">Löschen</string>
+    <string name="napplet_untitled">Unbenanntes nApplet</string>
+</resources>

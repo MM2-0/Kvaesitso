@@ -1,0 +1,23 @@
+{
+  "name": "nests-browser-interop",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Phase 4 (T16) browser-side cross-stack interop harness — headless Chromium running @moq/lite + @moq/hang against the same NativeMoqRelayHarness moq-relay subprocess that drives HangInteropTest. Lands behind -DnestsBrowserInterop=true.",
+  "scripts": {
+    "build": "bun build src/listen.ts src/publish.ts --outdir dist --target browser && cp src/listen.html src/publish.html src/pcm-tap-worklet.js dist/",
+    "serve": "bun run src/server.ts",
+    "playwright": "playwright test"
+  },
+  "dependencies": {
+    "@moq/hang": "0.2.4",
+    "@moq/lite": "0.2.2",
+    "@moq/publish": "0.2.6",
+    "@moq/watch": "0.2.10"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.56.1",
+    "@types/bun": "latest",
+    "typescript": "^5.6.0"
+  }
+}

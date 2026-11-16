@@ -1,0 +1,50 @@
+# systemd unit for the geode Nostr relay.
+#
+# Install (paths assume the .deb/.rpm or the portable tarball unpacked to
+# /opt/geode — adjust ExecStart if you put it elsewhere):
+#
+#   sudo useradd --system --home /var/lib/geode --shell /usr/sbin/nologin geode
+#   sudo mkdir -p /var/lib/geode /etc/geode
+#   sudo cp /opt/geode/share/geode/config.example.toml /etc/geode/geode.toml   # then edit
+#   sudo cp /opt/geode/share/geode/geode.service /etc/systemd/system/geode.service
+#   sudo chown -R geode:geode /var/lib/geode
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now geode
+#
+# Logs: journalctl -u geode -f
+
+[Unit]
+Description=geode Nostr relay
+Documentation=https://github.com/vitorpamplona/amethyst/blob/main/geode/README.md
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=geode
+Group=geode
+# Point --config at your edited copy. Drop the flag to run on built-in
+# defaults (0.0.0.0:7447, in-memory store — events vanish on restart).
+ExecStart=/opt/geode/bin/geode --config /etc/geode/geode.toml
+Restart=on-failure
+RestartSec=5
+
+# A relay holds one file descriptor per WebSocket; the distro default of 1024
+# caps it well below 1k connections. Raise to match [network] tuning.
+LimitNOFILE=65536
+
+# systemd creates + owns /var/lib/geode (0750, User:Group above). Point
+# [database].file there, e.g. file = "/var/lib/geode/events.db".
+StateDirectory=geode
+WorkingDirectory=/opt/geode
+
+# Hardening — geode needs no elevated access. Loosen only if a custom
+# IEventStore writes outside its StateDirectory.
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+ReadWritePaths=/var/lib/geode
+
+[Install]
+WantedBy=multi-user.target

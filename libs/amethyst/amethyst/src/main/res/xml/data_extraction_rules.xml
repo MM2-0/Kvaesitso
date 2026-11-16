@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Defense-in-depth: allowBackup="false" is set in AndroidManifest.xml.
+     These rules provide additional protection if backup is ever enabled. -->
+<data-extraction-rules>
+    <cloud-backup>
+        <!-- Exclude encrypted secrets (device-bound KeyStore encryption) -->
+        <exclude domain="sharedpref" path="secret_keeper.xml" />
+        <exclude domain="sharedpref" path="." requireFlags="clientSideEncryption" />
+
+        <!-- Exclude all DataStore files (encrypted keys and account preferences) -->
+        <exclude domain="file" path="datastore" />
+
+        <!-- Exclude external storage -->
+        <exclude domain="external" path="." />
+    </cloud-backup>
+
+    <device-transfer>
+        <!-- Exclude encrypted secrets (device-bound, unusable on target device) -->
+        <exclude domain="sharedpref" path="secret_keeper.xml" />
+        <exclude domain="sharedpref" path="." requireFlags="clientSideEncryption" />
+
+        <!-- Exclude all DataStore files (encrypted keys and account preferences) -->
+        <exclude domain="file" path="datastore" />
+
+        <!-- Exclude external storage -->
+        <exclude domain="external" path="." />
+    </device-transfer>
+</data-extraction-rules>

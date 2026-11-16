@@ -1,0 +1,16 @@
+blur	3	3
+blur-heavy	0	3
+clean	3	3
+far-1.5px	0	3
+far-2px	2	3
+far-3px	3	3
+glare	3	3
+inverted	3	3
+low-contrast	3	3
+moire	3	3
+noise	2	3
+perspective	0	3
+tilt15	2	3
+tilt30	2	3
+tilt45	2	3
+very-low-contrast	0	3

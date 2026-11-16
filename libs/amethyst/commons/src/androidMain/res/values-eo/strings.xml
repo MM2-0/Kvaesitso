@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="browser_address_hint">Serĉi aŭ enigi adreson</string>
+    <string name="browser_console_title_short">Konzolo</string>
+    <string name="browser_console_title">Konzolo (%1$d)</string>
+    <string name="browser_console_clear">Viŝi</string>
+    <string name="napplet_untitled">Sennoma nApplet</string>
+</resources>

@@ -1,0 +1,425 @@
+0	typed	Profile
+1	typed	Notes
+3	typed	Follow List
+4	typed	NIP-04 DMs
+5	typed	Deletions
+6	typed	Reposts
+7	typed	Reactions
+8	typed	Badge Awards
+9	typed	Relay Chat
+11	typed	Thread
+13	typed	Seals
+14	typed	DM Message
+15	typed	DM File
+16	typed	Reposts (16)
+17	typed	External Reaction
+20	typed	Pictures
+21	typed	Video
+22	typed	Shorts
+24	typed	Public Message
+30	typed	Chess Auth
+31	typed	Citation (Web)
+32	typed	Citation (Print)
+33	typed	Citation (Prompt)
+40	typed	Channel Definition
+41	typed	Channel Metadata
+42	typed	Channel Message
+43	typed	Channel Hide Msg
+44	typed	Channel Mute User
+54	typed	Podcast Episode
+62	typed	User Delete
+64	typed	Chess Games
+78	typed	App Data
+82	typed	Medical Data
+444	typed	MLS Welcome
+445	typed	MLS Group Message
+446	typed	MLS Notification Request
+447	typed	MLS Token Request
+448	typed	MLS Token List
+449	typed	MLS Token Removal
+818	typed	Wiki Merge Request
+819	typed	Wiki Merge Accepted
+1010	typed	Edits
+1018	typed	Poll Response
+1021	typed	Marketplace Bid
+1022	typed	Bid Confirmation
+1040	typed	OTS
+1059	typed	GiftWraps
+1063	typed	File Headers
+1064	typed	Blob Data
+1065	typed	Blob Headers
+1068	typed	Poll
+1111	typed	Comments
+1163	typed	Profile Gallery
+1222	typed	Voice Msg
+1244	typed	Voice Reply
+1301	typed	Workouts
+1311	typed	Live Chats
+1312	typed	Live Raid
+1313	typed	Live Clip
+1315	typed	Road Report
+1316	typed	Road Confirmation
+1337	typed	Code Snippet
+1617	typed	Git Patch
+1618	typed	Git Pull Request
+1619	typed	Git PR Update
+1621	typed	Git Issue
+1622	typed	Git Reply
+1630	typed	
+1631	typed	
+1632	typed	
+1633	typed	
+1740	typed	
+1808	typed	Audio Header
+1984	typed	Reports
+1985	typed	Label
+2003	typed	Torrents
+2004	typed	Torrent Comments
+2473	typed	Bird Detection
+3063	typed	Software Asset
+3079	typed	Push Registration
+3080	typed	Push Deregistration
+3083	typed	Push Preferences
+3302	typed	
+3308	typed	
+3330	typed	
+4312	typed	Nests Admin Command
+4550	typed	Community Post
+5000	typed	DVM Text Extraction Req
+5001	typed	DVM Summarization Req
+5002	typed	DVM Translation Req
+5050	typed	DVM Text Generation Req
+5100	typed	DVM Image Generation Req
+5129	typed	Napplet Snapshot
+5200	typed	DVM Video Conversion Req
+5201	typed	DVM Video Translation Req
+5202	typed	DVM Image To Video Req
+5250	typed	DVM Text To Speech Req
+5300	typed	DVM Content Req
+5301	typed	DVM User Req
+5302	typed	DVM Content Search Req
+5303	typed	DVM People Search Req
+5400	typed	DVM Event Count Req
+5500	typed	DVM Malware Scan Req
+5900	typed	DVM Timestamping Req
+5901	typed	DVM OpReturn Req
+5905	typed	DVM Publish Schedule Req
+5970	typed	DVM PoW Delegation Req
+6000	typed	DVM Text Extraction Resp
+6001	typed	DVM Summarization Resp
+6002	typed	DVM Translation Resp
+6050	typed	DVM Text Generation Resp
+6100	typed	DVM Image Generation Resp
+6200	typed	DVM Video Conversion Resp
+6201	typed	DVM Video Translation Resp
+6202	typed	DVM Image To Video Resp
+6250	typed	DVM Text To Speech Resp
+6300	typed	DVM Content Resp
+6301	typed	DVM User Resp
+6302	typed	DVM Content Search Resp
+6303	typed	DVM People Search Resp
+6400	typed	DVM Event Count Resp
+6500	typed	DVM Malware Scan Resp
+6900	typed	DVM Timestamping Resp
+6901	typed	DVM OpReturn Resp
+6905	typed	DVM Publish Schedule Resp
+6969	typed	Zap Poll
+6970	typed	DVM PoW Delegation Resp
+7000	typed	DVM Status
+7374	typed	Cashu Mint Quote
+7375	typed	Cashu Token
+7376	typed	Cashu History
+7516	typed	Geocache Found Log
+7517	typed	Geocache Verification
+8000	typed	Relay Add Member
+8001	typed	Relay Remove Member
+8002	typed	
+8003	typed	
+8333	typed	Onchain Zap
+9000	typed	Group Put User
+9001	typed	Group Remove User
+9002	typed	Group Edit Metadata
+9005	typed	Group Delete Event
+9007	typed	Group Create
+9008	typed	Group Delete
+9009	typed	Group Create Invite
+9010	typed	
+9021	typed	Group Join Request
+9022	typed	Group Leave Request
+9030	typed	
+9031	typed	
+9032	typed	
+9033	typed	
+9035	typed	
+9036	typed	
+9040	typed	
+9041	typed	Zap Goals
+9042	typed	
+9043	typed	
+9044	typed	
+9321	typed	Nutzap
+9733	typed	Private Zaps
+9734	typed	Zap Req
+9735	typed	Zaps
+9736	typed	Bolt12 Zap
+9737	typed	
+9802	typed	Highlights
+9998	typed	Decentralized List
+9999	typed	Decentralized List Item
+10000	typed	Mute List
+10001	typed	Pins
+10002	typed	Outbox Relays
+10003	typed	Bookmark List
+10004	typed	Community List
+10005	typed	Channel List
+10006	typed	Blocked Relays
+10007	typed	Search Relays
+10008	typed	Profile Badges
+10009	typed	Group List
+10011	typed	External Identities
+10012	typed	Favorite Relays
+10013	typed	Private Relays
+10015	typed	Hashtag Follows
+10017	typed	Git Authors
+10018	typed	Git Repos
+10019	typed	Nutzap Info
+10020	typed	Media Follows
+10021	typed	Favorite Follow Sets
+10023	typed	Ephemeral Chatrooms
+10030	typed	Emoji Pack List
+10040	typed	Trusted Providers
+10044	typed	Encryption Keys
+10050	typed	DM Relays
+10051	typed	MLS KeyPackage Relays
+10054	typed	Favorite Podcasts
+10058	typed	Bolt12 Offers
+10063	typed	Blossom Servers
+10064	typed	Authored Podcasts
+10081	typed	Geohash Follows
+10086	typed	Index Relay List
+10087	typed	Proxy Relays
+10088	typed	Broadcast Relays
+10089	typed	Trusted Relays
+10090	typed	Favorite Feeds
+10096	typed	File Servers
+10100	typed	
+10101	typed	Wiki Authors
+10102	typed	Wiki Relays
+10112	typed	Nests Servers
+10133	typed	PayTo
+10154	typed	Podcast Show
+10166	typed	Relay Monitor Announcement
+10312	typed	Room Presence
+10317	typed	GRASP Servers
+11316	typed	
+11317	typed	
+11333	typed	
+11871	typed	Attestor Proficiency
+11998	typed	
+12473	typed	Birdex
+13194	typed	NWC Info
+13302	typed	
+13303	typed	
+13534	typed	Relay Memberships
+13535	typed	
+15128	typed	Website Root
+15129	typed	Napplet Root
+17375	typed	Cashu Wallet
+20000	typed	
+20001	typed	
+20002	typed	
+21001	typed	CLINK Offer
+21002	typed	CLINK Debit
+21003	typed	CLINK Manage
+21059	typed	GiftWraps
+22236	typed	Video Views
+22242	typed	Relay Auth
+23194	typed	NWC Request
+23195	typed	NWC Response
+23196	typed	
+23197	typed	NWC Notification
+23333	typed	Ephemeral Chat
+23903	typed	WakeUp
+24133	typed	Nostr Connect
+24134	typed	
+24200	typed	
+24242	typed	Blossom Auth
+24810	typed	
+25050	typed	Call Offer
+25051	typed	Call Answer
+25052	typed	Call ICE Candidate
+25053	typed	Call Hangup
+25054	typed	Call Reject
+25055	typed	Call Renegotiate
+27235	typed	Http Auth
+28934	typed	Relay Join Request
+28935	typed	Relay Invite Request
+28936	typed	Relay Leave Request
+30000	typed	People Lists
+30001	typed	Old Bookmark List
+30002	typed	Relay Set
+30003	typed	Named Bookmarks
+30004	typed	Article Sets
+30005	typed	Video Sets
+30006	typed	Picture Sets
+30007	typed	Kind Mute Sets
+30008	typed	Accepted Badge Set
+30009	typed	Badge Definitions
+30015	typed	Interest Sets
+30017	typed	Marketplace Stall
+30018	typed	Marketplace Product
+30019	typed	Marketplace
+30020	typed	Marketplace Auction
+30023	typed	Blogs
+30030	typed	Emoji Packs
+30040	typed	Publication
+30041	typed	Publication Section
+30045	typed	Directory
+30053	typed	NNS
+30054	typed	Podcast Episode (Podcasting 2.0)
+30055	typed	Podcast Trailer (Podcasting 2.0)
+30063	typed	Release Artifacts
+30064	typed	Chess Challenges
+30065	typed	Chess Game Accept
+30066	typed	Chess Move
+30067	typed	Chess Game End
+30068	typed	Chess Draw Offer
+30078	typed	User Settings
+30142	typed	Learning Resource
+30166	typed	Relay Discovery
+30174	typed	
+30175	typed	
+30176	typed	
+30177	typed	
+30178	typed	
+30267	typed	App Sets
+30296	typed	Adventure Prologue
+30297	typed	Adventure Scene
+30298	typed	Adventure Reading
+30300	typed	
+30311	typed	Live Streams
+30312	typed	Meeting Space
+30313	typed	Meeting Room
+30315	typed	User Status
+30350	typed	
+30382	typed	Contact Card
+30383	typed	Event Assertion
+30384	typed	Addressable Assertion
+30385	typed	External ID Assertion
+30392	typed	Trusted List of Pubkeys
+30393	typed	Trusted List of Events
+30394	typed	Trusted List of Addressables
+30395	typed	Trusted List of External IDs
+30402	typed	Classifieds
+30443	typed	MLS KeyPackage
+30617	typed	Git Repo
+30618	typed	Git Repo State
+30620	typed	
+30621	typed	
+30622	typed	
+30817	typed	NIP
+30818	typed	Wiki
+30819	typed	Wiki Redirect
+31234	typed	Drafts
+31337	typed	Audio Track
+31871	typed	Attestation
+31872	typed	Attestation Request
+31873	typed	Attestor Recommendation
+31890	typed	Feed Definition
+31922	typed	Day Appointment
+31923	typed	Appointment
+31924	typed	Calendar
+31925	typed	Appt RSVP
+31987	typed	Relay Review
+31989	typed	App Recommendations
+31990	typed	Apps
+32176	typed	Blossom Piece Index
+32267	typed	Software Application
+33301	typed	
+33302	typed	
+33330	typed	
+33331	typed	
+33401	typed	Exercise Template
+33534	typed	Relay Role
+33863	typed	Fundraiser
+34139	typed	Music Playlist
+34235	typed	Video (Repl)
+34236	typed	Shorts (Repl)
+34238	typed	Video Collaboration
+34259	typed	Rating
+34550	typed	Community Def
+34551	typed	Community Rules
+35128	typed	Website
+35129	typed	Napplet
+36787	typed	Music Track
+37516	typed	Geocache
+37517	typed	Geocache Curation List
+38000	typed	Mint Recommendation
+38172	typed	Cashu Mint
+38173	typed	Fedimint
+38192	typed	PS1 Save
+38383	typed	P2P Order
+39000	typed	Group Metadata
+39001	typed	Group Admins
+39002	typed	Group Members
+39003	typed	Group Roles
+39004	typed	Group Participants
+39005	typed	
+39006	typed	
+39007	typed	
+39089	typed	Follow Packs
+39092	typed	Media Starter Pack
+39307	typed	Video Subtitles
+39701	typed	Web Bookmark
+39998	typed	Editable Decentralized List
+39999	typed	Editable Decentralized List Item
+40002	typed	
+40003	typed	
+40004	typed	
+40005	typed	
+40006	typed	
+40007	typed	
+40008	typed	
+40099	typed	
+40100	typed	
+40901	typed	
+40902	typed	
+41001	typed	
+41010	typed	
+41011	typed	
+41012	typed	
+42000	typed	
+43001	typed	
+43002	typed	
+43003	typed	
+43004	typed	
+43005	typed	
+43006	typed	
+44100	typed	
+44101	typed	
+44200	typed	
+45001	typed	
+45002	typed	
+45003	typed	
+45010	typed	
+45011	typed	
+46001	typed	
+46002	typed	
+46003	typed	
+46004	typed	
+46005	typed	
+46006	typed	
+46007	typed	
+46010	typed	
+46011	typed	
+46012	typed	
+46020	typed	
+46030	typed	
+46031	typed	
+48001	typed	
+48100	typed	
+48101	typed	
+48102	typed	
+48103	typed	
+48104	typed	
+48106	typed	

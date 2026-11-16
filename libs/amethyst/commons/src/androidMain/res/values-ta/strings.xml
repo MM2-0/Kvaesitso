@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="browser_address_hint">தேடவும் அல்லது முகவரியை உள்ளிடவும்</string>
+    <string name="browser_console_title_short">கன்சோல்</string>
+    <string name="browser_console_title">கன்சோல் (%1$d)</string>
+    <string name="browser_console_clear">அழிக்கவும்</string>
+    <string name="napplet_untitled">தலைப்பற்ற nApplet</string>
+</resources>

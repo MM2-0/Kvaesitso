@@ -427,3 +427,16 @@ The now-built `rish` JNI library comes from the Shizuku API/Rish project (MIT, c
 The Apache-2.0 Shizuku-Next license is included in full. Statically linked NDK 27 C++ runtime
 licenses (Apache-2.0 with LLVM exceptions and legacy notices) are reproduced in the bundled
 NDK consolidated notices; this asset is retained to preserve all runtime attributions.
+
+
+## Amethyst — embedded Aether source (integration in progress)
+
+Source: https://github.com/vitorpamplona/amethyst
+Pinned revision: `75bb07fa3adf4ef5d590bb5379d87f01c139a430`.
+Copyright (c) 2023 Vitor Pamplona; individual source headers retain their
+respective years and notices. MIT license, reproduced in full in
+`libs/amethyst/LICENSE`. The source is adapted into an Android library for
+Aether; it is not currently wired into or shipped by the Telos application.
+The native Arti and zxing-cpp source/build instructions and license information
+remain under `libs/amethyst/tools`. Dependency and runtime attribution review
+is required before enabling this library in a production APK.

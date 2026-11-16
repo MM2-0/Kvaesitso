@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="browser_address_hint">Zoeken of adres invoeren</string>
+    <string name="browser_console_title_short">Console</string>
+    <string name="browser_console_title">Console (%1$d)</string>
+    <string name="browser_console_clear">Wissen</string>
+    <string name="napplet_untitled">Naamloze nApplet</string>
+</resources>

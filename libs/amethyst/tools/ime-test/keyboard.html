@@ -1,0 +1,119 @@
+<!doctype html>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Keyboard focus matrix</title>
+<style>
+  body { font: 13px/1.35 system-ui, sans-serif; margin: 6px; background: #111; color: #eee; }
+  #focus { font: 700 15px/1.4 ui-monospace, monospace; background: #04203a; color: #7fd4ff;
+           padding: 6px 8px; border-radius: 5px; position: sticky; top: 0; z-index: 5; }
+  .row { display: flex; align-items: center; gap: 6px; margin: 5px 0; }
+  .row label { width: 74px; font: 700 11px ui-monospace, monospace; color: #9ab; flex: none; }
+  input, textarea, [contenteditable] { flex: 1; font-size: 15px; padding: 7px;
+      border-radius: 5px; border: 1px solid #456; background: #1b1f24; color: #eee; }
+  input:focus, textarea:focus, [contenteditable]:focus { border-color: #7fd4ff; outline: none; }
+  [contenteditable] { min-height: 20px; }
+  #log { font: 11px/1.3 ui-monospace, monospace; color: #7dff9b; background: #000;
+         padding: 5px; height: 190px; overflow: auto; border-radius: 5px; margin-top: 6px;
+         white-space: pre-wrap; }
+  button { font-size: 12px; padding: 5px 9px; border-radius: 5px; border: 1px solid #567;
+           background: #223; color: #eee; }
+</style>
+
+<div id="focus">FOCUS: (none)</div>
+
+<div class="row"><label>empty</label><input id="empty" type="text" placeholder="empty text"></div>
+<div class="row"><label>filled</label><input id="filled" type="text" value="hello world"></div>
+<div class="row"><label>ta-empty</label><textarea id="taEmpty" rows="1" placeholder="empty textarea"></textarea></div>
+<div class="row"><label>ta-filled</label><textarea id="taFilled" rows="1">hello world</textarea></div>
+<div class="row"><label>editable</label><div id="ce" contenteditable>hello world</div></div>
+<div class="row"><label>email</label><input id="email" type="email" placeholder="a@b.c"></div>
+<div class="row"><label>number</label><input id="number" type="number" placeholder="123"></div>
+<div class="row"><label>password</label><input id="password" type="password" placeholder="secret"></div>
+<div class="row"><label>search</label><input id="search" type="search" placeholder="search"></div>
+<div class="row"><label>tel</label><input id="tel" type="tel" placeholder="+1"></div>
+<div class="row"><label>readonly</label><input id="readonly" type="text" value="readonly" readonly></div>
+<div class="row"><label>disabled</label><input id="disabled" type="text" value="disabled" disabled></div>
+<div class="row">
+  <label>actions</label>
+  <button id="btnBlur">blur()</button>
+  <button id="btnFocusFilled">focus(filled)</button>
+  <button id="btnClear">clear log</button>
+</div>
+
+<div id="log"></div>
+
+<script>
+  const logEl = document.getElementById('log');
+  const focusEl = document.getElementById('focus');
+  const t0 = performance.now();
+  const stamp = () => ('    ' + (performance.now() - t0).toFixed(0)).slice(-6);
+
+  function log(msg) {
+    const line = stamp() + ' ' + msg;
+    logEl.textContent += line + '\n';
+    logEl.scrollTop = logEl.scrollHeight;
+    console.log('[KbDiag] ' + line);
+  }
+
+  const idOf = (el) => !el || el === document.body ? '(none)' : (el.id || el.tagName.toLowerCase());
+
+  function paintFocus() {
+    const el = document.activeElement;
+    const sel = (el && 'selectionStart' in el && el.selectionStart !== null)
+      ? ' sel=' + el.selectionStart + '..' + el.selectionEnd : '';
+    focusEl.textContent = 'FOCUS: ' + idOf(el) + sel;
+  }
+
+  // Focus/blur are the signals the host turns into ime.focus; a tap on an
+  // already-focused field fires NEITHER, which is the case this branch fixes.
+  document.addEventListener('focusin', (e) => { log('FOCUSIN  ' + idOf(e.target)); paintFocus(); });
+  document.addEventListener('focusout', (e) => { log('FOCUSOUT ' + idOf(e.target)); paintFocus(); });
+
+  document.addEventListener('click', (e) => {
+    const already = e.target === document.activeElement;
+    log('CLICK    ' + idOf(e.target) + (already ? '  [ALREADY-FOCUSED -> needs wantkb]' : ''));
+    paintFocus();
+  }, true);
+
+  document.addEventListener('selectionchange', paintFocus);
+
+  document.addEventListener('input', (e) => {
+    const el = e.target;
+    const v = ('value' in el ? el.value : el.textContent) || '';
+    log('INPUT    ' + idOf(el) + ' val="' + v.slice(0, 40) + '" len=' + v.length +
+        ('selectionStart' in el && el.selectionStart !== null
+          ? ' sel=' + el.selectionStart + '..' + el.selectionEnd : ''));
+    paintFocus();
+  });
+
+  document.addEventListener('keydown', (e) => log('KEYDOWN  ' + idOf(e.target) + ' key=' + e.key));
+
+  // Page-level visibility: a tab moved off-screen keeps DOM focus, so this is
+  // how we tell "the host hid us" apart from "the page lost focus".
+  document.addEventListener('visibilitychange',
+    () => log('VISIBILITY ' + document.visibilityState + ' activeElement=' + idOf(document.activeElement)));
+
+  document.getElementById('btnBlur').addEventListener('click', (e) => {
+    e.preventDefault();
+    if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
+    log('ACTION   programmatic blur()');
+  });
+  document.getElementById('btnFocusFilled').addEventListener('click', (e) => {
+    e.preventDefault();
+    document.getElementById('filled').focus();
+    log('ACTION   programmatic focus(filled)');
+  });
+  document.getElementById('btnClear').addEventListener('click', (e) => {
+    e.preventDefault();
+    logEl.textContent = '';
+  });
+
+  // Heartbeat: catches focus drifting on its own while the tab sits idle.
+  let lastBeat = '';
+  setInterval(() => {
+    const now = idOf(document.activeElement);
+    if (now !== lastBeat) { log('DRIFT    activeElement -> ' + now); lastBeat = now; }
+  }, 500);
+
+  log('ready — ' + location.href);
+  paintFocus();
+</script>

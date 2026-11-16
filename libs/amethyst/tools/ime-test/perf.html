@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Embed vs direct — runtime perf probe</title>
+<style>
+  :root { color-scheme: light dark; }
+  body { font: 14px/1.45 system-ui, sans-serif; margin: 0; padding: 12px 12px 40px; }
+  h1 { font-size: 16px; margin: 0 0 4px; }
+  p.sub { margin: 0 0 12px; opacity: .7; font-size: 12px; }
+  #tap { display: block; width: 100%; height: 96px; font: 600 16px system-ui, sans-serif;
+         border: 2px solid currentColor; border-radius: 10px; background: transparent; color: inherit;
+         margin: 0 0 12px; touch-action: manipulation; }
+  table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; }
+  td { padding: 4px 6px; border-bottom: 1px solid rgba(128,128,128,.3); vertical-align: top; }
+  td.k { opacity: .75; white-space: nowrap; }
+  td.v { text-align: right; font-weight: 600; white-space: nowrap; }
+  .bad { color: #c0392b; }
+  .warn { color: #b8860b; }
+  .ok { color: #2e7d32; }
+  #summary { margin-top: 12px; width: 100%; min-height: 76px; font: 11px/1.35 ui-monospace, monospace; }
+  #filler > div { padding: 2px 4px; border-left: 3px solid rgba(128,128,128,.25); }
+  button.rerun { margin-top: 10px; padding: 8px 14px; font: 14px system-ui, sans-serif; }
+</style>
+</head>
+<body>
+<h1>Runtime perf probe</h1>
+<p class="sub">Open this same URL twice — once as an <b>embedded</b> tab, once in the <b>full-screen</b> browser — and compare. Both are the same WebView in the same process; any gap is host-induced.</p>
+
+<button id="tap">Tap me a few times<br><small>measures input → JS → paint</small></button>
+
+<table id="out"></table>
+<button class="rerun" id="rerun">Re-run benchmarks</button>
+<textarea id="summary" readonly aria-label="one-line summary"></textarea>
+
+<div id="filler" aria-hidden="true"></div>
+
+<script>
+(function () {
+  'use strict';
+
+  // A few thousand nodes, so layout costs are representative of a real page rather than a blank one.
+  var filler = document.getElementById('filler');
+  var frag = document.createDocumentFragment();
+  for (var i = 0; i < 1500; i++) {
+    var d = document.createElement('div');
+    d.textContent = 'row ' + i + ' — lorem ipsum dolor sit amet consectetur';
+    frag.appendChild(d);
+  }
+  filler.appendChild(frag);
+
+  var rows = {};
+  var table = document.getElementById('out');
+  function put(key, value, cls) {
+    var tr = rows[key];
+    if (!tr) {
+      tr = rows[key] = document.createElement('tr');
+      var k = document.createElement('td'); k.className = 'k'; k.textContent = key;
+      var v = document.createElement('td'); v.className = 'v';
+      tr.appendChild(k); tr.appendChild(v); table.appendChild(tr);
+    }
+    var cell = tr.lastChild;
+    cell.textContent = value;
+    cell.className = 'v' + (cls ? ' ' + cls : '');
+  }
+  function median(a) { var b = a.slice().sort(function (x, y) { return x - y; }); return b[b.length >> 1]; }
+
+  // ---- environment -------------------------------------------------------
+  // visibilityState is the one that matters most: a page Chromium considers hidden gets its timers
+  // clamped to ~1Hz and requestAnimationFrame suspended entirely, which reads exactly like "the site's
+  // JS got slow and everything lags". hasFocus() false is EXPECTED in the embed (the host window owns
+  // the keyboard) and is not, by itself, a throttling trigger.
+  function env() {
+    put('visibilityState', document.visibilityState, document.visibilityState === 'visible' ? 'ok' : 'bad');
+    put('document.hasFocus()', String(document.hasFocus()));
+    put('hardwareConcurrency', String(navigator.hardwareConcurrency || '?'));
+    put('devicePixelRatio', String(window.devicePixelRatio));
+    put('viewport', window.innerWidth + '×' + window.innerHeight);
+  }
+
+  // ---- pure CPU: no DOM, no allocation. Isolates scheduler/core assignment. ----
+  function cpuMs() {
+    var runs = [];
+    for (var r = 0; r < 5; r++) {
+      var t0 = performance.now(), x = 0;
+      for (var i = 0; i < 3e6; i++) x += Math.sqrt(i) * 1.0000001;
+      runs.push(performance.now() - t0);
+      if (x === Infinity) console.log(x); // keep the loop alive
+    }
+    return median(runs);
+  }
+
+  // ---- forced layout: what the IME shim's caret measurement does on this DOM ----
+  function layoutMs() {
+    var runs = [];
+    for (var r = 0; r < 5; r++) {
+      var t0 = performance.now();
+      for (var i = 0; i < 20; i++) {
+        var d = document.createElement('div');
+        d.style.cssText = 'position:absolute;visibility:hidden;white-space:pre-wrap';
+        d.textContent = 'measure';
+        document.body.appendChild(d);
+        void d.offsetTop; // forces a full document layout
+        document.body.removeChild(d);
+      }
+      runs.push((performance.now() - t0) / 20);
+    }
+    return median(runs);
+  }
+
+  // ---- timer fidelity: catches background throttling (a 50ms interval firing at ~1000ms) ----
+  function timerFidelity(cb) {
+    var want = 50, ticks = [], last = performance.now();
+    var id = setInterval(function () {
+      var now = performance.now();
+      ticks.push(now - last);
+      last = now;
+      if (ticks.length >= 20) { clearInterval(id); cb(median(ticks), want); }
+    }, want);
+  }
+
+  // ---- rAF rate: suspended entirely on a page Chromium thinks is hidden ----
+  function rafRate(cb) {
+    var frames = 0, t0 = performance.now();
+    (function step() {
+      frames++;
+      if (performance.now() - t0 < 2000) requestAnimationFrame(step);
+      else cb(frames / ((performance.now() - t0) / 1000));
+    })();
+  }
+
+  // ---- long tasks (>50ms on the main thread) ----
+  var longTasks = 0, longMs = 0;
+  try {
+    new PerformanceObserver(function (list) {
+      list.getEntries().forEach(function (e) { longTasks++; longMs += e.duration; });
+      put('long tasks (>50ms)', longTasks + ' / ' + Math.round(longMs) + 'ms', longTasks ? 'warn' : 'ok');
+    }).observe({ entryTypes: ['longtask'] });
+  } catch (_) { /* not supported */ }
+
+  // ---- input latency: OS event stamp → JS handler → next paint ----
+  var deliver = [], toPaint = [];
+  document.getElementById('tap').addEventListener('pointerdown', function (e) {
+    var atHandler = performance.now();
+    // e.timeStamp shares performance.now()'s time origin for trusted events, so this is the time the
+    // event spent between the platform stamping it and JS seeing it — input delivery + main-thread wait.
+    if (e.isTrusted && e.timeStamp > 0) deliver.push(atHandler - e.timeStamp);
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () { // second rAF ≈ after the frame containing our change is presented
+        toPaint.push(performance.now() - atHandler);
+        put('input → handler',
+            (deliver.length ? median(deliver).toFixed(1) + ' ms' : 'n/a') + '  (n=' + deliver.length + ')',
+            median(deliver) > 32 ? 'bad' : median(deliver) > 16 ? 'warn' : 'ok');
+        put('handler → paint',
+            median(toPaint).toFixed(1) + ' ms  (n=' + toPaint.length + ')',
+            median(toPaint) > 48 ? 'bad' : median(toPaint) > 32 ? 'warn' : 'ok');
+        summarize();
+      });
+    });
+  }, { passive: true });
+
+  var results = {};
+  function summarize() {
+    document.getElementById('summary').value =
+      'vis=' + document.visibilityState + ' focus=' + document.hasFocus() +
+      ' cores=' + (navigator.hardwareConcurrency || '?') +
+      ' | cpu=' + (results.cpu != null ? results.cpu.toFixed(0) + 'ms' : '-') +
+      ' layout=' + (results.layout != null ? results.layout.toFixed(2) + 'ms' : '-') +
+      ' timer50=' + (results.timer != null ? results.timer.toFixed(0) + 'ms' : '-') +
+      ' raf=' + (results.raf != null ? results.raf.toFixed(0) + 'fps' : '-') +
+      ' longtasks=' + longTasks +
+      ' | inputDelivery=' + (deliver.length ? median(deliver).toFixed(1) + 'ms' : '-') +
+      ' toPaint=' + (toPaint.length ? median(toPaint).toFixed(1) + 'ms' : '-');
+  }
+
+  function run() {
+    env();
+    put('cpu loop (3M sqrt)', 'running…');
+    setTimeout(function () {
+      results.cpu = cpuMs();
+      put('cpu loop (3M sqrt)', results.cpu.toFixed(0) + ' ms');
+      results.layout = layoutMs();
+      put('forced layout (1500 nodes)', results.layout.toFixed(2) + ' ms');
+      rafRate(function (fps) {
+        results.raf = fps;
+        put('requestAnimationFrame', fps.toFixed(0) + ' fps', fps < 30 ? 'bad' : fps < 50 ? 'warn' : 'ok');
+        timerFidelity(function (got, want) {
+          results.timer = got;
+          put('setInterval(' + want + 'ms) actual', got.toFixed(0) + ' ms',
+              got > 400 ? 'bad' : got > 80 ? 'warn' : 'ok');
+          summarize();
+        });
+      });
+    }, 50);
+  }
+
+  document.getElementById('rerun').addEventListener('click', run);
+  document.addEventListener('visibilitychange', function () {
+    put('visibilityState', document.visibilityState, document.visibilityState === 'visible' ? 'ok' : 'bad');
+  });
+  run();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="browser_address_hint">ค้นหาหรือป้อนที่อยู่</string>
+    <string name="browser_console_title_short">คอนโซล</string>
+    <string name="browser_console_title">คอนโซล (%1$d)</string>
+    <string name="browser_console_clear">ล้าง</string>
+    <string name="napplet_untitled">nApplet ไม่มีชื่อ</string>
+</resources>

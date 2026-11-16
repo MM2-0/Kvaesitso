@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Scoped to the one cache subdirectory the camera writes WebView captures into. Deliberately NOT the
+  app-wide file_paths.xml (which exposes all of cache/ and external files) — the only thing a camera
+  app should ever be handed is the empty file it is about to fill.
+-->
+<paths>
+    <cache-path
+        name="webview_captures"
+        path="webview-captures/" />
+</paths>

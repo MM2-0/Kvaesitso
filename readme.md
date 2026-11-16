@@ -132,7 +132,7 @@ Phone settings expose Android’s caller-identification/blocking role on support
 
 Telos Keyboard setup offers both Android input settings and the input-method chooser. The IME installs Compose owners on its window, recreates input views safely, routes taps directly to its keys, uses numeric layouts for numeric editors and honors Search/Done/Send actions. Password/PIN and no-learning editors keep their privacy requirement independently of the manual incognito switch and clear transient word/clipboard state when editors change.
 
-Aether currently remains a local preview. Full Amethyst account management, settings and live Nostr integration are still pending.
+Aether currently remains a local preview. Full Amethyst account management, settings and live Nostr integration are still pending. The full upstream source is staged under `libs/amethyst` as an Android library; it is not connected to the production host or included in released APKs yet.
 
 
 
@@ -1324,6 +1324,7 @@ adapted, the original license is respected.
 | [QEMU](https://www.qemu.org/) + [scrcpy](https://github.com/Genymobile/scrcpy) + [BlissOS](https://blissos.org/) | GPL-2.0 / Apache-2.0 / Apache-2.0 | Optional TelosAndroidVm guest (`tools/windows-qemu-android/`) on Windows, Linux KVM, and Apple Silicon; gitignored vendor ISO/binaries; not in the APK |
 | [BreezeX_Cursor](https://github.com/ful1e5/BreezeX_Cursor) / [Bibata_Cursor](https://github.com/ful1e5/Bibata_Cursor) | GPL-3.0-or-later | Optional Telos Desktop XCursor theme downloads (not bundled; user-initiated) |
 | [Papirus](https://github.com/PapirusDevelopmentTeam/papirus-icon-theme) / [Tela](https://github.com/vinceliuice/Tela-icon-theme) / [candy-icons](https://github.com/EliverLara/candy-icons) | GPL-3.0 | Optional Telos Desktop icon-theme catalog downloads (not bundled); CandyCyber chrome glyphs are Telos originals |
+| [Amethyst](https://github.com/vitorpamplona/amethyst) | MIT | Full client source staged for embedded Aether integration; production host and runtime verification pending |
 | [QUIK](https://github.com/quik-sms/quik) | GPL-3.0 | Ideas for Telos Messages: pin, archive, delayed send, any-file attachments, speech-to-text (written in Compose, no QUIK code copied) |
 | [Right Dialer (Goodwy/Dialer)](https://github.com/Goodwy/Dialer) | GPL-3.0 | Phone app layout and look: recents, contacts, dialpad, call screens |
 | [Secure Dialer](https://github.com/Secure-Phone-apps/Secure-Dialer) | GPL-3.0 | Privacy features: biometric lock, secure call screen, call screening, callback reminders |

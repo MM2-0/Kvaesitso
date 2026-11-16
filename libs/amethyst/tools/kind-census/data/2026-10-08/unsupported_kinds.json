@@ -1,0 +1,8912 @@
+[
+ {
+  "kind": 37195,
+  "class": "addressable",
+  "events": 2825,
+  "authors": 2410,
+  "tag_presence": {
+   "version": 2825,
+   "d": 2825,
+   "protocol": 2825,
+   "expiration": 2825
+  },
+  "content_shape": {
+   "json": 2825
+  },
+  "json_content_keys": {
+   "identifier": 2825,
+   "version": 2825,
+   "endpoints": 2825,
+   "stunServers": 2748,
+   "signalRelays": 191
+  },
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 1060,
+  "class": "regular",
+  "events": 93095,
+  "authors": 1444,
+  "tag_presence": {
+   "header": 93086,
+   "p": 93078,
+   "expiration": 1,
+   "h": 1
+  },
+  "content_shape": {
+   "nip44": 93095
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 4333,
+  "class": "regular",
+  "events": 637,
+  "authors": 637,
+  "tag_presence": {
+   "z": 633,
+   "expiration": 633,
+   "t": 4
+  },
+  "content_shape": {
+   "nip44": 633,
+   "opaque-b64": 4
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 7368,
+  "class": "regular",
+  "events": 122548,
+  "authors": 537,
+  "tag_presence": {
+   "i": 122548,
+   "type": 122548,
+   "schema": 122546,
+   "rater": 122546,
+   "subject": 122546,
+   "max_rating": 122546,
+   "scope": 122546,
+   "created_at": 122546,
+   "reason": 122546,
+   "rating": 122546,
+   "min_rating": 122546,
+   "window_end": 122542,
+   "sample_count": 122542,
+   "tag": 122542,
+   "p": 6
+  },
+  "content_shape": {
+   "empty": 122546,
+   "nip44": 2
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 30277,
+  "class": "addressable",
+  "events": 252,
+  "authors": 234,
+  "tag_presence": {
+   "d": 252,
+   "t": 252
+  },
+  "content_shape": {
+   "json": 252
+  },
+  "json_content_keys": {
+   "v": 252,
+   "name": 252,
+   "mi": 252,
+   "lv": 252,
+   "c": 252
+  },
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 10377,
+  "class": "replaceable",
+  "events": 318,
+  "authors": 214,
+  "tag_presence": {
+   "i": 318
+  },
+  "content_shape": {
+   "json": 318
+  },
+  "json_content_keys": {
+   "payload": 318,
+   "signature": 318
+  },
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 30789,
+  "class": "addressable",
+  "events": 341,
+  "authors": 176,
+  "tag_presence": {
+   "x": 337,
+   "t": 337,
+   "d": 4
+  },
+  "content_shape": {
+   "opaque-b64": 337,
+   "nip44": 4
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 30787,
+  "class": "addressable",
+  "events": 263,
+  "authors": 170,
+  "tag_presence": {
+   "x": 263,
+   "d": 263,
+   "t": 263
+  },
+  "content_shape": {
+   "opaque-b64": 263
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 1460,
+  "class": "regular",
+  "events": 202,
+  "authors": 140,
+  "tag_presence": {
+   "d": 202,
+   "expiration": 3
+  },
+  "content_shape": {
+   "nip44": 202
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 37368,
+  "class": "addressable",
+  "events": 122,
+  "authors": 108,
+  "tag_presence": {
+   "schema": 122,
+   "d": 122,
+   "i": 122,
+   "type": 122,
+   "p": 112,
+   "owner_pubkey": 112,
+   "device": 110,
+   "member": 10,
+   "admin": 10,
+   "name": 10,
+   "revision": 10,
+   "created_at": 10,
+   "updated_at": 10,
+   "created_by": 10,
+   "protocol": 10
+  },
+  "content_shape": {
+   "empty": 122
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 4248,
+  "class": "regular",
+  "events": 96,
+  "authors": 96,
+  "tag_presence": {
+   "p": 96
+  },
+  "content_shape": {
+   "opaque-b64": 92,
+   "nip44": 4
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 30388,
+  "class": "addressable",
+  "events": 276,
+  "authors": 90,
+  "tag_presence": {
+   "dataset": 276,
+   "d": 276,
+   "p": 276,
+   "app": 276
+  },
+  "content_shape": {
+   "nip04": 276
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 1463,
+  "class": "regular",
+  "events": 151,
+  "authors": 83,
+  "tag_presence": {
+   "d": 151
+  },
+  "content_shape": {
+   "nip44": 151
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 13473,
+  "class": "replaceable",
+  "events": 60,
+  "authors": 58,
+  "tag_presence": {
+   "end": 60,
+   "alt": 60,
+   "start": 60,
+   "published_at": 60,
+   "client": 60
+  },
+  "content_shape": {
+   "empty": 60
+  },
+  "json_content_keys": {},
+  "alt": {
+   "Posting streak": 60
+  },
+  "client": {
+   "Ditto": 60
+  },
+  "samples": 10
+ },
+ {
+  "kind": 30310,
+  "class": "addressable",
+  "events": 64,
+  "authors": 57,
+  "tag_presence": {
+   "d": 64,
+   "pfx": 62,
+   "u": 62,
+   "app": 62
+  },
+  "content_shape": {
+   "json": 62,
+   "nip44": 2
+  },
+  "json_content_keys": {
+   "username": 62,
+   "displayName": 62,
+   "image": 62,
+   "bannerImage": 62,
+   "activeProfileBadge": 62,
+   "ts": 62,
+   "bio": 28,
+   "about": 28,
+   "description": 28
+  },
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 30079,
+  "class": "addressable",
+  "events": 121,
+  "authors": 51,
+  "tag_presence": {
+   "d": 121,
+   "e": 56,
+   "r": 55,
+   "t": 26,
+   "client": 25,
+   "alias": 15,
+   "encrypted": 11,
+   "key": 11,
+   "e_ref": 7,
+   "v": 4,
+   "k": 4,
+   "x": 4,
+   "role": 3,
+   "wk": 2,
+   "orderId": 1
+  },
+  "content_shape": {
+   "json": 57,
+   "text": 36,
+   "nip44": 24,
+   "empty": 4
+  },
+  "json_content_keys": {
+   "version": 19,
+   "points": 19,
+   "abilities": 19,
+   "rootPoints": 19,
+   "lifespan": 19,
+   "alias": 15,
+   "pubkey": 15,
+   "name": 11,
+   "description": 11,
+   "encrypted": 11,
+   "event": 10,
+   "meetup": 10,
+   "t": 10,
+   "role": 3,
+   "nick": 1
+  },
+  "alt": {},
+  "client": {
+   "COURA": 15,
+   "einundzwanzig-meetup-app": 10
+  },
+  "samples": 10
+ },
+ {
+  "kind": 9421,
+  "class": "regular",
+  "events": 50,
+  "authors": 50,
+  "tag_presence": {
+   "s": 50,
+   "o": 50,
+   "g": 50,
+   "t": 50
+  },
+  "content_shape": {
+   "text": 50
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 9420,
+  "class": "regular",
+  "events": 46,
+  "authors": 46,
+  "tag_presence": {
+   "g": 46,
+   "t": 46,
+   "a": 42,
+   "o": 42,
+   "s": 29
+  },
+  "content_shape": {
+   "text": 46
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 3927,
+  "class": "regular",
+  "events": 60,
+  "authors": 41,
+  "tag_presence": {
+   "u": 60,
+   "d": 60,
+   "alt": 60,
+   "t": 60
+  },
+  "content_shape": {
+   "text": 60
+  },
+  "json_content_keys": {},
+  "alt": {
+   "Page view counter update for com.citadelwire.page-views.home": 60
+  },
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 37778,
+  "class": "addressable",
+  "events": 40,
+  "authors": 40,
+  "tag_presence": {
+   "d": 40,
+   "expiration": 40
+  },
+  "content_shape": {
+   "hex": 40
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 30085,
+  "class": "addressable",
+  "events": 53,
+  "authors": 35,
+  "tag_presence": {
+   "relay": 53,
+   "d": 53,
+   "relay-urls": 53,
+   "app": 53
+  },
+  "content_shape": {
+   "empty": 53
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 37779,
+  "class": "addressable",
+  "events": 35,
+  "authors": 35,
+  "tag_presence": {
+   "d": 35,
+   "expiration": 35
+  },
+  "content_shape": {
+   "hex": 35
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 2023,
+  "class": "regular",
+  "events": 142,
+  "authors": 31,
+  "tag_presence": {
+   "p": 142
+  },
+  "content_shape": {
+   "nip44": 142
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 10443,
+  "class": "replaceable",
+  "events": 27,
+  "authors": 27,
+  "tag_presence": {
+   "ciphersuite": 26,
+   "mls_protocol_version": 26,
+   "relay": 26,
+   "client": 26,
+   "extensions": 25
+  },
+  "content_shape": {
+   "opaque-b64": 26,
+   "json": 1
+  },
+  "json_content_keys": {
+   "signedPrekeySignature": 1,
+   "oneTimePrekey": 1,
+   "signedPrekey": 1,
+   "identityKey": 1
+  },
+  "alt": {},
+  "client": {
+   "Keychat": 25,
+   "meiso": 1
+  },
+  "samples": 10
+ },
+ {
+  "kind": 38385,
+  "class": "addressable",
+  "events": 66,
+  "authors": 26,
+  "tag_presence": {
+   "y": 66,
+   "pow": 66,
+   "z": 66,
+   "expiration_seconds": 66,
+   "d": 66,
+   "min_order_amount": 66,
+   "expiration_hours": 66,
+   "mostro_version": 66,
+   "max_order_amount": 66,
+   "fee": 66,
+   "max_orders_per_response": 66,
+   "mostro_commit_hash": 66,
+   "fiat_currencies_accepted": 66,
+   "bond_enabled": 66,
+   "invoice_expiration_window": 65
+  },
+  "content_shape": {
+   "empty": 66
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 38001,
+  "class": "addressable",
+  "events": 22501,
+  "authors": 25,
+  "tag_presence": {
+   "L": 22501,
+   "smj": 22501,
+   "m": 22501,
+   "side": 22501,
+   "n": 22501,
+   "status": 22501,
+   "s": 22501,
+   "b": 22501,
+   "t": 22501,
+   "d": 22501,
+   "payout_address": 22501,
+   "outcome": 22501,
+   "price": 22501,
+   "l": 22501,
+   "fee": 22501
+  },
+  "content_shape": {
+   "json": 22501
+  },
+  "json_content_keys": {
+   "amount": 22501,
+   "avgPrice": 22501,
+   "outcomeId": 22501,
+   "trader": 22501,
+   "rail": 22501,
+   "traderName": 22501,
+   "feeSats": 22501,
+   "feePercent": 22501,
+   "feeCurrency": 22501
+  },
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 3560,
+  "class": "regular",
+  "events": 121,
+  "authors": 25,
+  "tag_presence": {
+   "expiration": 121,
+   "s": 121
+  },
+  "content_shape": {
+   "nip44": 121
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 31986,
+  "class": "addressable",
+  "events": 27,
+  "authors": 25,
+  "tag_presence": {
+   "rating": 27,
+   "sig": 27,
+   "d": 27,
+   "p": 27
+  },
+  "content_shape": {
+   "empty": 27
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 1461,
+  "class": "regular",
+  "events": 25,
+  "authors": 25,
+  "tag_presence": {
+   "d": 25
+  },
+  "content_shape": {
+   "json": 25
+  },
+  "json_content_keys": {
+   "v": 25
+  },
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 38501,
+  "class": "addressable",
+  "events": 351,
+  "authors": 23,
+  "tag_presence": {
+   "d": 351
+  },
+  "content_shape": {
+   "json": 351
+  },
+  "json_content_keys": {
+   "created": 351,
+   "enc": 351,
+   "meeting_node": 351,
+   "onion": 351,
+   "pubkey": 351,
+   "sig": 351,
+   "sig3": 351,
+   "v": 351
+  },
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 1077,
+  "class": "regular",
+  "events": 77,
+  "authors": 23,
+  "tag_presence": {
+   "r": 77
+  },
+  "content_shape": {
+   "json": 77
+  },
+  "json_content_keys": {
+   "from": 77,
+   "to": 77,
+   "kind": 77,
+   "peer_id": 77,
+   "caps": 77
+  },
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 4277,
+  "class": "regular",
+  "events": 24,
+  "authors": 22,
+  "tag_presence": {
+   "t": 24
+  },
+  "content_shape": {
+   "json": 24
+  },
+  "json_content_keys": {
+   "v": 24,
+   "rating": 24,
+   "text": 24,
+   "name": 24,
+   "bike": 24,
+   "map": 24,
+   "device": 24,
+   "rides": 24,
+   "mins": 24,
+   "when": 24
+  },
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 31242,
+  "class": "addressable",
+  "events": 22,
+  "authors": 22,
+  "tag_presence": {
+   "d": 22,
+   "expiration": 22
+  },
+  "content_shape": {
+   "opaque-b64": 22
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 9424,
+  "class": "regular",
+  "events": 28,
+  "authors": 21,
+  "tag_presence": {
+   "m": 20,
+   "o": 20,
+   "g": 20,
+   "t": 20,
+   "r": 8
+  },
+  "content_shape": {
+   "text": 20,
+   "opaque-b64": 8
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 1717,
+  "class": "regular",
+  "events": 25,
+  "authors": 21,
+  "tag_presence": {
+   "expiration": 25
+  },
+  "content_shape": {
+   "opaque-b64": 24,
+   "nip44": 1
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 37104,
+  "class": "addressable",
+  "events": 21,
+  "authors": 21,
+  "tag_presence": {
+   "status": 21,
+   "d": 21,
+   "t": 21
+  },
+  "content_shape": {
+   "json": 21
+  },
+  "json_content_keys": {
+   "schema": 21,
+   "being_pubkey": 21,
+   "being_name": 21,
+   "being_domain": 21,
+   "status": 21,
+   "adoptee_count": 21,
+   "alive_at": 21
+  },
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 39020,
+  "class": "addressable",
+  "events": 21,
+  "authors": 21,
+  "tag_presence": {
+   "name": 21,
+   "p": 21,
+   "t": 21,
+   "d": 21,
+   "domain": 21,
+   "protocol": 21
+  },
+  "content_shape": {
+   "json": 21
+  },
+  "json_content_keys": {
+   "protocol": 21,
+   "version": 21,
+   "name": 21,
+   "summary": 21,
+   "domain": 21,
+   "language": 21,
+   "interests": 21,
+   "capabilities": 21,
+   "communication_policy": 21,
+   "updated_at": 21
+  },
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 443,
+  "class": "regular",
+  "events": 26,
+  "authors": 20,
+  "tag_presence": {
+   "mls_protocol_version": 26,
+   "relays": 26,
+   "client": 26,
+   "encoding": 21,
+   "i": 21,
+   "mls_extensions": 21,
+   "mls_ciphersuite": 21,
+   "mls_proposals": 18,
+   "ciphersuite": 5,
+   "extensions": 5
+  },
+  "content_shape": {
+   "nip44": 21,
+   "empty": 5
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {
+   "MDK/0.8.0": 18,
+   "rizq": 5,
+   "MDK/0.7.1": 2,
+   "EpochShield": 1
+  },
+  "samples": 10
+ },
+ {
+  "kind": 5555,
+  "class": "regular",
+  "events": 24,
+  "authors": 18,
+  "tag_presence": {
+   "schema": 24,
+   "version": 24,
+   "t": 24,
+   "streak": 24,
+   "played": 24,
+   "won": 24,
+   "result": 24,
+   "source": 24,
+   "maxStreak": 24,
+   "puzzle": 24,
+   "game": 24,
+   "difficulty": 24
+  },
+  "content_shape": {
+   "json": 24
+  },
+  "json_content_keys": {
+   "game": 24,
+   "puzzle": 24,
+   "result": 24,
+   "hardMode": 24,
+   "streak": 24,
+   "maxStreak": 24,
+   "played": 24,
+   "won": 24,
+   "version": 24
+  },
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 31903,
+  "class": "addressable",
+  "events": 18,
+  "authors": 18,
+  "tag_presence": {
+   "d": 18,
+   "t": 18
+  },
+  "content_shape": {
+   "nip44": 13,
+   "json": 5
+  },
+  "json_content_keys": {
+   "_bro_commands": 5,
+   "youtube.com": 1
+  },
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 1000,
+  "class": "regular",
+  "events": 814,
+  "authors": 17,
+  "tag_presence": {
+   "p": 191
+  },
+  "content_shape": {
+   "json": 814
+  },
+  "json_content_keys": {
+   "type": 191,
+   "data": 173
+  },
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 36944,
+  "class": "addressable",
+  "events": 21,
+  "authors": 16,
+  "tag_presence": {
+   "d": 21,
+   "nonce": 20,
+   "a": 5,
+   "version": 5,
+   "deleted": 1,
+   "p": 1
+  },
+  "content_shape": {
+   "nip44": 11,
+   "empty": 10
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 30215,
+  "class": "addressable",
+  "events": 16,
+  "authors": 16,
+  "tag_presence": {
+   "d": 16,
+   "visibility": 16
+  },
+  "content_shape": {
+   "text": 16
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 32022,
+  "class": "addressable",
+  "events": 15,
+  "authors": 15,
+  "tag_presence": {
+   "network": 15,
+   "d": 15,
+   "t": 15
+  },
+  "content_shape": {
+   "json": 15
+  },
+  "json_content_keys": {
+   "v": 15,
+   "app": 15,
+   "network": 15,
+   "id": 15,
+   "public_key": 15,
+   "denomination": 15,
+   "fee_rate": 15,
+   "min_peers": 15,
+   "max_peers": 15,
+   "private": 15,
+   "timeout": 15,
+   "state": 15,
+   "peers": 15
+  },
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 10222,
+  "class": "replaceable",
+  "events": 14,
+  "authors": 14,
+  "tag_presence": {
+   "strict": 14,
+   "blossom": 14,
+   "r": 14,
+   "k": 14,
+   "content": 14,
+   "membership": 11,
+   "access": 11
+  },
+  "content_shape": {
+   "empty": 14
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 1050,
+  "class": "regular",
+  "events": 48,
+  "authors": 13,
+  "tag_presence": {
+   "t": 48,
+   "p": 27
+  },
+  "content_shape": {
+   "opaque-b64": 26,
+   "json": 22
+  },
+  "json_content_keys": {
+   "type": 21,
+   "at": 21,
+   "family": 1,
+   "v": 1,
+   "alg": 1,
+   "ct": 1
+  },
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 4721,
+  "class": "regular",
+  "events": 13,
+  "authors": 13,
+  "tag_presence": {
+   "client": 13,
+   "t": 13
+  },
+  "content_shape": {
+   "json": 13
+  },
+  "json_content_keys": {
+   "id": 13,
+   "escrow": 13,
+   "from": 13,
+   "createdAt": 13,
+   "ciphertext": 13
+  },
+  "alt": {},
+  "client": {
+   "ouroswap": 13
+  },
+  "samples": 10
+ },
+ {
+  "kind": 36943,
+  "class": "addressable",
+  "events": 135,
+  "authors": 12,
+  "tag_presence": {
+   "d": 135,
+   "c": 135,
+   "client": 135,
+   "published_at": 135,
+   "epoch": 135,
+   "nonce": 135,
+   "h": 135,
+   "a": 19,
+   "p": 2,
+   "emoji": 1,
+   "sticker": 1,
+   "M": 1
+  },
+  "content_shape": {
+   "opaque-b64": 132,
+   "nip44": 3
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {
+   "DEN Chat": 135
+  },
+  "samples": 10
+ },
+ {
+  "kind": 16942,
+  "class": "replaceable",
+  "events": 14,
+  "authors": 12,
+  "tag_presence": {
+   "v": 14
+  },
+  "content_shape": {
+   "empty": 11,
+   "nip44": 3
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 1081,
+  "class": "regular",
+  "events": 12,
+  "authors": 12,
+  "tag_presence": {},
+  "content_shape": {
+   "nip44": 12
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 4545,
+  "class": "regular",
+  "events": 12,
+  "authors": 12,
+  "tag_presence": {
+   "y": 12,
+   "expiration": 12
+  },
+  "content_shape": {
+   "opaque-b64": 12
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 8
+ },
+ {
+  "kind": 9422,
+  "class": "regular",
+  "events": 12,
+  "authors": 12,
+  "tag_presence": {
+   "r": 12
+  },
+  "content_shape": {
+   "opaque-b64": 11,
+   "nip44": 1
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 31124,
+  "class": "addressable",
+  "events": 42,
+  "authors": 11,
+  "tag_presence": {
+   "health": 42,
+   "happiness": 42,
+   "breeding_ready": 42,
+   "stage": 42,
+   "special_mark": 42,
+   "state": 42,
+   "pattern": 42,
+   "size": 42,
+   "generation": 42,
+   "progression_state": 42,
+   "energy": 42,
+   "b": 42,
+   "secondary_color": 42,
+   "d": 42,
+   "hunger": 42
+  },
+  "content_shape": {
+   "json": 37,
+   "text": 5
+  },
+  "json_content_keys": {
+   "evolution": 37
+  },
+  "alt": {},
+  "client": {
+   "Ditto": 42
+  },
+  "samples": 10
+ },
+ {
+  "kind": 11125,
+  "class": "replaceable",
+  "events": 15,
+  "authors": 11,
+  "tag_presence": {
+   "pettingLevel": 15,
+   "blobbi_onboarding_done": 15,
+   "name": 15,
+   "b": 15,
+   "d": 15,
+   "published_at": 15,
+   "client": 15,
+   "has": 13,
+   "xp": 10,
+   "level": 10,
+   "coins": 10,
+   "current_companion": 1,
+   "background": 1,
+   "storage": 1
+  },
+  "content_shape": {
+   "json": 11,
+   "empty": 4
+  },
+  "json_content_keys": {
+   "missions": 11,
+   "room_furniture": 7,
+   "room_layouts": 7,
+   "room_furniture_v2": 1
+  },
+  "alt": {},
+  "client": {
+   "Ditto": 15
+  },
+  "samples": 10
+ },
+ {
+  "kind": 37701,
+  "class": "addressable",
+  "events": 12,
+  "authors": 11,
+  "tag_presence": {
+   "d": 12,
+   "t": 12
+  },
+  "content_shape": {
+   "json": 12
+  },
+  "json_content_keys": {
+   "payload": 12,
+   "proof": 12
+  },
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 30218,
+  "class": "addressable",
+  "events": 24,
+  "authors": 10,
+  "tag_presence": {
+   "d": 24,
+   "visibility": 24,
+   "backup": 14
+  },
+  "content_shape": {
+   "text": 24
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 38422,
+  "class": "addressable",
+  "events": 17,
+  "authors": 10,
+  "tag_presence": {
+   "provider": 17,
+   "schema": 17,
+   "d": 17
+  },
+  "content_shape": {
+   "json": 17
+  },
+  "json_content_keys": {
+   "endpoint_urls": 17,
+   "generated_at": 17,
+   "interval_minutes": 17,
+   "model_usage_mix": 17,
+   "npub": 17,
+   "others_usage": 17,
+   "provider_id": 17,
+   "pubkey": 17,
+   "schema": 17,
+   "summary": 17,
+   "top_model_usage": 17,
+   "window_hours": 17,
+   "windows": 17
+  },
+  "alt": {},
+  "client": {},
+  "samples": 4
+ },
+ {
+  "kind": 4454,
+  "class": "regular",
+  "events": 16,
+  "authors": 10,
+  "tag_presence": {
+   "P": 16,
+   "pubkey": 16
+  },
+  "content_shape": {
+   "empty": 16
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 16767,
+  "class": "replaceable",
+  "events": 14,
+  "authors": 10,
+  "tag_presence": {
+   "alt": 14,
+   "c": 14,
+   "client": 14,
+   "f": 13,
+   "published_at": 11,
+   "title": 10,
+   "bg": 8,
+   "p": 2,
+   "a": 2
+  },
+  "content_shape": {
+   "empty": 14
+  },
+  "json_content_keys": {},
+  "alt": {
+   "Active profile theme": 14
+  },
+  "client": {
+   "Ditto": 10,
+   "jotstr": 3,
+   "Armada": 1
+  },
+  "samples": 10
+ },
+ {
+  "kind": 30032,
+  "class": "addressable",
+  "events": 12,
+  "authors": 10,
+  "tag_presence": {
+   "e": 12,
+   "k": 12,
+   "p": 12,
+   "app": 12
+  },
+  "content_shape": {
+   "empty": 12
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 4334,
+  "class": "regular",
+  "events": 198,
+  "authors": 9,
+  "tag_presence": {
+   "c": 198,
+   "expiration": 198,
+   "x": 198
+  },
+  "content_shape": {
+   "opaque-b64": 194,
+   "nip44": 4
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 2
+ },
+ {
+  "kind": 9423,
+  "class": "regular",
+  "events": 9,
+  "authors": 9,
+  "tag_presence": {
+   "r": 9
+  },
+  "content_shape": {
+   "opaque-b64": 9
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 9
+ },
+ {
+  "kind": 30421,
+  "class": "addressable",
+  "events": 1646,
+  "authors": 8,
+  "tag_presence": {
+   "d": 1646,
+   "t": 1646,
+   "alt": 254,
+   "name": 241,
+   "x": 241,
+   "m": 241,
+   "size": 241,
+   "prompts-hash": 13,
+   "stake-sim": 13,
+   "image-digest": 13,
+   "roles": 13,
+   "coord-protocol": 13,
+   "ollama-model": 13,
+   "client": 13
+  },
+  "content_shape": {
+   "json": 1646
+  },
+  "json_content_keys": {
+   "protocol": 1633,
+   "deleted": 1392,
+   "fileId": 241,
+   "filename": 241,
+   "title": 241,
+   "artist": 241,
+   "album": 241,
+   "format": 241,
+   "mime": 241,
+   "size": 241,
+   "license": 241,
+   "description": 241,
+   "tags": 241,
+   "software_version": 13,
+   "coord_protocol": 13
+  },
+  "alt": {
+   "Napstr shared file catalogue entry": 241,
+   "BetPod distributed oracle node registration": 13
+  },
+  "client": {
+   "betpod-oracle-poc/0.1": 13
+  },
+  "samples": 10
+ },
+ {
+  "kind": 38384,
+  "class": "addressable",
+  "events": 448,
+  "authors": 8,
+  "tag_presence": {
+   "d": 448,
+   "v": 350,
+   "t": 350,
+   "days": 98,
+   "total_rating": 98,
+   "max_rate": 98,
+   "z": 98,
+   "total_reviews": 98,
+   "min_rate": 98,
+   "expiration": 98,
+   "last_rating": 98,
+   "since": 49
+  },
+  "content_shape": {
+   "json": 350,
+   "empty": 98
+  },
+  "json_content_keys": {
+   "provider_npub": 350,
+   "timestamp": 350,
+   "active_workloads": 350,
+   "available_capacity": 350,
+   "version": 350
+  },
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 30422,
+  "class": "addressable",
+  "events": 280,
+  "authors": 8,
+  "tag_presence": {
+   "d": 280,
+   "expiration": 280,
+   "t": 280
+  },
+  "content_shape": {
+   "json": 280
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 4242,
+  "class": "regular",
+  "events": 131,
+  "authors": 8,
+  "tag_presence": {
+   "t": 125,
+   "p": 8,
+   "e": 2,
+   "a": 2,
+   "k": 2,
+   "direction": 2,
+   "client": 2,
+   "alt": 1,
+   "d": 1,
+   "market-version": 1,
+   "market-status": 1,
+   "market-resolves-at": 1
+  },
+  "content_shape": {
+   "opaque-b64": 123,
+   "nip44": 5,
+   "empty": 2,
+   "text": 1
+  },
+  "json_content_keys": {},
+  "alt": {
+   "BetPod market 57978046 voided — no longer open for resolution": 1
+  },
+  "client": {
+   "Divine": 2
+  },
+  "samples": 10
+ },
+ {
+  "kind": 1124,
+  "class": "regular",
+  "events": 104,
+  "authors": 8,
+  "tag_presence": {
+   "p": 104,
+   "alt": 104,
+   "a": 104,
+   "item": 104,
+   "source": 104,
+   "action": 104,
+   "blobbi": 104,
+   "client": 104
+  },
+  "content_shape": {
+   "empty": 104
+  },
+  "json_content_keys": {},
+  "alt": {
+   "Blobbi interaction: clean": 35,
+   "Blobbi interaction: feed": 32,
+   "Blobbi interaction: medicate": 29
+  },
+  "client": {
+   "Ditto": 104
+  },
+  "samples": 10
+ },
+ {
+  "kind": 1990,
+  "class": "regular",
+  "events": 10,
+  "authors": 8,
+  "tag_presence": {
+   "d": 10
+  },
+  "content_shape": {
+   "nip44": 10
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 1002,
+  "class": "regular",
+  "events": 8,
+  "authors": 8,
+  "tag_presence": {
+   "o": 8,
+   "v": 8,
+   "i": 8,
+   "f": 8
+  },
+  "content_shape": {
+   "nip44": 8
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 8
+ },
+ {
+  "kind": 1080,
+  "class": "regular",
+  "events": 102,
+  "authors": 7,
+  "tag_presence": {},
+  "content_shape": {
+   "nip44": 102
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 30301,
+  "class": "addressable",
+  "events": 69,
+  "authors": 7,
+  "tag_presence": {
+   "d": 69,
+   "status": 68,
+   "col": 53,
+   "b": 52,
+   "file-attachment": 16,
+   "output-file": 16,
+   "i": 16,
+   "platform": 16,
+   "c": 16,
+   "x": 16,
+   "client": 16,
+   "version": 16,
+   "based-on": 15,
+   "p": 1,
+   "title": 1
+  },
+  "content_shape": {
+   "opaque-b64": 50,
+   "json": 16,
+   "nip44": 2,
+   "empty": 1
+  },
+  "json_content_keys": {
+   "description": 16,
+   "content": 16
+  },
+  "alt": {},
+  "client": {
+   "WalletScrutiny.com": 16
+  },
+  "samples": 10
+ },
+ {
+  "kind": 39844,
+  "class": "addressable",
+  "events": 35,
+  "authors": 7,
+  "tag_presence": {
+   "W": 35,
+   "workflow-path": 35,
+   "a": 35,
+   "s": 35,
+   "d": 35,
+   "R": 35,
+   "expiration": 35,
+   "secret": 9
+  },
+  "content_shape": {
+   "empty": 35
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 30080,
+  "class": "addressable",
+  "events": 29,
+  "authors": 7,
+  "tag_presence": {
+   "d": 29,
+   "world": 15,
+   "prompt_hash": 15,
+   "model": 15,
+   "p": 14,
+   "r": 10,
+   "t": 10,
+   "expiration": 9,
+   "orderId": 8
+  },
+  "content_shape": {
+   "json": 25,
+   "nip44": 4
+  },
+  "json_content_keys": {
+   "updatedAt": 25,
+   "schemaVersion": 15,
+   "modelId": 15,
+   "promptHash": 15,
+   "imageUrl": 15,
+   "type": 10,
+   "orderId": 10,
+   "userPubkey": 10,
+   "publishedBy": 10,
+   "providerId": 9,
+   "status": 8,
+   "paymentProof": 8,
+   "billCode_nip44": 1,
+   "encryption": 1
+  },
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 30227,
+  "class": "addressable",
+  "events": 15,
+  "authors": 7,
+  "tag_presence": {
+   "d": 15,
+   "t": 15
+  },
+  "content_shape": {
+   "json": 15
+  },
+  "json_content_keys": {
+   "v": 15,
+   "joignable": 15,
+   "nom": 11,
+   "avatar": 2
+  },
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 30225,
+  "class": "addressable",
+  "events": 14,
+  "authors": 7,
+  "tag_presence": {
+   "expiration": 14,
+   "d": 14,
+   "visibility": 14,
+   "t": 14
+  },
+  "content_shape": {
+   "json": 14
+  },
+  "json_content_keys": {
+   "v": 8,
+   "genre": 8,
+   "modele": 8,
+   "stature": 8,
+   "epaules": 8,
+   "hanches": 8,
+   "teinte": 8,
+   "formes": 8,
+   "couleurs": 8,
+   "base": 8,
+   "tailleCm": 8,
+   "ageAns": 8,
+   "carnation": 8,
+   "tenue": 8,
+   "peau": 8
+  },
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 30226,
+  "class": "addressable",
+  "events": 14,
+  "authors": 7,
+  "tag_presence": {
+   "expiration": 14,
+   "d": 14,
+   "visibility": 14,
+   "t": 14
+  },
+  "content_shape": {
+   "json": 14
+  },
+  "json_content_keys": {
+   "off": 12,
+   "cid": 2,
+   "mime": 2,
+   "auto": 2
+  },
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 30228,
+  "class": "addressable",
+  "events": 14,
+  "authors": 7,
+  "tag_presence": {
+   "expiration": 14,
+   "d": 14,
+   "visibility": 14,
+   "t": 14
+  },
+  "content_shape": {
+   "json": 14
+  },
+  "json_content_keys": {
+   "off": 13,
+   "v": 1,
+   "aventure": 1,
+   "sport": 1,
+   "social": 1,
+   "rythme": 1,
+   "interets": 1
+  },
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 30801,
+  "class": "addressable",
+  "events": 13,
+  "authors": 7,
+  "tag_presence": {
+   "d": 13,
+   "window": 12,
+   "scheme": 12,
+   "expiration": 12,
+   "epoch": 12,
+   "commit": 12,
+   "encrypted": 1
+  },
+  "content_shape": {
+   "nip44": 13
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 30081,
+  "class": "addressable",
+  "events": 8,
+  "authors": 7,
+  "tag_presence": {
+   "d": 8,
+   "t": 6,
+   "p": 3,
+   "orderId": 2,
+   "expiration": 2,
+   "e": 2,
+   "L": 1
+  },
+  "content_shape": {
+   "opaque-b64": 4,
+   "json": 3,
+   "empty": 1
+  },
+  "json_content_keys": {
+   "type": 2,
+   "orderId": 2,
+   "providerId": 2,
+   "providerInvoice": 2,
+   "refreshedAt": 1,
+   "shares": 1,
+   "orderEventId": 1,
+   "userPubkey": 1,
+   "recipientPubkey": 1,
+   "completedAt": 1,
+   "proofImage_nip44": 1,
+   "proofImage": 1,
+   "encryption": 1
+  },
+  "alt": {},
+  "client": {},
+  "samples": 8
+ },
+ {
+  "kind": 30509,
+  "class": "addressable",
+  "events": 7,
+  "authors": 7,
+  "tag_presence": {
+   "signature": 7,
+   "d": 7,
+   "expiry": 7
+  },
+  "content_shape": {
+   "empty": 7
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 7
+ },
+ {
+  "kind": 8571,
+  "class": "regular",
+  "events": 31,
+  "authors": 6,
+  "tag_presence": {
+   "x": 31,
+   "expiration": 3
+  },
+  "content_shape": {
+   "opaque-b64": 28,
+   "text": 3
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 34578,
+  "class": "addressable",
+  "events": 18,
+  "authors": 6,
+  "tag_presence": {
+   "d": 18
+  },
+  "content_shape": {
+   "nip44": 18
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 4471,
+  "class": "regular",
+  "events": 10,
+  "authors": 6,
+  "tag_presence": {
+   "expiration": 10,
+   "h": 10
+  },
+  "content_shape": {
+   "nip44": 10
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 30052,
+  "class": "addressable",
+  "events": 10,
+  "authors": 6,
+  "tag_presence": {
+   "d": 10,
+   "visibility": 10,
+   "t": 10
+  },
+  "content_shape": {
+   "json": 10
+  },
+  "json_content_keys": {
+   "lat": 10,
+   "lng": 10,
+   "approx": 10,
+   "prec": 10,
+   "at": 10,
+   "decl": 8
+  },
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 31991,
+  "class": "addressable",
+  "events": 10,
+  "authors": 6,
+  "tag_presence": {
+   "d": 10,
+   "l": 9,
+   "L": 9,
+   "s": 9,
+   "p": 1,
+   "t": 1
+  },
+  "content_shape": {
+   "json": 10
+  },
+  "json_content_keys": {
+   "status": 9,
+   "version": 1,
+   "provider": 1,
+   "author": 1,
+   "api_base": 1,
+   "payment": 1,
+   "security": 1,
+   "services": 1
+  },
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 30100,
+  "class": "addressable",
+  "events": 7,
+  "authors": 6,
+  "tag_presence": {
+   "d": 7,
+   "nonce": 5,
+   "client": 5,
+   "e": 1,
+   "status": 1,
+   "version": 1,
+   "supports": 1,
+   "t": 1
+  },
+  "content_shape": {
+   "nip44": 5,
+   "text": 1,
+   "json": 1
+  },
+  "json_content_keys": {
+   "schema": 1,
+   "version": 1,
+   "supports": 1,
+   "active_at": 1
+  },
+  "alt": {},
+  "client": {
+   "snapstr.app": 5
+  },
+  "samples": 7
+ },
+ {
+  "kind": 34237,
+  "class": "addressable",
+  "events": 7,
+  "authors": 6,
+  "tag_presence": {
+   "e": 6,
+   "a": 1,
+   "d": 1
+  },
+  "content_shape": {
+   "empty": 7
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 7
+ },
+ {
+  "kind": 34552,
+  "class": "addressable",
+  "events": 6,
+  "authors": 6,
+  "tag_presence": {
+   "action": 6,
+   "d": 6,
+   "app": 6
+  },
+  "content_shape": {
+   "empty": 6
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 6
+ },
+ {
+  "kind": 9841,
+  "class": "regular",
+  "events": 111,
+  "authors": 5,
+  "tag_presence": {
+   "name": 111,
+   "a": 111,
+   "o": 111,
+   "conclusion": 111,
+   "c": 111,
+   "started_at": 111,
+   "queued_at": 111,
+   "w": 111,
+   "job": 111,
+   "logs": 93,
+   "q": 76,
+   "r": 60,
+   "e": 51,
+   "p": 51,
+   "E": 51
+  },
+  "content_shape": {
+   "json-ish": 110,
+   "text": 1
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 9842,
+  "class": "regular",
+  "events": 101,
+  "authors": 5,
+  "tag_presence": {
+   "a": 101,
+   "o": 101,
+   "conclusion": 101,
+   "q": 101,
+   "c": 101,
+   "started_at": 101,
+   "queued_at": 101,
+   "w": 101,
+   "r": 99,
+   "e": 47,
+   "E": 47,
+   "p": 47,
+   "K": 47,
+   "k": 47,
+   "P": 47
+  },
+  "content_shape": {
+   "empty": 101
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 30304,
+  "class": "addressable",
+  "events": 78,
+  "authors": 5,
+  "tag_presence": {
+   "e": 78,
+   "d": 78,
+   "sha256": 78,
+   "chunk": 78
+  },
+  "content_shape": {
+   "opaque-b64": 75,
+   "nip44": 3
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 4
+ },
+ {
+  "kind": 33333,
+  "class": "addressable",
+  "events": 31,
+  "authors": 5,
+  "tag_presence": {
+   "d": 31,
+   "t": 30,
+   "alt": 30,
+   "n": 30,
+   "tip": 30,
+   "u": 29,
+   "peg": 29,
+   "e": 5,
+   "score": 1,
+   "p": 1,
+   "distance": 1,
+   "paid": 1,
+   "client": 1
+  },
+  "content_shape": {
+   "opaque-b64": 30,
+   "text": 1
+  },
+  "json_content_keys": {},
+  "alt": {
+   "sidestr headers 6539-6550 of sidestr:dreamlab-txbt4": 1,
+   "sidestr headers 1756-1767 of sidestr:dreamlab": 1,
+   "sidestr headers 6515-6526 of sidestr:dreamlab-txbt4": 1
+  },
+  "client": {
+   "holdbtc": 1
+  },
+  "samples": 10
+ },
+ {
+  "kind": 31510,
+  "class": "addressable",
+  "events": 25,
+  "authors": 5,
+  "tag_presence": {
+   "get": 25,
+   "d": 25,
+   "expiration": 25,
+   "network": 25,
+   "give": 25
+  },
+  "content_shape": {
+   "json": 25
+  },
+  "json_content_keys": {
+   "v": 25,
+   "type": 25,
+   "swap_id": 25,
+   "from": 25,
+   "body": 25,
+   "sig": 25
+  },
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 30779,
+  "class": "addressable",
+  "events": 17,
+  "authors": 5,
+  "tag_presence": {
+   "d": 17,
+   "t": 17
+  },
+  "content_shape": {
+   "text": 17
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 31905,
+  "class": "addressable",
+  "events": 16,
+  "authors": 5,
+  "tag_presence": {
+   "d": 16,
+   "t": 16
+  },
+  "content_shape": {
+   "opaque-b64": 16
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 35713,
+  "class": "addressable",
+  "events": 14,
+  "authors": 5,
+  "tag_presence": {
+   "d": 14,
+   "t": 14
+  },
+  "content_shape": {
+   "opaque-b64": 14
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 35711,
+  "class": "addressable",
+  "events": 12,
+  "authors": 5,
+  "tag_presence": {
+   "d": 12,
+   "t": 12
+  },
+  "content_shape": {
+   "nip44": 12
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 38421,
+  "class": "addressable",
+  "events": 11,
+  "authors": 5,
+  "tag_presence": {
+   "d": 11,
+   "n": 6,
+   "nonce": 6,
+   "expiration": 6,
+   "u": 5,
+   "version": 5,
+   "mint": 5
+  },
+  "content_shape": {
+   "json": 11
+  },
+  "json_content_keys": {
+   "base_fee_msat": 6,
+   "fee_ppm": 6,
+   "min_amount_msat": 6,
+   "max_amount_msat": 6,
+   "max_expiry_seconds": 6,
+   "min_request_pow": 6,
+   "features": 6,
+   "relays": 6,
+   "urls": 6,
+   "node_pubkey": 6,
+   "node_sig": 6,
+   "name": 5,
+   "about": 5
+  },
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 1019,
+  "class": "regular",
+  "events": 8,
+  "authors": 5,
+  "tag_presence": {
+   "e": 8,
+   "t": 8
+  },
+  "content_shape": {
+   "opaque-b64": 8
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 8
+ },
+ {
+  "kind": 3411,
+  "class": "regular",
+  "events": 6,
+  "authors": 5,
+  "tag_presence": {
+   "t": 6,
+   "e": 2,
+   "v": 2
+  },
+  "content_shape": {
+   "json": 6
+  },
+  "json_content_keys": {
+   "trade_v": 6,
+   "diagnostic": 4,
+   "lot_id": 2,
+   "seq": 2,
+   "prev": 2,
+   "status": 2
+  },
+  "alt": {},
+  "client": {},
+  "samples": 6
+ },
+ {
+  "kind": 30800,
+  "class": "addressable",
+  "events": 6,
+  "authors": 5,
+  "tag_presence": {
+   "d": 6,
+   "schema": 4,
+   "contractStatus": 4,
+   "t": 4,
+   "email": 4,
+   "published_at": 4,
+   "encrypted": 2
+  },
+  "content_shape": {
+   "json": 4,
+   "nip44": 2
+  },
+  "json_content_keys": {
+   "@context": 4,
+   "alsoKnownAs": 4,
+   "assertionMethod": 4,
+   "authentication": 4,
+   "id": 4,
+   "keyAgreement": 4,
+   "metadata": 4,
+   "service": 4,
+   "type": 4,
+   "verificationMethod": 4
+  },
+  "alt": {},
+  "client": {},
+  "samples": 6
+ },
+ {
+  "kind": 1001,
+  "class": "regular",
+  "events": 5,
+  "authors": 5,
+  "tag_presence": {
+   "v": 5,
+   "f": 5
+  },
+  "content_shape": {
+   "nip44": 5
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 5
+ },
+ {
+  "kind": 3410,
+  "class": "regular",
+  "events": 5,
+  "authors": 5,
+  "tag_presence": {
+   "t": 5,
+   "u": 1,
+   "v": 1,
+   "g": 1,
+   "x": 1,
+   "expiration": 1,
+   "w": 1
+  },
+  "content_shape": {
+   "json": 5
+  },
+  "json_content_keys": {
+   "trade_v": 5,
+   "diagnostic": 4,
+   "give": 1,
+   "want": 1,
+   "maker_trade_pubkey": 1,
+   "expires_at": 1,
+   "deadline_policy": 1,
+   "fee_policy": 1
+  },
+  "alt": {},
+  "client": {},
+  "samples": 5
+ },
+ {
+  "kind": 4263,
+  "class": "regular",
+  "events": 5,
+  "authors": 5,
+  "tag_presence": {
+   "round1": 5,
+   "t": 5,
+   "frost-id": 5,
+   "edition": 5,
+   "coord-protocol": 5,
+   "base": 5
+  },
+  "content_shape": {
+   "empty": 5
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 5
+ },
+ {
+  "kind": 4264,
+  "class": "regular",
+  "events": 5,
+  "authors": 5,
+  "tag_presence": {
+   "frost-id": 5,
+   "t": 5,
+   "edition": 5
+  },
+  "content_shape": {
+   "json": 5
+  },
+  "json_content_keys": {
+   "packages": 5,
+   "commitments": 5
+  },
+  "alt": {},
+  "client": {},
+  "samples": 5
+ },
+ {
+  "kind": 4272,
+  "class": "regular",
+  "events": 5,
+  "authors": 5,
+  "tag_presence": {
+   "t": 5,
+   "frost-id": 5,
+   "edition": 5,
+   "new": 5,
+   "base": 5
+  },
+  "content_shape": {
+   "empty": 5
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 5
+ },
+ {
+  "kind": 30303,
+  "class": "addressable",
+  "events": 5,
+  "authors": 5,
+  "tag_presence": {
+   "mime": 5,
+   "d": 5,
+   "sha256": 5,
+   "t": 5
+  },
+  "content_shape": {
+   "json": 5
+  },
+  "json_content_keys": {
+   "protocol": 5,
+   "version": 5,
+   "filename": 5,
+   "mime": 5,
+   "size": 5,
+   "width": 5,
+   "height": 5,
+   "sha256": 5,
+   "chunks": 5,
+   "pubkey": 5
+  },
+  "alt": {},
+  "client": {},
+  "samples": 5
+ },
+ {
+  "kind": 30701,
+  "class": "addressable",
+  "events": 5,
+  "authors": 5,
+  "tag_presence": {
+   "d": 5
+  },
+  "content_shape": {
+   "opaque-b64": 3,
+   "nip44": 2
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 5
+ },
+ {
+  "kind": 38503,
+  "class": "addressable",
+  "events": 98,
+  "authors": 4,
+  "tag_presence": {
+   "d": 98,
+   "t": 98
+  },
+  "content_shape": {
+   "json": 98
+  },
+  "json_content_keys": {
+   "blocks": 98,
+   "btf": 98,
+   "fee_pct": 98,
+   "hashrate": 98,
+   "miners": 98,
+   "name": 98
+  },
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 8383,
+  "class": "regular",
+  "events": 30,
+  "authors": 4,
+  "tag_presence": {
+   "hash": 30,
+   "destination": 30,
+   "y": 30,
+   "z": 30,
+   "order-id": 30,
+   "expiration": 30,
+   "network": 30,
+   "amount": 30
+  },
+  "content_shape": {
+   "empty": 30
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 37196,
+  "class": "addressable",
+  "events": 11,
+  "authors": 4,
+  "tag_presence": {
+   "channel_expiry_secs": 11,
+   "upstream": 11,
+   "v": 11,
+   "mint": 11,
+   "free_probe_units": 11,
+   "ip": 11,
+   "last_seen_unix": 11,
+   "service": 11,
+   "d": 11,
+   "app": 11,
+   "private_vpn_access": 11,
+   "max_channel_capacity_sat": 11,
+   "grace_units": 11,
+   "expiration": 11,
+   "payment": 11
+  },
+  "content_shape": {
+   "json": 11
+  },
+  "json_content_keys": {
+   "offer_id": 11,
+   "seller_npub": 11,
+   "receiver_pubkey_hex": 11,
+   "service": 11,
+   "access": 11,
+   "pricing": 11,
+   "channel": 11,
+   "location": 11,
+   "ip_support": 11,
+   "quality": 11,
+   "fips_endpoints": 3
+  },
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 30700,
+  "class": "addressable",
+  "events": 8,
+  "authors": 4,
+  "tag_presence": {
+   "d": 8
+  },
+  "content_shape": {
+   "opaque-b64": 5,
+   "nip44": 3
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 8
+ },
+ {
+  "kind": 32123,
+  "class": "addressable",
+  "events": 6,
+  "authors": 4,
+  "tag_presence": {
+   "d": 6
+  },
+  "content_shape": {
+   "nip44": 6
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 6
+ },
+ {
+  "kind": 30051,
+  "class": "addressable",
+  "events": 5,
+  "authors": 4,
+  "tag_presence": {
+   "d": 5,
+   "access": 5,
+   "visibility": 5,
+   "lang": 5
+  },
+  "content_shape": {
+   "json": 5
+  },
+  "json_content_keys": {
+   "updatedAt": 5,
+   "profile": 5,
+   "abondance": 2,
+   "gallery": 2,
+   "bio": 2,
+   "passeport": 1
+  },
+  "alt": {},
+  "client": {},
+  "samples": 5
+ },
+ {
+  "kind": 39401,
+  "class": "addressable",
+  "events": 5,
+  "authors": 4,
+  "tag_presence": {
+   "expires": 5,
+   "p": 5,
+   "qel-transports": 5,
+   "d": 5,
+   "qel": 5,
+   "qel-backchannel": 5
+  },
+  "content_shape": {
+   "json": 5
+  },
+  "json_content_keys": {
+   "ecdh_public": 5,
+   "type": 5,
+   "version": 5
+  },
+  "alt": {},
+  "client": {},
+  "samples": 5
+ },
+ {
+  "kind": 1401,
+  "class": "regular",
+  "events": 4,
+  "authors": 4,
+  "tag_presence": {
+   "expiration": 4,
+   "x": 4
+  },
+  "content_shape": {
+   "nip44": 4
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 4
+ },
+ {
+  "kind": 30092,
+  "class": "addressable",
+  "events": 4,
+  "authors": 4,
+  "tag_presence": {
+   "d": 4,
+   "p": 4
+  },
+  "content_shape": {
+   "nip44": 4
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 4
+ },
+ {
+  "kind": 31902,
+  "class": "addressable",
+  "events": 4,
+  "authors": 4,
+  "tag_presence": {
+   "d": 4,
+   "t": 4
+  },
+  "content_shape": {
+   "opaque-b64": 4
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 4
+ },
+ {
+  "kind": 31909,
+  "class": "addressable",
+  "events": 4,
+  "authors": 4,
+  "tag_presence": {
+   "e": 4,
+   "d": 4,
+   "t": 4
+  },
+  "content_shape": {
+   "opaque-b64": 4
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 4
+ },
+ {
+  "kind": 32150,
+  "class": "addressable",
+  "events": 4,
+  "authors": 4,
+  "tag_presence": {
+   "clantag": 4,
+   "name": 4,
+   "p": 4,
+   "alt": 4,
+   "d": 4,
+   "picture": 4,
+   "r": 3
+  },
+  "content_shape": {
+   "text": 3,
+   "empty": 1
+  },
+  "json_content_keys": {},
+  "alt": {
+   "Esports clan: Aschaffenburg [AB]": 1,
+   "Esports clan: Einundzwanzig Darmstadt [SVD]": 1,
+   "Esports clan: Bitcoin Metropole Kempten [BMK]": 1
+  },
+  "client": {},
+  "samples": 4
+ },
+ {
+  "kind": 33457,
+  "class": "addressable",
+  "events": 4,
+  "authors": 4,
+  "tag_presence": {
+   "d": 4,
+   "notestr-base": 2
+  },
+  "content_shape": {
+   "nip44": 4
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 4
+ },
+ {
+  "kind": 39010,
+  "class": "addressable",
+  "events": 4,
+  "authors": 4,
+  "tag_presence": {
+   "d": 4,
+   "p": 4
+  },
+  "content_shape": {
+   "nip44": 4
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 4
+ },
+ {
+  "kind": 7575,
+  "class": "regular",
+  "events": 410,
+  "authors": 3,
+  "tag_presence": {
+   "t": 410
+  },
+  "content_shape": {
+   "json": 410
+  },
+  "json_content_keys": {
+   "type": 410,
+   "t": 410,
+   "game": 274,
+   "simulated": 136
+  },
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 1078,
+  "class": "regular",
+  "events": 293,
+  "authors": 3,
+  "tag_presence": {
+   "t": 290,
+   "price": 280,
+   "L": 280,
+   "l": 280,
+   "pricenode": 280,
+   "source": 280,
+   "author_mc": 10,
+   "d": 10,
+   "author_uuid": 10,
+   "marker_id": 10,
+   "h": 3
+  },
+  "content_shape": {
+   "json": 290,
+   "nip44": 3
+  },
+  "json_content_keys": {
+   "btcmarketsTs": 280,
+   "btcmarketsCount": 280,
+   "binanceTs": 280,
+   "binanceCount": 280,
+   "btcAverageTs": 280,
+   "btcAverageCount": 280,
+   "bitfinexTs": 280,
+   "bitfinexCount": 280,
+   "bitflyerTs": 280,
+   "bitflyerCount": 280,
+   "bitstampTs": 280,
+   "bitstampCount": 280,
+   "coingeckoTs": 280,
+   "coingeckoCount": 280,
+   "coinmarketcapTs": 280
+  },
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 30197,
+  "class": "addressable",
+  "events": 54,
+  "authors": 3,
+  "tag_presence": {
+   "d": 54,
+   "t": 54,
+   "ref": 52,
+   "scope": 2
+  },
+  "content_shape": {
+   "json": 54
+  },
+  "json_content_keys": {
+   "revoked": 54,
+   "name": 52,
+   "rootEventId": 52,
+   "displayName": 2
+  },
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 6472,
+  "class": "regular",
+  "events": 28,
+  "authors": 3,
+  "tag_presence": {
+   "l": 28,
+   "g": 28,
+   "expiration": 28,
+   "client": 28
+  },
+  "content_shape": {
+   "text": 22,
+   "empty": 6
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {
+   "icebreaker": 28
+  },
+  "samples": 10
+ },
+ {
+  "kind": 30702,
+  "class": "addressable",
+  "events": 27,
+  "authors": 3,
+  "tag_presence": {
+   "d": 27
+  },
+  "content_shape": {
+   "opaque-b64": 25,
+   "nip44": 2
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 5128,
+  "class": "regular",
+  "events": 15,
+  "authors": 3,
+  "tag_presence": {
+   "a": 15,
+   "x": 15,
+   "server": 15,
+   "title": 15,
+   "path": 15,
+   "description": 10,
+   "source": 10
+  },
+  "content_shape": {
+   "empty": 15
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 9
+ },
+ {
+  "kind": 32678,
+  "class": "addressable",
+  "events": 11,
+  "authors": 3,
+  "tag_presence": {
+   "d": 11
+  },
+  "content_shape": {
+   "nip44": 11
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 87201,
+  "class": "regular",
+  "events": 10,
+  "authors": 3,
+  "tag_presence": {
+   "a": 10,
+   "client": 10
+  },
+  "content_shape": {
+   "json": 10
+  },
+  "json_content_keys": {
+   "v": 10,
+   "type": 10,
+   "ts": 10,
+   "media": 6,
+   "text": 4,
+   "transcript": 2,
+   "reply_to": 1
+  },
+  "alt": {},
+  "client": {
+   "rose-app": 8,
+   "rose-agent": 2
+  },
+  "samples": 10
+ },
+ {
+  "kind": 4178,
+  "class": "regular",
+  "events": 8,
+  "authors": 3,
+  "tag_presence": {
+   "v": 8,
+   "expiration": 8
+  },
+  "content_shape": {
+   "opaque-b64": 8
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 8
+ },
+ {
+  "kind": 4278,
+  "class": "regular",
+  "events": 8,
+  "authors": 3,
+  "tag_presence": {
+   "t": 8
+  },
+  "content_shape": {
+   "text": 8
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 8
+ },
+ {
+  "kind": 1054,
+  "class": "regular",
+  "events": 7,
+  "authors": 3,
+  "tag_presence": {
+   "p": 7,
+   "t": 7
+  },
+  "content_shape": {
+   "json": 7
+  },
+  "json_content_keys": {
+   "family": 7,
+   "v": 7,
+   "alg": 7,
+   "ct": 7
+  },
+  "alt": {},
+  "client": {},
+  "samples": 7
+ },
+ {
+  "kind": 1624,
+  "class": "regular",
+  "events": 6,
+  "authors": 3,
+  "tag_presence": {
+   "e": 6,
+   "p": 6,
+   "alt": 6,
+   "q": 3,
+   "nonce": 1
+  },
+  "content_shape": {
+   "text": 6
+  },
+  "json_content_keys": {},
+  "alt": {
+   "cover note for issue": 3,
+   "cover note for PR": 3
+  },
+  "client": {},
+  "samples": 6
+ },
+ {
+  "kind": 9401,
+  "class": "regular",
+  "events": 5,
+  "authors": 3,
+  "tag_presence": {
+   "i": 5,
+   "platform": 5,
+   "x": 5,
+   "c": 5,
+   "version": 5,
+   "client": 5
+  },
+  "content_shape": {
+   "text": 5
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {
+   "WalletScrutiny.com": 5
+  },
+  "samples": 5
+ },
+ {
+  "kind": 15750,
+  "class": "replaceable",
+  "events": 5,
+  "authors": 3,
+  "tag_presence": {
+   "network": 5,
+   "name": 5,
+   "absolutemininputcount": 5,
+   "type": 5,
+   "readmore": 5,
+   "endpoint": 5
+  },
+  "content_shape": {
+   "text": 5
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 5
+ },
+ {
+  "kind": 16919,
+  "class": "replaceable",
+  "events": 5,
+  "authors": 3,
+  "tag_presence": {
+   "shard": 5,
+   "v": 5,
+   "source": 5,
+   "alt": 5
+  },
+  "content_shape": {
+   "json": 5
+  },
+  "json_content_keys": {
+   "v": 5,
+   "shard": 5,
+   "platform": 5,
+   "network": 5,
+   "charging": 5,
+   "stats": 5
+  },
+  "alt": {
+   "Indexstr node heartbeat: shard 77": 2,
+   "Crawlstr node heartbeat: shard 69": 2,
+   "Indexstr node heartbeat: shard 35": 1
+  },
+  "client": {},
+  "samples": 5
+ },
+ {
+  "kind": 10037,
+  "class": "replaceable",
+  "events": 4,
+  "authors": 3,
+  "tag_presence": {
+   "ark": 4,
+   "network": 4
+  },
+  "content_shape": {
+   "empty": 4
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 4
+ },
+ {
+  "kind": 19843,
+  "class": "replaceable",
+  "events": 4,
+  "authors": 3,
+  "tag_presence": {
+   "X": 4,
+   "software": 4,
+   "W": 4,
+   "R": 4,
+   "M": 4,
+   "expiration": 4,
+   "secrets-key": 1
+  },
+  "content_shape": {
+   "empty": 4
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 4
+ },
+ {
+  "kind": 30210,
+  "class": "addressable",
+  "events": 4,
+  "authors": 3,
+  "tag_presence": {
+   "relay": 4,
+   "cap": 4,
+   "d": 4,
+   "mirror": 4
+  },
+  "content_shape": {
+   "empty": 4
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 4
+ },
+ {
+  "kind": 30736,
+  "class": "addressable",
+  "events": 4,
+  "authors": 3,
+  "tag_presence": {
+   "d": 4,
+   "trader_char": 4,
+   "pnl_365d": 4,
+   "pnl_30d": 4,
+   "trader_char_id": 4,
+   "pnl_7d": 4
+  },
+  "content_shape": {
+   "text": 4
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 4
+ },
+ {
+  "kind": 36767,
+  "class": "addressable",
+  "events": 4,
+  "authors": 3,
+  "tag_presence": {
+   "alt": 4,
+   "t": 4,
+   "bg": 4,
+   "d": 4,
+   "c": 4,
+   "published_at": 4,
+   "title": 4,
+   "client": 4,
+   "f": 3,
+   "p": 2,
+   "a": 2,
+   "description": 1
+  },
+  "content_shape": {
+   "empty": 4
+  },
+  "json_content_keys": {},
+  "alt": {
+   "Custom theme: Suika": 1,
+   "Custom theme: Fall": 1,
+   "Custom theme: Dark Sky": 1
+  },
+  "client": {
+   "Armada": 2,
+   "Ditto": 2
+  },
+  "samples": 4
+ },
+ {
+  "kind": 1013,
+  "class": "regular",
+  "events": 3,
+  "authors": 3,
+  "tag_presence": {
+   "o": 3,
+   "v": 3,
+   "f": 3
+  },
+  "content_shape": {
+   "nip44": 3
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 3
+ },
+ {
+  "kind": 10600,
+  "class": "replaceable",
+  "events": 3,
+  "authors": 3,
+  "tag_presence": {
+   "url": 3,
+   "source": 3,
+   "t": 3,
+   "referer": 1
+  },
+  "content_shape": {
+   "text": 2,
+   "json": 1
+  },
+  "json_content_keys": {
+   "type": 1,
+   "page": 1,
+   "source": 1,
+   "relay": 1,
+   "timestamp": 1,
+   "current_url": 1,
+   "user_agent": 1,
+   "viewport": 1,
+   "referer": 1,
+   "uspot_url": 1
+  },
+  "alt": {},
+  "client": {},
+  "samples": 3
+ },
+ {
+  "kind": 12150,
+  "class": "replaceable",
+  "events": 3,
+  "authors": 3,
+  "tag_presence": {
+   "a": 3,
+   "alt": 3
+  },
+  "content_shape": {
+   "empty": 3
+  },
+  "json_content_keys": {},
+  "alt": {
+   "Esports clan membership": 3
+  },
+  "client": {},
+  "samples": 3
+ },
+ {
+  "kind": 19844,
+  "class": "replaceable",
+  "events": 3,
+  "authors": 3,
+  "tag_presence": {
+   "a": 3,
+   "expiration": 3,
+   "p": 1
+  },
+  "content_shape": {
+   "empty": 3
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 3
+ },
+ {
+  "kind": 31906,
+  "class": "addressable",
+  "events": 3,
+  "authors": 3,
+  "tag_presence": {
+   "d": 3,
+   "t": 3
+  },
+  "content_shape": {
+   "opaque-b64": 3
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 3
+ },
+ {
+  "kind": 3434,
+  "class": "regular",
+  "events": 482,
+  "authors": 2,
+  "tag_presence": {
+   "expiration": 482,
+   "p": 482
+  },
+  "content_shape": {
+   "nip44": 482
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 39697,
+  "class": "addressable",
+  "events": 234,
+  "authors": 2,
+  "tag_presence": {
+   "u": 234,
+   "v": 234,
+   "alt": 234,
+   "d": 234,
+   "x": 234,
+   "type": 234,
+   "network": 234,
+   "source": 234,
+   "l": 217,
+   "published": 111,
+   "t": 79,
+   "platform": 6
+  },
+  "content_shape": {
+   "json": 234
+  },
+  "json_content_keys": {
+   "title": 234,
+   "description": 192,
+   "image": 162
+  },
+  "alt": {
+   "Web index observation: Xcoders": 4,
+   "Web index observation: New Australian Online Casinos 2026 - Brands & Bonuses": 2,
+   "Web index observation: zettzeit.ch – Modellbahn in 1:220 seit dem Jahr 2000": 2
+  },
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 36947,
+  "class": "addressable",
+  "events": 64,
+  "authors": 2,
+  "tag_presence": {
+   "elevation": 64,
+   "tracks": 64,
+   "d": 64,
+   "session": 64,
+   "c": 64,
+   "pos": 64,
+   "pitch": 64,
+   "host": 64,
+   "sphere": 64,
+   "status": 64
+  },
+  "content_shape": {
+   "empty": 64
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 9741,
+  "class": "regular",
+  "events": 44,
+  "authors": 2,
+  "tag_presence": {
+   "expiration": 44,
+   "t": 44
+  },
+  "content_shape": {
+   "json": 44
+  },
+  "json_content_keys": {
+   "m": 44,
+   "i": 44,
+   "n": 44,
+   "d": 44
+  },
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 30515,
+  "class": "addressable",
+  "events": 44,
+  "authors": 2,
+  "tag_presence": {
+   "d": 44,
+   "p": 44
+  },
+  "content_shape": {
+   "nip44": 44
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 4859,
+  "class": "regular",
+  "events": 28,
+  "authors": 2,
+  "tag_presence": {
+   "expiration": 28,
+   "t": 28,
+   "nonce": 10
+  },
+  "content_shape": {
+   "nip44": 22,
+   "opaque-b64": 6
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 2100,
+  "class": "regular",
+  "events": 26,
+  "authors": 2,
+  "tag_presence": {
+   "client": 26,
+   "t": 26,
+   "name": 4
+  },
+  "content_shape": {
+   "text": 26
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {
+   "tasklist-private": 22,
+   "tasklist-telegram": 4
+  },
+  "samples": 10
+ },
+ {
+  "kind": 87070,
+  "class": "regular",
+  "events": 15,
+  "authors": 2,
+  "tag_presence": {
+   "p": 15,
+   "dealer": 15,
+   "record": 15,
+   "t": 15,
+   "split": 15,
+   "v": 15,
+   "offer": 15,
+   "alt": 15,
+   "i": 14,
+   "lana": 14,
+   "prior": 14,
+   "delivery_days": 14,
+   "wallet": 14,
+   "price": 14,
+   "accepted_at": 14
+  },
+  "content_shape": {
+   "json": 15
+  },
+  "json_content_keys": {
+   "v": 15,
+   "dealer": 15,
+   "host": 15,
+   "offer": 15,
+   "buyer": 15,
+   "split": 15,
+   "currency": 14,
+   "amount": 14,
+   "prior": 14,
+   "lana": 14,
+   "fx": 14,
+   "parts": 14,
+   "wallet": 14,
+   "wallet_class": 14,
+   "params": 14
+  },
+  "alt": {
+   "BEF mandate purchase: 11393.22916 Mandate LANA for 3500.00 EUR (ravenaplus.com)": 2,
+   "BEF mandate purchase: 6510.41666 Mandate LANA for 2000.00 EUR (ravenaplus.com)": 2,
+   "BEF mandate purchase: 1627.60416 Mandate LANA for 500.00 EUR (krogmenjave.com)": 2
+  },
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 3140,
+  "class": "regular",
+  "events": 13,
+  "authors": 2,
+  "tag_presence": {
+   "t": 13,
+   "operator": 8,
+   "e": 8,
+   "vkey": 8,
+   "size": 5,
+   "mirror": 5
+  },
+  "content_shape": {
+   "text": 13
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 36,
+  "class": "regular",
+  "events": 9,
+  "authors": 2,
+  "tag_presence": {
+   "k": 9
+  },
+  "content_shape": {
+   "text": 9
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 9
+ },
+ {
+  "kind": 30087,
+  "class": "addressable",
+  "events": 8,
+  "authors": 2,
+  "tag_presence": {
+   "d": 8,
+   "t": 8,
+   "survey_count": 6
+  },
+  "content_shape": {
+   "nip44": 6,
+   "opaque-b64": 2
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 8
+ },
+ {
+  "kind": 6426,
+  "class": "regular",
+  "events": 7,
+  "authors": 2,
+  "tag_presence": {
+   "t": 7,
+   "questionnaire-id": 7,
+   "q": 7,
+   "invite-code-hash": 7,
+   "state": 7
+  },
+  "content_shape": {
+   "json": 7
+  },
+  "json_content_keys": {
+   "schemaVersion": 7,
+   "eventType": 7,
+   "questionnaireId": 7,
+   "codeHash": 7,
+   "state": 7,
+   "coordinatorPubkey": 7,
+   "createdAt": 7,
+   "redeemedNpubHash": 7,
+   "redemptionCount": 7,
+   "maxRedemptions": 7,
+   "redeemedAt": 7,
+   "revokedAt": 7
+  },
+  "alt": {},
+  "client": {},
+  "samples": 7
+ },
+ {
+  "kind": 31222,
+  "class": "addressable",
+  "events": 7,
+  "authors": 2,
+  "tag_presence": {
+   "d": 7
+  },
+  "content_shape": {
+   "opaque-b64": 7
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 7
+ },
+ {
+  "kind": 33051,
+  "class": "addressable",
+  "events": 7,
+  "authors": 2,
+  "tag_presence": {
+   "t": 7
+  },
+  "content_shape": {
+   "json": 7
+  },
+  "json_content_keys": {
+   "type": 7,
+   "name": 7,
+   "seeking": 7,
+   "room": 7,
+   "inTrivia": 7,
+   "playing": 7,
+   "timestamp": 7
+  },
+  "alt": {},
+  "client": {},
+  "samples": 7
+ },
+ {
+  "kind": 13922,
+  "class": "replaceable",
+  "events": 6,
+  "authors": 2,
+  "tag_presence": {
+   "listing": 6,
+   "queue": 6,
+   "expiration": 6,
+   "endpoint": 6,
+   "status": 6
+  },
+  "content_shape": {
+   "empty": 6
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 6
+ },
+ {
+  "kind": 105,
+  "class": "regular",
+  "events": 5,
+  "authors": 2,
+  "tag_presence": {
+   "p": 5,
+   "t": 5
+  },
+  "content_shape": {
+   "empty": 5
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 5
+ },
+ {
+  "kind": 31310,
+  "class": "addressable",
+  "events": 5,
+  "authors": 2,
+  "tag_presence": {
+   "relay": 5,
+   "d": 5,
+   "alt": 5
+  },
+  "content_shape": {
+   "json": 5
+  },
+  "json_content_keys": {
+   "v": 5,
+   "name": 5,
+   "https": 5,
+   "relays": 5,
+   "proto": 5,
+   "features": 5
+  },
+  "alt": {
+   "PosterChan VM host": 5
+  },
+  "client": {},
+  "samples": 5
+ },
+ {
+  "kind": 1014,
+  "class": "regular",
+  "events": 4,
+  "authors": 2,
+  "tag_presence": {
+   "o": 4,
+   "v": 4,
+   "f": 4
+  },
+  "content_shape": {
+   "nip44": 4
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 4
+ },
+ {
+  "kind": 30703,
+  "class": "addressable",
+  "events": 4,
+  "authors": 2,
+  "tag_presence": {
+   "d": 4
+  },
+  "content_shape": {
+   "opaque-b64": 3,
+   "nip44": 1
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 4
+ },
+ {
+  "kind": 35981,
+  "class": "addressable",
+  "events": 4,
+  "authors": 2,
+  "tag_presence": {
+   "p": 4,
+   "alt": 4,
+   "a": 4,
+   "d": 4,
+   "expiration": 4,
+   "cid": 4
+  },
+  "content_shape": {
+   "empty": 4
+  },
+  "json_content_keys": {},
+  "alt": {
+   "SWING replica report: ama.ne.jp": 2,
+   "SWING replica report: yureko.samoyed.moe": 2
+  },
+  "client": {},
+  "samples": 4
+ },
+ {
+  "kind": 37070,
+  "class": "addressable",
+  "events": 4,
+  "authors": 2,
+  "tag_presence": {
+   "e": 4,
+   "d": 4,
+   "t": 4
+  },
+  "content_shape": {
+   "json": 4
+  },
+  "json_content_keys": {
+   "gameId": 4,
+   "hostPubkey": 4,
+   "phase": 4,
+   "revision": 4,
+   "updatedAt": 4,
+   "participant": 4,
+   "settledAtMs": 4,
+   "endReason": 3,
+   "finalizedAt": 3,
+   "proposalId": 2,
+   "proposalDeadline": 2,
+   "startAt": 2,
+   "startedAt": 2,
+   "endsAt": 2,
+   "seed": 2
+  },
+  "alt": {},
+  "client": {},
+  "samples": 4
+ },
+ {
+  "kind": 1058,
+  "class": "regular",
+  "events": 3,
+  "authors": 2,
+  "tag_presence": {
+   "p": 3
+  },
+  "content_shape": {
+   "nip44": 3
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 3
+ },
+ {
+  "kind": 7007,
+  "class": "regular",
+  "events": 3,
+  "authors": 2,
+  "tag_presence": {
+   "expiration": 3,
+   "t": 3
+  },
+  "content_shape": {
+   "nip44": 3
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 3
+ },
+ {
+  "kind": 9444,
+  "class": "regular",
+  "events": 3,
+  "authors": 2,
+  "tag_presence": {
+   "p": 3
+  },
+  "content_shape": {
+   "nip44": 3
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 3
+ },
+ {
+  "kind": 32100,
+  "class": "addressable",
+  "events": 3,
+  "authors": 2,
+  "tag_presence": {
+   "d": 3,
+   "client": 3,
+   "p": 3,
+   "t": 3
+  },
+  "content_shape": {
+   "json": 3
+  },
+  "json_content_keys": {
+   "name": 3,
+   "history_for_new_members": 3,
+   "agents": 3
+  },
+  "alt": {},
+  "client": {
+   "rose-app": 3
+  },
+  "samples": 3
+ },
+ {
+  "kind": 34506,
+  "class": "addressable",
+  "events": 3,
+  "authors": 2,
+  "tag_presence": {
+   "questionnaire-id": 3,
+   "d": 3,
+   "q": 3,
+   "t": 3
+  },
+  "content_shape": {
+   "json": 3
+  },
+  "json_content_keys": {
+   "schemaVersion": 3,
+   "eventType": 3,
+   "questionnaireId": 3,
+   "expectedInviteeCount": 3,
+   "createdAt": 3,
+   "coordinatorPubkey": 3
+  },
+  "alt": {},
+  "client": {},
+  "samples": 3
+ },
+ {
+  "kind": 35980,
+  "class": "addressable",
+  "events": 3,
+  "authors": 2,
+  "tag_presence": {
+   "alt": 3,
+   "d": 3,
+   "cid": 3,
+   "url": 3,
+   "size": 3,
+   "title": 3
+  },
+  "content_shape": {
+   "text": 3
+  },
+  "json_content_keys": {},
+  "alt": {
+   "SWING site announcement: yureko.samoyed.moe": 2,
+   "SWING site announcement: ama.ne.jp": 1
+  },
+  "client": {},
+  "samples": 3
+ },
+ {
+  "kind": 1004,
+  "class": "regular",
+  "events": 2,
+  "authors": 2,
+  "tag_presence": {
+   "o": 2,
+   "v": 2,
+   "f": 2
+  },
+  "content_shape": {
+   "nip44": 2
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 3314,
+  "class": "regular",
+  "events": 2,
+  "authors": 2,
+  "tag_presence": {
+   "client": 2
+  },
+  "content_shape": {
+   "text": 2
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {
+   "Armada": 2
+  },
+  "samples": 2
+ },
+ {
+  "kind": 4246,
+  "class": "regular",
+  "events": 2,
+  "authors": 2,
+  "tag_presence": {
+   "confidence": 2,
+   "agreement": 2,
+   "e": 2,
+   "t": 2,
+   "btc-block": 2,
+   "m": 2,
+   "resolution-source": 2,
+   "market-resolution": 2
+  },
+  "content_shape": {
+   "text": 2
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 2
+ },
+ {
+  "kind": 4711,
+  "class": "regular",
+  "events": 2,
+  "authors": 2,
+  "tag_presence": {
+   "expiration": 2,
+   "x": 2
+  },
+  "content_shape": {
+   "opaque-b64": 2
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 2
+ },
+ {
+  "kind": 4817,
+  "class": "regular",
+  "events": 2,
+  "authors": 2,
+  "tag_presence": {
+   "nonce": 2,
+   "g": 2,
+   "expiration": 2,
+   "t": 2
+  },
+  "content_shape": {
+   "json": 2
+  },
+  "json_content_keys": {
+   "v": 2,
+   "type": 2,
+   "lat": 2,
+   "lon": 2,
+   "created": 2
+  },
+  "alt": {},
+  "client": {},
+  "samples": 2
+ },
+ {
+  "kind": 6742,
+  "class": "regular",
+  "events": 2,
+  "authors": 2,
+  "tag_presence": {
+   "t": 2
+  },
+  "content_shape": {
+   "json": 2
+  },
+  "json_content_keys": {
+   "image": 2,
+   "app": 2
+  },
+  "alt": {},
+  "client": {},
+  "samples": 2
+ },
+ {
+  "kind": 7451,
+  "class": "regular",
+  "events": 2,
+  "authors": 2,
+  "tag_presence": {
+   "v": 2,
+   "p": 2,
+   "a": 2,
+   "proto": 2,
+   "rules-hash": 2
+  },
+  "content_shape": {
+   "json": 2
+  },
+  "json_content_keys": {
+   "deckKey": 2,
+   "pok": 2,
+   "relays": 2,
+   "session": 2,
+   "sessionSig": 2
+  },
+  "alt": {},
+  "client": {},
+  "samples": 2
+ },
+ {
+  "kind": 7452,
+  "class": "regular",
+  "events": 2,
+  "authors": 2,
+  "tag_presence": {
+   "seq": 2,
+   "proto": 2,
+   "e": 2
+  },
+  "content_shape": {
+   "json": 2
+  },
+  "json_content_keys": {
+   "deck": 2,
+   "proof": 2,
+   "type": 2
+  },
+  "alt": {},
+  "client": {},
+  "samples": 2
+ },
+ {
+  "kind": 7453,
+  "class": "regular",
+  "events": 2,
+  "authors": 2,
+  "tag_presence": {
+   "proto": 2,
+   "e": 2
+  },
+  "content_shape": {
+   "json": 2
+  },
+  "json_content_keys": {
+   "shares": 2,
+   "type": 2
+  },
+  "alt": {},
+  "client": {},
+  "samples": 2
+ },
+ {
+  "kind": 7710,
+  "class": "regular",
+  "events": 2,
+  "authors": 2,
+  "tag_presence": {
+   "t": 2
+  },
+  "content_shape": {
+   "json": 2
+  },
+  "json_content_keys": {
+   "v": 2,
+   "chain": 2,
+   "tag": 2,
+   "scheme": 2,
+   "kid": 2,
+   "ts": 2,
+   "epk": 2,
+   "nonce": 2,
+   "ct": 2
+  },
+  "alt": {},
+  "client": {},
+  "samples": 2
+ },
+ {
+  "kind": 8181,
+  "class": "regular",
+  "events": 2,
+  "authors": 2,
+  "tag_presence": {
+   "K": 2,
+   "M": 2,
+   "E": 2
+  },
+  "content_shape": {
+   "json": 2
+  },
+  "json_content_keys": {
+   "schema": 2,
+   "mint": 2,
+   "mint_identity": 2,
+   "keyset_id": 2,
+   "epoch_index": 2,
+   "manifest_digest": 2,
+   "manifest_signature": 2,
+   "global_digest": 2,
+   "issued_mmr_root_hash": 2,
+   "issued_mmr_root_sum": 2,
+   "spent_mmr_root_hash": 2,
+   "spent_mmr_root_sum": 2,
+   "outstanding_balance": 2,
+   "reserve_digest": 2,
+   "reserve_sats": 2
+  },
+  "alt": {},
+  "client": {},
+  "samples": 2
+ },
+ {
+  "kind": 8211,
+  "class": "regular",
+  "events": 2,
+  "authors": 2,
+  "tag_presence": {
+   "client": 2,
+   "p": 2,
+   "alt": 2
+  },
+  "content_shape": {
+   "nip44": 2
+  },
+  "json_content_keys": {},
+  "alt": {
+   "Encrypted letter": 2
+  },
+  "client": {
+   "Ditto": 2
+  },
+  "samples": 2
+ },
+ {
+  "kind": 9840,
+  "class": "regular",
+  "events": 2,
+  "authors": 2,
+  "tag_presence": {
+   "p": 2,
+   "a": 2,
+   "c": 2,
+   "w": 2,
+   "r": 1
+  },
+  "content_shape": {
+   "empty": 2
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 2
+ },
+ {
+  "kind": 10318,
+  "class": "replaceable",
+  "events": 2,
+  "authors": 2,
+  "tag_presence": {},
+  "content_shape": {
+   "nip44": 2
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 2
+ },
+ {
+  "kind": 10333,
+  "class": "replaceable",
+  "events": 2,
+  "authors": 2,
+  "tag_presence": {
+   "medium": 2,
+   "i": 2,
+   "k": 2,
+   "alt": 2
+  },
+  "content_shape": {
+   "empty": 2
+  },
+  "json_content_keys": {},
+  "alt": {
+   "PC 2.0 Favorites": 2
+  },
+  "client": {},
+  "samples": 2
+ },
+ {
+  "kind": 16440,
+  "class": "replaceable",
+  "events": 2,
+  "authors": 2,
+  "tag_presence": {
+   "m": 2,
+   "operator": 2,
+   "central": 2,
+   "threshold": 2
+  },
+  "content_shape": {
+   "empty": 2
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 2
+ },
+ {
+  "kind": 19004,
+  "class": "replaceable",
+  "events": 2,
+  "authors": 2,
+  "tag_presence": {
+   "-": 2,
+   "p": 2
+  },
+  "content_shape": {
+   "empty": 2
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 2
+ },
+ {
+  "kind": 30084,
+  "class": "addressable",
+  "events": 2,
+  "authors": 2,
+  "tag_presence": {
+   "d": 2,
+   "e": 2,
+   "p": 2
+  },
+  "content_shape": {
+   "nip44": 2
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 2
+ },
+ {
+  "kind": 30278,
+  "class": "addressable",
+  "events": 2,
+  "authors": 2,
+  "tag_presence": {
+   "d": 2,
+   "client": 2
+  },
+  "content_shape": {
+   "nip44": 2
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {
+   "goose": 2
+  },
+  "samples": 2
+ },
+ {
+  "kind": 30790,
+  "class": "addressable",
+  "events": 2,
+  "authors": 2,
+  "tag_presence": {
+   "v": 2,
+   "d": 2
+  },
+  "content_shape": {
+   "nip44": 1,
+   "opaque-b64": 1
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 2
+ },
+ {
+  "kind": 31926,
+  "class": "addressable",
+  "events": 2,
+  "authors": 2,
+  "tag_presence": {
+   "block": 2,
+   "d": 2,
+   "t": 2
+  },
+  "content_shape": {
+   "empty": 2
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 2
+ },
+ {
+  "kind": 34101,
+  "class": "addressable",
+  "events": 2,
+  "authors": 2,
+  "tag_presence": {
+   "d": 2,
+   "t": 2
+  },
+  "content_shape": {
+   "json": 2
+  },
+  "json_content_keys": {
+   "onion": 2,
+   "s": 2,
+   "v": 2
+  },
+  "alt": {},
+  "client": {},
+  "samples": 2
+ },
+ {
+  "kind": 9413,
+  "class": "regular",
+  "events": 83472,
+  "authors": 1,
+  "tag_presence": {
+   "p": 83472
+  },
+  "content_shape": {
+   "nip44": 83472
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 1066,
+  "class": "regular",
+  "events": 19382,
+  "authors": 1,
+  "tag_presence": {
+   "r": 19382,
+   "client": 19382,
+   "T": 18987,
+   "rtt-open": 18897,
+   "retry": 485,
+   "O": 378,
+   "limitation.created_at_upper_limit": 82,
+   "+attributes": 73,
+   "-attributes": 72,
+   "+kinds": 56,
+   "limitation.created_at_lower_limit": 55,
+   "stats.events.accepted": 54,
+   "stats.bytes.out": 54,
+   "stats.events.rejected": 54,
+   "stats.uptime_secs": 54
+  },
+  "content_shape": {
+   "empty": 19382
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {
+   "@nostrwatch/relaymon": 19382
+  },
+  "samples": 10
+ },
+ {
+  "kind": 30072,
+  "class": "addressable",
+  "events": 14871,
+  "authors": 1,
+  "tag_presence": {
+   "health": 14871,
+   "expires": 14871,
+   "last_checked": 14871,
+   "d": 14871,
+   "relay": 14871,
+   "payment": 14871,
+   "admission": 14871,
+   "latency_ms": 8347,
+   "nips": 8302,
+   "software": 8292,
+   "name": 8289,
+   "description": 8076,
+   "operator": 6750,
+   "location": 6364
+  },
+  "content_shape": {
+   "empty": 14871
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 9431,
+  "class": "regular",
+  "events": 4605,
+  "authors": 1,
+  "tag_presence": {
+   "p": 4605
+  },
+  "content_shape": {
+   "nip44": 4605
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 9435,
+  "class": "regular",
+  "events": 4605,
+  "authors": 1,
+  "tag_presence": {
+   "p": 4605
+  },
+  "content_shape": {
+   "nip44": 4605
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 9436,
+  "class": "regular",
+  "events": 4605,
+  "authors": 1,
+  "tag_presence": {
+   "p": 4605
+  },
+  "content_shape": {
+   "nip44": 4605
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 9477,
+  "class": "regular",
+  "events": 4605,
+  "authors": 1,
+  "tag_presence": {
+   "p": 4605
+  },
+  "content_shape": {
+   "nip44": 4605
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 9432,
+  "class": "regular",
+  "events": 4604,
+  "authors": 1,
+  "tag_presence": {
+   "p": 4604
+  },
+  "content_shape": {
+   "nip44": 4604
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 9464,
+  "class": "regular",
+  "events": 4604,
+  "authors": 1,
+  "tag_presence": {
+   "p": 4604
+  },
+  "content_shape": {
+   "nip44": 4604
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 9478,
+  "class": "regular",
+  "events": 4604,
+  "authors": 1,
+  "tag_presence": {
+   "p": 4604
+  },
+  "content_shape": {
+   "nip44": 4604
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 9465,
+  "class": "regular",
+  "events": 4603,
+  "authors": 1,
+  "tag_presence": {
+   "p": 4603
+  },
+  "content_shape": {
+   "nip44": 4603
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 4903,
+  "class": "regular",
+  "events": 2024,
+  "authors": 1,
+  "tag_presence": {
+   "agent": 2024,
+   "type": 2024,
+   "domain": 2024
+  },
+  "content_shape": {
+   "json": 2024
+  },
+  "json_content_keys": {
+   "domain": 2024,
+   "type": 2024,
+   "agent": 2024,
+   "status": 2024
+  },
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 30934,
+  "class": "addressable",
+  "events": 403,
+  "authors": 1,
+  "tag_presence": {
+   "tx_ref": 403,
+   "a": 403,
+   "d": 403,
+   "order_type": 403,
+   "from_wallet": 403,
+   "lana_amount": 403,
+   "to_wallet": 403,
+   "currency": 403,
+   "fiat_value": 403,
+   "to_hex": 403,
+   "exchange_rate": 403,
+   "status": 403
+  },
+  "content_shape": {
+   "empty": 403
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 30939,
+  "class": "addressable",
+  "events": 387,
+  "authors": 1,
+  "tag_presence": {
+   "a": 387,
+   "overdue_days": 387,
+   "created_at": 387,
+   "wallet_id": 387,
+   "status": 387,
+   "d": 387,
+   "order_type": 387,
+   "destination_type": 387,
+   "fund_ref": 387,
+   "payment_type": 387,
+   "confirmed": 387,
+   "payment_info": 387,
+   "currency": 387,
+   "investor_hex": 387,
+   "confirmed_at": 387
+  },
+  "content_shape": {
+   "empty": 387
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 4444,
+  "class": "regular",
+  "events": 382,
+  "authors": 1,
+  "tag_presence": {},
+  "content_shape": {
+   "json": 382
+  },
+  "json_content_keys": {
+   "serverTime": 382,
+   "p": 263,
+   "u": 263,
+   "m": 263,
+   "b": 263,
+   "a": 263,
+   "f": 260,
+   "fw": 260,
+   "bot": 140,
+   "emotes": 140,
+   "alert": 117,
+   "refreshTicker": 2
+  },
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 3210,
+  "class": "regular",
+  "events": 361,
+  "authors": 1,
+  "tag_presence": {
+   "expiration": 361
+  },
+  "content_shape": {
+   "nip44": 361
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 30935,
+  "class": "addressable",
+  "events": 310,
+  "authors": 1,
+  "tag_presence": {
+   "investor_hex": 310,
+   "fund_setting_id": 310,
+   "tx_ref": 310,
+   "a": 310,
+   "receipt_url": 310,
+   "d": 310,
+   "order_type": 310,
+   "status": 310,
+   "destination_type": 310,
+   "shop_name": 310,
+   "destination_name": 310,
+   "currency": 310,
+   "investor_wallet": 310,
+   "receipt_description": 310,
+   "amount_fiat": 310
+  },
+  "content_shape": {
+   "empty": 310
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 30960,
+  "class": "addressable",
+  "events": 234,
+  "authors": 1,
+  "tag_presence": {
+   "bef_version": 234,
+   "e": 234,
+   "lana_received_lanoshis": 234,
+   "p": 234,
+   "lanapays_pubkey": 234,
+   "wallet": 234,
+   "round": 234,
+   "a": 234,
+   "d": 234,
+   "purchases": 234,
+   "lana_received": 234,
+   "split": 234,
+   "snapshot_at": 234,
+   "status": 234,
+   "projection_basis": 159
+  },
+  "content_shape": {
+   "json": 234
+  },
+  "json_content_keys": {
+   "d": 234,
+   "p": 234,
+   "split": 234,
+   "round": 234,
+   "status": 234,
+   "lana_received": 234,
+   "lana_received_lanoshis": 234,
+   "wallet": 234,
+   "a": 234,
+   "e": 234,
+   "snapshot_at": 234,
+   "lanapays_pubkey": 234,
+   "bef_version": 234,
+   "purchases": 234,
+   "non_binding": 234
+  },
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 38023,
+  "class": "addressable",
+  "events": 178,
+  "authors": 1,
+  "tag_presence": {
+   "b": 178,
+   "t": 178,
+   "d": 178,
+   "L": 178,
+   "m": 178,
+   "l": 178,
+   "n": 178
+  },
+  "content_shape": {
+   "json": 178
+  },
+  "json_content_keys": {
+   "outcomePools": 178,
+   "outcomes": 178,
+   "totalPoolSats": 178,
+   "totalVolume": 178,
+   "participants": 178
+  },
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 30013,
+  "class": "addressable",
+  "events": 153,
+  "authors": 1,
+  "tag_presence": {
+   "d": 153,
+   "t": 153
+  },
+  "content_shape": {
+   "json": 153
+  },
+  "json_content_keys": {
+   "content_sha256": 153,
+   "job_id": 153,
+   "outcome": 153,
+   "source": 153,
+   "trust_score": 153,
+   "ts": 153,
+   "witnesses": 153
+  },
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 38380,
+  "class": "addressable",
+  "events": 126,
+  "authors": 1,
+  "tag_presence": {
+   "d": 126
+  },
+  "content_shape": {
+   "json": 126
+  },
+  "json_content_keys": {
+   "kind": 126,
+   "version": 126,
+   "offerId": 126,
+   "sourcePubkey": 126,
+   "nodeId": 126,
+   "content": 126,
+   "type": 126,
+   "sourceTrust": 126,
+   "sourceTrustLabel": 126,
+   "epistemicType": 126,
+   "confidence": 126,
+   "evidenceLevel": 126,
+   "scope": 126,
+   "timestamp": 126
+  },
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 30933,
+  "class": "addressable",
+  "events": 106,
+  "authors": 1,
+  "tag_presence": {
+   "p": 106,
+   "a": 106,
+   "lana_amount": 106,
+   "exchange_rate": 106,
+   "invoice_number": 106,
+   "status": 106,
+   "lana_discount_per": 106,
+   "customer_wallet": 106,
+   "d": 106,
+   "caretaker_wallet": 106,
+   "merchant_name": 106,
+   "investor": 106,
+   "payment_type": 106,
+   "caretaker_hex": 106,
+   "merchant_hex": 106
+  },
+  "content_shape": {
+   "empty": 106
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 30666,
+  "class": "addressable",
+  "events": 100,
+  "authors": 1,
+  "tag_presence": {
+   "schema_version": 100,
+   "t": 100,
+   "alt": 100,
+   "s": 100,
+   "revision": 100,
+   "d": 100,
+   "period": 14,
+   "resolution": 14
+  },
+  "content_shape": {
+   "json": 100
+  },
+  "json_content_keys": {
+   "schema_version": 100,
+   "snapshot_id": 100,
+   "generated_at": 100,
+   "revision": 99,
+   "restated_at": 99,
+   "restated_because": 99,
+   "payload": 99,
+   "publisher": 1,
+   "coverage": 1,
+   "resolutions": 1,
+   "documents": 1
+  },
+  "alt": {
+   "bestiario orders report over the last 30 days for instance b3626fe91b602bdbca3673bec0855221f41dc8f6d": 1,
+   "bestiario orders report over the last 7 days for instance 00037abd44e7a846689e230d5446abcd0d56a344fa": 1,
+   "bestiario network summary report over the last whole archive": 1
+  },
+  "client": {},
+  "samples": 8
+ },
+ {
+  "kind": 4200,
+  "class": "regular",
+  "events": 81,
+  "authors": 1,
+  "tag_presence": {
+   "t": 81,
+   "alt": 81,
+   "section": 81,
+   "x": 81,
+   "issue": 81
+  },
+  "content_shape": {
+   "json": 81
+  },
+  "json_content_keys": {
+   "audio": 81,
+   "isIntro": 81
+  },
+  "alt": {
+   "AI narration: Ditto 2.42.3 shows relay delivery and tightens account boundaries": 1,
+   "AI narration: Sonar alpha.15–alpha.15.1 repairs encrypted-group publishing": 1,
+   "AI narration: Myco 0.8.0–0.8.1 gives nearby apps their own Nostr store": 1
+  },
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 4223,
+  "class": "regular",
+  "events": 67,
+  "authors": 1,
+  "tag_presence": {
+   "a": 67,
+   "d": 67,
+   "temp": 67,
+   "t": 67
+  },
+  "content_shape": {
+   "empty": 67
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 6312,
+  "class": "regular",
+  "events": 60,
+  "authors": 1,
+  "tag_presence": {
+   "e": 60,
+   "p": 60,
+   "nodes": 60,
+   "sort": 60,
+   "source": 60
+  },
+  "content_shape": {
+   "json": 60
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 30381,
+  "class": "addressable",
+  "events": 51,
+  "authors": 1,
+  "tag_presence": {
+   "issued_at_ms": 51,
+   "v": 51,
+   "scope": 51,
+   "d": 51,
+   "expires_at_ms": 51,
+   "reason": 51,
+   "action": 51,
+   "e": 50,
+   "p": 1
+  },
+  "content_shape": {
+   "empty": 51
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 7078,
+  "class": "regular",
+  "events": 38,
+  "authors": 1,
+  "tag_presence": {
+   "d": 38
+  },
+  "content_shape": {
+   "json": 38
+  },
+  "json_content_keys": {
+   "_originalId": 38,
+   "_schema": 38,
+   "type": 38,
+   "title": 38,
+   "status": 38,
+   "infoType": 38,
+   "editorialOffice": 38,
+   "publishingOffice": 38,
+   "pressDateTime": 38,
+   "reportDateTime": 38,
+   "targetDateTime": 38,
+   "eventId": 38,
+   "serialNo": 38,
+   "infoKind": 38,
+   "infoKindVersion": 38
+  },
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 87002,
+  "class": "regular",
+  "events": 35,
+  "authors": 1,
+  "tag_presence": {
+   "p": 35,
+   "wallet": 35,
+   "L": 35,
+   "wallet_type": 35,
+   "l": 35,
+   "registration_source": 35,
+   "registered_at": 35,
+   "is_virgin": 35,
+   "status": 35,
+   "split_created": 12,
+   "batch_id": 2
+  },
+  "content_shape": {
+   "text": 35
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 87006,
+  "class": "regular",
+  "events": 35,
+  "authors": 1,
+  "tag_presence": {
+   "validation_method": 35,
+   "wallet": 35,
+   "L": 35,
+   "l": 35,
+   "balance": 35,
+   "verified_at": 35
+  },
+  "content_shape": {
+   "text": 35
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 30889,
+  "class": "addressable",
+  "events": 34,
+  "authors": 1,
+  "tag_presence": {
+   "d": 34,
+   "w": 34,
+   "status": 34
+  },
+  "content_shape": {
+   "empty": 34
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 31000,
+  "class": "addressable",
+  "events": 32,
+  "authors": 1,
+  "tag_presence": {
+   "p": 32,
+   "t": 32
+  },
+  "content_shape": {
+   "json": 32
+  },
+  "json_content_keys": {
+   "node_id": 32,
+   "name": 32,
+   "version": 32,
+   "address": 32,
+   "last_seen": 32,
+   "idle": 32,
+   "online_minutes": 32
+  },
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 2727,
+  "class": "regular",
+  "events": 31,
+  "authors": 1,
+  "tag_presence": {
+   "field": 31,
+   "client": 31
+  },
+  "content_shape": {
+   "opaque-b64": 31
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {
+   "field-clean": 31
+  },
+  "samples": 10
+ },
+ {
+  "kind": 2101,
+  "class": "regular",
+  "events": 28,
+  "authors": 1,
+  "tag_presence": {
+   "name": 28,
+   "e": 28,
+   "t": 28,
+   "action": 28,
+   "client": 28
+  },
+  "content_shape": {
+   "empty": 28
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {
+   "tasklist": 28
+  },
+  "samples": 10
+ },
+ {
+  "kind": 4373,
+  "class": "regular",
+  "events": 27,
+  "authors": 1,
+  "tag_presence": {
+   "z": 27,
+   "expiration": 27
+  },
+  "content_shape": {
+   "opaque-b64": 27
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 30495,
+  "class": "addressable",
+  "events": 26,
+  "authors": 1,
+  "tag_presence": {
+   "v": 26,
+   "onboard": 26,
+   "r": 26,
+   "t": 26,
+   "d": 26,
+   "price": 26,
+   "x402": 26,
+   "title": 26,
+   "status": 26,
+   "timing": 1,
+   "size": 1
+  },
+  "content_shape": {
+   "text": 26
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 31500,
+  "class": "addressable",
+  "events": 26,
+  "authors": 1,
+  "tag_presence": {
+   "d": 26,
+   "expiration": 26
+  },
+  "content_shape": {
+   "json": 26
+  },
+  "json_content_keys": {
+   "id": 26,
+   "channelId": 26,
+   "source": 26,
+   "messageId": 26,
+   "species": 26,
+   "disguisedAs": 26,
+   "gender": 26,
+   "shiny": 26,
+   "ivPercent": 26,
+   "ivSpread": 26,
+   "level": 26,
+   "cp": 26,
+   "sizeTag": 26,
+   "moves": 26,
+   "cityRaw": 26
+  },
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 30974,
+  "class": "addressable",
+  "events": 23,
+  "authors": 1,
+  "tag_presence": {
+   "alt": 23,
+   "d": 23,
+   "p": 23,
+   "t": 23
+  },
+  "content_shape": {
+   "json": 23
+  },
+  "json_content_keys": {
+   "version": 23,
+   "dealer": 23,
+   "customer": 23,
+   "status": 23,
+   "buy": 23,
+   "sell": 23,
+   "buy_up_to": 23
+  },
+  "alt": {
+   "BEF dealer regular customer: krog-menjave": 23
+  },
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 30903,
+  "class": "addressable",
+  "events": 20,
+  "authors": 1,
+  "tag_presence": {
+   "lanapays_pubkey": 20,
+   "quota_volume_limit": 20,
+   "quota_tx_used": 20,
+   "a": 20,
+   "quota_currency": 20,
+   "d": 20,
+   "quota_volume_used": 20,
+   "reason": 20,
+   "unit_id": 20,
+   "quota_period": 20,
+   "quota_tx_limit": 20,
+   "status": 20,
+   "featured": 17
+  },
+  "content_shape": {
+   "text": 20
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 30427,
+  "class": "addressable",
+  "events": 19,
+  "authors": 1,
+  "tag_presence": {
+   "thumb": 19,
+   "d": 19,
+   "t": 19
+  },
+  "content_shape": {
+   "json": 19
+  },
+  "json_content_keys": {
+   "protocol": 19,
+   "art": 19,
+   "mbid": 19,
+   "year": 19,
+   "genre": 19,
+   "collection": 19,
+   "source": 19,
+   "deleted": 19
+  },
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 30093,
+  "class": "addressable",
+  "events": 16,
+  "authors": 1,
+  "tag_presence": {
+   "t": 16,
+   "producteur": 16,
+   "d": 16,
+   "date": 16,
+   "lang": 16,
+   "station": 16,
+   "duration": 16,
+   "visibility": 16
+  },
+  "content_shape": {
+   "json": 16
+  },
+  "json_content_keys": {
+   "stationId": 16,
+   "date": 16,
+   "language": 16,
+   "durationSec": 16,
+   "audioCid": 16,
+   "audioMime": 16,
+   "turns": 16,
+   "segments": 16,
+   "newsRefs": 16,
+   "model": 16,
+   "generatedAt": 16,
+   "titre": 16,
+   "resume": 16
+  },
+  "alt": {},
+  "client": {},
+  "samples": 6
+ },
+ {
+  "kind": 6314,
+  "class": "regular",
+  "events": 15,
+  "authors": 1,
+  "tag_presence": {
+   "e": 15,
+   "p": 15,
+   "nodes": 15,
+   "sort": 15,
+   "source": 15
+  },
+  "content_shape": {
+   "json": 15
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 31605,
+  "class": "addressable",
+  "events": 14,
+  "authors": 1,
+  "tag_presence": {
+   "a": 14,
+   "v": 14,
+   "d": 14
+  },
+  "content_shape": {
+   "nip44": 14
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 8
+ },
+ {
+  "kind": 4472,
+  "class": "regular",
+  "events": 13,
+  "authors": 1,
+  "tag_presence": {
+   "epoch": 13,
+   "l": 13
+  },
+  "content_shape": {
+   "nip44": 13
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 3141,
+  "class": "regular",
+  "events": 12,
+  "authors": 1,
+  "tag_presence": {
+   "t": 12,
+   "round": 12,
+   "digest": 12,
+   "seal": 12,
+   "reveal_at": 12,
+   "chain": 12,
+   "ct": 12
+  },
+  "content_shape": {
+   "text": 12
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 32107,
+  "class": "addressable",
+  "events": 12,
+  "authors": 1,
+  "tag_presence": {
+   "t": 12,
+   "d": 12,
+   "coreApiVersion": 12,
+   "icon": 12,
+   "repo": 12,
+   "title": 12,
+   "version": 12,
+   "ref": 12,
+   "L": 10,
+   "l": 10,
+   "website": 7
+  },
+  "content_shape": {
+   "text": 12
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 9911,
+  "class": "regular",
+  "events": 10,
+  "authors": 1,
+  "tag_presence": {
+   "t": 10,
+   "i": 10,
+   "oaf-id": 10,
+   "oaf-channel": 10,
+   "oaf-sender": 10
+  },
+  "content_shape": {
+   "json": 10
+  },
+  "json_content_keys": {
+   "envelope": 10,
+   "senderPublicKey": 10
+  },
+  "alt": {},
+  "client": {},
+  "samples": 10
+ },
+ {
+  "kind": 4516,
+  "class": "regular",
+  "events": 9,
+  "authors": 1,
+  "tag_presence": {
+   "expiration": 9,
+   "p": 9
+  },
+  "content_shape": {
+   "nip44": 9
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 9
+ },
+ {
+  "kind": 4850,
+  "class": "regular",
+  "events": 9,
+  "authors": 1,
+  "tag_presence": {
+   "d": 9
+  },
+  "content_shape": {
+   "json": 9
+  },
+  "json_content_keys": {
+   "schemaVersion": 9,
+   "keyDerivationVersion": 9,
+   "nonce": 9,
+   "ciphertext": 9,
+   "publicContext": 9
+  },
+  "alt": {},
+  "client": {},
+  "samples": 9
+ },
+ {
+  "kind": 30211,
+  "class": "addressable",
+  "events": 9,
+  "authors": 1,
+  "tag_presence": {
+   "t": 9,
+   "a": 9,
+   "sport_type": 9,
+   "d": 9,
+   "match": 9,
+   "deadline": 9
+  },
+  "content_shape": {
+   "json": 9
+  },
+  "json_content_keys": {
+   "match_id": 9,
+   "home_score": 9,
+   "away_score": 9
+  },
+  "alt": {},
+  "client": {},
+  "samples": 9
+ },
+ {
+  "kind": 30290,
+  "class": "addressable",
+  "events": 9,
+  "authors": 1,
+  "tag_presence": {
+   "user": 9,
+   "d": 9,
+   "arb": 9,
+   "role": 8,
+   "i": 8,
+   "n": 8
+  },
+  "content_shape": {
+   "nip44": 8,
+   "json": 1
+  },
+  "json_content_keys": {
+   "v": 1,
+   "updatedAt": 1,
+   "n": 1,
+   "ct": 1
+  },
+  "alt": {},
+  "client": {},
+  "samples": 9
+ },
+ {
+  "kind": 33272,
+  "class": "addressable",
+  "events": 9,
+  "authors": 1,
+  "tag_presence": {
+   "d": 9
+  },
+  "content_shape": {
+   "nip44": 9
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 9
+ },
+ {
+  "kind": 1349,
+  "class": "regular",
+  "events": 8,
+  "authors": 1,
+  "tag_presence": {
+   "a": 8,
+   "e": 8,
+   "k": 8,
+   "p": 8
+  },
+  "content_shape": {
+   "json": 8
+  },
+  "json_content_keys": {
+   "id": 8,
+   "pubkey": 8,
+   "created_at": 8,
+   "kind": 8,
+   "tags": 8,
+   "content": 8,
+   "sig": 8
+  },
+  "alt": {},
+  "client": {},
+  "samples": 8
+ },
+ {
+  "kind": 4247,
+  "class": "regular",
+  "events": 8,
+  "authors": 1,
+  "tag_presence": {
+   "v": 8,
+   "covenant-address": 8,
+   "p": 8,
+   "t": 8,
+   "doomsday-at": 8,
+   "d": 8,
+   "covenant": 8,
+   "doomsday-address": 8,
+   "oracle": 8,
+   "m": 8,
+   "covenant-params": 8,
+   "expiration": 8,
+   "side": 8,
+   "amount": 8,
+   "resolves-at": 8
+  },
+  "content_shape": {
+   "text": 8
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 8
+ },
+ {
+  "kind": 30292,
+  "class": "addressable",
+  "events": 7,
+  "authors": 1,
+  "tag_presence": {
+   "u": 7,
+   "t": 7,
+   "d": 7,
+   "role": 7,
+   "app": 7,
+   "i": 6,
+   "n": 1
+  },
+  "content_shape": {
+   "nip44": 7
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 7
+ },
+ {
+  "kind": 30815,
+  "class": "addressable",
+  "events": 7,
+  "authors": 1,
+  "tag_presence": {
+   "d": 7,
+   "expiration": 7
+  },
+  "content_shape": {
+   "opaque-b64": 7
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 3
+ },
+ {
+  "kind": 31503,
+  "class": "addressable",
+  "events": 7,
+  "authors": 1,
+  "tag_presence": {
+   "d": 7
+  },
+  "content_shape": {
+   "json": 7
+  },
+  "json_content_keys": {
+   "at": 7,
+   "relays": 7
+  },
+  "alt": {},
+  "client": {},
+  "samples": 7
+ },
+ {
+  "kind": 90901,
+  "class": "regular",
+  "events": 7,
+  "authors": 1,
+  "tag_presence": {
+   "e": 7,
+   "billing_day": 7,
+   "proposal": 7,
+   "p": 7,
+   "service": 7,
+   "tx": 7,
+   "from_wallet": 7,
+   "to_wallet": 7,
+   "amount_lana": 7,
+   "amount_lanoshi": 7,
+   "timestamp_paid": 7,
+   "type": 7
+  },
+  "content_shape": {
+   "text": 7
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 7
+ },
+ {
+  "kind": 9486,
+  "class": "regular",
+  "events": 6,
+  "authors": 1,
+  "tag_presence": {
+   "p": 6
+  },
+  "content_shape": {
+   "nip44": 6
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 6
+ },
+ {
+  "kind": 1623,
+  "class": "regular",
+  "events": 5,
+  "authors": 1,
+  "tag_presence": {
+   "t": 5,
+   "d": 5,
+   "touchstone-checkpoint": 5,
+   "touchstone-recorder": 5,
+   "touchstone-head": 5,
+   "touchstone-bitcoin-height": 3,
+   "touchstone-root": 2
+  },
+  "content_shape": {
+   "json": 5
+  },
+  "json_content_keys": {
+   "format": 5,
+   "recorder": 5,
+   "checkpoint_id": 5,
+   "merkle_root": 5,
+   "head_hash": 5,
+   "digest": 3,
+   "bitcoin_height": 3,
+   "block_hash": 3,
+   "ots_complete_proof_b64": 3,
+   "seq_start": 2,
+   "seq_end": 2,
+   "prev_checkpoint_hash": 2,
+   "recorder_sig": 2,
+   "created_at": 2
+  },
+  "alt": {},
+  "client": {},
+  "samples": 5
+ },
+ {
+  "kind": 30302,
+  "class": "addressable",
+  "events": 5,
+  "authors": 1,
+  "tag_presence": {
+   "s": 5,
+   "a": 5,
+   "rank": 5,
+   "d": 5,
+   "title": 5,
+   "description": 5
+  },
+  "content_shape": {
+   "empty": 5
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 5
+ },
+ {
+  "kind": 30900,
+  "class": "addressable",
+  "events": 5,
+  "authors": 1,
+  "tag_presence": {
+   "schema": 5,
+   "priority": 5,
+   "t": 5,
+   "a": 5,
+   "d": 5,
+   "domain": 5,
+   "assignee": 5,
+   "status": 5,
+   "dependency": 2,
+   "dep": 2,
+   "depends-on": 2
+  },
+  "content_shape": {
+   "json": 5
+  },
+  "json_content_keys": {
+   "schema_version": 5,
+   "id": 5,
+   "title": 5,
+   "description": 5,
+   "status": 5,
+   "assignee": 5,
+   "created_at": 5,
+   "created_by": 5,
+   "updated_at": 5,
+   "labels": 5,
+   "checkpoints": 5,
+   "evidence": 5,
+   "repository": 5,
+   "metadata": 5,
+   "priority": 5
+  },
+  "alt": {},
+  "client": {},
+  "samples": 5
+ },
+ {
+  "kind": 30938,
+  "class": "addressable",
+  "events": 5,
+  "authors": 1,
+  "tag_presence": {
+   "investor_hex": 5,
+   "investment_amount": 5,
+   "d": 5,
+   "note": 5,
+   "available_amount": 5,
+   "investment_currency": 5,
+   "invested_amount": 5,
+   "wallet_id": 5,
+   "status": 5
+  },
+  "content_shape": {
+   "empty": 5
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 5
+ },
+ {
+  "kind": 1707,
+  "class": "regular",
+  "events": 4,
+  "authors": 1,
+  "tag_presence": {
+   "t": 4
+  },
+  "content_shape": {
+   "opaque-b64": 4
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 4
+ },
+ {
+  "kind": 13196,
+  "class": "replaceable",
+  "events": 4,
+  "authors": 1,
+  "tag_presence": {
+   "maxSendable": 4,
+   "walletFeeBase": 4,
+   "t": 4,
+   "paymentFeeBase": 4,
+   "minSendable": 4,
+   "o": 4,
+   "liquidityFeeRate": 4,
+   "maxBalance": 4,
+   "walletFeePeriod": 4,
+   "relay": 4,
+   "comment": 4,
+   "paymentFeeRate": 4
+  },
+  "content_shape": {
+   "empty": 4
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 4
+ },
+ {
+  "kind": 30090,
+  "class": "addressable",
+  "events": 4,
+  "authors": 1,
+  "tag_presence": {
+   "d": 4,
+   "visibility": 4,
+   "t": 4
+  },
+  "content_shape": {
+   "json": 4
+  },
+  "json_content_keys": {
+   "version": 4,
+   "generatedAt": 4,
+   "surveys": 4
+  },
+  "alt": {},
+  "client": {},
+  "samples": 4
+ },
+ {
+  "kind": 33337,
+  "class": "addressable",
+  "events": 4,
+  "authors": 1,
+  "tag_presence": {
+   "d": 4
+  },
+  "content_shape": {
+   "json": 4
+  },
+  "json_content_keys": {
+   "v": 4,
+   "node_id_hex": 4,
+   "addr": 4,
+   "relay_capable": 4
+  },
+  "alt": {},
+  "client": {},
+  "samples": 4
+ },
+ {
+  "kind": 39991,
+  "class": "addressable",
+  "events": 4,
+  "authors": 1,
+  "tag_presence": {
+   "vout": 4,
+   "e": 4,
+   "p": 4,
+   "a": 4,
+   "last_block": 4,
+   "d": 4,
+   "from_wallet": 4,
+   "to_wallet": 4,
+   "state": 4,
+   "txid": 4,
+   "amount": 4,
+   "chain": 4
+  },
+  "content_shape": {
+   "empty": 4
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 4
+ },
+ {
+  "kind": 1090,
+  "class": "regular",
+  "events": 3,
+  "authors": 1,
+  "tag_presence": {
+   "alt": 3,
+   "t": 3,
+   "L": 3,
+   "x": 3,
+   "l": 3,
+   "imeta": 3,
+   "client": 3
+  },
+  "content_shape": {
+   "text": 3
+  },
+  "json_content_keys": {},
+  "alt": {
+   "Reaction clip: One of us!": 1,
+   "One of us!": 1,
+   "Reaction clip: Reaction clip: audrey hepburn sunglasses looking": 1
+  },
+  "client": {
+   "imwald": 3
+  },
+  "samples": 3
+ },
+ {
+  "kind": 9372,
+  "class": "regular",
+  "events": 3,
+  "authors": 1,
+  "tag_presence": {
+   "expiration": 3,
+   "client": 3
+  },
+  "content_shape": {
+   "nip44": 3
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {
+   "cliprelay": 3
+  },
+  "samples": 3
+ },
+ {
+  "kind": 10110,
+  "class": "replaceable",
+  "events": 3,
+  "authors": 1,
+  "tag_presence": {
+   "root": 3,
+   "prev": 3,
+   "height": 3
+  },
+  "content_shape": {
+   "json": 3
+  },
+  "json_content_keys": {
+   "node_pubkey": 3,
+   "root": 3,
+   "height": 3,
+   "prev_cert_id": 3,
+   "ts": 3
+  },
+  "alt": {},
+  "client": {},
+  "samples": 3
+ },
+ {
+  "kind": 30940,
+  "class": "addressable",
+  "events": 3,
+  "authors": 1,
+  "tag_presence": {
+   "total_budget": 3,
+   "investor_hex": 3,
+   "overdue_count": 3,
+   "payment_count": 3,
+   "avg_payment_days": 3,
+   "confirmed_count": 3,
+   "d": 3,
+   "available_amount": 3,
+   "split_financed": 3,
+   "total_financed": 3,
+   "invested_amount": 3,
+   "split": 3,
+   "status": 3
+  },
+  "content_shape": {
+   "empty": 3
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 3
+ },
+ {
+  "kind": 31111,
+  "class": "addressable",
+  "events": 3,
+  "authors": 1,
+  "tag_presence": {
+   "d": 3
+  },
+  "content_shape": {
+   "text": 3
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 3
+ },
+ {
+  "kind": 32681,
+  "class": "addressable",
+  "events": 3,
+  "authors": 1,
+  "tag_presence": {
+   "d": 3
+  },
+  "content_shape": {
+   "nip44": 3
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 3
+ },
+ {
+  "kind": 33838,
+  "class": "addressable",
+  "events": 3,
+  "authors": 1,
+  "tag_presence": {
+   "expiration": 3,
+   "d": 3,
+   "p": 3,
+   "t": 3
+  },
+  "content_shape": {
+   "nip44": 3
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 3
+ },
+ {
+  "kind": 35714,
+  "class": "addressable",
+  "events": 3,
+  "authors": 1,
+  "tag_presence": {
+   "d": 3,
+   "t": 3
+  },
+  "content_shape": {
+   "opaque-b64": 3
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 3
+ },
+ {
+  "kind": 39015,
+  "class": "addressable",
+  "events": 3,
+  "authors": 1,
+  "tag_presence": {
+   "v": 3,
+   "d": 3,
+   "expiration": 3,
+   "client": 3
+  },
+  "content_shape": {
+   "json": 3
+  },
+  "json_content_keys": {
+   "uptime_s": 3,
+   "services": 3,
+   "version": 3,
+   "stack_version": 3,
+   "update_state": 3,
+   "media_live_paths": 3,
+   "media_hls_readers": 3
+  },
+  "alt": {},
+  "client": {
+   "church-node-agent/0.1.0": 3
+  },
+  "samples": 3
+ },
+ {
+  "kind": 39802,
+  "class": "addressable",
+  "events": 3,
+  "authors": 1,
+  "tag_presence": {
+   "d": 3,
+   "a": 2,
+   "r": 1
+  },
+  "content_shape": {
+   "json": 3
+  },
+  "json_content_keys": {
+   "progress": 3,
+   "ts": 3
+  },
+  "alt": {},
+  "client": {},
+  "samples": 3
+ },
+ {
+  "kind": 112,
+  "class": "regular",
+  "events": 2,
+  "authors": 1,
+  "tag_presence": {},
+  "content_shape": {
+   "text": 2
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 2
+ },
+ {
+  "kind": 5310,
+  "class": "regular",
+  "events": 2,
+  "authors": 1,
+  "tag_presence": {
+   "expiration": 2,
+   "nofederate": 2,
+   "p": 2
+  },
+  "content_shape": {
+   "nip44": 2
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 2
+ },
+ {
+  "kind": 30291,
+  "class": "addressable",
+  "events": 2,
+  "authors": 1,
+  "tag_presence": {
+   "u": 2,
+   "d": 2,
+   "role": 2,
+   "app": 2,
+   "n": 2,
+   "i": 1
+  },
+  "content_shape": {
+   "nip44": 2
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 2
+ },
+ {
+  "kind": 30506,
+  "class": "addressable",
+  "events": 2,
+  "authors": 1,
+  "tag_presence": {
+   "d": 2,
+   "access": 2,
+   "visibility": 2,
+   "lang": 2
+  },
+  "content_shape": {
+   "text": 2
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 2
+ },
+ {
+  "kind": 30520,
+  "class": "addressable",
+  "events": 2,
+  "authors": 1,
+  "tag_presence": {
+   "d": 2
+  },
+  "content_shape": {
+   "nip44": 2
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 2
+ },
+ {
+  "kind": 30762,
+  "class": "addressable",
+  "events": 2,
+  "authors": 1,
+  "tag_presence": {
+   "score": 2,
+   "v": 2,
+   "p": 2,
+   "t": 2,
+   "board": 2,
+   "d": 2,
+   "level": 2,
+   "state": 2,
+   "mode": 2,
+   "game": 2
+  },
+  "content_shape": {
+   "text": 2
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 2
+ },
+ {
+  "kind": 30902,
+  "class": "addressable",
+  "events": 2,
+  "authors": 1,
+  "tag_presence": {
+   "lanapays_pubkey": 2,
+   "caretaker_hex": 2,
+   "lana_discount_per": 2,
+   "a": 2,
+   "d": 2,
+   "note": 2,
+   "caretaker_wallet": 2,
+   "unit_id": 2,
+   "lanapays_us_per": 2,
+   "valid_from": 2,
+   "status": 2,
+   "max_tx_amount": 1,
+   "caretaker_plan": 1
+  },
+  "content_shape": {
+   "text": 2
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 2
+ },
+ {
+  "kind": 31780,
+  "class": "addressable",
+  "events": 2,
+  "authors": 1,
+  "tag_presence": {
+   "d": 2,
+   "p": 2,
+   "t": 2
+  },
+  "content_shape": {
+   "json": 2
+  },
+  "json_content_keys": {
+   "v": 2,
+   "lv": 2,
+   "seed": 2,
+   "ser": 2,
+   "to": 2,
+   "ts": 2
+  },
+  "alt": {},
+  "client": {},
+  "samples": 2
+ },
+ {
+  "kind": 31971,
+  "class": "addressable",
+  "events": 2,
+  "authors": 1,
+  "tag_presence": {
+   "e": 2,
+   "p": 2,
+   "E": 2,
+   "a": 2,
+   "A": 2,
+   "child_status": 2,
+   "K": 2,
+   "d": 2,
+   "k": 2,
+   "P": 2,
+   "para": 2,
+   "title": 2,
+   "bitcoin": 2,
+   "status": 2
+  },
+  "content_shape": {
+   "text": 2
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 2
+ },
+ {
+  "kind": 32151,
+  "class": "addressable",
+  "events": 2,
+  "authors": 1,
+  "tag_presence": {
+   "p": 2,
+   "alt": 2,
+   "a": 2,
+   "d": 2,
+   "mode": 2,
+   "game": 2
+  },
+  "content_shape": {
+   "empty": 2
+  },
+  "json_content_keys": {},
+  "alt": {
+   "Esports lineup: SUPER TOXIC, rocket-league 1v1": 1,
+   "Esports lineup: SUPER TOXIC, age-of-empires-2 1v1": 1
+  },
+  "client": {},
+  "samples": 2
+ },
+ {
+  "kind": 34579,
+  "class": "addressable",
+  "events": 2,
+  "authors": 1,
+  "tag_presence": {
+   "d": 2
+  },
+  "content_shape": {
+   "nip44": 2
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 2
+ },
+ {
+  "kind": 37777,
+  "class": "addressable",
+  "events": 2,
+  "authors": 1,
+  "tag_presence": {
+   "image": 2,
+   "d": 2,
+   "r": 2,
+   "client": 2
+  },
+  "content_shape": {
+   "empty": 2
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {
+   "zap.stream": 2
+  },
+  "samples": 2
+ },
+ {
+  "kind": 38103,
+  "class": "addressable",
+  "events": 2,
+  "authors": 1,
+  "tag_presence": {
+   "e": 2,
+   "d": 2,
+   "client": 2,
+   "t": 2
+  },
+  "content_shape": {
+   "json": 2
+  },
+  "json_content_keys": {
+   "encryptedFor": 2
+  },
+  "alt": {},
+  "client": {
+   "chama": 2
+  },
+  "samples": 2
+ },
+ {
+  "kind": 38107,
+  "class": "addressable",
+  "events": 2,
+  "authors": 1,
+  "tag_presence": {
+   "e": 2,
+   "d": 2,
+   "client": 2,
+   "t": 2
+  },
+  "content_shape": {
+   "json": 2
+  },
+  "json_content_keys": {
+   "type": 2,
+   "cancellerRole": 2,
+   "reason": 2,
+   "cancelledAt": 2
+  },
+  "alt": {},
+  "client": {
+   "chama": 2
+  },
+  "samples": 2
+ },
+ {
+  "kind": 38111,
+  "class": "addressable",
+  "events": 2,
+  "authors": 1,
+  "tag_presence": {
+   "n": 2,
+   "nonce": 2,
+   "d": 2,
+   "expiration": 2
+  },
+  "content_shape": {
+   "json": 2
+  },
+  "json_content_keys": {
+   "endpoint": 2,
+   "models": 2,
+   "reputation": 2,
+   "bond_txid": 2
+  },
+  "alt": {},
+  "client": {},
+  "samples": 2
+ },
+ {
+  "kind": 38381,
+  "class": "addressable",
+  "events": 2,
+  "authors": 1,
+  "tag_presence": {
+   "phase": 2,
+   "beacon_id": 2,
+   "pubkey": 2,
+   "t": 2
+  },
+  "content_shape": {
+   "json": 2
+  },
+  "json_content_keys": {
+   "kind": 2,
+   "phase": 2,
+   "version": 2,
+   "beaconId": 2,
+   "sourcePubkey": 2,
+   "capabilities": 2,
+   "timestamp": 2
+  },
+  "alt": {},
+  "client": {},
+  "samples": 2
+ },
+ {
+  "kind": 39842,
+  "class": "addressable",
+  "events": 2,
+  "authors": 1,
+  "tag_presence": {
+   "r": 2,
+   "a": 2,
+   "o": 2,
+   "d": 2,
+   "c": 2,
+   "expiration": 2,
+   "started_at": 2,
+   "queued_at": 2,
+   "w": 2,
+   "status": 2,
+   "conclusion": 1,
+   "q": 1
+  },
+  "content_shape": {
+   "empty": 2
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 2
+ },
+ {
+  "kind": 87211,
+  "class": "regular",
+  "events": 2,
+  "authors": 1,
+  "tag_presence": {
+   "a": 2,
+   "action": 2,
+   "client": 2
+  },
+  "content_shape": {
+   "json": 2
+  },
+  "json_content_keys": {
+   "action": 2,
+   "room": 2,
+   "trigger": 2,
+   "ref": 2
+  },
+  "alt": {},
+  "client": {
+   "rose-agent": 2
+  },
+  "samples": 2
+ },
+ {
+  "kind": 52,
+  "class": "regular",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {},
+  "content_shape": {
+   "text": 1
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 106,
+  "class": "regular",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "p": 1,
+   "t": 1
+  },
+  "content_shape": {
+   "empty": 1
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 123,
+  "class": "regular",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "l": 1,
+   "d": 1
+  },
+  "content_shape": {
+   "nip44": 1
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 1003,
+  "class": "regular",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "o": 1,
+   "v": 1,
+   "f": 1
+  },
+  "content_shape": {
+   "nip44": 1
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 1005,
+  "class": "regular",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "o": 1,
+   "v": 1,
+   "f": 1
+  },
+  "content_shape": {
+   "nip44": 1
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 1015,
+  "class": "regular",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "o": 1,
+   "v": 1,
+   "f": 1
+  },
+  "content_shape": {
+   "nip44": 1
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 1051,
+  "class": "regular",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "p": 1,
+   "t": 1
+  },
+  "content_shape": {
+   "json": 1
+  },
+  "json_content_keys": {
+   "family": 1,
+   "v": 1,
+   "alg": 1,
+   "ct": 1
+  },
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 1351,
+  "class": "regular",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "p": 1,
+   "timestamp": 1,
+   "t": 1,
+   "encrypted": 1,
+   "unit": 1,
+   "encryption_algo": 1,
+   "entry_method": 1,
+   "source": 1
+  },
+  "content_shape": {
+   "nip44": 1
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 1420,
+  "class": "regular",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "score": 1,
+   "client": 1,
+   "p": 1,
+   "t": 1
+  },
+  "content_shape": {
+   "json": 1
+  },
+  "json_content_keys": {
+   "v": 1,
+   "seed": 1,
+   "L": 1,
+   "R": 1,
+   "score": 1,
+   "pk": 1,
+   "names": 1
+  },
+  "alt": {},
+  "client": {
+   "doodleduo": 1
+  },
+  "samples": 1
+ },
+ {
+  "kind": 1738,
+  "class": "regular",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "r": 1,
+   "alt": 1
+  },
+  "content_shape": {
+   "text": 1
+  },
+  "json_content_keys": {},
+  "alt": {
+   "Cairn: https://www.google.com/": 1
+  },
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 1818,
+  "class": "regular",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "t": 1
+  },
+  "content_shape": {
+   "text": 1
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 1888,
+  "class": "regular",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "p1": 1,
+   "walked": 1,
+   "lblocks": 1,
+   "replay": 1,
+   "dur": 1,
+   "t": 1,
+   "i0": 1,
+   "a1": 1,
+   "lboss": 1,
+   "score": 1,
+   "v": 1,
+   "bots": 1,
+   "lvl": 1,
+   "a2": 1,
+   "blocks": 1
+  },
+  "content_shape": {
+   "empty": 1
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 1889,
+  "class": "regular",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "pool": 1,
+   "t": 1
+  },
+  "content_shape": {
+   "empty": 1
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 1989,
+  "class": "regular",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "flags": 1,
+   "mines": 1,
+   "exploded": 1,
+   "alt": 1,
+   "revealed": 1,
+   "duration": 1,
+   "height": 1,
+   "result": 1,
+   "width": 1,
+   "difficulty": 1,
+   "mine_count": 1
+  },
+  "content_shape": {
+   "text": 1
+  },
+  "json_content_keys": {},
+  "alt": {
+   "Minesweeper game result": 1
+  },
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 2102,
+  "class": "regular",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "name": 1,
+   "client": 1,
+   "t": 1
+  },
+  "content_shape": {
+   "text": 1
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {
+   "tasklist-telegram": 1
+  },
+  "samples": 1
+ },
+ {
+  "kind": 2256,
+  "class": "regular",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "t": 1,
+   "alt": 1,
+   "s": 1,
+   "c": 1,
+   "client": 1
+  },
+  "content_shape": {
+   "empty": 1
+  },
+  "json_content_keys": {},
+  "alt": {
+   "Daily tarot reading with three cards: Page of Wands, The World (Reversed), Four of Wands (Reversed) ": 1
+  },
+  "client": {
+   "Ditto": 1
+  },
+  "samples": 1
+ },
+ {
+  "kind": 3031,
+  "class": "regular",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "from": 1,
+   "p": 1,
+   "t": 1
+  },
+  "content_shape": {
+   "text": 1
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 4251,
+  "class": "regular",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "m": 1,
+   "btc-block": 1,
+   "e": 1,
+   "t": 1
+  },
+  "content_shape": {
+   "opaque-b64": 1
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 4252,
+  "class": "regular",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "m": 1,
+   "btc-block": 1,
+   "e": 1,
+   "t": 1
+  },
+  "content_shape": {
+   "json": 1
+  },
+  "json_content_keys": {
+   "verdict": 1,
+   "confidence": 1,
+   "nonce": 1,
+   "transcript_hash": 1,
+   "seen_commits": 1
+  },
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 4473,
+  "class": "regular",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "epoch": 1,
+   "l": 1
+  },
+  "content_shape": {
+   "nip44": 1
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 4474,
+  "class": "regular",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "epoch": 1,
+   "l": 1
+  },
+  "content_shape": {
+   "nip44": 1
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 4551,
+  "class": "regular",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "d": 1,
+   "p": 1,
+   "app": 1
+  },
+  "content_shape": {
+   "json": 1
+  },
+  "json_content_keys": {
+   "text": 1,
+   "ts": 1,
+   "author": 1,
+   "post": 1
+  },
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 4663,
+  "class": "regular",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "t": 1
+  },
+  "content_shape": {
+   "json": 1
+  },
+  "json_content_keys": {
+   "v": 1,
+   "type": 1,
+   "room": 1,
+   "roomName": 1,
+   "who": 1
+  },
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 4747,
+  "class": "regular",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "i": 1,
+   "k": 1,
+   "expiration": 1,
+   "alt": 1
+  },
+  "content_shape": {
+   "opaque-b64": 1
+  },
+  "json_content_keys": {},
+  "alt": {
+   "A MycoSoft post, readable in MycoSoft (or by anyone with its author's public key).": 1
+  },
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 5101,
+  "class": "regular",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "e": 1,
+   "p": 1,
+   "exit_code": 1,
+   "stdout": 1,
+   "success": 1,
+   "duration": 1,
+   "stderr": 1
+  },
+  "content_shape": {
+   "empty": 1
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 6313,
+  "class": "regular",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "e": 1,
+   "p": 1,
+   "nodes": 1,
+   "sort": 1,
+   "source": 1
+  },
+  "content_shape": {
+   "json": 1
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 6315,
+  "class": "regular",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "e": 1,
+   "p": 1,
+   "nodes": 1,
+   "sort": 1,
+   "source": 1
+  },
+  "content_shape": {
+   "json": 1
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 6420,
+  "class": "regular",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "questionnaire-id": 1,
+   "state": 1,
+   "q": 1,
+   "t": 1
+  },
+  "content_shape": {
+   "json": 1
+  },
+  "json_content_keys": {
+   "schemaVersion": 1,
+   "eventType": 1,
+   "protocolVersion": 1,
+   "flowMode": 1,
+   "responseMode": 1,
+   "questionnaireId": 1,
+   "title": 1,
+   "description": 1,
+   "createdAt": 1,
+   "openAt": 1,
+   "closeAt": 1,
+   "coordinatorPubkey": 1,
+   "coordinatorEncryptionPubkey": 1,
+   "responseVisibility": 1,
+   "eligibilityMode": 1
+  },
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 6421,
+  "class": "regular",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "questionnaire-id": 1,
+   "state": 1,
+   "q": 1,
+   "t": 1
+  },
+  "content_shape": {
+   "json": 1
+  },
+  "json_content_keys": {
+   "schemaVersion": 1,
+   "eventType": 1,
+   "questionnaireId": 1,
+   "state": 1,
+   "createdAt": 1,
+   "coordinatorPubkey": 1
+  },
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 7450,
+  "class": "regular",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "v": 1,
+   "e": 1,
+   "a": 1,
+   "proto": 1,
+   "rules-hash": 1,
+   "deadline": 1,
+   "relay": 1,
+   "game": 1
+  },
+  "content_shape": {
+   "json": 1
+  },
+  "json_content_keys": {
+   "rules": 1,
+   "seats": 1
+  },
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 7700,
+  "class": "regular",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "p": 1,
+   "priority": 1,
+   "ticket_id": 1,
+   "category": 1,
+   "status": 1
+  },
+  "content_shape": {
+   "nip44": 1
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 7711,
+  "class": "regular",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "t": 1
+  },
+  "content_shape": {
+   "json": 1
+  },
+  "json_content_keys": {
+   "v": 1,
+   "type": 1,
+   "chain": 1,
+   "address": 1,
+   "seq": 1,
+   "scheme": 1,
+   "key": 1,
+   "issuedAt": 1,
+   "expiresAt": 1,
+   "sig": 1
+  },
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 7878,
+  "class": "regular",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "c": 1,
+   "cl": 1
+  },
+  "content_shape": {
+   "json": 1
+  },
+  "json_content_keys": {
+   "id": 1,
+   "circleId": 1,
+   "authorPublicKeyRaw": 1,
+   "ciphertext": 1,
+   "iv": 1,
+   "signature": 1,
+   "createdAt": 1,
+   "logicalClock": 1
+  },
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 7880,
+  "class": "regular",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "c": 1
+  },
+  "content_shape": {
+   "json": 1
+  },
+  "json_content_keys": {
+   "ciphertext": 1,
+   "iv": 1,
+   "signature": 1
+  },
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 8555,
+  "class": "regular",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "u": 1,
+   "digest-directory": 1,
+   "digest-models": 1,
+   "digest-snapshot": 1,
+   "digest-uptime": 1
+  },
+  "content_shape": {
+   "json": 1
+  },
+  "json_content_keys": {
+   "what": 1,
+   "fetched_at": 1,
+   "digests": 1,
+   "bytes": 1
+  },
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 9637,
+  "class": "regular",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "workout_date": 1,
+   "title": 1,
+   "duration": 1,
+   "t": 1
+  },
+  "content_shape": {
+   "json": 1
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 9807,
+  "class": "regular",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "v": 1,
+   "e": 1,
+   "-": 1
+  },
+  "content_shape": {
+   "nip44": 1
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 9843,
+  "class": "regular",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "a": 1,
+   "p": 1
+  },
+  "content_shape": {
+   "empty": 1
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 10010,
+  "class": "replaceable",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "p": 1
+  },
+  "content_shape": {
+   "empty": 1
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 10218,
+  "class": "replaceable",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "e": 1,
+   "p": 1
+  },
+  "content_shape": {
+   "text": 1
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 10442,
+  "class": "replaceable",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {},
+  "content_shape": {
+   "json": 1
+  },
+  "json_content_keys": {
+   "s": 1
+  },
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 10444,
+  "class": "replaceable",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {},
+  "content_shape": {
+   "nip44": 1
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 16158,
+  "class": "replaceable",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "sensor": 1,
+   "name": 1,
+   "g": 1,
+   "sensor_status": 1,
+   "power": 1,
+   "connectivity": 1,
+   "description": 1
+  },
+  "content_shape": {
+   "empty": 1
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 16769,
+  "class": "replaceable",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "published_at": 1,
+   "tab": 1,
+   "client": 1,
+   "alt": 1
+  },
+  "content_shape": {
+   "empty": 1
+  },
+  "json_content_keys": {},
+  "alt": {
+   "Custom profile tabs": 1
+  },
+  "client": {
+   "Ditto": 1
+  },
+  "samples": 1
+ },
+ {
+  "kind": 17777,
+  "class": "replaceable",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "a": 1,
+   "client": 1
+  },
+  "content_shape": {
+   "empty": 1
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {
+   "zap.stream": 1
+  },
+  "samples": 1
+ },
+ {
+  "kind": 18678,
+  "class": "replaceable",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "published_at": 1,
+   "client": 1,
+   "p": 1,
+   "alt": 1
+  },
+  "content_shape": {
+   "empty": 1
+  },
+  "json_content_keys": {},
+  "alt": {
+   "Top 8: this user's eight favorite people, in order": 1
+  },
+  "client": {
+   "Ditto": 1
+  },
+  "samples": 1
+ },
+ {
+  "kind": 30024,
+  "class": "addressable",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "r": 1,
+   "p": 1,
+   "image": 1,
+   "d": 1,
+   "L": 1,
+   "summary": 1,
+   "imeta": 1,
+   "l": 1,
+   "published_at": 1,
+   "title": 1
+  },
+  "content_shape": {
+   "json-ish": 1
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 30027,
+  "class": "addressable",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "e": 1,
+   "d": 1,
+   "client": 1
+  },
+  "content_shape": {
+   "empty": 1
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {
+   "Nostrich": 1
+  },
+  "samples": 1
+ },
+ {
+  "kind": 30031,
+  "class": "addressable",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "title": 1,
+   "sticker": 1,
+   "d": 1,
+   "client": 1
+  },
+  "content_shape": {
+   "empty": 1
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {
+   "DEN Chat": 1
+  },
+  "samples": 1
+ },
+ {
+  "kind": 30086,
+  "class": "addressable",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "title": 1,
+   "d": 1
+  },
+  "content_shape": {
+   "text": 1
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 30108,
+  "class": "addressable",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "d": 1,
+   "t": 1
+  },
+  "content_shape": {
+   "json": 1
+  },
+  "json_content_keys": {
+   "title": 1,
+   "cid": 1
+  },
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 30164,
+  "class": "addressable",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "u": 1,
+   "d": 1,
+   "gateway": 1
+  },
+  "content_shape": {
+   "empty": 1
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 30184,
+  "class": "addressable",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "channel": 1,
+   "d": 1,
+   "published_at": 1
+  },
+  "content_shape": {
+   "json": 1
+  },
+  "json_content_keys": {
+   "channelId": 1,
+   "title": 1,
+   "videoCid": 1,
+   "blossomUrl": 1,
+   "durationSec": 1,
+   "airDateMs": 1,
+   "poster": 1,
+   "segments": 1,
+   "generator": 1
+  },
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 30220,
+  "class": "addressable",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "e": 1,
+   "round": 1,
+   "d": 1,
+   "witness": 1,
+   "prediction_at": 1
+  },
+  "content_shape": {
+   "empty": 1
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 30241,
+  "class": "addressable",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "u": 1,
+   "d": 1,
+   "app": 1
+  },
+  "content_shape": {
+   "json": 1
+  },
+  "json_content_keys": {
+   "v": 1,
+   "networkUserPub": 1,
+   "updatedAt": 1
+  },
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 30321,
+  "class": "addressable",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "score": 1,
+   "p": 1,
+   "d": 1,
+   "open_count": 1,
+   "period_days": 1
+  },
+  "content_shape": {
+   "text": 1
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 30333,
+  "class": "addressable",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "capacity": 1,
+   "price": 1,
+   "d": 1,
+   "nonce": 1,
+   "kinds": 1,
+   "status": 1
+  },
+  "content_shape": {
+   "empty": 1
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 30361,
+  "class": "addressable",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "d": 1,
+   "t": 1
+  },
+  "content_shape": {
+   "json": 1
+  },
+  "json_content_keys": {
+   "version": 1,
+   "escrow_type": 1,
+   "networks": 1,
+   "expires_at": 1
+  },
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 30398,
+  "class": "addressable",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "d": 1,
+   "visibility": 1,
+   "t": 1
+  },
+  "content_shape": {
+   "json": 1
+  },
+  "json_content_keys": {
+   "communities": 1
+  },
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 30560,
+  "class": "addressable",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "alt": 1,
+   "blake3": 1,
+   "fa:scope": 1,
+   "d": 1,
+   "fa:context": 1,
+   "fa:day": 1,
+   "fa:board": 1
+  },
+  "content_shape": {
+   "json": 1
+  },
+  "json_content_keys": {
+   "@context": 1,
+   "@type": 1,
+   "committed_pts": 1,
+   "done_pts": 1,
+   "remaining_pts": 1,
+   "adds_today": 1,
+   "drops_today": 1
+  },
+  "alt": {
+   "Tide 2026-10-06: 3 of 3 pts remaining": 1
+  },
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 30791,
+  "class": "addressable",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "d": 1
+  },
+  "content_shape": {
+   "opaque-b64": 1
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 30901,
+  "class": "addressable",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "online_shop": 1,
+   "receiver_name": 1,
+   "p": 1,
+   "receiver_address": 1,
+   "payment_scheme_label": 1,
+   "opening_hours_json": 1,
+   "bank_account": 1,
+   "lanapays_payout_wallet": 1,
+   "status": 1,
+   "latitude": 1,
+   "receiver_country": 1,
+   "d": 1,
+   "category": 1,
+   "lanapays_payout_method": 1,
+   "country": 1
+  },
+  "content_shape": {
+   "empty": 1
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 30961,
+  "class": "addressable",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "p": 1,
+   "a": 1,
+   "paid_percent": 1,
+   "lana_in_progress_lanoshis": 1,
+   "mandate_status": 1,
+   "lana_received": 1,
+   "d": 1,
+   "lana_acquired": 1,
+   "lana_remaining_lanoshis": 1,
+   "acquired_percent": 1,
+   "split": 1,
+   "acquisition": 1,
+   "budget": 1,
+   "lana_received_lanoshis": 1,
+   "wallet": 1
+  },
+  "content_shape": {
+   "json": 1
+  },
+  "json_content_keys": {
+   "note": 1,
+   "budget": 1,
+   "totals": 1,
+   "sales": 1,
+   "payouts": 1,
+   "snapshot_at": 1
+  },
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 30970,
+  "class": "addressable",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "non_binding": 1,
+   "wallet": 1,
+   "round": 1,
+   "alt": 1,
+   "d": 1,
+   "params": 1,
+   "total": 1,
+   "client": 1,
+   "currency": 1,
+   "split": 1,
+   "status": 1
+  },
+  "content_shape": {
+   "json": 1
+  },
+  "json_content_keys": {
+   "split": 1,
+   "currency": 1,
+   "rounds": 1,
+   "total": 1,
+   "status": 1,
+   "wallet": 1,
+   "params": 1,
+   "non_binding": 1
+  },
+  "alt": {
+   "Non-binding co-creation interest for Split 9: GBP 2000 (BEF Explorer)": 1
+  },
+  "client": {
+   "befexplorer.com": 1
+  },
+  "samples": 1
+ },
+ {
+  "kind": 31338,
+  "class": "addressable",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "zap": 1,
+   "t": 1,
+   "a": 1,
+   "encrypted": 1,
+   "price": 1,
+   "d": 1,
+   "subject": 1,
+   "i": 1,
+   "imeta": 1,
+   "c": 1,
+   "referral": 1,
+   "title": 1,
+   "client": 1
+  },
+  "content_shape": {
+   "text": 1
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {
+   "Fanfares": 1
+  },
+  "samples": 1
+ },
+ {
+  "kind": 31342,
+  "class": "addressable",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "n": 1,
+   "d": 1,
+   "g": 1,
+   "t": 1
+  },
+  "content_shape": {
+   "json": 1
+  },
+  "json_content_keys": {
+   "id": 1,
+   "creatorId": 1,
+   "name": 1,
+   "emoji": 1,
+   "boundary": 1,
+   "booths": 1,
+   "paths": 1,
+   "startsAt": 1,
+   "endsAt": 1,
+   "geohash6": 1,
+   "createdAt": 1,
+   "updatedAt": 1,
+   "isLocked": 1,
+   "visibility": 1
+  },
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 31402,
+  "class": "addressable",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "name": 1,
+   "t": 1,
+   "d": 1,
+   "price": 1,
+   "pmi": 1,
+   "about": 1,
+   "url": 1
+  },
+  "content_shape": {
+   "json": 1
+  },
+  "json_content_keys": {
+   "capabilities": 1,
+   "version": 1
+  },
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 31573,
+  "class": "addressable",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "v": 1,
+   "p": 1,
+   "t": 1,
+   "zone": 1,
+   "d": 1
+  },
+  "content_shape": {
+   "json": 1
+  },
+  "json_content_keys": {
+   "name": 1,
+   "hp": 1,
+   "max_hp": 1,
+   "zone": 1,
+   "born": 1,
+   "kills": 1,
+   "deaths": 1,
+   "boss_kills": 1,
+   "pvp_kills": 1
+  },
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 31602,
+  "class": "addressable",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "d": 1
+  },
+  "content_shape": {
+   "nip44": 1
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 31603,
+  "class": "addressable",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "a": 1,
+   "v": 1,
+   "d": 1,
+   "eck": 1
+  },
+  "content_shape": {
+   "nip44": 1
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 31604,
+  "class": "addressable",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "a": 1,
+   "v": 1,
+   "d": 1,
+   "eck": 1
+  },
+  "content_shape": {
+   "nip44": 1
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 31994,
+  "class": "addressable",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "t": 1,
+   "expires-at": 1,
+   "q": 1,
+   "coordinator": 1,
+   "worker": 1,
+   "delegation-id": 1,
+   "election-id": 1
+  },
+  "content_shape": {
+   "json": 1
+  },
+  "json_content_keys": {
+   "type": 1,
+   "schemaVersion": 1,
+   "delegationId": 1,
+   "electionId": 1,
+   "coordinatorNpub": 1,
+   "workerNpub": 1,
+   "capabilities": 1,
+   "controlRelays": 1,
+   "dmRelays": 1,
+   "issuedAt": 1,
+   "expiresAt": 1
+  },
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 32069,
+  "class": "addressable",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "a": 1,
+   "d": 1
+  },
+  "content_shape": {
+   "nip44": 1
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 32600,
+  "class": "addressable",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "modes": 1,
+   "version": 1,
+   "d": 1,
+   "relays": 1
+  },
+  "content_shape": {
+   "json": 1
+  },
+  "json_content_keys": {
+   "name": 1,
+   "capabilities": 1,
+   "max_concurrent_games": 1
+  },
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 33356,
+  "class": "addressable",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "v": 1,
+   "p": 1,
+   "app_pub": 1,
+   "d": 1,
+   "protocol": 1
+  },
+  "content_shape": {
+   "nip44": 1
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 33357,
+  "class": "addressable",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "app_pub": 1,
+   "d": 1,
+   "protocol": 1,
+   "p": 1
+  },
+  "content_shape": {
+   "nip44": 1
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 33402,
+  "class": "addressable",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "alt": 1,
+   "rest_between_sets": 1,
+   "d": 1,
+   "exercise": 1,
+   "type": 1,
+   "title": 1,
+   "difficulty": 1,
+   "client": 1
+  },
+  "content_shape": {
+   "empty": 1
+  },
+  "json_content_keys": {},
+  "alt": {
+   "Workout template: Bar Zero - Push": 1
+  },
+  "client": {
+   "POWR": 1
+  },
+  "samples": 1
+ },
+ {
+  "kind": 34200,
+  "class": "addressable",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "title": 1,
+   "d": 1
+  },
+  "content_shape": {
+   "json": 1
+  },
+  "json_content_keys": {
+   "issueRef": 1,
+   "episodeStatus": 1,
+   "sections": 1,
+   "publishedRss": 1
+  },
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 34393,
+  "class": "addressable",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "d": 1
+  },
+  "content_shape": {
+   "json": 1
+  },
+  "json_content_keys": {
+   "tunnel_code": 1
+  },
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 34472,
+  "class": "addressable",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "epoch": 1,
+   "l": 1,
+   "d": 1
+  },
+  "content_shape": {
+   "nip44": 1
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 36669,
+  "class": "addressable",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "alt": 1,
+   "d": 1,
+   "published_at": 1,
+   "day": 1,
+   "client": 1
+  },
+  "content_shape": {
+   "text": 1
+  },
+  "json_content_keys": {},
+  "alt": {
+   "Daily reflection entry for Wednesday, October 7 (Day 280)": 1
+  },
+  "client": {
+   "gratefulday.space": 1
+  },
+  "samples": 1
+ },
+ {
+  "kind": 36677,
+  "class": "addressable",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "schedule": 1,
+   "end": 1,
+   "p": 1,
+   "donation_wallet_unreg": 1,
+   "start": 1,
+   "d": 1,
+   "online": 1,
+   "cover": 1,
+   "language": 1,
+   "donation_wallet": 1,
+   "title": 1,
+   "event_type": 1,
+   "timezone": 1,
+   "status": 1
+  },
+  "content_shape": {
+   "text": 1
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 36942,
+  "class": "addressable",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "W": 1,
+   "r": 1,
+   "s": 1,
+   "o": 1,
+   "d": 1,
+   "L": 1,
+   "nonce": 1,
+   "m": 1,
+   "f": 1,
+   "published_at": 1,
+   "epoch": 1,
+   "n": 1,
+   "content-warning": 1,
+   "w": 1,
+   "client": 1
+  },
+  "content_shape": {
+   "json": 1
+  },
+  "json_content_keys": {
+   "settings": 1,
+   "roles": 1,
+   "grouped_roles": 1,
+   "categories": 1,
+   "channels": 1,
+   "plugins": 1
+  },
+  "alt": {},
+  "client": {
+   "DEN Chat": 1
+  },
+  "samples": 1
+ },
+ {
+  "kind": 36946,
+  "class": "addressable",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "provider": 1,
+   "epoch": 1,
+   "d": 1,
+   "status": 1
+  },
+  "content_shape": {
+   "opaque-b64": 1
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 37450,
+  "class": "addressable",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "v": 1,
+   "seats": 1,
+   "d": 1,
+   "proto": 1,
+   "deadline": 1,
+   "relay": 1,
+   "open": 1,
+   "game": 1,
+   "status": 1
+  },
+  "content_shape": {
+   "json": 1
+  },
+  "json_content_keys": {
+   "rules": 1
+  },
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 37572,
+  "class": "addressable",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "config": 1,
+   "d": 1,
+   "k": 1,
+   "p": 1
+  },
+  "content_shape": {
+   "empty": 1
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 37702,
+  "class": "addressable",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "d": 1,
+   "t": 1
+  },
+  "content_shape": {
+   "json": 1
+  },
+  "json_content_keys": {
+   "payload": 1,
+   "proof": 1
+  },
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 38386,
+  "class": "addressable",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "initiator": 1,
+   "s": 1,
+   "y": 1,
+   "d": 1,
+   "z": 1,
+   "published_at": 1,
+   "expiration": 1
+  },
+  "content_shape": {
+   "empty": 1
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 39019,
+  "class": "addressable",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "v": 1,
+   "d": 1,
+   "client": 1
+  },
+  "content_shape": {
+   "json": 1
+  },
+  "json_content_keys": {
+   "protocol": 1,
+   "services": 1,
+   "agent_url": 1,
+   "relay_url": 1,
+   "software": 1,
+   "stack_version": 1,
+   "arch": 1,
+   "variant": 1,
+   "channel": 1,
+   "apis": 1,
+   "reachability": 1,
+   "ipfs_reachability": 1
+  },
+  "alt": {},
+  "client": {
+   "church-node-agent/0.1.0": 1
+  },
+  "samples": 1
+ },
+ {
+  "kind": 39022,
+  "class": "addressable",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "p": 1,
+   "t": 1,
+   "a": 1,
+   "d": 1,
+   "cycle": 1,
+   "protocol": 1
+  },
+  "content_shape": {
+   "json": 1
+  },
+  "json_content_keys": {
+   "protocol": 1,
+   "version": 1,
+   "topic_ref": 1,
+   "cycle": 1,
+   "phase": 1,
+   "summary": 1,
+   "focus": 1,
+   "active_beings": 1,
+   "next_invitation": 1,
+   "mandala": 1,
+   "updated_at": 1
+  },
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 39036,
+  "class": "addressable",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "v": 1,
+   "d": 1,
+   "client": 1
+  },
+  "content_shape": {
+   "json": 1
+  },
+  "json_content_keys": {
+   "members": 1,
+   "updated_at": 1
+  },
+  "alt": {},
+  "client": {
+   "church_sdk/0.1.0": 1
+  },
+  "samples": 1
+ },
+ {
+  "kind": 40970,
+  "class": "regular",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "e": 1,
+   "p": 1,
+   "t": 1,
+   "alt": 1,
+   "action": 1,
+   "dealer": 1,
+   "split": 1
+  },
+  "content_shape": {
+   "json": 1
+  },
+  "json_content_keys": {
+   "version": 1,
+   "action": 1,
+   "dealer": 1,
+   "interest": 1
+  },
+  "alt": {
+   "Ravena Plus accepted the co-creation interest of 16a97006… for SPLIT 9": 1
+  },
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 60200,
+  "class": "regular",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "p": 1,
+   "service": 1,
+   "tx": 1,
+   "from_wallet": 1,
+   "to_wallet": 1,
+   "currency": 1,
+   "type": 1,
+   "amount_lanoshis": 1,
+   "timestamp_paid": 1,
+   "amount_fiat": 1,
+   "project": 1
+  },
+  "content_shape": {
+   "text": 1
+  },
+  "json_content_keys": {},
+  "alt": {},
+  "client": {},
+  "samples": 1
+ },
+ {
+  "kind": 64600,
+  "class": "regular",
+  "events": 1,
+  "authors": 1,
+  "tag_presence": {
+   "d": 1,
+   "t": 1
+  },
+  "content_shape": {
+   "json": 1
+  },
+  "json_content_keys": {
+   "dns_addresses": 1,
+   "relays": 1
+  },
+  "alt": {},
+  "client": {},
+  "samples": 1
+ }
+]

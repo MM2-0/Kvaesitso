@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Launch splash / window background. Tracks MaterialTheme's background so the
+         first composed frame does not step to a different colour. See values/colors.xml. -->
+    <color name="splash_background">#FF000000</color>
+</resources>

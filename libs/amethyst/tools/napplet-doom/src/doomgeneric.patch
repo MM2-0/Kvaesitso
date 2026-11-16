@@ -1,0 +1,89 @@
+diff --git a/doomgeneric/d_main.c b/doomgeneric/d_main.c
+index 9012e5f..32f74a2 100644
+--- a/doomgeneric/d_main.c
++++ b/doomgeneric/d_main.c
+@@ -166,6 +166,10 @@ extern  boolean setsizeneeded;
+ extern  int             showMessages;
+ void R_ExecuteSetViewSize (void);
+ 
++static boolean wipe_in_progress = false;
++static int wipe_start_time;
++void D_WipeStep (void);
++
+ void D_Display (void)
+ {
+     static  boolean		viewactivestate = false;
+@@ -174,11 +178,7 @@ void D_Display (void)
+     static  boolean		fullscreen = false;
+     static  gamestate_t		oldgamestate = -1;
+     static  int			borderdrawcount;
+-    int				nowtime;
+-    int				tics;
+-    int				wipestart;
+     int				y;
+-    boolean			done;
+     boolean			wipe;
+     boolean			redrawsbar;
+ 
+@@ -308,24 +308,32 @@ void D_Display (void)
+     // wipe update
+     wipe_EndScreen(0, 0, SCREENWIDTH, SCREENHEIGHT);
+ 
+-    wipestart = I_GetTime () - 1;
++    // The melt used to spin here until it finished, which a browser main thread cannot do:
++    // D_WipeStep() advances it once per call until it is done.
++    wipe_start_time = I_GetTime () - 1;
++    wipe_in_progress = true;
++    D_WipeStep ();
++}
+ 
+-    do
+-    {
+-	do
+-	{
+-	    nowtime = I_GetTime ();
+-	    tics = nowtime - wipestart;
+-            I_Sleep(1);
+-	} while (tics <= 0);
+-        
+-	wipestart = nowtime;
+-	done = wipe_ScreenWipe(wipe_Melt
+-			       , 0, 0, SCREENWIDTH, SCREENHEIGHT, tics);
+-	I_UpdateNoBlit ();
+-	M_Drawer ();                            // menu is drawn even on top of wipes
+-	I_FinishUpdate ();                      // page flip or blit buffer
+-    } while (!done);
++boolean D_WipeInProgress (void)
++{
++    return wipe_in_progress;
++}
++
++void D_WipeStep (void)
++{
++    int nowtime = I_GetTime ();
++    int tics = nowtime - wipe_start_time;
++
++    if (tics <= 0)
++        return;
++
++    wipe_start_time = nowtime;
++    if (wipe_ScreenWipe(wipe_Melt, 0, 0, SCREENWIDTH, SCREENHEIGHT, tics))
++        wipe_in_progress = false;
++    I_UpdateNoBlit ();
++    M_Drawer ();                            // menu is drawn even on top of wipes
++    I_FinishUpdate ();                      // page flip or blit buffer
+ }
+ 
+ //
+diff --git a/doomgeneric/i_video.c b/doomgeneric/i_video.c
+index 84bebde..a0a9075 100644
+--- a/doomgeneric/i_video.c
++++ b/doomgeneric/i_video.c
+@@ -288,6 +288,7 @@ void I_InitGraphics (void)
+ 
+     /* Allocate screen to draw to */
+ 	I_VideoBuffer = (byte*)Z_Malloc (SCREENWIDTH * SCREENHEIGHT, PU_STATIC, NULL);  // For DOOM to draw on
++	memset(I_VideoBuffer, 0, SCREENWIDTH * SCREENHEIGHT);  // the first melt starts from black, not zone garbage
+ 
+ 	screenvisible = true;
+ 

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="browser_address_hint">Поиск или введите адрес</string>
+    <string name="browser_console_title_short">Консоль</string>
+    <string name="browser_console_title">Консоль (%1$d)</string>
+    <string name="browser_console_clear">Очистить</string>
+    <string name="napplet_untitled">nApplet без названия</string>
+</resources>

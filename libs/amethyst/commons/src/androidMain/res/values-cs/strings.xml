@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="browser_address_hint">Hledat nebo zadat adresu</string>
+    <string name="browser_console_title_short">Konzola</string>
+    <string name="browser_console_title">Konzola (%1$d)</string>
+    <string name="browser_console_clear">Vymazat</string>
+    <string name="napplet_untitled">Nepojmenovaný nApplet</string>
+</resources>

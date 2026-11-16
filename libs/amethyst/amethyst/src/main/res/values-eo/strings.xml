@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+<string name="share_target_as_dm">Sendi kiel DM</string>
+    <string name="always_on_notif_channel_description">Konservas konektojn al viaj enirkestaj relay-oj aktivaj por realtempaj sciigoj</string>
+    <plurals name="always_on_notif_connected_foreground">
+        <item quantity="one">Konektita al %1$d relay</item>
+        <item quantity="other">Konektita al %1$d relays</item>
+    </plurals>
+    <string name="always_on_notif_connecting">Konektante al enirkestaj relay-oj…</string>
+    <string name="always_on_notif_title">Amethyst-Sciigoj Aktivaj</string>
+    <string name="call_ongoing">Alvokoj</string>
+    <string name="call_ongoing_description">Sciigo pri daŭranta alvoko</string>
+    <string name="call_with">Alvoko kun %1$s</string>
+    <string name="call_hangup">Malkonekti</string>
+    <string name="reaction">Reago</string>
+    <string name="boost">Plifortigi</string>
+    <string name="post">Afiŝi</string>
+    <string name="voice_post">Voĉa Afiŝo</string>
+    <string name="voice_reply">Voĉa Respondo</string>
+    <string name="private_message">Privata Mesaĝo</string>
+    <string name="nest_notification_broadcasting">Nesto — Viva</string>
+    <string name="nest_notification_channel">Nestoj</string>
+    <string name="nest_notification_channel_description">Konservas aŭdion luданте dum ĉambro estas malfermita.</string>
+    <string name="nest_notification_listening">Nesto konektita</string>
+    <string name="nest_notification_stop">Halti</string>
+    <string name="nest_notification_text">Tuŝetu por reveni.</string>
+    <string name="nest_leave">Forlasi</string>
+    <string name="nest_mute">Silentigi</string>
+    <string name="nest_unmute">Malsilentigi</string>
+    <string name="call_mute">Silentigi</string>
+    <string name="call_unmute">Malsilentigi</string>
+    <string name="napplet_cap_identity">Identeco</string>
+    <string name="napplet_cap_keys">Klavarago</string>
+    <string name="napplet_cap_relay">Relay-oj</string>
+    <string name="napplet_cap_storage">Stokado</string>
+    <string name="napplet_cap_value">Pagoj</string>
+    <string name="napplet_cap_resource">Reto</string>
+    <string name="napplet_cap_upload">Alŝutoj</string>
+    <string name="napplet_cap_theme">Temo</string>
+    <string name="napplet_cap_notify">Sciigoj</string>
+    <string name="napplet_cap_inc">Mesaĝado</string>
+    <string name="muted_button">Silentigita. Alklaki por malsilentigi</string>
+    <string name="mute_button">Ŝalta sono. Alklaki por silentigi</string>
+    <string name="play">Ludi</string>
+    <string name="pause">Paŭzi</string>
+</resources>

@@ -1,0 +1,31 @@
+# Pinned upstream npm package versions for the browser-side cross-stack
+# interop harness (Phase 4 of T16).
+#
+# These versions are what `nestsClient-browser-interop/package.json` pins
+# and what the bun build resolves at install time. Bumping requires
+# touching package.json + bun.lockb + this file together so a silent
+# upstream rev change can't mask a regression.
+#
+# See: nestsClient/plans/2026-05-06-phase4-browser-harness.md
+#
+# Source: https://github.com/kixelated/moq , workspace published to npm
+# under the @moq/* scope. The `@moq/lite` 0.2.x line implements
+# `moq-lite-03` (see /tmp/moq/js/lite/src/lite/), matching the pin in
+# nestsClient/tests/hang-interop/REV (KIXELATED_MOQ_GIT_REV).
+
+# Browser listener: builds Watch.Broadcast on top of @moq/lite +
+# @moq/hang. We use @moq/lite + @moq/hang directly for the harness path
+# (closer to nestsClient's own moq-lite stack) but keep @moq/watch
+# pinned in case a future scenario wants the higher-level reactive
+# Broadcast wrapper.
+MOQ_WATCH_VERSION=0.2.10
+
+# Browser publisher: same story for @moq/publish.
+MOQ_PUBLISH_VERSION=0.2.6
+
+# Lower-level moq-lite-03 client + hang catalog/container.
+MOQ_LITE_VERSION=0.2.2
+MOQ_HANG_VERSION=0.2.4
+
+# Playwright Chromium driver.
+PLAYWRIGHT_VERSION=1.56.1

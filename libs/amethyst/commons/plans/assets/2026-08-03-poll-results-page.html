@@ -1,0 +1,1897 @@
+<title>Poll results — Amethyst design proposal</title>
+
+<style>
+  /* Self-sufficient reset — don't depend on the host page's. */
+  .sheet, .sheet *, .sheet *::before, .sheet *::after { box-sizing: border-box; }
+  .sheet button { margin: 0; }
+
+  /* ─────────────────────────────────────────────────────────────
+     Tokens.
+     Two separate palettes on purpose:
+       --doc-*  the spec sheet you are reading (annotation layer)
+       --app-*  lifted verbatim from amethyst/ui/theme/{Color,Theme}.kt
+                so the mockups render in the real app's colours.
+     Greys are hue-free in both, matching the documented decision in
+     Theme.kt:157 to avoid a violet wash on neutral surfaces.
+     ───────────────────────────────────────────────────────────── */
+  :root {
+    --doc-canvas: #efefef;
+    --doc-panel: #ffffff;
+    --doc-panel-2: #f7f7f7;
+    --doc-ink: #171717;
+    --doc-ink-2: #4c4c4c;
+    --doc-ink-3: #7a7a7a;
+    --doc-rule: #dcdcdc;
+    --doc-rule-2: #bfbfbf;
+    --doc-accent: #6200ee;
+    --doc-good: #2f7d00;
+    --doc-warn: #8c6d0a;
+    --doc-bad: #c62828;
+
+    --app-bg: #fdfdfd;
+    --app-on: #1c1c1c;
+    --app-on-2: #484848;
+    --app-c-lowest: #ffffff;
+    --app-c-low: #f7f7f7;
+    --app-c: #f2f2f2;
+    --app-c-high: #ececec;
+    --app-outline: #767676;
+    --app-outline-2: #cacaca;
+    --app-accent: #6200ee;
+    --app-good: #339900;
+    --app-warn: #c09b14;
+    --app-placeholder: color-mix(in srgb, #1c1c1c 42%, transparent);
+    --app-shadow: 0 18px 40px rgba(0, 0, 0, .16), 0 2px 6px rgba(0, 0, 0, .08);
+
+    --font-ui: ui-sans-serif, system-ui, "Segoe UI", Helvetica, Arial, sans-serif;
+    --font-app: Roboto, "Noto Sans", ui-sans-serif, system-ui, sans-serif;
+    --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", "Roboto Mono", Menlo, Consolas, monospace;
+
+    --step: 8px;
+    --sheet: 1180px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --doc-canvas: #0a0a0a;
+      --doc-panel: #141414;
+      --doc-panel-2: #1a1a1a;
+      --doc-ink: #e9e9e9;
+      --doc-ink-2: #b0b0b0;
+      --doc-ink-3: #838383;
+      --doc-rule: #2b2b2b;
+      --doc-rule-2: #3d3d3d;
+      --doc-accent: #bb86fc;
+      --doc-good: #99cc33;
+      --doc-warn: #e1c419;
+      --doc-bad: #f34747;
+
+      --app-bg: #000000;
+      --app-on: #e6e6e6;
+      --app-on-2: #cacaca;
+      --app-c-lowest: #141414;
+      --app-c-low: #1a1a1a;
+      --app-c: #252525;
+      --app-c-high: #2e2e2e;
+      --app-outline: #909090;
+      --app-outline-2: #454545;
+      --app-accent: #bb86fc;
+      --app-good: #99cc33;
+      --app-warn: #e1c419;
+    --app-placeholder: color-mix(in srgb, #e6e6e6 42%, transparent);
+      --app-shadow: 0 18px 40px rgba(0, 0, 0, .6), 0 0 0 1px #2b2b2b;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --doc-canvas: #0a0a0a;
+    --doc-panel: #141414;
+    --doc-panel-2: #1a1a1a;
+    --doc-ink: #e9e9e9;
+    --doc-ink-2: #b0b0b0;
+    --doc-ink-3: #838383;
+    --doc-rule: #2b2b2b;
+    --doc-rule-2: #3d3d3d;
+    --doc-accent: #bb86fc;
+    --doc-good: #99cc33;
+    --doc-warn: #e1c419;
+    --doc-bad: #f34747;
+
+    --app-bg: #000000;
+    --app-on: #e6e6e6;
+    --app-on-2: #cacaca;
+    --app-c-lowest: #141414;
+    --app-c-low: #1a1a1a;
+    --app-c: #252525;
+    --app-c-high: #2e2e2e;
+    --app-outline: #909090;
+    --app-outline-2: #454545;
+    --app-accent: #bb86fc;
+    --app-good: #99cc33;
+    --app-warn: #e1c419;
+    --app-placeholder: color-mix(in srgb, #e6e6e6 42%, transparent);
+    --app-shadow: 0 18px 40px rgba(0, 0, 0, .6), 0 0 0 1px #2b2b2b;
+  }
+
+  :root[data-theme="light"] {
+    --doc-canvas: #efefef;
+    --doc-panel: #ffffff;
+    --doc-panel-2: #f7f7f7;
+    --doc-ink: #171717;
+    --doc-ink-2: #4c4c4c;
+    --doc-ink-3: #7a7a7a;
+    --doc-rule: #dcdcdc;
+    --doc-rule-2: #bfbfbf;
+    --doc-accent: #6200ee;
+    --doc-good: #2f7d00;
+    --doc-warn: #8c6d0a;
+    --doc-bad: #c62828;
+
+    --app-bg: #fdfdfd;
+    --app-on: #1c1c1c;
+    --app-on-2: #484848;
+    --app-c-lowest: #ffffff;
+    --app-c-low: #f7f7f7;
+    --app-c: #f2f2f2;
+    --app-c-high: #ececec;
+    --app-outline: #767676;
+    --app-outline-2: #cacaca;
+    --app-accent: #6200ee;
+    --app-good: #339900;
+    --app-warn: #c09b14;
+    --app-placeholder: color-mix(in srgb, #1c1c1c 42%, transparent);
+    --app-shadow: 0 18px 40px rgba(0, 0, 0, .16), 0 2px 6px rgba(0, 0, 0, .08);
+  }
+
+  /* ── Page ────────────────────────────────────────────────── */
+  .sheet {
+    background: var(--doc-canvas);
+    color: var(--doc-ink);
+    font-family: var(--font-ui);
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    padding: clamp(20px, 4vw, 56px) clamp(16px, 4vw, 40px) 96px;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  .wrap {
+    max-width: var(--sheet);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 72px;
+  }
+
+  /* ── Masthead ───────────────────────────────────────────── */
+  .mast { display: flex; flex-direction: column; gap: 20px; }
+
+  .mast-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--doc-ink-3);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 14px;
+    align-items: center;
+  }
+  .mast-eyebrow b { color: var(--doc-accent); font-weight: 600; }
+
+  .mast h1 {
+    font-size: clamp(30px, 5.2vw, 52px);
+    line-height: 1.02;
+    letter-spacing: -.035em;
+    font-weight: 700;
+    margin: 0;
+    text-wrap: balance;
+    max-width: 20ch;
+  }
+  .mast h1 em { font-style: normal; color: var(--doc-ink-3); }
+
+  .mast-lede {
+    max-width: 66ch;
+    color: var(--doc-ink-2);
+    font-size: 17px;
+    margin: 0;
+  }
+
+  .mast-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    border-top: 1px solid var(--doc-rule);
+    border-bottom: 1px solid var(--doc-rule);
+    margin-top: 4px;
+  }
+  .mast-meta div {
+    padding: 12px 22px 12px 0;
+    margin-right: 22px;
+    border-right: 1px solid var(--doc-rule);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .mast-meta div:last-child { border-right: 0; }
+  .mast-meta dt {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--doc-ink-3);
+  }
+  .mast-meta dd {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ── Section scaffolding ────────────────────────────────── */
+  .block { display: flex; flex-direction: column; gap: 26px; }
+
+  .block-head { display: flex; flex-direction: column; gap: 8px; max-width: 72ch; }
+
+  .block-num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: .16em;
+    color: var(--doc-accent);
+    text-transform: uppercase;
+  }
+  .block-head h2 {
+    margin: 0;
+    font-size: clamp(21px, 2.6vw, 27px);
+    letter-spacing: -.02em;
+    font-weight: 700;
+    text-wrap: balance;
+  }
+  .block-head p { margin: 0; color: var(--doc-ink-2); font-size: 15.5px; }
+
+  /* ── Phone frame ────────────────────────────────────────── */
+  .stage {
+    display: grid;
+    grid-template-columns: minmax(0, 372px) minmax(0, 1fr);
+    gap: clamp(24px, 4vw, 56px);
+    align-items: start;
+  }
+  .stage-wide { grid-template-columns: minmax(0, 1fr); }
+
+  .phone {
+    background: var(--app-bg);
+    color: var(--app-on);
+    font-family: var(--font-app);
+    font-size: 14px;
+    line-height: 1.4;
+    border-radius: 26px;
+    border: 1px solid var(--doc-rule-2);
+    box-shadow: var(--app-shadow);
+    overflow: hidden;
+    position: relative;
+  }
+  .phone-sm { font-size: 13px; }
+
+  .app-bar {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--app-outline-2);
+    background: var(--app-c-lowest);
+  }
+  .app-bar-title { font-size: 16px; font-weight: 600; flex: 1; }
+  .app-bar-ico {
+    width: 22px; height: 22px;
+    display: grid; place-items: center;
+    color: var(--app-on-2);
+    font-size: 16px;
+  }
+
+  .app-body { display: flex; flex-direction: column; }
+
+  .app-sec {
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-bottom: 1px solid var(--app-outline-2);
+  }
+  .app-sec-flush { border-bottom: 0; }
+
+  /* author + question */
+  .app-author { display: flex; align-items: center; gap: 9px; }
+  .app-author-name { font-weight: 600; font-size: 14px; }
+  .app-author-sub { color: var(--app-on-2); font-size: 12px; }
+
+  .app-q {
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -.01em;
+    line-height: 1.3;
+    text-wrap: balance;
+  }
+
+  .avatar {
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    display: grid; place-items: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: .02em;
+    flex: none;
+  }
+  /* UserPicture at Size55dp, the size every user list in the app uses. */
+  .avatar-user { width: 48px; height: 48px; font-size: 15px; }
+  .avatar-xs {
+    width: 21px; height: 21px; font-size: 8.5px;
+    box-shadow: 0 0 0 2px var(--app-bg);
+  }
+  .a1 { background: linear-gradient(140deg, #7b3fe4, #b06ab3); }
+  .a2 { background: linear-gradient(140deg, #0f7b6c, #35b0a0); }
+  .a3 { background: linear-gradient(140deg, #b0561a, #e08b3c); }
+  .a4 { background: linear-gradient(140deg, #23508f, #4a86d8); }
+  .a5 { background: linear-gradient(140deg, #8a1c45, #cf5a86); }
+  .a6 { background: linear-gradient(140deg, #4a4a4a, #8b8b8b); }
+  .a7 { background: linear-gradient(140deg, #2c6e2c, #6bb36b); }
+  .a8 { background: linear-gradient(140deg, #5c3a8e, #9a7ad1); }
+
+  /* chips */
+  .app-chips { display: flex; flex-wrap: wrap; gap: 7px; }
+  .chip {
+    font-size: 11.5px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--app-outline-2);
+    color: var(--app-on-2);
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    white-space: nowrap;
+  }
+  .chip-live { color: var(--app-good); border-color: color-mix(in srgb, var(--app-good) 45%, transparent); }
+  .chip-live::before {
+    content: "";
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--app-good);
+  }
+  .chip-ended { color: var(--app-on-2); }
+  .chip-ended::before {
+    content: "";
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--app-outline);
+  }
+
+  .app-totals {
+    font-size: 13px;
+    color: var(--app-on-2);
+    font-variant-numeric: tabular-nums;
+  }
+  .app-totals b { color: var(--app-on); font-weight: 700; }
+
+  /* option rows */
+  .opts { display: flex; flex-direction: column; gap: 8px; }
+
+  .opt {
+    position: relative;
+    border: 1px solid var(--app-outline-2);
+    border-radius: 10px;
+    background: var(--app-c-low);
+    padding: 11px 13px;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .opt-win {
+    border-color: color-mix(in srgb, var(--app-good) 60%, transparent);
+    background: color-mix(in srgb, var(--app-good) 12%, var(--app-c-low));
+  }
+  /* Width is the truth; the grow is decoration. Keeping the final width in CSS
+     means the bar is correct even mid-animation or with JS off. 800 ms matches
+     the tween in RenderClosedItem. */
+  .opt-fill {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: var(--pct, 0%);
+    background: var(--app-accent);
+    opacity: .18;
+    z-index: -1;
+    transform-origin: left center;
+    animation: grow .8s cubic-bezier(.2, .8, .3, 1) both;
+  }
+  @keyframes grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  .opt-win .opt-fill { background: var(--app-good); opacity: .26; }
+
+  .opt-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .opt-label {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .opt-name {
+    font-size: 14.5px;
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .opt-sub {
+    font-size: 11.5px;
+    color: var(--app-on-2);
+    font-variant-numeric: tabular-nums;
+  }
+  .opt-gallery { display: flex; }
+  .opt-gallery .avatar-xs + .avatar-xs { margin-left: -8px; }
+  .opt-more {
+    width: 21px; height: 21px;
+    border-radius: 50%;
+    background: var(--app-c-high);
+    color: var(--app-on-2);
+    display: grid; place-items: center;
+    font-size: 9px;
+    font-weight: 700;
+    margin-left: -8px;
+    box-shadow: 0 0 0 2px var(--app-bg);
+  }
+  .opt-pct {
+    font-size: 14px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    min-width: 42px;
+    text-align: right;
+  }
+  .opt-win .opt-pct { color: var(--app-good); }
+  .opt-check { color: var(--app-good); font-size: 13px; }
+
+  /* your vote strip */
+  .app-yours {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 16px;
+    background: color-mix(in srgb, var(--app-accent) 9%, var(--app-c-lowest));
+    border-bottom: 1px solid var(--app-outline-2);
+    font-size: 13px;
+  }
+  .app-yours span { flex: 1; }
+  .app-yours b { font-weight: 700; }
+  .app-btn {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--app-accent);
+    border: 1px solid color-mix(in srgb, var(--app-accent) 45%, transparent);
+    border-radius: 999px;
+    padding: 4px 12px;
+    background: none;
+    font-family: inherit;
+    cursor: pointer;
+  }
+
+  /* filter bar */
+  .app-filters {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--app-outline-2);
+    background: var(--app-c-lowest);
+  }
+  .filter-scroll {
+    display: flex;
+    gap: 7px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-bottom: 1px;
+  }
+  .filter-scroll::-webkit-scrollbar { display: none; }
+  .fchip {
+    font-family: inherit;
+    font-size: 11.5px;
+    padding: 4px 11px;
+    border-radius: 999px;
+    border: 1px solid var(--app-outline-2);
+    background: none;
+    color: var(--app-on-2);
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background .15s, color .15s, border-color .15s;
+  }
+  .fchip:hover { border-color: var(--app-outline); }
+  .fchip[aria-pressed="true"] {
+    background: color-mix(in srgb, var(--app-accent) 16%, transparent);
+    border-color: color-mix(in srgb, var(--app-accent) 50%, transparent);
+    color: var(--app-accent);
+    font-weight: 600;
+  }
+  .fchip:focus-visible,
+  .app-btn:focus-visible { outline: 2px solid var(--app-accent); outline-offset: 2px; }
+
+
+  /* Voter list. This is UserLine, the app's existing user row: SlimListItem with
+     ClickableUserPicture / UsernameDisplay / WatchAndDisplayNip05Row, and the
+     vote passed into the trailingContent slot it already exposes. */
+  .voters { display: flex; flex-direction: column; }
+  .voter {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 16px;
+    border-bottom: 1px solid var(--app-outline-2);
+  }
+  .voter:last-child { border-bottom: 0; }
+  .voter-id { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px; }
+  .voter-name {
+    font-size: 14.5px;
+    font-weight: 700;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  /* WatchAndDisplayNip05Row: local part · verified symbol · domain, no "@",
+     all in colorScheme.nip05 (= the accent). Falls back to the npub only when
+     the user has no NIP-05 at all. */
+  .voter-nip05 {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    min-width: 0;
+    font-size: 13px;
+    color: var(--app-accent);
+  }
+  /* Only the local part ellipsizes; the domain is TextOverflow.Visible in the
+     app, so it never truncates. */
+  .n5-local {
+    flex: 0 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .n5-domain { flex: none; white-space: nowrap; }
+  .n5-check {
+    flex: none;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: var(--app-accent);
+    color: var(--app-bg);
+    font-size: 9px;
+    font-weight: 700;
+    display: grid;
+    place-items: center;
+    line-height: 1;
+  }
+  .voter-npub {
+    font-size: 13px;
+    color: var(--app-placeholder);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .voter-vote {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    flex: none;
+  }
+  .voter-choice { font-size: 12.5px; font-weight: 600; }
+  .voter-when { font-size: 11px; color: var(--app-placeholder); font-variant-numeric: tabular-nums; }
+
+  .app-foot {
+    padding: 11px 16px 14px;
+    font-size: 11.5px;
+    color: var(--app-on-2);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-variant-numeric: tabular-nums;
+  }
+  .app-foot-warn { color: var(--app-warn); display: flex; gap: 6px; align-items: baseline; }
+
+  /* hotspot markers — positioned in the gutter, aligned by JS to their anchors */
+  .pinned { position: relative; padding-left: 32px; }
+  .hot {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: var(--doc-accent);
+    color: #fff;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    display: grid;
+    place-items: center;
+    z-index: 4;
+    opacity: 0;
+    transition: opacity .2s, top .2s;
+  }
+  .hot.set { opacity: 1; }
+  .hot::after {
+    content: "";
+    position: absolute;
+    left: 22px;
+    width: 10px;
+    height: 1px;
+    background: var(--doc-rule-2);
+  }
+  :root[data-theme="dark"] .hot { color: #100b1c; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .hot { color: #100b1c; } }
+
+  /* ── Annotations ────────────────────────────────────────── */
+  .notes { display: flex; flex-direction: column; gap: 0; padding-top: 4px; }
+  .note {
+    display: grid;
+    grid-template-columns: 30px minmax(0, 1fr);
+    gap: 14px;
+    padding: 16px 0;
+    border-top: 1px solid var(--doc-rule);
+    align-items: start;
+  }
+  .note:last-child { border-bottom: 1px solid var(--doc-rule); }
+  .note-n {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--doc-accent);
+    padding-top: 2px;
+  }
+  .note-body { display: flex; flex-direction: column; gap: 5px; }
+  .note-t { font-size: 15px; font-weight: 700; letter-spacing: -.01em; }
+  .note-d { font-size: 14.5px; color: var(--doc-ink-2); margin: 0; }
+  .note-d code, code.ref {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    background: var(--doc-panel-2);
+    border: 1px solid var(--doc-rule);
+    border-radius: 4px;
+    padding: 0 4px;
+    color: var(--doc-ink);
+    white-space: nowrap;
+  }
+
+  /* ── Before / after ─────────────────────────────────────── */
+  .compare {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: 22px;
+    align-items: start;
+  }
+  .card {
+    background: var(--doc-panel);
+    border: 1px solid var(--doc-rule);
+    border-radius: 14px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .card-tag {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--doc-ink-3);
+  }
+  .card-tag::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--doc-rule);
+  }
+  .card-tag-now { color: var(--doc-ink-3); }
+  .card-tag-new { color: var(--doc-accent); }
+  .card-note { font-size: 14px; color: var(--doc-ink-2); margin: 0; }
+  .card-note b { color: var(--doc-ink); font-weight: 600; }
+
+  .miniframe {
+    background: var(--app-bg);
+    color: var(--app-on);
+    font-family: var(--font-app);
+    border: 1px solid var(--app-outline-2);
+    border-radius: 12px;
+    padding: 13px;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+  }
+
+
+
+  /* ── Decision A/B ───────────────────────────────────────── */
+  .ab {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 22px;
+    align-items: start;
+  }
+  .ab-card {
+    background: var(--doc-panel);
+    border: 1px solid var(--doc-rule);
+    border-radius: 14px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .ab-card-rec { border-color: color-mix(in srgb, var(--doc-accent) 55%, transparent); }
+  .ab-head {
+    padding: 15px 18px;
+    border-bottom: 1px solid var(--doc-rule);
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .ab-head h3 { margin: 0; font-size: 16px; font-weight: 700; letter-spacing: -.01em; }
+  .ab-badge {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border-radius: 999px;
+    border: 1px solid currentColor;
+  }
+  .ab-badge-rec { color: var(--doc-accent); }
+  .ab-badge-cur { color: var(--doc-ink-3); }
+  .ab-inner {
+    padding: 16px 18px;
+    background: var(--app-bg);
+    color: var(--app-on);
+    font-family: var(--font-app);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .ab-foot {
+    padding: 14px 18px;
+    font-size: 14px;
+    color: var(--doc-ink-2);
+    border-top: 1px solid var(--doc-rule);
+    background: var(--doc-panel);
+  }
+  .ab-foot b { color: var(--doc-ink); font-weight: 600; }
+  .ab-sum {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    color: var(--app-on-2);
+    padding-top: 4px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ── State variants ─────────────────────────────────────── */
+  .states {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(255px, 1fr));
+    gap: 22px;
+    align-items: start;
+  }
+  .state-cap {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+    color: var(--doc-ink-3);
+    padding-bottom: 9px;
+  }
+  .empty-note {
+    text-align: center;
+    padding: 22px 10px 8px;
+    color: var(--app-on-2);
+    font-size: 13px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .empty-note b { color: var(--app-on); font-size: 14.5px; font-weight: 600; }
+
+  .skel {
+    background: var(--app-c);
+    border-radius: 5px;
+    height: 10px;
+  }
+  .skel-pulse { animation: pulse 1.6s ease-in-out infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .45; } }
+
+  /* ── Desktop column ─────────────────────────────────────── */
+  .deck {
+    background: var(--app-bg);
+    color: var(--app-on);
+    font-family: var(--font-app);
+    border: 1px solid var(--doc-rule-2);
+    border-radius: 12px;
+    box-shadow: var(--app-shadow);
+    display: grid;
+    grid-template-columns: 56px minmax(0, 270px) minmax(0, 400px) minmax(0, 1fr);
+    overflow: hidden;
+    min-height: 430px;
+  }
+  .deck-empty {
+    display: grid;
+    place-items: center;
+    background: var(--app-c-low);
+    color: var(--app-on-2);
+    font-size: 12.5px;
+    padding: 20px;
+    text-align: center;
+  }
+  .deck-rail {
+    background: var(--app-c-low);
+    border-right: 1px solid var(--app-outline-2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 0;
+  }
+  .rail-ico {
+    width: 30px; height: 30px;
+    border-radius: 8px;
+    display: grid; place-items: center;
+    color: var(--app-on-2);
+    font-size: 15px;
+    background: transparent;
+  }
+  .rail-ico-on { background: color-mix(in srgb, var(--app-accent) 18%, transparent); color: var(--app-accent); }
+  .deck-col {
+    border-right: 1px solid var(--app-outline-2);
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+  .deck-col:last-child { border-right: 0; }
+  .deck-col-head {
+    padding: 11px 14px;
+    border-bottom: 1px solid var(--app-outline-2);
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--app-c-lowest);
+  }
+  .deck-col-head small { color: var(--app-on-2); font-weight: 400; font-size: 11.5px; margin-left: auto; }
+  .deck-scroll { padding: 12px 14px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+
+  /* ── Tables ─────────────────────────────────────────────── */
+  .table-scroll {
+    overflow-x: auto;
+    border: 1px solid var(--doc-rule);
+    border-radius: 12px;
+    background: var(--doc-panel);
+  }
+  table.grid {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 660px;
+    font-size: 14.5px;
+  }
+  table.grid th, table.grid td {
+    text-align: left;
+    padding: 13px 16px;
+    border-bottom: 1px solid var(--doc-rule);
+    vertical-align: top;
+  }
+  table.grid tbody tr:last-child td { border-bottom: 0; }
+  table.grid th {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+    color: var(--doc-ink-3);
+    font-weight: 500;
+    background: var(--doc-panel-2);
+    white-space: nowrap;
+  }
+  table.grid td:first-child { font-weight: 600; }
+  table.grid td.num {
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    color: var(--doc-ink-3);
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    font-weight: 400;
+  }
+  .sev {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border-radius: 4px;
+    border: 1px solid currentColor;
+    white-space: nowrap;
+  }
+  .sev-num { color: var(--doc-bad); }
+  .sev-spec { color: var(--doc-warn); }
+  .sev-data { color: var(--doc-accent); }
+
+  /* ── Phases ─────────────────────────────────────────────── */
+  .phases { display: flex; flex-direction: column; }
+  .phase {
+    display: grid;
+    grid-template-columns: 56px minmax(0, 1fr) minmax(0, 240px);
+    gap: 18px;
+    padding: 17px 0;
+    border-top: 1px solid var(--doc-rule);
+    align-items: baseline;
+  }
+  .phase:last-child { border-bottom: 1px solid var(--doc-rule); }
+  .phase-n {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--doc-accent);
+    letter-spacing: .08em;
+    font-weight: 700;
+  }
+  .phase-t { font-size: 15.5px; font-weight: 600; }
+  .phase-t span { display: block; font-weight: 400; color: var(--doc-ink-2); font-size: 14px; margin-top: 2px; }
+  .phase-v { font-size: 13.5px; color: var(--doc-ink-3); }
+  .phase-v.ships { color: var(--doc-good); }
+
+  /* ── Colophon ───────────────────────────────────────────── */
+  .colophon {
+    border-top: 1px solid var(--doc-rule);
+    padding-top: 22px;
+    font-size: 13px;
+    color: var(--doc-ink-3);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    max-width: 72ch;
+  }
+  .colophon b { color: var(--doc-ink-2); font-weight: 600; }
+
+  .hidden { display: none !important; }
+
+  @media (max-width: 900px) {
+    .stage { grid-template-columns: minmax(0, 1fr); }
+    .phase { grid-template-columns: 40px minmax(0, 1fr); }
+    .phase-v { grid-column: 2; }
+    .deck { grid-template-columns: minmax(0, 1fr); min-height: 0; }
+    .deck-rail { flex-direction: row; justify-content: flex-start; padding: 8px 12px; border-right: 0; border-bottom: 1px solid var(--app-outline-2); }
+    .deck-col { border-right: 0; border-bottom: 1px solid var(--app-outline-2); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: .001ms !important; transition-duration: .001ms !important; }
+  }
+</style>
+
+<div class="sheet">
+<div class="wrap">
+
+  <!-- ══════════════ MASTHEAD ══════════════ -->
+  <header class="mast">
+    <div class="mast-eyebrow">
+      <span>Design proposal</span>
+      <span>·</span>
+      <span>Amethyst</span>
+      <span>·</span>
+      <b>NIP&#8209;88 polls</b>
+      <span>·</span>
+      <span>2026&#8209;08&#8209;03</span>
+    </div>
+    <h1>Poll results, <em>with the counts and the people in them</em></h1>
+    <p class="mast-lede">
+      A poll in Amethyst currently ends its life as a percentage bar and four avatars in the feed.
+      This proposes a dedicated results screen that answers the two questions people actually ask —
+      how many votes each answer got, and who voted for what — shared between Android and Desktop.
+    </p>
+    <dl class="mast-meta">
+      <div><dt>Event kinds</dt><dd>1068 · 1018</dd></div>
+      <div><dt>Core module</dt><dd>commons</dd></div>
+      <div><dt>Front ends</dt><dd>Android · Desktop</dd></div>
+      <div><dt>New event kinds</dt><dd>0</dd></div>
+      <div><dt>Bugs fixed en route</dt><dd>4</dd></div>
+    </dl>
+  </header>
+
+  <!-- ══════════════ 01 · BEFORE / AFTER ══════════════ -->
+  <section class="block">
+    <div class="block-head">
+      <div class="block-num">01 — The gap</div>
+      <h2>What a finished poll looks like today</h2>
+      <p>
+        The inline card is deliberately compact, and that compactness is the whole problem: no vote
+        counts anywhere, at most four voter avatars, and no route to the fifth. Desktop already grew a
+        voter popup to work around it, which is the demand showing up as a divergence.
+      </p>
+    </div>
+
+    <div class="compare">
+      <div class="card">
+        <div class="card-tag card-tag-now">Today — inline feed card</div>
+        <div class="miniframe">
+          <div class="app-q" style="font-size:15px">Which relay should Amethyst suggest first to brand-new users?</div>
+          <div class="opts">
+            <div class="opt opt-win" style="--pct:46%">
+              <div class="opt-fill"></div>
+              <div class="opt-row">
+                <div class="opt-label"><div class="opt-name">nos.lol</div></div>
+                <div class="opt-gallery">
+                  <div class="avatar avatar-xs a1">MK</div>
+                  <div class="avatar avatar-xs a3">AR</div>
+                  <div class="avatar avatar-xs a7">TS</div>
+                  <div class="avatar avatar-xs a4">JD</div>
+                  <div class="opt-more">+171</div>
+                </div>
+                <div class="opt-pct">46%</div>
+              </div>
+            </div>
+            <div class="opt" style="--pct:35%">
+              <div class="opt-fill"></div>
+              <div class="opt-row">
+                <div class="opt-label"><div class="opt-name">relay.damus.io</div></div>
+                <div class="opt-gallery">
+                  <div class="avatar avatar-xs a2">BS</div>
+                  <div class="avatar avatar-xs a5">LN</div>
+                  <div class="avatar avatar-xs a8">RW</div>
+                  <div class="avatar avatar-xs a6">CF</div>
+                  <div class="opt-more">+129</div>
+                </div>
+                <div class="opt-pct">35%</div>
+              </div>
+            </div>
+            <div class="opt" style="--pct:19%">
+              <div class="opt-fill"></div>
+              <div class="opt-row">
+                <div class="opt-label"><div class="opt-name">purplepag.es</div></div>
+                <div class="opt-gallery">
+                  <div class="avatar avatar-xs a6">HM</div>
+                  <div class="avatar avatar-xs a4">NF</div>
+                  <div class="avatar avatar-xs a2">PS</div>
+                  <div class="avatar avatar-xs a3">EK</div>
+                  <div class="opt-more">+68</div>
+                </div>
+                <div class="opt-pct">19%</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="card-note">
+          The <b>+171</b> chip is a dead end — it counts people you cannot reach. Percentages appear
+          without their counts, and on a multiple-choice poll the denominator is wrong
+          (<code class="ref">PollResponsesCache.kt:52</code>).
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="card-tag card-tag-new">Proposed — the same card, one addition</div>
+        <div class="miniframe">
+          <div class="app-q" style="font-size:15px">Which relay should Amethyst suggest first to brand-new users?</div>
+          <div class="opts">
+            <div class="opt opt-win" style="--pct:46%">
+              <div class="opt-fill"></div>
+              <div class="opt-row">
+                <div class="opt-label"><div class="opt-name">nos.lol</div></div>
+                <div class="opt-gallery">
+                  <div class="avatar avatar-xs a1">MK</div>
+                  <div class="avatar avatar-xs a3">AR</div>
+                  <div class="avatar avatar-xs a7">TS</div>
+                  <div class="avatar avatar-xs a4">JD</div>
+                  <div class="opt-more">+171</div>
+                </div>
+                <div class="opt-sub" style="min-width:26px;text-align:right">175</div>
+                <div class="opt-pct">46%</div>
+              </div>
+            </div>
+            <div class="opt" style="--pct:35%">
+              <div class="opt-fill"></div>
+              <div class="opt-row">
+                <div class="opt-label"><div class="opt-name">relay.damus.io</div></div>
+                <div class="opt-gallery">
+                  <div class="avatar avatar-xs a2">BS</div>
+                  <div class="avatar avatar-xs a5">LN</div>
+                  <div class="avatar avatar-xs a8">RW</div>
+                  <div class="avatar avatar-xs a6">CF</div>
+                  <div class="opt-more">+129</div>
+                </div>
+                <div class="opt-sub" style="min-width:26px;text-align:right">133</div>
+                <div class="opt-pct">35%</div>
+              </div>
+            </div>
+            <div class="opt" style="--pct:19%">
+              <div class="opt-fill"></div>
+              <div class="opt-row">
+                <div class="opt-label"><div class="opt-name">purplepag.es</div></div>
+                <div class="opt-gallery">
+                  <div class="avatar avatar-xs a6">HM</div>
+                  <div class="avatar avatar-xs a4">NF</div>
+                  <div class="avatar avatar-xs a2">PS</div>
+                  <div class="avatar avatar-xs a3">EK</div>
+                  <div class="opt-more">+68</div>
+                </div>
+                <div class="opt-sub" style="min-width:26px;text-align:right">72</div>
+                <div class="opt-pct">19%</div>
+              </div>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:flex-end">
+            <div style="font-size:12.5px;color:var(--app-accent);font-weight:600">380 votes &#8250;</div>
+          </div>
+        </div>
+        <p class="card-note">
+          One change to the card itself: the <b>vote count</b> beside each percentage. The count
+          under the options and the avatar stack both become the entry point to the full results
+          screen — so the <b>+171</b> stops being a dead end.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ 02 · THE SCREEN ══════════════ -->
+  <section class="block">
+    <div class="block-head">
+      <div class="block-num">02 — The screen</div>
+      <h2>Poll results, Android</h2>
+      <p>
+        Summary above detail: totals, then per-option breakdown, then every voter with the option they
+        chose on the same row. Try the option chips — they filter the list below.
+      </p>
+    </div>
+
+    <div class="stage">
+      <div class="pinned" id="pinStage">
+        <span class="hot" data-anchor="pin1">1</span>
+        <span class="hot" data-anchor="pin2">2</span>
+        <span class="hot" data-anchor="pin3">3</span>
+        <span class="hot" data-anchor="pin4">4</span>
+        <span class="hot" data-anchor="pin5">5</span>
+        <span class="hot" data-anchor="pin6">6</span>
+        <span class="hot" data-anchor="pin7">7</span>
+
+      <div class="phone">
+        <div class="app-bar" id="pin1">
+          <div class="app-bar-ico">&#8592;</div>
+          <div class="app-bar-title">Poll results</div>
+          <div class="app-bar-ico">&#8635;</div>
+        </div>
+
+        <div class="app-body">
+          <div class="app-sec">
+            <div class="app-author">
+              <div class="avatar a1">NF</div>
+              <div>
+                <div class="app-author-name">Nadia Ferreira</div>
+                <div class="app-author-sub">npub1v0ry&#8230;8qk2 · 2d ago</div>
+              </div>
+            </div>
+            <div class="app-q">Which relay should Amethyst suggest first to brand-new users?</div>
+            <div class="app-chips">
+              <span class="chip chip-live">Open · closes in 4h</span>
+              <span class="chip">Single choice</span>
+            </div>
+            <div class="app-totals" id="pin2"><b>380</b> voters · <b>380</b> selections</div>
+          </div>
+
+          <div class="app-sec" id="pin3">
+            <div class="opts">
+              <div class="opt opt-win" style="--pct:46%">
+                <div class="opt-fill"></div>
+                <div class="opt-row">
+                  <div class="opt-label">
+                    <div class="opt-name">nos.lol</div>
+                    <div class="opt-sub">175 of 380 voters</div>
+                  </div>
+                  <div class="opt-gallery">
+                  <div class="avatar avatar-xs a1">MK</div>
+                  <div class="avatar avatar-xs a3">AR</div>
+                  <div class="avatar avatar-xs a7">TS</div>
+                  <div class="avatar avatar-xs a4">JD</div>
+                  <div class="opt-more">+171</div>
+                </div>
+                  <div class="opt-pct">46%</div>
+                  <div class="opt-check">&#10003;</div>
+                </div>
+              </div>
+              <div class="opt" style="--pct:35%">
+                <div class="opt-fill"></div>
+                <div class="opt-row">
+                  <div class="opt-label">
+                    <div class="opt-name">relay.damus.io</div>
+                    <div class="opt-sub">133 of 380 voters</div>
+                  </div>
+                  <div class="opt-gallery">
+                  <div class="avatar avatar-xs a2">BS</div>
+                  <div class="avatar avatar-xs a5">LN</div>
+                  <div class="avatar avatar-xs a8">RW</div>
+                  <div class="avatar avatar-xs a6">CF</div>
+                  <div class="opt-more">+129</div>
+                </div>
+                  <div class="opt-pct">35%</div>
+                </div>
+              </div>
+              <div class="opt" style="--pct:19%">
+                <div class="opt-fill"></div>
+                <div class="opt-row">
+                  <div class="opt-label">
+                    <div class="opt-name">purplepag.es</div>
+                    <div class="opt-sub">72 of 380 voters</div>
+                  </div>
+                  <div class="opt-gallery">
+                  <div class="avatar avatar-xs a6">HM</div>
+                  <div class="avatar avatar-xs a4">NF</div>
+                  <div class="avatar avatar-xs a2">PS</div>
+                  <div class="avatar avatar-xs a3">EK</div>
+                  <div class="opt-more">+68</div>
+                </div>
+                  <div class="opt-pct">19%</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="app-yours" id="pin4">
+            <span>You voted <b>nos.lol</b></span>
+            <button class="app-btn" type="button">Change vote</button>
+          </div>
+
+          <div class="app-filters" id="pin5">
+            <div class="filter-scroll" id="optionChips">
+              <button class="fchip" type="button" aria-pressed="true" data-opt="all">All options</button>
+              <button class="fchip" type="button" aria-pressed="false" data-opt="nos">nos.lol · 175</button>
+              <button class="fchip" type="button" aria-pressed="false" data-opt="damus">relay.damus.io · 133</button>
+              <button class="fchip" type="button" aria-pressed="false" data-opt="purple">purplepag.es · 72</button>
+            </div>
+          </div>
+
+          <div class="voters" id="voterList" data-pin="pin6">
+            <div class="voter" data-opt="nos">
+              <div class="avatar avatar-user a8">VP</div>
+              <div class="voter-id">
+                <div class="voter-name">you</div>
+                <div class="voter-nip05"><span class="n5-local">me</span><span class="n5-check">&#10003;</span><span class="n5-domain">nostrplebs.com</span></div>
+              </div>
+              <div class="voter-vote"><div class="voter-choice">nos.lol</div><div class="voter-when">2d ago</div></div>
+            </div>
+            <div class="voter" data-opt="damus">
+              <div class="avatar avatar-user a2">BS</div>
+              <div class="voter-id">
+                <div class="voter-name">Bruno Sá</div>
+                <div class="voter-nip05"><span class="n5-local">bruno</span><span class="n5-check">&#10003;</span><span class="n5-domain">nostrplebs.com</span></div>
+              </div>
+              <div class="voter-vote"><div class="voter-choice">relay.damus.io</div><div class="voter-when">2d ago</div></div>
+            </div>
+            <div class="voter" data-opt="nos">
+              <div class="avatar avatar-user a1">MK</div>
+              <div class="voter-id">
+                <div class="voter-name">mira.k</div>
+                <div class="voter-nip05"><span class="n5-local">mira</span><span class="n5-check">&#10003;</span><span class="n5-domain">nostrcheck.me</span></div>
+              </div>
+              <div class="voter-vote"><div class="voter-choice">nos.lol</div><div class="voter-when">2d ago</div></div>
+            </div>
+            <div class="voter" data-opt="nos">
+              <div class="avatar avatar-user a3">AR</div>
+              <div class="voter-id">
+                <div class="voter-name">Ana Reis</div>
+                <div class="voter-nip05"><span class="n5-local">ana</span><span class="n5-check">&#10003;</span><span class="n5-domain">nostrcheck.me</span></div>
+              </div>
+              <div class="voter-vote"><div class="voter-choice">nos.lol</div><div class="voter-when">1d ago</div></div>
+            </div>
+            <div class="voter" data-opt="purple">
+              <div class="avatar avatar-user a8">RW</div>
+              <div class="voter-id">
+                <div class="voter-name">relaywrangler</div>
+                <div class="voter-nip05"><span class="n5-local">wrangler</span><span class="n5-check">&#10003;</span><span class="n5-domain">relay.tools</span></div>
+              </div>
+              <div class="voter-vote"><div class="voter-choice">purplepag.es</div><div class="voter-when">1d ago</div></div>
+            </div>
+            <div class="voter" data-opt="damus">
+              <div class="avatar avatar-user a5">KM</div>
+              <div class="voter-id">
+                <div class="voter-name">Katya M.</div>
+                <div class="voter-npub">npub1q8f&#8230;j3xw</div>
+              </div>
+              <div class="voter-vote"><div class="voter-choice">relay.damus.io</div><div class="voter-when">22h ago</div></div>
+            </div>
+            <div class="voter" data-opt="nos">
+              <div class="avatar avatar-user a7">TS</div>
+              <div class="voter-id">
+                <div class="voter-name">tomás</div>
+                <div class="voter-nip05"><span class="n5-local">tomas</span><span class="n5-check">&#10003;</span><span class="n5-domain">nostr.pt</span></div>
+              </div>
+              <div class="voter-vote"><div class="voter-choice">nos.lol</div><div class="voter-when">14h ago</div></div>
+            </div>
+            <div class="voter" data-opt="purple">
+              <div class="avatar avatar-user a6">HM</div>
+              <div class="voter-id">
+                <div class="voter-name">hodlmatrix</div>
+                <div class="voter-nip05"><span class="n5-check">&#10003;</span><span class="n5-domain">21m.io</span></div>
+              </div>
+              <div class="voter-vote"><div class="voter-choice">purplepag.es</div><div class="voter-when">9h ago</div></div>
+            </div>
+          </div>
+
+          <div class="app-foot" id="pin7">
+            <div class="app-foot-warn"><span>&#9888;</span><span>380 of ~412 responses loaded from 6 relays</span></div>
+            <div>3 responses ignored (unknown option) · 2 voters hidden by your mute list</div>
+          </div>
+        </div>
+      </div>
+      </div>
+
+      <div class="notes">
+        <div class="note">
+          <div class="note-n">1</div>
+          <div class="note-body">
+            <div class="note-t">Refresh is for relays, not for the tally</div>
+            <p class="note-d">
+              The tally is already a live <code>StateFlow</code> — new votes animate in without asking.
+              The refresh action re-runs the backfill against the poll's own relays, which is the only
+              part that can be stale.
+            </p>
+          </div>
+        </div>
+        <div class="note">
+          <div class="note-n">2</div>
+          <div class="note-body">
+            <div class="note-t">Both totals, stated plainly</div>
+            <p class="note-d">
+              <b>Voters</b> is distinct pubkeys; <b>selections</b> is how many boxes were ticked. They
+              are identical on a single-choice poll and diverge on multiple choice — which is exactly
+              where today's percentages go wrong (§03).
+            </p>
+          </div>
+        </div>
+        <div class="note">
+          <div class="note-n">3</div>
+          <div class="note-body">
+            <div class="note-t">Counts beside percentages, winner marked</div>
+            <p class="note-d">
+              Each row gains <code>N of M voters</code>. The winner keeps the existing green treatment
+              from <code class="ref">RenderClosedItem</code> so the screen reads as the card it came
+              from, and the bar keeps the same 800 ms tween.
+            </p>
+          </div>
+        </div>
+        <div class="note">
+          <div class="note-n">4</div>
+          <div class="note-body">
+            <div class="note-t">Your own vote, and a way out of it</div>
+            <p class="note-d">
+              Desktop already allows re-voting; Android does not. This strip makes the behaviour the
+              same on both, and puts your vote where you don't have to hunt the list for yourself.
+            </p>
+          </div>
+        </div>
+        <div class="note">
+          <div class="note-n">5</div>
+          <div class="note-body">
+            <div class="note-t">Filter the list, never the summary</div>
+            <p class="note-d">
+              Option chips scope the voter list only — the bars above stay put, so the totals can't
+              appear to change while you browse. An audience filter, a sort control and voter search
+              are <b>deliberately held back</b>; the list is ordered you → follows → rest, and it's
+              not yet clear which of the three people would actually reach for.
+            </p>
+          </div>
+        </div>
+        <div class="note">
+          <div class="note-n">6</div>
+          <div class="note-body">
+            <div class="note-t">This is <code class="ref">UserLine</code>, unmodified</div>
+            <p class="note-d">
+              Not a new row, and not an edited one: the results screen calls the app's existing
+              <code class="ref">UserLine</code> and passes the vote as its
+              <code>trailingContent</code>, a parameter it already has. So the second line is the
+              <b>NIP-05 identifier</b> the way the app draws it — local part, verified mark, domain,
+              no <code>@</code> — with a root identifier showing the domain alone (row eight) and the
+              npub appearing only where there is no NIP-05 to show (row six).
+            </p>
+          </div>
+        </div>
+        <div class="note">
+          <div class="note-n">7</div>
+          <div class="note-body">
+            <div class="note-t">Say how complete the tally is</div>
+            <p class="note-d">
+              A NIP-45 <code>count</code> against the poll's relays gives the "~412" — so a partial
+              tally can admit it instead of presenting itself as final. The second line accounts for
+              every response that was dropped and why.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ 03 · THE DECISION ══════════════ -->
+  <section class="block">
+    <div class="block-head">
+      <div class="block-num">03 — Open question, needs your call</div>
+      <h2>What a multiple-choice percentage should mean</h2>
+      <p>
+        Same poll, same votes, two readings. 240 people voted and ticked 456 boxes between them.
+        This is the one decision that blocks the tally work, because it changes the numbers on the
+        existing feed card too.
+      </p>
+    </div>
+
+    <div class="ab">
+      <div class="ab-card ab-card-rec">
+        <div class="ab-head">
+          <h3>Share of voters</h3>
+          <span class="ab-badge ab-badge-rec">proposed</span>
+        </div>
+        <div class="ab-inner">
+          <div class="opt opt-win" style="--pct:70%">
+            <div class="opt-fill"></div>
+            <div class="opt-row">
+              <div class="opt-label"><div class="opt-name">Groups</div><div class="opt-sub">168 of 240 voters</div></div>
+              <div class="opt-pct">70%</div>
+            </div>
+          </div>
+          <div class="opt" style="--pct:55%">
+            <div class="opt-fill"></div>
+            <div class="opt-row">
+              <div class="opt-label"><div class="opt-name">Polls</div><div class="opt-sub">132 of 240 voters</div></div>
+              <div class="opt-pct">55%</div>
+            </div>
+          </div>
+          <div class="opt" style="--pct:40%">
+            <div class="opt-fill"></div>
+            <div class="opt-row">
+              <div class="opt-label"><div class="opt-name">Search</div><div class="opt-sub">96 of 240 voters</div></div>
+              <div class="opt-pct">40%</div>
+            </div>
+          </div>
+          <div class="opt" style="--pct:25%">
+            <div class="opt-fill"></div>
+            <div class="opt-row">
+              <div class="opt-label"><div class="opt-name">Wallet</div><div class="opt-sub">60 of 240 voters</div></div>
+              <div class="opt-pct">25%</div>
+            </div>
+          </div>
+          <div class="ab-sum">bars sum to 190% &#8212; by design</div>
+        </div>
+        <div class="ab-foot">
+          <b>"7 in 10 people want Groups."</b> Matches how a poll bar is read. Costs you a total that
+          doesn't add to 100, which the per-row caption explains.
+        </div>
+      </div>
+
+      <div class="ab-card">
+        <div class="ab-head">
+          <h3>Share of selections</h3>
+          <span class="ab-badge ab-badge-cur">what ships today</span>
+        </div>
+        <div class="ab-inner">
+          <div class="opt opt-win" style="--pct:37%">
+            <div class="opt-fill"></div>
+            <div class="opt-row">
+              <div class="opt-label"><div class="opt-name">Groups</div><div class="opt-sub">168 of 456 selections</div></div>
+              <div class="opt-pct">37%</div>
+            </div>
+          </div>
+          <div class="opt" style="--pct:29%">
+            <div class="opt-fill"></div>
+            <div class="opt-row">
+              <div class="opt-label"><div class="opt-name">Polls</div><div class="opt-sub">132 of 456 selections</div></div>
+              <div class="opt-pct">29%</div>
+            </div>
+          </div>
+          <div class="opt" style="--pct:21%">
+            <div class="opt-fill"></div>
+            <div class="opt-row">
+              <div class="opt-label"><div class="opt-name">Search</div><div class="opt-sub">96 of 456 selections</div></div>
+              <div class="opt-pct">21%</div>
+            </div>
+          </div>
+          <div class="opt" style="--pct:13%">
+            <div class="opt-fill"></div>
+            <div class="opt-row">
+              <div class="opt-label"><div class="opt-name">Wallet</div><div class="opt-sub">60 of 456 selections</div></div>
+              <div class="opt-pct">13%</div>
+            </div>
+          </div>
+          <div class="ab-sum">bars sum to 100%</div>
+        </div>
+        <div class="ab-foot">
+          <b>"Groups took 37% of the vote."</b> Tidier, and a voter who ticks four boxes counts four
+          times. Desktop already contradicts this in its own footer, which uses distinct voters.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ 04 · STATES ══════════════ -->
+  <section class="block">
+    <div class="block-head">
+      <div class="block-num">04 — States</div>
+      <h2>The three the screen has to get right</h2>
+      <p>
+        Every one of these is a moment where a number could look like a bug unless the screen says
+        what happened.
+      </p>
+    </div>
+
+    <div class="states">
+      <div>
+        <div class="state-cap">Loading · partial tally</div>
+        <div class="phone phone-sm">
+          <div class="app-bar">
+            <div class="app-bar-ico">&#8592;</div>
+            <div class="app-bar-title">Poll results</div>
+          </div>
+          <div class="app-sec">
+            <div class="app-totals"><b>112</b> voters so far</div>
+            <div class="opts">
+              <div class="opt" style="--pct:52%">
+                <div class="opt-fill"></div>
+                <div class="opt-row">
+                  <div class="opt-label"><div class="opt-name">nos.lol</div><div class="opt-sub">58 of 112 voters</div></div>
+                  <div class="opt-pct">52%</div>
+                </div>
+              </div>
+              <div class="opt" style="--pct:30%">
+                <div class="opt-fill"></div>
+                <div class="opt-row">
+                  <div class="opt-label"><div class="opt-name">relay.damus.io</div><div class="opt-sub">34 of 112 voters</div></div>
+                  <div class="opt-pct">30%</div>
+                </div>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:7px;padding-top:4px">
+              <div class="skel skel-pulse" style="width:82%"></div>
+              <div class="skel skel-pulse" style="width:64%"></div>
+              <div class="skel skel-pulse" style="width:73%"></div>
+            </div>
+          </div>
+          <div class="app-foot">
+            <div class="app-foot-warn"><span>&#9888;</span><span>Loading page 2 of 5 from 6 relays&#8230;</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="state-cap">Closed poll</div>
+        <div class="phone phone-sm">
+          <div class="app-bar">
+            <div class="app-bar-ico">&#8592;</div>
+            <div class="app-bar-title">Poll results</div>
+          </div>
+          <div class="app-sec">
+            <div class="app-chips">
+              <span class="chip chip-ended">Ended 2d ago</span>
+              <span class="chip">Single choice</span>
+            </div>
+            <div class="app-totals"><b>412</b> voters · final</div>
+            <div class="opts">
+              <div class="opt opt-win" style="--pct:46%">
+                <div class="opt-fill"></div>
+                <div class="opt-row">
+                  <div class="opt-label"><div class="opt-name">nos.lol</div><div class="opt-sub">189 of 412 voters</div></div>
+                  <div class="opt-pct">46%</div>
+                  <div class="opt-check">&#10003;</div>
+                </div>
+              </div>
+              <div class="opt" style="--pct:34%">
+                <div class="opt-fill"></div>
+                <div class="opt-row">
+                  <div class="opt-label"><div class="opt-name">relay.damus.io</div><div class="opt-sub">142 of 412 voters</div></div>
+                  <div class="opt-pct">34%</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="app-foot">
+            <div>No new votes accepted. <b style="color:var(--app-on)">7 votes arrived after the deadline</b> and are excluded.</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="state-cap">No votes yet</div>
+        <div class="phone phone-sm">
+          <div class="app-bar">
+            <div class="app-bar-ico">&#8592;</div>
+            <div class="app-bar-title">Poll results</div>
+          </div>
+          <div class="app-sec">
+            <div class="app-chips"><span class="chip chip-live">Open · closes in 3d</span></div>
+            <div class="opts">
+              <div class="opt" style="--pct:0%">
+                <div class="opt-fill"></div>
+                <div class="opt-row">
+                  <div class="opt-label"><div class="opt-name">nos.lol</div><div class="opt-sub">0 voters</div></div>
+                  <div class="opt-pct">0%</div>
+                </div>
+              </div>
+              <div class="opt" style="--pct:0%">
+                <div class="opt-fill"></div>
+                <div class="opt-row">
+                  <div class="opt-label"><div class="opt-name">relay.damus.io</div><div class="opt-sub">0 voters</div></div>
+                  <div class="opt-pct">0%</div>
+                </div>
+              </div>
+            </div>
+            <div class="empty-note">
+              <b>No votes yet</b>
+              <span>Be the first — your vote will show up here.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ 05 · DESKTOP ══════════════ -->
+  <section class="block">
+    <div class="block-head">
+      <div class="block-num">05 — Desktop</div>
+      <h2>The same screen as a deck column</h2>
+      <p>
+        Desktop navigates by <code class="ref">DeckColumnType</code>, not routes, so results open as a
+        column beside the feed. The existing voter popup stays as the quick peek and grows a
+        <b>See all voters</b> footer that opens this column.
+      </p>
+    </div>
+
+    <div class="deck">
+      <div class="deck-rail">
+        <div class="rail-ico">&#9750;</div>
+        <div class="rail-ico">&#9993;</div>
+        <div class="rail-ico rail-ico-on">&#9678;</div>
+        <div class="rail-ico">&#9734;</div>
+      </div>
+
+      <div class="deck-col">
+        <div class="deck-col-head">Polls <small>Open</small></div>
+        <div class="deck-scroll">
+          <div style="border:1px solid color-mix(in srgb, var(--app-accent) 50%, transparent);background:color-mix(in srgb, var(--app-accent) 10%, transparent);border-radius:10px;padding:11px 13px">
+            <div class="opt-name" style="white-space:normal">Which relay should Amethyst suggest first?</div>
+            <div class="opt-sub" style="padding-top:2px">Nadia Ferreira · 380 voters</div>
+          </div>
+          <div style="border:1px solid var(--app-outline-2);border-radius:10px;padding:11px 13px">
+            <div class="opt-name" style="white-space:normal">Should the composer default to plain text?</div>
+            <div class="opt-sub" style="padding-top:2px">Bruno Sá · 96 voters</div>
+          </div>
+          <div style="border:1px solid var(--app-outline-2);border-radius:10px;padding:11px 13px">
+            <div class="opt-name" style="white-space:normal">Pick the next language for the UI</div>
+            <div class="opt-sub" style="padding-top:2px">mira.k · 1,204 voters</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="deck-col">
+        <div class="deck-col-head">Poll results <small>380 voters · 6 relays</small></div>
+        <div class="deck-scroll">
+          <div class="app-q" style="font-size:15px">Which relay should Amethyst suggest first to brand-new users?</div>
+          <div class="app-chips">
+            <span class="chip chip-live">Open · closes in 4h</span>
+            <span class="chip">Single choice</span>
+          </div>
+          <div class="opts">
+            <div class="opt opt-win" style="--pct:46%">
+              <div class="opt-fill"></div>
+              <div class="opt-row">
+                <div class="opt-label"><div class="opt-name">nos.lol</div><div class="opt-sub">175 of 380 voters</div></div>
+                <div class="opt-pct">46%</div>
+                <div class="opt-check">&#10003;</div>
+              </div>
+            </div>
+            <div class="opt" style="--pct:35%">
+              <div class="opt-fill"></div>
+              <div class="opt-row">
+                <div class="opt-label"><div class="opt-name">relay.damus.io</div><div class="opt-sub">133 of 380 voters</div></div>
+                <div class="opt-pct">35%</div>
+              </div>
+            </div>
+            <div class="opt" style="--pct:19%">
+              <div class="opt-fill"></div>
+              <div class="opt-row">
+                <div class="opt-label"><div class="opt-name">purplepag.es</div><div class="opt-sub">72 of 380 voters</div></div>
+                <div class="opt-pct">19%</div>
+              </div>
+            </div>
+          </div>
+          <div class="filter-scroll" style="padding-top:2px">
+            <span class="fchip" aria-pressed="true">All options</span>
+            <span class="fchip">nos.lol · 175</span>
+            <span class="fchip">relay.damus.io · 133</span>
+          </div>
+          <div class="voters" style="border:1px solid var(--app-outline-2);border-radius:10px;overflow:hidden">
+            <div class="voter">
+              <div class="avatar avatar-user a8">VP</div>
+              <div class="voter-id">
+                <div class="voter-name">you</div>
+                <div class="voter-nip05"><span class="n5-local">me</span><span class="n5-check">&#10003;</span><span class="n5-domain">nostrplebs.com</span></div>
+              </div>
+              <div class="voter-vote"><div class="voter-choice">nos.lol</div><div class="voter-when">2d ago</div></div>
+            </div>
+            <div class="voter">
+              <div class="avatar avatar-user a2">BS</div>
+              <div class="voter-id">
+                <div class="voter-name">Bruno Sá</div>
+                <div class="voter-nip05"><span class="n5-local">bruno</span><span class="n5-check">&#10003;</span><span class="n5-domain">nostrplebs.com</span></div>
+              </div>
+              <div class="voter-vote"><div class="voter-choice">relay.damus.io</div><div class="voter-when">2d ago</div></div>
+            </div>
+            <div class="voter">
+              <div class="avatar avatar-user a1">MK</div>
+              <div class="voter-id">
+                <div class="voter-name">mira.k</div>
+                <div class="voter-nip05"><span class="n5-local">mira</span><span class="n5-check">&#10003;</span><span class="n5-domain">nostrcheck.me</span></div>
+              </div>
+              <div class="voter-vote"><div class="voter-choice">nos.lol</div><div class="voter-when">2d ago</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="deck-empty">Add a column</div>
+    </div>
+  </section>
+
+  <!-- ══════════════ 06 · CORRECTNESS ══════════════ -->
+  <section class="block">
+    <div class="block-head">
+      <div class="block-num">06 — Prerequisites</div>
+      <h2>Four tally bugs, and one missing subscription</h2>
+      <p>
+        The results page would inherit all of these, so they land first. The four tally bugs share one
+        root cause — <code class="ref">ResponseTally</code> never sees the
+        <code class="ref">PollEvent</code>, so it cannot know the poll's type, its valid option codes,
+        or its window. The fifth is separate: Android asks the wrong relays for votes. Both fixes
+        improve the feed card on their own.
+      </p>
+    </div>
+
+    <div class="table-scroll">
+      <table class="grid">
+        <thead>
+          <tr>
+            <th>What breaks</th>
+            <th>Impact</th>
+            <th>Consequence</th>
+            <th>Where</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Multiple-choice denominator</td>
+            <td><span class="sev sev-num">wrong number</span></td>
+            <td>A voter who picks three options counts three times. Desktop's footer and its own bars already disagree about this.</td>
+            <td class="num">PollResponsesCache.kt:52</td>
+          </tr>
+          <tr>
+            <td>Every <code>response</code> tag counted</td>
+            <td><span class="sev sev-spec">spec</span></td>
+            <td>NIP-88 keeps only the first tag on a single-choice poll. One malformed vote lands in every bucket.</td>
+            <td class="num">PollResponsesCache.kt:129</td>
+          </tr>
+          <tr>
+            <td>Votes after the deadline</td>
+            <td><span class="sev sev-spec">spec</span></td>
+            <td>Only <code>createdAt</code> is compared, so a late vote beats a valid earlier one and closed polls keep moving.</td>
+            <td class="num">Note.kt:1685</td>
+          </tr>
+          <tr>
+            <td>Unknown option codes</td>
+            <td><span class="sev sev-num">wrong number</span></td>
+            <td>A code that isn't in the poll creates a phantom bucket that still drags every real percentage down.</td>
+            <td class="num">PollResponsesCache.kt:129</td>
+          </tr>
+          <tr>
+            <td>Poll relays never queried</td>
+            <td><span class="sev sev-data">missing data</span></td>
+            <td>Android reads votes from the author's inbox relays, not the relays the poll publishes votes to — so its tallies are short. Desktop patched this per-card.</td>
+            <td class="num">FilterRepliesAndReactionsToNotes.kt:89</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ══════════════ 07 · PHASING ══════════════ -->
+  <section class="block">
+    <div class="block-head">
+      <div class="block-num">07 — Sequence</div>
+      <h2>What lands, in what order</h2>
+      <p>The first two phases are bug fixes wearing a feature's clothes — worth shipping even if the screen never gets built.</p>
+    </div>
+
+    <div class="phases">
+      <div class="phase">
+        <div class="phase-n">P0</div>
+        <div class="phase-t">Poll-aware tally<span>New <code class="ref">PollTallyPolicy</code> in commons + tests. Fixes all four numbers above.</span></div>
+        <div class="phase-v ships">Ships alone — corrects the feed card on both platforms</div>
+      </div>
+      <div class="phase">
+        <div class="phase-n">P1</div>
+        <div class="phase-t">Shared response subscription<span>Desktop's per-card fix lifted into a shared assembler, plus <code>fetchAllPages</code> backfill.</span></div>
+        <div class="phase-v ships">Ships alone — Android tallies stop being short</div>
+      </div>
+      <div class="phase">
+        <div class="phase-n">P2</div>
+        <div class="phase-t">The screen<span>ViewModel + shared composables + Android route + entry points from the card. No existing composable is modified.</span></div>
+        <div class="phase-v ships">The feature</div>
+      </div>
+      <div class="phase">
+        <div class="phase-n">P3</div>
+        <div class="phase-t">Desktop deck column<span>Same ViewModel, same option bars, desktop's own user row.</span></div>
+        <div class="phase-v">Parity</div>
+      </div>
+      <div class="phase">
+        <div class="phase-n">P4</div>
+        <div class="phase-t">Audience filter, sort, voter search<span>Held back on purpose — added once it's clear which of the three people reach for.</span></div>
+        <div class="phase-v">Only if wanted</div>
+      </div>
+      <div class="phase">
+        <div class="phase-n">P5</div>
+        <div class="phase-t">Zap polls<span>Kind 6969 shares the shell but not the tally — it is weighted by sats, not by people.</span></div>
+        <div class="phase-v">Breadth</div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="colophon">
+    <div>
+      <b>On the palette.</b> Every colour inside a mockup is lifted from
+      <code class="ref">ui/theme/Color.kt</code> and <code class="ref">Theme.kt</code> — the purple
+      accent, the green winner state, the amber warning, the surface ramp. The annotation layer around
+      them uses a separate neutral set, so you can always tell the app from the commentary. Greys stay
+      hue-free in both, per the decision recorded at <code class="ref">Theme.kt:157</code>.
+    </div>
+    <div>Mockup only — no code in this proposal has been written. Numbers and handles are fictional.</div>
+  </footer>
+
+</div>
+</div>
+
+<script>
+  (function () {
+    // Callout pins live in the gutter and are aligned to the element they
+    // describe, so they stay put at any width instead of guessed offsets.
+    var stage = document.getElementById('pinStage');
+    if (stage) {
+      var pins = stage.querySelectorAll('.hot');
+      var placePins = function () {
+        var base = stage.getBoundingClientRect().top;
+        pins.forEach(function (pin) {
+          var name = pin.getAttribute('data-anchor');
+          var anchor = document.getElementById(name) ||
+                       document.querySelector('[data-pin="' + name + '"]');
+          if (!anchor) return;
+          var top = anchor.getBoundingClientRect().top - base + 12;
+          pin.style.top = Math.round(top) + 'px';
+          pin.classList.add('set');
+        });
+      };
+      placePins();
+      window.addEventListener('resize', placePins);
+      if (window.ResizeObserver) new ResizeObserver(placePins).observe(stage);
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(placePins);
+    }
+
+    // Option chips scope the voter list only — the summary above never moves.
+    var chips = document.querySelectorAll('#optionChips .fchip');
+    var voters = document.querySelectorAll('#voterList .voter');
+    chips.forEach(function (chip) {
+      chip.addEventListener('click', function () {
+        var want = chip.getAttribute('data-opt');
+        chips.forEach(function (c) { c.setAttribute('aria-pressed', String(c === chip)); });
+        voters.forEach(function (v) {
+          var show = want === 'all' || v.getAttribute('data-opt') === want;
+          v.classList.toggle('hidden', !show);
+        });
+      });
+    });
+  })();
+</script>

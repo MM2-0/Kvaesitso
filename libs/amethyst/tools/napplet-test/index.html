@@ -1,0 +1,164 @@
+<!doctype html>
+<!--
+  Napplet test harness — a single-file napplet that exercises every window.napplet.* API and
+  renders the result of each on screen, so the Android host can be verified end to end on a device.
+
+  Read-only checks run automatically on load (each triggers a one-time consent prompt per capability).
+  Side-effectful ops (publish / upload / pay) are behind buttons so you trigger them deliberately.
+  Live pushes (identity.changed, keys.action) appear in the banner at the top when they fire.
+
+  Publish it with publish.sh, then open it from Amethyst (your Apps / Napplets list, or its feed card).
+-->
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <title>Napplet Test Harness</title>
+    <style>
+      body { font: 14px/1.4 system-ui, sans-serif; margin: 0; padding: 12px; background: #fff; color: #111; }
+      h1 { font-size: 16px; margin: 0 0 8px; }
+      #banner { min-height: 1.4em; padding: 8px; margin-bottom: 10px; border-radius: 8px; background: #eef; color: #224; font-weight: 600; }
+      .row { padding: 6px 8px; border-bottom: 1px solid #eee; display: flex; gap: 8px; align-items: baseline; }
+      .name { flex: 0 0 12em; font-weight: 600; }
+      .val { flex: 1; white-space: pre-wrap; word-break: break-word; font-family: ui-monospace, monospace; font-size: 12px; }
+      .ok { color: #0a0; } .err { color: #c00; } .pending { color: #888; }
+      section { margin-top: 14px; }
+      input, button { font: inherit; padding: 6px 8px; margin: 2px 0; }
+      input { width: 100%; box-sizing: border-box; }
+      button { cursor: pointer; }
+    </style>
+  </head>
+  <body>
+    <h1>Napplet Test Harness</h1>
+    <div id="banner">Waiting for live pushes (switch account → identity.changed; press Ctrl+S → keys.action)…</div>
+    <div id="results"></div>
+
+    <section>
+      <h1>Side-effectful (tap to run)</h1>
+      <input id="pub" placeholder="note content to publish (relay.publish, signs as you)" />
+      <button onclick="doPublish()">relay.publish</button>
+      <hr/>
+      <input id="res" placeholder="resource.bytes URL — https://… or nostr:nevent1…/note1…/npub1…" />
+      <button onclick="doResource()">resource.bytes</button>
+      <hr/>
+      <button onclick="doUpload()">upload.blob (uploads a tiny text blob)</button>
+      <hr/>
+      <input id="inv" placeholder="BOLT-11 invoice for value.payInvoice" />
+      <button onclick="doPay()">value.payInvoice</button>
+    </section>
+
+    <script>
+      var results = document.getElementById('results');
+      var banner = document.getElementById('banner');
+
+      function row(name) {
+        var r = document.createElement('div'); r.className = 'row';
+        var n = document.createElement('div'); n.className = 'name'; n.textContent = name;
+        var v = document.createElement('div'); v.className = 'val pending'; v.textContent = '…';
+        r.appendChild(n); r.appendChild(v); results.appendChild(r);
+        return v;
+      }
+      function show(v, ok, value) {
+        v.className = 'val ' + (ok ? 'ok' : 'err');
+        v.textContent = (ok ? '' : 'ERROR: ') + (typeof value === 'string' ? value : JSON.stringify(value));
+      }
+      // Run an async napplet call and render pass/fail.
+      function check(name, fn) {
+        var v = row(name);
+        var domain = name.split('.')[0].split(' ')[0];
+        if (window.napplet && !(domain in window.napplet)) { show(v, true, 'unavailable (optional domain)'); return; }
+        try {
+          Promise.resolve(fn()).then(function (out) { show(v, true, out === undefined ? 'ok' : out); },
+            function (e) { show(v, false, (e && e.message) || String(e)); });
+        } catch (e) { show(v, false, (e && e.message) || String(e)); }
+      }
+      function flash(msg) { banner.textContent = msg + '  (' + new Date().toLocaleTimeString() + ')'; }
+
+      function run() {
+        if (!window.napplet) { banner.textContent = 'window.napplet is MISSING — shim not injected!'; return; }
+
+        // Domain presence is available before authored scripts, without a shell handshake.
+        show(row('available domains'), true, Object.keys(napplet));
+        if (napplet.theme) {
+          check('theme.get', function () { return napplet.theme.get(); });
+          napplet.theme.onChanged(function (theme) { flash('theme.changed → ' + JSON.stringify(theme.colors)); });
+        }
+
+        // ---- identity (read-only) ----
+        check('identity.getPublicKey', function () { return napplet.identity.getPublicKey(); });
+        check('identity.getProfile', function () { return napplet.identity.getProfile(); });
+        check('identity.getRelays', function () { return napplet.identity.getRelays(); });
+        check('identity.getFollows', function () { return napplet.identity.getFollows().then(trunc); });
+        check('identity.getMutes', function () { return napplet.identity.getMutes().then(trunc); });
+        check('identity.getBlocked', function () { return napplet.identity.getBlocked().then(trunc); });
+        check('identity.getList(bookmarks)', function () { return napplet.identity.getList('bookmarks').then(trunc); });
+        check('identity.getZaps', function () { return napplet.identity.getZaps().then(trunc); });
+        check('identity.getBadges', function () { return napplet.identity.getBadges().then(trunc); });
+
+        // identity.onChanged → live push when you switch / log out
+        try {
+          napplet.identity.onChanged(function (pubkey) { flash('identity.changed → ' + (pubkey || '(logged out)')); });
+          row('identity.onChanged').textContent = 'registered — log out the launching account to fire';
+        } catch (e) { show(row('identity.onChanged'), false, e.message); }
+
+        // ---- relay (read) ----
+        check('relay.query(kind1 limit3)', function () {
+          return napplet.relay.query({ kinds: [1], limit: 3 }).then(function (evs) { return (evs ? evs.length : 0) + ' events'; });
+        });
+        check('relay.subscribe(kind1)', function () {
+          return new Promise(function (resolve) {
+            var n = 0;
+            var sub = napplet.relay.subscribe({ kinds: [1], limit: 5 }, function () { n++; }, function () { sub.close(); resolve(n + ' events, EOSE ok'); });
+            setTimeout(function () { try { sub.close(); } catch (_) {} resolve(n + ' events (timeout)'); }, 8000);
+          });
+        });
+
+        // ---- storage round-trip ----
+        check('storage round-trip', function () {
+          var key = 'k' + Date.now();
+          return napplet.storage.setItem(key, 'v1')
+            .then(function () { return napplet.storage.getItem(key); })
+            .then(function (got) {
+              if (got !== 'v1') throw new Error('getItem returned ' + got);
+              return napplet.storage.keys();
+            })
+            .then(function (keys) { return napplet.storage.removeItem(key).then(function () { return 'set/get/keys(' + keys.length + ')/remove ok'; }); });
+        });
+
+        // ---- keys: register Ctrl+S, fire via onAction ----
+        if (napplet.keys) try {
+          napplet.keys.registerAction({ id: 'save', label: 'Save', defaultKey: 'Ctrl+S' }).then(function (reg) {
+            show(row('keys.registerAction'), true, reg);
+          });
+          napplet.keys.onAction('save', function () { flash('keys.action → save fired'); });
+        } catch (e) { show(row('keys.registerAction'), false, e.message); }
+      }
+
+      function trunc(x) { var s = JSON.stringify(x); return s.length > 200 ? s.slice(0, 200) + '…' : s; }
+
+      // ---- side-effectful handlers ----
+      function doPublish() {
+        var c = document.getElementById('pub').value || ('napplet test ' + Date.now());
+        check('relay.publish', function () { return napplet.relay.publish({ kind: 1, content: c, tags: [] }).then(function (ev) { return 'published ' + ev.id; }); });
+      }
+      function doResource() {
+        var u = document.getElementById('res').value;
+        if (!u) { flash('enter a URL first'); return; }
+        check('resource.bytes(' + u.slice(0, 24) + '…)', function () {
+          return napplet.resource.bytes(u).then(function (blob) { return blob.size + ' bytes, type=' + blob.type; });
+        });
+      }
+      function doUpload() {
+        var bytes = new TextEncoder().encode('napplet upload test ' + Date.now());
+        check('upload.blob', function () { return napplet.upload.blob(bytes, 'text/plain').then(function (url) { return url; }); });
+      }
+      function doPay() {
+        var inv = document.getElementById('inv').value;
+        if (!inv) { flash('enter an invoice first'); return; }
+        check('value.payInvoice', function () { return napplet.value.payInvoice(inv).then(function (pre) { return 'preimage ' + pre; }); });
+      }
+
+      run();
+    </script>
+  </body>
+</html>

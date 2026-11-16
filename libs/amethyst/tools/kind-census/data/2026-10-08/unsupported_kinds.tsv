@@ -1,0 +1,387 @@
+kind	class	events	authors	tags	content	client	alt
+37195	addressable	2825	2410	version,d,protocol,expiration	json:2825		
+1060	regular	93095	1444	header,p,expiration,h	nip44:93095		
+4333	regular	637	637	z,expiration,t	nip44:633,opaque-b64:4		
+7368	regular	122548	537	i,type,schema,rater,subject,max_rating,scope,created_at,reason,rating	empty:122546,nip44:2		
+30277	addressable	252	234	d,t	json:252		
+10377	replaceable	318	214	i	json:318		
+30789	addressable	341	176	x,t,d	opaque-b64:337,nip44:4		
+30787	addressable	263	170	x,d,t	opaque-b64:263		
+1460	regular	202	140	d,expiration	nip44:202		
+37368	addressable	122	108	schema,d,i,type,p,owner_pubkey,device,member,admin,name	empty:122		
+4248	regular	96	96	p	opaque-b64:92,nip44:4		
+30388	addressable	276	90	dataset,d,p,app	nip04:276		
+1463	regular	151	83	d	nip44:151		
+13473	replaceable	60	58	end,alt,start,published_at,client	empty:60	Ditto	Posting streak
+30310	addressable	64	57	d,pfx,u,app	json:62,nip44:2		
+30079	addressable	121	51	d,e,r,t,client,alias,encrypted,key,e_ref,v	json:57,text:36,nip44:24,empty:4	COURA,einundzwanzig-meetup-app	
+9421	regular	50	50	s,o,g,t	text:50		
+9420	regular	46	46	g,t,a,o,s	text:46		
+3927	regular	60	41	u,d,alt,t	text:60		Page view counter update for com.citadelwire.page-views.home
+37778	addressable	40	40	d,expiration	hex:40		
+30085	addressable	53	35	relay,d,relay-urls,app	empty:53		
+37779	addressable	35	35	d,expiration	hex:35		
+2023	regular	142	31	p	nip44:142		
+10443	replaceable	27	27	ciphersuite,mls_protocol_version,relay,client,extensions	opaque-b64:26,json:1	Keychat,meiso	
+38385	addressable	66	26	y,pow,z,expiration_seconds,d,min_order_amount,expiration_hours,mostro_version,max_order_amount,fee	empty:66		
+38001	addressable	22501	25	L,smj,m,side,n,status,s,b,t,d	json:22501		
+3560	regular	121	25	expiration,s	nip44:121		
+31986	addressable	27	25	rating,sig,d,p	empty:27		
+1461	regular	25	25	d	json:25		
+38501	addressable	351	23	d	json:351		
+1077	regular	77	23	r	json:77		
+4277	regular	24	22	t	json:24		
+31242	addressable	22	22	d,expiration	opaque-b64:22		
+9424	regular	28	21	m,o,g,t,r	text:20,opaque-b64:8		
+1717	regular	25	21	expiration	opaque-b64:24,nip44:1		
+37104	addressable	21	21	status,d,t	json:21		
+39020	addressable	21	21	name,p,t,d,domain,protocol	json:21		
+443	regular	26	20	mls_protocol_version,relays,client,encoding,i,mls_extensions,mls_ciphersuite,mls_proposals,ciphersuite,extensions	nip44:21,empty:5	MDK/0.8.0,rizq,MDK/0.7.1,EpochShield	
+5555	regular	24	18	schema,version,t,streak,played,won,result,source,maxStreak,puzzle	json:24		
+31903	addressable	18	18	d,t	nip44:13,json:5		
+1000	regular	814	17	p	json:814		
+36944	addressable	21	16	d,nonce,a,version,deleted,p	nip44:11,empty:10		
+30215	addressable	16	16	d,visibility	text:16		
+32022	addressable	15	15	network,d,t	json:15		
+10222	replaceable	14	14	strict,blossom,r,k,content,membership,access	empty:14		
+1050	regular	48	13	t,p	opaque-b64:26,json:22		
+4721	regular	13	13	client,t	json:13	ouroswap	
+36943	addressable	135	12	d,c,client,published_at,epoch,nonce,h,a,p,emoji	opaque-b64:132,nip44:3	DEN Chat	
+16942	replaceable	14	12	v	empty:11,nip44:3		
+1081	regular	12	12		nip44:12		
+4545	regular	12	12	y,expiration	opaque-b64:12		
+9422	regular	12	12	r	opaque-b64:11,nip44:1		
+31124	addressable	42	11	health,happiness,breeding_ready,stage,special_mark,state,pattern,size,generation,progression_state	json:37,text:5	Ditto	
+11125	replaceable	15	11	pettingLevel,blobbi_onboarding_done,name,b,d,published_at,client,has,xp,level	json:11,empty:4	Ditto	
+37701	addressable	12	11	d,t	json:12		
+30218	addressable	24	10	d,visibility,backup	text:24		
+38422	addressable	17	10	provider,schema,d	json:17		
+4454	regular	16	10	P,pubkey	empty:16		
+16767	replaceable	14	10	alt,c,client,f,published_at,title,bg,p,a	empty:14	Ditto,jotstr,Armada	Active profile theme
+30032	addressable	12	10	e,k,p,app	empty:12		
+4334	regular	198	9	c,expiration,x	opaque-b64:194,nip44:4		
+9423	regular	9	9	r	opaque-b64:9		
+30421	addressable	1646	8	d,t,alt,name,x,m,size,prompts-hash,stake-sim,image-digest	json:1646	betpod-oracle-poc/0.1	Napstr shared file catalogue entry|BetPod distributed oracle node registration
+38384	addressable	448	8	d,v,t,days,total_rating,max_rate,z,total_reviews,min_rate,expiration	json:350,empty:98		
+30422	addressable	280	8	d,expiration,t	json:280		
+4242	regular	131	8	t,p,e,a,k,direction,client,alt,d,market-version	opaque-b64:123,nip44:5,empty:2,text:1	Divine	BetPod market 57978046 voided — no longer open for resolution
+1124	regular	104	8	p,alt,a,item,source,action,blobbi,client	empty:104	Ditto	Blobbi interaction: clean|Blobbi interaction: feed|Blobbi interaction: medicate
+1990	regular	10	8	d	nip44:10		
+1002	regular	8	8	o,v,i,f	nip44:8		
+1080	regular	102	7		nip44:102		
+30301	addressable	69	7	d,status,col,b,file-attachment,output-file,i,platform,c,x	opaque-b64:50,json:16,nip44:2,empty:1	WalletScrutiny.com	
+39844	addressable	35	7	W,workflow-path,a,s,d,R,expiration,secret	empty:35		
+30080	addressable	29	7	d,world,prompt_hash,model,p,r,t,expiration,orderId	json:25,nip44:4		
+30227	addressable	15	7	d,t	json:15		
+30225	addressable	14	7	expiration,d,visibility,t	json:14		
+30226	addressable	14	7	expiration,d,visibility,t	json:14		
+30228	addressable	14	7	expiration,d,visibility,t	json:14		
+30801	addressable	13	7	d,window,scheme,expiration,epoch,commit,encrypted	nip44:13		
+30081	addressable	8	7	d,t,p,orderId,expiration,e,L	opaque-b64:4,json:3,empty:1		
+30509	addressable	7	7	signature,d,expiry	empty:7		
+8571	regular	31	6	x,expiration	opaque-b64:28,text:3		
+34578	addressable	18	6	d	nip44:18		
+4471	regular	10	6	expiration,h	nip44:10		
+30052	addressable	10	6	d,visibility,t	json:10		
+31991	addressable	10	6	d,l,L,s,p,t	json:10		
+30100	addressable	7	6	d,nonce,client,e,status,version,supports,t	nip44:5,text:1,json:1	snapstr.app	
+34237	addressable	7	6	e,a,d	empty:7		
+34552	addressable	6	6	action,d,app	empty:6		
+9841	regular	111	5	name,a,o,conclusion,c,started_at,queued_at,w,job,logs	json-ish:110,text:1		
+9842	regular	101	5	a,o,conclusion,q,c,started_at,queued_at,w,r,e	empty:101		
+30304	addressable	78	5	e,d,sha256,chunk	opaque-b64:75,nip44:3		
+33333	addressable	31	5	d,t,alt,n,tip,u,peg,e,score,p	opaque-b64:30,text:1	holdbtc	sidestr headers 6539-6550 of sidestr:dreamlab-txbt4|sidestr headers 1756-1767 of sidestr:dreamlab|sidestr headers 6515-6526 of sidestr:dreamlab-txbt4
+31510	addressable	25	5	get,d,expiration,network,give	json:25		
+30779	addressable	17	5	d,t	text:17		
+31905	addressable	16	5	d,t	opaque-b64:16		
+35713	addressable	14	5	d,t	opaque-b64:14		
+35711	addressable	12	5	d,t	nip44:12		
+38421	addressable	11	5	d,n,nonce,expiration,u,version,mint	json:11		
+1019	regular	8	5	e,t	opaque-b64:8		
+3411	regular	6	5	t,e,v	json:6		
+30800	addressable	6	5	d,schema,contractStatus,t,email,published_at,encrypted	json:4,nip44:2		
+1001	regular	5	5	v,f	nip44:5		
+3410	regular	5	5	t,u,v,g,x,expiration,w	json:5		
+4263	regular	5	5	round1,t,frost-id,edition,coord-protocol,base	empty:5		
+4264	regular	5	5	frost-id,t,edition	json:5		
+4272	regular	5	5	t,frost-id,edition,new,base	empty:5		
+30303	addressable	5	5	mime,d,sha256,t	json:5		
+30701	addressable	5	5	d	opaque-b64:3,nip44:2		
+38503	addressable	98	4	d,t	json:98		
+8383	regular	30	4	hash,destination,y,z,order-id,expiration,network,amount	empty:30		
+37196	addressable	11	4	channel_expiry_secs,upstream,v,mint,free_probe_units,ip,last_seen_unix,service,d,app	json:11		
+30700	addressable	8	4	d	opaque-b64:5,nip44:3		
+32123	addressable	6	4	d	nip44:6		
+30051	addressable	5	4	d,access,visibility,lang	json:5		
+39401	addressable	5	4	expires,p,qel-transports,d,qel,qel-backchannel	json:5		
+1401	regular	4	4	expiration,x	nip44:4		
+30092	addressable	4	4	d,p	nip44:4		
+31902	addressable	4	4	d,t	opaque-b64:4		
+31909	addressable	4	4	e,d,t	opaque-b64:4		
+32150	addressable	4	4	clantag,name,p,alt,d,picture,r	text:3,empty:1		Esports clan: Aschaffenburg [AB]|Esports clan: Einundzwanzig Darmstadt [SVD]|Esports clan: Bitcoin Metropole Kempten [BMK]
+33457	addressable	4	4	d,notestr-base	nip44:4		
+39010	addressable	4	4	d,p	nip44:4		
+7575	regular	410	3	t	json:410		
+1078	regular	293	3	t,price,L,l,pricenode,source,author_mc,d,author_uuid,marker_id	json:290,nip44:3		
+30197	addressable	54	3	d,t,ref,scope	json:54		
+6472	regular	28	3	l,g,expiration,client	text:22,empty:6	icebreaker	
+30702	addressable	27	3	d	opaque-b64:25,nip44:2		
+5128	regular	15	3	a,x,server,title,path,description,source	empty:15		
+32678	addressable	11	3	d	nip44:11		
+87201	regular	10	3	a,client	json:10	rose-app,rose-agent	
+4178	regular	8	3	v,expiration	opaque-b64:8		
+4278	regular	8	3	t	text:8		
+1054	regular	7	3	p,t	json:7		
+1624	regular	6	3	e,p,alt,q,nonce	text:6		cover note for issue|cover note for PR
+9401	regular	5	3	i,platform,x,c,version,client	text:5	WalletScrutiny.com	
+15750	replaceable	5	3	network,name,absolutemininputcount,type,readmore,endpoint	text:5		
+16919	replaceable	5	3	shard,v,source,alt	json:5		Indexstr node heartbeat: shard 77|Crawlstr node heartbeat: shard 69|Indexstr node heartbeat: shard 35
+10037	replaceable	4	3	ark,network	empty:4		
+19843	replaceable	4	3	X,software,W,R,M,expiration,secrets-key	empty:4		
+30210	addressable	4	3	relay,cap,d,mirror	empty:4		
+30736	addressable	4	3	d,trader_char,pnl_365d,pnl_30d,trader_char_id,pnl_7d	text:4		
+36767	addressable	4	3	alt,t,bg,d,c,published_at,title,client,f,p	empty:4	Armada,Ditto	Custom theme: Suika|Custom theme: Fall|Custom theme: Dark Sky
+1013	regular	3	3	o,v,f	nip44:3		
+10600	replaceable	3	3	url,source,t,referer	text:2,json:1		
+12150	replaceable	3	3	a,alt	empty:3		Esports clan membership
+19844	replaceable	3	3	a,expiration,p	empty:3		
+31906	addressable	3	3	d,t	opaque-b64:3		
+3434	regular	482	2	expiration,p	nip44:482		
+39697	addressable	234	2	u,v,alt,d,x,type,network,source,l,published	json:234		Web index observation: Xcoders|Web index observation: New Australian Online Casinos 2026 - Brands & Bonuses|Web index observation: zettzeit.ch – Modellbahn in 1:220 seit dem Jahr 2000
+36947	addressable	64	2	elevation,tracks,d,session,c,pos,pitch,host,sphere,status	empty:64		
+9741	regular	44	2	expiration,t	json:44		
+30515	addressable	44	2	d,p	nip44:44		
+4859	regular	28	2	expiration,t,nonce	nip44:22,opaque-b64:6		
+2100	regular	26	2	client,t,name	text:26	tasklist-private,tasklist-telegram	
+87070	regular	15	2	p,dealer,record,t,split,v,offer,alt,i,lana	json:15		BEF mandate purchase: 11393.22916 Mandate LANA for 3500.00 EUR (ravenaplus.com)|BEF mandate purchase: 6510.41666 Mandate LANA for 2000.00 EUR (ravenaplus.com)|BEF mandate purchase: 1627.60416 Mandate LANA for 500.00 EUR (krogmenjave.com)
+3140	regular	13	2	t,operator,e,vkey,size,mirror	text:13		
+36	regular	9	2	k	text:9		
+30087	addressable	8	2	d,t,survey_count	nip44:6,opaque-b64:2		
+6426	regular	7	2	t,questionnaire-id,q,invite-code-hash,state	json:7		
+31222	addressable	7	2	d	opaque-b64:7		
+33051	addressable	7	2	t	json:7		
+13922	replaceable	6	2	listing,queue,expiration,endpoint,status	empty:6		
+105	regular	5	2	p,t	empty:5		
+31310	addressable	5	2	relay,d,alt	json:5		PosterChan VM host
+1014	regular	4	2	o,v,f	nip44:4		
+30703	addressable	4	2	d	opaque-b64:3,nip44:1		
+35981	addressable	4	2	p,alt,a,d,expiration,cid	empty:4		SWING replica report: ama.ne.jp|SWING replica report: yureko.samoyed.moe
+37070	addressable	4	2	e,d,t	json:4		
+1058	regular	3	2	p	nip44:3		
+7007	regular	3	2	expiration,t	nip44:3		
+9444	regular	3	2	p	nip44:3		
+32100	addressable	3	2	d,client,p,t	json:3	rose-app	
+34506	addressable	3	2	questionnaire-id,d,q,t	json:3		
+35980	addressable	3	2	alt,d,cid,url,size,title	text:3		SWING site announcement: yureko.samoyed.moe|SWING site announcement: ama.ne.jp
+1004	regular	2	2	o,v,f	nip44:2		
+3314	regular	2	2	client	text:2	Armada	
+4246	regular	2	2	confidence,agreement,e,t,btc-block,m,resolution-source,market-resolution	text:2		
+4711	regular	2	2	expiration,x	opaque-b64:2		
+4817	regular	2	2	nonce,g,expiration,t	json:2		
+6742	regular	2	2	t	json:2		
+7451	regular	2	2	v,p,a,proto,rules-hash	json:2		
+7452	regular	2	2	seq,proto,e	json:2		
+7453	regular	2	2	proto,e	json:2		
+7710	regular	2	2	t	json:2		
+8181	regular	2	2	K,M,E	json:2		
+8211	regular	2	2	client,p,alt	nip44:2	Ditto	Encrypted letter
+9840	regular	2	2	p,a,c,w,r	empty:2		
+10318	replaceable	2	2		nip44:2		
+10333	replaceable	2	2	medium,i,k,alt	empty:2		PC 2.0 Favorites
+16440	replaceable	2	2	m,operator,central,threshold	empty:2		
+19004	replaceable	2	2	-,p	empty:2		
+30084	addressable	2	2	d,e,p	nip44:2		
+30278	addressable	2	2	d,client	nip44:2	goose	
+30790	addressable	2	2	v,d	nip44:1,opaque-b64:1		
+31926	addressable	2	2	block,d,t	empty:2		
+34101	addressable	2	2	d,t	json:2		
+9413	regular	83472	1	p	nip44:83472		
+1066	regular	19382	1	r,client,T,rtt-open,retry,O,limitation.created_at_upper_limit,+attributes,-attributes,+kinds	empty:19382	@nostrwatch/relaymon	
+30072	addressable	14871	1	health,expires,last_checked,d,relay,payment,admission,latency_ms,nips,software	empty:14871		
+9431	regular	4605	1	p	nip44:4605		
+9435	regular	4605	1	p	nip44:4605		
+9436	regular	4605	1	p	nip44:4605		
+9477	regular	4605	1	p	nip44:4605		
+9432	regular	4604	1	p	nip44:4604		
+9464	regular	4604	1	p	nip44:4604		
+9478	regular	4604	1	p	nip44:4604		
+9465	regular	4603	1	p	nip44:4603		
+4903	regular	2024	1	agent,type,domain	json:2024		
+30934	addressable	403	1	tx_ref,a,d,order_type,from_wallet,lana_amount,to_wallet,currency,fiat_value,to_hex	empty:403		
+30939	addressable	387	1	a,overdue_days,created_at,wallet_id,status,d,order_type,destination_type,fund_ref,payment_type	empty:387		
+4444	regular	382	1		json:382		
+3210	regular	361	1	expiration	nip44:361		
+30935	addressable	310	1	investor_hex,fund_setting_id,tx_ref,a,receipt_url,d,order_type,status,destination_type,shop_name	empty:310		
+30960	addressable	234	1	bef_version,e,lana_received_lanoshis,p,lanapays_pubkey,wallet,round,a,d,purchases	json:234		
+38023	addressable	178	1	b,t,d,L,m,l,n	json:178		
+30013	addressable	153	1	d,t	json:153		
+38380	addressable	126	1	d	json:126		
+30933	addressable	106	1	p,a,lana_amount,exchange_rate,invoice_number,status,lana_discount_per,customer_wallet,d,caretaker_wallet	empty:106		
+30666	addressable	100	1	schema_version,t,alt,s,revision,d,period,resolution	json:100		bestiario orders report over the last 30 days for instance b3626fe91b602bdbca3673bec0855221f41dc8f6d|bestiario orders report over the last 7 days for instance 00037abd44e7a846689e230d5446abcd0d56a344fa|bestiario network summary report over the last whole archive
+4200	regular	81	1	t,alt,section,x,issue	json:81		AI narration: Ditto 2.42.3 shows relay delivery and tightens account boundaries|AI narration: Sonar alpha.15–alpha.15.1 repairs encrypted-group publishing|AI narration: Myco 0.8.0–0.8.1 gives nearby apps their own Nostr store
+4223	regular	67	1	a,d,temp,t	empty:67		
+6312	regular	60	1	e,p,nodes,sort,source	json:60		
+30381	addressable	51	1	issued_at_ms,v,scope,d,expires_at_ms,reason,action,e,p	empty:51		
+7078	regular	38	1	d	json:38		
+87002	regular	35	1	p,wallet,L,wallet_type,l,registration_source,registered_at,is_virgin,status,split_created	text:35		
+87006	regular	35	1	validation_method,wallet,L,l,balance,verified_at	text:35		
+30889	addressable	34	1	d,w,status	empty:34		
+31000	addressable	32	1	p,t	json:32		
+2727	regular	31	1	field,client	opaque-b64:31	field-clean	
+2101	regular	28	1	name,e,t,action,client	empty:28	tasklist	
+4373	regular	27	1	z,expiration	opaque-b64:27		
+30495	addressable	26	1	v,onboard,r,t,d,price,x402,title,status,timing	text:26		
+31500	addressable	26	1	d,expiration	json:26		
+30974	addressable	23	1	alt,d,p,t	json:23		BEF dealer regular customer: krog-menjave
+30903	addressable	20	1	lanapays_pubkey,quota_volume_limit,quota_tx_used,a,quota_currency,d,quota_volume_used,reason,unit_id,quota_period	text:20		
+30427	addressable	19	1	thumb,d,t	json:19		
+30093	addressable	16	1	t,producteur,d,date,lang,station,duration,visibility	json:16		
+6314	regular	15	1	e,p,nodes,sort,source	json:15		
+31605	addressable	14	1	a,v,d	nip44:14		
+4472	regular	13	1	epoch,l	nip44:13		
+3141	regular	12	1	t,round,digest,seal,reveal_at,chain,ct	text:12		
+32107	addressable	12	1	t,d,coreApiVersion,icon,repo,title,version,ref,L,l	text:12		
+9911	regular	10	1	t,i,oaf-id,oaf-channel,oaf-sender	json:10		
+4516	regular	9	1	expiration,p	nip44:9		
+4850	regular	9	1	d	json:9		
+30211	addressable	9	1	t,a,sport_type,d,match,deadline	json:9		
+30290	addressable	9	1	user,d,arb,role,i,n	nip44:8,json:1		
+33272	addressable	9	1	d	nip44:9		
+1349	regular	8	1	a,e,k,p	json:8		
+4247	regular	8	1	v,covenant-address,p,t,doomsday-at,d,covenant,doomsday-address,oracle,m	text:8		
+30292	addressable	7	1	u,t,d,role,app,i,n	nip44:7		
+30815	addressable	7	1	d,expiration	opaque-b64:7		
+31503	addressable	7	1	d	json:7		
+90901	regular	7	1	e,billing_day,proposal,p,service,tx,from_wallet,to_wallet,amount_lana,amount_lanoshi	text:7		
+9486	regular	6	1	p	nip44:6		
+1623	regular	5	1	t,d,touchstone-checkpoint,touchstone-recorder,touchstone-head,touchstone-bitcoin-height,touchstone-root	json:5		
+30302	addressable	5	1	s,a,rank,d,title,description	empty:5		
+30900	addressable	5	1	schema,priority,t,a,d,domain,assignee,status,dependency,dep	json:5		
+30938	addressable	5	1	investor_hex,investment_amount,d,note,available_amount,investment_currency,invested_amount,wallet_id,status	empty:5		
+1707	regular	4	1	t	opaque-b64:4		
+13196	replaceable	4	1	maxSendable,walletFeeBase,t,paymentFeeBase,minSendable,o,liquidityFeeRate,maxBalance,walletFeePeriod,relay	empty:4		
+30090	addressable	4	1	d,visibility,t	json:4		
+33337	addressable	4	1	d	json:4		
+39991	addressable	4	1	vout,e,p,a,last_block,d,from_wallet,to_wallet,state,txid	empty:4		
+1090	regular	3	1	alt,t,L,x,l,imeta,client	text:3	imwald	Reaction clip: One of us!|One of us!|Reaction clip: Reaction clip: audrey hepburn sunglasses looking
+9372	regular	3	1	expiration,client	nip44:3	cliprelay	
+10110	replaceable	3	1	root,prev,height	json:3		
+30940	addressable	3	1	total_budget,investor_hex,overdue_count,payment_count,avg_payment_days,confirmed_count,d,available_amount,split_financed,total_financed	empty:3		
+31111	addressable	3	1	d	text:3		
+32681	addressable	3	1	d	nip44:3		
+33838	addressable	3	1	expiration,d,p,t	nip44:3		
+35714	addressable	3	1	d,t	opaque-b64:3		
+39015	addressable	3	1	v,d,expiration,client	json:3	church-node-agent/0.1.0	
+39802	addressable	3	1	d,a,r	json:3		
+112	regular	2	1		text:2		
+5310	regular	2	1	expiration,nofederate,p	nip44:2		
+30291	addressable	2	1	u,d,role,app,n,i	nip44:2		
+30506	addressable	2	1	d,access,visibility,lang	text:2		
+30520	addressable	2	1	d	nip44:2		
+30762	addressable	2	1	score,v,p,t,board,d,level,state,mode,game	text:2		
+30902	addressable	2	1	lanapays_pubkey,caretaker_hex,lana_discount_per,a,d,note,caretaker_wallet,unit_id,lanapays_us_per,valid_from	text:2		
+31780	addressable	2	1	d,p,t	json:2		
+31971	addressable	2	1	e,p,E,a,A,child_status,K,d,k,P	text:2		
+32151	addressable	2	1	p,alt,a,d,mode,game	empty:2		Esports lineup: SUPER TOXIC, rocket-league 1v1|Esports lineup: SUPER TOXIC, age-of-empires-2 1v1
+34579	addressable	2	1	d	nip44:2		
+37777	addressable	2	1	image,d,r,client	empty:2	zap.stream	
+38103	addressable	2	1	e,d,client,t	json:2	chama	
+38107	addressable	2	1	e,d,client,t	json:2	chama	
+38111	addressable	2	1	n,nonce,d,expiration	json:2		
+38381	addressable	2	1	phase,beacon_id,pubkey,t	json:2		
+39842	addressable	2	1	r,a,o,d,c,expiration,started_at,queued_at,w,status	empty:2		
+87211	regular	2	1	a,action,client	json:2	rose-agent	
+52	regular	1	1		text:1		
+106	regular	1	1	p,t	empty:1		
+123	regular	1	1	l,d	nip44:1		
+1003	regular	1	1	o,v,f	nip44:1		
+1005	regular	1	1	o,v,f	nip44:1		
+1015	regular	1	1	o,v,f	nip44:1		
+1051	regular	1	1	p,t	json:1		
+1351	regular	1	1	p,timestamp,t,encrypted,unit,encryption_algo,entry_method,source	nip44:1		
+1420	regular	1	1	score,client,p,t	json:1	doodleduo	
+1738	regular	1	1	r,alt	text:1		Cairn: https://www.google.com/
+1818	regular	1	1	t	text:1		
+1888	regular	1	1	p1,walked,lblocks,replay,dur,t,i0,a1,lboss,score	empty:1		
+1889	regular	1	1	pool,t	empty:1		
+1989	regular	1	1	flags,mines,exploded,alt,revealed,duration,height,result,width,difficulty	text:1		Minesweeper game result
+2102	regular	1	1	name,client,t	text:1	tasklist-telegram	
+2256	regular	1	1	t,alt,s,c,client	empty:1	Ditto	Daily tarot reading with three cards: Page of Wands, The World (Reversed), Four of Wands (Reversed) 
+3031	regular	1	1	from,p,t	text:1		
+4251	regular	1	1	m,btc-block,e,t	opaque-b64:1		
+4252	regular	1	1	m,btc-block,e,t	json:1		
+4473	regular	1	1	epoch,l	nip44:1		
+4474	regular	1	1	epoch,l	nip44:1		
+4551	regular	1	1	d,p,app	json:1		
+4663	regular	1	1	t	json:1		
+4747	regular	1	1	i,k,expiration,alt	opaque-b64:1		A MycoSoft post, readable in MycoSoft (or by anyone with its author's public key).
+5101	regular	1	1	e,p,exit_code,stdout,success,duration,stderr	empty:1		
+6313	regular	1	1	e,p,nodes,sort,source	json:1		
+6315	regular	1	1	e,p,nodes,sort,source	json:1		
+6420	regular	1	1	questionnaire-id,state,q,t	json:1		
+6421	regular	1	1	questionnaire-id,state,q,t	json:1		
+7450	regular	1	1	v,e,a,proto,rules-hash,deadline,relay,game	json:1		
+7700	regular	1	1	p,priority,ticket_id,category,status	nip44:1		
+7711	regular	1	1	t	json:1		
+7878	regular	1	1	c,cl	json:1		
+7880	regular	1	1	c	json:1		
+8555	regular	1	1	u,digest-directory,digest-models,digest-snapshot,digest-uptime	json:1		
+9637	regular	1	1	workout_date,title,duration,t	json:1		
+9807	regular	1	1	v,e,-	nip44:1		
+9843	regular	1	1	a,p	empty:1		
+10010	replaceable	1	1	p	empty:1		
+10218	replaceable	1	1	e,p	text:1		
+10442	replaceable	1	1		json:1		
+10444	replaceable	1	1		nip44:1		
+16158	replaceable	1	1	sensor,name,g,sensor_status,power,connectivity,description	empty:1		
+16769	replaceable	1	1	published_at,tab,client,alt	empty:1	Ditto	Custom profile tabs
+17777	replaceable	1	1	a,client	empty:1	zap.stream	
+18678	replaceable	1	1	published_at,client,p,alt	empty:1	Ditto	Top 8: this user's eight favorite people, in order
+30024	addressable	1	1	r,p,image,d,L,summary,imeta,l,published_at,title	json-ish:1		
+30027	addressable	1	1	e,d,client	empty:1	Nostrich	
+30031	addressable	1	1	title,sticker,d,client	empty:1	DEN Chat	
+30086	addressable	1	1	title,d	text:1		
+30108	addressable	1	1	d,t	json:1		
+30164	addressable	1	1	u,d,gateway	empty:1		
+30184	addressable	1	1	channel,d,published_at	json:1		
+30220	addressable	1	1	e,round,d,witness,prediction_at	empty:1		
+30241	addressable	1	1	u,d,app	json:1		
+30321	addressable	1	1	score,p,d,open_count,period_days	text:1		
+30333	addressable	1	1	capacity,price,d,nonce,kinds,status	empty:1		
+30361	addressable	1	1	d,t	json:1		
+30398	addressable	1	1	d,visibility,t	json:1		
+30560	addressable	1	1	alt,blake3,fa:scope,d,fa:context,fa:day,fa:board	json:1		Tide 2026-10-06: 3 of 3 pts remaining
+30791	addressable	1	1	d	opaque-b64:1		
+30901	addressable	1	1	online_shop,receiver_name,p,receiver_address,payment_scheme_label,opening_hours_json,bank_account,lanapays_payout_wallet,status,latitude	empty:1		
+30961	addressable	1	1	p,a,paid_percent,lana_in_progress_lanoshis,mandate_status,lana_received,d,lana_acquired,lana_remaining_lanoshis,acquired_percent	json:1		
+30970	addressable	1	1	non_binding,wallet,round,alt,d,params,total,client,currency,split	json:1	befexplorer.com	Non-binding co-creation interest for Split 9: GBP 2000 (BEF Explorer)
+31338	addressable	1	1	zap,t,a,encrypted,price,d,subject,i,imeta,c	text:1	Fanfares	
+31342	addressable	1	1	n,d,g,t	json:1		
+31402	addressable	1	1	name,t,d,price,pmi,about,url	json:1		
+31573	addressable	1	1	v,p,t,zone,d	json:1		
+31602	addressable	1	1	d	nip44:1		
+31603	addressable	1	1	a,v,d,eck	nip44:1		
+31604	addressable	1	1	a,v,d,eck	nip44:1		
+31994	addressable	1	1	t,expires-at,q,coordinator,worker,delegation-id,election-id	json:1		
+32069	addressable	1	1	a,d	nip44:1		
+32600	addressable	1	1	modes,version,d,relays	json:1		
+33356	addressable	1	1	v,p,app_pub,d,protocol	nip44:1		
+33357	addressable	1	1	app_pub,d,protocol,p	nip44:1		
+33402	addressable	1	1	alt,rest_between_sets,d,exercise,type,title,difficulty,client	empty:1	POWR	Workout template: Bar Zero - Push
+34200	addressable	1	1	title,d	json:1		
+34393	addressable	1	1	d	json:1		
+34472	addressable	1	1	epoch,l,d	nip44:1		
+36669	addressable	1	1	alt,d,published_at,day,client	text:1	gratefulday.space	Daily reflection entry for Wednesday, October 7 (Day 280)
+36677	addressable	1	1	schedule,end,p,donation_wallet_unreg,start,d,online,cover,language,donation_wallet	text:1		
+36942	addressable	1	1	W,r,s,o,d,L,nonce,m,f,published_at	json:1	DEN Chat	
+36946	addressable	1	1	provider,epoch,d,status	opaque-b64:1		
+37450	addressable	1	1	v,seats,d,proto,deadline,relay,open,game,status	json:1		
+37572	addressable	1	1	config,d,k,p	empty:1		
+37702	addressable	1	1	d,t	json:1		
+38386	addressable	1	1	initiator,s,y,d,z,published_at,expiration	empty:1		
+39019	addressable	1	1	v,d,client	json:1	church-node-agent/0.1.0	
+39022	addressable	1	1	p,t,a,d,cycle,protocol	json:1		
+39036	addressable	1	1	v,d,client	json:1	church_sdk/0.1.0	
+40970	regular	1	1	e,p,t,alt,action,dealer,split	json:1		Ravena Plus accepted the co-creation interest of 16a97006… for SPLIT 9
+60200	regular	1	1	p,service,tx,from_wallet,to_wallet,currency,type,amount_lanoshis,timestamp_paid,amount_fiat	text:1		
+64600	regular	1	1	d,t	json:1		

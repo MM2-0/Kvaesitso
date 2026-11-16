@@ -1,0 +1,28 @@
+[package]
+name = "udp-loss-shim"
+version.workspace = true
+edition.workspace = true
+publish.workspace = true
+license.workspace = true
+
+# UDP loopback that drops a configurable fraction of datagrams.
+# Used by the I9 packet-loss interop scenario:
+#
+#   client (--server-bind 0.0.0.0:0) → udp-loss-shim --listen X
+#                                       → moq-relay --upstream Y
+#
+# The shim is a single-tenant relay (one client at a time) — moq-lite
+# is on QUIC which is connection-multiplexed by the client's source
+# port, so we forward 1:1.
+
+[[bin]]
+name = "udp-loss-shim"
+path = "src/main.rs"
+
+[dependencies]
+anyhow.workspace = true
+clap.workspace = true
+tokio.workspace = true
+rand = "0.8"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }

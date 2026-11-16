@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="browser_address_hint">搜索或输入地址</string>
+    <string name="browser_console_title_short">控制台</string>
+    <string name="browser_console_title">控制台(%1$d)</string>
+    <string name="browser_console_clear">清除</string>
+    <string name="napplet_untitled">未命名nApplet</string>
+</resources>

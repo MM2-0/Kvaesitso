@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="browser_address_hint">Search or enter address</string>
+    <string name="browser_console_title_short">Console</string>
+    <string name="browser_console_title">Console (%1$d)</string>
+    <string name="browser_console_clear">Clear</string>
+    <string name="napplet_untitled">Untitled nApplet</string>
+    <!-- Title of the system picker opened for an HTML file input inside the in-app browser. -->
+    <string name="browser_file_chooser_title">Choose a file</string>
+    <!-- Shown when the device has no app that can hand a file back to the page. -->
+    <string name="browser_file_chooser_unavailable">No app available to pick a file</string>
+    <!-- Browser actions -->
+    <string name="browser_link_copied">Link copied</string>
+    <string name="browser_no_other_browser">No other browser installed</string>
+
+    <!-- Downloads and sharing -->
+    <string name="browser_download_started">Downloading %1$s…</string>
+    <string name="browser_download_saved">Saved %1$s to Downloads</string>
+    <string name="browser_download_failed">Couldn\'t download %1$s</string>
+    <string name="browser_share_chooser">Share</string>
+
+    <string name="browser_site_data_cleared">Site data cleared</string>
+    <!-- Shown when a page in the in-app browser goes full screen, hiding the address bar: names the site, so a page can't pass itself off as the app. -->
+    <string name="browser_fullscreen_notice">%1$s is full screen. Swipe from an edge, or press Back, to exit.</string>
+
+    <!-- Site permissions (camera / microphone / location) -->
+    <string name="browser_permission_camera">Use your camera</string>
+    <string name="browser_permission_microphone">Use your microphone</string>
+    <string name="browser_permission_location">Know your approximate location</string>
+    <string name="browser_permission_system_denied">Amethyst doesn\'t have Android\'s permission for this. Allow it in system settings.</string>
+    <string name="browser_permission_ask">Ask</string>
+    <string name="browser_permission_allowed">Allowed</string>
+    <string name="browser_permission_blocked">Blocked</string>
+    <string name="browser_permission_section">Site permissions</string>
+
+    <!-- Long-press menu -->
+    <string name="browser_ctx_open_new_window">Open in new window</string>
+    <string name="browser_ctx_copy_link">Copy link address</string>
+    <string name="browser_ctx_share_link">Share link</string>
+    <string name="browser_ctx_download_image">Download image</string>
+    <string name="browser_ctx_copy_image_link">Copy image address</string>
+
+    <!-- Home screen shortcuts -->
+    <string name="browser_home_shortcut_unsupported">Your launcher doesn\'t support shortcuts</string>
+
+    <!-- Renderer crash -->
+    <string name="browser_renderer_gone">This page stopped working</string>
+    <string name="browser_renderer_gone_reload">Reload</string>
+</resources>

@@ -1,0 +1,29 @@
+[package]
+name = "hang-listen"
+version.workspace = true
+edition.workspace = true
+publish.workspace = true
+license.workspace = true
+
+# Real subscribe/decode body: connects to a moq-lite-03 relay, reads
+# the hang catalog, picks the first Opus / Container::Legacy audio
+# rendition, and writes Float32 PCM to --output-pcm. Used by the
+# cross-stack interop tests in nestsClient/src/jvmTest/.../interop/native/.
+
+[[bin]]
+name = "hang-listen"
+path = "src/main.rs"
+
+[dependencies]
+anyhow.workspace = true
+clap.workspace = true
+tokio.workspace = true
+hang = "0.15"
+moq-lite = "0.15"
+moq-mux = "0.3"
+moq-native = { version = "0.13", default-features = false, features = ["quinn", "aws-lc-rs"] }
+opus = "0.3"
+rustls = { version = "0.23", default-features = false, features = ["aws-lc-rs"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+url = "2"

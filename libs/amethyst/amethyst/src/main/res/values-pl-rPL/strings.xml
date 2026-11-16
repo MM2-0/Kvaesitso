@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Placeholder shown in a chat row while an encrypted message is still being decrypted -->
+    <!-- Prefix on a Messages-list preview when the newest message was sent by the logged-in user. %1$s is the message text -->
+    <!-- Reply-mode toggle in the chat composer: reply inline in the timeline vs pull it aside into a thread. -->
+    <!-- Title of the minichat (thread) screen opened from a chat message. -->
+    <!-- Title of the picked-image confirmation dialog when attaching a picture to a thread reply. -->
+    <!-- Chip on a chat message that opens its thread ("minichat") of kind-1111 replies. -->
+    <!-- A reply whose target was searched for across all reachable history and never found. -->
+    <!-- Reply subtitle when every relay genuinely bottomed out (no stalls) and it still wasn't there. -->
+    <!-- Overflow count on the capped reporter avatar row, e.g. "+21". -->
+    <!-- Napplet sandbox chrome (host top bar + live action notices) -->
+    <!-- Napplet capability names -->
+    <!-- Napplet consent dialog -->
+    <!-- An amountless BOLT11: the payee decides how much. Never render this as "0 sats". -->
+    <!-- Consequence lines for event kinds whose payload lives entirely in the tags, so a
+         kind-only summary would hide what is actually being signed. These replaceable lists are
+         already cached on the account, so the dialog diffs the proposed list against the current
+         one and reports what actually changes rather than a raw total. -->
+    <!-- Single-account edits, by far the common case: name who it is instead of counting. %1$s is
+         the display name, shown next to their avatar. -->
+    <!-- %1$s is the joined change list, e.g. "follows 2 new accounts and UNFOLLOWS 130 accounts". -->
+    <!-- Re-publishing an identical list is harmless; say so rather than raising a false alarm. -->
+    <!-- No cached copy to compare against, so the whole list is what gets written. -->
+    <!-- Signer permissions: first-connect dialog -->
+    <!-- Signer trust levels -->
+    <!-- Signer per-op consent dialog -->
+    <!-- Signer op labels -->
+    <!-- Decrypt: the message is already decrypted by Amethyst; the permission is to expose it to the app -->
+    <!-- Decrypt scoped to one counterparty. %1$s is that person's name (or a shortened npub) -->
+    <!-- Narrower "remember" choice offered next to "Always allow". %1$s is the counterparty's name -->
+    <!-- Shown as the preview when Amethyst itself cannot decrypt the message the app asked to read -->
+    <!-- Label above the counterparty avatar in the decrypt consent dialog -->
+    <!-- Permissions management screen -->
+    <!-- NIP-46 remote signer (bunker) -->
+    <!-- Relay Authentication (NIP-42) settings -->
+    <!-- The group header carries the grammar; each toggle is a completion of the sentence, so these
+         keys are new rather than reused - a stale translation of the old standalone titles would
+         read as a non-sequitur under this header. -->
+    <!-- The AUTH prompt. The title is constant and names the account whose npub would be revealed;
+         exactly one "why" line varies, and it states the consequence of declining too, which is why
+         there is no separate "if you don\'t" line. New keys throughout: these replaced a set of
+         labels ("Notify:", "Post to this room") whose translations would otherwise still bind. -->
+    <!-- What the same two buttons say once "Remember for this relay" is on. -->
+    <!-- No longer shown in the prompt: kept so the existing translations aren't orphaned. -->
+    <!-- Settings: three lists that each hold what their header says. -->
+    <!-- Short labels for the purpose chips on a "recent logins" row. -->
+    <!-- Composer audience control (Notify / "Visible to") -->
+    <!-- Notification channel groups (organize the per-kind channels in system settings) -->
+    <!-- Reposts -->
+    <!-- Media (picture &amp; video posts that mention you) -->
+    <!-- Articles &amp; highlights -->
+    <!-- Code &amp; git -->
+    <!-- Badges -->
+    <!-- Nutzaps &amp; onchain zaps (rendered on the Zaps channel) -->
+    <!-- Poll mentions (rendered on the Mentions channel) -->
+    <!-- Call notifications and UI -->
+    <!-- Opt-in breakdown of the always-on notification, shown only after the user taps "Show details". Counts overlap: one relay commonly
+         serves several jobs at once, so these deliberately sum to more than the relay count. -->
+    <!-- Activity labels, used where the app's own noun for the data type already means something
+         else to the user: "Outbox Relays" is their own relay list in settings, and "Profile" is
+         their profile screen. Naming the job avoids an active misreading. -->
+    <!-- How each subscription actually works, shown on the Active Subscriptions screen.
+         Describe the real strategy, not the intent — these are read by people trying to explain
+         a relay count they think is too high. -->
+    <!-- Two countable nouns, so two plurals composed at the call site rather than one string with
+         two %d in it: filter and relay decline independently in Slavic/Baltic/Semitic languages. -->
+    <string name="always_on_notif_tile_label">Usługa powiadomień</string>
+    <!-- Settings search -->
+    <!-- Settings search keywords: an English concept/protocol index that supplements the
+         (translated) row titles. Marked translatable="false" so protocol terms (blossom, nsec,
+         negentropy, …) stay searchable in every locale and aren't sent to translators. -->
+    <!-- Compact label for the segmented control, where "Unmetered WiFi" does not fit. -->
+    <!-- Compact labels for the segmented control. -->
+    <!-- Compact labels for the segmented control, rendered in each option's own typeface. -->
+    <!-- New conversation chooser (full-screen picker opened from the Messages FAB).
+         Each row stays lean; the "best for" line and the pros/cons appear only when a row is tapped. -->
+    <!-- Buzz calls its groups channels, and a Buzz relay is one workspace rather than a directory of groups. -->
+    <!-- Reusable geohash location picker (shared, not group-specific) -->
+    <!-- Same, where this viewer cannot start one: not a member, or a Buzz chat channel (forum posts belong to forum channels). -->
+    <string name="share_target_as_dm">Wyślij jako DM</string>
+    <string name="share_target_as_highlight">Nowe wyróżnienie</string>
+    <string name="share_target_as_picture">Nowe zdjęcie</string>
+    <string name="share_target_as_short_video">Nowy filmik</string>
+    <string name="share_target_as_video">Nowe wideo</string>
+    <string name="share_target_scan_qr">Zeskanuj QR kod</string>
+    <string name="shortcut_scan_qr_short">Skanuj QR </string>
+    <string name="shortcut_scan_qr_long">Zeskanuj QR kod</string>
+    <!-- Label for the mixed media feed: pictures + every NIP-71 video kind + NIP-94 files.
+         Distinct from the "shorts" string, which labels the vertical/short-video-only feed. -->
+    <!-- Onchain zap send dialog -->
+    <!-- Buzz kind-40099 system messages: relay-authored narration of a channel state change. -->
+    <!-- Fallback for a system message type this version does not know yet: "alice: some_new_type". -->
+    <!-- Buzz huddles (kind 481xx): live audio-room lifecycle, narrated in the chat timeline. -->
+    <!-- Buzz agent jobs (kind 43xxx): an agent task's lifecycle, narrated in the chat timeline. -->
+    <!-- Buzz forum votes (kind 45002). -->
+    <!-- %1$s is replaced at runtime by an inline star icon, not text. Keep the placeholder. -->
+    <!-- Kind display names for relay subscription filter chips -->
+    <!-- M3 Action Dialog titles -->
+    <!-- Nicknames (NIP-85 contact cards); the dialog strings live in commons -->
+    <!-- LAN cast (Chromecast) feature -->
+    <!-- HLS multi-resolution video sharing -->
+    <!-- NIP-75 Zap Goals -->
+    <!-- PS1 memory-card saves over nostr (kind 38192). "PS1" is the PlayStation 1, do not translate. -->
+    <!-- Roadstr road event reports (kinds 1315/1316). "Roadstr" is a proper noun, do not translate. -->
+    <!-- NIP-86 Relay Management -->
+    <!-- Emoji packs -->
+    <!-- NIP-9B community rules composer-side validation. -->
+    <!-- Nowhere links (hostednowhere.com / nowhr.xyz). The site name "Nowhere" is a proper noun, do not translate. -->
+    <!-- Marmot (MLS) group chats -->
+    <!-- Buzz workflow run board -->
+    <!-- Buzz agent attestation -->
+    <!-- Buzz agent persona editor -->
+    <!-- Profile card (kind-0 rendered in the feed) -->
+    <!-- Health Connect: activity label, shown by Health Connect next to the link into our
+         rationale screen. Needs to be an Android resource (not a commons Compose resource)
+         because android:label on the manifest entry can only reference @string/. -->
+    <!-- My Fitness: the signed-in user's own training summary. Android resource because
+         NavBarItemDef labels are R.string ids. -->
+    <!-- NIP-71 video credits: what a video says about the people and works it references. -->
+    <string name="always_on_notif_channel_description">Utrzymuje aktywne połączenia z transmiterami skrzynki odbiorczej, umożliwiając otrzymywanie powiadomień w czasie rzeczywistym</string>
+    <plurals name="always_on_notif_connected_foreground">
+        <item quantity="one">Podłączono do %1$d transmitera</item>
+        <item quantity="few">Podłączono do %1$d transmiterów</item>
+        <item quantity="many">Podłączono do %1$d transmiterów</item>
+        <item quantity="other">Podłączono do %1$d transmiterów</item>
+    </plurals>
+    <string name="always_on_notif_connecting">Łączenie z transmiterami odbiorczymi\u2026</string>
+    <string name="always_on_notif_hide_details">Ukryj szczegóły</string>
+    <string name="always_on_notif_show_details">Pokaż szczegóły</string>
+    <string name="always_on_notif_tile_subtitle_off">Wył.</string>
+    <string name="always_on_notif_tile_subtitle_on">Wł.</string>
+    <string name="always_on_notif_title">Powiadomienia Ametyst Aktywne</string>
+    <string name="blossom_sync_cancel">Anuluj</string>
+    <string name="blossom_sync_channel_description">Wyświetla postęp kopiowania plików między serwerami Blossom.</string>
+    <string name="blossom_sync_channel_name">Synchronizacja Blossom</string>
+    <string name="call_ongoing">Połączenia</string>
+    <string name="call_ongoing_description">Powiadomienie o trwającym połączeniu</string>
+    <string name="call_with">Zadzwoń przez %1$s</string>
+    <string name="pow_notification_channel_description">Wyświetla posty, które wciąż generują dowód pracy zgodnie ze standardem NIP-13, aby proces ten mógł się zakończyć po zamknięciu aplikacji.</string>
+    <string name="pow_notification_channel_name">Wydobywanie dowodów wykonania pracy</string>
+    <string name="pow_notification_send_without_pow">Wyślij teraz</string>
+    <string name="blossom_syncing">Kopiowanie plików pomiędzy serwerami…</string>
+    <string name="call_hangup">Rozłącz się</string>
+    <plurals name="pow_mining_job">
+        <item quantity="one">%1$s • wydobywanie z szybkością %2$d bitów</item>
+        <item quantity="few">%1$s • wydobywanie z szybkością %2$d bitów</item>
+        <item quantity="many">%1$s • wydobywanie z szybkością %2$d bitów</item>
+        <item quantity="other">%1$s • wydobywanie z szybkością %2$d bitów</item>
+    </plurals>
+    <plurals name="pow_mining_progress">
+        <item quantity="one">Wydobycie w systemie proof of work… (%1$d wpis w kolejce)</item>
+        <item quantity="few">Wydobywanie w systemie proof of work… (%1$d wpisów w kolejce)</item>
+        <item quantity="many">Wydobywanie w systemie proof of work… (%1$d wpisów w kolejce)</item>
+        <item quantity="other">Dowód pracy w górnictwie… (%1$d posty w kolejce)</item>
+    </plurals>
+    <string name="pow_mining_title">Wydobywanie dowodu wykonania pracy</string>
+    <string name="pow_notification_sending">Wysyłanie do transmiterów…</string>
+    <string name="pow_notification_cancel_all">Anuluj</string>
+    <string name="pow_time_left">◆ %1$s pozostało</string>
+    <string name="pow_time_left_soon">w każdej chwili</string>
+    <string name="pow_estimate_instant">&lt;1 s</string>
+    <plurals name="pow_estimate_seconds">
+        <item quantity="one">%1$d sekundę</item>
+        <item quantity="few">%1$d sekund</item>
+        <item quantity="many">%1$d sekund</item>
+        <item quantity="other">%1$d sekund</item>
+    </plurals>
+    <plurals name="pow_estimate_minutes">
+        <item quantity="one">%1$d minutę</item>
+        <item quantity="few">%1$d minut</item>
+        <item quantity="many">%1$d minut</item>
+        <item quantity="other">%1$d minut</item>
+    </plurals>
+    <plurals name="pow_estimate_hours">
+        <item quantity="one">%1$d godzina</item>
+        <item quantity="few">%1$d godzin</item>
+        <item quantity="many">%1$d godzin</item>
+        <item quantity="other">%1$d godzin</item>
+    </plurals>
+    <plurals name="pow_estimate_days">
+        <item quantity="one">%1$d dzień</item>
+        <item quantity="few">%1$d dni</item>
+        <item quantity="many">%1$d dni</item>
+        <item quantity="other">%1$d dni</item>
+    </plurals>
+    <string name="reaction">Reakcję</string>
+    <string name="boost">Powtórz</string>
+    <string name="post">Wyślij</string>
+    <string name="voice_post">Wiadomość głosowa</string>
+    <string name="voice_reply">Odpowiedź głosowa</string>
+    <string name="pow_kind_report">Zgłoś</string>
+    <!-- Emoji packs -->
+    <string name="health_connect_rationale_activity_label">Health Connect i Amethyst</string>
+    <!-- My Fitness: the signed-in user's own training summary. Android resource because
+         NavBarItemDef labels are R.string ids. -->
+    <string name="private_message">Wiadomość prywatna</string>
+    <string name="pow_kind_chat_message">Wiadomość Czatu</string>
+    <string name="nest_notification_broadcasting">Nest — Na żywo</string>
+    <string name="nest_notification_channel">Nests</string>
+    <string name="nest_notification_channel_description">Kontynuuje odtwarzanie dźwięku, jeżeli pokój jest otwarty.</string>
+    <string name="nest_notification_listening">Nest jest podłączony</string>
+    <string name="nest_notification_stop">Zatrzymaj</string>
+    <string name="nest_notification_text">Kliknij, aby wrócić.</string>
+    <string name="nest_leave">Wyjdź</string>
+    <string name="nest_mute">Wycisz</string>
+    <string name="nest_unmute">Włącz dźwięk</string>
+    <string name="call_mute">Wycisz</string>
+    <string name="call_unmute">Włącz dźwięk</string>
+    <string name="napplet_cap_identity">Tożsamość</string>
+    <string name="napplet_cap_keys">Operacje klawiatury</string>
+    <string name="napplet_cap_relay">Transmitery</string>
+    <string name="napplet_cap_signer">Szyfrowanie</string>
+    <string name="napplet_cap_storage">Schowek</string>
+    <string name="napplet_cap_value">Płatności</string>
+    <string name="napplet_cap_resource">Sieć</string>
+    <string name="napplet_cap_upload">Wgrane</string>
+    <string name="napplet_cap_theme">Motyw</string>
+    <string name="napplet_cap_notify">Powiadomienia</string>
+    <string name="napplet_cap_inc">Wiadomości</string>
+    <string name="muted_button">Wyciszone. Kliknij, aby włączyć dźwięk</string>
+    <string name="mute_button">Dźwięk włączony. Kliknij, aby wyciszyć</string>
+    <string name="play">Odtwórz</string>
+    <string name="pause">Pauza</string>
+</resources>

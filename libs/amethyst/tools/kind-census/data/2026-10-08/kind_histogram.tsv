@@ -1,0 +1,574 @@
+kind	events	authors	typed_in_quartz	quartz_label
+30382	755771	18	yes	Contact Card
+1	408783	13837	yes	Notes
+5	278654	1263	yes	Deletions
+1059	227901	223368	yes	GiftWraps
+7368	122548	537	NO	
+1060	93095	1444	NO	
+9413	83472	1	NO	
+30166	31609	34	yes	Relay Discovery
+7	30549	5321	yes	Reactions
+445	30167	30097	yes	MLS Group Message
+30383	26823	2	yes	Event Assertion
+30078	26462	8011	yes	User Settings
+38001	22501	25	NO	
+0	19885	17617	yes	Profile
+1066	19382	1	NO	
+10002	17769	15483	yes	Outbox Relays
+6	15111	4336	yes	Reposts
+30072	14871	1	NO	
+4	11541	334	yes	NIP-04 DMs
+14	5994	602	yes	DM Message
+5300	5291	48	yes	DVM Content Req
+30023	4923	984	yes	Blogs
+10050	4876	4655	yes	DM Relays
+9431	4605	1	NO	
+9435	4605	1	NO	
+9436	4605	1	NO	
+9477	4605	1	NO	
+9432	4604	1	NO	
+9464	4604	1	NO	
+9478	4604	1	NO	
+9465	4603	1	NO	
+1111	3849	1228	yes	Comments
+13194	3473	3228	yes	NWC Info
+42	3424	380	yes	Channel Message
+37195	2825	2410	NO	
+30392	2446	1	yes	Trusted List of Pubkeys
+30393	2445	1	yes	Trusted List of Events
+30443	2323	2147	yes	MLS KeyPackage
+9735	2275	171	yes	Zaps
+3	2250	1939	yes	Follow List
+4903	2024	1	NO	
+30315	1971	1804	yes	User Status
+6300	1713	38	yes	DVM Content Resp
+30421	1646	8	NO	
+3079	1376	582	yes	Push Registration
+1063	1097	65	yes	File Headers
+32267	998	22	yes	Software Application
+1311	918	31	yes	Live Chats
+30384	871	2	yes	Addressable Assertion
+1000	814	17	NO	
+10009	804	778	yes	Group List
+16	773	143	yes	Reposts (16)
+10005	710	695	yes	Channel List
+31923	666	21	yes	Appointment
+4333	637	637	NO	
+38383	513	27	yes	P2P Order
+30002	492	50	yes	Relay Set
+3434	482	2	NO	
+31922	479	4	yes	Day Appointment
+38384	448	8	NO	
+1040	444	6	yes	OTS
+34236	444	159	yes	Shorts (Repl)
+7575	410	3	NO	
+30934	403	1	NO	
+30939	387	1	NO	
+30311	384	38	yes	Live Streams
+4444	382	1	NO	
+3210	361	1	NO	
+10000	353	267	yes	Mute List
+38501	351	23	NO	
+1984	342	62	yes	Reports
+30789	341	176	NO	
+1985	335	18	yes	Label
+3083	328	294	yes	Push Preferences
+10377	318	214	NO	
+30935	310	1	NO	
+1078	293	3	NO	
+30422	280	8	NO	
+30388	276	90	NO	
+30005	275	264	yes	Video Sets
+30787	263	170	NO	
+30277	252	234	NO	
+10003	235	215	yes	Bookmark List
+30960	234	1	NO	
+39697	234	2	NO	
+7375	203	11	yes	Cashu Token
+1460	202	140	NO	
+1018	199	122	yes	Poll Response
+4334	198	9	NO	
+38023	178	1	NO	
+7000	177	8	yes	DVM Status
+1337	172	8	yes	Code Snippet
+30000	167	75	yes	People Lists
+9000	164	3	yes	Group Put User
+9021	163	112	yes	Group Join Request
+30013	153	1	NO	
+1463	151	83	NO	
+2023	142	31	NO	
+36943	135	12	NO	
+4242	131	8	NO	
+30402	129	14	yes	Classifieds
+38380	126	1	NO	
+37368	122	108	NO	
+2003	121	1	yes	Torrents
+3560	121	25	NO	
+30079	121	51	NO	
+30618	120	58	yes	Git Repo State
+31990	118	46	yes	Apps
+9841	111	5	NO	
+33302	109	85	yes	
+20	108	21	yes	Pictures
+30933	106	1	NO	
+10063	105	89	yes	Blossom Servers
+1124	104	8	NO	
+1080	102	7	NO	
+9	101	24	yes	Relay Chat
+9842	101	5	NO	
+1619	100	6	yes	Git PR Update
+30666	100	1	NO	
+11998	98	19	yes	
+38503	98	4	NO	
+3063	97	21	yes	Software Asset
+4248	96	96	NO	
+10100	96	49	yes	
+1068	91	17	yes	Poll
+10007	82	81	yes	Search Relays
+4200	81	1	NO	
+30304	78	5	NO	
+1077	77	23	NO	
+1618	77	12	yes	Git Pull Request
+1631	76	10	yes	
+30063	74	21	yes	Release Artifacts
+30385	71	2	yes	External ID Assertion
+31234	70	32	yes	Drafts
+30301	69	7	NO	
+10012	68	67	yes	Favorite Relays
+4223	67	1	NO	
+10312	67	49	yes	Room Presence
+38385	66	26	NO	
+30310	64	57	NO	
+36947	64	2	NO	
+17	63	26	yes	External Reaction
+10051	61	60	yes	MLS KeyPackage Relays
+3927	60	41	NO	
+6312	60	1	NO	
+13473	60	58	NO	
+10011	59	55	yes	External Identities
+1621	58	9	yes	Git Issue
+30197	54	3	NO	
+10086	53	53	yes	Index Relay List
+30085	53	35	NO	
+30381	51	1	NO	
+9421	50	50	NO	
+1050	48	13	NO	
+9420	46	46	NO	
+30617	45	22	yes	Git Repo
+9741	44	2	NO	
+30515	44	2	NO	
+31124	42	11	NO	
+39999	41	40	yes	Editable Decentralized List Item
+37778	40	40	NO	
+40	39	13	yes	Channel Definition
+7078	38	1	NO	
+33301	38	37	yes	
+34235	37	17	yes	Video (Repl)
+37779	35	35	NO	
+39844	35	7	NO	
+87002	35	1	NO	
+87006	35	1	NO	
+3080	34	14	yes	Push Deregistration
+30889	34	1	NO	
+30267	33	31	yes	App Sets
+31000	32	1	NO	
+2727	31	1	NO	
+8571	31	6	NO	
+33333	31	5	NO	
+8383	30	4	NO	
+30080	29	7	NO	
+2101	28	1	NO	
+4859	28	2	NO	
+6472	28	3	NO	
+9424	28	21	NO	
+13303	28	28	yes	
+15128	28	22	yes	Website Root
+17375	28	28	yes	Cashu Wallet
+39002	28	5	yes	Group Members
+8	27	8	yes	Badge Awards
+4373	27	1	NO	
+10443	27	27	NO	
+30001	27	16	yes	Old Bookmark List
+30003	27	16	yes	Named Bookmarks
+30064	27	6	yes	Chess Challenges
+30702	27	3	NO	
+31986	27	25	NO	
+443	26	20	NO	
+1010	26	21	yes	Edits
+2100	26	2	NO	
+7376	26	10	yes	Cashu History
+9734	26	5	yes	Zap Req
+10030	26	21	yes	Emoji Pack List
+13302	26	26	yes	
+30495	26	1	NO	
+31500	26	1	NO	
+11	25	5	yes	Thread
+1461	25	25	NO	
+1717	25	21	NO	
+31510	25	5	NO	
+4277	24	22	NO	
+5555	24	18	NO	
+9802	24	10	yes	Highlights
+10001	24	22	yes	Pins
+30218	24	10	NO	
+30974	23	1	NO	
+31242	22	22	NO	
+39307	22	14	yes	Video Subtitles
+36944	21	16	NO	
+37104	21	21	NO	
+39020	21	21	NO	
+30903	20	1	NO	
+30427	19	1	NO	
+22	18	12	yes	Shorts
+31903	18	18	NO	
+34578	18	6	NO	
+30779	17	5	NO	
+31925	17	13	yes	Appt RSVP
+38422	17	10	NO	
+30	16	2	yes	Chess Auth
+4454	16	10	NO	
+10019	16	16	yes	Nutzap Info
+30093	16	1	NO	
+30215	16	16	NO	
+31905	16	5	NO	
+34238	16	11	yes	Video Collaboration
+5128	15	3	NO	
+6314	15	1	NO	
+9022	15	13	yes	Group Leave Request
+10006	15	13	yes	Blocked Relays
+11125	15	11	NO	
+30227	15	7	NO	
+32022	15	15	NO	
+35128	15	10	yes	Website
+87070	15	2	NO	
+5129	14	3	yes	Napplet Snapshot
+9001	14	3	yes	Group Remove User
+10222	14	14	NO	
+16767	14	10	NO	
+16942	14	12	NO	
+30225	14	7	NO	
+30226	14	7	NO	
+30228	14	7	NO	
+31605	14	1	NO	
+35713	14	5	NO	
+3140	13	2	NO	
+4472	13	1	NO	
+4721	13	13	NO	
+10015	13	13	yes	Hashtag Follows
+10166	13	6	yes	Relay Monitor Announcement
+30801	13	7	NO	
+31337	13	3	yes	Audio Track
+1081	12	12	NO	
+3141	12	1	NO	
+4545	12	12	NO	
+9422	12	12	NO	
+30009	12	7	yes	Badge Definitions
+30015	12	6	yes	Interest Sets
+30032	12	10	NO	
+32107	12	1	NO	
+35711	12	5	NO	
+37701	12	11	NO	
+1630	11	1	yes	
+1633	11	3	yes	
+32678	11	3	NO	
+35129	11	8	yes	Napplet
+37196	11	4	NO	
+38421	11	5	NO	
+62	10	10	yes	User Delete
+1617	10	8	yes	Git Patch
+1990	10	8	NO	
+4471	10	6	NO	
+9911	10	1	NO	
+10008	10	9	yes	Profile Badges
+30052	10	6	NO	
+30312	10	5	yes	Meeting Space
+31991	10	6	NO	
+87201	10	3	NO	
+36	9	2	NO	
+4516	9	1	NO	
+4850	9	1	NO	
+9423	9	9	NO	
+10044	9	9	yes	Encryption Keys
+11317	9	3	yes	
+30211	9	1	NO	
+30290	9	1	NO	
+33272	9	1	NO	
+1002	8	8	NO	
+1019	8	5	NO	
+1349	8	1	NO	
+4178	8	3	NO	
+4247	8	1	NO	
+4278	8	3	NO	
+30081	8	7	NO	
+30087	8	2	NO	
+30700	8	4	NO	
+1054	7	3	NO	
+6426	7	2	NO	
+10096	7	6	yes	File Servers
+30100	7	6	NO	
+30178	7	3	yes	
+30292	7	1	NO	
+30509	7	7	NO	
+30815	7	1	NO	
+31222	7	2	NO	
+31503	7	1	NO	
+31989	7	6	yes	App Recommendations
+33051	7	2	NO	
+34237	7	6	NO	
+39701	7	5	yes	Web Bookmark
+90901	7	1	NO	
+1163	6	6	yes	Profile Gallery
+1624	6	3	NO	
+1632	6	6	yes	
+3411	6	5	NO	
+4550	6	4	yes	Community Post
+9486	6	1	NO	
+11316	6	3	yes	
+13922	6	2	NO	
+30800	6	5	NO	
+32123	6	4	NO	
+34552	6	6	NO	
+105	5	2	NO	
+1001	5	5	NO	
+1623	5	1	NO	
+3410	5	5	NO	
+4263	5	5	NO	
+4264	5	5	NO	
+4272	5	5	NO	
+9401	5	3	NO	
+10040	5	5	yes	Trusted Providers
+10133	5	5	yes	PayTo
+15750	5	3	NO	
+16919	5	3	NO	
+30051	5	4	NO	
+30302	5	1	NO	
+30303	5	5	NO	
+30701	5	5	NO	
+30817	5	2	yes	NIP
+30900	5	1	NO	
+30938	5	1	NO	
+31310	5	2	NO	
+31924	5	3	yes	Calendar
+39089	5	4	yes	Follow Packs
+39401	5	4	NO	
+1014	4	2	NO	
+1301	4	4	yes	Workouts
+1401	4	4	NO	
+1707	4	1	NO	
+6002	4	1	yes	DVM Translation Resp
+10004	4	4	yes	Community List
+10037	4	3	NO	
+13196	4	1	NO	
+19843	4	3	NO	
+30090	4	1	NO	
+30092	4	4	NO	
+30210	4	3	NO	
+30300	4	4	yes	
+30703	4	2	NO	
+30736	4	3	NO	
+30818	4	1	yes	Wiki
+31902	4	4	NO	
+31909	4	4	NO	
+32150	4	4	NO	
+33337	4	1	NO	
+33457	4	4	NO	
+35981	4	2	NO	
+36767	4	3	NO	
+37070	4	2	NO	
+39010	4	4	NO	
+39991	4	1	NO	
+41	3	3	yes	Channel Metadata
+1013	3	3	NO	
+1058	3	2	NO	
+1090	3	1	NO	
+5002	3	3	yes	DVM Translation Req
+6050	3	1	yes	DVM Text Generation Resp
+7007	3	2	NO	
+9372	3	1	NO	
+9444	3	2	NO	
+10013	3	3	yes	Private Relays
+10081	3	3	yes	Geohash Follows
+10110	3	1	NO	
+10600	3	3	NO	
+12150	3	3	NO	
+19844	3	3	NO	
+30004	3	3	yes	Article Sets
+30008	3	3	yes	Accepted Badge Set
+30940	3	1	NO	
+31111	3	1	NO	
+31906	3	3	NO	
+32100	3	2	NO	
+32681	3	1	NO	
+33838	3	1	NO	
+34506	3	2	NO	
+34550	3	3	yes	Community Def
+35714	3	1	NO	
+35980	3	2	NO	
+39015	3	1	NO	
+39802	3	1	NO	
+112	2	1	NO	
+1004	2	2	NO	
+1808	2	2	yes	Audio Header
+3314	2	2	NO	
+4246	2	2	NO	
+4711	2	2	NO	
+4817	2	2	NO	
+5310	2	1	NO	
+6742	2	2	NO	
+6969	2	2	yes	Zap Poll
+7451	2	2	NO	
+7452	2	2	NO	
+7453	2	2	NO	
+7710	2	2	NO	
+8000	2	2	yes	Relay Add Member
+8181	2	2	NO	
+8211	2	2	NO	
+9002	2	2	yes	Group Edit Metadata
+9007	2	2	yes	Group Create
+9840	2	2	NO	
+10018	2	2	yes	Git Repos
+10318	2	2	NO	
+10333	2	2	NO	
+13534	2	2	yes	Relay Memberships
+16440	2	2	NO	
+19004	2	2	NO	
+30084	2	2	NO	
+30278	2	2	NO	
+30291	2	1	NO	
+30506	2	1	NO	
+30520	2	1	NO	
+30762	2	1	NO	
+30790	2	2	NO	
+30902	2	1	NO	
+31780	2	1	NO	
+31926	2	2	NO	
+31971	2	1	NO	
+32151	2	1	NO	
+34101	2	2	NO	
+34579	2	1	NO	
+37777	2	1	NO	
+38103	2	1	NO	
+38107	2	1	NO	
+38111	2	1	NO	
+38381	2	1	NO	
+39000	2	2	yes	Group Metadata
+39842	2	1	NO	
+87211	2	1	NO	
+52	1	1	NO	
+106	1	1	NO	
+123	1	1	NO	
+1003	1	1	NO	
+1005	1	1	NO	
+1015	1	1	NO	
+1051	1	1	NO	
+1312	1	1	yes	Live Raid
+1315	1	1	yes	Road Report
+1351	1	1	NO	
+1420	1	1	NO	
+1738	1	1	NO	
+1818	1	1	NO	
+1888	1	1	NO	
+1889	1	1	NO	
+1989	1	1	NO	
+2102	1	1	NO	
+2256	1	1	NO	
+3031	1	1	NO	
+4251	1	1	NO	
+4252	1	1	NO	
+4473	1	1	NO	
+4474	1	1	NO	
+4551	1	1	NO	
+4663	1	1	NO	
+4747	1	1	NO	
+5100	1	1	yes	DVM Image Generation Req
+5101	1	1	NO	
+5302	1	1	yes	DVM Content Search Req
+6100	1	1	yes	DVM Image Generation Resp
+6313	1	1	NO	
+6315	1	1	NO	
+6420	1	1	NO	
+6421	1	1	NO	
+7374	1	1	yes	Cashu Mint Quote
+7450	1	1	NO	
+7700	1	1	NO	
+7711	1	1	NO	
+7878	1	1	NO	
+7880	1	1	NO	
+8555	1	1	NO	
+9321	1	1	yes	Nutzap
+9637	1	1	NO	
+9737	1	1	yes	
+9807	1	1	NO	
+9843	1	1	NO	
+10010	1	1	NO	
+10058	1	1	yes	Bolt12 Offers
+10088	1	1	yes	Broadcast Relays
+10089	1	1	yes	Trusted Relays
+10090	1	1	yes	Favorite Feeds
+10112	1	1	yes	Nests Servers
+10218	1	1	NO	
+10317	1	1	yes	GRASP Servers
+10442	1	1	NO	
+10444	1	1	NO	
+16158	1	1	NO	
+16769	1	1	NO	
+17777	1	1	NO	
+18678	1	1	NO	
+30018	1	1	yes	Marketplace Product
+30024	1	1	NO	
+30027	1	1	NO	
+30030	1	1	yes	Emoji Packs
+30031	1	1	NO	
+30086	1	1	NO	
+30108	1	1	NO	
+30142	1	1	yes	Learning Resource
+30164	1	1	NO	
+30184	1	1	NO	
+30220	1	1	NO	
+30241	1	1	NO	
+30321	1	1	NO	
+30333	1	1	NO	
+30361	1	1	NO	
+30394	1	1	yes	Trusted List of Addressables
+30398	1	1	NO	
+30560	1	1	NO	
+30622	1	1	yes	
+30791	1	1	NO	
+30901	1	1	NO	
+30961	1	1	NO	
+30970	1	1	NO	
+31338	1	1	NO	
+31342	1	1	NO	
+31402	1	1	NO	
+31573	1	1	NO	
+31602	1	1	NO	
+31603	1	1	NO	
+31604	1	1	NO	
+31994	1	1	NO	
+32069	1	1	NO	
+32600	1	1	NO	
+33356	1	1	NO	
+33357	1	1	NO	
+33402	1	1	NO	
+34139	1	1	yes	Music Playlist
+34200	1	1	NO	
+34393	1	1	NO	
+34472	1	1	NO	
+36669	1	1	NO	
+36677	1	1	NO	
+36942	1	1	NO	
+36946	1	1	NO	
+37450	1	1	NO	
+37572	1	1	NO	
+37702	1	1	NO	
+38172	1	1	yes	Cashu Mint
+38386	1	1	NO	
+39001	1	1	yes	Group Admins
+39004	1	1	yes	Group Participants
+39019	1	1	NO	
+39022	1	1	NO	
+39036	1	1	NO	
+39998	1	1	yes	Editable Decentralized List
+40970	1	1	NO	
+60200	1	1	NO	
+64600	1	1	NO	

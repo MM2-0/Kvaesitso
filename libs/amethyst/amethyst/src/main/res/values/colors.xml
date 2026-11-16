@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+
+    <!-- Launch splash / window background. Tracks MaterialTheme's background so the
+         first composed frame does not step to a different colour. See values-night. -->
+    <color name="splash_background">#FFFDFDFD</color>
+</resources>

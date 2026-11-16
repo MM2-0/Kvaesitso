@@ -1,0 +1,826 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <queries>
+        <package android:name="org.torproject.android"/>
+        <!-- Health Connect data store (Android 8–13 ships it as a separate system app) -->
+        <package android:name="com.google.android.apps.healthdata" />
+        <intent>
+            <action android:name="androidx.health.ACTION_SHOW_PERMISSIONS_RATIONALE" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data android:scheme="nostrsigner" />
+        </intent>
+        <!-- The remote-signer login hands its nostrconnect:// code to a NIP-46 signer app. -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data android:scheme="nostrconnect" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.TTS_SERVICE" />
+        </intent>
+
+        <!-- So the browser's hand-off tile can name the browser it would open.
+             Android 11+ package visibility answers resolveActivity with nothing
+             for a scheme that is not declared here, so without this the tile can
+             only ever say "Open in browser". Read-only: it names the target, the
+             hand-off itself still goes through a chooser. -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data android:scheme="https" />
+        </intent>
+
+        <!-- NIP-A3 payment targets. Android 11+ package visibility means
+             queryIntentActivities returns NOTHING for a scheme not declared here,
+             so without these the zap picker's pay-to chip is invisible on every
+             modern device. Specific <intent> filters rather than
+             QUERY_ALL_PACKAGES, which is policy-restricted on Play.
+             Unknown target types all fall back to payto://<type>/<authority>,
+             so the single payto entry covers the open-ended tail.
+             No <category>: a category here narrows visibility the same way it
+             narrows an intent match, and would hide any app whose filter declares
+             only DEFAULT - which is what our ACTION_VIEW hand-off actually uses. -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="payto" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="bitcoin" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="lightning" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="liquidnetwork" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="ethereum" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="monero" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="dash" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="zcash" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="bitcoincash" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="litecoin" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="dogecoin" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="solana" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="tron" />
+        </intent>
+        <!-- Media apps (they expose a MediaBrowserService), so the now-playing settings can show
+             the name of the app playing instead of its package name. -->
+        <intent>
+            <action android:name="android.media.browse.MediaBrowserService" />
+        </intent>
+    </queries>
+
+
+    <!-- Doesn't require a camera or microphone -->
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
+    <uses-feature android:name="android.hardware.microphone" android:required="false" />
+
+    <!-- To connect with relays -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <!-- To Upload media (old devices) -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
+
+    <!-- To read QRs that contain nostr:<NIP19> -->
+    <!-- To take pictures -->
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <!-- To record audio messages -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <!-- To read NFCs that contain nostr:<NIP19> -->
+    <uses-permission android:name="android.permission.NFC" />
+
+    <!-- To know receive notifications when the app connects/disconnects from the web -->
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+
+    <!-- For ConnectivityManager.registerDefaultNetworkCallback used by NestForegroundService
+         to detect Wi-Fi ↔ cellular handover and recycle the active QUIC session promptly
+         (otherwise the wrapper waits ~30s for QUIC PTO before reconnecting). -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!-- Audio/Video Playback -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CAMERA" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PROJECTION" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_PHONE_CALL" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+
+    <!-- Phone calls -->
+    <uses-permission android:name="android.permission.MANAGE_OWN_CALLS" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.BLUETOOTH" android:maxSdkVersion="30" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+
+    <!-- Always-on notification service: restart after reboot -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <!-- Always-on notification service: battery optimization exemption -->
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+
+    <!-- Keeps screen on while playing videos -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <!-- This notification permission is needed for some phones -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+
+    <!-- Adds Geohash to posts if active -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <!-- Reads finished workouts from Health Connect to suggest a kind 1301 post.
+         Read-only; requested on demand, never on cold start. -->
+    <uses-permission android:name="android.permission.health.READ_EXERCISE" />
+    <uses-permission android:name="android.permission.health.READ_DISTANCE" />
+    <uses-permission android:name="android.permission.health.READ_ACTIVE_CALORIES_BURNED" />
+    <uses-permission android:name="android.permission.health.READ_TOTAL_CALORIES_BURNED" />
+    <uses-permission android:name="android.permission.health.READ_HEART_RATE" />
+    <uses-permission android:name="android.permission.health.READ_STEPS" />
+    <uses-permission android:name="android.permission.health.READ_ELEVATION_GAINED" />
+
+    <!-- Old permission to access media -->
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28"
+        tools:ignore="ScopedStorage" />
+
+    <application
+        android:allowBackup="false"
+        android:name=".Amethyst"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:enableOnBackInvokedCallback="true"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Amethyst"
+        android:largeHeap="true"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:hardwareAccelerated="true"
+        android:localeConfig="@xml/locales_config"
+        android:memtagMode="${memtagMode}"
+        tools:targetApi="34">
+        <activity
+            android:name=".ui.MainActivity"
+            android:exported="true"
+            android:launchMode="singleInstance"
+            android:windowSoftInputMode="adjustResize"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboardHidden|keyboard|navigation|uiMode|fontScale|density"
+            android:supportsPictureInPicture="true"
+            android:theme="@style/Theme.Amethyst">
+
+            <intent-filter android:label="Amethyst">
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <!-- Long-press the launcher icon to scan a QR code. The shortcut fires a VIEW intent
+                 at nostr:scanqr, which the nostr-scheme filter below already catches, so it needs
+                 no hardcoded targetPackage - debug and benchmark builds carry an applicationId
+                 suffix that would break one. uriToRoute turns it into the scanner. -->
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+
+            <intent-filter android:label="Amethyst">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="nostr" />
+                <data android:scheme="amethyst" />
+            </intent-filter>
+
+            <intent-filter android:label="Amethyst">
+                <action android:name="android.nfc.action.NDEF_DISCOVERED"/>
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="nostr" />
+            </intent-filter>
+
+            <intent-filter android:label="Amethyst">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="nostrwalletconnect" />
+                <data android:scheme="nostr+walletconnect" />
+                <data android:scheme="amethyst+walletconnect" />
+            </intent-filter>
+
+            <!-- NIP-46: an app's `nostrconnect://` offer opens the signer screen, which pairs it. -->
+            <intent-filter android:label="Amethyst">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="nostrconnect" />
+            </intent-filter>
+
+            <intent-filter android:label="New Post">
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+
+            <intent-filter android:label="New Post">
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="video/*" />
+            </intent-filter>
+
+            <intent-filter android:label="New Post">
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="image/*" />
+            </intent-filter>
+
+            <intent-filter android:label="njump.me">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https" />
+                <data android:host="njump.me" />
+            </intent-filter>
+
+            <intent-filter android:label="njump.to">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https" />
+                <data android:host="njump.to" />
+            </intent-filter>
+
+            <intent-filter android:label="iris.to">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https" />
+                <data android:host="iris.to" />
+            </intent-filter>
+
+            <!-- Concord community invite links: https://amethyst.social/invite/<naddr>#<fragment> -->
+            <intent-filter android:label="Amethyst">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https" />
+                <data android:host="amethyst.social" />
+                <data android:pathPrefix="/invite/" />
+            </intent-filter>
+
+            <!-- cordn group links, as cordn.net's "Share group link" and its QR codes hand them out:
+                 https://cordn.net/chat/cordn1…?m=<preview>. Only paths that start with a cordn1 ref,
+                 so cordn.net's other pages (news, profiles, settings) stay in the browser. Not
+                 autoVerify: we don't own the domain, so Android 12+ opens these here only once the
+                 user turns cordn.net on in Amethyst's "Open by default" settings; older Android
+                 asks which app to use. -->
+            <intent-filter android:label="Amethyst">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https" />
+                <data android:host="cordn.net" />
+                <data android:host="www.cordn.net" />
+                <data android:host="cordn.relay.tools" />
+                <data android:pathPattern="/chat/cordn1.*" />
+            </intent-filter>
+
+            <!-- Buzz workspace invite links: https://<team>.communities.buzz.xyz/invite/<token> -->
+            <intent-filter android:label="Amethyst">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https" />
+                <data android:host="communities.buzz.xyz" />
+                <data android:host="*.communities.buzz.xyz" />
+                <data android:pathPrefix="/invite/" />
+            </intent-filter>
+
+            <intent-filter android:label="zap.stream">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https" />
+                <data android:host="zap.stream" />
+                <data android:pathPrefix="/p/" />
+                <data android:pathPrefix="/" />
+            </intent-filter>
+
+            <intent-filter android:label="shosho.live">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https" />
+                <data android:host="shosho.live" />
+                <data android:pathPrefix="/profile/" />
+                <data android:pathPrefix="/live/" />
+            </intent-filter>
+
+            <intent-filter android:label="Primal">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https" />
+                <data android:host="primal.net" />
+                <data android:pathPrefix="/e/" />
+                <data android:pathPrefix="/p/" />
+                <data android:pathPrefix="/a/" />
+            </intent-filter>
+
+            <intent-filter android:label="Yakihonne">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https" />
+                <data android:host="yakihonne.com" />
+                <data android:pathPrefix="/notes/" />
+                <data android:pathPrefix="/users/" />
+                <data android:pathPrefix="/videos/" />
+                <data android:pathPrefix="/article/" />
+            </intent-filter>
+        </activity>
+
+        <!-- "Send as DM" share target. The android:name simple class ("ShareAsDMAlias")
+             is matched at runtime by ShareIntentRouting.SHARE_AS_DM_ALIAS_SIMPLE_NAME;
+             keep the two in sync when renaming. -->
+        <activity-alias
+            android:name=".ui.ShareAsDMAlias"
+            android:exported="true"
+            android:label="@string/share_target_as_dm"
+            android:targetActivity=".ui.MainActivity">
+
+            <intent-filter android:label="@string/share_target_as_dm">
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+
+            <intent-filter android:label="@string/share_target_as_dm">
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="image/*" />
+            </intent-filter>
+
+            <intent-filter android:label="@string/share_target_as_dm">
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="video/*" />
+            </intent-filter>
+        </activity-alias>
+
+        <!-- "New Picture" share target: a gallery (or camera) shares an image and it goes straight
+             into the picture feed as a NIP-68 kind-20 post instead of a text note with a link. The
+             android:name simple class ("ShareAsPictureAlias") is matched at runtime by
+             ShareIntentRouting.SHARE_AS_PICTURE_ALIAS_SIMPLE_NAME; keep the two in sync. -->
+        <activity-alias
+            android:name=".ui.ShareAsPictureAlias"
+            android:exported="true"
+            android:label="@string/share_target_as_picture"
+            android:targetActivity=".ui.MainActivity">
+
+            <intent-filter android:label="@string/share_target_as_picture">
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="image/*" />
+            </intent-filter>
+
+            <intent-filter android:label="@string/share_target_as_picture">
+                <action android:name="android.intent.action.SEND_MULTIPLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="image/*" />
+            </intent-filter>
+        </activity-alias>
+
+        <!-- "Scan QR code" share target: an image shared here is decoded rather than posted, which
+             is how most QR codes actually arrive - a screenshot or a photo someone sent you. SEND
+             only: a QR scan reads one code, so there is nothing sensible to do with a multi-select.
+             The android:name simple class ("ScanQrCodeAlias") is matched at runtime by
+             ShareIntentRouting.SCAN_QR_ALIAS_SIMPLE_NAME; keep the two in sync. -->
+        <activity-alias
+            android:name=".ui.ScanQrCodeAlias"
+            android:exported="true"
+            android:label="@string/share_target_scan_qr"
+            android:icon="@drawable/ic_qrcode"
+            android:targetActivity=".ui.MainActivity">
+
+            <intent-filter android:label="@string/share_target_scan_qr">
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="image/*" />
+            </intent-filter>
+        </activity-alias>
+
+        <!-- "New Short" share target: a video shared here always becomes a NIP-71 kind-22 short so
+             it lands in the Shorts feed, whatever its orientation. Video-only — a short is a video.
+             The android:name simple class ("ShareAsShortVideoAlias") is matched at runtime by
+             ShareIntentRouting.SHARE_AS_SHORT_VIDEO_ALIAS_SIMPLE_NAME; keep the two in sync. -->
+        <activity-alias
+            android:name=".ui.ShareAsShortVideoAlias"
+            android:exported="true"
+            android:label="@string/share_target_as_short_video"
+            android:targetActivity=".ui.MainActivity">
+
+            <intent-filter android:label="@string/share_target_as_short_video">
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="video/*" />
+            </intent-filter>
+
+            <intent-filter android:label="@string/share_target_as_short_video">
+                <action android:name="android.intent.action.SEND_MULTIPLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="video/*" />
+            </intent-filter>
+        </activity-alias>
+
+        <!-- "New Video" share target: opens the Video feed's media composer, which publishes a
+             NIP-71 video event (kind 21 or 22 by orientation) instead of a text note. The
+             android:name simple class ("ShareAsVideoAlias") is matched at runtime by
+             ShareIntentRouting.SHARE_AS_VIDEO_ALIAS_SIMPLE_NAME; keep the two in sync. -->
+        <activity-alias
+            android:name=".ui.ShareAsVideoAlias"
+            android:exported="true"
+            android:label="@string/share_target_as_video"
+            android:targetActivity=".ui.MainActivity">
+
+            <intent-filter android:label="@string/share_target_as_video">
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="video/*" />
+            </intent-filter>
+
+            <intent-filter android:label="@string/share_target_as_video">
+                <action android:name="android.intent.action.SEND_MULTIPLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="video/*" />
+            </intent-filter>
+        </activity-alias>
+
+        <!-- "New Highlight" share target: a browser (or reader) shares a selected passage of
+             text and it opens the NIP-84 highlight composer. Text-only — a highlight is a text
+             passage, so no image/video filters here. The android:name simple class
+             ("ShareAsHighlightAlias") is matched at runtime by
+             ShareIntentRouting.SHARE_AS_HIGHLIGHT_ALIAS_SIMPLE_NAME; keep the two in sync. -->
+        <activity-alias
+            android:name=".ui.ShareAsHighlightAlias"
+            android:exported="true"
+            android:label="@string/share_target_as_highlight"
+            android:targetActivity=".ui.MainActivity">
+
+            <intent-filter android:label="@string/share_target_as_highlight">
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity-alias>
+
+        <!-- Health Connect permissions rationale. Both entry points land on the same screen,
+             which explains what Amethyst reads from Health Connect and why; it needs no account,
+             so it works even when launched cold from Health Connect itself.
+             Android 13 and lower open it with ACTION_SHOW_PERMISSIONS_RATIONALE; without a
+             target for it the permission request fails silently (no dialog appears). -->
+        <activity
+            android:name=".ui.screen.loggedIn.workouts.health.HealthConnectRationaleActivity"
+            android:exported="true"
+            android:label="@string/health_connect_rationale_activity_label"
+            android:excludeFromRecents="true"
+            android:theme="@style/Theme.Amethyst">
+            <intent-filter>
+                <action android:name="androidx.health.ACTION_SHOW_PERMISSIONS_RATIONALE" />
+            </intent-filter>
+        </activity>
+
+        <!-- Android 14+ route to the same rationale screen. The system launches it, guarded by
+             START_VIEW_PERMISSION_USAGE, from the Health Connect data-management screens. -->
+        <activity-alias
+            android:name="ViewPermissionUsageActivity"
+            android:exported="true"
+            android:targetActivity=".ui.screen.loggedIn.workouts.health.HealthConnectRationaleActivity"
+            android:permission="android.permission.START_VIEW_PERMISSION_USAGE">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW_PERMISSION_USAGE" />
+                <category android:name="android.intent.category.HEALTH_PERMISSIONS" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity
+            android:name=".ui.screen.loggedIn.nests.room.activity.NestActivity"
+            android:autoRemoveFromRecents="true"
+            android:configChanges="orientation|screenLayout|screenSize|smallestScreenSize|keyboardHidden|keyboard|uiMode|navigation|fontScale|density"
+            android:supportsPictureInPicture="true"
+            android:launchMode="singleTask"
+            android:exported="false"
+            android:resizeableActivity="true"
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@style/Theme.Amethyst" />
+
+        <activity
+            android:name=".ui.call.CallActivity"
+            android:autoRemoveFromRecents="true"
+            android:configChanges="orientation|screenLayout|screenSize|smallestScreenSize|keyboardHidden|keyboard|uiMode|navigation|fontScale|density"
+            android:supportsPictureInPicture="true"
+            android:launchMode="singleTop"
+            android:exported="false"
+            android:resizeableActivity="true"
+            android:showOnLockScreen="true"
+            android:turnScreenOn="true"
+            android:theme="@style/Theme.Amethyst"
+        />
+
+        <activity
+            android:name=".service.playback.pip.PipVideoActivity"
+            android:autoRemoveFromRecents="true"
+            android:configChanges="orientation|screenLayout|screenSize|smallestScreenSize|keyboardHidden|keyboard|uiMode"
+            android:supportsPictureInPicture="true"
+            android:launchMode="singleInstance"
+            android:exported="false"
+            android:resizeableActivity="true"
+            android:theme="@style/noAnimTheme"
+        />
+
+        <service
+            android:name=".service.playback.service.PlaybackService"
+            android:foregroundServiceType="mediaPlayback"
+            android:stopWithTask="true"
+            android:exported="true"
+            tools:ignore="ExportedService">
+            <intent-filter>
+                <action android:name="androidx.media3.session.MediaSessionService"/>
+            </intent-filter>
+        </service>
+
+        <!-- Reads other apps' media sessions to share what the user listens to as a NIP-38 music
+             status. Android only exposes other apps' sessions to an enabled notification listener;
+             this one never reads notifications. The system binds it only after the user grants
+             "Notification access", and it stays in the main process with the account. -->
+        <service
+            android:name=".service.nowPlaying.OtherAppsNowPlayingService"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService" />
+            </intent-filter>
+            <!-- Media sessions do not depend on which notifications are delivered, so ask for the
+                 narrowest type: fewer wakeups, and the access screen shows what is actually read. -->
+            <meta-data
+                android:name="android.service.notification.default_filter_types"
+                android:value="ongoing" />
+        </service>
+
+        <service
+            android:name=".service.call.CallForegroundService"
+            android:foregroundServiceType="microphone|camera|phoneCall|mediaProjection"
+            android:stopWithTask="false"
+            android:exported="false" />
+
+        <service
+            android:name=".service.nests.NestForegroundService"
+            android:foregroundServiceType="mediaPlayback|microphone"
+            android:stopWithTask="true"
+            android:exported="false" />
+
+        <!-- Keeps the NIP-13 mining queue schedulable after the user leaves the
+             app: shortService gives a ~3 min guaranteed window with no special
+             permission. Jobs are persisted, so a timeout only defers them. -->
+        <service
+            android:name=".service.pow.PowMiningForegroundService"
+            android:foregroundServiceType="shortService"
+            android:stopWithTask="false"
+            android:exported="false" />
+
+        <!-- Keeps the "sync all blobs to all servers" (BUD-04) sweep alive while backgrounded.
+             dataSync is the correct type for an upload/download/sync; it must be started from the
+             foreground, which "Sync all" (user-initiated in the manager) satisfies. -->
+        <service
+            android:name=".service.uploads.blossom.BlossomSyncForegroundService"
+            android:foregroundServiceType="dataSync"
+            android:stopWithTask="false"
+            android:exported="false" />
+
+        <!-- Keeps a front page print the reader started alive after they leave the app: a print
+             can run past shortService's ~3 min, and dataSync (6 h a day on Android 15) covers it.
+             It starts when the reader presses Print, so always from the foreground. -->
+        <service
+            android:name=".service.frontpage.FrontPagePrintingForegroundService"
+            android:foregroundServiceType="dataSync"
+            android:stopWithTask="false"
+            android:exported="false" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+        <service
+            android:name=".service.notifications.NotificationRelayService"
+            android:foregroundServiceType="specialUse"
+            android:exported="false">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="Persistent real-time messaging relay connection for Nostr protocol. Maintains WebSocket connections to user-configured inbox relays for immediate notification delivery of direct messages, zaps, and mentions." />
+        </service>
+
+        <service
+            android:name=".service.notifications.NotificationServiceTileService"
+            android:icon="@drawable/amethyst_service"
+            android:label="@string/always_on_notif_tile_label"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+
+        <receiver
+            android:name=".service.notifications.BootCompletedReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name=".service.notifications.ServiceWatchdogManager$WatchdogReceiver"
+            android:exported="false" />
+
+        <receiver
+            android:name=".service.notifications.AutoRestartReceiver"
+            android:exported="false" />
+
+        <receiver
+            android:name=".service.notifications.PokeyReceiver"
+            android:exported="true"
+            tools:ignore="ExportedReceiver"
+            >
+            <intent-filter>
+                <action android:name="com.shared.NOSTR" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name=".service.notifications.NotificationReplyReceiver"
+            android:exported="false" />
+
+        <receiver
+            android:name=".service.call.CallNotificationReceiver"
+            android:exported="false" />
+
+        <!--
+            Compose Resources learns its Context from a ContentProvider the library
+            declares, and a provider is instantiated only in the process it belongs
+            to. The browser chrome is now drawn by shared composables that read
+            `Res.string`, and those run in `:napplet` — where the lookup threw
+            MissingResourceException ("Android context is not initialized") and killed
+            the sandbox. `multiprocess` is the platform's answer to exactly this: it
+            gives every process of the app its own instance of the provider. A second
+            <provider> element cannot work, because the manifest merger keys them by
+            android:name and would merge the two into one.
+        -->
+        <provider
+            android:name="org.jetbrains.compose.resources.AndroidContextProvider"
+            android:multiprocess="true"
+            tools:node="merge" />
+
+        <!-- Sandboxed napplet/nsite host. Runs in an isolated process that holds no keys. -->
+        <activity
+            android:name="com.vitorpamplona.amethyst.napplethost.NappletHostActivity"
+            android:process=":napplet"
+            android:exported="false"
+            android:autoRemoveFromRecents="true"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboardHidden|keyboard|uiMode|navigation|fontScale|density"
+            android:launchMode="singleTask"
+            android:theme="@style/Theme.Amethyst" />
+
+        <!-- Direct-WebView browser for a single web client. Runs in the isolated, keyless `:napplet`
+             process and hosts the WebView directly (not a streamed surface), so scroll/zoom/keyboard work
+             natively. The activity insets its own content for the soft keyboard (adjustResize only still
+             applies below Android 15, where the window is not forced edge-to-edge). Its own task/recents
+             entry. -->
+        <activity
+            android:name="com.vitorpamplona.amethyst.napplethost.NappletBrowserActivity"
+            android:process=":napplet"
+            android:exported="false"
+            android:autoRemoveFromRecents="true"
+            android:documentLaunchMode="intoExisting"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboardHidden|keyboard|uiMode|navigation|fontScale|density"
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@style/Theme.Amethyst" />
+
+        <!-- Target of web-app launcher shortcuts (Add to Home screen + favorites). Main process, so the
+             app and Tor are up before it hands the URL to the full-screen browser; draws nothing. -->
+        <activity
+            android:name=".favorites.WebShortcutActivity"
+            android:exported="false"
+            android:excludeFromRecents="true"
+            android:noHistory="true"
+            android:taskAffinity=""
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <!-- Capability-consent dialog. Runs in the main process (the only side trusted to grant). -->
+        <activity
+            android:name=".napplet.NappletConsentActivity"
+            android:exported="false"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTop"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <!-- Invisible host that runs the system file picker for an embedded WebView surface. The
+             `:napplet` providers are windowless services with no Activity of their own, so the main
+             process collects the pick and relays the URIs back to the sandbox. -->
+        <!-- Standard launch mode on purpose: two embedded surfaces can each have a pick in flight, and
+             singleTop would collapse the second onto the first and strand its page's file input. -->
+        <activity
+            android:name=".napplet.WebFileChooserActivity"
+            android:exported="false"
+            android:excludeFromRecents="true"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboardHidden|keyboard|uiMode|navigation|fontScale|density"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <!-- Invisible host for a NAP-FS pick (fs.pickFile / pickFiles / pickSaveFile). The broker is a
+             Service, so the main process runs the system document picker here and the broker reads and
+             writes what the user chose. Standard launch mode for the same reason as above. -->
+        <activity
+            android:name=".napplet.NappletFsPickerActivity"
+            android:exported="false"
+            android:excludeFromRecents="true"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboardHidden|keyboard|uiMode|navigation|fontScale|density"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <!-- First-connect "Connect to Nostr" dialog. -->
+        <activity
+            android:name=".connectedApps.consent.SignerConnectActivity"
+            android:exported="false"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTop"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <!-- Per-operation signer consent dialog. -->
+        <activity
+            android:name=".connectedApps.consent.SignerConsentActivity"
+            android:exported="false"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTop"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <!-- Main-process broker: holds the signer and brokers capabilities for the sandbox. -->
+        <service
+            android:name=".napplet.NappletBrokerService"
+            android:exported="false" />
+
+        <!-- Embedded-browser provider: hosts the in-app browser WebView in the isolated, keyless
+             process and ships its rendered surface to the main app (SurfaceControlViewHost). -->
+        <service
+            android:name="com.vitorpamplona.amethyst.napplethost.NappletBrowserService"
+            android:process=":napplet"
+            android:exported="false" />
+
+        <!-- Embedded nsite/napplet provider: hosts the verified-blob WebView in the isolated, keyless
+             process and ships its surface to the main app, so a favorited nsite/napplet can render as
+             an in-app tab instead of taking over the screen. Same trust model as NappletHostActivity. -->
+        <service
+            android:name="com.vitorpamplona.amethyst.napplethost.NappletHostService"
+            android:process=":napplet"
+            android:exported="false" />
+
+    </application>
+
+
+</manifest>

@@ -1,0 +1,39 @@
+2026-05-07T18:34:52.026436Z TRACE moq_relay::config: final config config=Config { server: ServerConfig { bind: Some("127.0.0.1:36015"), backend: None, quic_lb_id: None, quic_lb_nonce: None, max_streams: None, version: [], tls: ServerTlsConfig { cert: [], key: [], generate: ["localhost"], root: [] } }, client: ClientConfig { bind: 127.0.0.1:0, backend: None, max_streams: None, version: [], tls: ClientTls { root: [], cert: None, key: None, disable_verify: None }, backoff: Backoff { initial: 1s, multiplier: 2, max: 30s, timeout: None }, websocket: ClientWebSocket { enabled: true, delay: Some(200ms) } }, log: Log { level: Level(Info) }, cluster: ClusterConfig { root: None, token: None, node: None, prefix: "internal/origins" }, auth: AuthConfig { key: None, key_dir: None, tls: AuthTls { root: [], cert: None, key: None, disable_verify: None }, public: Some(Simple([""])), public_subscribe: None, public_publish: None, public_api: None }, web: WebConfig { http: HttpConfig { listen: None }, https: HttpsConfig { listen: None, cert: None, key: None }, ws: true }, file: None, iroh: IrohEndpointConfig { enabled: None, secret: None, bind_v4: None, bind_v6: None, disable_relay: None } }
+2026-05-07T18:34:52.074954Z  INFO moq_relay: listening addr=127.0.0.1:36015
+2026-05-07T18:34:52.075041Z  INFO moq_relay::cluster: running as root, accepting leaf nodes
+2026-05-07T18:34:52.081425Z  WARN rustls::msgs::handshake: Illegal SNI extension: ignoring IP address presented as hostname (3132372e302e302e31)
+2026-05-07T18:34:52.081527Z  WARN moq_native::tls: no SNI certificate found server_name=None
+2026-05-07T18:34:52.082207Z DEBUG moq_native::quinn: accepting host= ip=127.0.0.1:48534 alpn=h3
+2026-05-07T18:34:52.085126Z DEBUG moq_native::quinn: accepted host= ip=127.0.0.1:48534 alpn=h3
+2026-05-07T18:34:52.085638Z  INFO conn{id=0}: moq_relay::connection: session accepted transport="quic" root=nests/30312:6d60532fccc6e96fbd52693ce7cb3d7bc0977e1d10149aff7f967937f22e1458:rt-59e2aebe-a5f0-4241-8bce-3d093763fbac publish= subscribe=
+2026-05-07T18:34:52.085900Z  INFO conn{id=0}: moq_relay::connection: negotiated version=moq-lite-03 transport="quic"
+2026-05-07T18:34:52.085976Z TRACE conn{id=0}: moq_lite::lite::message: encoding self=AnnounceInterest { prefix: Path(""), exclude_hop: 0 }
+2026-05-07T18:34:52.092094Z TRACE conn{id=0}: moq_lite::lite::message: decoded result=Probe { bitrate: 32000, rtt: None }
+2026-05-07T18:34:52.092167Z DEBUG conn{id=0}: moq_lite::lite::subscriber: probe stream closed
+2026-05-07T18:34:52.092405Z TRACE conn{id=0}: moq_lite::lite::message: decoded result=Active { suffix: Path("6d60532fccc6e96fbd52693ce7cb3d7bc0977e1d10149aff7f967937f22e1458"), hops: [] }
+2026-05-07T18:34:52.092451Z DEBUG conn{id=0}: moq_lite::lite::subscriber: announce broadcast=nests/30312:6d60532fccc6e96fbd52693ce7cb3d7bc0977e1d10149aff7f967937f22e1458:rt-59e2aebe-a5f0-4241-8bce-3d093763fbac/6d60532fccc6e96fbd52693ce7cb3d7bc0977e1d10149aff7f967937f22e1458
+2026-05-07T18:34:54.149303Z  WARN moq_native::tls: no SNI certificate found server_name=None
+2026-05-07T18:34:54.150149Z DEBUG moq_native::quinn: accepting host= ip=127.0.0.1:41457 alpn=h3
+2026-05-07T18:34:54.150976Z DEBUG moq_native::quinn: accepted host= ip=127.0.0.1:41457 alpn=h3
+2026-05-07T18:34:54.151521Z  INFO conn{id=1}: moq_relay::connection: session accepted transport="quic" root=nests/30312:6d60532fccc6e96fbd52693ce7cb3d7bc0977e1d10149aff7f967937f22e1458:rt-59e2aebe-a5f0-4241-8bce-3d093763fbac publish= subscribe=
+2026-05-07T18:34:54.151697Z  INFO conn{id=1}: moq_relay::connection: negotiated version=moq-lite-03 transport="quic"
+2026-05-07T18:34:54.151710Z TRACE conn{id=1}: moq_lite::lite::message: encoding self=AnnounceInterest { prefix: Path(""), exclude_hop: 0 }
+2026-05-07T18:34:54.152094Z TRACE conn{id=1}: moq_lite::lite::message: decoded result=AnnounceInterest { prefix: Path(""), exclude_hop: 0 }
+2026-05-07T18:34:54.152164Z DEBUG conn{id=1}: moq_lite::lite::publisher: announce broadcast=nests/30312:6d60532fccc6e96fbd52693ce7cb3d7bc0977e1d10149aff7f967937f22e1458:rt-59e2aebe-a5f0-4241-8bce-3d093763fbac/6d60532fccc6e96fbd52693ce7cb3d7bc0977e1d10149aff7f967937f22e1458
+2026-05-07T18:34:54.152184Z TRACE conn{id=1}: moq_lite::lite::message: encoding self=Active { suffix: Path("6d60532fccc6e96fbd52693ce7cb3d7bc0977e1d10149aff7f967937f22e1458"), hops: [] }
+2026-05-07T18:34:54.152434Z TRACE conn{id=1}: moq_lite::lite::message: decoded result=Probe { bitrate: 45593982, rtt: None }
+2026-05-07T18:34:54.152699Z TRACE conn{id=1}: moq_lite::lite::message: encoding self=Probe { bitrate: 193376453, rtt: Some(0) }
+2026-05-07T18:34:54.152809Z TRACE conn{id=1}: moq_lite::lite::message: decoded result=Subscribe { id: 0, broadcast: Path("6d60532fccc6e96fbd52693ce7cb3d7bc0977e1d10149aff7f967937f22e1458"), track: "catalog.json", priority: 100, ordered: true, max_latency: 0ns, start_group: None, end_group: None }
+2026-05-07T18:34:54.152832Z  INFO conn{id=1}: moq_lite::lite::publisher: subscribed started id=0 broadcast=nests/30312:6d60532fccc6e96fbd52693ce7cb3d7bc0977e1d10149aff7f967937f22e1458:rt-59e2aebe-a5f0-4241-8bce-3d093763fbac/6d60532fccc6e96fbd52693ce7cb3d7bc0977e1d10149aff7f967937f22e1458 track=catalog.json
+2026-05-07T18:34:54.152923Z  INFO conn{id=0}: moq_lite::lite::subscriber: subscribe started id=0 broadcast=nests/30312:6d60532fccc6e96fbd52693ce7cb3d7bc0977e1d10149aff7f967937f22e1458:rt-59e2aebe-a5f0-4241-8bce-3d093763fbac/6d60532fccc6e96fbd52693ce7cb3d7bc0977e1d10149aff7f967937f22e1458 track=catalog.json
+2026-05-07T18:34:54.152963Z TRACE conn{id=0}: moq_lite::lite::message: encoding self=Subscribe { id: 0, broadcast: Path("6d60532fccc6e96fbd52693ce7cb3d7bc0977e1d10149aff7f967937f22e1458"), track: "catalog.json", priority: 100, ordered: true, max_latency: 0ns, start_group: None, end_group: None }
+2026-05-07T18:34:57.095776Z TRACE conn{id=0}: moq_lite::lite::message: decoded result=Ended { suffix: Path("6d60532fccc6e96fbd52693ce7cb3d7bc0977e1d10149aff7f967937f22e1458"), hops: [] }
+2026-05-07T18:34:57.095828Z DEBUG conn{id=0}: moq_lite::lite::subscriber: unannounced broadcast=nests/30312:6d60532fccc6e96fbd52693ce7cb3d7bc0977e1d10149aff7f967937f22e1458:rt-59e2aebe-a5f0-4241-8bce-3d093763fbac/6d60532fccc6e96fbd52693ce7cb3d7bc0977e1d10149aff7f967937f22e1458
+2026-05-07T18:34:57.095922Z DEBUG conn{id=0}: moq_lite::lite::subscriber: broadcast closed err=cancelled
+2026-05-07T18:34:57.095986Z DEBUG conn{id=1}: moq_lite::lite::publisher: unannounce broadcast=nests/30312:6d60532fccc6e96fbd52693ce7cb3d7bc0977e1d10149aff7f967937f22e1458:rt-59e2aebe-a5f0-4241-8bce-3d093763fbac/6d60532fccc6e96fbd52693ce7cb3d7bc0977e1d10149aff7f967937f22e1458
+2026-05-07T18:34:57.095996Z TRACE conn{id=1}: moq_lite::lite::message: encoding self=Ended { suffix: Path("6d60532fccc6e96fbd52693ce7cb3d7bc0977e1d10149aff7f967937f22e1458"), hops: [] }
+2026-05-07T18:34:57.095999Z  INFO conn{id=1}: moq_lite::lite::publisher: subscribed cancelled id=0 broadcast=nests/30312:6d60532fccc6e96fbd52693ce7cb3d7bc0977e1d10149aff7f967937f22e1458:rt-59e2aebe-a5f0-4241-8bce-3d093763fbac/6d60532fccc6e96fbd52693ce7cb3d7bc0977e1d10149aff7f967937f22e1458 track=catalog.json
+2026-05-07T18:34:57.096013Z  INFO conn{id=0}: moq_lite::lite::subscriber: subscribe cancelled id=0 broadcast=nests/30312:6d60532fccc6e96fbd52693ce7cb3d7bc0977e1d10149aff7f967937f22e1458:rt-59e2aebe-a5f0-4241-8bce-3d093763fbac/6d60532fccc6e96fbd52693ce7cb3d7bc0977e1d10149aff7f967937f22e1458 track=catalog.json
+2026-05-07T18:34:57.097496Z  WARN web_transport_quinn::session: failed to read capsule e=UnexpectedEnd
+2026-05-07T18:34:57.097577Z  INFO conn{id=0}: moq_lite::lite::session: session terminated
+2026-05-07T18:34:57.097800Z  WARN moq_relay: connection closed err=transport: connection error: closed

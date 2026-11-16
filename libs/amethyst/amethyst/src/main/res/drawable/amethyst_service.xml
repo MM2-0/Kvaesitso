@@ -1,0 +1,36 @@
+<!--
+  ~ Status-bar icon for the always-on relay-connection service.
+  ~
+  ~ Notification small icons are rendered by the system as flat, alpha-only
+  ~ silhouettes, so the regular `amethyst` gem becomes an identical solid gem
+  ~ for both real notifications and this persistent service. To set the
+  ~ always-on service apart, this variant centres the brand gem inside a ring
+  ~ of three "server" nodes — signalling a background service quietly connected
+  ~ to a network of relays, clearly different from a one-off notification at a
+  ~ glance. The gem is grown to the largest size that still clears the nodes.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="512dp"
+    android:height="512dp"
+    android:viewportWidth="512"
+    android:viewportHeight="512">
+  <path
+      android:fillColor="#000000"
+      android:fillType="evenOdd"
+      android:pathData="M384.871,330.838C384.567,329.917,313.907,161.667,294.473,115c-23.662,0,-73.63,0,-108.877,0c-10.343,25.583,-37.047,90.79,-58.468,143.318c11.74,28.006,22.282,53.163,30.412,72.57l44.332,0a3.03,3.03 0,0,0,2.831,-3.56c-0.381,-8.953,-24.749,-41.49,-17.48,-76.687c1.937,-7.573,3.422,-15.267,5.542,-22.812a266.236,266.236 135,0,1,20.356,-52.711c1.347,-2.561,1.97,-3.709,5.072,-1.772c6.618,4.118,14.008,3.88,21.371,3.345c6.347,-1.38,9.438,-4.421,21.068,-1.33c2.302,0,4.543,0,6.894,0.21c5.591,0.442,10.829,1.772,14.191,6.833c3.665,5.53,4.255,11.784,3.665,18.176c-0.894,9.56,-0.259,18.463,7.832,25.202a87.125,87.125 0,0,0,9.091,6.06c4.013,2.578,8.859,3.698,12.297,7.269c2.031,2.103,3.229,4.349,2.346,7.346c-0.878,2.997,-3.229,4.41,-6.314,4.741c-7.816,0.85,-15.449,-0.74,-23.127,-1.667c-0.999,-0.121,-1.981,-0.199,-3.03,-0.259a17.375,17.375 0,0,1,-5.773,0.199l-1.805,0a40.441,40.441 0,0,0,-8.936,2.136c-7.242,2.638,-13.832,5.542,-22.37,5.393a6.546,6.546 0,0,0,-3.107,1.347c-6.695,5.95,-10.724,13.467,-7.374,24.446c9.179,25.643,32.73,87.505,42.853,114.209c-0.287,-18.087,-0.364,-50.47,-0.425,-66.189c40.413,0.061,102.375,0.028,107.315,0.028ZM248.64,201.534a8.544,8.693 90,1,0,17.386,0a8.544,8.693 90,1,0,-17.386,0Z" />
+  <path
+      android:strokeColor="#000000"
+      android:strokeWidth="20"
+      android:fillColor="#00000000"
+      android:strokeLineJoin="round"
+      android:pathData="M256,46A210,210 0,1,1 256,466A210,210 0,1,1 256,46Z" />
+  <path
+      android:fillColor="#000000"
+      android:pathData="M256,10A36,36 0,1,1 256,82A36,36 0,1,1 256,10Z" />
+  <path
+      android:fillColor="#000000"
+      android:pathData="M74.13,325A36,36 0,1,1 74.13,397A36,36 0,1,1 74.13,325Z" />
+  <path
+      android:fillColor="#000000"
+      android:pathData="M437.87,325A36,36 0,1,1 437.87,397A36,36 0,1,1 437.87,325Z" />
+</vector>

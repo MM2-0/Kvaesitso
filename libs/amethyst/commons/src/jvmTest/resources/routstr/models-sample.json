@@ -1,0 +1,40 @@
+{
+  "data": [
+    {
+      "id": "anthropic/claude-sonnet-5.5",
+      "name": "Anthropic: Claude Sonnet 5.5",
+      "created": 1790000000,
+      "context_length": 1000000,
+      "architecture": { "modality": "text+image->text", "input_modalities": ["text", "image"], "output_modalities": ["text"], "tokenizer": "Claude" },
+      "pricing": { "prompt": "0.000003", "completion": "0.000015", "request": "0", "image": "0.0048" },
+      "sats_pricing": { "prompt": 0.003, "completion": 0.015, "request": 0, "image": 4.8, "max_cost": 4307.2 },
+      "top_provider": { "context_length": 1000000, "max_completion_tokens": 64000, "is_moderated": false },
+      "enabled": true
+    },
+    {
+      "id": "openai/gpt-5.2-mini",
+      "name": "OpenAI: GPT-5.2 Mini",
+      "context_length": 400000,
+      "architecture": { "output_modalities": ["text"] },
+      "pricing": { "prompt": "0.00000025", "completion": "0.000002" },
+      "sats_pricing": { "prompt": "0.00025", "completion": "0.002", "request": "1", "max_cost": "812.5" },
+      "top_provider": { "max_completion_tokens": 128000 },
+      "enabled": true
+    },
+    {
+      "id": "black-forest-labs/flux-3",
+      "name": "Black Forest Labs: FLUX 3",
+      "architecture": { "output_modalities": ["image"] },
+      "pricing": { "prompt": "0", "completion": "0", "image": "0.04" },
+      "sats_pricing": { "prompt": 0, "completion": 0, "image": 40, "max_cost": 40 },
+      "enabled": true
+    },
+    {
+      "id": "meta-llama/llama-5-70b",
+      "name": "Meta: Llama 5 70B",
+      "architecture": { "output_modalities": ["text"] },
+      "pricing": { "prompt": "0.0000004", "completion": "0.0000004" },
+      "enabled": false
+    }
+  ]
+}

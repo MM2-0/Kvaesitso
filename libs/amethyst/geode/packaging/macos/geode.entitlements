@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  Hardened-runtime entitlements for geode's bundled JVM (runtime/bin/java).
+  Required when codesigning + notarizing the macOS jlink image:
+    - allow-jit / allow-unsigned-executable-memory: the JIT compiler writes
+      and executes generated machine code.
+    - disable-library-validation: geode loads the secp256k1 native .dylib that
+      secp256k1-kmp-jni-jvm extracts from a jar at runtime (Schnorr signature
+      verification), plus the bundled SQLite native; those dylibs are not
+      signed by our Team ID, so library validation would otherwise block them.
+    - allow-dyld-environment-variables: the launcher sets JVM env.
+  Applied only to Mach-O *executables* in the image; plain dylibs are signed
+  without entitlements. See .github/workflows/create-release.yml (build-geode).
+-->
+<plist version="1.0">
+<dict>
+  <key>com.apple.security.cs.allow-jit</key>
+  <true/>
+  <key>com.apple.security.cs.allow-unsigned-executable-memory</key>
+  <true/>
+  <key>com.apple.security.cs.disable-library-validation</key>
+  <true/>
+  <key>com.apple.security.cs.allow-dyld-environment-variables</key>
+  <true/>
+</dict>
+</plist>
