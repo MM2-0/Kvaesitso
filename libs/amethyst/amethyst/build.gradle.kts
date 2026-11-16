@@ -43,7 +43,16 @@ android {
         resources.excludes += listOf("/META-INF/{AL2.0,LGPL2.1}", "**/libscrypt.dylib")
         jniLibs.keepDebugSymbols += listOf("**/libarti_android.so", "**/libzxingcpp_android.so")
     }
-    testOptions.unitTests.isReturnDefaultValues = true
+    testOptions {
+        unitTests.isReturnDefaultValues = true
+        unitTests.all { test ->
+            // JVM tests load the host JNI build, never an Android ABI binary.
+            test.systemProperty("java.library.path", "$projectDir/src/test/native-libs/x86_64-linux")
+            project.findProperty("amethyst.arti.integration")?.let {
+                test.systemProperty("amethyst.arti.integration", it.toString())
+            }
+        }
+    }
 }
 
 kotlin.compilerOptions.jvmTarget.set(JvmTarget.JVM_21)

@@ -41,4 +41,10 @@ are handled; the current upstream application startup remains the default.
 - Re-fetch GitHub immediately before merge, integrate newer main changes and
   validate the combined code before signing a release.
 
-No host, device, account or release validation has passed for this integration.
+Initial GitHub Actions run `43934837665` built the Android library and executed
+1,526 Android host tests: one failed and nine were skipped. The failure was
+`TorArtiNativeIntegrationTest`: the library conversion omitted the upstream
+`java.library.path` setting for the committed Linux JNI binary. That setting is
+restored; a fresh Actions run must verify the correction.
+
+No Telos host, device, account or release validation has passed for this integration.

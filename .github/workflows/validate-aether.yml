@@ -47,6 +47,23 @@ jobs:
               escaped = line.replace('%', '%25').replace('\r', '%0D').replace('\n', '%0A')
               print(f'::error title=Aether library build::{escaped}')
           PYCODE
+      - name: Report executed tests
+        if: always()
+        shell: bash
+        run: |
+          python3 - <<'PYCODE'
+          from pathlib import Path
+          import xml.etree.ElementTree as ET
+          files = list(Path('libs/amethyst/amethyst/build/test-results/testFdroidDebugUnitTest').glob('TEST-*.xml'))
+          totals = dict(tests=0, failures=0, errors=0, skipped=0)
+          for path in files:
+              suite = ET.parse(path).getroot()
+              for key in totals:
+                  totals[key] += int(suite.get(key, 0))
+          if not totals['tests']:
+              raise SystemExit('No Aether host tests executed')
+          print('::notice title=Aether host test totals::' + ', '.join(f'{key}={value}' for key, value in totals.items()))
+          PYCODE
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -55,3 +72,4 @@ jobs:
           path: |
             /tmp/aether-build.log
             libs/amethyst/amethyst/build/reports/tests/
+            libs/amethyst/amethyst/build/test-results/
