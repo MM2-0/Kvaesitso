@@ -256,16 +256,6 @@ fun StoreDashboardScreen(initialLink: String = "", initialQuery: String = "") {
                         color = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.padding(horizontal = 16.dp, vertical = 2.dp)
                     )
-                } else if (global.lastCheckMillis > 0L) {
-                    Text(
-                        text = stringResource(
-                            I18nR.string.store_last_check,
-                            android.text.format.DateUtils.getRelativeTimeSpanString(global.lastCheckMillis),
-                        ),
-                        style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
-                    )
                 }
                 // === TELOS_PENDING_REVIEW_END: store_micro_progress ===
                                 val freezeManager: de.mm20.launcher2.freeze.FreezeManager = koinInject()
@@ -303,20 +293,25 @@ fun StoreDashboardScreen(initialLink: String = "", initialQuery: String = "") {
                         horizontalArrangement = Arrangement.spacedBy(6.dp)
                     ) {
                         item {
-                            TelosTechPill(
-                                text = "[ALL]",
-                                isSelected = category == null,
-                                onClick = { viewModel.category.value = null },
-                                accentColor = TelosCyber.NeonCyan,
-                            )
+                            de.mm20.launcher2.ui.component.Tooltip(stringResource(I18nR.string.hf_store_filter_all)) {
+                                TelosTechPill(
+                                    text = "ALL",
+                                    isSelected = category == null,
+                                    onClick = { viewModel.category.value = null },
+                                    accentColor = TelosCyber.NeonCyan,
+                                )
+                            }
                         }
                         items(categories) { cat ->
-                            TelosTechPill(
-                                text = cat.uppercase(),
-                                isSelected = category == cat,
-                                onClick = { viewModel.category.value = if (category == cat) null else cat },
-                                accentColor = TelosCyber.accentFor(cat.hashCode()),
-                            )
+                            val initial = remember(cat) { cat.trim().take(2).uppercase().ifBlank { "#" } }
+                            de.mm20.launcher2.ui.component.Tooltip(cat) {
+                                TelosTechPill(
+                                    text = initial,
+                                    isSelected = category == cat,
+                                    onClick = { viewModel.category.value = if (category == cat) null else cat },
+                                    accentColor = TelosCyber.accentFor(cat.hashCode()),
+                                )
+                            }
                         }
                     }
                 }
@@ -338,6 +333,7 @@ fun StoreDashboardScreen(initialLink: String = "", initialQuery: String = "") {
                         onUpdateAll = { viewModel.updateAll() },
                         checking = checking,
                         onRefresh = { viewModel.checkAll() },
+                        lastCheck = global.lastCheckMillis,
                     )
                 } else if (tab == 1) {
                     TelosAppsTab(
@@ -580,44 +576,13 @@ private fun StoreCommandHud(
     onFilter: (StoreFilter) -> Unit,
     onUpdateAll: () -> Unit,
     filters: List<StoreFilter> = StoreFilter.entries.toList(),
+    status: String? = null,
 ) {
-    var searchOpen by rememberSaveable { mutableStateOf(query.isNotBlank()) }
-    val searchLabel = stringResource(I18nR.string.hf_store_search)
-    val updateAllLabel = stringResource(I18nR.string.hc_update_all_count, updateCount)
-    Column(Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 4.dp)) {
-        AnimatedVisibility(visible = searchOpen || query.isNotBlank(), enter = fadeIn() + expandVertically(), exit = fadeOut() + shrinkVertically()) {
-            de.mm20.launcher2.ui.component.TelosSearchBar(query, onQuery, searchLabel)
-        }
-        Row(
-            Modifier
-                .fillMaxWidth()
-                .telosTechCard(borderColor = TelosCyber.NeonCyan, shape = RoundedCornerShape(18.dp), alpha = 0.7f)
-                .horizontalScroll(rememberScrollState())
-                .padding(horizontal = 4.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(2.dp),
-        ) {
-            StoreHudIcon(
-                selected = searchOpen || query.isNotBlank(),
-                onClick = {
-                    searchOpen = !(searchOpen || query.isNotBlank())
-                    if (!searchOpen) onQuery("")
-                },
-                icon = BaseR.drawable.search_24px,
-                label = searchLabel,
-                accent = TelosCyber.NeonCyan,
-            )
-            filters.forEach { f ->
-                val label = when (f) {
-                    StoreFilter.All -> stringResource(I18nR.string.hf_store_filter_all)
-                    StoreFilter.Updates -> stringResource(I18nR.string.hf_store_filter_updates, updateCount)
-                    StoreFilter.Installed -> stringResource(I18nR.string.hf_store_installed)
-                    StoreFilter.NotInstalled -> stringResource(I18nR.string.hf_store_not_installed)
-                    StoreFilter.TrackOnly -> stringResource(I18nR.string.hf_store_track_only)
-                }
-                StoreHudIcon(
-                    selected = filter == f,
-                    onClick = { onFilter(f) },
+    val actions = buildList {
+        filters.forEach { f ->
+            add(
+                de.mm20.launcher2.ui.component.TelosHudAction(
+                    id = f.name,
                     icon = when (f) {
                         StoreFilter.All -> BaseR.drawable.apps_24px
                         StoreFilter.Updates -> BaseR.drawable.download_24px
@@ -625,62 +590,45 @@ private fun StoreCommandHud(
                         StoreFilter.NotInstalled -> BaseR.drawable.apk_document_24px
                         StoreFilter.TrackOnly -> BaseR.drawable.visibility_24px
                     },
-                    label = label,
+                    label = when (f) {
+                        StoreFilter.All -> stringResource(I18nR.string.hf_store_filter_all)
+                        StoreFilter.Updates -> stringResource(I18nR.string.hf_store_filter_updates, updateCount)
+                        StoreFilter.Installed -> stringResource(I18nR.string.hf_store_installed)
+                        StoreFilter.NotInstalled -> stringResource(I18nR.string.hf_store_not_installed)
+                        StoreFilter.TrackOnly -> stringResource(I18nR.string.hf_store_track_only)
+                    },
+                    selected = filter == f,
                     accent = when (f) {
                         StoreFilter.Updates -> TelosCyber.NeonOrange
                         StoreFilter.Installed -> TelosCyber.NeonGreen
                         StoreFilter.NotInstalled -> TelosCyber.NeonMagenta
-                        StoreFilter.TrackOnly -> TelosCyber.NeonCyan
-                        StoreFilter.All -> TelosCyber.NeonCyan
+                        else -> TelosCyber.NeonCyan
                     },
+                    onClick = { onFilter(f) },
                 )
-            }
-            if (updateCount > 0) {
-                BadgedBox(
-                    badge = {
-                        Badge(containerColor = TelosCyber.NeonOrange, contentColor = MaterialTheme.colorScheme.onPrimary) {
-                            Text("$updateCount", style = MaterialTheme.typography.labelSmall)
-                        }
-                    },
-                    modifier = Modifier.padding(end = 8.dp),
-                ) {
-                    StoreHudIcon(
-                        selected = true,
-                        onClick = onUpdateAll,
-                        icon = BaseR.drawable.ic_glyph_sync,
-                        label = updateAllLabel,
-                        accent = TelosCyber.NeonOrange,
-                    )
-                }
-            }
+            )
+        }
+        if (updateCount > 0) {
+            add(
+                de.mm20.launcher2.ui.component.TelosHudAction(
+                    id = "update-all",
+                    icon = BaseR.drawable.ic_glyph_sync,
+                    label = stringResource(I18nR.string.hc_update_all_count, updateCount),
+                    selected = true,
+                    badge = "$updateCount",
+                    accent = TelosCyber.NeonOrange,
+                    onClick = onUpdateAll,
+                )
+            )
         }
     }
-}
-
-@Composable
-private fun StoreHudIcon(
-    selected: Boolean,
-    onClick: () -> Unit,
-    icon: Int,
-    label: String,
-    accent: Color,
-) {
-    IconButton(
-        onClick = onClick,
-        modifier = Modifier
-            .size(48.dp)
-            .semantics {
-                contentDescription = label
-                this.selected = selected
-            },
-    ) {
-        Icon(
-            painterResource(icon),
-            contentDescription = null,
-            modifier = Modifier.size(22.dp),
-            tint = if (selected) accent else MaterialTheme.colorScheme.onSurfaceVariant,
-        )
-    }
+    de.mm20.launcher2.ui.component.TelosCommandHud(
+        actions = actions,
+        searchQuery = query,
+        onSearchQueryChange = onQuery,
+        searchPlaceholder = stringResource(I18nR.string.hf_store_search),
+        status = status,
+    )
 }
 
 @Composable
@@ -701,6 +649,7 @@ private fun AppsTab(
     onUpdateAll: () -> Unit,
     checking: Boolean = false,
     onRefresh: () -> Unit = {},
+    lastCheck: Long = 0L,
 ) {
     Column(Modifier.fillMaxSize()) {
         StoreCommandHud(
@@ -710,6 +659,14 @@ private fun AppsTab(
             updateCount = updateCount,
             onFilter = onFilter,
             onUpdateAll = onUpdateAll,
+            status = when {
+                checking -> stringResource(I18nR.string.store_checking_updates)
+                lastCheck > 0L -> stringResource(
+                    I18nR.string.store_last_check,
+                    android.text.format.DateUtils.getRelativeTimeSpanString(lastCheck),
+                )
+                else -> null
+            },
         )
         if (rows.isEmpty() && query.isNotBlank()) {
             de.mm20.launcher2.ui.component.SearchEmptyState(query.trim())
