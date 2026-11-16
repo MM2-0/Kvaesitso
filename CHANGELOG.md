@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.45.67
+
+- Fix System Battery tab compile (`PreferenceCategory` content) so release APKs build.
+- Preinstall NDK 27 in the APK workflow so armeabi-v7a is not killed by a truncated SDK zip.
+
 ## 1.45.66
 
 - Release Gradle resolves Kotlin from Google/Maven Central first and skips the JetBrains

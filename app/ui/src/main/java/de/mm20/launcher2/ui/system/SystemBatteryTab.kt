@@ -69,51 +69,44 @@ fun SystemBatteryTab() {
                 enabled = privileged,
             )
         }
-        item { PreferenceCategory(title = stringResource(I18nR.string.battery_screen_off)) }
         item {
-            SwitchPreference(
-                title = stringResource(I18nR.string.battery_gps),
-                summary = stringResource(I18nR.string.battery_gps_summary),
-                value = group.batteryScreenOffGps,
-                onValueChanged = { settings.update { g -> g.copy(batteryScreenOffGps = it) } },
-                enabled = group.batteryGuardEnabled,
-            )
-        }
-        item {
-            SwitchPreference(
-                title = stringResource(I18nR.string.battery_data),
-                summary = stringResource(I18nR.string.battery_data_summary),
-                value = group.batteryScreenOffData,
-                onValueChanged = { settings.update { g -> g.copy(batteryScreenOffData = it) } },
-                enabled = group.batteryGuardEnabled,
-            )
-        }
-        item {
-            SwitchPreference(
-                title = stringResource(I18nR.string.battery_mic),
-                summary = stringResource(I18nR.string.battery_mic_summary),
-                value = group.batteryScreenOffMic,
-                onValueChanged = { settings.update { g -> g.copy(batteryScreenOffMic = it) } },
-                enabled = group.batteryGuardEnabled,
-            )
-        }
-        item {
-            SwitchPreference(
-                title = stringResource(I18nR.string.battery_camera),
-                summary = stringResource(I18nR.string.battery_camera_summary),
-                value = group.batteryScreenOffCamera,
-                onValueChanged = { settings.update { g -> g.copy(batteryScreenOffCamera = it) } },
-                enabled = group.batteryGuardEnabled,
-            )
-        }
-        item {
-            SwitchPreference(
-                title = stringResource(I18nR.string.battery_sync),
-                summary = stringResource(I18nR.string.battery_sync_summary),
-                value = group.batteryScreenOffSync,
-                onValueChanged = { settings.update { g -> g.copy(batteryScreenOffSync = it) } },
-                enabled = group.batteryGuardEnabled,
-            )
+            PreferenceCategory(title = stringResource(I18nR.string.battery_screen_off)) {
+                SwitchPreference(
+                    title = stringResource(I18nR.string.battery_gps),
+                    summary = stringResource(I18nR.string.battery_gps_summary),
+                    value = group.batteryScreenOffGps,
+                    onValueChanged = { settings.update { g -> g.copy(batteryScreenOffGps = it) } },
+                    enabled = group.batteryGuardEnabled,
+                )
+                SwitchPreference(
+                    title = stringResource(I18nR.string.battery_data),
+                    summary = stringResource(I18nR.string.battery_data_summary),
+                    value = group.batteryScreenOffData,
+                    onValueChanged = { settings.update { g -> g.copy(batteryScreenOffData = it) } },
+                    enabled = group.batteryGuardEnabled,
+                )
+                SwitchPreference(
+                    title = stringResource(I18nR.string.battery_mic),
+                    summary = stringResource(I18nR.string.battery_mic_summary),
+                    value = group.batteryScreenOffMic,
+                    onValueChanged = { settings.update { g -> g.copy(batteryScreenOffMic = it) } },
+                    enabled = group.batteryGuardEnabled,
+                )
+                SwitchPreference(
+                    title = stringResource(I18nR.string.battery_camera),
+                    summary = stringResource(I18nR.string.battery_camera_summary),
+                    value = group.batteryScreenOffCamera,
+                    onValueChanged = { settings.update { g -> g.copy(batteryScreenOffCamera = it) } },
+                    enabled = group.batteryGuardEnabled,
+                )
+                SwitchPreference(
+                    title = stringResource(I18nR.string.battery_sync),
+                    summary = stringResource(I18nR.string.battery_sync_summary),
+                    value = group.batteryScreenOffSync,
+                    onValueChanged = { settings.update { g -> g.copy(batteryScreenOffSync = it) } },
+                    enabled = group.batteryGuardEnabled,
+                )
+            }
         }
         item {
             Text(stringResource(I18nR.string.battery_radio), Modifier.padding(horizontal = 16.dp, vertical = 8.dp), style = MaterialTheme.typography.titleSmall)
@@ -129,37 +122,37 @@ fun SystemBatteryTab() {
                 }
             }
         }
-        item { PreferenceCategory(title = stringResource(I18nR.string.battery_schedulers)) }
         item {
-            SwitchPreference(
-                title = stringResource(I18nR.string.battery_weather_wake),
-                summary = stringResource(I18nR.string.battery_weather_wake_summary),
-                value = group.batteryWeatherWakeMinutes > 0,
-                onValueChanged = { on -> settings.update { g -> g.copy(batteryWeatherWakeMinutes = if (on) 60 else 0) } },
-                enabled = group.batteryGuardEnabled,
-            )
+            PreferenceCategory(title = stringResource(I18nR.string.battery_schedulers)) {
+                SwitchPreference(
+                    title = stringResource(I18nR.string.battery_weather_wake),
+                    summary = stringResource(I18nR.string.battery_weather_wake_summary),
+                    value = group.batteryWeatherWakeMinutes > 0,
+                    onValueChanged = { on -> settings.update { g -> g.copy(batteryWeatherWakeMinutes = if (on) 60 else 0) } },
+                    enabled = group.batteryGuardEnabled,
+                )
+                SwitchPreference(
+                    title = stringResource(I18nR.string.battery_sync_wake),
+                    summary = stringResource(I18nR.string.battery_sync_wake_summary),
+                    value = group.batterySyncWakeMinutes > 0,
+                    onValueChanged = { on -> settings.update { g -> g.copy(batterySyncWakeMinutes = if (on) 60 else 0) } },
+                    enabled = group.batteryGuardEnabled,
+                )
+            }
         }
         item {
-            SwitchPreference(
-                title = stringResource(I18nR.string.battery_sync_wake),
-                summary = stringResource(I18nR.string.battery_sync_wake_summary),
-                value = group.batterySyncWakeMinutes > 0,
-                onValueChanged = { on -> settings.update { g -> g.copy(batterySyncWakeMinutes = if (on) 60 else 0) } },
-                enabled = group.batteryGuardEnabled,
-            )
-        }
-        item { PreferenceCategory(title = stringResource(I18nR.string.battery_holds)) }
-        item {
-            Text(
-                stringResource(I18nR.string.battery_holds_gps_list, gpsInstalled.joinToString().ifBlank { "—" }),
-                style = MaterialTheme.typography.bodySmall,
-                modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
-            )
-            Text(
-                stringResource(I18nR.string.battery_holds_call_list, callInstalled.joinToString().ifBlank { "—" }),
-                style = MaterialTheme.typography.bodySmall,
-                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
-            )
+            PreferenceCategory(title = stringResource(I18nR.string.battery_holds)) {
+                Text(
+                    stringResource(I18nR.string.battery_holds_gps_list, gpsInstalled.joinToString().ifBlank { "—" }),
+                    style = MaterialTheme.typography.bodySmall,
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
+                )
+                Text(
+                    stringResource(I18nR.string.battery_holds_call_list, callInstalled.joinToString().ifBlank { "—" }),
+                    style = MaterialTheme.typography.bodySmall,
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                )
+            }
         }
     }
 }
