@@ -44,7 +44,7 @@ class DevicePoseProvider internal constructor(
      * @param skipCache: when using `getLocation().firstOrNull()`, prefer `skipCache = false`,
      *                   since otherwise, you may only receive an out of date location
      */
-    fun getLocation(minTimeMs: Long = 1000, minDistanceM: Float = 1f, skipCache: Boolean = false) = channelFlow {
+    fun getLocation(minTimeMs: Long = 15_000, minDistanceM: Float = 50f, skipCache: Boolean = false) = channelFlow {
         // have a local copy to work with
         var localLastLocation = lastCachedLocation
 

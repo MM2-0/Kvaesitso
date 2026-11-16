@@ -146,7 +146,7 @@ fun LocationItem(
     val viewModel: SearchableItemVM = listItemViewModel(key = "search-${location.key}")
 
     val userLocation by remember {
-        viewModel.devicePoseProvider.getLocation()
+        viewModel.devicePoseProvider.getLocation(minTimeMs = 15_000, minDistanceM = 25f)
     }.collectAsStateWithLifecycle(null)
 
     val targetHeading by remember(userLocation, location) {

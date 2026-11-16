@@ -112,7 +112,7 @@ class CurrencyRepository(
 
     fun enableCurrencyUpdateWorker() {
         val currencyWorker =
-            PeriodicWorkRequest.Builder(ExchangeRateWorker::class.java, 60, TimeUnit.MINUTES)
+            PeriodicWorkRequest.Builder(ExchangeRateWorker::class.java, 12, TimeUnit.HOURS)
                 .setConstraints(
                     Constraints.Builder()
                         .setRequiredNetworkType(NetworkType.CONNECTED)
@@ -122,7 +122,7 @@ class CurrencyRepository(
                 .build()
         WorkManager.getInstance(context).enqueueUniquePeriodicWork(
             "ExchangeRates",
-            ExistingPeriodicWorkPolicy.KEEP, currencyWorker
+            ExistingPeriodicWorkPolicy.UPDATE, currencyWorker
         )
     }
 
