@@ -39,6 +39,7 @@ jobs:
       - uses: gradle/actions/setup-gradle@v6
         with:
           cache-provider: basic
+          cache-read-only: false
       - name: Compile UI and test freeze policies and task continuity
         run: |
           BUILD_STATUS=0

@@ -56,7 +56,7 @@ class KeyboardImeTest {
         automation.serviceInfo = oldInfo
         var scenario: ActivityScenario<ComponentActivity>? = null
         try {
-            val registered = shell("ime list -s")
+            val registered = shell("ime list -a -s")
             assertTrue(
                 "Production IME is missing from the test APK: $registered",
                 registered.lines().any { it.trim() == ime },
