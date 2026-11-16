@@ -14,6 +14,7 @@ permissions:
 jobs:
   build-aab:
     runs-on: ubuntu-latest
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@v7
 
@@ -27,12 +28,26 @@ jobs:
         uses: gradle/actions/setup-gradle@v6
         with:
           cache-provider: basic
+      - uses: android-actions/setup-android@v4
+      - name: Install NDK
+        run: |
+          NDK="ndk;27.0.12077973"
+          for attempt in 1 2 3; do
+            yes | sdkmanager --install "$NDK" && exit 0
+            echo "NDK install attempt $attempt failed, retrying"
+            sleep 8
+          done
+          echo "::error::Failed to install $NDK after 3 attempts"
+          exit 1
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
       - name: Build Android App Bundle (.aab)
-        run: ./gradlew :app:app:bundleDefaultRelease --stacktrace
+        timeout-minutes: 30
+        env:
+          GRADLE_OPTS: "-Xmx6144m -XX:MaxMetaspaceSize=1536m -XX:+UseG1GC"
+        run: ./gradlew :app:app:bundleDefaultRelease --no-configuration-cache --no-daemon --stacktrace
 
       - name: Upload App Bundle Artifact
         uses: actions/upload-artifact@v7

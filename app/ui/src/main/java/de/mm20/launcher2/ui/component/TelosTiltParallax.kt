@@ -10,6 +10,9 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.compose.currentStateAsState
 
 /**
  * Optimized Low-Pass Filtered 3D Gyroscope Parallax Tilt Reaction Modifier.
@@ -20,10 +23,14 @@ fun Modifier.telosTiltParallax(
     maxTiltAngle: Float = 6f
 ): Modifier {
     val context = LocalContext.current
+    val lifecycleState by LocalLifecycleOwner.current.lifecycle.currentStateAsState()
     var pitch by remember { mutableFloatStateOf(0f) }
     var roll by remember { mutableFloatStateOf(0f) }
 
-    DisposableEffect(Unit) {
+    DisposableEffect(lifecycleState.isAtLeast(Lifecycle.State.STARTED)) {
+        if (!lifecycleState.isAtLeast(Lifecycle.State.STARTED)) {
+            return@DisposableEffect onDispose { }
+        }
         val sensorManager = context.getSystemService(SensorManager::class.java)
         val accelerometer = sensorManager?.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
 
@@ -52,7 +59,7 @@ fun Modifier.telosTiltParallax(
         }
 
         if (accelerometer != null) {
-            sensorManager.registerListener(listener, accelerometer, SensorManager.SENSOR_DELAY_GAME)
+            sensorManager.registerListener(listener, accelerometer, SensorManager.SENSOR_DELAY_UI)
         }
 
         onDispose {

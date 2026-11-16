@@ -25,6 +25,7 @@ import androidx.compose.ui.test.hasSetTextAction
 import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
@@ -108,8 +109,10 @@ class ArtOptimizerScrollTest {
             // Measuring this item on 1.44.19 throws the reported infinite-width exception.
             compose.onNodeWithTag("art-list").performScrollToNode(hasTestTag("art-search"))
             compose.onNodeWithTag("art-search").assertIsDisplayed()
+            compose.onNodeWithContentDescription(context.getString(de.mm20.launcher2.i18n.R.string.art_optimizer_search_apps_hint))
+                .performClick()
             for (label in labels) {
-                compose.onNodeWithText(label).performScrollTo().performClick().assertIsSelected()
+                compose.onNodeWithContentDescription(label).performScrollTo().performClick().assertIsSelected()
             }
             compose.onNode(hasSetTextAction()).performTextReplacement("com.example")
         }

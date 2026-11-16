@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import de.mm20.launcher2.ui.launcher.SharedLauncherActivity
+import kotlinx.coroutines.launch
 
 class PackageReplacedReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent?) {
@@ -24,6 +25,15 @@ class PackageReplacedReceiver : BroadcastReceiver() {
                 context = context,
                 scope = kotlinx.coroutines.CoroutineScope(kotlinx.coroutines.Dispatchers.IO + kotlinx.coroutines.SupervisorJob()),
             )
+            val pending = goAsync()
+            kotlinx.coroutines.CoroutineScope(kotlinx.coroutines.Dispatchers.IO).launch {
+                try {
+                    kotlinx.coroutines.delay(2_000)
+                    de.mm20.launcher2.wallpapers.WallpaperRestorer.restoreAfterUpgrade(context)
+                } finally {
+                    pending.finish()
+                }
+            }
         } catch (e: Exception) {
             Log.e("PackageReplacedReceiver", "Failed to relaunch Telos Launcher post-update", e)
         }

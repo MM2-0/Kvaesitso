@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="battery_tab">Μπαταρία</string>
+    <string name="battery_intro">Με κλειστή οθόνη το Telos μπορεί να παρκάρει ραδιόφωνα και αισθητήρες και να τα ξυπνά με πρόγραμμα για καιρό ή συγχρονισμό. Μένει κλειστό μέχρι να το ανοίξεις. Χρειάζεται Shizuku ή root. Εισερχόμενες κλήσεις τηλεφώνου και μηνυμάτων κρατούν το μικρόφωνο. Εφαρμογές χαρτών κρατούν το GPS όσο είναι μπροστά.</string>
+    <string name="battery_needs_shizuku">Σύνδεσε Shizuku ή root στην καρτέλα Shizuku πριν το ενεργοποιήσεις.</string>
+    <string name="battery_master">Φύλακας ισχύος με κλειστή οθόνη</string>
+    <string name="battery_master_summary">Εφαρμόζει τους διακόπτες περίπου 20 δευτερόλεπτα αφού σβήσει η οθόνη. Επαναφέρει την προηγούμενη κατάσταση στο ξύπνημα.</string>
+    <string name="battery_screen_off">Με κλειστή οθόνη</string>
+    <string name="battery_gps">Κλείσιμο τοποθεσίας</string>
+    <string name="battery_gps_summary">Παραλείπεται αν μια εφαρμογή πλοήγησης που κρατάς είναι σε πρώτο πλάνο.</string>
+    <string name="battery_data">Κλείσιμο δεδομένων κινητής</string>
+    <string name="battery_data_summary">Το Wi-Fi μένει. Παραλείπεται σε ενεργή κλήση.</string>
+    <string name="battery_mic">Απόρρητο: μικρόφωνο κλειστό</string>
+    <string name="battery_mic_summary">Ανοίγει αυτόματα σε εισερχόμενη ή ενεργή κλήση τηλεφώνου ή messaging.</string>
+    <string name="battery_camera">Απόρρητο: κάμερα κλειστή</string>
+    <string name="battery_camera_summary">Χρησιμοποιεί το Android sensor privacy. Επανέρχεται στο ξύπνημα.</string>
+    <string name="battery_sync">Παύση αυτόματου συγχρονισμού λογαριασμών</string>
+    <string name="battery_sync_summary">Συγχρονισμός επαφών/mail του Android. Το ωριαίο ξύπνημα μπορεί να κάνει υποχρεωτικό sync.</string>
+    <string name="battery_radio">Προτιμώμενο δίκτυο σε αδράνεια</string>
+    <string name="battery_radio_leave">Να μείνει όπως είναι</string>
+    <string name="battery_radio_lte">Προτίμηση 4G/LTE</string>
+    <string name="battery_radio_3g">Προτίμηση 3G</string>
+    <string name="battery_radio_2g">Προτίμηση 2G (κίνδυνος έκτακτης ανάγκης σε κάποια δίκτυα)</string>
+    <string name="battery_schedulers">Παράθυρα αφύπνισης</string>
+    <string name="battery_weather_wake">Ωριαία τοποθεσία καιρού</string>
+    <string name="battery_weather_wake_summary">Ανοίγει τοποθεσία και δεδομένα για ~45 δευτερόλεπτα κάθε ώρα και τα παρκάρει ξανά αν η οθόνη είναι ακόμα κλειστή.</string>
+    <string name="battery_sync_wake">Ωριαίος συγχρονισμός λογαριασμών</string>
+    <string name="battery_sync_wake_summary">Ανοίγει δεδομένα, ζητά Android sync, μετά παρκάρει ξανά.</string>
+    <string name="battery_holds">Εξαιρέσεις (εγκατεστημένες)</string>
+    <string name="battery_holds_gps_list">Πλοήγηση: %1$s</string>
+    <string name="battery_holds_call_list">Κλήσεις/μηνύματα: %1$s</string>
+    <string name="wallpaper_restore_channel">Ταπετσαρία</string>
+    <string name="wallpaper_restore_title">Επαναφορά video wallpaper</string>
+    <string name="wallpaper_restore_text">Το Android έβγαλε το live wallpaper μετά την ενημέρωση του Telos. Το αρχείο είναι ακόμα στη συσκευή. Πάτα για να το ξαναβάλεις.</string>
+</resources>

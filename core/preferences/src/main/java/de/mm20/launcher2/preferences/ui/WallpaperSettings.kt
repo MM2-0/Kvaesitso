@@ -108,6 +108,13 @@ class WallpaperSettings internal constructor(
         dataStore.update { it.copy(videoWallpaper = it.videoWallpaper.copy(videoWallpaperPauseOnDesktopMode = pause)) }
     }
 
+    val liveWallpaperWanted
+        get() = dataStore.data.map { it.videoWallpaper.liveWallpaperWanted }.distinctUntilChanged()
+
+    fun setLiveWallpaperWanted(wanted: Boolean) {
+        dataStore.update { it.copy(videoWallpaper = it.videoWallpaper.copy(liveWallpaperWanted = wanted)) }
+    }
+
     val textColors
         get() = dataStore.data.map { it.wallpaper.wallpaperTextColors }.distinctUntilChanged()
 

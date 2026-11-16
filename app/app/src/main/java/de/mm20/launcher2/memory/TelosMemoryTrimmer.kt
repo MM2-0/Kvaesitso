@@ -78,10 +78,12 @@ class TelosMemoryTrimmer private constructor(
                 Log.w(TAG, "onTrimMemory: TRIM_MEMORY_RUNNING_CRITICAL ($level) - Evicting all unpinned caches")
                 purgeNonEssentialCaches(critical = true)
             }
-            level >= ComponentCallbacks2.TRIM_MEMORY_RUNNING_LOW ||
-                level == ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN -> {
+            level >= ComponentCallbacks2.TRIM_MEMORY_RUNNING_LOW -> {
                 Log.d(TAG, "onTrimMemory: Moderate trim level ($level) - Trimming icon cache by 50%")
                 purgeNonEssentialCaches(critical = false)
+            }
+            level == ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN -> {
+                TelosIconCache.trimHalf()
             }
         }
     }
@@ -104,9 +106,8 @@ class TelosMemoryTrimmer private constructor(
         // 2. Drop heavy ART Optimizer dump/audit reports from memory
         StartupOptimizationAudit.clearCachedAudit()
 
-        // 3. Clear Coil image memory cache if instantiated
-        runCatching {
-            coil.Coil.imageLoader(app).memoryCache?.clear()
+        if (critical) {
+            runCatching { coil.Coil.imageLoader(app).memoryCache?.clear() }
         }
     }
 

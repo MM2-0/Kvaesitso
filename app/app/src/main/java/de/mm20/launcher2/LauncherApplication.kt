@@ -117,6 +117,9 @@ class LauncherApplication : Amethyst(), CoroutineScope, ImageLoaderFactory {
         de.mm20.launcher2.appmanagement.stealth.TelosDevOptsCloak.start(this)
 
         launch(Dispatchers.IO) { de.mm20.launcher2.ui.system.restoreSystemAppOps(this@LauncherApplication) }
+        launch(Dispatchers.IO) {
+            runCatching { get<de.mm20.launcher2.appmanagement.battery.BatteryPolicy>().start() }
+        }
 
         if (BuildConfig.BUILD_TYPE == "debug") initDebugMode()
 
@@ -198,6 +201,7 @@ class LauncherApplication : Amethyst(), CoroutineScope, ImageLoaderFactory {
                     networkModule,
                 )
             )
+            runCatching { de.mm20.launcher2.wallpapers.WallpaperRestorer.restoreAfterUpgrade(this@LauncherApplication) }
         }
 
         // Reconcile an old call notification after a process crash; Telecom is queried off Main.

@@ -1,5 +1,39 @@
 # Changelog
 
+## 1.45.67
+
+- Fix System Battery tab compile (`PreferenceCategory` content) so release APKs build.
+- Preinstall NDK 27 in the APK workflow so armeabi-v7a is not killed by a truncated SDK zip.
+
+## 1.45.66
+
+- Release Gradle resolves Kotlin from Google/Maven Central first and skips the JetBrains
+  Compose Space repo for stdlib, so APK builds survive a Space DNS failure.
+
+## 1.45.65
+
+- Restore video/GIF live wallpaper after Telos APK updates (retry bind, else a restore
+  notification). Static images stay as the system wallpaper.
+- Telos System → Battery: opt-in screen-off GPS/data/mic/camera/sync with Maps and
+  messaging-call hold-outs, plus hourly weather/sync windows (Shizuku or root).
+- Idle GPS/weather/mail/FX/sensor sampling uses less battery without changing Call Screening.
+
+## 1.45.64
+
+- Store, Downloads, Freeze and ART Optimizer use a compact command HUD: icon search, icon
+  filters with long-press labels, update-all badge, and last-check readout.
+
+## 1.45.63
+
+- Restore Telos Store Shizuku installs: parse session IDs from more `pm` outputs, treat prefixed
+  Success as OK, fall back to stdin `pm install` when sessions fail, and restart the Shizuku
+  UserService after launcher updates.
+
+## 1.45.62
+
+- Fix Stremio Fork compile on Kotlin 2.4: upcoming-episode load uses `async` on a coroutine scope,
+  so F-Droid, AAB and CodeQL builds succeed.
+
 ## 1.45.61
 
 - Stremio Fork: `stremio://` detail links, add-on configuration pages, continue-watching progress,

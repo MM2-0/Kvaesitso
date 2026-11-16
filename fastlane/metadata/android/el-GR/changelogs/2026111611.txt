@@ -1,0 +1,1 @@
+Διόρθωση compile του Battery tab ώστε να βγαίνει APK, και εγκατάσταση NDK στο CI.

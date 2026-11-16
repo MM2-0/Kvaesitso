@@ -98,6 +98,7 @@ Telos runs as the home screen, so every agent (Devin, Copilot, ChatGPT, Claude) 
 - No new `runBlocking` in app code. Inside a coroutine, call `first()` directly. Outside one, launch in a scope (`containedScope(...)` from `core:base`, `lifecycleScope`, `viewModelScope`) and come back to `Dispatchers.Main` to touch the UI.
 - `SharedPreferences`: use `apply()`. `commit()` is only for writes that must be on disk before the process can die (crash-recovery state such as `VirtualAppGuard`), and never on the main thread.
 - Do not start heavy work in `Application.onCreate`. Create engines, decoders and services on first use.
+- Battery: no GPS/network location loops on the home screen. Search location and weather use coarse, cached updates. Periodic WorkManager jobs require `setRequiresBatteryNotLow(true)` unless the user asked for a live check. Do not poll CallScreening or the dialer blocklist; it stays event-driven when enabled. Do not add wake locks or foreground services for launcher idle. Sensor listeners unregister when the lifecycle is below STARTED. Never trade home-screen frame time for extra battery savings.
 
 **Compose**
 - Wrap derived values in `remember(keys)` or `derivedStateOf`. No sorting, filtering, parsing, `Regex(...)`, `SimpleDateFormat(...)` or object allocation directly in a composable body or in `drawBehind`/`onDraw`.
@@ -219,7 +220,8 @@ start another prompt from every new composition or persist an unlocked flag to d
 All Telos virtual apps, mini players, and launcher controls must adhere to the Cyber-Tech design language:
 - **Glowing Tech Borders**: Cards and container items must use `Modifier.telosTechCard(borderColor, shape, borderWidth, alpha)` with neon accent highlights (Neon Green `#00E676`, Neon Cyan `#00F0FF`, Neon Magenta `#FF007F`, Neon Orange `#FF9100`).
 - **Telemetry & Dot Matrix**: Header labels, status HUDs, and technical metrics must use `TelosDotMatrixText` and `TelosRadialGauge` / `CyberGauges` for visual hierarchy and high-tech telemetry readouts.
-- **Morphe-Style Tech Pills**: Interactive tabs, category chips, and filter toggles must use `TelosTechPill` with matching glowing accent borders and container fills.
+- **Command HUD (mandatory for list apps)**: Search, filters and bulk actions (update all, pause all, refresh) use `TelosCommandHud` / `TelosHudIcon` in `app/ui/.../TelosCommandHud.kt`. Search is an icon until opened. Filters are 48dp icons with `contentDescription` and long-press `Tooltip` labels. Counts use badges. Status (last check, scanning) uses `TelosDotMatrixText` under the strip. Do not add a full-width search field plus a Filters button plus an Update-all button as three stacked rows. Categories that are names may be 1–2 letter `TelosTechPill`s with tooltip of the full name. Apply this in Store, Downloads, Freeze, ART Optimizer, and any new list/filter dashboard. Keep 48dp targets and font scale.
+- **Morphe-Style Tech Pills**: Destination tabs and short named modes still use `TelosTechPill`. Filter *rows* of many options belong on the command HUD, not a second chip row.
 - **Mini Player Surface**: The mini player across Telos Media, Radio, Music, TV, and Stremio must feature `telosTechCard` translucent glass borders, neon playback status indicators, marquee titles, and instant full-surface touch controls.
 - **Opaque Popups Over Glass**: All dialogs, pickers, and popups over glass must use `virtualAppPopup()` (`surfaceContainer` at alpha 1) with opaque background tones to prevent background text bleed.
 

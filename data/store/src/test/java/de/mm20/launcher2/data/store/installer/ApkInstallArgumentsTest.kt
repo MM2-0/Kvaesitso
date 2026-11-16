@@ -7,6 +7,8 @@ class ApkInstallArgumentsTest {
     @Test fun currentProfileAndExplicitStdin() {
         assertEquals(listOf("pm", "install", "-r", "--user", "10", "--skip-enable", "-S", "123", "-"),
             apkInstallArguments(123, 10, true))
+        assertEquals(listOf("pm", "install", "-r", "--user", "0", "-d", "-S", "8", "-"),
+            apkInstallArguments(8, 0, false, allowDowngrade = true))
     }
     @Test fun legacyDoesNotRequestUnsupportedFlag() {
         assertFalse(apkInstallArguments(123, 0, false).contains("--skip-enable"))

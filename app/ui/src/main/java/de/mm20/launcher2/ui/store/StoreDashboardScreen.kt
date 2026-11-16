@@ -10,6 +10,11 @@ import android.graphics.drawable.Drawable
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
@@ -44,6 +49,8 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FilledTonalButton
+import androidx.compose.material3.Badge
+import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -74,6 +81,9 @@ import androidx.compose.runtime.setValue
 import org.koin.compose.koinInject
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.selected
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalClipboardManager
@@ -99,6 +109,7 @@ import de.mm20.launcher2.store.model.StoreItem
 import de.mm20.launcher2.store.parser.StoreUrlParser
 import de.mm20.launcher2.ui.component.TelosCyber
 import de.mm20.launcher2.ui.component.TelosTechPill
+import de.mm20.launcher2.ui.component.telosTechCard
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.locals.LocalBackStack
 import de.mm20.launcher2.ui.media.MediaFrame
@@ -245,16 +256,6 @@ fun StoreDashboardScreen(initialLink: String = "", initialQuery: String = "") {
                         color = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.padding(horizontal = 16.dp, vertical = 2.dp)
                     )
-                } else if (global.lastCheckMillis > 0L) {
-                    Text(
-                        text = stringResource(
-                            I18nR.string.store_last_check,
-                            android.text.format.DateUtils.getRelativeTimeSpanString(global.lastCheckMillis),
-                        ),
-                        style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
-                    )
                 }
                 // === TELOS_PENDING_REVIEW_END: store_micro_progress ===
                                 val freezeManager: de.mm20.launcher2.freeze.FreezeManager = koinInject()
@@ -267,8 +268,8 @@ fun StoreDashboardScreen(initialLink: String = "", initialQuery: String = "") {
                     Modifier
                         .fillMaxWidth()
                         .horizontalScroll(rememberScrollState())
-                        .padding(horizontal = 16.dp, vertical = 8.dp),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        .padding(horizontal = 12.dp, vertical = 4.dp),
+                    horizontalArrangement = Arrangement.spacedBy(6.dp),
                 ) {
                     TelosTechPill(stringResource(I18nR.string.hc_apps), tab == 0, { tab = 0 }, accentColor = TelosCyber.NeonCyan)
                     TelosTechPill(stringResource(I18nR.string.hc_telos_apps), tab == 1, { tab = 1 }, accentColor = TelosCyber.NeonGreen)
@@ -288,24 +289,29 @@ fun StoreDashboardScreen(initialLink: String = "", initialQuery: String = "") {
                 }
                 if (tab == 0 && categories.isNotEmpty()) {
                     LazyRow(
-                        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 6.dp),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        contentPadding = PaddingValues(horizontal = 12.dp, vertical = 2.dp),
+                        horizontalArrangement = Arrangement.spacedBy(6.dp)
                     ) {
                         item {
-                            TelosTechPill(
-                                text = "[ALL]",
-                                isSelected = category == null,
-                                onClick = { viewModel.category.value = null },
-                                accentColor = TelosCyber.NeonCyan,
-                            )
+                            de.mm20.launcher2.ui.component.Tooltip(stringResource(I18nR.string.hf_store_filter_all)) {
+                                TelosTechPill(
+                                    text = "ALL",
+                                    isSelected = category == null,
+                                    onClick = { viewModel.category.value = null },
+                                    accentColor = TelosCyber.NeonCyan,
+                                )
+                            }
                         }
                         items(categories) { cat ->
-                            TelosTechPill(
-                                text = cat.uppercase(),
-                                isSelected = category == cat,
-                                onClick = { viewModel.category.value = if (category == cat) null else cat },
-                                accentColor = TelosCyber.accentFor(cat.hashCode()),
-                            )
+                            val initial = remember(cat) { cat.trim().take(2).uppercase().ifBlank { "#" } }
+                            de.mm20.launcher2.ui.component.Tooltip(cat) {
+                                TelosTechPill(
+                                    text = initial,
+                                    isSelected = category == cat,
+                                    onClick = { viewModel.category.value = if (category == cat) null else cat },
+                                    accentColor = TelosCyber.accentFor(cat.hashCode()),
+                                )
+                            }
                         }
                     }
                 }
@@ -327,6 +333,7 @@ fun StoreDashboardScreen(initialLink: String = "", initialQuery: String = "") {
                         onUpdateAll = { viewModel.updateAll() },
                         checking = checking,
                         onRefresh = { viewModel.checkAll() },
+                        lastCheck = global.lastCheckMillis,
                     )
                 } else if (tab == 1) {
                     TelosAppsTab(
@@ -397,39 +404,15 @@ private fun PlayStoreTab(
     onOpen: (PlayStoreApp) -> Unit,
 ) {
     Column(Modifier.fillMaxSize()) {
-        de.mm20.launcher2.ui.component.TelosSearchBar(query, onQuery, stringResource(I18nR.string.hf_store_search))
-        Button(
-            onClick = onUpdateAll,
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
-        ) {
-            Icon(painterResource(BaseR.drawable.download_24px), contentDescription = null, modifier = Modifier.size(18.dp))
-            Spacer(Modifier.width(8.dp))
-            Text(stringResource(I18nR.string.store_play_unfreeze_update))
-        }
-        Row(
-            Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            FilterChip(
-                selected = filterUpdates,
-                onClick = { onFilterUpdates(!filterUpdates) },
-                label = { Text(stringResource(I18nR.string.hf_store_filter_updates, updateCount)) },
-            )
-            if (frozenCount > 0) {
-                FilterChip(
-                    selected = false,
-                    onClick = {},
-                    enabled = false,
-                    label = { Text(stringResource(I18nR.string.store_play_frozen_count, frozenCount)) },
-                )
-            }
-            if (updateCount > 0) {
-                FilledTonalButton(onClick = onUpdateAll) {
-                    Text(stringResource(I18nR.string.hc_update_all_count, updateCount))
-                }
-            }
-        }
+        StoreCommandHud(
+            query = query,
+            onQuery = onQuery,
+            filter = if (filterUpdates) StoreFilter.Updates else StoreFilter.All,
+            updateCount = updateCount,
+            onFilter = { onFilterUpdates(it == StoreFilter.Updates) },
+            onUpdateAll = onUpdateAll,
+            filters = listOf(StoreFilter.All, StoreFilter.Updates),
+        )
         Text(
             stringResource(I18nR.string.store_play_hint),
             style = MaterialTheme.typography.bodySmall,
@@ -585,6 +568,70 @@ private fun PlayStoreAppRow(app: PlayStoreApp, onOpen: () -> Unit, onUpdate: () 
 
 
 @Composable
+private fun StoreCommandHud(
+    query: String,
+    onQuery: (String) -> Unit,
+    filter: StoreFilter,
+    updateCount: Int,
+    onFilter: (StoreFilter) -> Unit,
+    onUpdateAll: () -> Unit,
+    filters: List<StoreFilter> = StoreFilter.entries.toList(),
+    status: String? = null,
+) {
+    val actions = buildList {
+        filters.forEach { f ->
+            add(
+                de.mm20.launcher2.ui.component.TelosHudAction(
+                    id = f.name,
+                    icon = when (f) {
+                        StoreFilter.All -> BaseR.drawable.apps_24px
+                        StoreFilter.Updates -> BaseR.drawable.download_24px
+                        StoreFilter.Installed -> BaseR.drawable.check_circle_24px
+                        StoreFilter.NotInstalled -> BaseR.drawable.apk_document_24px
+                        StoreFilter.TrackOnly -> BaseR.drawable.visibility_24px
+                    },
+                    label = when (f) {
+                        StoreFilter.All -> stringResource(I18nR.string.hf_store_filter_all)
+                        StoreFilter.Updates -> stringResource(I18nR.string.hf_store_filter_updates, updateCount)
+                        StoreFilter.Installed -> stringResource(I18nR.string.hf_store_installed)
+                        StoreFilter.NotInstalled -> stringResource(I18nR.string.hf_store_not_installed)
+                        StoreFilter.TrackOnly -> stringResource(I18nR.string.hf_store_track_only)
+                    },
+                    selected = filter == f,
+                    accent = when (f) {
+                        StoreFilter.Updates -> TelosCyber.NeonOrange
+                        StoreFilter.Installed -> TelosCyber.NeonGreen
+                        StoreFilter.NotInstalled -> TelosCyber.NeonMagenta
+                        else -> TelosCyber.NeonCyan
+                    },
+                    onClick = { onFilter(f) },
+                )
+            )
+        }
+        if (updateCount > 0) {
+            add(
+                de.mm20.launcher2.ui.component.TelosHudAction(
+                    id = "update-all",
+                    icon = BaseR.drawable.ic_glyph_sync,
+                    label = stringResource(I18nR.string.hc_update_all_count, updateCount),
+                    selected = true,
+                    badge = "$updateCount",
+                    accent = TelosCyber.NeonOrange,
+                    onClick = onUpdateAll,
+                )
+            )
+        }
+    }
+    de.mm20.launcher2.ui.component.TelosCommandHud(
+        actions = actions,
+        searchQuery = query,
+        onSearchQueryChange = onQuery,
+        searchPlaceholder = stringResource(I18nR.string.hf_store_search),
+        status = status,
+    )
+}
+
+@Composable
 private fun AppsTab(
     rows: List<StoreRow>,
     totalCount: Int,
@@ -602,53 +649,25 @@ private fun AppsTab(
     onUpdateAll: () -> Unit,
     checking: Boolean = false,
     onRefresh: () -> Unit = {},
+    lastCheck: Long = 0L,
 ) {
-    val context = LocalContext.current
     Column(Modifier.fillMaxSize()) {
-        de.mm20.launcher2.ui.component.TelosSearchBar(query, onQuery, stringResource(I18nR.string.hf_store_search))
-        var showFilters by rememberSaveable { mutableStateOf(false) }
-        OutlinedButton(onClick = { showFilters = true }, modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
-            Text(stringResource(I18nR.string.telos_store_filters))
-        }
-        if (showFilters) AlertDialog(
-            onDismissRequest = { showFilters = false },
-            title = { TelosCyberHeading {  Text(stringResource(I18nR.string.telos_store_filters))  } },
-            text = {
-                Column(Modifier.verticalScroll(rememberScrollState())) {
-                    StoreFilter.entries.forEach { f ->
-                        Row(Modifier.fillMaxWidth().clickable { onFilter(f) }, verticalAlignment = Alignment.CenterVertically) {
-                            androidx.compose.material3.RadioButton(selected = filter == f, onClick = { onFilter(f) })
-                            Text(when (f) {
-                                StoreFilter.All -> stringResource(I18nR.string.hf_store_filter_all)
-                                StoreFilter.Updates -> stringResource(I18nR.string.hf_store_filter_updates, updateCount)
-                                StoreFilter.Installed -> stringResource(I18nR.string.hf_store_installed)
-                                StoreFilter.NotInstalled -> stringResource(I18nR.string.hf_store_not_installed)
-                                StoreFilter.TrackOnly -> stringResource(I18nR.string.hf_store_track_only)
-                            }, modifier = Modifier.weight(1f))
-                        }
-                    }
-                    if (categories.isNotEmpty()) {
-                        Text(stringResource(I18nR.string.hc_category), style = MaterialTheme.typography.titleSmall)
-                        Row(Modifier.fillMaxWidth().clickable { onCategory(null) }, verticalAlignment = Alignment.CenterVertically) {
-                            androidx.compose.material3.RadioButton(selected = category == null, onClick = { onCategory(null) })
-                            Text(stringResource(I18nR.string.hf_store_filter_all))
-                        }
-                        categories.forEach { c ->
-                            Row(Modifier.fillMaxWidth().clickable { onCategory(c) }, verticalAlignment = Alignment.CenterVertically) {
-                                androidx.compose.material3.RadioButton(selected = category == c, onClick = { onCategory(c) })
-                                Text(c, modifier = Modifier.weight(1f))
-                            }
-                        }
-                    }
-                }
+        StoreCommandHud(
+            query = query,
+            onQuery = onQuery,
+            filter = filter,
+            updateCount = updateCount,
+            onFilter = onFilter,
+            onUpdateAll = onUpdateAll,
+            status = when {
+                checking -> stringResource(I18nR.string.store_checking_updates)
+                lastCheck > 0L -> stringResource(
+                    I18nR.string.store_last_check,
+                    android.text.format.DateUtils.getRelativeTimeSpanString(lastCheck),
+                )
+                else -> null
             },
-            confirmButton = { TextButton(onClick = { showFilters = false }) { Text(stringResource(I18nR.string.hc_close)) } },
         )
-        if (updateCount > 0) {
-            FilledTonalButton(onClick = onUpdateAll, modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
-                Text(stringResource(I18nR.string.hc_update_all_count, updateCount))
-            }
-        }
         if (rows.isEmpty() && query.isNotBlank()) {
             de.mm20.launcher2.ui.component.SearchEmptyState(query.trim())
         } else if (rows.isEmpty()) {

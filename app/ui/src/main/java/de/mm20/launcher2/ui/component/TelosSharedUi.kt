@@ -280,7 +280,7 @@ fun TelosWarningCard(
 }
 
 /**
- * Standardized search and filter bar using [TelosSearchBar] and horizontally scrolling [FilterChip]s.
+ * Compact HUD: search is an icon until opened; filters are 48dp icons with long-press labels.
  */
 @Composable
 fun TelosSearchAndFilterBar(
@@ -293,26 +293,29 @@ fun TelosSearchAndFilterBar(
     placeholder: String = stringResource(I18nR.string.art_optimizer_search_apps_hint),
 ) {
     val haptics = LocalHapticFeedback.current
-    Column(
-        modifier = modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(4.dp),
-    ) {
-        TelosSearchBar(
-            value = query,
-            onValueChange = onQueryChange,
-            placeholder = placeholder,
-            filters = {
-                for (filter in availableFilters) {
-                    FilterChip(
-                        selected = activeFilter == filter,
-                        onClick = {
-                            haptics.performHapticFeedback(HapticFeedbackType.TextHandleMove)
-                            onFilterChange(filter)
-                        },
-                        label = { Text(stringResource(filter.labelRes)) },
-                    )
-                }
-            }
-        )
-    }
+    TelosCommandHud(
+        modifier = modifier,
+        searchQuery = query,
+        onSearchQueryChange = onQueryChange,
+        searchPlaceholder = placeholder,
+        actions = availableFilters.map { filter ->
+            TelosHudAction(
+                id = filter.name,
+                icon = when (filter) {
+                    SharedAppFilter.ALL -> BaseR.drawable.apps_24px
+                    SharedAppFilter.USER -> BaseR.drawable.check_circle_24px
+                    SharedAppFilter.SYSTEM -> BaseR.drawable.filter_alt_24px
+                    SharedAppFilter.FROZEN -> BaseR.drawable.visibility_off_24px
+                    SharedAppFilter.NEEDS_ATTENTION -> BaseR.drawable.warning_24px
+                },
+                label = stringResource(filter.labelRes),
+                selected = activeFilter == filter,
+                accent = if (filter == SharedAppFilter.NEEDS_ATTENTION) TelosCyber.NeonOrange else TelosCyber.NeonCyan,
+                onClick = {
+                    haptics.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+                    onFilterChange(filter)
+                },
+            )
+        },
+    )
 }

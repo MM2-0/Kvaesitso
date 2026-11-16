@@ -142,6 +142,7 @@ fun SystemDashboardScreen(initialTab: String = "") {
                 "tweaks" -> 2
                 "shield", "privacy", "security" -> 3
                 "shizuku" -> 4
+                "battery" -> 5
                 else -> 0
             }
         )
@@ -241,6 +242,12 @@ fun SystemDashboardScreen(initialTab: String = "") {
                     onClick = { currentTab = 4 },
                     accentColor = TelosCyber.NeonCyan,
                 )
+                TelosTechPill(
+                    text = stringResource(I18nR.string.battery_tab),
+                    isSelected = currentTab == 5,
+                    onClick = { currentTab = 5 },
+                    accentColor = TelosCyber.NeonOrange,
+                )
             }
             if (currentTab == 1) {
                 SystemAppsTab(onOpenDetails = { pkg -> backStack.add(SystemAppDetailsRoute(pkg)) })
@@ -252,6 +259,8 @@ fun SystemDashboardScreen(initialTab: String = "") {
                 }
             } else if (currentTab == 4) {
                 SystemShizukuTab()
+            } else if (currentTab == 5) {
+                SystemBatteryTab()
             } else {
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),

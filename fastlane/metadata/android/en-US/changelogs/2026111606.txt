@@ -1,0 +1,1 @@
+Fix Stremio Fork Kotlin 2.4 compile for upcoming-episode loading so release, F-Droid and AAB builds succeed.

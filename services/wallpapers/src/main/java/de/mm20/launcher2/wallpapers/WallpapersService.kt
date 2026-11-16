@@ -94,6 +94,7 @@ class WallpapersService(private val context: Context) {
                     }
                 }
                 VideoWallpaperService.videoChanged.tryEmit(Unit)
+                WallpaperRestorer.markWanted(context)
                 true
             } catch (e: Exception) {
                 CrashReporter.logException(e)
@@ -157,6 +158,9 @@ class WallpapersService(private val context: Context) {
             getVideoDir(context).listFiles()?.forEach { it.delete() }
             @Suppress("DEPRECATION") getVideoFile(context).delete()
             VideoWallpaperService.videoChanged.tryEmit(Unit)
+            runCatching {
+                org.koin.core.context.GlobalContext.get().get<de.mm20.launcher2.preferences.ui.WallpaperSettings>().setLiveWallpaperWanted(false)
+            }
         }
     }
 

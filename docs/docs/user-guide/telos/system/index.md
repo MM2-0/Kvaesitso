@@ -1,6 +1,8 @@
 # Telos System
 
-Telos System is a virtual app: CPU, RAM, network addresses, processes, AppOps, tweaks, Privacy Shield, and the **built-in Shizuku server**. Saved Wi-Fi passwords live under **Telos Network → Settings**. Open System from the app grid or search for System.
+Telos System is a virtual app: CPU, RAM, network addresses, processes, AppOps, tweaks, Privacy Shield, **Battery**, and the **built-in Shizuku server**. Saved Wi-Fi passwords live under **Telos Network → Settings**. Open System from the app grid or search for System.
+
+After a Telos update, Android often unbinds a **video or GIF live wallpaper** even though the file is still in Telos storage. Telos tries to bind it again (Shizuku/root) and otherwise shows a notification to confirm the live wallpaper. Static image wallpapers set through Telos stay as the system wallpaper.
 
 ## Apps and frozen apps
 
@@ -11,6 +13,12 @@ Search names or package IDs, filter frozen/running/user/system/bloat apps, or en
 Opening firewall for one package resolves its shared UID even when the package has no Internet permission. The general firewall list still shows Internet-capable apps only. The installed-app directory includes disabled apps and refreshes on returning to the screen and on package changes. Network rules remain UID-based and can affect shared-UID siblings.
 
 AppOps reads retry through the privileged shell after a native/UserService failure. This requires an available authorized privileged transport. Failures remain visible if both transports fail; diagnostics record the first command's exit status, timeout and bounded error text. After a successful retry, subsequent commands use that working transport until reconnection. Mode-changing commands are never retried automatically.
+
+## Battery
+
+**Telos System → Battery** is off until you enable it. With Shizuku or root, about 20 seconds after the screen turns off Telos can park location, mobile data, microphone, camera, account sync, and optionally prefer a slower radio. It restores the previous values when you wake the phone. Navigation apps (Maps, Waze, Organic Maps, … if installed) keep GPS while they are in the foreground. Incoming or active phone and messaging calls (WhatsApp, Telegram, Signal, Viber, Meet, Zoom, Discord, … if installed) keep the microphone. Optional hourly windows turn location/data back on briefly for weather, or data/sync for contacts and mail.
+
+This does not change the Dialer blocklist. Radio mode (4G/3G/2G) is OEM-specific and can fail silently; 2G can affect emergency calling on some networks.
 
 ## Built-in Shizuku
 
