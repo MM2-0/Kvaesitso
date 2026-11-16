@@ -61,6 +61,17 @@ jobs:
         with:
           cache-provider: basic
           cache-read-only: false
+      - uses: android-actions/setup-android@v4
+      - name: Install NDK
+        run: |
+          NDK="ndk;27.0.12077973"
+          for attempt in 1 2 3; do
+            yes | sdkmanager --install "$NDK" && exit 0
+            echo "NDK install attempt $attempt failed, retrying"
+            sleep 8
+          done
+          echo "::error::Failed to install $NDK after 3 attempts"
+          exit 1
       - name: Prepare repository signing key
         if: github.event_name != 'pull_request'
         env:

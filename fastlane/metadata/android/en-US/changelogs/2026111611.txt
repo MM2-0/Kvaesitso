@@ -1,0 +1,1 @@
+Fix release APK compile for System Battery and NDK install in CI.
