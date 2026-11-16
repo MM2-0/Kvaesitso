@@ -1,0 +1,1 @@
+Compact Store HUD: icon search, filters and update-all. Same command strip on Downloads, Freeze and ART Optimizer.

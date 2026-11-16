@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.45.64
+
+- Store, Downloads, Freeze and ART Optimizer use a compact command HUD: icon search, icon
+  filters with long-press labels, update-all badge, and last-check readout.
+
 ## 1.45.63
 
 - Restore Telos Store Shizuku installs: parse session IDs from more `pm` outputs, treat prefixed
