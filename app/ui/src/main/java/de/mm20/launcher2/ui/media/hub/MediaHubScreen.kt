@@ -138,8 +138,8 @@ private enum class MediaSpace(
     Radio("radio", "telos_radio_app://radio", BaseR.drawable.ic_glyph_radio, I18nR.string.au9_mediahub_space_radio),
     Video("video", "telos_video_app://video", BaseR.drawable.video_library_24px, I18nR.string.au9_mediahub_space_video),
     Tv("tv", "telos_tv_app://tv", BaseR.drawable.ic_glyph_tv, I18nR.string.au12_tvui_space_tv),
-    YouTube("youtube", "telos_youtube_app://youtube", de.mm20.launcher2.base.R.drawable.ic_app_youtube_fg, I18nR.string.telos_youtube_label),
-    YouTubeMusic("youtube_music", "telos_youtube_music_app://youtube_music", de.mm20.launcher2.base.R.drawable.ic_app_youtube_music_fg, I18nR.string.telos_youtube_music_label),
+    YouTube("youtube", "telos_youtube_app://youtube", BaseR.drawable.ic_glyph_youtube, I18nR.string.telos_youtube_label),
+    YouTubeMusic("youtube_music", "telos_youtube_music_app://youtube_music", BaseR.drawable.ic_glyph_youtube_music, I18nR.string.telos_youtube_music_label),
     Stremio("stremio", "telos_media_app://stremio", BaseR.drawable.theaters_24px, I18nR.string.au22_stremio_label),
 }
 
@@ -474,7 +474,7 @@ private fun HubBottomBar(
                     onSelect(MediaSpace.YouTubeMusic)
                 },
                 icon = {
-                    Icon(painterResource(de.mm20.launcher2.base.R.drawable.ic_app_youtube_music_fg), contentDescription = null, modifier = Modifier.size(22.dp))
+                    Icon(painterResource(BaseR.drawable.ic_glyph_youtube_music), contentDescription = null, modifier = Modifier.size(22.dp))
                 },
                 label = {
                     Text("YT Music")
@@ -527,7 +527,7 @@ private fun HubBottomBar(
                     onSelect(MediaSpace.YouTube)
                 },
                 icon = {
-                    Icon(painterResource(de.mm20.launcher2.base.R.drawable.ic_app_youtube_fg), contentDescription = null, modifier = Modifier.size(22.dp))
+                    Icon(painterResource(BaseR.drawable.ic_glyph_youtube), contentDescription = null, modifier = Modifier.size(22.dp))
                 },
                 label = {
                     Text("YouTube")

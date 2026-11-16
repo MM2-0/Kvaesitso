@@ -81,7 +81,7 @@ private fun RadioDashboardContent(
     val isRecording = recordingState is de.mm20.launcher2.comms.radio.RadioRecorder.State.Recording
     val isRadioPlaying by playerViewModel.isPlaying.collectAsStateWithLifecycle()
 
-    var selectedTabIndex by de.mm20.launcher2.ui.component.rememberPersistentUiState("radio.tab", 0)
+    var selectedTabIndex by rememberSaveable { mutableIntStateOf(0) }
     var searchExpanded by rememberSaveable { mutableStateOf(false) }
     var collectionQuery by rememberSaveable { mutableStateOf("") }
     val keyboard = androidx.compose.ui.platform.LocalSoftwareKeyboardController.current
@@ -90,7 +90,7 @@ private fun RadioDashboardContent(
         if (!searchExpanded) { keyboard?.hide(); focus.clearFocus() }
     }
     var collectionSearchExpanded by rememberSaveable { mutableStateOf(false) }
-    LaunchedEffect(Unit) { if (selectedTabIndex == 1) selectedTabIndex = 0 }
+    androidx.activity.compose.BackHandler(selectedTabIndex != 0 && !searchExpanded) { selectedTabIndex = 0 }
     androidx.activity.compose.BackHandler(searchExpanded) {
         searchExpanded = false
         viewModel.updateSearchQuery("")
@@ -161,6 +161,11 @@ private fun RadioDashboardContent(
                 DropdownMenuItem(text = { Text(stringResource(I18nR.string.tsm_search_my_stations)) },
                     leadingIcon = { Icon(painterResource(BaseR.drawable.search_24px), null) },
                     onClick = { menuOpen = false; searchExpanded = false; selectedTabIndex = 0; collectionSearchExpanded = true })
+                DropdownMenuItem(
+                    text = { Text(stringResource(if (selectedTabIndex == 0) I18nR.string.au_radio_tab_history else I18nR.string.au_radio_tab_collection)) },
+                    leadingIcon = { Icon(painterResource(if (selectedTabIndex == 0) BaseR.drawable.schedule_24px else BaseR.drawable.radio_24px), null) },
+                    onClick = { menuOpen = false; searchExpanded = false; selectedTabIndex = if (selectedTabIndex == 0) 2 else 0 },
+                )
                 DropdownMenuItem(text = { Text(stringResource(I18nR.string.hc_settings)) },
                     leadingIcon = { Icon(painterResource(BaseR.drawable.settings_24px), null) },
                     onClick = { menuOpen = false; showSettings = true })
@@ -252,7 +257,7 @@ private fun RadioDashboardContent(
                     favorites = shownFavorites,
                     player = playerViewModel,
                     onLongClick = { editTarget = it },
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier.weight(1f).fillMaxWidth(),
                     header = {
                         Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                             TelosCyberSectionLabel(
@@ -321,6 +326,12 @@ private fun RadioDashboardContent(
                     verticalArrangement = Arrangement.spacedBy(8.dp),
                     modifier = Modifier.fillMaxSize()
                 ) {
+                    item {
+                        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
+                            TelosCyberSectionLabel(stringResource(I18nR.string.au_radio_tab_history))
+                            TextButton(onClick = { selectedTabIndex = 0 }) { Text(stringResource(I18nR.string.au_radio_tab_collection)) }
+                        }
+                    }
                     if (values.controlsScroll) item { RadioNowPlayingBar(favorites, onOpen = { showNowPlaying = true }) }
                     if (history.isEmpty()) {
                         item {

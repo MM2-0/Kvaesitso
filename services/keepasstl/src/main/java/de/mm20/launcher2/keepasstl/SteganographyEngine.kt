@@ -131,12 +131,9 @@ object SteganographyEngine {
         pixelIndex = 0
         while (totalBitsRead < targetBits && pixelIndex < totalPixels) {
             val pixel = pixels[pixelIndex]
-            val r = (pixel shr 16) and 1
-            val g = (pixel shr 8) and 1
-            val b = pixel and 1
-            val bits = intArrayOf(r, g, b)
 
-            for (bit in bits) {
+            for (shift in 16 downTo 0 step 8) {
+                val bit = (pixel shr shift) and 1
                 if (totalBitsRead >= 32 && totalBitsRead < targetBits) {
                     currentByte = (currentByte shl 1) or bit
                     bitsInCurrentByte++

@@ -178,6 +178,7 @@ fun RadioStationCard(
     val cardShape = RoundedCornerShape(12.dp)
     Row(
         modifier
+            .fillMaxWidth()
             .pressScale(reduce, onClick = { if (uiSettings.tapPlays) player.toggleStation(station) else onLongClick() }, onLongClick = onLongClick)
             .telosTechSurface(
                 borderColor = if (playing) TelosCyber.NeonGreen else TelosCyber.NeonCyan.copy(alpha = 0.65f),

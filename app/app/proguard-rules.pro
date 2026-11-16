@@ -89,3 +89,12 @@
 
 # Preserve the package used by AnyAscii Unicode resource lookups.
 -keepnames class com.anyascii.AnyAscii
+
+# R8 optimization passes & Kotlin runtime null-check stripping
+-optimizationpasses 5
+-assumenosideeffects class kotlin.jvm.internal.Intrinsics {
+    public static void checkNotNullParameter(java.lang.Object, java.lang.String);
+    public static void checkExpressionValueIsNotNull(java.lang.Object, java.lang.String);
+    public static void checkNotNullExpressionValue(java.lang.Object, java.lang.String);
+    public static void checkParameterIsNotNull(java.lang.Object, java.lang.String);
+}

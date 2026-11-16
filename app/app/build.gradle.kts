@@ -59,6 +59,10 @@ android {
         resources.excludes.add("META-INF/versions/**")
         resources.excludes.add("META-INF/*.kotlin_module")
         resources.excludes.add("META-INF/*.version")
+        resources.excludes.add("DebugProbesKt.bin")
+        resources.excludes.add("kotlin-tooling-metadata.json")
+        resources.excludes.add("META-INF/AL2.0")
+        resources.excludes.add("META-INF/LGPL2.1")
         // Picnic (legacy post-quantum signatures) lookup tables: nothing in Telos uses Picnic
         resources.excludes.add("org/bouncycastle/pqc/legacy/picnic/**")
         // Extract .so files so the Shizuku starter can be exec'd from nativeLibraryDir
