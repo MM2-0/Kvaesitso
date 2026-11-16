@@ -38,7 +38,7 @@ export const DeveloperGuideSidebar: DefaultTheme.SidebarItem[] = [
     link: '/docs/developer-guide/desktop-linux',
   },
   {
-    text: 'Windows QEMU + scrcpy',
+    text: 'TelosAndroidVm (QEMU + scrcpy)',
     link: '/docs/developer-guide/windows-qemu-scrcpy',
   },
   {

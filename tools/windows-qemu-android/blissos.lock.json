@@ -1,0 +1,11 @@
+{
+  "channel": "Official/BlissOS16/FOSS/Generic",
+  "id": "Bliss-v16.9.7-x86_64-OFFICIAL-foss-20241011",
+  "version": "16.9.7",
+  "date": "20241011",
+  "filename": "Bliss-v16.9.7-x86_64-OFFICIAL-foss-20241011.iso",
+  "url": "https://downloads.sourceforge.net/project/blissos-x86/Official/BlissOS16/FOSS/Generic/Bliss-v16.9.7-x86_64-OFFICIAL-foss-20241011.iso",
+  "sha256_url": "https://downloads.sourceforge.net/project/blissos-x86/Official/BlissOS16/FOSS/Generic/Bliss-v16.9.7-x86_64-OFFICIAL-foss-20241011.iso.sha256",
+  "keep_data_disk": true,
+  "notes": "Pinned official FOSS Generic x86_64. BlissOS currently publishes no newer official ISO. Updates are opt-in and never format android-data.qcow2."
+}

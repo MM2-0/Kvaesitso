@@ -1,59 +1,37 @@
-# Telos portable Windows Android VM (QEMU + scrcpy)
+# TelosAndroidVm (QEMU + scrcpy)
 
-Headless QEMU runs BlissOS x86_64 (or another android-x86 ISO) with a 16 GiB growable QCOW2 data disk. The guest is shown in a borderless scrcpy window. `TelosAndroidVm.exe` starts QEMU without a console, waits for `sys.boot_completed`, then scrcpy. Closing scrcpy sends `reboot -p` and stops QEMU.
+Headless QEMU + scrcpy for BlissOS x86_64. Encrypted userdata is `images/android-data.qcow2` and survives wrapper and opt-in ISO updates.
 
-This is **not** Telos Desktop (`:desktop-linux`). It does not replace the Compose Windows `.exe`. Do not add a Gradle dependency from `:app:app` to this folder.
+Not Telos Desktop (`:desktop-linux`). Do not depend `:app:app` on this folder.
 
-## First-boot encryption and Setup Wizard
+## Hosts
 
-- Boot options patched by `patch-android-boot.sh`: `SETUPWIZARD=1 DATA=vda ENCRYPT=1`.
-- Overlay `overlay/telos-crypto.prop` + `fstab.telos` request **file-based encryption** (`ro.crypto.type=file`, `fileencryption=aes-256-xts:aes-256-cts:v2`).
-- `scripts/first-boot-lock.sh` (pushed over ADB) keeps SUW enabled and `locksettings set-disabled false`.
-- The user must set a PIN, pattern, or password in the wizard. That credential unwraps CE keys on later boots. The host never chooses or stores the PIN.
+- **Windows x64:** `TelosAndroidVm.exe` (WHPX / HAXM / TCG), vendored QEMU + scrcpy.
+- **Linux:** `python3 telos_android_vm.py` — system `qemu-system-x86_64` with **KVM** and `-cpu host`, system `scrcpy` + `adb`.
+- **macOS Apple Silicon:** same Python runner; `brew install qemu scrcpy android-platform-tools`. Guest is still x86_64 BlissOS via **TCG** (HVF is same-arch only). Intel Macs are unsupported.
 
-Android-x86/BlissOS FBE support varies by build. If the guest only offers FDE at install time, `ENCRYPT=1` still encrypts `/data`; the lockscreen credential is the unlock secret. Full fstab injection needs a writable `system` (or the initrd overlay when gzip/cpio succeed).
+## BlissOS update (keeps encrypted data)
 
-## Host requirements (Windows)
+Pinned in `blissos.lock.json`. The user must confirm:
 
-- 64-bit Windows 10/11.
-- **WHPX**: enable “Windows Hypervisor Platform” (and optionally Hyper-V). Fallback: Intel HAXM, then TCG (slow).
-- 1 GiB RAM and 2 SMP cores are what the runner allocates.
+```bash
+python3 blissos_catalog.py --update
+# or
+python3 telos_android_vm.py --update-bliss
+TelosAndroidVm.exe --update-bliss
+```
+
+Only official FOSS Generic x86_64 ISOs. SHA-256 checked. `android-data.qcow2` is never formatted. Major line changes warn that `/data` may not unlock.
 
 ## Setup
 
-On Linux (this repo) or Windows:
-
 ```bash
-cd tools/windows-qemu-android
-./fetch-toolchain.sh          # QEMU Windows binaries, scrcpy+adb, BlissOS ISO
-./prepare-qcow2.sh            # 16G qcow2 (needs qemu-img when possible)
+./fetch-toolchain.sh
+./prepare-qcow2.sh
 ./patch-android-boot.sh
-# publish TelosAndroidVm.exe (from a machine with the .NET 8 SDK):
-dotnet publish src/TelosAndroidVm/TelosAndroidVm.csproj -c Release -o .
+python3 telos_android_vm.py          # Linux / macOS ARM
 ```
 
-On Windows after copying `vendor/`, `images/`, `scripts/`, and `TelosAndroidVm.exe`:
+Windows: `.\fetch-toolchain.ps1`, `.\prepare-qcow2.ps1`, `.\TelosAndroidVm.exe`.
 
-```powershell
-.\fetch-toolchain.ps1
-.\prepare-qcow2.ps1
-.\TelosAndroidVm.exe
-```
-
-Optional: set `TELOS_APK` to a Telos APK path to sideload and request it as home.
-
-## Layout
-
-| Path | Role |
-| --- | --- |
-| `vendor/qemu/` | Windows `qemu-system-x86_64.exe` + `qemu-img.exe` (not committed) |
-| `vendor/scrcpy/` | scrcpy + adb (not committed) |
-| `images/android-data.qcow2` | 16 GiB growable disk (not committed) |
-| `images/blissos-x86_64.iso` | Guest ISO (not committed) |
-| `TelosAndroidVm.exe` | Single-file win-x64 wrapper |
-
-QEMU uses `-display none` (no QEMU window). `-nographic` would steal the VGA device and break scrcpy.
-
-## Licenses
-
-Vendored tools stay on disk for local use; they are gitignored. See `THIRD_PARTY_NOTICES.md` (QEMU GPL-2.0, scrcpy Apache-2.0, BlissOS / android-x86).
+Optional: `TELOS_APK` for sideload. Drag-and-drop onto scrcpy goes to `/sdcard/Download`.

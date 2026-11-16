@@ -21,6 +21,12 @@ internal static class Program
         try
         {
             var root = ResolveBundleRoot(args);
+            if (args.Any(a => a.Equals("--update-bliss", StringComparison.OrdinalIgnoreCase)))
+            {
+                var yes = args.Any(a => a.Equals("--yes", StringComparison.OrdinalIgnoreCase));
+                return BlissosUpdate.Run(root, yes);
+            }
+
             var qemu = FindQemu(root);
             var scrcpyDir = FindScrcpyDir(root);
             var adb = Path.Combine(scrcpyDir, "adb.exe");
@@ -53,7 +59,7 @@ internal static class Program
 
                 using var scrcpyProc = StartHidden(
                     scrcpy,
-                    $"-s 127.0.0.1:{AdbPort} --window-borderless --window-title \"Telos Android\" --stay-awake --always-on-top=false --no-clipboard-autosync",
+                    $"-s 127.0.0.1:{AdbPort} --window-borderless --window-title \"Telos Android\" --stay-awake --push-target /sdcard/Download",
                     scrcpyDir,
                     createNoWindow: false);
 
@@ -127,8 +133,10 @@ internal static class Program
     private static string? FindIso(string root)
     {
         var dir = Path.Combine(root, "images");
+        var preferred = Path.Combine(dir, "blissos-x86_64.iso");
+        if (File.Exists(preferred)) return preferred;
         if (!Directory.Exists(dir)) return null;
-        return Directory.GetFiles(dir, "*.iso").FirstOrDefault();
+        return Directory.GetFiles(dir, "*.iso").FirstOrDefault(p => !p.EndsWith(".bak", StringComparison.OrdinalIgnoreCase));
     }
 
     private static string ProbeAccel(string qemu)
