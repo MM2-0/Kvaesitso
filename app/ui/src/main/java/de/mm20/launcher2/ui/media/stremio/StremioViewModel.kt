@@ -29,6 +29,8 @@ import de.mm20.launcher2.comms.stremio.streamKey
 import de.mm20.launcher2.ui.media.video.PlayerChoice
 import de.mm20.launcher2.ui.media.video.VideoPlayerActivity
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -400,9 +402,9 @@ class StremioViewModel : ViewModel(), KoinComponent {
                 return@launch
             }
             val bound = Semaphore(3)
-            val items = kotlinx.coroutines.coroutineScope {
+            val items = coroutineScope {
                 series.map { entry ->
-                    kotlinx.coroutines.async {
+                    async {
                         bound.withPermit {
                             var meta: Meta? = null
                             for (a in addons.filter { it.manifest.supports("meta", entry.type, entry.id) }) {
