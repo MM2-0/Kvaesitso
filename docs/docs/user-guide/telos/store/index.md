@@ -137,7 +137,7 @@ are no longer offered in "Open with". Phone and Messages stay registered with An
 | Update checks in the background | Store settings | Periodic job, Wi-Fi only by default |
 | Silent updates | Store settings | Shizuku or root |
 | Per-app options | App page | Track only, pin, skip, exclude, filter, pre-releases, category, note, rename |
-| Search, filters, categories | Dashboard | |
+| Search, filters, update all | Dashboard HUD | Icon toolbar: search (expands the field), all / updates / installed / not installed / track-only, and update-all with a count badge |
 | Add installed apps | More menu | F-Droid, then IzzyOnDroid |
 | Obtainium import and export | More menu | Both directions |
 | `obtainium://` links | Links | add and app |
