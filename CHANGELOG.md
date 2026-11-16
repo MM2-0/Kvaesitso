@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.45.63
+
+- Restore Telos Store Shizuku installs: parse session IDs from more `pm` outputs, treat prefixed
+  Success as OK, fall back to stdin `pm install` when sessions fail, and restart the Shizuku
+  UserService after launcher updates.
+
 ## 1.45.62
 
 - Fix Stremio Fork compile on Kotlin 2.4: upcoming-episode load uses `async` on a coroutine scope,

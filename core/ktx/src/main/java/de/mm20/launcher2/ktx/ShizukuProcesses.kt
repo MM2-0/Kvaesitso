@@ -52,7 +52,7 @@ object ShizukuProcesses {
             binding?.takeIf { it.ready.count > 0 || it.service?.asBinder()?.pingBinder() == true } ?: Binding().also { state ->
                 binding = state
                 val serviceArgs = Shizuku.UserServiceArgs(ComponentName(context.packageName, ShizukuCommandService::class.java.name))
-                    .daemon(false).processNameSuffix("telos-command").version(1)
+                    .daemon(false).processNameSuffix("telos-command").version(userServiceVersion(context))
                     .debuggable(context.applicationInfo.flags and android.content.pm.ApplicationInfo.FLAG_DEBUGGABLE != 0)
                 val connection = object : ServiceConnection {
                     override fun onServiceConnected(name: ComponentName, binder: IBinder?) {
@@ -78,7 +78,7 @@ object ShizukuProcesses {
                 Binding().also { state ->
                     binding = state
                     val serviceArgs = Shizuku.UserServiceArgs(ComponentName(context.packageName, ShizukuCommandService::class.java.name))
-                        .daemon(false).processNameSuffix("telos-command").version(1)
+                        .daemon(false).processNameSuffix("telos-command").version(userServiceVersion(context))
                         .debuggable(context.applicationInfo.flags and android.content.pm.ApplicationInfo.FLAG_DEBUGGABLE != 0)
                     val connection = object : ServiceConnection {
                         override fun onServiceConnected(name: ComponentName, binder: IBinder?) {
@@ -170,6 +170,12 @@ object ShizukuProcesses {
     }
 
     /** Descriptor ownership boundary, also exercised with a fake binder by Android regression tests. */
+    private fun userServiceVersion(context: Context): Int {
+        val info = context.packageManager.getPackageInfo(context.packageName, 0)
+        val code = if (android.os.Build.VERSION.SDK_INT >= 28) info.longVersionCode else info.versionCode.toLong()
+        return (code and 0x7fffffffL).toInt().coerceAtLeast(1)
+    }
+
     fun fromRemoteProcess(remote: IRemoteProcess): Process {
         return object : Process() {
             private val stdout by lazy { ParcelFileDescriptor.AutoCloseInputStream(remote.inputStream) }

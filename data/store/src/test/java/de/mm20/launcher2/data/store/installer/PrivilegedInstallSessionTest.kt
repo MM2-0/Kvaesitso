@@ -34,12 +34,21 @@ class PrivilegedInstallSessionTest {
                 when (args[1]) {
                     "install-create" -> InstallCommandResult(0, "Success: created install session [9]")
                     "install-write" -> InstallCommandResult(1, "Failure [INSTALL_FAILED_INVALID_APK]")
-                    else -> InstallCommandResult(0, "Success")
+                    "install-abandon" -> InstallCommandResult(0, "Success")
+                    else -> InstallCommandResult(1, "Failure [DENIED]")
                 }
             }
             assertTrue(result is BackendInstallResult.Failed)
-            assertEquals(listOf("install-create", "install-write", "install-abandon"), calls)
+            assertEquals(listOf("install-create", "install-write", "install-abandon", "install"), calls)
         } finally { file.delete() }
+    }
+
+    @Test fun parsesSessionIdsWithoutBracketsAndTreatsPrefixedSuccessAsOk() {
+        assertEquals("44", parseInstallSessionId("Success: created install session [44]"))
+        assertEquals("9", parseInstallSessionId("created session 9"))
+        assertTrue(installCommandSucceeded(0, "pkg: /\nSuccess: streamed 12 bytes"))
+        assertTrue(installCommandSucceeded(0, ""))
+        assertFalse(installCommandSucceeded(0, "Failure [INSTALL_FAILED_INVALID_APK]"))
     }
 
     @Test fun malformedCreateDoesNotInventASession() = runBlocking {
@@ -48,7 +57,7 @@ class PrivilegedInstallSessionTest {
             var calls = 0
             val result = installPrivilegedSession(file, 0) { _, _ -> calls++; InstallCommandResult(255, "Permission denied") }
             assertTrue(result is BackendInstallResult.Failed)
-            assertEquals(1, calls)
+            assertEquals(2, calls)
         } finally { file.delete() }
     }
 }
