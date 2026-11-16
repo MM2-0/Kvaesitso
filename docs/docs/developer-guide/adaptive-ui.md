@@ -37,6 +37,11 @@ Assistant/island/floating overlays are launcher capabilities, not additional sta
 
 ## Reuse the existing foundations
 
+List dashboards (Store, Downloads, Freeze, ART Optimizer, and new apps like them) use
+`TelosCommandHud`: icon search, icon filters with long-press labels, badge counts, and
+dot-matrix status. Do not stack a full search field, a Filters button and a bulk-action
+button. Keep 48dp targets. See `AGENTS.md` Command HUD.
+
 - `LauncherTheme` supplies the user's Material color scheme, typography, shapes and the product
   font multiplier **on top of** Android font scale. Do not install a second palette/type system,
   set a replacement font density, clamp fontScale or shrink important text to force it into a box.

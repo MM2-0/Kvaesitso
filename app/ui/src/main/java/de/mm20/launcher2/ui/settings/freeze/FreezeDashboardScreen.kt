@@ -1,6 +1,6 @@
 package de.mm20.launcher2.ui.settings.freeze
 import de.mm20.launcher2.i18n.R as I18nR
-import de.mm20.launcher2.icons.TelosIcons
+
 
 import android.text.format.DateUtils
 import androidx.appcompat.app.AppCompatActivity
@@ -8,9 +8,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material3.FilterChip
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -144,36 +141,34 @@ fun FreezeDashboardScreen() {
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.padding(horizontal = 16.dp),
                     )
-                    Row(
-                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    ) {
-                        for (state in listOf(
+                    de.mm20.launcher2.ui.component.TelosCommandHud(
+                        actions = listOf(
                             AppFreezeState.Normal,
                             AppFreezeState.Suspended,
                             AppFreezeState.Disabled,
                             AppFreezeState.Hidden,
-                        )) {
+                        ).map { state ->
                             val count = runtimeRows.count { it.state == state }
-                            FilterChip(
-                                modifier = Modifier.weight(1f),
-                                selected = state == selectedState,
-                                onClick = { viewModel.selectState(state) },
-                                label = {
-                                    Text(
-                                        "${stateLabel(state)} ($count)",
-                                        maxLines = 1,
-                                    )
+                            de.mm20.launcher2.ui.component.TelosHudAction(
+                                id = state.name,
+                                icon = when (state) {
+                                    AppFreezeState.Normal -> de.mm20.launcher2.base.R.drawable.apps_24px
+                                    AppFreezeState.Suspended -> de.mm20.launcher2.base.R.drawable.pause_24px
+                                    AppFreezeState.Disabled -> de.mm20.launcher2.base.R.drawable.error_24px
+                                    AppFreezeState.Hidden -> de.mm20.launcher2.base.R.drawable.visibility_off_24px
                                 },
+                                label = "${stateLabel(state)} ($count)",
+                                selected = state == selectedState,
+                                badge = count.takeIf { it > 0 }?.toString(),
+                                onClick = { viewModel.selectState(state) },
                             )
-                        }
-                        IconButton(onClick = { viewModel.refresh() }) {
-                            Icon(
-                                TelosIcons.Refresh,
-                                contentDescription = stringResource(I18nR.string.freeze_dashboard_refresh),
-                            )
-                        }
-                    }
+                        } + de.mm20.launcher2.ui.component.TelosHudAction(
+                            id = "refresh",
+                            icon = de.mm20.launcher2.base.R.drawable.restart_alt_24px,
+                            label = stringResource(I18nR.string.freeze_dashboard_refresh),
+                            onClick = { viewModel.refresh() },
+                        ),
+                    )
                 }
             }
         }

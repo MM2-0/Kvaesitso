@@ -117,7 +117,7 @@ fun DownloadsScreen(initialUrls: List<String> = emptyList()) {
 
     var filter by rememberSaveable { mutableStateOf(Filter.All) }
     var query by rememberSaveable { mutableStateOf("") }
-    var searching by rememberSaveable { mutableStateOf(false) }
+
     val initialIsTorrent = initialUrls.isNotEmpty() && initialUrls.any { TorrentSources.containsTorrent(it) || it.startsWith("file:") }
     var showAdd by rememberSaveable { mutableStateOf(initialUrls.isNotEmpty() && !initialIsTorrent) }
     var showAddTorrent by rememberSaveable { mutableStateOf(initialIsTorrent) }
@@ -230,9 +230,6 @@ fun DownloadsScreen(initialUrls: List<String> = emptyList()) {
                     onDismiss = { showFontDialog = false }
                 )
             }
-            IconButton(onClick = { searching = !searching; if (!searching) query = "" }) {
-                Icon(painterResource(BaseR.drawable.search_24px), stringResource(I18nR.string.dl_search))
-            }
             IconButton(onClick = { showFontDialog = true }) {
                 Icon(painterResource(BaseR.drawable.settings_24px), contentDescription = stringResource(I18nR.string.per_app_font_size))
             }
@@ -254,15 +251,12 @@ fun DownloadsScreen(initialUrls: List<String> = emptyList()) {
     ) {
         Box(Modifier.fillMaxSize()) {
             Column(Modifier.fillMaxSize()) {
-                AnimatedVisibility(searching) {
-                    TelosSearchBar(query, { query = it }, stringResource(I18nR.string.dl_search))
-                }
-                Row(
-                    Modifier.horizontalScroll(rememberScrollState()).padding(horizontal = 16.dp, vertical = 4.dp),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                ) {
-                    for ((idx, f) in Filter.entries.withIndex()) {
-                        val label = when (f) {
+                de.mm20.launcher2.ui.component.TelosCommandHud(
+                    searchQuery = query,
+                    onSearchQueryChange = { query = it },
+                    searchPlaceholder = stringResource(I18nR.string.dl_search),
+                    actions = Filter.entries.mapIndexed { idx, f ->
+                        val labelRes = when (f) {
                             Filter.All -> I18nR.string.dl_tab_all
                             Filter.Active -> I18nR.string.dl_tab_active
                             Filter.Queued -> I18nR.string.dl_tab_queued
@@ -271,14 +265,26 @@ fun DownloadsScreen(initialUrls: List<String> = emptyList()) {
                             Filter.Torrents -> I18nR.string.dl_tab_torrents
                             Filter.Media -> I18nR.string.dl_m_tab
                         }
-                        TelosTechPill(
-                            text = stringResource(label) + if ((counts[f] ?: 0) > 0) " ${counts[f]}" else "",
-                            isSelected = filter == f,
+                        val count = counts[f] ?: 0
+                        de.mm20.launcher2.ui.component.TelosHudAction(
+                            id = f.name,
+                            icon = when (f) {
+                                Filter.All -> BaseR.drawable.apps_24px
+                                Filter.Active -> BaseR.drawable.download_24px
+                                Filter.Queued -> BaseR.drawable.pause_24px
+                                Filter.Completed -> BaseR.drawable.check_circle_24px
+                                Filter.Failed -> BaseR.drawable.error_24px
+                                Filter.Torrents -> BaseR.drawable.cloud_20px
+                                Filter.Media -> BaseR.drawable.movie_24px
+                            },
+                            label = stringResource(labelRes) + if (count > 0) " $count" else "",
+                            selected = filter == f,
+                            badge = count.takeIf { it > 0 }?.toString(),
+                            accent = TelosCyber.accentFor(idx),
                             onClick = { filter = f },
-                            accentColor = TelosCyber.accentFor(idx),
                         )
-                    }
-                }
+                    },
+                )
                 clip?.takeIf { settings.detectClipboard }?.let { c ->
                     ClipboardBanner(c, onAdd = {
                         handledClip = c; clip = null
