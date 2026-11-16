@@ -300,6 +300,16 @@ fabric.properties
 # Claude Code local settings temp files
 .claude/settings.local.json.tmp.*
 
+# Agent stubs: every assistant reads AGENTS.md only
+CLAUDE.md
+.github/copilot-instructions.md
+GEMINI.md
+.cursorrules
+.cursor/rules/
+CODEX.md
+.windsurfrules
+.aider.conf.yml
+
 .kotlin
 *.telos_backup
 desktop-linux/build/
