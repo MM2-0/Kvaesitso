@@ -1,0 +1,1 @@
+Restore video wallpaper after updates. System → Battery for opt-in screen-off radios/sensors with Maps and call hold-outs.
