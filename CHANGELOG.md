@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.45.62
+
+- Fix Stremio Fork compile on Kotlin 2.4: upcoming-episode load uses `async` on a coroutine scope,
+  so F-Droid, AAB and CodeQL builds succeed.
+
 ## 1.45.61
 
 - Stremio Fork: `stremio://` detail links, add-on configuration pages, continue-watching progress,
