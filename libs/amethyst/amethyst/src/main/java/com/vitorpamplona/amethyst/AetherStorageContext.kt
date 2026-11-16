@@ -47,7 +47,10 @@ class AetherStorageContext(context: Context) : ContextWrapper(applicationBase(co
 
     override fun deleteFile(name: String): Boolean = getFileStreamPath(name).delete()
 
-    override fun fileList(): Array<String> = filesDir.list().orEmpty()
+    override fun fileList(): Array<String> {
+        val names = filesDir.list().orEmpty()
+        return Array<String>(names.size) { names[it] }
+    }
 
     override fun getCacheDir(): File = File(baseContext.cacheDir, "aether").apply { mkdirs() }
 
@@ -71,7 +74,10 @@ class AetherStorageContext(context: Context) : ContextWrapper(applicationBase(co
 
     override fun deleteDatabase(name: String): Boolean = baseContext.deleteDatabase(getDatabasePath(name).absolutePath)
 
-    override fun databaseList(): Array<String> = File(privateRoot, "databases").list().orEmpty()
+    override fun databaseList(): Array<String> {
+        val names = File(privateRoot, "databases").list().orEmpty()
+        return Array<String>(names.size) { names[it] }
+    }
 
     // One explicitly excluded file keeps every legacy encrypted account and Tink keyset
     // out of backup without excluding the launcher's own preference files.

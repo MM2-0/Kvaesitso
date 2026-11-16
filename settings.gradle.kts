@@ -3,7 +3,6 @@ pluginManagement {
         google()
         mavenCentral()
         gradlePluginPortal()
-        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
     }
 }
 
@@ -23,7 +22,6 @@ dependencyResolutionManagement {
                 includeGroupByRegex("com\\.github\\.vitorpamplona(\\..*)?")
             }
         }
-        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
         google()
         mavenCentral()
     }

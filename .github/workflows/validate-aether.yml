@@ -110,6 +110,7 @@ jobs:
           log = Path('/tmp/telos-aether-build.log')
           lines = log.read_text(errors='replace').splitlines() if log.exists() else ['No build log']
           selected = [line for line in lines if line.startswith('e: ') or 'Could not resolve' in line or 'Could not find ' in line or 'Error:' in line]
+          print('::error title=Telos Aether failure details::' + '\n'.join(lines[-85:])[-18000:].replace('%', '%25').replace('\r', '%0D').replace('\n', '%0A'))
           for line in (selected[-30:] or lines[-30:]):
               print('::error title=Telos Aether compile::' + line.replace('%', '%25').replace('\r', '%0D').replace('\n', '%0A'))
           PYCODE
