@@ -39,6 +39,23 @@ class KeyboardImeTest {
             ParcelFileDescriptor.AutoCloseInputStream(automation.executeShellCommand(command))
                 .bufferedReader()
                 .use { it.readText().trim() }
+        // Compose exposes virtual accessibility children, not provider text-search results.
+        fun findKey(root: android.view.accessibility.AccessibilityNodeInfo?, label: String): Rect? {
+            val nodes = java.util.ArrayDeque<android.view.accessibility.AccessibilityNodeInfo>()
+            root?.let(nodes::add)
+            var visited = 0
+            while (nodes.isNotEmpty() && visited++ < 512) {
+                val node = nodes.removeFirst()
+                if (
+                    node.text?.toString() == label || node.contentDescription?.toString() == label
+                ) {
+                    val bounds = Rect().also(node::getBoundsInScreen)
+                    if (node.isVisibleToUser && !bounds.isEmpty) return bounds
+                }
+                for (index in 0 until node.childCount) node.getChild(index)?.let(nodes::add)
+            }
+            return null
+        }
         val ime = ComponentName(context, TelosKeyboardService::class.java).flattenToShortString()
         val previous = shell("settings get secure default_input_method")
         val hardwareSetting = shell("settings get secure show_ime_with_hard_keyboard")
@@ -111,9 +128,7 @@ class KeyboardImeTest {
                     }
                     for (window in automation.windows) {
                         if (window.type != AccessibilityWindowInfo.TYPE_INPUT_METHOD) continue
-                        val node =
-                            window.root?.findAccessibilityNodeInfosByText(label)?.firstOrNull()
-                        if (node != null) bounds = Rect().also(node::getBoundsInScreen)
+                        findKey(window.root, label)?.let { bounds = it }
                     }
                     if (bounds == null) SystemClock.sleep(100)
                 }
@@ -191,7 +206,7 @@ class KeyboardImeTest {
             val windows =
                 automation.windows.joinToString("\n") { window ->
                     val root = window.root
-                    "window type=${window.type} title=${window.title} children=${root?.childCount} alpha=${root?.findAccessibilityNodeInfosByText("α")?.size} q=${root?.findAccessibilityNodeInfosByText("q")?.size}"
+                    "window type=${window.type} title=${window.title} children=${root?.childCount} alpha=${findKey(root, "α")} q=${findKey(root, "q")}"
                 }
             throw AssertionError(
                 "${failure.message}\nIME state:\n$state\nWindows:\n$windows\nIME crash diagnostics:\n$crashes",
