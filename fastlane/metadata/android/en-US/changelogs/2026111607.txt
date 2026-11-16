@@ -1,0 +1,1 @@
+Fix Telos Store Shizuku installs: more robust package-manager sessions, stdin fallback, and a fresh Shizuku UserService after updates.
