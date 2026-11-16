@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.45.61
+
+- Stremio Fork: `stremio://` detail links, add-on configuration pages, continue-watching progress,
+  calendar of upcoming library episodes, Open with / Telos Downloads on streams, local watch
+  profiles, and streaming-server status in the overflow menu.
+- Desktop CI unit tests run without the Gradle configuration cache after Maven 429 and cache
+  serialization failures on linux-jar.
+
 ## 1.44.20
 
 - Fix the crash when scrolling down the ART optimizer to the per-app search

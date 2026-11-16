@@ -48,8 +48,9 @@ class StremioLibrary(context: Context) {
                 mutex.withLock {
                     val prefs = app.getSharedPreferences("stremio_account", Context.MODE_PRIVATE)
                     val email = prefs.getString("email", null)
+                    val local = StremioLocalProfiles.accountKey(StremioLocalProfiles(app).active())
                     activeSession = prefs.getString("playback_session", if (email == null) "anonymous" else "legacy").orEmpty()
-                    val target = accountFile(email)
+                    val target = accountFile(email ?: local)
                     // Migrate only into the already signed-in account. Never upload an anonymous/other account's library on login.
                     if (email != null && file.isFile && !target.exists()) check(file.renameTo(target))
                     file = target

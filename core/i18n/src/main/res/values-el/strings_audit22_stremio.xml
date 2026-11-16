@@ -49,4 +49,21 @@
     
     
 
+<string name="au22_stremio_upcoming">Προσεχώς</string>
+<string name="au22_stremio_calendar">Ημερολόγιο / Ιστορικό</string>
+<string name="au22_stremio_history">Ιστορικό παρακολούθησης</string>
+<string name="au22_stremio_history_empty">Δεν έχει καταγραφεί ιστορικό παρακολούθησης.</string>
+<string name="au22_stremio_watched_on">Παρακολουθήθηκε στις %s</string>
+<string name="au22_stremio_notify_episodes">Ειδοποίηση όταν προβάλλεται επεισόδιο της βιβλιοθήκης</string>
+<string name="au22_stremio_episode_aired">Νέο επεισόδιο</string>
+<string name="au22_stremio_episode_aired_text">%1$s · %2$s</string>
+<string name="au22_stremio_remaining_min">%d λεπτά ακόμα</string>
+<string name="au22_stremio_remaining_hm">%1$d ώρες %2$d λεπτά ακόμα</string>
+<string name="au22_stremio_percent">%d%%</string>
+<string name="au22_stremio_configure">Ρύθμιση</string>
+<string name="au22_stremio_server_connected">Ο streaming server είναι συνδεδεμένος</string>
+<string name="au22_stremio_test_server">Δοκιμή streaming server</string>
+<string name="au22_stremio_profiles">Προφίλ</string>
+<string name="au22_stremio_profile_anonymous">Ανώνυμο</string>
+<string name="au22_stremio_profile_name">Όνομα προφίλ</string>
 </resources>

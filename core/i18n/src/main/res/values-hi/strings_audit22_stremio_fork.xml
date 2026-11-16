@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_server_connected">स्ट्रीमिंग सर्वर कनेक्ट है</string>
+    <string name="au22_stremio_test_server">स्ट्रीमिंग सर्वर जाँचें</string>
+    <string name="au22_stremio_profiles">प्रोफ़ाइल</string>
+    <string name="au22_stremio_profile_anonymous">अनाम</string>
+    <string name="au22_stremio_profile_name">प्रोफ़ाइल नाम</string>
+</resources>

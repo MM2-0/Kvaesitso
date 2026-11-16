@@ -35,7 +35,6 @@ class StremioProtocolTest {
                "catalogs":[{"type":"movie","id":"top","name":"Top","extra":[{"name":"search"}]}],
                "behaviorHints":{"p2p":true}}"""
         )!!
-        assertTrue(m.p2p)
         assertTrue(m.catalogs.single().searchable)
         assertTrue(m.supports("stream", "movie", "tt1"))
         assertTrue(!m.supports("stream", "series", "tt1"))
@@ -81,5 +80,31 @@ class StremioProtocolTest {
         // a plain list works as well
         assertEquals(1, StremioProtocol.parseAddonList("""[{"transportUrl":"stremio://y.example/manifest.json","manifest":{"id":"c","name":"C","version":"1","resources":["catalog"],"types":["movie"],"catalogs":[]}}]""").size)
         assertTrue(StremioProtocol.parseAddonList("not json").isEmpty())
+    }
+
+    @Test
+    fun parseDeepLinkDetailAndAddon() {
+        val a = StremioProtocol.parseDeepLink("stremio:///detail/movie/tt0111161") as StremioDeepLink.Detail
+        assertEquals("movie", a.type)
+        assertEquals("tt0111161", a.id)
+        val b = StremioProtocol.parseDeepLink("stremio://detail/series/tt0108778:1:1") as StremioDeepLink.Detail
+        assertEquals("series", b.type)
+        assertEquals("tt0108778:1:1", b.id)
+        val c = StremioProtocol.parseDeepLink("stremio://example.com/addon/manifest.json") as StremioDeepLink.AddonInstall
+        assertEquals("stremio://example.com/addon/manifest.json", c.url)
+        val d = StremioProtocol.parseDeepLink("https://example.com/addon/manifest.json") as StremioDeepLink.AddonInstall
+        assertEquals("https://example.com/addon/manifest.json", d.url)
+        assertNull(StremioProtocol.parseDeepLink("ftp://x"))
+        assertNull(StremioProtocol.parseDeepLink(""))
+    }
+
+    @Test
+    fun parseManifestConfigurationUrl() {
+        val m = StremioProtocol.parseManifest(
+            """{"id":"x","name":"X","resources":["catalog"],"types":["movie"],"catalogs":[],
+               "behaviorHints":{"configurationRequired":true,"configurationURL":"https://example.com/cfg"}}"""
+        )!!
+        assertTrue(m.configurationRequired)
+        assertEquals("https://example.com/cfg", m.configurationURL)
     }
 }

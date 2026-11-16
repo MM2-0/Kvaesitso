@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_server_connected">Transliavimo serveris prijungtas</string>
+    <string name="au22_stremio_test_server">Tikrinti transliavimo serverį</string>
+    <string name="au22_stremio_profiles">Profiliai</string>
+    <string name="au22_stremio_profile_anonymous">Anoniminis</string>
+    <string name="au22_stremio_profile_name">Profilio pavadinimas</string>
+</resources>

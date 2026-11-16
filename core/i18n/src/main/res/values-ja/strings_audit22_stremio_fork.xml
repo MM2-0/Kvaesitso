@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_server_connected">ストリーミングサーバーに接続しました</string>
+    <string name="au22_stremio_test_server">ストリーミングサーバーをテスト</string>
+    <string name="au22_stremio_profiles">プロファイル</string>
+    <string name="au22_stremio_profile_anonymous">匿名</string>
+    <string name="au22_stremio_profile_name">プロファイル名</string>
+</resources>

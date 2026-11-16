@@ -34,6 +34,26 @@ object StremioProtocol {
 
     fun manifestUrl(baseUrl: String): String = baseUrl.trimEnd('/') + "/manifest.json"
 
+    /** `stremio:///detail/{type}/{id}`, `stremio://detail/{type}/{id}`, or an add-on `manifest.json` URL. */
+    fun parseDeepLink(input: String): StremioDeepLink? {
+        val raw = input.trim()
+        if (raw.isEmpty()) return null
+        val afterScheme = when {
+            raw.startsWith("stremio://", true) -> raw.substring("stremio://".length)
+            else -> null
+        }
+        if (afterScheme != null) {
+            val segs = afterScheme.trimStart('/').substringBefore('?').substringBefore('#').split('/')
+            if (segs.size >= 3 && segs[0].equals("detail", ignoreCase = true)) {
+                val type = segs[1]
+                val id = segs.drop(2).joinToString("/")
+                if (type.isNotBlank() && id.isNotBlank()) return StremioDeepLink.Detail(type, id)
+                return null
+            }
+        }
+        return if (baseUrl(raw) != null) StremioDeepLink.AddonInstall(raw) else null
+    }
+
     private fun JSONObject.str(key: String): String? = optString(key, "").takeIf { it.isNotBlank() && it != "null" }
 
     private fun JSONArray?.strings(): List<String> =
@@ -83,6 +103,7 @@ object StremioProtocol {
             p2p = hints?.optBoolean("p2p", false) ?: false,
             adult = hints?.optBoolean("adult", false) ?: false,
             configurationRequired = hints?.optBoolean("configurationRequired", false) ?: false,
+            configurationURL = hints?.str("configurationURL"),
         )
     }
 

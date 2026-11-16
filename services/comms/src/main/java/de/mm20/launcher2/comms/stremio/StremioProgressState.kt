@@ -4,13 +4,31 @@ import org.json.JSONObject
 import java.io.ByteArrayOutputStream
 import java.time.Instant
 import java.util.Base64
+import kotlin.math.roundToInt
 import java.util.zip.DeflaterOutputStream
 import java.util.zip.InflaterInputStream
 
 /** Stremio's public library-state units are milliseconds; watched and resume are distinct. */
+data class ResumeUi(val fraction: Float, val remainingMs: Long?, val percent: Int)
+
 object StremioProgressState {
     const val WATCHED_THRESHOLD = 0.7
     const val CREDITS_THRESHOLD = 0.9
+
+    /** Bar fill and caption inputs from stored player offset or a percent fallback. */
+    fun resumeUi(positionMs: Long, durationMs: Long, resumePercent: Double?): ResumeUi? {
+        if (durationMs > 0 && positionMs >= 0) {
+            val fraction = (positionMs.toDouble() / durationMs).toFloat().coerceIn(0f, 1f)
+            val remaining = (durationMs - positionMs).coerceAtLeast(0L)
+            return ResumeUi(fraction, remaining, (fraction * 100f).roundToInt().coerceIn(0, 100))
+        }
+        val percent = resumePercent
+        if (percent != null && percent.isFinite()) {
+            val fraction = (percent / 100.0).toFloat().coerceIn(0f, 1f)
+            return ResumeUi(fraction, remainingMs = null, percent.roundToInt().coerceIn(0, 100))
+        }
+        return null
+    }
 
     fun orderedVideoIds(videos: List<Video>): List<String> = videos.map { video ->
         video to (video.released?.let { runCatching { Instant.parse(it).toEpochMilli() }.getOrNull() } ?: Long.MIN_VALUE)

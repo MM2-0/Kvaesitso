@@ -17,9 +17,12 @@ import de.mm20.launcher2.comms.stremio.StreamItem
 import de.mm20.launcher2.comms.stremio.StremioAddons
 import de.mm20.launcher2.comms.stremio.StremioClient
 import de.mm20.launcher2.comms.stremio.StremioLibrary
+import de.mm20.launcher2.comms.stremio.StremioLocalProfiles
 import de.mm20.launcher2.comms.stremio.StremioPlaybackSettings
 import de.mm20.launcher2.comms.stremio.StremioStreamingServer
+import de.mm20.launcher2.comms.stremio.StremioLibraryNotifier
 import de.mm20.launcher2.comms.stremio.StremioProtocol
+import de.mm20.launcher2.comms.stremio.StremioUpcoming
 import de.mm20.launcher2.comms.stremio.Video
 import de.mm20.launcher2.comms.stremio.WatchProgress
 import de.mm20.launcher2.comms.stremio.streamKey
@@ -42,11 +45,26 @@ import kotlinx.coroutines.withTimeoutOrNull
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
+data class UpcomingItem(
+    val id: String,
+    val name: String,
+    val episodeTitle: String,
+    val season: Int?,
+    val episode: Int?,
+    val released: String,
+    val poster: String?,
+)
+
 /** A row of posters: one catalog of one add-on. [items] is null while it loads. */
 data class CatalogRow(val key: String, val title: String, val items: List<MetaPreview>?)
 
 /** The detail page: the preview that was tapped, and the full metadata once an add-on answered */
-data class DetailState(val preview: MetaPreview, val meta: Meta? = null, val loading: Boolean = true)
+data class DetailState(
+    val preview: MetaPreview,
+    val meta: Meta? = null,
+    val loading: Boolean = true,
+    val resumeVideoId: String? = null,
+)
 
 /** The list of streams for one movie or episode */
 data class StreamsState(
@@ -127,6 +145,10 @@ class StremioViewModel : ViewModel(), KoinComponent {
                 de.mm20.launcher2.comms.media.video.trakt.Trakt.refreshLibrary(appContext, force)
             }
         }
+        loadUpcoming()
+        viewModelScope.launch(kotlinx.coroutines.Dispatchers.IO) {
+            StremioLibraryNotifier.checkOnResume(appContext, library.library.value, addons.value, client)
+        }
     }
 
     fun signIn(email: String, password: String, onResult: (String?) -> Unit) {
@@ -142,6 +164,25 @@ class StremioViewModel : ViewModel(), KoinComponent {
         closeStreams()
         viewModelScope.launch { account.signOut() }
     }
+
+    fun switchLocalProfile(name: String?) {
+        if (account.email.value != null) return
+        viewModelScope.launch {
+            val profiles = StremioLocalProfiles(appContext)
+            val key = StremioLocalProfiles.accountKey(name)
+            profiles.setActive(name)
+            library.activateAccount(key)
+        }
+    }
+
+    fun addLocalProfile(name: String): Boolean {
+        val added = StremioLocalProfiles(appContext).add(name) ?: return false
+        switchLocalProfile(added)
+        return true
+    }
+
+    fun localProfileNames(): List<String> = StremioLocalProfiles(appContext).names()
+    fun activeLocalProfile(): String? = StremioLocalProfiles(appContext).active()
 
     /** Syncs add-ons, library and continue watching with the account; [onResult] gets null on success, otherwise the reason */
     fun syncNow(onResult: (String?) -> Unit) {
@@ -295,8 +336,8 @@ class StremioViewModel : ViewModel(), KoinComponent {
     private val _detail = MutableStateFlow<DetailState?>(null)
     val detail: StateFlow<DetailState?> get() = _detail
 
-    fun open(preview: MetaPreview) {
-        _detail.value = DetailState(preview)
+    fun open(preview: MetaPreview, resumeVideoId: String? = null) {
+        _detail.value = DetailState(preview, resumeVideoId = resumeVideoId)
         viewModelScope.launch {
             var meta: Meta? = null
             for (a in addons.value.filter { it.manifest.supports("meta", preview.type, preview.id) }) {
@@ -307,12 +348,22 @@ class StremioViewModel : ViewModel(), KoinComponent {
             val fallback = Meta(preview.id, preview.type, preview.name, poster = preview.poster, description = preview.description,
                 releaseInfo = preview.releaseInfo, imdbRating = preview.imdbRating)
             _detail.update { if (it?.preview?.id == preview.id) it.copy(meta = meta ?: fallback, loading = false) else it }
+            val current = _detail.value
+            val loaded = current?.meta
+            val videoId = current?.resumeVideoId
+            if (current?.preview?.id == preview.id && loaded != null && !videoId.isNullOrBlank()) {
+                val video = loaded.videos.firstOrNull { it.id == videoId }
+                showStreams(loaded, if (videoId == loaded.id) video else video ?: Video(videoId, ""))
+            }
         }
     }
 
     fun openSaved(e: LibraryEntry) = open(MetaPreview(e.id, e.type, e.name, e.poster))
 
-    fun openProgress(p: WatchProgress) = open(MetaPreview(p.id, p.type, p.name, p.poster))
+    fun openProgress(p: WatchProgress) = open(
+        MetaPreview(p.id, p.type, p.name, p.poster),
+        resumeVideoId = p.videoId.ifBlank { p.id },
+    )
 
     fun closeDetail() {
         _detail.value = null
@@ -334,6 +385,53 @@ class StremioViewModel : ViewModel(), KoinComponent {
     }
 
     fun removeProgress(id: String) { viewModelScope.launch { library.removeProgress(id) } }
+
+    private val _upcoming = MutableStateFlow<List<UpcomingItem>>(emptyList())
+    val upcoming: StateFlow<List<UpcomingItem>> get() = _upcoming
+    private var upcomingJob: Job? = null
+
+    fun loadUpcoming() {
+        upcomingJob?.cancel()
+        upcomingJob = viewModelScope.launch(kotlinx.coroutines.Dispatchers.IO) {
+            val series = saved.value.filter { it.type.equals("series", true) }.take(StremioLibraryNotifier.MAX_SERIES)
+            val addons = addons.value
+            if (series.isEmpty()) {
+                _upcoming.value = emptyList()
+                return@launch
+            }
+            val bound = Semaphore(3)
+            val items = kotlinx.coroutines.coroutineScope {
+                series.map { entry ->
+                    kotlinx.coroutines.async {
+                        bound.withPermit {
+                            var meta: Meta? = null
+                            for (a in addons.filter { it.manifest.supports("meta", entry.type, entry.id) }) {
+                                meta = runCatching { client.meta(a, entry.type, entry.id) }.getOrNull()
+                                if (meta != null) break
+                            }
+                            val videos = meta?.videos.orEmpty()
+                            (StremioUpcoming.upcoming(videos) + StremioUpcoming.airedInLastDays(videos, 7)).map { ep ->
+                                val title = ep.video.title.ifBlank {
+                                    listOfNotNull(ep.video.season?.let { "S$it" }, ep.video.episode?.let { "E$it" }).joinToString("")
+                                }
+                                UpcomingItem(
+                                    id = entry.id,
+                                    name = entry.name,
+                                    episodeTitle = title,
+                                    season = ep.video.season,
+                                    episode = ep.video.episode,
+                                    released = ep.released.toString(),
+                                    poster = entry.poster ?: meta?.poster,
+                                )
+                            }
+                        }
+                    }
+                }.flatMap { it.await() }
+            }
+            _upcoming.value = items.distinctBy { it.id to it.released to it.episodeTitle }
+                .sortedBy { it.released }
+        }
+    }
 
     // ---- streams ----
 

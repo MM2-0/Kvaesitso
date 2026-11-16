@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_server_connected">Streamovací server připojen</string>
+    <string name="au22_stremio_test_server">Otestovat streamovací server</string>
+    <string name="au22_stremio_profiles">Profily</string>
+    <string name="au22_stremio_profile_anonymous">Anonymní</string>
+    <string name="au22_stremio_profile_name">Název profilu</string>
+</resources>

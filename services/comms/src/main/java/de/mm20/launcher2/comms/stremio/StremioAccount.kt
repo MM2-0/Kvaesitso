@@ -102,7 +102,7 @@ class StremioAccount(
         initialized.await()
         val key = mutex.withLock {
             val currentKey = authKey()
-            try { library.activateAccount(null) } finally {
+            try { library.activateAccount(StremioLocalProfiles.accountKey(StremioLocalProfiles(app).active())) } finally {
                 prefs.edit().clear().apply(); keyCache = null; sessionCache = "anonymous"; _email.value = null; _watched.value = emptyMap(); lastPush.clear(); lastSent.clear()
             }
             currentKey

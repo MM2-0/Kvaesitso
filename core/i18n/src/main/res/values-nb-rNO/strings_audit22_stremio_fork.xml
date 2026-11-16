@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_server_connected">Strømmeserver tilkoblet</string>
+    <string name="au22_stremio_test_server">Test strømmeserver</string>
+    <string name="au22_stremio_profiles">Profiler</string>
+    <string name="au22_stremio_profile_anonymous">Anonym</string>
+    <string name="au22_stremio_profile_name">Profilnavn</string>
+</resources>

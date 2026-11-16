@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_server_connected">Server tal-istreaming konness</string>
+    <string name="au22_stremio_test_server">Ittestja s-server tal-istreaming</string>
+    <string name="au22_stremio_profiles">Profili</string>
+    <string name="au22_stremio_profile_anonymous">Anonimu</string>
+    <string name="au22_stremio_profile_name">Isem tal-profil</string>
+</resources>

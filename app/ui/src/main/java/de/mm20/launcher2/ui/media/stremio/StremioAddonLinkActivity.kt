@@ -6,15 +6,17 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.SystemClock
 import de.mm20.launcher2.applock.SettingsDeepLinkContract
+import de.mm20.launcher2.comms.stremio.StremioDeepLink
 import de.mm20.launcher2.comms.stremio.StremioProtocol
 
-/** Browser / share of a Stremio add-on URL opens Stremio Fork and offers install. */
+/** Browser / share of a Stremio add-on URL or detail link opens Stremio Fork. */
 class StremioAddonLinkActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (savedInstanceState == null && intent.action == Intent.ACTION_VIEW) {
             val raw = intent.dataString?.trim().orEmpty()
-            if (StremioProtocol.baseUrl(raw) != null) {
+            val parsed = StremioProtocol.parseDeepLink(raw)
+            if (parsed != null) {
                 val route = SettingsDeepLinkContract.ROUTE_STREMIO
                 startActivity(Intent().apply {
                     setClassName(
@@ -23,7 +25,14 @@ class StremioAddonLinkActivity : Activity() {
                     )
                     data = Uri.parse("telos-task://app/media")
                     putExtra(SettingsDeepLinkContract.EXTRA_ROUTE, route)
-                    putExtra(SettingsDeepLinkContract.EXTRA_STREMIO_ADDON, raw)
+                    when (parsed) {
+                        is StremioDeepLink.AddonInstall ->
+                            putExtra(SettingsDeepLinkContract.EXTRA_STREMIO_ADDON, parsed.url)
+                        is StremioDeepLink.Detail -> {
+                            putExtra(SettingsDeepLinkContract.EXTRA_STREMIO_DETAIL_TYPE, parsed.type)
+                            putExtra(SettingsDeepLinkContract.EXTRA_STREMIO_DETAIL_ID, parsed.id)
+                        }
+                    }
                     putExtra(
                         SettingsDeepLinkContract.EXTRA_YOUTUBE_LINK_REQUEST,
                         SystemClock.elapsedRealtimeNanos(),

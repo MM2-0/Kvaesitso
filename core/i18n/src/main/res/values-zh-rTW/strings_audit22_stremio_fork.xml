@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_server_connected">串流伺服器已連線</string>
+    <string name="au22_stremio_test_server">測試串流伺服器</string>
+    <string name="au22_stremio_profiles">設定檔</string>
+    <string name="au22_stremio_profile_anonymous">匿名</string>
+    <string name="au22_stremio_profile_name">設定檔名稱</string>
+</resources>

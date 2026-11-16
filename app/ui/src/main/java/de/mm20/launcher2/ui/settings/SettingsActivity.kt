@@ -431,7 +431,9 @@ open class SettingsActivity : BaseActivity() {
                 de.mm20.launcher2.ui.media.docs.ViewerScreen()
             }
             entry<de.mm20.launcher2.ui.media.hub.MediaHubRoute> {
-                de.mm20.launcher2.ui.media.hub.MediaHubScreen(it.space, it.link, it.requestId)
+                de.mm20.launcher2.ui.media.hub.MediaHubScreen(
+                    it.space, it.link, it.requestId, it.stremioDetailType, it.stremioDetailId,
+                )
             }
             entry<de.mm20.launcher2.ui.media.video.VideoRoute> {
                 de.mm20.launcher2.ui.media.video.VideoScreen()
@@ -963,6 +965,8 @@ open class SettingsActivity : BaseActivity() {
                 "stremio",
                 intent.getStringExtra(SettingsDeepLinkContract.EXTRA_STREMIO_ADDON),
                 intent.getLongExtra(SettingsDeepLinkContract.EXTRA_YOUTUBE_LINK_REQUEST, 0L),
+                intent.getStringExtra(SettingsDeepLinkContract.EXTRA_STREMIO_DETAIL_TYPE),
+                intent.getStringExtra(SettingsDeepLinkContract.EXTRA_STREMIO_DETAIL_ID),
             )
             ROUTE_MEDIA -> de.mm20.launcher2.ui.media.hub.MediaHubRoute(
                 intent.getStringExtra(SettingsDeepLinkContract.EXTRA_MEDIA_SPACE).orEmpty()

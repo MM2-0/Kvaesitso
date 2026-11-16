@@ -37,7 +37,7 @@ gallery, music, video and radio players, an app store and an app freezer.
 <a href="./store/"><b>🛍️ Store</b><span>Install and update apps from GitHub, F-Droid and more</span></a>
 <a href="./system/"><b>⚙️ System</b><span>CPU, RAM, Wi-Fi, AppOps, built-in Shizuku server, pairing, ADB</span></a>
 <a href="./freeze/"><b>❄️ Smart Freeze</b><span>Freeze or hide apps through Shizuku, Dhizuku, root, Island or device owner</span></a>
-<a href="./media/"><b>🎬 Media</b><span>Listen / Watch / Live: music, radio, YouTube, TV, Stremio Fork</span></a>
+<a href="./media/"><b>🎬 Media</b><span>Listen / Watch / Live: music, radio, YouTube, TV, Stremio Fork (deep links, calendar)</span></a>
 <a href="./linux-desktop"><b>🖥️ Telos Desktop</b><span>Linux session + Windows jar; vault as \$HOME on Linux</span></a>
 <a href="./android-vm"><b>📦 TelosAndroidVm</b><span>BlissOS in QEMU + scrcpy on Windows, Linux, and Apple Silicon</span></a>
 

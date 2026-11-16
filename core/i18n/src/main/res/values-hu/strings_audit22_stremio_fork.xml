@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_server_connected">A streamelő szerver csatlakozva</string>
+    <string name="au22_stremio_test_server">Streamelő szerver tesztelése</string>
+    <string name="au22_stremio_profiles">Profilok</string>
+    <string name="au22_stremio_profile_anonymous">Névtelen</string>
+    <string name="au22_stremio_profile_name">Profilnév</string>
+</resources>
