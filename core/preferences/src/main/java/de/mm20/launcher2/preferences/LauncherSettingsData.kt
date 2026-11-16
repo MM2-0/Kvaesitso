@@ -76,6 +76,7 @@ data class LauncherSettingsData internal constructor(
     val desktopMode: DesktopModeGroup = DesktopModeGroup(),
     val agents: AgentsGroup = AgentsGroup(),
     val tweaks: TweaksGroup = TweaksGroup(),
+    val battery: BatteryGroup = BatteryGroup(),
     // === TELOS_PENDING_REVIEW_START: comms_settings_engine ===
     val comms: CommsGroup = CommsGroup(),
     // === TELOS_PENDING_REVIEW_END: comms_settings_engine ===
@@ -475,6 +476,8 @@ data class VideoWallpaperGroup(
      * is a resource-saving choice the user should opt into rather than something sprung on them.
      */
     val videoWallpaperPauseOnDesktopMode: Boolean = false,
+    /** User asked Telos to keep the video/GIF live wallpaper after APK updates. */
+    val liveWallpaperWanted: Boolean = false,
 )
 
 @Serializable
@@ -846,6 +849,22 @@ data class AgentsGroup(
     /** If true, Enter sends a sentence (3+ words) to the agent instead of launching the top app. */
     val agentsSendSentences: Boolean = true,
     val searchBarVoice: Boolean = true,
+)
+
+@Serializable
+data class BatteryGroup(
+    val batteryGuardEnabled: Boolean = false,
+    val batteryScreenOffGps: Boolean = true,
+    val batteryScreenOffData: Boolean = false,
+    val batteryScreenOffMic: Boolean = false,
+    val batteryScreenOffCamera: Boolean = false,
+    val batteryScreenOffSync: Boolean = false,
+    /** empty = leave radio; lte, wcdma, gsm */
+    val batteryScreenOffRadio: String = "",
+    val batteryWeatherWakeMinutes: Int = 60,
+    val batterySyncWakeMinutes: Int = 0,
+    val batteryGpsHoldPackages: String = "",
+    val batteryCallHoldPackages: String = "",
 )
 
 @Serializable

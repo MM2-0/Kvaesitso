@@ -88,6 +88,29 @@ internal class GlassWallpaperStore(private val context: Context) {
         } finally { source.delete() }
     }
 
+    /** After an APK update the live wallpaper is often unbound; put the last static image back. */
+    suspend fun restoreStaticIfPresent(): Boolean = mutex.withLock {
+        val snapshot = try { file.openRead() } catch (_: java.io.FileNotFoundException) { return@withLock false }
+        val bitmap = snapshot.use { raw ->
+            val input = DataInputStream(raw)
+            if (input.readInt() != 0x54474c31) return@withLock false
+            input.readInt()
+            val bytes = input.readNBytesCompat(2 * 1024 * 1024)
+            BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+        } ?: return@withLock false
+        try {
+            java.io.ByteArrayOutputStream().use { out ->
+                if (!bitmap.compress(Bitmap.CompressFormat.PNG, 100, out)) return@withLock false
+                WallpaperManager.getInstance(context).setStream(java.io.ByteArrayInputStream(out.toByteArray()), null, true, WallpaperManager.FLAG_SYSTEM)
+            }
+            true
+        } catch (_: Exception) {
+            false
+        } finally {
+            bitmap.recycle()
+        }
+    }
+
     suspend fun load(radiusDp: Int, widthDp: Int, heightDp: Int): Bitmap? = mutex.withLock {
         val manager = WallpaperManager.getInstance(context)
         if (manager.wallpaperInfo != null || radiusDp <= 0) { frames.clear(); return@withLock null }

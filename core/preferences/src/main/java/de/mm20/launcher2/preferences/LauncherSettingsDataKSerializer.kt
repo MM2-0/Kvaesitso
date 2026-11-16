@@ -83,6 +83,7 @@ internal object LauncherSettingsDataKSerializer : KSerializer<LauncherSettingsDa
             mergeGroup(value.desktopMode, DesktopModeGroup.serializer())
             mergeGroup(value.agents, AgentsGroup.serializer())
             mergeGroup(value.tweaks, TweaksGroup.serializer())
+            mergeGroup(value.battery, BatteryGroup.serializer())
             mergeGroup(value.comms, CommsGroup.serializer())
         }
         jsonEncoder.encodeJsonElement(merged)
@@ -142,6 +143,7 @@ internal object LauncherSettingsDataKSerializer : KSerializer<LauncherSettingsDa
             desktopMode = json.decodeFromJsonElement(DesktopModeGroup.serializer(), obj),
             agents = json.decodeFromJsonElement(AgentsGroup.serializer(), obj),
             tweaks = json.decodeFromJsonElement(TweaksGroup.serializer(), obj),
+            battery = json.decodeFromJsonElement(BatteryGroup.serializer(), obj),
             comms = json.decodeFromJsonElement(CommsGroup.serializer(), obj),
         )
     }

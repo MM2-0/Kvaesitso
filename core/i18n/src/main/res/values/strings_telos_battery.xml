@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="battery_tab">Battery</string>
+    <string name="battery_intro">When the screen is off, Telos can park radios and sensors, then wake them on a schedule for weather or account sync. Off until you turn it on. Needs Shizuku or root. Incoming phone and messaging calls keep the microphone. Maps-style apps keep GPS while they are in the foreground.</string>
+    <string name="battery_needs_shizuku">Connect Shizuku or root in the Shizuku tab before enabling this.</string>
+    <string name="battery_master">Screen-off power guard</string>
+    <string name="battery_master_summary">Apply the switches below about 20 seconds after the display turns off. Restores the previous state when you wake the phone.</string>
+    <string name="battery_screen_off">While the screen is off</string>
+    <string name="battery_gps">Turn off location</string>
+    <string name="battery_gps_summary">Skips this if a navigation app you keep is in the foreground.</string>
+    <string name="battery_data">Turn off mobile data</string>
+    <string name="battery_data_summary">Wi-Fi is left alone. Skipped during an active call hold app.</string>
+    <string name="battery_mic">Privacy: microphone off</string>
+    <string name="battery_mic_summary">Re-enabled automatically for an incoming or active phone or messaging call.</string>
+    <string name="battery_camera">Privacy: camera off</string>
+    <string name="battery_camera_summary">Uses Android sensor privacy. Restored on wake.</string>
+    <string name="battery_sync">Pause automatic account sync</string>
+    <string name="battery_sync_summary">Android contacts/mail sync. The hourly wake below can run a forced sync.</string>
+    <string name="battery_radio">Preferred radio while idle</string>
+    <string name="battery_radio_leave">Leave as-is</string>
+    <string name="battery_radio_lte">Prefer 4G/LTE</string>
+    <string name="battery_radio_3g">Prefer 3G</string>
+    <string name="battery_radio_2g">Prefer 2G (emergency risk on some networks)</string>
+    <string name="battery_schedulers">Wake windows</string>
+    <string name="battery_weather_wake">Hourly weather location</string>
+    <string name="battery_weather_wake_summary">Turn location and data on for about 45 seconds each hour, then park them again if the screen is still off.</string>
+    <string name="battery_sync_wake">Hourly account sync</string>
+    <string name="battery_sync_wake_summary">Turn data on, request Android sync, then park again.</string>
+    <string name="battery_holds">Hold-outs (installed)</string>
+    <string name="battery_holds_gps_list">Navigation hold-outs: %1$s</string>
+    <string name="battery_holds_call_list">Call/messaging hold-outs: %1$s</string>
+    <string name="wallpaper_restore_channel">Wallpaper</string>
+    <string name="wallpaper_restore_title">Restore video wallpaper</string>
+    <string name="wallpaper_restore_text">Android dropped the live wallpaper after the Telos update. The file is still on the device. Tap to set it again.</string>
+</resources>
