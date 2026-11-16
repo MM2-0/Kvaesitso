@@ -2,8 +2,12 @@
 
 **Single source of truth for every AI coding agent** working in this repository
 (Claude, Codex, Copilot, Cursor, Devin, ChatGPT, Gemini, Grok, and any other
-assistant). Do not maintain a parallel instruction file. `CLAUDE.md` and
-`.github/copilot-instructions.md` only point here.
+assistant).
+
+Read this file only. Do not create or keep parallel instruction files
+(`CLAUDE.md`, `.github/copilot-instructions.md`, `GEMINI.md`, `.cursorrules`,
+`.cursor/rules/`, `CODEX.md`, `.windsurfrules`, Aider rule files, or extra
+`*-instructions.md`). Put every shared rule here so all agents stay in sync.
 
 ## Project
 
@@ -132,6 +136,8 @@ Every new or changed user-visible string must be translated into **all** support
 Supported: Greek, German, Spanish, French, Italian, Portuguese (pt, pt-BR), Russian, Turkish, Dutch, Polish, Czech, Slovak, Slovenian, Croatian, Bulgarian, Romanian, Hungarian, Danish, Swedish, Finnish, Estonian, Latvian, Lithuanian, Irish, Maltese, Ukrainian, Norwegian, Chinese (zh-CN, zh-TW), Japanese, Korean, Arabic, Hindi, Bengali.
 
 Use `tools/i18n/` (see its README): `extract.py` for missing keys, `build.py` to write `strings_telos_translations.xml`. Keep placeholders (`%1$s`, `%d`, XML tags) unchanged.
+
+Do not duplicate translated text. For common labels (Cancel, Save, Settings, Search, Close) reuse existing keys (`hc_cancel`, `hc_save`, `action_settings`, …) or alias with `@string/hc_cancel`. Do not add a second copy of the same English (or Greek) sentence.
 
 ## User workflow preferences
 
