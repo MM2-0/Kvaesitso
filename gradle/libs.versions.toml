@@ -79,7 +79,7 @@ taglib = "1.0.6"
 libtorrent4j = "2.1.0-39"
 youtubedl = "0.18.1"
 kotpass = "0.10.0"
-robolectric = "4.17"
+robolectric = "4.18"
 
 # Go network engine of Rethink DNS (MPL-2.0), pinned like Rethink pins it (firestackCommit)
 firestack = "c4a33649be"
