@@ -26,6 +26,7 @@ import kotlinx.coroutines.sync.Semaphore
 import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
+import kotlin.time.Duration.Companion.milliseconds
 
 class NotesWidgetVM(
     private val widgetsService: WidgetsService,
@@ -120,7 +121,7 @@ class NotesWidgetVM(
         updateJob?.cancel()
         val widget = widget.value ?: return
         updateJob = viewModelScope.launch {
-            delay(1000)
+            delay(1000.milliseconds)
             val success = if (widget.config.linkedFile != null) {
                 writeContentToFile(context, Uri.parse(widget.config.linkedFile), text.text)
             } else false
