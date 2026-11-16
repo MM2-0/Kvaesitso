@@ -10,6 +10,7 @@ on:
       - docs/**/*
       - plugins/sdk/**/*
       - core/shared/**/*
+      - .github/workflows/deploy-docs.yml
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -39,11 +40,22 @@ jobs:
         with:
           distribution: temurin
           java-version: 21
+      - uses: android-actions/setup-android@v4
+      - name: Install NDK (AGP configures native modules during Dokka)
+        run: |
+          NDK="ndk;27.0.12077973"
+          for attempt in 1 2 3; do
+            yes | sdkmanager --install "$NDK" && exit 0
+            echo "NDK install attempt $attempt failed, retrying"
+            sleep 8
+          done
+          echo "::error::Failed to install $NDK after 3 attempts"
+          exit 1
       - name: Use Gradle
         uses: gradle/actions/setup-gradle@v6
         with:
           cache-provider: basic
-      - run: chmod +x gradlew && ./gradlew dokkaGenerateHtml
+      - run: chmod +x gradlew && ./gradlew dokkaGenerateHtml --no-configuration-cache --stacktrace
         working-directory: .
       - run: mv build/dokka/html docs/public/reference
         working-directory: .
