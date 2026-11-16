@@ -98,6 +98,7 @@ Telos runs as the home screen, so every agent (Devin, Copilot, ChatGPT, Claude) 
 - No new `runBlocking` in app code. Inside a coroutine, call `first()` directly. Outside one, launch in a scope (`containedScope(...)` from `core:base`, `lifecycleScope`, `viewModelScope`) and come back to `Dispatchers.Main` to touch the UI.
 - `SharedPreferences`: use `apply()`. `commit()` is only for writes that must be on disk before the process can die (crash-recovery state such as `VirtualAppGuard`), and never on the main thread.
 - Do not start heavy work in `Application.onCreate`. Create engines, decoders and services on first use.
+- Battery: no GPS/network location loops on the home screen. Search location and weather use coarse, cached updates. Periodic WorkManager jobs require `setRequiresBatteryNotLow(true)` unless the user asked for a live check. Do not poll CallScreening or the dialer blocklist; it stays event-driven when enabled. Do not add wake locks or foreground services for launcher idle. Sensor listeners unregister when the lifecycle is below STARTED. Never trade home-screen frame time for extra battery savings.
 
 **Compose**
 - Wrap derived values in `remember(keys)` or `derivedStateOf`. No sorting, filtering, parsing, `Regex(...)`, `SimpleDateFormat(...)` or object allocation directly in a composable body or in `drawBehind`/`onDraw`.

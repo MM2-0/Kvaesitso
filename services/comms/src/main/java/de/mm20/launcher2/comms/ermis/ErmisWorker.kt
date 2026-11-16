@@ -32,8 +32,8 @@ class ErmisWorker(context: Context, params: WorkerParameters): CoroutineWorker(c
         } catch (e: kotlinx.coroutines.CancellationException) { throw e } catch (_: Exception) { Result.retry() }
     }
     companion object {
-        fun schedule(context: Context) { WorkManager.getInstance(context).enqueueUniquePeriodicWork("ermis-mail",ExistingPeriodicWorkPolicy.KEEP,
-            PeriodicWorkRequestBuilder<ErmisWorker>(15,TimeUnit.MINUTES).setConstraints(Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()).build()) }
+        fun schedule(context: Context) { WorkManager.getInstance(context).enqueueUniquePeriodicWork("ermis-mail",ExistingPeriodicWorkPolicy.UPDATE,
+            PeriodicWorkRequestBuilder<ErmisWorker>(30,TimeUnit.MINUTES).setConstraints(Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).setRequiresBatteryNotLow(true).build()).build()) }
         fun cancel(context: Context) { WorkManager.getInstance(context).cancelUniqueWork("ermis-mail") }
     }
 }

@@ -83,14 +83,13 @@ class SmartFreezeService : Service() {
 
     private fun triggerFreezeCycle() {
         scope.launch {
-            // Delay to allow apps to settle down
             delay(5.seconds)
             if (!isScreenOff) return@launch
+            if (isMediaActive() || isVpnRunning() || isHighDataTransfer()) return@launch
 
             val packagesToFreeze = getPackagesToFreeze()
             for (pkg in packagesToFreeze) {
                 if (canFreezePackage(pkg)) {
-                    // For auto-freeze, we default to user 0 (current user)
                     freezePackage(pkg, Process.myUserHandle().hashCode())
                 }
             }
@@ -98,25 +97,8 @@ class SmartFreezeService : Service() {
     }
 
     private suspend fun canFreezePackage(packageName: String): Boolean {
-        // Exception Check 1: Media is active
-        if (isMediaActive()) {
-            Log.d("SmartFreeze", "Skipping freeze for $packageName: Media is active")
-            return false
-        }
-
-        // Exception Check 2: VPN is running
-        if (isVpnRunning()) {
-            Log.d("SmartFreeze", "Skipping freeze for $packageName: VPN is running")
-            return false
-        }
-
-        // Exception Check 3: High data transfer (> 500 KB)
-        if (isHighDataTransfer()) {
-            Log.d("SmartFreeze", "Skipping freeze for $packageName: High data transfer")
-            return false
-        }
-
-        // Exception Check 4: Foreground or ongoing notifications exist
+        // Foreground / ongoing process check per package. Media, VPN and radio
+        // traffic are sampled once per screen-off cycle, not once per app.
         // Note: Full notification check requires NotificationListenerService.
         // We use a best-effort approach or assume integration with a companion listener.
         if (hasForegroundOrOngoingNotifications(packageName)) {
