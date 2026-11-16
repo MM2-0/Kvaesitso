@@ -59,7 +59,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.11.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.11.0")
     // === TELOS_PENDING_REVIEW_START: telos_elastic_sharded_pqc_vault ===
-    implementation("org.bouncycastle:bcprov-jdk18on:1.86")
+    implementation("org.bouncycastle:bcprov-jdk18on:1.87")
     // === TELOS_PENDING_REVIEW_END: telos_elastic_sharded_pqc_vault ===
     implementation(libs.commons.compress)
     implementation(libs.tukaani.xz)
