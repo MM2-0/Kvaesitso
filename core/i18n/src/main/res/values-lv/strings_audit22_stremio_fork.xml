@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_server_connected">Straumēšanas serveris ir savienots</string>
+    <string name="au22_stremio_test_server">Pārbaudīt straumēšanas serveri</string>
+    <string name="au22_stremio_profiles">Profili</string>
+    <string name="au22_stremio_profile_anonymous">Anonīms</string>
+    <string name="au22_stremio_profile_name">Profila nosaukums</string>
+</resources>

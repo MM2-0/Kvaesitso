@@ -7,8 +7,11 @@ import de.mm20.launcher2.base.R as BaseR
 import android.content.Intent
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.focusable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -43,6 +46,7 @@ import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedButton
@@ -92,7 +96,12 @@ import de.mm20.launcher2.ui.media.MediaFrame
  * is not affiliated with Stremio. Telos ships no add-on; what an add-on offers is the add-on's responsibility.
  */
 @Composable
-fun StremioScreen(initialAddon: String? = null, addonRequestId: Long = 0L) {
+fun StremioScreen(
+    initialAddon: String? = null,
+    addonRequestId: Long = 0L,
+    initialDetailType: String? = null,
+    initialDetailId: String? = null,
+) {
     val vm: StremioViewModel = viewModel()
     val accepted by vm.noticeAccepted.collectAsStateWithLifecycle()
     val addons by vm.addons.collectAsStateWithLifecycle()
@@ -107,10 +116,24 @@ fun StremioScreen(initialAddon: String? = null, addonRequestId: Long = 0L) {
     var showAddons by remember { mutableStateOf(false) }
     var showAccount by remember { mutableStateOf(false) }
     var showTrakt by remember { mutableStateOf(false) }
+    var showProfiles by remember { mutableStateOf(false) }
     val email by vm.accountEmail.collectAsStateWithLifecycle()
     val context = LocalContext.current
-    androidx.compose.runtime.LaunchedEffect(addonRequestId, initialAddon) {
-        val url = initialAddon?.trim().orEmpty()
+    androidx.compose.runtime.LaunchedEffect(addonRequestId, initialAddon, initialDetailType, initialDetailId) {
+        val fromLink = initialAddon?.let { de.mm20.launcher2.comms.stremio.StremioProtocol.parseDeepLink(it) }
+        val type = initialDetailType?.trim().orEmpty().ifBlank {
+            (fromLink as? de.mm20.launcher2.comms.stremio.StremioDeepLink.Detail)?.type.orEmpty()
+        }
+        val id = initialDetailId?.trim().orEmpty().ifBlank {
+            (fromLink as? de.mm20.launcher2.comms.stremio.StremioDeepLink.Detail)?.id.orEmpty()
+        }
+        if (type.isNotBlank() && id.isNotBlank()) {
+            vm.acceptNotice(false)
+            vm.open(de.mm20.launcher2.comms.stremio.MetaPreview(id = id, type = type, name = id))
+            return@LaunchedEffect
+        }
+        val url = (fromLink as? de.mm20.launcher2.comms.stremio.StremioDeepLink.AddonInstall)?.url
+            ?: initialAddon?.trim().orEmpty()
         if (url.isBlank()) return@LaunchedEffect
         vm.acceptNotice(false)
         showAddons = true
@@ -166,6 +189,8 @@ fun StremioScreen(initialAddon: String? = null, addonRequestId: Long = 0L) {
                     text = { Text(stringResource(I18nR.string.au22_stremio_addons)) },
                     onClick = { showActions = false; showAddons = true },
                 )
+                StremioServerStatusMenuItem(menuOpen = showActions)
+                if (email == null) StremioProfilesMenuItems(vm, onCloseMenu = { showActions = false }, onShowSheet = { showProfiles = true })
             }
         }
     }) {
@@ -187,6 +212,7 @@ fun StremioScreen(initialAddon: String? = null, addonRequestId: Long = 0L) {
         vm.refreshAccounts(context, force = true)
     }
     if (showAddons && accepted) AddonsSheet(vm, onDismiss = { showAddons = false })
+    if (showProfiles && email == null) StremioProfilesDialog(vm) { showProfiles = false }
     streams?.let { s -> StreamsSheet(vm, s) }
 }
 
@@ -334,6 +360,7 @@ private fun StremioHome(vm: StremioViewModel) {
     val query by vm.query.collectAsStateWithLifecycle()
     val watching by vm.watching.collectAsStateWithLifecycle()
     val history by vm.progressHistory.collectAsStateWithLifecycle()
+    val upcoming by vm.upcoming.collectAsStateWithLifecycle()
     val saved by vm.saved.collectAsStateWithLifecycle()
     var tab by de.mm20.launcher2.ui.component.rememberPersistentUiState("stremio.tab", 0)
     var searchExpanded by rememberSaveable { mutableStateOf(false) }
@@ -383,7 +410,35 @@ private fun StremioHome(vm: StremioViewModel) {
                             RowTitle(stringResource(I18nR.string.au22_stremio_continue))
                             LazyRow(contentPadding = PaddingValues(horizontal = 16.dp), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                                 items(watching, key = { it.id }) { p ->
-                                    Poster(vm, MetaPreview(p.id, p.type, p.name, p.poster), caption = p.videoTitle, onClick = { vm.openProgress(p) })
+                                    val resume = remember(p.positionMs, p.durationMs, p.resumePercent) {
+                                        de.mm20.launcher2.comms.stremio.StremioProgressState.resumeUi(
+                                            p.positionMs, p.durationMs, p.resumePercent,
+                                        )
+                                    }
+                                    val remainingMinutes = remember(resume?.remainingMs) {
+                                        resume?.remainingMs?.let { left ->
+                                            ((left + 59_999L) / 60_000L).toInt().coerceAtLeast(1)
+                                        }
+                                    }
+                                    val remainingCaption = when {
+                                        remainingMinutes != null && remainingMinutes >= 60 ->
+                                            stringResource(I18nR.string.au22_stremio_remaining_hm, remainingMinutes / 60, remainingMinutes % 60)
+                                        remainingMinutes != null ->
+                                            stringResource(I18nR.string.au22_stremio_remaining_min, remainingMinutes)
+                                        resume?.percent != null ->
+                                            stringResource(I18nR.string.au22_stremio_percent, resume.percent)
+                                        else -> null
+                                    }
+                                    val caption = remember(p.videoTitle, remainingCaption) {
+                                        listOfNotNull(p.videoTitle.takeIf { it.isNotBlank() }, remainingCaption)
+                                            .joinToString(" · ").ifBlank { null }
+                                    }
+                                    Poster(
+                                        vm, MetaPreview(p.id, p.type, p.name, p.poster),
+                                        caption = caption,
+                                        progress = resume?.fraction,
+                                        onClick = { vm.openProgress(p) },
+                                    )
                                 }
                             }
                         }
@@ -421,14 +476,18 @@ private fun StremioHome(vm: StremioViewModel) {
             }
             3 -> StremioDiscover(vm)
             else -> {
-                StremioWatchedCalendar(vm = vm, history = history)
+                StremioWatchedCalendar(vm = vm, history = history, upcoming = upcoming)
             }
         }
     }
 }
 
 @Composable
-private fun StremioWatchedCalendar(vm: StremioViewModel, history: List<de.mm20.launcher2.comms.stremio.WatchProgress>) {
+private fun StremioWatchedCalendar(
+    vm: StremioViewModel,
+    history: List<de.mm20.launcher2.comms.stremio.WatchProgress>,
+    upcoming: List<UpcomingItem>,
+) {
     val formatter = remember { java.text.SimpleDateFormat("yyyy-MM-dd HH:mm", java.util.Locale.getDefault()) }
     val sortedHistory = remember(history) { history.sortedByDescending { it.watchedAt } }
 
@@ -441,18 +500,39 @@ private fun StremioWatchedCalendar(vm: StremioViewModel, history: List<de.mm20.l
                 modifier = Modifier.size(24.dp)
             )
             Spacer(Modifier.width(8.dp))
-            Text("Watched Calendar & History", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
+            Text(stringResource(I18nR.string.au22_stremio_calendar), style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
         }
 
-        if (sortedHistory.isEmpty()) {
-            Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Text("No watch history recorded yet.", color = MaterialTheme.colorScheme.onSurfaceVariant)
+        LazyColumn(
+            contentPadding = PaddingValues(bottom = 112.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp),
+            modifier = Modifier.fillMaxSize(),
+        ) {
+            if (upcoming.isNotEmpty()) {
+                item(key = "upcoming-header") {
+                    Text(stringResource(I18nR.string.au22_stremio_upcoming), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
+                }
+                items(upcoming, key = { "u_${it.id}_${it.released}_${it.episodeTitle}" }) { u ->
+                    Card(
+                        modifier = Modifier.fillMaxWidth().clickable { vm.openSaved(de.mm20.launcher2.comms.stremio.LibraryEntry("series", u.id, u.name, u.poster, 0L)) },
+                        colors = androidx.compose.material3.CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh)
+                    ) {
+                        Column(Modifier.padding(12.dp)) {
+                            Text(u.name, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
+                            Text(u.episodeTitle, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.primary)
+                            Text(u.released.take(10), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        }
+                    }
+                }
             }
-        } else {
-            LazyColumn(
-                contentPadding = PaddingValues(bottom = 112.dp),
-                verticalArrangement = Arrangement.spacedBy(10.dp)
-            ) {
+            item(key = "history-header") {
+                Text(stringResource(I18nR.string.au22_stremio_history), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(top = 8.dp))
+            }
+            if (sortedHistory.isEmpty()) {
+                item(key = "history-empty") {
+                    Text(stringResource(I18nR.string.au22_stremio_history_empty), color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+            } else {
                 items(sortedHistory, key = { "${it.id}_${it.watchedAt}" }) { p ->
                     Card(
                         modifier = Modifier.fillMaxWidth().clickable { vm.openProgress(p) },
@@ -465,7 +545,7 @@ private fun StremioWatchedCalendar(vm: StremioViewModel, history: List<de.mm20.l
                                     Text(p.videoTitle, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.primary)
                                 }
                                 Text(
-                                    "Watched on " + formatter.format(java.util.Date(p.watchedAt)),
+                                    stringResource(I18nR.string.au22_stremio_watched_on, formatter.format(java.util.Date(p.watchedAt))),
                                     style = MaterialTheme.typography.labelSmall,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant
                                 )
@@ -500,7 +580,7 @@ internal fun StremioBrowseControls(
                 FilterChip(selected = tab == 0, onClick = { onTab(0) }, label = { Text(stringResource(I18nR.string.au22_stremio_home)) }, shape = MaterialTheme.shapes.large)
                 FilterChip(selected = tab == 1, onClick = { onTab(1) }, label = { Text(stringResource(I18nR.string.au22_stremio_library)) }, shape = MaterialTheme.shapes.large)
                 FilterChip(selected = tab == 3, onClick = { onTab(3) }, label = { Text(stringResource(I18nR.string.au22_stremio_discover)) }, shape = MaterialTheme.shapes.large)
-                FilterChip(selected = tab == 2, onClick = { onTab(2) }, label = { Text("Calendar / History") }, shape = MaterialTheme.shapes.large)
+                FilterChip(selected = tab == 2, onClick = { onTab(2) }, label = { Text(stringResource(I18nR.string.au22_stremio_calendar)) }, shape = MaterialTheme.shapes.large)
             }
             if (tab == 0) de.mm20.launcher2.ui.media.MediaSearchAction(searchExpanded, query.isNotBlank()) {
                 if (searchExpanded) onQuery("")
@@ -616,17 +696,35 @@ private fun RowTitle(text: String) {
 }
 
 @Composable
-private fun Poster(vm: StremioViewModel, item: MetaPreview, onClick: () -> Unit, caption: String? = null, fillWidth: Boolean = false) {
+private fun Poster(
+    vm: StremioViewModel,
+    item: MetaPreview,
+    onClick: () -> Unit,
+    caption: String? = null,
+    fillWidth: Boolean = false,
+    progress: Float? = null,
+) {
     val ratio = when (item.posterShape) {
         "landscape" -> 1.77f
         "square" -> 1f
         else -> 0.675f
     }
+    val posterInteraction = remember { MutableInteractionSource() }
     Column(
-        (if (fillWidth) Modifier.fillMaxWidth() else Modifier.width(if (ratio > 1f) 272.dp else 156.dp)).clickable(onClick = onClick),
+        (if (fillWidth) Modifier.fillMaxWidth() else Modifier.width(if (ratio > 1f) 272.dp else 156.dp))
+            .clickable(interactionSource = posterInteraction, indication = LocalIndication.current, onClick = onClick)
+            .focusable(interactionSource = posterInteraction),
     ) {
         Box(Modifier.fillMaxWidth().aspectRatio(ratio).clip(MaterialTheme.shapes.medium).background(MaterialTheme.colorScheme.surfaceContainerHigh)) {
             AsyncImage(model = item.poster, contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.fillMaxSize())
+            if (progress != null) {
+                LinearProgressIndicator(
+                    progress = { progress.coerceIn(0f, 1f) },
+                    modifier = Modifier.align(Alignment.BottomCenter).fillMaxWidth().height(4.dp),
+                    color = MaterialTheme.colorScheme.primary,
+                    trackColor = MaterialTheme.colorScheme.surfaceContainerHigh.copy(alpha = 0.7f),
+                )
+            }
         }
         if (item.type == "movie") WatchMark(vm, item.id)
         Text(item.name, style = MaterialTheme.typography.titleSmall, maxLines = 3, overflow = TextOverflow.Ellipsis, modifier = Modifier.padding(top = 6.dp))
@@ -749,7 +847,7 @@ private fun StreamsSheet(vm: StremioViewModel, state: StreamsState) {
             } else {
                 LazyColumn(modifier = Modifier.fillMaxWidth().height(420.dp)) {
                     items(visibleStreams, key = { it.streamKey() + "#" + state.items.indexOf(it) }) { s ->
-                        StreamRow(s, last = s.streamKey() == state.lastUsed) {
+                        StreamRow(s, last = s.streamKey() == state.lastUsed, title = state.title) {
                             vm.play(context, s, state) { opened ->
                                 if (opened) vm.closeStreams()
                                 else Toast.makeText(context, I18nR.string.au22_stremio_unsupported, Toast.LENGTH_SHORT).show()
@@ -763,7 +861,7 @@ private fun StreamsSheet(vm: StremioViewModel, state: StreamsState) {
 }
 
 @Composable
-private fun StreamRow(s: StreamItem, last: Boolean, onClick: () -> Unit) {
+private fun StreamRow(s: StreamItem, last: Boolean, title: String, onClick: () -> Unit) {
     val supported = s.kind != StreamItem.Kind.Unsupported
     Column(
         Modifier.fillMaxWidth().clip(RoundedCornerShape(12.dp)).clickable(enabled = supported, onClick = onClick).padding(vertical = 10.dp, horizontal = 4.dp),
@@ -773,6 +871,7 @@ private fun StreamRow(s: StreamItem, last: Boolean, onClick: () -> Unit) {
             Text(s.name ?: s.addonName, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold, modifier = Modifier.weight(1f, fill = false), maxLines = 1, overflow = TextOverflow.Ellipsis)
             if (last) Text(stringResource(I18nR.string.au22_stremio_last_used), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
         }
+        StremioStreamExtraActions(s, title)
         s.description?.let { Text(it, style = MaterialTheme.typography.bodySmall, maxLines = 3, overflow = TextOverflow.Ellipsis) }
         Text(
             when (s.kind) {
@@ -930,6 +1029,9 @@ private fun DirectorySheet(vm: StremioViewModel, onDismiss: () -> Unit) {
 
 @Composable
 private fun AddonRow(a: Addon, onRemove: () -> Unit) {
+    val context = LocalContext.current
+    val configureUrl = a.manifest.configurationURL?.trim()?.takeIf { it.startsWith("http") }
+        ?: a.manifest.configurationRequired.takeIf { it }?.let { a.baseUrl.trimEnd('/') + "/configure" }
     Card(Modifier.fillMaxWidth()) {
         Row(Modifier.padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
             Column(Modifier.weight(1f)) {
@@ -937,6 +1039,13 @@ private fun AddonRow(a: Addon, onRemove: () -> Unit) {
                 if (a.manifest.description.isNotBlank()) Text(a.manifest.description, style = MaterialTheme.typography.bodySmall, maxLines = 3, overflow = TextOverflow.Ellipsis)
                 if (a.manifest.p2p) Text(stringResource(I18nR.string.au22_stremio_p2p_warning), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.error)
                 Text(a.baseUrl, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
+            }
+            if (configureUrl != null) {
+                TextButton(onClick = {
+                    runCatching {
+                        context.startActivity(Intent(Intent.ACTION_VIEW, android.net.Uri.parse(configureUrl)))
+                    }
+                }) { Text(stringResource(I18nR.string.au22_stremio_configure)) }
             }
             TextButton(onClick = onRemove) { Text(stringResource(I18nR.string.hc_remove)) }
         }

@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_server_connected">Yayım serveri qoşulub</string>
+    <string name="au22_stremio_test_server">Yayım serverini yoxla</string>
+    <string name="au22_stremio_profiles">Profillər</string>
+    <string name="au22_stremio_profile_anonymous">Anonim</string>
+    <string name="au22_stremio_profile_name">Profil adı</string>
+</resources>

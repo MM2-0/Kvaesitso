@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_server_connected">שרת הסטרימינג מחובר</string>
+    <string name="au22_stremio_test_server">בדיקת שרת הסטרימינג</string>
+    <string name="au22_stremio_profiles">פרופילים</string>
+    <string name="au22_stremio_profile_anonymous">אנונימי</string>
+    <string name="au22_stremio_profile_name">שם פרופיל</string>
+</resources>

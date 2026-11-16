@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_server_connected">خادم البث متصل</string>
+    <string name="au22_stremio_test_server">اختبار خادم البث</string>
+    <string name="au22_stremio_profiles">الملفات الشخصية</string>
+    <string name="au22_stremio_profile_anonymous">مجهول</string>
+    <string name="au22_stremio_profile_name">اسم الملف الشخصي</string>
+</resources>

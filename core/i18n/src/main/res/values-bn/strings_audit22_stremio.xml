@@ -47,4 +47,16 @@
     <string name="au22_stremio_sort_featured">নির্বাচিত</string>
     <string name="au22_stremio_sort_trakt">Trakt</string>
     <string name="au22_stremio_genre_all">সব ধরন</string>
+<string name="au22_stremio_upcoming">Upcoming</string>
+<string name="au22_stremio_calendar">Calendar / History</string>
+<string name="au22_stremio_history">Watch history</string>
+<string name="au22_stremio_history_empty">No watch history recorded yet.</string>
+<string name="au22_stremio_watched_on">Watched on %s</string>
+<string name="au22_stremio_notify_episodes">Notify when a library episode airs</string>
+<string name="au22_stremio_episode_aired">New episode</string>
+<string name="au22_stremio_episode_aired_text">%1$s · %2$s</string>
+<string name="au22_stremio_remaining_min">%d মিনিট বাকি</string>
+<string name="au22_stremio_remaining_hm">%1$d ঘণ্টা %2$d মিনিট বাকি</string>
+<string name="au22_stremio_percent">%d%%</string>
+<string name="au22_stremio_configure">কনফিগার</string>
 </resources>

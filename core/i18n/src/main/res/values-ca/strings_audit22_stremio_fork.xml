@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_server_connected">Servidor de streaming connectat</string>
+    <string name="au22_stremio_test_server">Prova el servidor de streaming</string>
+    <string name="au22_stremio_profiles">Perfils</string>
+    <string name="au22_stremio_profile_anonymous">Anònim</string>
+    <string name="au22_stremio_profile_name">Nom del perfil</string>
+</resources>

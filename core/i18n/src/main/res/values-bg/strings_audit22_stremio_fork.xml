@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_server_connected">Стрийминг сървърът е свързан</string>
+    <string name="au22_stremio_test_server">Тест на стрийминг сървъра</string>
+    <string name="au22_stremio_profiles">Профили</string>
+    <string name="au22_stremio_profile_anonymous">Анонимно</string>
+    <string name="au22_stremio_profile_name">Име на профил</string>
+</resources>

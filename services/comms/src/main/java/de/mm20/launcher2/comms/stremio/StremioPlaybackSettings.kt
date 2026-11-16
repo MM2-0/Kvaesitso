@@ -17,6 +17,7 @@ data class StremioPlaybackSettings(
     val resolution: Int = 0,
     val maxSizeGb: Int = 0,
     val hideScreeners: Boolean = false,
+    val notifyNewEpisodes: Boolean = true,
     val sharedServer: Boolean = false,
     val streamingServer: String = StremioStreamingServer.DEFAULT_ADDRESS,
 ) {
@@ -40,6 +41,7 @@ data class StremioPlaybackSettings(
                 resolution = j.optInt("resolution", 0).takeIf { it in listOf(0, 480, 720, 1080, 1440, 2160) } ?: 0,
                 maxSizeGb = j.optInt("maxSizeGb", 0).takeIf { it in listOf(0, 1, 2, 5, 10, 20, 50) } ?: 0,
                 hideScreeners = j.optBoolean("hideScreeners", false),
+                notifyNewEpisodes = j.optBoolean("notifyNewEpisodes", true),
                 sharedServer = j.optBoolean("sharedServer", false),
                 streamingServer = StremioStreamingServer.normalizeAddress(j.optString("streamingServer")) ?: StremioStreamingServer.DEFAULT_ADDRESS)
         }.getOrDefault(StremioPlaybackSettings())
@@ -50,7 +52,9 @@ data class StremioPlaybackSettings(
                 .put("subtitles", settings.subtitles).put("subtitleFallback", settings.subtitleFallback)
                 .put("cacheGb", settings.cacheGb).put("autoNextEpisode", settings.autoNextEpisode)
                 .put("resolution", settings.resolution).put("maxSizeGb", settings.maxSizeGb)
-                .put("hideScreeners", settings.hideScreeners).put("sharedServer", settings.sharedServer)
+                .put("hideScreeners", settings.hideScreeners)
+                .put("notifyNewEpisodes", settings.notifyNewEpisodes)
+                .put("sharedServer", settings.sharedServer)
                 .put("streamingServer", settings.streamingServer).toString())
             check(tmp.renameTo(f)) { "Playback preferences could not be saved" }
         }

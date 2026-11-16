@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_server_connected">Ὁ διακομιστὴς ῥοῆς συνδεδεμένος</string>
+    <string name="au22_stremio_test_server">Δοκιμὴ διακομιστοῦ ῥοῆς</string>
+    <string name="au22_stremio_profiles">Προφίλ</string>
+    <string name="au22_stremio_profile_anonymous">Ἀνώνυμον</string>
+    <string name="au22_stremio_profile_name">Ὄνομα προφίλ</string>
+</resources>

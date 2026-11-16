@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_server_connected">Servus fluens coniunctus</string>
+    <string name="au22_stremio_test_server">Servum fluentem explora</string>
+    <string name="au22_stremio_profiles">Personae</string>
+    <string name="au22_stremio_profile_anonymous">Ignotus</string>
+    <string name="au22_stremio_profile_name">Nomen personae</string>
+</resources>

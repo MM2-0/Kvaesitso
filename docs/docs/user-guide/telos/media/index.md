@@ -107,7 +107,10 @@ Streams of the torrent kind go through the same torrent player as Telos Video, s
 - **Discover:** movies or series, mixed with **Popular / New / Trending / Featured**, optional **Trakt** catalogs, **year**
   and **genre** (genre and year are sent together when the add-on catalog accepts both extras).
 - **Home:** one row of posters for every catalog of every add-on (catalogs that need extra input are left out), with a search
-  field that asks all searchable catalogs. **Continue watching** shows what you played last.
+  field that asks all searchable catalogs. **Continue watching** shows what you played last, with a progress bar and remaining time; tapping it opens the title and the stream list for that episode.
+- **Calendar / History:** upcoming catalog episodes for saved series, plus local watch history. Optional notifications for new library episodes can be turned off in Stremio Fork settings.
+- **`stremio://` links:** add-on manifests still install; `stremio:///detail/{type}/{id}` opens that title. Add-ons with a configuration page show **Configure** in the add-on list.
+- **Streams:** besides Play, a stream can **Open with** another player (http(s) or magnet) or be sent to Telos Downloads. The overflow menu reports whether the shared streaming server at `127.0.0.1:11470` answers. Without a Stremio account, named **Profiles** keep separate local libraries.
 - **Detail page:** artwork, year, runtime, rating, genres, description and cast. A movie has **Play**; a series has seasons
   and episodes. **Save** puts the title in your **Library** tab (stored on this phone only).
 - **Streams:** tapping Play or an episode asks all stream add-ons and lists what they offer, with the stream you used last for
@@ -134,10 +137,7 @@ Use **Stremio account** in the toolbar to sync or **Sign out**. Signing out retu
 
 Movies display **Watched · Stremio**, **Watched · Trakt**, or both sources on posters and detail pages. Episode rows show the corresponding marks. Stremio episode marks follow its [watched-bitfield format](https://github.com/Stremio/stremio-watched-bitfield); merely starting playback is not counted as watched. Trakt marks match IMDb IDs and episode season/number, and work even when scrobbling is disabled. History refreshes on returning to this space and through **Sync now**. Trakt marks require a connected account and a catalog that supplies IMDb IDs.
 
-What is not there: Stremio's own streaming server (torrents use the torrent engine of Telos Video), the MPV player, add-on
-settings pages (add-ons that need configuration first must be configured in a browser, then added here with their address), the
-watch position of an item (Stremio shows a title in continue watching when its offset is above zero; Telos writes the smallest
-value and does not know the real position of a stream), and Android TV controls. The local add-on list, library and history are not part of the Telos backup.
+What is not there: a bundled copy of Stremio's streaming server binary (Telos probes a local server if you run one, and torrents use the torrent engine of Telos Video) and the MPV player. Continue watching uses the stored player offset. Posters and chips are focusable for a D-pad. The local add-on list, library and history are not part of the Telos backup.
 
 ### Greek supplemental channels / Πρόσθετα ελληνικά κανάλια
 

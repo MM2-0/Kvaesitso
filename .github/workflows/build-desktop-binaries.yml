@@ -46,7 +46,7 @@ jobs:
         run: |
           chmod +x gradlew desktop-linux/session/telos-session desktop-linux/session/labwc/autostart
           sh -n desktop-linux/session/telos-session
-          ./gradlew :ui-kmp:test :desktop-linux:test --stacktrace
+          ./gradlew :ui-kmp:test :desktop-linux:test --no-configuration-cache --stacktrace
       - name: Package Linux UberJar
         if: github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/tags/v') || github.event_name == 'pull_request'
         run: |
@@ -125,7 +125,7 @@ jobs:
           exit 0
       - name: Unit tests
         shell: bash
-        run: ./gradlew :ui-kmp:test :desktop-linux:test --stacktrace
+        run: ./gradlew :ui-kmp:test :desktop-linux:test --no-configuration-cache --stacktrace
       - name: Package Windows UberJar
         if: github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/tags/v') || github.event_name == 'pull_request'
         shell: bash

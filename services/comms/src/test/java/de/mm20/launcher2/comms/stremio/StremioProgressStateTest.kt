@@ -59,6 +59,22 @@ class StremioProgressStateTest {
         assertEquals(field, StremioProgressState.markEpisode(field, listOf("tt1:1:1"), "tt1:1:1"))
     }
 
+    @Test fun resumeUiPrefersMillisecondOffsetOverPercent() {
+        val ui = StremioProgressState.resumeUi(2500, 10000, 80.0)!!
+        assertEquals(0.25f, ui.fraction, 0.001f)
+        assertEquals(7500L, ui.remainingMs)
+        assertEquals(25, ui.percent)
+    }
+
+    @Test fun resumeUiFallsBackToPercentWhenDurationUnknown() {
+        val ui = StremioProgressState.resumeUi(0, 0, 33.3)!!
+        assertEquals(0.333f, ui.fraction, 0.01f)
+        assertNull(ui.remainingMs)
+        assertEquals(33, ui.percent)
+        assertNull(StremioProgressState.resumeUi(0, 0, null))
+        assertNull(StremioProgressState.resumeUi(0, 0, Double.NaN))
+    }
+
     @Test fun videoOrderMatchesStremioSeasonEpisodeReleaseOrder() {
         val videos = listOf(Video("third", "", season = 1, episode = 2), Video("second", "", season = 1, episode = 1), Video("first", ""))
         assertEquals(listOf("first", "second", "third"), StremioProgressState.orderedVideoIds(videos))

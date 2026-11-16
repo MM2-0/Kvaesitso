@@ -7,6 +7,12 @@ package de.mm20.launcher2.comms.stremio
  */
 
 /** One extra property of a catalog (`search`, `genre`, `skip`, ...) */
+/** Result of [StremioProtocol.parseDeepLink]. */
+sealed class StremioDeepLink {
+    data class AddonInstall(val url: String) : StremioDeepLink()
+    data class Detail(val type: String, val id: String) : StremioDeepLink()
+}
+
 data class CatalogExtra(val name: String, val isRequired: Boolean = false, val options: List<String> = emptyList())
 
 data class AddonCatalog(
@@ -39,6 +45,8 @@ data class AddonManifest(
     val p2p: Boolean = false,
     val adult: Boolean = false,
     val configurationRequired: Boolean = false,
+    /** HTTPS page the add-on uses to let the user configure it (`behaviorHints.configurationURL`). */
+    val configurationURL: String? = null,
 ) {
     /** True when the add-on answers [resource] for content of [type] with an id that starts with one of its prefixes */
     fun supports(resource: String, type: String, id: String): Boolean {

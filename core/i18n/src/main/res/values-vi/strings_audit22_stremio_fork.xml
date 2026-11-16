@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_server_connected">Máy chủ phát trực tuyến đã kết nối</string>
+    <string name="au22_stremio_test_server">Kiểm tra máy chủ phát trực tuyến</string>
+    <string name="au22_stremio_profiles">Hồ sơ</string>
+    <string name="au22_stremio_profile_anonymous">Ẩn danh</string>
+    <string name="au22_stremio_profile_name">Tên hồ sơ</string>
+</resources>

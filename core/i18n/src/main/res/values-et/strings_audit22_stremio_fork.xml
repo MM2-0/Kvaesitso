@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_server_connected">Voogedastusserver on ühendatud</string>
+    <string name="au22_stremio_test_server">Testi voogedastusserverit</string>
+    <string name="au22_stremio_profiles">Profiilid</string>
+    <string name="au22_stremio_profile_anonymous">Anonüümne</string>
+    <string name="au22_stremio_profile_name">Profiili nimi</string>
+</resources>

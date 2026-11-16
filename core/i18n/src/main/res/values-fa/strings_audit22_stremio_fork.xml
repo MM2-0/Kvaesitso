@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_server_connected">سرور پخش متصل است</string>
+    <string name="au22_stremio_test_server">آزمایش سرور پخش</string>
+    <string name="au22_stremio_profiles">نمایه‌ها</string>
+    <string name="au22_stremio_profile_anonymous">ناشناس</string>
+    <string name="au22_stremio_profile_name">نام نمایه</string>
+</resources>

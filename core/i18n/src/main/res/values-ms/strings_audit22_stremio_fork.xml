@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_server_connected">Pelayan strim disambungkan</string>
+    <string name="au22_stremio_test_server">Uji pelayan strim</string>
+    <string name="au22_stremio_profiles">Profil</string>
+    <string name="au22_stremio_profile_anonymous">Tanpa nama</string>
+    <string name="au22_stremio_profile_name">Nama profil</string>
+</resources>

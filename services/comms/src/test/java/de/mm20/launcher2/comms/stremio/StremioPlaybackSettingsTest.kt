@@ -17,4 +17,7 @@ class StremioPlaybackSettingsTest {
         assertEquals(20L * 1024 * 1024 * 1024, StremioPlaybackSettings(cacheGb = 20).cacheBytes)
         assertEquals(listOf(1, 2, 5, 10, 20), StremioPlaybackSettings.cacheChoices)
     }
+    @Test fun libraryEpisodeNotificationsDefaultOn() {
+        assertTrue(StremioPlaybackSettings().notifyNewEpisodes)
+    }
 }

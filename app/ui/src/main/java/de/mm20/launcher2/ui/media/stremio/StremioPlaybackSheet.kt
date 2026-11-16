@@ -69,6 +69,8 @@ internal fun StremioPlaybackSheet(cacheOnly: Boolean = false, onDismiss: () -> U
                         }, onValueChanged = { settings = s.copy(maxSizeGb = it) })
                     SwitchPreference(title = stringResource(I18nR.string.stremio_hide_screeners), value = s.hideScreeners,
                         onValueChanged = { settings = s.copy(hideScreeners = it) })
+                    SwitchPreference(title = stringResource(I18nR.string.au22_stremio_notify_episodes), value = s.notifyNewEpisodes,
+                        onValueChanged = { settings = s.copy(notifyNewEpisodes = it) })
 
                 }
             }

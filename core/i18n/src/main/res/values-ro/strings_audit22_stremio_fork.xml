@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_server_connected">Serverul de streaming este conectat</string>
+    <string name="au22_stremio_test_server">Testează serverul de streaming</string>
+    <string name="au22_stremio_profiles">Profiluri</string>
+    <string name="au22_stremio_profile_anonymous">Anonim</string>
+    <string name="au22_stremio_profile_name">Numele profilului</string>
+</resources>

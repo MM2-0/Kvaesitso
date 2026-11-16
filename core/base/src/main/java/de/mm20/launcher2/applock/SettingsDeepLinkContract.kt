@@ -30,6 +30,10 @@ object SettingsDeepLinkContract {
     const val ROUTE_STREMIO = "settings/stremio"
     /** Add-on manifest URL or stremio:// link to install in Stremio Fork */
     const val EXTRA_STREMIO_ADDON = "de.mm20.launcher2.settings.STREMIO_ADDON"
+    /** Content type from a `stremio:///detail/{type}/{id}` deep link */
+    const val EXTRA_STREMIO_DETAIL_TYPE = "de.mm20.launcher2.settings.STREMIO_DETAIL_TYPE"
+    /** Content id from a `stremio:///detail/{type}/{id}` deep link */
+    const val EXTRA_STREMIO_DETAIL_ID = "de.mm20.launcher2.settings.STREMIO_DETAIL_ID"
     /** Telos Media: music, radio, video and TV spaces in one app */
     const val ROUTE_MEDIA = "settings/media_hub"
     /** Space to open in Telos Media: music, radio, video or tv (default: the last used one) */

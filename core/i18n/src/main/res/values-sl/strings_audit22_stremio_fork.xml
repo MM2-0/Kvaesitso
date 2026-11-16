@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_server_connected">Pretočni strežnik povezan</string>
+    <string name="au22_stremio_test_server">Preizkusi pretočni strežnik</string>
+    <string name="au22_stremio_profiles">Profili</string>
+    <string name="au22_stremio_profile_anonymous">Anonimno</string>
+    <string name="au22_stremio_profile_name">Ime profila</string>
+</resources>
