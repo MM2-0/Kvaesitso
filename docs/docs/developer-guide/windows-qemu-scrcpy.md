@@ -4,52 +4,61 @@ sidebar_position: 9
 
 # TelosAndroidVm (QEMU + scrcpy)
 
-`tools/windows-qemu-android/` boots BlissOS x86_64 in **headless QEMU** and shows it with **scrcpy**. Closing scrcpy runs `adb shell reboot -p` and stops QEMU. Encrypted userdata lives in `images/android-data.qcow2` and is **never** deleted by an ISO or wrapper update.
+User-facing install and per-distro packages: **[TelosAndroidVm](/docs/user-guide/telos/android-vm)**.
 
-`:app:app` must not depend on this tree. Vendor ISOs and Windows QEMU binaries are gitignored. This is separate from [`:desktop-linux`](./desktop-linux).
+`tools/windows-qemu-android/` boots BlissOS x86_64 in **headless QEMU** (`-display none`) and shows it with **scrcpy**. Closing scrcpy runs `adb shell reboot -p` and stops QEMU. Encrypted userdata is `images/android-data.qcow2` and is **never** deleted by a wrapper or opt-in ISO update.
+
+`:app:app` must not depend on this tree. This is separate from [`:desktop-linux`](./desktop-linux). Vendor ISOs and Windows QEMU bits are gitignored.
+
+## Layout
+
+| Path | Role |
+| --- | --- |
+| `telos_android_vm.py` | Linux KVM / macOS Apple Silicon runner (system qemu, scrcpy, adb) |
+| `src/TelosAndroidVm/` | Windows `TelosAndroidVm.exe` (WHPX → HAXM → TCG) |
+| `blissos.lock.json` | Pinned official FOSS Generic x86_64 ISO |
+| `blissos_catalog.py` | SourceForge RSS catalog, SHA-256, opt-in replace ISO |
+| `scripts/first-boot-lock.sh` | SUW + lockscreen after `boot_completed` |
+| `overlay/` | FBE/SUW props injected into initrd when patching |
+| `tests/test_blissos_catalog.py` | Filename/RSS/lock unit tests |
 
 ## Hosts
 
 | Host | Runner | Acceleration | Guest |
 | --- | --- | --- | --- |
 | Windows x64 | `TelosAndroidVm.exe` | WHPX → HAXM → TCG | BlissOS x86_64 |
-| Linux x86_64 | `python3 telos_android_vm.py` | **KVM** (`-cpu host`) → TCG | BlissOS x86_64 |
-| macOS Apple Silicon | `python3 telos_android_vm.py` | TCG (x86_64 guest; HVF does not run a foreign architecture) | BlissOS x86_64 |
+| Linux x86_64 | `python3 telos_android_vm.py` | KVM + `-cpu host` → TCG | BlissOS x86_64 |
+| macOS Apple Silicon | `python3 telos_android_vm.py` | TCG (`thread=multi`, `-cpu max`) | BlissOS x86_64 |
 
-Intel macOS is unsupported. Linux uses distro `qemu-system-x86_64`, `scrcpy`, and `adb` (no Windows QEMU tree). macOS ARM: `brew install qemu scrcpy android-platform-tools`.
+Intel macOS is unsupported. Linux/macOS never unpack `qemu-w64-setup.exe`.
+
+## BlissOS pin and update
+
+Catalog channels: `Official/BlissOS16|17|18/FOSS/Generic`. Accepted names: `Bliss-v*-x86_64-OFFICIAL-foss-*.iso` only.
+
+```bash
+python3 blissos_catalog.py --check
+python3 blissos_catalog.py --update
+python3 telos_android_vm.py --update-bliss
+TelosAndroidVm.exe --update-bliss
+```
+
+`--yes` skips the prompt. A major version jump warns that `/data` may not unlock; the qcow2 is still kept. SHA-256 comes from the SourceForge sidecar. Old ISO → `blissos-x86_64.iso.bak`. Re-run `patch-android-boot.sh` after a new ISO.
+
+## First boot
+
+Kernel append / overlay: `SETUPWIZARD=1 DATA=vda ENCRYPT=1`. `first-boot-lock.sh` keeps SUW enabled and `locksettings set-disabled false`. The user sets PIN/pattern/password in the wizard.
 
 ## Resources
 
-- RAM 1 GiB, 2 SMP cores.
-- ADB: `hostfwd=tcp:127.0.0.1:5555-:5555`.
-- Disk: growable QCOW2, 16 GiB virtual (`images/android-data.qcow2`).
+- RAM 1 GiB, 2 SMP, ADB `127.0.0.1:5555`.
 - scrcpy: `--window-borderless --stay-awake --push-target /sdcard/Download`.
 
-## BlissOS pin and opt-in update
-
-`blissos.lock.json` pins the official FOSS Generic x86_64 ISO (currently 16.9.7). BlissOS is not publishing newer official images; the catalog still polls SourceForge RSS for `Official/BlissOS16|17|18/FOSS/Generic` and accepts only `Bliss-v*-x86_64-OFFICIAL-foss-*.iso` (no GApps, Go, Surface, unofficial).
-
-```bash
-python3 blissos_catalog.py --check          # latest vs lock
-python3 blissos_catalog.py --update         # prompt; keeps qcow2
-python3 telos_android_vm.py --update-bliss  # same, then boot
-TelosAndroidVm.exe --update-bliss           # Windows MessageBox
-```
-
-`--yes` skips the prompt (automation). A **major** version jump (16 → 17) asks a second time: the qcow2 is still kept, but `/data` may not unlock. SHA-256 is verified from the SourceForge `.sha256` sidecar before the ISO is renamed to `blissos-x86_64.iso`; the previous ISO becomes `blissos-x86_64.iso.bak`.
-
-## First boot (SUW + encryption)
-
-`patch-android-boot.sh` / kernel append: `SETUPWIZARD=1 DATA=vda ENCRYPT=1`. Overlay props request FBE. After boot, `scripts/first-boot-lock.sh` keeps the Setup Wizard enabled. The user sets PIN/pattern/password; that credential unwraps CE keys on later boots.
-
-## Build
+## Checks
 
 ```bash
 cd tools/windows-qemu-android
-./fetch-toolchain.sh          # ISO; Windows QEMU/scrcpy zips only on Windows
-./prepare-qcow2.sh
 python3 tests/test_blissos_catalog.py
-# Windows wrapper (cross-publish from Linux):
+python3 blissos_catalog.py --check
 dotnet publish src/TelosAndroidVm/TelosAndroidVm.csproj -c Release -r win-x64 --self-contained true -o .
-python3 telos_android_vm.py   # Linux / macOS ARM
 ```

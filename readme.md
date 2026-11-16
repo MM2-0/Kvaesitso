@@ -53,6 +53,7 @@ The documentation site is published via GitHub Pages at <https://koukomin.github
 - [Languages](#languages)
 - [Honest status](#honest-status)
 - [Planned](#planned)
+- [TelosAndroidVm](#telosandroidvm)
 - [Build](#build)
 - [Contributing](#contributing)
 - [Credits](#credits) and [Projects Telos is based on](#projects-telos-is-based-on)
@@ -1243,6 +1244,26 @@ Some features are new and not tested on every device. This is what the project's
 | **Debug and nightly builds only** | Feed and the Smartspacer integration |
 | **Disabled or hidden in this build** | Extra home screens, the Favorites widget in the picker, fallback icon pack setting, Dynamic Island timer (no source) |
 
+## TelosAndroidVm
+
+Portable **BlissOS x86_64** guest: headless QEMU, window is **scrcpy**. Encrypted userdata is `images/android-data.qcow2` and survives wrapper and opt-in ISO updates. Not the APK and not Telos Desktop.
+
+| Host | Start | Acceleration |
+| --- | --- | --- |
+| Windows 10/11 x64 | `TelosAndroidVm.exe` | WHPX → HAXM → TCG |
+| Linux x86_64 | `python3 telos_android_vm.py` | KVM + host CPU |
+| macOS Apple Silicon | `python3 telos_android_vm.py` | TCG (x86_64 guest) |
+
+Intel Macs are unsupported. Step-by-step packages for Debian/Ubuntu, Fedora/RHEL/openSUSE, Arch, Gentoo, Windows Hypervisor Platform, and Homebrew: [user guide](docs/docs/user-guide/telos/android-vm.md) (Pages: [TelosAndroidVm](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/android-vm)).
+
+```bash
+cd tools/windows-qemu-android
+./fetch-toolchain.sh && ./prepare-qcow2.sh && ./patch-android-boot.sh
+python3 telos_android_vm.py                    # Linux / macOS ARM
+python3 blissos_catalog.py --update            # opt-in ISO; keeps the qcow2
+# Windows: .\TelosAndroidVm.exe   and   .\TelosAndroidVm.exe --update-bliss
+```
+
 ## Planned
 
 - SIP: text messages, video and Bluetooth routing, and Android Telecom integration (SIP calls are
@@ -1300,7 +1321,7 @@ adapted, the original license is respected.
 | [libarchive](https://libarchive.org) with [libarchive-android](https://github.com/zhanghai/libarchive-android) | BSD-2-Clause, Apache-2.0 | RAR and RAR5 reading in Telos Files (standard version only, prebuilt library, used unchanged) |
 | [Kvaesitso](https://github.com/MM2-0/Kvaesitso) | GPL-3.0 | The whole launcher, plugin SDK and architecture |
 | [Compose Multiplatform](https://github.com/JetBrains/compose-multiplatform) | Apache-2.0 | JVM desktop shell in `:desktop-linux` only (not packaged in the Android APK) |
-| [QEMU](https://www.qemu.org/) + [scrcpy](https://github.com/Genymobile/scrcpy) + [BlissOS](https://blissos.org/) | GPL-2.0 / Apache-2.0 / Apache-2.0 | Optional portable Windows guest runner in `tools/windows-qemu-android/` (gitignored vendor binaries; not in the APK) |
+| [QEMU](https://www.qemu.org/) + [scrcpy](https://github.com/Genymobile/scrcpy) + [BlissOS](https://blissos.org/) | GPL-2.0 / Apache-2.0 / Apache-2.0 | Optional TelosAndroidVm guest (`tools/windows-qemu-android/`) on Windows, Linux KVM, and Apple Silicon; gitignored vendor ISO/binaries; not in the APK |
 | [BreezeX_Cursor](https://github.com/ful1e5/BreezeX_Cursor) / [Bibata_Cursor](https://github.com/ful1e5/Bibata_Cursor) | GPL-3.0-or-later | Optional Telos Desktop XCursor theme downloads (not bundled; user-initiated) |
 | [Papirus](https://github.com/PapirusDevelopmentTeam/papirus-icon-theme) / [Tela](https://github.com/vinceliuice/Tela-icon-theme) / [candy-icons](https://github.com/EliverLara/candy-icons) | GPL-3.0 | Optional Telos Desktop icon-theme catalog downloads (not bundled); CandyCyber chrome glyphs are Telos originals |
 | [QUIK](https://github.com/quik-sms/quik) | GPL-3.0 | Ideas for Telos Messages: pin, archive, delayed send, any-file attachments, speech-to-text (written in Compose, no QUIK code copied) |

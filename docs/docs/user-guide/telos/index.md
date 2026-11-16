@@ -9,6 +9,7 @@ gallery, music, video and radio players, an app store and an app freezer.
 - [**The launcher**](./launcher/) is search, home screen, widgets, icons and themes (inherited from Kvaesitso).
 - **The Telos apps** are added on top. Each one has its own page below.
 - [**Telos Desktop**](./linux-desktop) is a separate JVM shell (`:desktop-linux`), not in the APK — Linux session + Windows setup `.exe` / portable zip (macOS later).
+- [**TelosAndroidVm**](./android-vm) is a portable BlissOS QEMU + scrcpy guest (Windows / Linux / Apple Silicon), not in the APK.
 :::
 
 ## ✨ Built-in apps
@@ -38,6 +39,7 @@ gallery, music, video and radio players, an app store and an app freezer.
 <a href="./freeze/"><b>❄️ Smart Freeze</b><span>Freeze or hide apps through Shizuku, Dhizuku, root, Island or device owner</span></a>
 <a href="./media/"><b>🎬 Media</b><span>Listen / Watch / Live: music, radio, YouTube, TV, Stremio Fork</span></a>
 <a href="./linux-desktop"><b>🖥️ Telos Desktop</b><span>Linux session + Windows jar; vault as \$HOME on Linux</span></a>
+<a href="./android-vm"><b>📦 TelosAndroidVm</b><span>BlissOS in QEMU + scrcpy on Windows, Linux, and Apple Silicon</span></a>
 
 </div>
 

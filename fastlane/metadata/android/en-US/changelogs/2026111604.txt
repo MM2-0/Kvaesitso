@@ -1,0 +1,1 @@
+Document TelosAndroidVm for Windows, Linux (Debian, RPM, Arch, Gentoo) and Apple Silicon: KVM/WHPX/TCG, first-boot encryption, and opt-in BlissOS ISO updates that keep the encrypted data disk.

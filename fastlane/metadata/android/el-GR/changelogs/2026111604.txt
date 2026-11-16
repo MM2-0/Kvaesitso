@@ -1,0 +1,1 @@
+Οδηγίες TelosAndroidVm για Windows, Linux (Debian, RPM, Arch, Gentoo) και Apple Silicon: KVM/WHPX/TCG, κρυπτογράφηση στο πρώτο boot, και προαιρετικό update BlissOS χωρίς σβήσιμο του encrypted δίσκου.

@@ -104,6 +104,10 @@ features:
     title: Ermis
     details: IMAP/SMTP mail with TLS, conversations, drafts and optional Google/microG consent.
     link: /docs/user-guide/telos/ermis/
+  - icon: 📦
+    title: TelosAndroidVm
+    details: BlissOS in headless QEMU + scrcpy on Windows, Linux (KVM) and Apple Silicon. Encrypted guest disk survives opt-in ISO updates.
+    link: /docs/user-guide/telos/android-vm
   - icon: 🛡️
     title: Privacy and crash guard
     details: No tracking by default, and a crash guard that keeps the launcher usable if something goes wrong.
@@ -260,6 +264,7 @@ features:
   stop-and-back button. TV keeps a separate minimize action.
 - **Freeze Manager:** consistent snowflake/grayscale and icon packs, verified Disable/Suspend
   transitions, and actual-state scans with Unfreeze all / Freeze again for saved user/system groups.
+- **TelosAndroidVm:** portable BlissOS guest (QEMU + scrcpy) on Windows, Linux KVM, and Apple Silicon, with opt-in ISO updates that keep the encrypted data disk. [Guide](/docs/user-guide/telos/android-vm).
 - **Store:** opt-in frozen-app updates with durable restoration and streaming Shizuku/root installs.
   Published source artwork is shown for uninstalled apps, and full installer failures are readable.
   Plain Device Admin is insufficient; Device Owner supports only states it can restore.
