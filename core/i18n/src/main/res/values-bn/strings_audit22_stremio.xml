@@ -38,4 +38,13 @@
     
     
 
+    <string name="au22_stremio_discover">আবিষ্কার</string>
+    <string name="au22_stremio_type_movie">সিনেমা</string>
+    <string name="au22_stremio_type_series">সিরিজ</string>
+    <string name="au22_stremio_sort_popular">জনপ্রিয়</string>
+    <string name="au22_stremio_sort_new">নতুন</string>
+    <string name="au22_stremio_sort_trending">ট্রেন্ডিং</string>
+    <string name="au22_stremio_sort_featured">নির্বাচিত</string>
+    <string name="au22_stremio_sort_trakt">Trakt</string>
+    <string name="au22_stremio_genre_all">সব ধরন</string>
 </resources>

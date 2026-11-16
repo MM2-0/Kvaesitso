@@ -38,4 +38,13 @@
     
     
 
+    <string name="au22_stremio_discover">Otkrij</string>
+    <string name="au22_stremio_type_movie">Filmovi</string>
+    <string name="au22_stremio_type_series">Serije</string>
+    <string name="au22_stremio_sort_popular">Popularno</string>
+    <string name="au22_stremio_sort_new">Novo</string>
+    <string name="au22_stremio_sort_trending">U trendu</string>
+    <string name="au22_stremio_sort_featured">Istaknuto</string>
+    <string name="au22_stremio_sort_trakt">Trakt</string>
+    <string name="au22_stremio_genre_all">Svi žanrovi</string>
 </resources>

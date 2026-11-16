@@ -38,4 +38,13 @@
     
     
 
+    <string name="au22_stremio_discover">发现</string>
+    <string name="au22_stremio_type_movie">电影</string>
+    <string name="au22_stremio_type_series">剧集</string>
+    <string name="au22_stremio_sort_popular">热门</string>
+    <string name="au22_stremio_sort_new">最新</string>
+    <string name="au22_stremio_sort_trending">趋势</string>
+    <string name="au22_stremio_sort_featured">精选</string>
+    <string name="au22_stremio_sort_trakt">Trakt</string>
+    <string name="au22_stremio_genre_all">全部类型</string>
 </resources>

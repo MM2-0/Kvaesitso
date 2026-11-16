@@ -178,6 +178,48 @@ class StremioViewModel : ViewModel(), KoinComponent {
         viewModelScope.launch { store.refresh() }
     }
 
+    private val _discover = MutableStateFlow<List<MetaPreview>?>(null)
+    val discover: StateFlow<List<MetaPreview>?> get() = _discover
+    private var discoverJob: Job? = null
+
+    fun loadDiscover(
+        type: String,
+        sort: String,
+        genre: String?,
+        year: String?,
+        traktOnly: Boolean,
+    ) {
+        discoverJob?.cancel()
+        _discover.value = null
+        discoverJob = viewModelScope.launch {
+            val extra = linkedMapOf<String, String>()
+            if (!genre.isNullOrBlank() && genre != "All") extra["genre"] = genre
+            if (!year.isNullOrBlank() && year != "All") extra["year"] = year
+            val items = ArrayList<MetaPreview>()
+            val seen = HashSet<String>()
+            for (addon in addons.value) {
+                if (traktOnly && !addon.manifest.id.contains("trakt", true) && !addon.manifest.name.contains("trakt", true)) continue
+                val catalogs = addon.manifest.catalogs.filter { it.type == type }
+                val chosen = pickDiscoverCatalog(catalogs, sort) ?: catalogs.firstOrNull() ?: continue
+                val extras = extra.filterKeys { key -> chosen.extras.any { it.name == key } }
+                val page = runCatching { client.catalog(addon, chosen, extras) }.getOrDefault(emptyList())
+                for (m in page) if (seen.add(m.id)) items += m
+            }
+            _discover.value = items
+        }
+    }
+
+    fun discoverGenres(type: String): List<String> {
+        val names = LinkedHashSet<String>()
+        for (addon in addons.value) {
+            for (c in addon.manifest.catalogs) {
+                if (c.type != type) continue
+                c.extras.filter { it.name == "genre" }.flatMap { it.options }.forEach { names += it }
+            }
+        }
+        return names.toList()
+    }
+
     // ---- home and search ----
 
     private val _rows = MutableStateFlow<List<CatalogRow>>(emptyList())
@@ -195,6 +237,18 @@ class StremioViewModel : ViewModel(), KoinComponent {
 
     init {
         viewModelScope.launch { store.addons.collect { loadHome(it) } }
+    }
+
+    private fun pickDiscoverCatalog(catalogs: List<AddonCatalog>, sort: String): AddonCatalog? {
+        fun hit(c: AddonCatalog, vararg keys: String) =
+            keys.any { k -> c.id.contains(k, true) || c.name.contains(k, true) }
+        return when (sort) {
+            "popular" -> catalogs.firstOrNull { hit(it, "popular", "top", "imdb") }
+            "new" -> catalogs.firstOrNull { hit(it, "new", "year", "added", "latest", "calendar") }
+            "trending" -> catalogs.firstOrNull { hit(it, "trending", "trend") }
+            "featured" -> catalogs.firstOrNull { hit(it, "featured", "board", "top") }
+            else -> catalogs.firstOrNull()
+        } ?: catalogs.firstOrNull()
     }
 
     private fun rowKey(a: Addon, c: AddonCatalog) = "${a.baseUrl}|${c.type}|${c.id}"

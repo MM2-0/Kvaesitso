@@ -38,4 +38,13 @@
     
     
 
+    <string name="au22_stremio_discover">Descoperă</string>
+    <string name="au22_stremio_type_movie">Filme</string>
+    <string name="au22_stremio_type_series">Seriale</string>
+    <string name="au22_stremio_sort_popular">Populare</string>
+    <string name="au22_stremio_sort_new">Noi</string>
+    <string name="au22_stremio_sort_trending">Tendințe</string>
+    <string name="au22_stremio_sort_featured">Recomandate</string>
+    <string name="au22_stremio_sort_trakt">Trakt</string>
+    <string name="au22_stremio_genre_all">Toate genurile</string>
 </resources>

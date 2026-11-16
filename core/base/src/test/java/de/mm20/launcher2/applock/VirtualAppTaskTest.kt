@@ -42,7 +42,7 @@ class VirtualAppTaskTest {
     }
 
     @Test fun mediaAndViewerAliasesReuseTheirAppTask() {
-        for (route in listOf(contract.ROUTE_MEDIA, contract.ROUTE_MUSIC, contract.ROUTE_RADIO, contract.ROUTE_VIDEO, contract.ROUTE_TV))
+        for (route in listOf(contract.ROUTE_MEDIA, contract.ROUTE_MUSIC, contract.ROUTE_RADIO, contract.ROUTE_VIDEO, contract.ROUTE_TV, contract.ROUTE_STREMIO))
             assertEquals("media", contract.virtualAppTaskId(route))
         assertEquals(contract.virtualAppTaskId(contract.ROUTE_VIEWER), contract.virtualAppTaskId(contract.ROUTE_PHOTOS))
     }

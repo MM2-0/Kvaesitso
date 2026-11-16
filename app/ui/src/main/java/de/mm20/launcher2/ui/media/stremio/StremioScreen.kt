@@ -53,6 +53,7 @@ import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -91,7 +92,7 @@ import de.mm20.launcher2.ui.media.MediaFrame
  * is not affiliated with Stremio. Telos ships no add-on; what an add-on offers is the add-on's responsibility.
  */
 @Composable
-fun StremioScreen() {
+fun StremioScreen(initialAddon: String? = null, addonRequestId: Long = 0L) {
     val vm: StremioViewModel = viewModel()
     val accepted by vm.noticeAccepted.collectAsStateWithLifecycle()
     val addons by vm.addons.collectAsStateWithLifecycle()
@@ -108,11 +109,12 @@ fun StremioScreen() {
     var showTrakt by remember { mutableStateOf(false) }
     val email by vm.accountEmail.collectAsStateWithLifecycle()
     val context = LocalContext.current
-    androidx.compose.runtime.LaunchedEffect(email) {
-        if (email == null) {
-            showAccount = false
-            showAddons = false
-        }
+    androidx.compose.runtime.LaunchedEffect(addonRequestId, initialAddon) {
+        val url = initialAddon?.trim().orEmpty()
+        if (url.isBlank()) return@LaunchedEffect
+        vm.acceptNotice(false)
+        showAddons = true
+        vm.addAddon(url) { }
     }
     val lifecycle = androidx.lifecycle.compose.LocalLifecycleOwner.current.lifecycle
     androidx.compose.runtime.DisposableEffect(lifecycle, vm) {
@@ -132,6 +134,9 @@ fun StremioScreen() {
         confirmButton = { TextButton(onClick = { showNetworkRules = false }) { Text(stringResource(I18nR.string.hc_close)) } },
     )
     MediaFrame(stringResource(I18nR.string.au22_stremio_label), actions = {
+        if (accepted) IconButton(onClick = { showAddons = true }) {
+            Icon(painterResource(BaseR.drawable.extension_24px), contentDescription = stringResource(I18nR.string.au22_stremio_addons))
+        }
         Box {
             IconButton(onClick = { showActions = true }) {
                 Icon(painterResource(BaseR.drawable.more_vert_24px), contentDescription = stringResource(I18nR.string.hc_more))
@@ -157,7 +162,7 @@ fun StremioScreen() {
                     text = { Text(stringResource(I18nR.string.au7_trakt_title)) },
                     onClick = { showActions = false; showTrakt = true },
                 )
-                if (accepted && email != null) androidx.compose.material3.DropdownMenuItem(
+                if (accepted) androidx.compose.material3.DropdownMenuItem(
                     text = { Text(stringResource(I18nR.string.au22_stremio_addons)) },
                     onClick = { showActions = false; showAddons = true },
                 )
@@ -166,10 +171,6 @@ fun StremioScreen() {
     }) {
         Box(Modifier.fillMaxSize()) {
             when {
-                email == null -> Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(16.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                    Text(stringResource(I18nR.string.au22_stremio_fork_intro), style = MaterialTheme.typography.bodyLarge)
-                    AccountSection(vm)
-                }
                 !accepted -> NoticeCard(onAccept = { installDefaults -> vm.acceptNotice(installDefaults) })
                 addons.isEmpty() -> EmptyAddons(vm)
                 else -> StremioHome(vm)
@@ -185,7 +186,7 @@ fun StremioScreen() {
         showTrakt = false
         vm.refreshAccounts(context, force = true)
     }
-    if (showAddons && email != null) AddonsSheet(vm, onDismiss = { showAddons = false })
+    if (showAddons && accepted) AddonsSheet(vm, onDismiss = { showAddons = false })
     streams?.let { s -> StreamsSheet(vm, s) }
 }
 
@@ -274,10 +275,16 @@ private fun NoticeCard(onAccept: (Boolean) -> Unit) {
 
 @Composable
 private fun EmptyAddons(vm: StremioViewModel) {
+    var showDirectory by remember { mutableStateOf(false) }
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
         Text(stringResource(I18nR.string.au22_stremio_empty), style = MaterialTheme.typography.bodyLarge)
         AddAddonForm(vm, showSuggestion = true)
+        OutlinedButton(onClick = { showDirectory = true; vm.loadDirectory() }, modifier = Modifier.fillMaxWidth()) {
+            Text(stringResource(I18nR.string.au22_stremio_directory))
+        }
+        AccountSection(vm)
     }
+    if (showDirectory) DirectorySheet(vm, onDismiss = { showDirectory = false })
 }
 
 @Composable
@@ -412,6 +419,7 @@ private fun StremioHome(vm: StremioViewModel) {
                     }
                 }
             }
+            3 -> StremioDiscover(vm)
             else -> {
                 StremioWatchedCalendar(vm = vm, history = history)
             }
@@ -491,6 +499,7 @@ internal fun StremioBrowseControls(
             Row(Modifier.weight(1f).horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 FilterChip(selected = tab == 0, onClick = { onTab(0) }, label = { Text(stringResource(I18nR.string.au22_stremio_home)) }, shape = MaterialTheme.shapes.large)
                 FilterChip(selected = tab == 1, onClick = { onTab(1) }, label = { Text(stringResource(I18nR.string.au22_stremio_library)) }, shape = MaterialTheme.shapes.large)
+                FilterChip(selected = tab == 3, onClick = { onTab(3) }, label = { Text(stringResource(I18nR.string.au22_stremio_discover)) }, shape = MaterialTheme.shapes.large)
                 FilterChip(selected = tab == 2, onClick = { onTab(2) }, label = { Text("Calendar / History") }, shape = MaterialTheme.shapes.large)
             }
             if (tab == 0) de.mm20.launcher2.ui.media.MediaSearchAction(searchExpanded, query.isNotBlank()) {
@@ -525,6 +534,78 @@ internal fun StremioBrowseControls(
             }
             de.mm20.launcher2.ui.media.MediaSearchBar(query, onQuery, stringResource(I18nR.string.au22_stremio_search_hint),
                 expanded = searchExpanded, onClose = { onQuery(""); onSearchExpanded(false) })
+        }
+    }
+}
+
+@Composable
+private fun StremioDiscover(vm: StremioViewModel) {
+    var type by rememberSaveable { mutableStateOf("movie") }
+    var sort by rememberSaveable { mutableStateOf("popular") }
+    var year by rememberSaveable { mutableStateOf("All") }
+    var genre by rememberSaveable { mutableStateOf("All") }
+    var traktOnly by rememberSaveable { mutableStateOf(false) }
+    val items by vm.discover.collectAsStateWithLifecycle()
+    val addons by vm.addons.collectAsStateWithLifecycle()
+    val genres = remember(type, addons) { vm.discoverGenres(type) }
+    LaunchedEffect(type, sort, year, genre, traktOnly) {
+        vm.loadDiscover(type, sort, genre, year, traktOnly)
+    }
+    Column(Modifier.fillMaxSize()) {
+        Row(
+            Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 4.dp).horizontalScroll(rememberScrollState()),
+            horizontalArrangement = Arrangement.spacedBy(6.dp),
+        ) {
+            listOf("movie" to I18nR.string.au22_stremio_type_movie, "series" to I18nR.string.au22_stremio_type_series).forEach { (id, res) ->
+                FilterChip(selected = type == id, onClick = { type = id }, label = { Text(stringResource(res)) }, shape = MaterialTheme.shapes.small)
+            }
+        }
+        Row(
+            Modifier.fillMaxWidth().padding(horizontal = 8.dp).horizontalScroll(rememberScrollState()),
+            horizontalArrangement = Arrangement.spacedBy(6.dp),
+        ) {
+            listOf("popular", "new", "trending", "featured").forEach { id ->
+                val label = when (id) {
+                    "new" -> I18nR.string.au22_stremio_sort_new
+                    "trending" -> I18nR.string.au22_stremio_sort_trending
+                    "featured" -> I18nR.string.au22_stremio_sort_featured
+                    else -> I18nR.string.au22_stremio_sort_popular
+                }
+                FilterChip(selected = sort == id, onClick = { sort = id }, label = { Text(stringResource(label)) }, shape = MaterialTheme.shapes.small)
+            }
+            FilterChip(selected = traktOnly, onClick = { traktOnly = !traktOnly }, label = { Text(stringResource(I18nR.string.au22_stremio_sort_trakt)) }, shape = MaterialTheme.shapes.small)
+        }
+        Row(
+            Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 4.dp).horizontalScroll(rememberScrollState()),
+            horizontalArrangement = Arrangement.spacedBy(6.dp),
+        ) {
+            (listOf("All") + (2026 downTo 2018).map { it.toString() }).forEach { y ->
+                FilterChip(selected = year == y, onClick = { year = y }, label = { Text(y) }, shape = MaterialTheme.shapes.small)
+            }
+        }
+        if (genres.isNotEmpty()) {
+            Row(
+                Modifier.fillMaxWidth().padding(horizontal = 8.dp).horizontalScroll(rememberScrollState()),
+                horizontalArrangement = Arrangement.spacedBy(6.dp),
+            ) {
+                FilterChip(selected = genre == "All", onClick = { genre = "All" }, label = { Text(stringResource(I18nR.string.au22_stremio_genre_all)) }, shape = MaterialTheme.shapes.small)
+                genres.take(24).forEach { g ->
+                    FilterChip(selected = genre == g, onClick = { genre = g }, label = { Text(g) }, shape = MaterialTheme.shapes.small)
+                }
+            }
+        }
+        val list = items
+        when {
+            list == null -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) { CircularProgressIndicator() }
+            list.isEmpty() -> Text(stringResource(I18nR.string.au22_stremio_no_results), modifier = Modifier.padding(16.dp))
+            else -> LazyVerticalGrid(
+                columns = GridCells.Adaptive(140.dp),
+                contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 112.dp),
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
+                verticalArrangement = Arrangement.spacedBy(14.dp),
+            ) {
+                gridItems(list, key = { it.id }) { m -> Poster(vm, m, onClick = { vm.open(m) }, fillWidth = true) }
+            }
         }
     }
 }

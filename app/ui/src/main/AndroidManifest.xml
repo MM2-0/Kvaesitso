@@ -295,6 +295,30 @@
             </intent-filter>
         </activity-alias>
 
+        <activity android:name=".media.stremio.StremioAddonLinkActivity"
+            android:exported="false" android:noHistory="true"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+        <activity-alias android:name=".media.stremio.StremioAddonLinkHandler"
+            android:targetActivity=".media.stremio.StremioAddonLinkActivity"
+            android:exported="true" android:label="@string/au22_stremio_label"
+            android:icon="@drawable/ic_app_stremio_full">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="stremio" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https" />
+                <data android:scheme="http" />
+                <data android:pathPattern=".*manifest.json" />
+                <data android:pathSuffix="manifest.json" />
+            </intent-filter>
+        </activity-alias>
+
         <!-- One document task per virtual app; Settings keeps its own normal task. -->
         <activity
             android:name=".settings.TelosAppActivity"

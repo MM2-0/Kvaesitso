@@ -38,4 +38,13 @@
     
     
 
+    <string name="au22_stremio_discover">찾아보기</string>
+    <string name="au22_stremio_type_movie">영화</string>
+    <string name="au22_stremio_type_series">시리즈</string>
+    <string name="au22_stremio_sort_popular">인기</string>
+    <string name="au22_stremio_sort_new">신규</string>
+    <string name="au22_stremio_sort_trending">트렌드</string>
+    <string name="au22_stremio_sort_featured">추천</string>
+    <string name="au22_stremio_sort_trakt">Trakt</string>
+    <string name="au22_stremio_genre_all">모든 장르</string>
 </resources>

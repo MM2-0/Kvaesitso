@@ -27,6 +27,15 @@
     <string name="au22_stremio_refresh">Ανανέωση</string>
     <string name="au22_stremio_fork_intro">Το Stremio Fork φέρνει τον λογαριασμό Stremio στο Telos Media: καταλόγους, ταινίες, σειρές, πρόσθετα και βιβλιοθήκη, με ενδείξεις παρακολούθησης από το Stremio και τον συνδεδεμένο λογαριασμό Trakt. Είναι ανεξάρτητος, ανεπίσημος πελάτης και δεν συνδέεται με το Stremio. Συνδεθείτε παρακάτω για να ξεκινήσετε.</string>
     <string name="au22_stremio_watched_sources">✓ Προβλήθηκε · %s</string>
+    <string name="au22_stremio_discover">Ανακάλυψη</string>
+    <string name="au22_stremio_type_movie">Ταινίες</string>
+    <string name="au22_stremio_type_series">Σειρές</string>
+    <string name="au22_stremio_sort_popular">Δημοφιλή</string>
+    <string name="au22_stremio_sort_new">Νέα</string>
+    <string name="au22_stremio_sort_trending">Τάσεις</string>
+    <string name="au22_stremio_sort_featured">Προτεινόμενα</string>
+    <string name="au22_stremio_sort_trakt">Trakt</string>
+    <string name="au22_stremio_genre_all">Όλα τα είδη</string>
 
     
     

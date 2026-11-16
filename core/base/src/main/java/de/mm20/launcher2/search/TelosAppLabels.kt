@@ -36,6 +36,7 @@ object TelosAppLabels {
         "telos_weather_app" -> I18nR.string.widget_name_weather
         "telos_trash_app" -> I18nR.string.telos_trash_title
         "telos_tv_app" -> I18nR.string.au12_tvui_title
+        "telos_stremio_app" -> I18nR.string.au22_stremio_label
         "telos_sync_app" -> I18nR.string.notes_sync_settings
         "telos_backup_app" -> I18nR.string.preference_backup
         "telos_keyboard_app" -> I18nR.string.settings_keyboard

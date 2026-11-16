@@ -38,4 +38,13 @@
     
     
 
+    <string name="au22_stremio_discover">Scopri</string>
+    <string name="au22_stremio_type_movie">Film</string>
+    <string name="au22_stremio_type_series">Serie</string>
+    <string name="au22_stremio_sort_popular">Popolari</string>
+    <string name="au22_stremio_sort_new">Nuovi</string>
+    <string name="au22_stremio_sort_trending">Di tendenza</string>
+    <string name="au22_stremio_sort_featured">In evidenza</string>
+    <string name="au22_stremio_sort_trakt">Trakt</string>
+    <string name="au22_stremio_genre_all">Tutti i generi</string>
 </resources>

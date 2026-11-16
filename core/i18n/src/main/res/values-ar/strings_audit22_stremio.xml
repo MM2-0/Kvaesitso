@@ -38,4 +38,13 @@
     
     
 
+    <string name="au22_stremio_discover">اكتشف</string>
+    <string name="au22_stremio_type_movie">أفلام</string>
+    <string name="au22_stremio_type_series">مسلسلات</string>
+    <string name="au22_stremio_sort_popular">شائع</string>
+    <string name="au22_stremio_sort_new">جديد</string>
+    <string name="au22_stremio_sort_trending">رائج</string>
+    <string name="au22_stremio_sort_featured">مميز</string>
+    <string name="au22_stremio_sort_trakt">Trakt</string>
+    <string name="au22_stremio_genre_all">كل الأنواع</string>
 </resources>

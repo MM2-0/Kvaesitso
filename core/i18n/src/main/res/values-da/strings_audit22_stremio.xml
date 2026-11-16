@@ -38,4 +38,13 @@
     
     
 
+    <string name="au22_stremio_discover">Opdag</string>
+    <string name="au22_stremio_type_movie">Film</string>
+    <string name="au22_stremio_type_series">Serier</string>
+    <string name="au22_stremio_sort_popular">Populære</string>
+    <string name="au22_stremio_sort_new">Nye</string>
+    <string name="au22_stremio_sort_trending">Trending</string>
+    <string name="au22_stremio_sort_featured">Udvalgte</string>
+    <string name="au22_stremio_sort_trakt">Trakt</string>
+    <string name="au22_stremio_genre_all">Alle genrer</string>
 </resources>

@@ -38,4 +38,13 @@
     
     
 
+    <string name="au22_stremio_discover">Objevovat</string>
+    <string name="au22_stremio_type_movie">Filmy</string>
+    <string name="au22_stremio_type_series">Seriály</string>
+    <string name="au22_stremio_sort_popular">Populární</string>
+    <string name="au22_stremio_sort_new">Nové</string>
+    <string name="au22_stremio_sort_trending">Trendy</string>
+    <string name="au22_stremio_sort_featured">Vybrané</string>
+    <string name="au22_stremio_sort_trakt">Trakt</string>
+    <string name="au22_stremio_genre_all">Všechny žánry</string>
 </resources>

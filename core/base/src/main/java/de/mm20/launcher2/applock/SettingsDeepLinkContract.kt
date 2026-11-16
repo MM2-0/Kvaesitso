@@ -26,6 +26,10 @@ object SettingsDeepLinkContract {
     const val ROUTE_VIDEO = "settings/video"
     /** Telos TV space inside Telos Media */
     const val ROUTE_TV = "settings/tv"
+    /** Stremio Fork space inside Telos Media */
+    const val ROUTE_STREMIO = "settings/stremio"
+    /** Add-on manifest URL or stremio:// link to install in Stremio Fork */
+    const val EXTRA_STREMIO_ADDON = "de.mm20.launcher2.settings.STREMIO_ADDON"
     /** Telos Media: music, radio, video and TV spaces in one app */
     const val ROUTE_MEDIA = "settings/media_hub"
     /** Space to open in Telos Media: music, radio, video or tv (default: the last used one) */
@@ -70,7 +74,7 @@ object SettingsDeepLinkContract {
     /** Stable identity for one Recents task per built-in app, independent of launch payload. */
     fun virtualAppTaskId(route: String?, commsTab: String? = null): String? = when (route) {
         ROUTE_COMMS -> if (commsTab == "messages") "messages" else "phone"
-        ROUTE_MEDIA, ROUTE_MUSIC, ROUTE_RADIO, ROUTE_VIDEO, ROUTE_TV, ROUTE_YOUTUBE, ROUTE_YOUTUBE_MUSIC -> "media"
+        ROUTE_MEDIA, ROUTE_MUSIC, ROUTE_RADIO, ROUTE_VIDEO, ROUTE_TV, ROUTE_STREMIO, ROUTE_YOUTUBE, ROUTE_YOUTUBE_MUSIC -> "media"
         ROUTE_PHOTOS, ROUTE_VIEWER -> "viewer"
         ROUTE_FILES -> "files"
         ROUTE_STORE -> "store"

@@ -165,6 +165,16 @@ object TelosApps {
             route = SettingsDeepLinkContract.ROUTE_TV,
         ),
         TelosApp(
+            key = "telos_stremio_app://stremio",
+            name = "Stremio Fork",
+            description = "Stremio add-ons, catalogs, movies and series inside Telos Media.",
+            features = listOf(
+                "Opens the Stremio Fork space", "Add-on directory and stremio:// links", "Discover filters",
+            ),
+            iconRes = de.mm20.launcher2.base.R.drawable.ic_app_stremio_full,
+            route = SettingsDeepLinkContract.ROUTE_STREMIO,
+        ),
+        TelosApp(
             key = "telos_viewer_app://viewer",
             name = "Viewer",
             description = "Your pictures and your documents in one app, as two tabs: a gallery and photo editor with a privacy focus, and a library and viewer for PDF, Word, Excel, PowerPoint, OpenDocument, text and e-books.",

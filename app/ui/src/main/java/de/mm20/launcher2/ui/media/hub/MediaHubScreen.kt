@@ -140,7 +140,7 @@ private enum class MediaSpace(
     Tv("tv", "telos_tv_app://tv", BaseR.drawable.ic_glyph_tv, I18nR.string.au12_tvui_space_tv),
     YouTube("youtube", "telos_youtube_app://youtube", BaseR.drawable.ic_glyph_youtube, I18nR.string.telos_youtube_label),
     YouTubeMusic("youtube_music", "telos_youtube_music_app://youtube_music", BaseR.drawable.ic_glyph_youtube_music, I18nR.string.telos_youtube_music_label),
-    Stremio("stremio", "telos_media_app://stremio", BaseR.drawable.theaters_24px, I18nR.string.au22_stremio_label),
+    Stremio("stremio", "telos_stremio_app://stremio", BaseR.drawable.ic_glyph_stremio, I18nR.string.au22_stremio_label),
 }
 
 private val MediaSpace.group: String get() = when (this) {
@@ -313,7 +313,10 @@ fun MediaHubScreen(initialSpace: String = "", initialLink: String? = null, linkR
                                     MediaSpace.Video -> VideoScreen()
                                     MediaSpace.YouTube -> de.mm20.launcher2.ui.media.youtube.YouTubeScreen(false, youtubeVm, initialLink.takeIf { initialSpace == "youtube" }, linkRequestId)
                                     MediaSpace.YouTubeMusic -> de.mm20.launcher2.ui.media.youtube.YouTubeScreen(true, youtubeVm, initialLink.takeIf { initialSpace == "youtube_music" }, linkRequestId)
-                                    MediaSpace.Stremio -> de.mm20.launcher2.ui.media.stremio.StremioScreen()
+                                    MediaSpace.Stremio -> de.mm20.launcher2.ui.media.stremio.StremioScreen(
+                                        initialAddon = initialLink.takeIf { initialSpace == "stremio" },
+                                        addonRequestId = linkRequestId,
+                                    )
                                 }
                             }
                         }

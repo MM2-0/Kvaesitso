@@ -38,4 +38,13 @@
     
     
 
+    <string name="au22_stremio_discover">Löydä</string>
+    <string name="au22_stremio_type_movie">Elokuvat</string>
+    <string name="au22_stremio_type_series">Sarjat</string>
+    <string name="au22_stremio_sort_popular">Suositut</string>
+    <string name="au22_stremio_sort_new">Uudet</string>
+    <string name="au22_stremio_sort_trending">Nousussa</string>
+    <string name="au22_stremio_sort_featured">Nostot</string>
+    <string name="au22_stremio_sort_trakt">Trakt</string>
+    <string name="au22_stremio_genre_all">Kaikki lajityypit</string>
 </resources>

@@ -44,7 +44,7 @@ val dataCommsModule = module {
     // One deserializer per virtual app domain, so pinned / docked virtual apps survive a reload.
     listOf(
         VirtualPhoneApp.Domain, VirtualMessagesApp.Domain, VirtualRadioApp.Domain,
-        VirtualMusicApp.Domain, VirtualVideoApp.Domain, VirtualTvApp.Domain,
+        VirtualMusicApp.Domain, VirtualVideoApp.Domain, VirtualTvApp.Domain, VirtualStremioApp.Domain,
         VirtualYouTubeApp.Domain, VirtualYouTubeMusicApp.Domain,
         VirtualFilesApp.Domain, VirtualCalculatorApp.Domain, VirtualVoiceRecorderApp.Domain,
         VirtualCameraApp.Domain, VirtualScreenRecorderApp.Domain, VirtualScreenshotApp.Domain, VirtualNotesApp.Domain,

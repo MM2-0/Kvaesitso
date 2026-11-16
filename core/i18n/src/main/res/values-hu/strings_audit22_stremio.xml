@@ -38,4 +38,13 @@
     
     
 
+    <string name="au22_stremio_discover">Felfedezés</string>
+    <string name="au22_stremio_type_movie">Filmek</string>
+    <string name="au22_stremio_type_series">Sorozatok</string>
+    <string name="au22_stremio_sort_popular">Népszerű</string>
+    <string name="au22_stremio_sort_new">Új</string>
+    <string name="au22_stremio_sort_trending">Felkapott</string>
+    <string name="au22_stremio_sort_featured">Kiemelt</string>
+    <string name="au22_stremio_sort_trakt">Trakt</string>
+    <string name="au22_stremio_genre_all">Minden műfaj</string>
 </resources>

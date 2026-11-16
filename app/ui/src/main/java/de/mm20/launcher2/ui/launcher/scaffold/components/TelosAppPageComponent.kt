@@ -63,6 +63,7 @@ internal object TelosPages {
         "telos_music_app://music" -> de.mm20.launcher2.ui.media.hub.MediaHubRoute("music")
         "telos_video_app://video" -> de.mm20.launcher2.ui.media.hub.MediaHubRoute("video")
         "telos_tv_app://tv" -> de.mm20.launcher2.ui.media.hub.MediaHubRoute("tv")
+        "telos_stremio_app://stremio" -> de.mm20.launcher2.ui.media.hub.MediaHubRoute("stremio")
         "telos_photos_app://photos" -> de.mm20.launcher2.ui.media.docs.ViewerRoute
         "telos_viewer_app://viewer" -> de.mm20.launcher2.ui.media.docs.ViewerRoute
         "telos_files_app://files" -> de.mm20.launcher2.ui.files.FilesRoute

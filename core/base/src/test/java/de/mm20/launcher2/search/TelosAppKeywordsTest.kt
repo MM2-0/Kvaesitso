@@ -28,6 +28,14 @@ class TelosAppKeywordsTest {
         assertFalse("τηλεόραση" in media)
         assertFalse("tileorasi" in media)
     }
+    @Test fun stremioForkIsSearchableAndDoesNotOpenAsMediaKeyword() {
+        val stremio = TelosAppKeywords.forDomain("telos_stremio_app")
+        for (name in listOf("stremio", "stremio fork", "addons", "στρέμιο"))
+            assertTrue(name, name in stremio)
+        val media = TelosAppKeywords.forDomain("telos_media_app")
+        assertFalse("stremio" in media)
+        assertFalse("stremio fork" in media)
+    }
     @Test fun futureVirtualAppsRetainTheTelosAliasWithoutCatalogRegistration() {
         val aliases = TelosAppKeywords.forKey("telos_future_feature_app://home")
         assertTrue("telos" in aliases)

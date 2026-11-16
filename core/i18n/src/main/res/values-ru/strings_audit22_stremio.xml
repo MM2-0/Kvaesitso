@@ -38,4 +38,13 @@
     
     
 
+    <string name="au22_stremio_discover">Обзор</string>
+    <string name="au22_stremio_type_movie">Фильмы</string>
+    <string name="au22_stremio_type_series">Сериалы</string>
+    <string name="au22_stremio_sort_popular">Популярное</string>
+    <string name="au22_stremio_sort_new">Новое</string>
+    <string name="au22_stremio_sort_trending">В тренде</string>
+    <string name="au22_stremio_sort_featured">Избранное</string>
+    <string name="au22_stremio_sort_trakt">Trakt</string>
+    <string name="au22_stremio_genre_all">Все жанры</string>
 </resources>

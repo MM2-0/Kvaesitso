@@ -80,7 +80,7 @@ The TV space plays live channels from the open [iptv-org](https://github.com/ipt
 
 ## Telos Media destinations
 
-The compact bar has Music, Radio, YouTube Music and Watch on the listen side, and Listen, Video, YouTube, TV and Stremio on the watch side. Each destination opens that space. Source chips in the toolbar still choose Music, YouTube Music, Video, YouTube, Stremio Fork, Radio or TV. Searching **TV**, **τηλεόραση** or Greeklish such as **tileorasi** opens Telos TV (the TV space), not Radio or the last Media space. Hiding the older Telos Music, Radio, Video or TV icons in the Store only removes those chips.
+The compact bar has Music, Radio, YouTube Music and Watch on the listen side, and Listen, Video, YouTube, TV and Stremio on the watch side. Each destination opens that space. Source chips in the toolbar still choose Music, YouTube Music, Video, YouTube, Stremio Fork, Radio or TV. Searching **TV**, **τηλεόραση** or Greeklish such as **tileorasi** opens Telos TV (the TV space), not Radio or the last Media space. Searching **Stremio** or **Stremio Fork** opens the **Stremio Fork** icon (Rondo disc) and the Stremio space, not TV or the last Media space. Hiding the older Telos Music, Radio, Video or TV icons in the Store only removes those chips.
 
 ## Notification controls
 
@@ -100,10 +100,12 @@ right to watch it where you live. Some add-ons use BitTorrent, which shows your 
 Streams of the torrent kind go through the same torrent player as Telos Video, so its Wi-Fi only setting and its VPN route apply.
 :::
 
-- **Add-ons:** the extension icon at the top opens the add-ons. Paste an add-on address (`https://…/manifest.json`) or a
-  `stremio://` link and tap **Add add-on**. A one-tap suggestion adds Cinemeta, Stremio's own metadata add-on; it is never
-  added without your tap, and we have not verified that its terms allow other clients, so check them if that matters to you.
-  Add-ons can be removed and refreshed (a new version may have new catalogs). Only addresses on the public internet are used.
+- **Add-ons:** the puzzle-piece button in the toolbar (also **Add-ons** in the menu) opens the list after the first notice,
+  with or without a Stremio account. Paste an add-on address (`https://…/manifest.json`) or a `stremio://` link and tap
+  **Add add-on**. Opening such a link from the browser offers **Stremio Fork** and installs it. **Browse add-ons** lists
+  community add-ons from installed `addon_catalog` directories and Stremio's public list. A one-tap suggestion adds Cinemeta.
+- **Discover:** movies or series, mixed with **Popular / New / Trending / Featured**, optional **Trakt** catalogs, **year**
+  and **genre** (genre and year are sent together when the add-on catalog accepts both extras).
 - **Home:** one row of posters for every catalog of every add-on (catalogs that need extra input are left out), with a search
   field that asks all searchable catalogs. **Continue watching** shows what you played last.
 - **Detail page:** artwork, year, runtime, rating, genres, description and cast. A movie has **Play**; a series has seasons

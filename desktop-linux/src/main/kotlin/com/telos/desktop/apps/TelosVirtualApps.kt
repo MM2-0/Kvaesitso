@@ -22,6 +22,7 @@ object TelosVirtualApps {
         TelosVirtualApp("telos_radio_app", "Radio", TelosAppCategory.AudioVideo, CandyIcon.Radio, "Media Player"),
         TelosVirtualApp("telos_video_app", "Video", TelosAppCategory.AudioVideo, CandyIcon.Monitor, "Media Player"),
         TelosVirtualApp("telos_media_app", "Media", TelosAppCategory.AudioVideo, CandyIcon.Volume, "Media Player"),
+        TelosVirtualApp("telos_stremio_app", "Stremio Fork", TelosAppCategory.AudioVideo, CandyIcon.Monitor, "Stremio Fork"),
         TelosVirtualApp("telos_notes_app", "Notes", TelosAppCategory.Office, CandyIcon.Notes, "Notes"),
         TelosVirtualApp("telos_calendar_app", "Calendar", TelosAppCategory.Office, CandyIcon.Calendar, "Calendar"),
         TelosVirtualApp("telos_calculator_app", "Calculator", TelosAppCategory.Utility, CandyIcon.Calculator, "Calculator"),

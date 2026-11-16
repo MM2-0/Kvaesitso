@@ -38,4 +38,13 @@
     
     
 
+    <string name="au22_stremio_discover">Keşfet</string>
+    <string name="au22_stremio_type_movie">Filmler</string>
+    <string name="au22_stremio_type_series">Diziler</string>
+    <string name="au22_stremio_sort_popular">Popüler</string>
+    <string name="au22_stremio_sort_new">Yeni</string>
+    <string name="au22_stremio_sort_trending">Trend</string>
+    <string name="au22_stremio_sort_featured">Öne çıkan</string>
+    <string name="au22_stremio_sort_trakt">Trakt</string>
+    <string name="au22_stremio_genre_all">Tüm türler</string>
 </resources>

@@ -38,4 +38,13 @@
     
     
 
+    <string name="au22_stremio_discover">खोजें</string>
+    <string name="au22_stremio_type_movie">फ़िल्में</string>
+    <string name="au22_stremio_type_series">सीरीज़</string>
+    <string name="au22_stremio_sort_popular">लोकप्रिय</string>
+    <string name="au22_stremio_sort_new">नया</string>
+    <string name="au22_stremio_sort_trending">ट्रेंडिंग</string>
+    <string name="au22_stremio_sort_featured">विशेष</string>
+    <string name="au22_stremio_sort_trakt">Trakt</string>
+    <string name="au22_stremio_genre_all">सभी विधाएँ</string>
 </resources>

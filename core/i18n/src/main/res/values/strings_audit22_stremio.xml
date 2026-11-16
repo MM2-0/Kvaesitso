@@ -41,4 +41,13 @@
     <string name="au22_stremio_directory_empty">No add-ons found</string>
     <string name="au22_stremio_fork_intro">Stremio Fork brings your Stremio account into Telos Media: browse catalogs, movies and series, use your add-ons and library, and see watched marks from Stremio and your connected Trakt account. This is an independent, unofficial client and is not affiliated with Stremio. Sign in below to get started.</string>
     <string name="au22_stremio_watched_sources">✓ Watched · %s</string>
+    <string name="au22_stremio_discover">Discover</string>
+    <string name="au22_stremio_type_movie">Movies</string>
+    <string name="au22_stremio_type_series">Series</string>
+    <string name="au22_stremio_sort_popular">Popular</string>
+    <string name="au22_stremio_sort_new">New</string>
+    <string name="au22_stremio_sort_trending">Trending</string>
+    <string name="au22_stremio_sort_featured">Featured</string>
+    <string name="au22_stremio_sort_trakt">Trakt</string>
+    <string name="au22_stremio_genre_all">All genres</string>
 </resources>

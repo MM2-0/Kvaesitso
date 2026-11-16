@@ -13,8 +13,12 @@ object TelosAppKeywords {
         "telos_phone_app" to listOf("dialer", "calls", "call", "contacts", "τηλέφωνο", "κλήσεις", "επαφές"),
         "telos_messages_app" to listOf("sms", "mms", "text", "chat", "μηνύματα"),
         "telos_media_app" to listOf(
-            "media", "hub", "music", "radio", "video", "player", "audio", "movies", "films", "songs", "stations", "mousiki", "tainies", "radiofono", "vinteo", "stremio", "stremio fork", "addons", "series",
+            "media", "hub", "music", "radio", "video", "player", "audio", "movies", "films", "songs", "stations", "mousiki", "tainies", "radiofono", "vinteo",
             "μέσα", "πολυμέσα", "μουσική", "ραδιόφωνο", "βίντεο", "ταινίες"
+        ),
+        "telos_stremio_app" to listOf(
+            "stremio", "stremio fork", "addons", "add-ons", "catalog", "torrentio", "cinemeta", "series", "movies",
+            "στρέμιο", "στρεμιο", "πρόσθετα", "σειρές", "ταινίες",
         ),
         "telos_tv_app" to listOf(
             "tv", "television", "tileorasi", "tileorash", "tileoras", "thleorasi", "iptv", "live tv", "kanalia", "stream", "channels",
@@ -65,6 +69,7 @@ object TelosAppKeywords {
         "telos_youtube_music_app" to "YouTube Music",
         "telos_video_app" to "video",
         "telos_tv_app" to "TV",
+        "telos_stremio_app" to "Stremio Fork",
         "telos_photos_app" to "photos",
         "telos_viewer_app" to "viewer",
         "telos_files_app" to "files",
