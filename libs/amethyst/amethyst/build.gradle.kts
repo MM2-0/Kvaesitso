@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.androidLibrary)
@@ -7,8 +8,13 @@ plugins {
     alias(libs.plugins.googleKsp)
 }
 
-val hostVersion = java.util.Properties().apply {
-    rootProject.file("../../version.properties").takeIf { it.isFile }?.inputStream()?.use { load(it) }
+val hostVersion = Properties().apply {
+    val versionFile = listOf(
+        rootProject.file("version.properties"),
+        rootProject.file("../../version.properties"),
+        file("../../version.properties"),
+    ).firstOrNull { it.isFile }
+    versionFile?.inputStream()?.use { load(it) }
 }
 
 android {
