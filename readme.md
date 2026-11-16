@@ -131,6 +131,9 @@ Phone settings expose Android’s caller-identification/blocking role on support
 
 Telos Keyboard setup offers both Android input settings and the input-method chooser. The IME installs Compose owners on its window, recreates input views safely, routes taps directly to its keys, uses numeric layouts for numeric editors and honors Search/Done/Send actions. Password/PIN and no-learning editors keep their privacy requirement independently of the manual incognito switch and clear transient word/clipboard state when editors change.
 
+Aether currently remains a local preview. Full Amethyst account management, settings and live Nostr integration are still pending.
+
+
 
 
 
