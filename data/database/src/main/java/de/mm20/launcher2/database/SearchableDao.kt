@@ -35,7 +35,7 @@ interface SearchableDao {
                 "WHERE (" +
                 "(:manuallySorted AND pinPosition > 1) OR " +
                 "(:automaticallySorted AND pinPosition = 1) OR " +
-                "(:frequentlyUsed AND pinPosition = 0 AND launchCount > 0) OR " +
+                "(:frequentlyUsed AND pinPosition = 0 AND launchCount > 0 AND excludeFromFrequentlyUsed = 0) OR " +
                 "(:unused AND pinPosition = 0 AND launchCount = 0)" +
                 ") AND (hidden <= :minVisibility AND hidden >= :maxVisibility) " +
                 "ORDER BY pinPosition DESC, weight DESC, launchCount DESC LIMIT :limit"
@@ -56,7 +56,7 @@ interface SearchableDao {
                 "(" +
                 "(:manuallySorted AND pinPosition > 1) OR " +
                 "(:automaticallySorted AND pinPosition = 1) OR " +
-                "(:frequentlyUsed AND pinPosition = 0 AND launchCount > 0) OR" +
+                "(:frequentlyUsed AND pinPosition = 0 AND launchCount > 0 AND excludeFromFrequentlyUsed = 0) OR" +
                 "(:unused AND pinPosition = 0 AND launchCount = 0)" +
                 ") AND (hidden <= :minVisibility AND hidden >= :maxVisibility) " +
                 "ORDER BY pinPosition DESC, weight DESC, launchCount DESC LIMIT :limit"
@@ -78,7 +78,7 @@ interface SearchableDao {
                 "(" +
                 "(:manuallySorted AND pinPosition > 1) OR " +
                 "(:automaticallySorted AND pinPosition = 1) OR " +
-                "(:frequentlyUsed AND pinPosition = 0 AND launchCount > 0) OR " +
+                "(:frequentlyUsed AND pinPosition = 0 AND launchCount > 0 AND excludeFromFrequentlyUsed = 0) OR " +
                 "(:unused AND pinPosition = 0 AND launchCount = 0)" +
                 ") AND (hidden <= :minVisibility AND hidden >= :maxVisibility) " +
                 "ORDER BY pinPosition DESC, weight DESC, launchCount DESC LIMIT :limit"
@@ -99,7 +99,7 @@ interface SearchableDao {
                 "WHERE (" +
                 "(:manuallySorted AND pinPosition > 1) OR " +
                 "(:automaticallySorted AND pinPosition = 1) OR " +
-                "(:frequentlyUsed AND pinPosition = 0 AND launchCount > 0) OR " +
+                "(:frequentlyUsed AND pinPosition = 0 AND launchCount > 0 AND excludeFromFrequentlyUsed = 0) OR " +
                 "(:unused AND pinPosition = 0 AND launchCount = 0)" +
                 ") AND (hidden <= :minVisibility AND hidden >= :maxVisibility) " +
                 "ORDER BY pinPosition DESC, weight DESC, launchCount DESC LIMIT :limit"
@@ -120,7 +120,7 @@ interface SearchableDao {
                 "(" +
                 "(:manuallySorted AND pinPosition > 1) OR " +
                 "(:automaticallySorted AND pinPosition = 1) OR" +
-                "(:frequentlyUsed AND pinPosition = 0 AND launchCount > 0) OR " +
+                "(:frequentlyUsed AND pinPosition = 0 AND launchCount > 0 AND excludeFromFrequentlyUsed = 0) OR " +
                 "(:unused AND pinPosition = 0 AND launchCount = 0)" +
                 ") AND (hidden <= :minVisibility AND hidden >= :maxVisibility) " +
                 "ORDER BY pinPosition DESC, weight DESC, launchCount DESC LIMIT :limit"
@@ -142,7 +142,7 @@ interface SearchableDao {
                 "(" +
                 "(:manuallySorted AND pinPosition > 1) OR " +
                 "(:automaticallySorted AND pinPosition = 1) OR " +
-                "(:frequentlyUsed AND pinPosition = 0 AND launchCount > 0) OR " +
+                "(:frequentlyUsed AND pinPosition = 0 AND launchCount > 0 AND excludeFromFrequentlyUsed = 0) OR " +
                 "(:unused AND pinPosition = 0 AND launchCount = 0)" +
                 ") AND (hidden <= :minVisibility AND hidden >= :maxVisibility) " +
                 "ORDER BY pinPosition DESC, weight DESC, launchCount DESC LIMIT :limit"
@@ -209,6 +209,12 @@ interface SearchableDao {
 
     @Query("SELECT pinPosition FROM Searchable WHERE `key` = :key UNION SELECT 0 as pinPosition ORDER BY pinPosition DESC LIMIT 1")
     fun isPinned(key: String): Flow<Boolean>
+
+    @Query("SELECT excludeFromFrequentlyUsed FROM Searchable WHERE `key` = :key UNION SELECT 0 as excludeFromFrequentlyUsed ORDER BY excludeFromFrequentlyUsed DESC LIMIT 1")
+    fun isExcludedFromFrequentlyUsed(key: String): Flow<Boolean>
+
+    @Query("SELECT * FROM Searchable WHERE excludeFromFrequentlyUsed = 1")
+    fun getExcludedFromFrequentlyUsed(): Flow<List<SavedSearchableEntity>>
 
     @Transaction
     suspend fun replace(key: String, item: SavedSearchableUpdateContentEntity) {
