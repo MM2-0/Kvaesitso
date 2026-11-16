@@ -98,7 +98,7 @@ features:
     link: /docs/user-guide/telos/freeze/
   - icon: 🎬
     title: Media
-    details: Listen, Watch and Live in one app — local files, YouTube, TV, Stremio Fork, NextLib decoders.
+    details: Listen, Watch and Live in one app — local files, YouTube, TV, Stremio Fork (deep links, calendar, continue watching), NextLib decoders.
     link: /docs/user-guide/telos/media/
   - icon: ✉️
     title: Ermis

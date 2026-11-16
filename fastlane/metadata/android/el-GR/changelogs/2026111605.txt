@@ -1,0 +1,1 @@
+Stremio Fork: deep links τίτλων, ρύθμιση add-on, πρόοδος continue watching, ημερολόγιο επεισοδίων, Άνοιγμα με / Λήψεις, τοπικά προφίλ και κατάσταση streaming server.

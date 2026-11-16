@@ -1,0 +1,1 @@
+Stremio Fork: detail deep links, add-on configuration, continue-watching progress, upcoming-episode calendar, Open with / Downloads, local profiles, and streaming-server status.

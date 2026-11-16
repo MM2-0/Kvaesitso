@@ -5,4 +5,25 @@
     <string name="au22_stremio_profiles">Profilak</string>
     <string name="au22_stremio_profile_anonymous">Anonimoa</string>
     <string name="au22_stremio_profile_name">Profilaren izena</string>
+<string name="au22_stremio_discover">Discover</string>
+<string name="au22_stremio_type_movie">Movies</string>
+<string name="au22_stremio_type_series">Series</string>
+<string name="au22_stremio_sort_popular">Popular</string>
+<string name="au22_stremio_sort_new">New</string>
+<string name="au22_stremio_sort_trending">Trending</string>
+<string name="au22_stremio_sort_featured">Featured</string>
+<string name="au22_stremio_sort_trakt">Trakt</string>
+<string name="au22_stremio_genre_all">All genres</string>
+<string name="au22_stremio_upcoming">Upcoming</string>
+<string name="au22_stremio_calendar">Calendar / History</string>
+<string name="au22_stremio_history">Watch history</string>
+<string name="au22_stremio_history_empty">No watch history recorded yet.</string>
+<string name="au22_stremio_watched_on">Watched on %s</string>
+<string name="au22_stremio_notify_episodes">Notify when a library episode airs</string>
+<string name="au22_stremio_episode_aired">New episode</string>
+<string name="au22_stremio_episode_aired_text">%1$s · %2$s</string>
+<string name="au22_stremio_remaining_min">%d min left</string>
+<string name="au22_stremio_remaining_hm">%1$d h %2$d min left</string>
+<string name="au22_stremio_percent">%d%%</string>
+<string name="au22_stremio_configure">Configure</string>
 </resources>
