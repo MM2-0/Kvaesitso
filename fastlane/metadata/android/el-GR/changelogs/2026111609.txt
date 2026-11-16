@@ -1,0 +1,1 @@
+Επαναφορά video wallpaper μετά από ενημέρωση. System → Μπαταρία: opt-in κλείσιμο GPS/data/mic με εξαιρέσεις Maps και κλήσεων.
