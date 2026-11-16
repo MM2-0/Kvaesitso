@@ -56,9 +56,18 @@ class KeyboardImeTest {
         automation.serviceInfo = oldInfo
         var scenario: ActivityScenario<ComponentActivity>? = null
         try {
-            shell("ime enable ${quote(ime)}")
-            shell("ime set ${quote(ime)}")
-            assertEquals(ime, shell("settings get secure default_input_method"))
+            val registered = shell("ime list -s")
+            assertTrue(
+                "Production IME is missing from the test APK: $registered",
+                registered.lines().any { it.trim() == ime },
+            )
+            val enabled = shell("ime enable ${quote(ime)}")
+            val selected = shell("ime set ${quote(ime)}")
+            assertEquals(
+                "$enabled; $selected",
+                ime,
+                shell("settings get secure default_input_method"),
+            )
             shell("settings put secure show_ime_with_hard_keyboard 1")
             val active = ActivityScenario.launch(ComponentActivity::class.java)
             scenario = active
@@ -109,6 +118,7 @@ class KeyboardImeTest {
                             target.exactCenterY(),
                             0,
                         )
+                    event.source = android.view.InputDevice.SOURCE_TOUCHSCREEN
                     try {
                         assertTrue(automation.injectInputEvent(event, true))
                     } finally {
