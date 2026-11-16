@@ -65,6 +65,8 @@ android {
         resources.excludes.add("META-INF/LGPL2.1")
         // Picnic (legacy post-quantum signatures) lookup tables: nothing in Telos uses Picnic
         resources.excludes.add("org/bouncycastle/pqc/legacy/picnic/**")
+        // Quartz/Amethyst pull protobuf-java while Telos uses protobuf-javalite.
+        resources.excludes.add("google/protobuf/**")
         // Extract .so files so the Shizuku starter can be exec'd from nativeLibraryDir
         // (libshizuku.so) and so youtubedl-android can run Python/FFmpeg from disk.
         jniLibs.useLegacyPackaging = true
