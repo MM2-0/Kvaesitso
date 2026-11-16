@@ -60,6 +60,8 @@ class KeyboardImeTest {
         automation.serviceInfo = oldInfo
         var scenario: ActivityScenario<ComponentActivity>? = null
         try {
+            shell("input keyevent KEYCODE_WAKEUP")
+            shell("wm dismiss-keyguard")
             val registered = shell("ime list -a -s")
             assertTrue(
                 "Production IME is missing from the test APK: $registered",
@@ -77,7 +79,12 @@ class KeyboardImeTest {
             scenario = active
             lateinit var editor: EditText
             active.onActivity { activity ->
-                editor = EditText(activity)
+                editor =
+                    EditText(activity).apply {
+                        inputType = android.text.InputType.TYPE_CLASS_TEXT
+                        showSoftInputOnFocus = true
+                    }
+                activity.window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
                 activity.setContentView(editor)
                 activity.window.setSoftInputMode(
                     WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
@@ -159,7 +166,37 @@ class KeyboardImeTest {
             awaitText("ασ")
         } catch (failure: Throwable) {
             val crashes = shell("logcat -d -b crash -t 60")
-            throw AssertionError("${failure.message}\nIME crash diagnostics:\n$crashes", failure)
+            val state =
+                shell("dumpsys input_method")
+                    .lineSequence()
+                    .filter { line ->
+                        listOf(
+                                "mCurMethod",
+                                "mInputShown",
+                                "mShowRequested",
+                                "mInputView",
+                                "mWindow",
+                                "mShowInput",
+                                "mInputStarted",
+                                "mInputEditorInfo",
+                                "mServed",
+                                "mCurClient",
+                                "mCurFocused",
+                                "mImeWindow",
+                                "mFocusedWindow",
+                            )
+                            .any(line::contains)
+                    }
+                    .joinToString("\n")
+            val windows =
+                automation.windows.joinToString("\n") { window ->
+                    val root = window.root
+                    "window type=${window.type} title=${window.title} children=${root?.childCount} alpha=${root?.findAccessibilityNodeInfosByText("α")?.size} q=${root?.findAccessibilityNodeInfosByText("q")?.size}"
+                }
+            throw AssertionError(
+                "${failure.message}\nIME state:\n$state\nWindows:\n$windows\nIME crash diagnostics:\n$crashes",
+                failure,
+            )
         } finally {
             scenario?.close()
             if (previous.isNotBlank() && previous != "null" && previous != ime)
