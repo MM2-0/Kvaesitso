@@ -30,7 +30,11 @@ class KeyboardImeTest {
         val instrumentation = InstrumentationRegistry.getInstrumentation()
         val automation = instrumentation.uiAutomation
         val context = instrumentation.targetContext
-        fun quote(value: String) = "'" + value.replace("'", "'\\''") + "'"
+        // UiAutomation uses Runtime.exec, not a shell: quotes would become part of the IME ID.
+        fun argument(value: String): String {
+            require(value.isNotEmpty() && value.none { it.isWhitespace() || it == '\u0000' })
+            return value
+        }
         fun shell(command: String) =
             ParcelFileDescriptor.AutoCloseInputStream(automation.executeShellCommand(command))
                 .bufferedReader()
@@ -61,8 +65,8 @@ class KeyboardImeTest {
                 "Production IME is missing from the test APK: $registered",
                 registered.lines().any { it.trim() == ime },
             )
-            val enabled = shell("ime enable ${quote(ime)}")
-            val selected = shell("ime set ${quote(ime)}")
+            val enabled = shell("ime enable ${argument(ime)}")
+            val selected = shell("ime set ${argument(ime)}")
             assertEquals(
                 "$enabled; $selected",
                 ime,
@@ -153,14 +157,20 @@ class KeyboardImeTest {
             }
             tapKey("σ")
             awaitText("ασ")
+        } catch (failure: Throwable) {
+            val crashes = shell("logcat -d -b crash -t 60")
+            throw AssertionError("${failure.message}\nIME crash diagnostics:\n$crashes", failure)
         } finally {
             scenario?.close()
             if (previous.isNotBlank() && previous != "null" && previous != ime)
-                shell("ime set ${quote(previous)}")
-            if (previous != ime) shell("ime disable ${quote(ime)}")
+                shell("ime set ${argument(previous)}")
+            if (previous != ime) shell("ime disable ${argument(ime)}")
             if (hardwareSetting == "null")
                 shell("settings delete secure show_ime_with_hard_keyboard")
-            else shell("settings put secure show_ime_with_hard_keyboard ${quote(hardwareSetting)}")
+            else
+                shell(
+                    "settings put secure show_ime_with_hard_keyboard ${argument(hardwareSetting)}"
+                )
             val info = automation.serviceInfo
             info.flags = oldFlags
             automation.serviceInfo = info
