@@ -9,7 +9,12 @@ plugins {
 }
 
 val hostVersion = Properties().apply {
-    rootProject.file("../../version.properties").takeIf { it.isFile }?.inputStream()?.use { load(it) }
+    val versionFile = listOf(
+        rootProject.file("version.properties"),
+        rootProject.file("../../version.properties"),
+        file("../../version.properties"),
+    ).firstOrNull { it.isFile }
+    versionFile?.inputStream()?.use { load(it) }
 }
 
 android {
