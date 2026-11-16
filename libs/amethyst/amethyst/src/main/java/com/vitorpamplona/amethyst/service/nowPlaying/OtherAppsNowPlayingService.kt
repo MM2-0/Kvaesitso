@@ -39,6 +39,7 @@ import android.service.notification.NotificationListenerService
 import androidx.core.app.NotificationManagerCompat
 import com.vitorpamplona.amethyst.commons.model.nip38UserStatuses.nowPlaying.NowPlaying
 import com.vitorpamplona.amethyst.commons.model.nip38UserStatuses.nowPlaying.NowPlayingSource
+import com.vitorpamplona.amethyst.Amethyst
 import com.vitorpamplona.quartz.utils.Log
 import com.vitorpamplona.quartz.utils.TimeUtils
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -117,6 +118,7 @@ class OtherAppsNowPlayingService : NotificationListenerService() {
         super.onListenerConnected()
         scope.coroutineContext.cancelChildren()
         scope.launch {
+            Amethyst.initialize(this@OtherAppsNowPlayingService)
             // The system may have bound this right after a reboot or update, before the account
             // loaded: only watch sessions once sharing is known to be on.
             val wanted = OtherAppsPlaybackRegistry.wanted

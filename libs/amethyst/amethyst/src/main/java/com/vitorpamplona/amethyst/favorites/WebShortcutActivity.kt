@@ -51,6 +51,7 @@ class WebShortcutActivity : ComponentActivity() {
             return
         }
         lifecycleScope.launch {
+            Amethyst.initialize(this@WebShortcutActivity)
             val app = Amethyst.instance
             val torWanted = app.torPrefs.torType.value != TorType.OFF && app.torManager.activePortOrNull.value == null
             val torReady =

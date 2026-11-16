@@ -57,3 +57,10 @@ Tink keysets use separate namespaces in `aether_private.xml`. Both Android backu
 formats explicitly exclude that file. Android instrumentation tests exercise real
 encrypted preferences, account isolation, editor reuse and SQLite paths. These
 new tests and the combined Telos build have not passed yet.
+
+The cold-start adaptation now initializes workers and push callbacks on IO;
+notifications use their own tag so dismissing them cannot cancel a Telos alarm
+or download. These changes are still under verification. A second compile
+identified a Kotlin DSL name collision (`java` versus `java.util.Properties`);
+using an explicit Properties import resolves configuration locally (`help
+--offline` passes).

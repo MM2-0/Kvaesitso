@@ -84,6 +84,7 @@
     <application
         android:name=".LauncherApplication"
         android:allowBackup="true"
+        android:largeHeap="true"
         android:crossProfile="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"

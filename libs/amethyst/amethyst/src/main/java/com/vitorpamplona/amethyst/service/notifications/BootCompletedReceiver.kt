@@ -24,6 +24,10 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import com.vitorpamplona.quartz.utils.Log
+import com.vitorpamplona.amethyst.Amethyst
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 /**
  * Restarts the NotificationRelayService after device reboot or app update.
@@ -56,8 +60,10 @@ class BootCompletedReceiver : BroadcastReceiver() {
                 // avoid a StrictMode DiskReadViolation while keeping the receiver alive until
                 // the work finishes.
                 val pending = goAsync()
-                Thread {
+                CoroutineScope(Dispatchers.IO).launch {
                     try {
+                        if (!Amethyst.hasBeenUsed(context)) return@launch
+                        Amethyst.initialize(context)
                         Log.d(TAG) { "Received ${intent.action}, checking if notification service should start" }
                         if (NotificationRelayService.isEnabled(context)) {
                             Log.d(TAG, "Starting notification relay service")
@@ -66,7 +72,7 @@ class BootCompletedReceiver : BroadcastReceiver() {
                     } finally {
                         pending.finish()
                     }
-                }.start()
+                }
             }
         }
     }

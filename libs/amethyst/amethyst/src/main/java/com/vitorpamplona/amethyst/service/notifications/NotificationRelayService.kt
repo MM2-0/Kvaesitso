@@ -198,7 +198,6 @@ class NotificationRelayService : Service() {
     override fun onCreate() {
         super.onCreate()
         Log.d(TAG, "Service created")
-        Amethyst.instance.alwaysOnSession.setActive(true)
         createNotificationChannel()
         ensureForeground()
     }
@@ -266,7 +265,7 @@ class NotificationRelayService : Service() {
     override fun onDestroy() {
         Log.d(TAG, "Service destroyed")
         isForeground = false
-        Amethyst.instance.alwaysOnSession.setActive(false)
+        if (Amethyst.isInitialized) Amethyst.instance.alwaysOnSession.setActive(false)
         relayServiceCollectorJob?.cancel()
         scope.cancel()
 
@@ -352,6 +351,13 @@ class NotificationRelayService : Service() {
         relayServiceCollectorJob?.cancel()
         relayServiceCollectorJob =
             scope.launch {
+                Amethyst.initialize(this@NotificationRelayService)
+                Amethyst.instance.accountsCache.loadAllWritableAccounts(LocalPreferences)
+                if (!isEnabled(this@NotificationRelayService)) {
+                    stopSelf()
+                    return@launch
+                }
+                Amethyst.instance.alwaysOnSession.setActive(true)
                 launch {
                     Amethyst.instance.relayProxyClientConnector.relayServices.collectLatest {
                         Log.d(TAG) { "Relay services state updated: $it" }

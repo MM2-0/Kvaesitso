@@ -48,7 +48,7 @@ import com.vitorpamplona.amethyst.commons.R as CommonsR
 object WebShortcuts {
     private const val TAG = "WebShortcuts"
     private const val MAX_DYNAMIC = 4
-    private const val DYNAMIC_PREFIX = "fav:"
+    private const val DYNAMIC_PREFIX = "aether:fav:"
     private const val ICON_PX = 192
 
     /** Asks the launcher to pin a shortcut to [url] labelled [title]. */
@@ -61,7 +61,7 @@ object WebShortcuts {
             Toast.makeText(context, CommonsR.string.browser_home_shortcut_unsupported, Toast.LENGTH_SHORT).show()
             return
         }
-        val info = build(context, "web:" + idOf(url), url, title)
+        val info = build(context, "aether:web:" + idOf(url), url, title)
         runCatching { ShortcutManagerCompat.requestPinShortcut(context, info, null) }
             .onFailure { Log.w(TAG, "Pin shortcut request failed", it) }
     }

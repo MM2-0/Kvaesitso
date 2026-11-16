@@ -76,6 +76,7 @@ import kotlin.math.min
  * keeps those replacements silent.
  */
 object NotificationUtils {
+    const val TAG = "aether"
     const val REPLY_ACTION = "com.vitorpamplona.amethyst.REPLY_ACTION"
     const val PUBLIC_REPLY_ACTION = "com.vitorpamplona.amethyst.PUBLIC_REPLY_ACTION"
     const val MARMOT_REPLY_ACTION = "com.vitorpamplona.amethyst.MARMOT_REPLY_ACTION"
@@ -310,7 +311,7 @@ object NotificationUtils {
             builder.addAction(publicReplyAction(applicationContext, notId, id, inlineReply))
         }
 
-        notify(notId, builder.build())
+        notify(TAG, notId, builder.build())
         sendGroupSummary(category, groupKey, summaryId, time, applicationContext)
     }
 
@@ -440,7 +441,7 @@ object NotificationUtils {
 
         if (addMarkRead) builder.addAction(markReadAction(applicationContext, notId, id))
 
-        notify(notId, builder.build())
+        notify(TAG, notId, builder.build())
         sendGroupSummary(category, groupKey, summaryId, time, applicationContext)
     }
 
@@ -733,12 +734,12 @@ object NotificationUtils {
                         .setSummaryText(loadStringRes(category.summaryTextRes)),
                 )
 
-        notify(summaryId, summaryBuilder.build())
+        notify(TAG, summaryId, summaryBuilder.build())
     }
 
     /** Cancels all notifications. */
     fun NotificationManager.cancelNotifications() {
-        cancelAll()
+        activeNotifications.filter { it.tag == TAG }.forEach { cancel(TAG, it.id) }
     }
 
     /**
@@ -761,7 +762,7 @@ object NotificationUtils {
 
         // Most events the user reads never had a tray notification (regular feed
         // items), so bail out before touching anything when nothing is posted for it.
-        if (activeNotifications.none { it.id == notId }) return
+        if (activeNotifications.none { it.tag == TAG && it.id == notId }) return
 
         cancelAndPrune(notId)
     }
@@ -773,7 +774,7 @@ object NotificationUtils {
      * group child with a summary above it.
      */
     fun NotificationManager.cancelAndPrune(notId: Int) {
-        cancel(notId)
+        cancel(TAG, notId)
         cancelChildlessGroupSummaries(alreadyGone = notId)
     }
 
@@ -790,7 +791,7 @@ object NotificationUtils {
      * only makes the platform rebuild it.
      */
     fun NotificationManager.cancelChildlessGroupSummaries(alreadyGone: Int? = null) {
-        val active: Array<StatusBarNotification> = activeNotifications
+        val active: Array<StatusBarNotification> = activeNotifications.filter { it.tag == TAG }.toTypedArray()
 
         // Collect the groups that still have a child in one pass, then cancel the
         // summaries not in that set. Every child now ships with a summary, so this list
@@ -809,7 +810,7 @@ object NotificationUtils {
             if (summary.notification.flags and Notification.FLAG_GROUP_SUMMARY == 0) continue
             val group = summary.notification.group ?: continue
             if (!group.startsWith(OWN_GROUP_PREFIX)) continue
-            if (group !in groupsWithChildren) cancel(summary.id)
+            if (group !in groupsWithChildren) cancel(TAG, summary.id)
         }
     }
 

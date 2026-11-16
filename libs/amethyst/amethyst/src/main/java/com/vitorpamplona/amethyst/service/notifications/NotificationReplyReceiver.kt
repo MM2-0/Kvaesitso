@@ -181,6 +181,15 @@ class NotificationReplyReceiver : BroadcastReceiver() {
         val appContext = context.applicationContext
 
         scope.launch {
+            try {
+                Amethyst.initialize(appContext)
+            } catch (exception: Exception) {
+                pendingResult.finish()
+                scope.cancel()
+                if (exception is CancellationException) throw exception
+                Log.e("NotificationReply", "Client unavailable", exception)
+                return@launch
+            }
             val collectionJob =
                 scope.launch {
                     Amethyst.instance.relayProxyClientConnector.relayServices

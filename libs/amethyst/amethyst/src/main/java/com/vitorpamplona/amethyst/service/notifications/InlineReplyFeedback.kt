@@ -115,7 +115,7 @@ private suspend fun NotificationManager.renderReplyStateOrThrow(
     notId: Int,
     state: ReplyState,
 ): Boolean {
-    val existing = activeNotifications.firstOrNull { it.id == notId }?.notification ?: return false
+    val existing = activeNotifications.firstOrNull { it.tag == NotificationUtils.TAG && it.id == notId }?.notification ?: return false
 
     val builder =
         NotificationCompat
@@ -171,6 +171,6 @@ private suspend fun NotificationManager.renderReplyStateOrThrow(
 
     style?.let { builder.setStyle(it) }
 
-    notify(notId, builder.build())
+    notify(NotificationUtils.TAG, notId, builder.build())
     return true
 }

@@ -89,7 +89,7 @@ jobs:
       - uses: actions/setup-go@v7
         with:
           go-version-file: libs/appops-next/daemon/go.mod
-          cache-dependency-path: libs/appops-next/daemon/go.sum
+          cache: false
       - uses: gradle/actions/setup-gradle@v6
         with:
           cache-provider: basic
@@ -134,11 +134,23 @@ jobs:
           cache-provider: basic
           cache-read-only: false
       - name: Compile storage device tests
-        run: >-
-          ./gradlew -p libs/amethyst :amethyst:assembleFdroidDebugAndroidTest
-          --no-daemon --max-workers=1 --console=plain
-          -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process
-          '-Dorg.gradle.jvmargs=-Xmx6g -Dfile.encoding=UTF-8'
+        run: |
+          set -o pipefail
+          ./gradlew -p libs/amethyst :amethyst:assembleFdroidDebugAndroidTest \
+            --no-daemon --max-workers=1 --console=plain \
+            -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process \
+            '-Dorg.gradle.jvmargs=-Xmx6g -Dfile.encoding=UTF-8' 2>&1 | tee /tmp/aether-storage-build.log
+      - name: Report storage compilation errors
+        if: failure()
+        run: |
+          python3 - <<'PYCODE'
+          from pathlib import Path
+          log = Path('/tmp/aether-storage-build.log')
+          lines = log.read_text(errors='replace').splitlines() if log.exists() else []
+          errors = [x for x in lines if x.startswith('e: ') or 'Could not resolve' in x]
+          for line in (errors[-20:] or lines[-20:]):
+              print('::error title=Aether device build::' + line.replace('%', '%25'))
+          PYCODE
       - name: Enable emulator acceleration
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules

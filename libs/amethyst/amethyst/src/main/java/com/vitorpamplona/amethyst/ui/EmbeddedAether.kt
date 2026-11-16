@@ -4,6 +4,7 @@
  */
 package com.vitorpamplona.amethyst.ui
 
+import android.content.ComponentCallbacks2
 import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.fillMaxSize
@@ -80,6 +81,7 @@ private fun EmbeddedClientLifecycle() {
                 } else {
                     Amethyst.instance.foregroundTracker.embeddedHostStopped()
                     application.foregroundRecycleHook.embeddedHostStopped()
+                    if (!Amethyst.instance.foregroundTracker.isForeground.value) Amethyst.instance.trim(ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN)
                 }
                 started = nextStarted
             }

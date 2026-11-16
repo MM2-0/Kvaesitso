@@ -5,6 +5,12 @@
 package com.vitorpamplona.amethyst
 
 import android.content.Context
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.os.Build
+import android.os.ParcelFileDescriptor
+import android.os.SystemClock
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import org.junit.Assert.assertEquals
@@ -12,12 +18,44 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
+import com.vitorpamplona.amethyst.service.notifications.NotificationUtils
+import com.vitorpamplona.amethyst.service.notifications.NotificationUtils.cancelNotifications
 import java.io.File
 import java.util.UUID
 
 @RunWith(AndroidJUnit4::class)
 class AetherStorageContextTest {
     private val base = InstrumentationRegistry.getInstrumentation().targetContext
+
+    @Test
+    fun clearingAetherNotificationsPreservesTheHostNotificationWithTheSameId() {
+        if (Build.VERSION.SDK_INT >= 33) {
+            ParcelFileDescriptor.AutoCloseInputStream(
+                InstrumentationRegistry.getInstrumentation().uiAutomation.executeShellCommand("pm grant ${base.packageName} android.permission.POST_NOTIFICATIONS"),
+            ).use { it.readBytes() }
+        }
+        val manager = base.getSystemService(NotificationManager::class.java)
+        val channel = "aether-test-${UUID.randomUUID()}"
+        val id = 19731
+        manager.createNotificationChannel(NotificationChannel(channel, "Test", NotificationManager.IMPORTANCE_LOW))
+        val notification = Notification.Builder(base, channel).setSmallIcon(android.R.drawable.ic_dialog_info).setContentTitle("Test").build()
+        try {
+            manager.notify("host", id, notification)
+            manager.notify(NotificationUtils.TAG, id, notification)
+            val postedDeadline = SystemClock.elapsedRealtime() + 5_000
+            while (manager.activeNotifications.count { it.id == id } < 2 && SystemClock.elapsedRealtime() < postedDeadline) SystemClock.sleep(50)
+            assertEquals(2, manager.activeNotifications.count { it.id == id })
+            manager.cancelNotifications()
+            val clearedDeadline = SystemClock.elapsedRealtime() + 5_000
+            while (manager.activeNotifications.any { it.tag == NotificationUtils.TAG && it.id == id } && SystemClock.elapsedRealtime() < clearedDeadline) SystemClock.sleep(50)
+            assertTrue(manager.activeNotifications.any { it.tag == "host" && it.id == id })
+            assertFalse(manager.activeNotifications.any { it.tag == NotificationUtils.TAG && it.id == id })
+        } finally {
+            manager.cancel("host", id)
+            manager.cancel(NotificationUtils.TAG, id)
+            manager.deleteNotificationChannel(channel)
+        }
+    }
 
     @Test
     fun encryptedAccountsSurviveReopeningAndClearingOneDoesNotEraseAnother() {

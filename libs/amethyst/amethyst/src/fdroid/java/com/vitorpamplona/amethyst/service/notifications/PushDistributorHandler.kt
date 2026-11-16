@@ -24,6 +24,7 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import com.vitorpamplona.amethyst.Amethyst
+import com.vitorpamplona.amethyst.AetherStorageContext
 import com.vitorpamplona.quartz.utils.Log
 import org.unifiedpush.android.connector.UnifiedPush
 
@@ -97,6 +98,6 @@ object PushDistributorHandler : PushDistributorActions {
     }
 
     fun forceRemoveDistributor(context: Context) {
-        UnifiedPush.removeDistributor(context)
+        UnifiedPush.removeDistributor(AetherStorageContext(context))
     }
 }

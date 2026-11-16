@@ -22,15 +22,19 @@ package com.vitorpamplona.amethyst.service.notifications
 
 import android.app.NotificationManager
 import android.content.Context
+import android.content.Intent
 import android.util.LruCache
 import androidx.core.content.ContextCompat
 import com.vitorpamplona.amethyst.Amethyst
+import com.vitorpamplona.amethyst.AetherStorageContext
 import com.vitorpamplona.amethyst.LocalPreferences
 import com.vitorpamplona.quartz.nip01Core.core.Event
 import com.vitorpamplona.quartz.nip59Giftwrap.wraps.GiftWrapEvent
 import com.vitorpamplona.quartz.utils.Log
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import org.unifiedpush.android.connector.FailedReason
 import org.unifiedpush.android.connector.MessagingReceiver
@@ -42,8 +46,26 @@ class PushMessageReceiver : MessagingReceiver() {
         private val TAG = "Amethyst-OSSPushReceiver"
     }
 
-    private val appContext = Amethyst.instance.appContext
-    private val scope = Amethyst.instance.applicationIOScope
+    private val appContext get() = Amethyst.instance.appContext
+    private lateinit var scope: CoroutineScope
+
+    override fun onReceive(context: Context, intent: Intent) {
+        val pending = goAsync()
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                coroutineScope {
+                    scope = this
+                    // The SDK validates its registration token before invoking callbacks.
+                    super@PushMessageReceiver.onReceive(AetherStorageContext(context), intent)
+                }
+            } catch (exception: Exception) {
+                if (exception is CancellationException) throw exception
+                Log.e(TAG, "Push processing failed", exception)
+            } finally {
+                pending.finish()
+            }
+        }
+    }
     private val eventCache = LruCache<String, String>(100)
     private val pushHandler = PushDistributorHandler
 
@@ -56,6 +78,7 @@ class PushMessageReceiver : MessagingReceiver() {
         Log.d(TAG) { "New message $messageStr for Instance: $instance" }
         scope.launch {
             try {
+                Amethyst.initialize(context)
                 parseMessage(messageStr)?.let {
                     receiveIfNew(it)
                 }
@@ -88,21 +111,16 @@ class PushMessageReceiver : MessagingReceiver() {
         endpoint: PushEndpoint,
         instance: String,
     ) {
-        val sanitizedEndpoint = if (endpoint.url.endsWith("?up=1")) endpoint.url.dropLast(5) else endpoint.url
-        // if (sanitizedEndpoint != pushHandler.getSavedEndpoint()) {
-        Log.d(TAG) { "New endpoint provided:- ${endpoint.url} for Instance: $instance ${pushHandler.getSavedEndpoint()} $sanitizedEndpoint" }
-        pushHandler.setEndpoint(sanitizedEndpoint)
-        scope.launch(Dispatchers.IO) {
+        scope.launch {
+            Amethyst.initialize(context)
+            val sanitizedEndpoint = if (endpoint.url.endsWith("?up=1")) endpoint.url.dropLast(5) else endpoint.url
+            pushHandler.setEndpoint(sanitizedEndpoint)
             PushNotificationUtils.checkAndInit(sanitizedEndpoint, LocalPreferences.allSavedAccounts()) {
-                Log.d(TAG) { "Building okHttpClient, useTor: ${Amethyst.instance.torManager.isSocksReady()}" }
                 Amethyst.instance.okHttpClients.getHttpClient(Amethyst.instance.torManager.isSocksReady())
             }
             NotificationCategory.ZAP.ensureChannel(appContext)
             NotificationCategory.DIRECT_MESSAGE.ensureChannel(appContext)
         }
-        // } else {
-        Log.d(TAG) { "Same endpoint provided:- ${endpoint.url} for Instance: $instance $sanitizedEndpoint" }
-        // }
     }
 
     override fun onRegistrationFailed(
@@ -111,18 +129,21 @@ class PushMessageReceiver : MessagingReceiver() {
         instance: String,
     ) {
         Log.d(TAG) { "Registration failed for Instance: $instance" }
-        pushHandler.forceRemoveDistributor(context)
+        scope.launch {
+            Amethyst.initialize(context)
+            pushHandler.forceRemoveDistributor(context)
+        }
     }
 
     override fun onUnregistered(
         context: Context,
         instance: String,
     ) {
-        val removedEndpoint = pushHandler.getSavedEndpoint()
-        Log.d(TAG) { "Endpoint: $removedEndpoint removed for Instance: $instance" }
-        Log.d(TAG, "App is unregistered. ")
-        pushHandler.forceRemoveDistributor(context)
-        pushHandler.removeEndpoint()
+        scope.launch {
+            Amethyst.initialize(context)
+            pushHandler.forceRemoveDistributor(context)
+            pushHandler.removeEndpoint()
+        }
     }
 
     fun notificationManager(): NotificationManager =

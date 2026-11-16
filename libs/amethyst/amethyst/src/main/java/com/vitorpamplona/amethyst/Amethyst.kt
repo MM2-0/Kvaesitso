@@ -115,6 +115,8 @@ open class Amethyst : Application() {
         val isInitialized: Boolean
             get() = clientReady
 
+        fun hasBeenUsed(context: Context): Boolean = File(AetherStorageContext.applicationBase(context).noBackupFilesDir, "aether/runtime-used").exists()
+
         suspend fun initialize(context: Context) {
             (AetherStorageContext.applicationBase(context) as Amethyst).initializeEmbedded()
         }
@@ -195,7 +197,7 @@ open class Amethyst : Application() {
         }
 
         // Hydrate the per-site camera/microphone/location answers the browser asks about.
-        WebSitePermissionRegistry.init(this)
+        WebSitePermissionRegistry.init(instance.appContext)
 
         // Hydrate the device-local browser visit history (main process only; feeds the omnibox suggestions).
         instance.browserHistory.init()
@@ -209,7 +211,7 @@ open class Amethyst : Application() {
 
         // Hydrate the per-web-client Tor routing preferences so a site opted out of Tor (some reject Tor
         // exits) starts on the open web without first flashing a failed Tor load.
-        WebAppNetworkRegistry.init(this)
+        WebAppNetworkRegistry.init(instance.appContext)
         // The same for nSites: a launch reads the choice synchronously, and one read before these have
         // loaded falls back to Tor, whatever "Applets and Websites" says.
         NsiteNetworkRegistry.preload()
@@ -239,7 +241,8 @@ open class Amethyst : Application() {
                 .setRecording(true)
         }
 
-        instance.initiate(this)
+        instance.initiate(instance.appContext)
+        File(instance.appContext.noBackupFilesDir, "runtime-used").writeText("1")
         clientReady = true
     }
 
