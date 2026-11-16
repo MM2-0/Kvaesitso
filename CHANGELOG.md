@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.45.66
+
+- Release Gradle resolves Kotlin from Google/Maven Central first and skips the JetBrains
+  Compose Space repo for stdlib, so APK builds survive a Space DNS failure.
+
 ## 1.45.65
 
 - Restore video/GIF live wallpaper after Telos APK updates (retry bind, else a restore

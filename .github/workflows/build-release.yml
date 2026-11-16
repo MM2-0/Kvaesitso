@@ -95,7 +95,7 @@ jobs:
       - name: Build Release APK (${{ matrix.abi }})
         env:
           GRADLE_OPTS: "-Xmx6144m -XX:MaxMetaspaceSize=1536m -XX:+UseG1GC"
-        run: ./gradlew assembleDefaultRelease -Ptelos.abi=${{ matrix.abi }} --stacktrace
+        run: ./gradlew assembleDefaultRelease -Ptelos.abi=${{ matrix.abi }} --no-configuration-cache --stacktrace
 
       - name: Verify packaged native ABIs
         env:
