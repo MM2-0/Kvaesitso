@@ -1,0 +1,1 @@
+AAB CI installs NDK up front so Play bundles do not hang. Same app as 1.45.67 plus that pipeline fix.

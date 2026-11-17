@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.45.68
+
+- AAB CI preinstalls NDK 27 and times out hung Gradle instead of sitting for 40+ minutes.
+
 ## 1.45.67
 
 - Fix System Battery tab compile (`PreferenceCategory` content) so release APKs build.
