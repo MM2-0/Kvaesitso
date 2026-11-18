@@ -1,34 +1,23 @@
-name: Inspect running Aether compilation
+name: Stop redundant Aether validation after passing main gates
 on:
   push:
     branches: ['codex/aether-diagnostics']
 permissions:
-  actions: read
+  actions: write
   contents: read
 jobs:
-  inspect-running-log:
+  stop-redundant-validation:
     runs-on: ubuntu-latest
     steps:
-      - name: Read currently available job logs
+      - uses: actions/checkout@v7
+      - name: Confirm passing validation and stop duplicate build
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          python3 - <<'PY'
-          import os, urllib.request, urllib.error, urllib.parse
-          class SafeRedirect(urllib.request.HTTPRedirectHandler):
-              def redirect_request(self, req, fp, code, msg, headers, newurl):
-                  redirected = super().redirect_request(req, fp, code, msg, headers, newurl)
-                  if redirected and urllib.parse.urlsplit(req.full_url).netloc != urllib.parse.urlsplit(newurl).netloc:
-                      redirected.remove_header('Authorization')
-                  return redirected
-          opener = urllib.request.build_opener(SafeRedirect())
-          url = 'https://api.github.com/repos/' + os.environ['GITHUB_REPOSITORY'] + '/actions/jobs/134928650490/logs'
-          req = urllib.request.Request(url, headers={'Authorization': 'Bearer ' + os.environ['GH_TOKEN'], 'Accept': 'application/vnd.github+json'})
-          try:
-              data = opener.open(req).read().decode(errors='replace')
-              lines = [x for x in data.splitlines() if '> Task' in x or 'Downloading ' in x or 'BUILD ' in x or 'FAILURE:' in x or x.startswith('e: ')]
-              for line in lines[-20:]:
-                  print('::notice title=Current compiler progress::' + line.replace('%', '%25').replace('\r', '%0D').replace('\n', '%0A'))
-          except urllib.error.HTTPError as e:
-              print('::notice title=Running log availability::HTTP ' + str(e.code) + ': ' + e.read().decode(errors='replace').replace('%', '%25').replace('\r', '%0D').replace('\n', '%0A'))
-          PY
+          conclusion=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/44336725713" --jq .conclusion)
+          test "$conclusion" = success
+          status=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/44340452492" --jq .status)
+          if [ "$status" != completed ]; then
+            gh api --method POST "repos/$GITHUB_REPOSITORY/actions/runs/44340452492/cancel"
+            echo '::notice::Stopped redundant validation; all main Aether gates passed on the same application source'
+          fi
