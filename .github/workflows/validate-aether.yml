@@ -275,3 +275,32 @@ jobs:
             /tmp/aether-screenshots/
             app/ui/build/outputs/androidTest-results/
             app/ui/build/reports/androidTests/
+
+  open-pull-request:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/codex/aether-amethyst-embedded'
+    needs: [android-library, telos-apk, aether-storage-device, aether-client-device]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v5
+      - name: Open review after the integration gates pass
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          existing=$(gh pr list --repo "$GITHUB_REPOSITORY" --base main --head codex/aether-amethyst-embedded --state open --json number --jq '.[0].number // empty')
+          if [ -n "$existing" ]; then
+            echo "Aether PR #$existing already exists"
+            exit 0
+          fi
+          cat > /tmp/aether-pr.md <<'BODY'
+          Aether currently opens a preview. This embeds the full Amethyst F-Droid client inside the Telos APK, including multiple accounts, settings, feeds, relay management and messaging. No external Amethyst APK is needed; proprietary Play-only integrations are not shipped.
+
+          The integration defers runtime startup, isolates encrypted account storage from launcher preferences/backups, preserves the keyless WebView sandbox, forwards links and shares into the Telos task, and connects Cybertech settings chrome and separate notification identity. Original MIT notices and the pinned upstream revision are retained.
+
+          Validation covers the real ARM64 debug and R8 release APK builds, library host tests, encrypted storage/notification isolation on Android, and a separate-process driver exercising public-key login, multiple accounts, settings and process restart in the actual Telos APK. Physical Android 17, external signers and live publishing are not established by these tests.
+          BODY
+          printf '\nValidation run: https://github.com/%s/actions/runs/%s\n' "$GITHUB_REPOSITORY" "$GITHUB_RUN_ID" >> /tmp/aether-pr.md
+          gh pr create --repo "$GITHUB_REPOSITORY" --base main --head codex/aether-amethyst-embedded \
+            --title 'Embed Amethyst client in Aether with multiple accounts' --body-file /tmp/aether-pr.md

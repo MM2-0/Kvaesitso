@@ -111,6 +111,9 @@ class AetherEmbeddedClientTest {
     @Test
     fun embeddedLoginSettingsAndAccountSurviveProcessDeath() {
         // A public key only: no signing, publication, private accounts or external client APK.
+        val originalFont = shell("settings get system font_scale").trim().toFloatOrNull() ?: 1f
+        val originalAutoRotate = shell("settings get system accelerometer_rotation").trim().toIntOrNull() ?: 1
+        val originalRotation = shell("settings get system user_rotation").trim().toIntOrNull() ?: 0
         shell("svc wifi disable")
         shell("svc data disable")
         try {
@@ -131,6 +134,18 @@ class AetherEmbeddedClientTest {
             awaitNode("switched account") { it.contentDescription?.toString() == "Your Profile Picture" }
             openSettings()
             screenshot("settings")
+            shell("settings put system font_scale 2.0")
+            SystemClock.sleep(1_000)
+            awaitNode("large-font settings") { it.text?.toString() == "Search settings" }
+            screenshot("settings-large-font")
+            shell("settings put system accelerometer_rotation 0")
+            shell("settings put system user_rotation 1")
+            SystemClock.sleep(1_000)
+            awaitNode("landscape settings") { it.text?.toString() == "Search settings" }
+            screenshot("settings-large-font-landscape")
+            shell("settings put system user_rotation $originalRotation")
+            shell("settings put system accelerometer_rotation $originalAutoRotate")
+            shell("settings put system font_scale $originalFont")
             shell("input keyevent KEYCODE_HOME")
             shell("am force-stop $target")
             openAether()
@@ -139,6 +154,9 @@ class AetherEmbeddedClientTest {
             awaitNode("persisted second account") { it.text?.toString() == "npub1gcx…wqlfnj5z" }
             screenshot("restored-accounts")
         } finally {
+            shell("settings put system user_rotation $originalRotation")
+            shell("settings put system accelerometer_rotation $originalAutoRotate")
+            shell("settings put system font_scale $originalFont")
             shell("svc wifi enable")
             shell("svc data enable")
         }

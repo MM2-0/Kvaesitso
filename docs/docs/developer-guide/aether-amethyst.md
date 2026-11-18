@@ -48,7 +48,8 @@ UI/chrome changes; they are not a release or full client runtime certification.
 `validate-aether.yml` additionally builds the real Telos APK for an x86_64
 emulator solely for validation (release APKs remain ARM-specific). A separate
 instrumentation process drives public-key-only login, multiple accounts, settings
-and process restart with network disabled. Screenshots are exported through
+and process restart with network disabled, plus large-font portrait/landscape
+settings captures. After all integration gates pass, Actions opens the review PR. Screenshots are exported through
 MediaStore before test APK removal. The public-fixture evidence branch records
 the tested source revision for visual review.
 
