@@ -70,7 +70,9 @@ artifact on Android compile/runtime classpaths and its JRE artifact for tools.
 
 `verifyBuildSecurityDependencies` resolves real buildscript and Android runtime
 graphs in both builds and compares affected components against advisory minima.
-These security changes are being revalidated; the rendering evidence below
+[Dependency review](https://github.com/koukomin/Telos-Launcher/actions/runs/44355647038)
+reports zero added vulnerable components against v1.45.69 for `6837a4661`.
+Compilation and tests are being revalidated; the rendering evidence below
 records the earlier tested application revision, not a claim of completed
 security validation for the follow-up.
 

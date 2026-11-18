@@ -453,5 +453,4 @@ license notices remain in their distributed packages.
 
 The included Amethyst build also applies the launcher's patched transitive
 versions to its own plugin and project classpaths. OpenTelemetry Java API and
-context are aligned at 1.68.0 (Apache-2.0); this is dependency convergence, not a
-new telemetry configuration. Existing third-party notices remain preserved.
+context are aligned at 1.68.0 (Apache-2.0). Existing third-party notices remain preserved.

@@ -180,6 +180,7 @@ GHSA-rcgg-9c38-7xpx / GHSA-ccrj-gw8r-854m require 1.62.0 / 1.67.0.
 Amethyst's settings now constrain both buildscript and project configurations;
 the host settings also align OpenTelemetry API/context and remove stale fallback
 versions. `verifyBuildSecurityDependencies` checks actual plugin and Android
-runtime resolution in both builds. Fresh graph/compile/test validation is
-pending; no alert has been dismissed and no claim that the alert list is empty
-is made. The picomatch advisory discussed above is a separate docs-tool issue.
+runtime resolution in both builds. The [follow-up dependency review](https://github.com/koukomin/Telos-Launcher/actions/runs/44355647038)
+reports zero added vulnerable components against v1.45.69 for source revision
+`6837a4661`. Compile/test validation is still pending; no alert has been dismissed
+and no claim that the private alert list is empty is made. The picomatch advisory discussed above is a separate docs-tool issue.
