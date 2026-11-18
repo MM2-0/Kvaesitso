@@ -1,133 +1,29 @@
-name: Retry exact Aether APK on fresh emulator
+name: Read open dependency alerts before Aether release
 on:
   push:
     branches: ['codex/aether-diagnostics']
 permissions:
   contents: read
+  security-events: read
 jobs:
-  aether-client-device:
-    permissions:
-      contents: write
+  inspect-alerts:
     runs-on: ubuntu-latest
-    timeout-minutes: 90
     steps:
       - uses: actions/checkout@v7
-        with:
-          ref: e8ef99978b2cffecbc9c0e0107022ddbf08e9871
-      - name: Verify exact application source
-        run: test "$(git rev-parse HEAD)" = e8ef99978b2cffecbc9c0e0107022ddbf08e9871
-      - uses: actions/setup-java@v6
-        with:
-          distribution: temurin
-          java-version: '21'
-      - uses: actions/setup-go@v7
-        with:
-          go-version-file: libs/appops-next/daemon/go.mod
-          cache: false
-      - uses: gradle/actions/setup-gradle@v6
-        with:
-          cache-provider: basic
-          cache-read-only: false
-      - uses: android-actions/setup-android@v4
-      - name: Install the release NDK before Gradle
+      - name: Read actionable dependency advisory metadata
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          for attempt in 1 2 3; do
-            if timeout 8m sdkmanager --install 'ndk;27.0.12077973' </dev/null; then exit 0; fi
-            echo "NDK installation attempt $attempt failed"
-            sleep 8
-          done
-          echo '::error::Could not install NDK 27 before the APK build'
-          exit 1
-      - name: Cache APK task outputs independently of the library job
-        uses: actions/cache@v6
-        with:
-          path: ~/.gradle/caches/build-cache-1
-          key: aether-apk-${{ runner.os }}-${{ github.job }}-${{ hashFiles('**/*.gradle*', '**/libs.versions.toml', 'gradle/wrapper/**') }}-${{ github.sha }}
-          restore-keys: |
-            aether-apk-${{ runner.os }}-${{ github.job }}-${{ hashFiles('**/*.gradle*', '**/libs.versions.toml', 'gradle/wrapper/**') }}-
-            aether-apk-${{ runner.os }}-${{ github.job }}-
-      - name: Build actual Telos and external UI driver
-        run: |
-          set -o pipefail
-          ./gradlew :app:app:assembleDefaultDebug :app:ui:assembleDefaultDebugAndroidTest -Ptelos.abi=x86_64 \
-            --no-daemon --max-workers=1 --console=plain -Dorg.gradle.parallel=false \
-            -Pkotlin.compiler.execution.strategy=in-process '-Dorg.gradle.jvmargs=-Xmx7g -Dfile.encoding=UTF-8' 2>&1 | tee /tmp/aether-client.log
-      - name: Enable emulator acceleration
-        run: |
-          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
-          sudo udevadm control --reload-rules
-          sudo udevadm trigger --name-match=kvm
-      - uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: 35
-          arch: x86_64
-          target: google_apis
-          profile: pixel_7
-          disable-animations: true
-          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim
-          script: bash tools/validation/aether-client-device.sh
-      - name: Publish public-fixture screenshots for review
-        if: always()
-        shell: bash
-        run: |
-          if ! find /tmp/aether-screenshots -name '*.png' -print -quit 2>/dev/null | grep -q .; then exit 0; fi
-          # Fresh offline emulator, public keys only. No user data or signing keys.
-          source_revision="$(git rev-parse HEAD)"
-          base="$source_revision"
-          if git fetch origin refs/heads/codex/aether-ui-evidence:refs/remotes/origin/aether-ui-evidence; then
-            base=refs/remotes/origin/aether-ui-evidence
-          fi
-          git worktree add --detach /tmp/aether-review "$base"
-          mkdir -p /tmp/aether-review/docs/screenshots/development/aether
-          # Do not relabel a previous run's failure PNG with the new source revision.
-          rm -f /tmp/aether-review/docs/screenshots/development/aether/aether-*.png
-          find /tmp/aether-screenshots -name '*.png' -exec cp {} /tmp/aether-review/docs/screenshots/development/aether/ \;
-          printf '%s\n' "$source_revision" > /tmp/aether-review/docs/screenshots/development/aether/SOURCE_REVISION
-          git -C /tmp/aether-review config user.name github-actions[bot]
-          git -C /tmp/aether-review config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git -C /tmp/aether-review add docs/screenshots/development/aether
-          if ! git -C /tmp/aether-review diff --cached --quiet; then
-            git -C /tmp/aether-review commit -qm 'docs: record offline Aether emulator screenshots [skip ci]'
-            git -C /tmp/aether-review push origin HEAD:refs/heads/codex/aether-ui-evidence
-          fi
-      - name: Report client validation details
-        if: always()
-        run: |
-          python3 - <<'PYCODE'
+          if gh api --paginate "repos/$GITHUB_REPOSITORY/dependabot/alerts?state=open&per_page=100" --jq '.[] | {severity: .security_advisory.severity, advisory: .security_advisory.ghsa_id, package: .dependency.package.name, manifest: .dependency.manifest_path, vulnerable: .security_vulnerability.vulnerable_version_range, patched: .security_vulnerability.first_patched_version.identifier}' > /tmp/alerts.txt 2>/tmp/alerts-error.txt; then
+            python3 - <<'PY'
           from pathlib import Path
-          import xml.etree.ElementTree as ET
-          for path in Path('app/ui/build/outputs/androidTest-results').rglob('TEST-*.xml'):
-              suite = ET.parse(path).getroot()
-              print('::notice title=Aether UI tests::' + str(suite.attrib))
-              for failure in suite.findall('.//failure'):
-                  text = (failure.get('message', '') + '\n' + (failure.text or ''))[:12000]
-                  print('::error title=Aether UI failure::' + text.replace('%', '%25').replace('\r', '%0D').replace('\n', '%0A'))
-          log = Path('/tmp/aether-client.log')
-          if log.exists():
-              lines = log.read_text(errors='replace').splitlines()
-              if any('BUILD FAILED' in line for line in lines):
-                  text = '\n'.join(lines[-85:])[-18000:]
-                  print('::error title=Aether APK driver build::' + text.replace('%', '%25').replace('\r', '%0D').replace('\n', '%0A'))
-              for line in lines:
-                  if line.startswith('e: '): print('::error title=Aether UI compile::' + line.replace('%', '%25'))
-          logcats = list(Path('app/ui/build/outputs/androidTest-results').rglob('logcat*.txt'))
-          logcat = Path('/tmp/aether-client-logcat.txt')
-          if logcat.exists(): logcats.append(logcat)
-          for logcat in logcats:
-              errors = [line for line in logcat.read_text(errors='replace').splitlines() if 'AndroidRuntime' in line or 'AetherRuntime' in line or 'Abort message:' in line]
-              if errors:
-                  text = '\n'.join(errors[-80:])[-18000:]
-                  print('::error title=Aether runtime details::' + text.replace('%', '%25').replace('\r', '%0D').replace('\n', '%0A'))
-          PYCODE
-      - uses: actions/upload-artifact@v7
-        if: always()
-        with:
-          name: aether-client-device-results
-          if-no-files-found: ignore
-          path: |
-            /tmp/aether-client.log
-            /tmp/aether-client-logcat.txt
-            /tmp/aether-screenshots/
-            app/ui/build/outputs/androidTest-results/
-            app/ui/build/reports/androidTests/
-
+          text = Path('/tmp/alerts.txt').read_text()
+          print('::notice title=Open dependency advisories::' + (text or 'No open alerts').replace('%', '%25').replace('\r', '%0D').replace('\n', '%0A'))
+          PY
+          else
+            python3 - <<'PY'
+          from pathlib import Path
+          text = Path('/tmp/alerts-error.txt').read_text(errors='replace')
+          print('::warning title=Dependency alert access::' + text.replace('%', '%25').replace('\r', '%0D').replace('\n', '%0A'))
+          PY
+          fi
