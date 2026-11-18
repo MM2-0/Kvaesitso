@@ -1,0 +1,27 @@
+# Narrow historical fingerprints from the full upstream source import.
+# No path/rule/commit-wide exclusion; future changes are scanned normally.
+
+# Removed upstream Firebase client identifiers (not Telos credentials). Exact historical
+# import locations only; the JSON is deleted and no Firebase config ships in the F-Droid APK.
+8f03193da20778404578bdd5c0c44f70738f92f6:libs/amethyst/amethyst/google-services.json:gcp-api-key:18
+8f03193da20778404578bdd5c0c44f70738f92f6:libs/amethyst/amethyst/google-services.json:gcp-api-key:37
+8f03193da20778404578bdd5c0c44f70738f92f6:libs/amethyst/amethyst/google-services.json:gcp-api-key:56
+
+# Reviewed source false positives: preference-key NAMES, runtime field references and
+# signer request-ID interpolation, not embedded credentials.
+8f03193da20778404578bdd5c0c44f70738f92f6:libs/amethyst/amethyst/src/main/java/com/vitorpamplona/amethyst/connectedApps/consent/SignerConsentCoordinator.kt:generic-api-key:83
+8f03193da20778404578bdd5c0c44f70738f92f6:libs/amethyst/amethyst/src/main/java/com/vitorpamplona/amethyst/LocalPreferences.kt:generic-api-key:105
+8f03193da20778404578bdd5c0c44f70738f92f6:libs/amethyst/commons/src/jvmAndroid/kotlin/com/vitorpamplona/amethyst/commons/model/preferences/AccountSecrets.kt:generic-api-key:99
+8f03193da20778404578bdd5c0c44f70738f92f6:libs/amethyst/commons/src/jvmAndroid/kotlin/com/vitorpamplona/amethyst/commons/model/preferences/AccountSettingsStorage.kt:generic-api-key:366
+
+# Reviewed test fixtures: Cashu/NIP-49/RFC6455 examples, synthetic key material and
+# purchase tokens used by parser/storage/mock tests. Never real user credentials.
+8f03193da20778404578bdd5c0c44f70738f92f6:libs/amethyst/amethyst/src/androidTest/java/com/vitorpamplona/amethyst/CashuBTest.kt:generic-api-key:35
+8f03193da20778404578bdd5c0c44f70738f92f6:libs/amethyst/amethyst/src/test/java/com/vitorpamplona/amethyst/AccountKeyStoreTest.kt:generic-api-key:41
+8f03193da20778404578bdd5c0c44f70738f92f6:libs/amethyst/commons/src/commonTest/kotlin/com/vitorpamplona/amethyst/commons/account/AccountSessionManagerTest.kt:generic-api-key:147
+8f03193da20778404578bdd5c0c44f70738f92f6:libs/amethyst/commons/src/commonTest/kotlin/com/vitorpamplona/amethyst/commons/routstr/RoutstrPurchasesTest.kt:generic-api-key:481
+8f03193da20778404578bdd5c0c44f70738f92f6:libs/amethyst/commons/src/commonTest/kotlin/com/vitorpamplona/amethyst/commons/routstr/RoutstrPurchasesTest.kt:generic-api-key:500
+8f03193da20778404578bdd5c0c44f70738f92f6:libs/amethyst/commons/src/jvmTest/kotlin/com/vitorpamplona/amethyst/commons/keystorage/PasswordKeyFileTest.kt:generic-api-key:198
+8f03193da20778404578bdd5c0c44f70738f92f6:libs/amethyst/commons/src/jvmTest/kotlin/com/vitorpamplona/amethyst/commons/wot/onboarding/BrainstormOnboardingTest.kt:generic-api-key:51
+8f03193da20778404578bdd5c0c44f70738f92f6:libs/amethyst/commonsUI/src/jvmTest/kotlin/com/vitorpamplona/amethyst/commons/chats/ui/SubjectChangeTest.kt:generic-api-key:29
+8f03193da20778404578bdd5c0c44f70738f92f6:libs/amethyst/geode/src/test/kotlin/com/vitorpamplona/geode/KtorRelayFrameLimitTest.kt:generic-api-key:91

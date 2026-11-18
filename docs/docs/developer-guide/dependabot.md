@@ -136,3 +136,18 @@ installed a second Vue runtime and produced `vitepress data not properly
 injected` errors despite a zero build exit status. After alignment, the Pages
 build renders successfully without those SSR errors. The lockfile removes the
 duplicate runtime; the unpatched picomatch advisory above remains unchanged.
+
+
+Gitleaks 8.30.1 scanned the complete Aether branch history relative to main.
+The import contains three historical Firebase client-identifier locations in the
+now-deleted upstream `google-services.json`; Telos does not use that project and
+the F-Droid APK has no Firebase integration. Other matches were reviewed as
+preference-key names, runtime request/secret field references, and public or
+synthetic Cashu/NIP-49/RFC6455/storage-test fixtures. `.gitleaksignore` records
+only their exact import-commit/file/rule/line fingerprints with reasons, not a
+whole commit, path or rule. New credentials at those paths remain detectable.
+This does not claim that any upstream API identifier was rotated or revoked.
+
+After regenerating the deduplicated Vue lockfile, the final npm audit reports
+five high entries propagated from the same unpatched picomatch advisory, down
+from eight in the initial graph. No advisory is suppressed.

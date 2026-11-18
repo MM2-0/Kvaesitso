@@ -12,6 +12,7 @@ class HostChrome(
     val card: (Modifier, Shape, Color) -> Modifier,
     val heading: @Composable (@Composable () -> Unit) -> Unit,
     val label: @Composable (String, Modifier) -> Unit,
+    val brandIcon: (@Composable (Modifier) -> Unit)? = null,
 )
 
 val LocalHostChrome = staticCompositionLocalOf<HostChrome?> { null }

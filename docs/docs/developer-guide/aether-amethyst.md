@@ -33,6 +33,8 @@ The Play source set is retained for source provenance, with no Firebase key ship
   scaling. Explicit client accent colors remain selectable. Settings cards,
   headings and section labels use the host Cybertech components; drawers and
   floating login cards use opaque tonal containers over the shared root backing.
+  Login uses the Aether name and existing Rondo glyph; the imported decorative
+  background glow is disabled in the host to preserve the single root backing.
 - Workers and push callbacks await initialization. Aether notifications use their
   own tag; clearing them does not cancel Telos alarms or downloads. Media playback
   uses notification ID 7407, distinct from the other Telos players. Client

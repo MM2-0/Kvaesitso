@@ -6412,7 +6412,7 @@
     <string name="zap_payto_toggle">Offer the author's payment methods</string>
     <string name="zaps">Zaps</string>
     <string name="zaps_search_keywords" translatable="false">lightning, sats, tips, wallet, amount, payto, pay-to, venmo, paypal, cash app, monero, iban, hand-off</string>
-    <string name="app_name" translatable="false">Amethyst</string>
+    <string name="app_name" translatable="false">Aether</string>
     <string name="block_hide_user"><![CDATA[Block & Hide User]]></string>
     <string name="rename">Rename</string>
     <string name="save">Save</string>

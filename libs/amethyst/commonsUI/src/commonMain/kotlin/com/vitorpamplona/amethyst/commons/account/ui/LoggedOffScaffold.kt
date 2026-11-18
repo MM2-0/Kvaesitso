@@ -91,6 +91,7 @@ import com.vitorpamplona.amethyst.commons.tor.TorSettingsFlow
 import com.vitorpamplona.amethyst.commons.ui.insets.imePaddingSafe
 import com.vitorpamplona.amethyst.commons.ui.painterRes
 import com.vitorpamplona.amethyst.commons.ui.stringRes
+import com.vitorpamplona.amethyst.commons.ui.theme.LocalHostChrome
 import com.vitorpamplona.amethyst.commons.ui.theme.CardSurfaces
 import com.vitorpamplona.amethyst.commons.ui.theme.isLight
 import com.vitorpamplona.amethyst.commons.ui.tor.ConnectTorDialog
@@ -119,12 +120,15 @@ fun LoggedOffScaffold(
     footer: @Composable () -> Unit,
     form: @Composable ColumnScope.() -> Unit,
 ) {
+    val hostChrome = LocalHostChrome.current
     val glow = if (MaterialTheme.colorScheme.isLight) 0.16f else 0.30f
 
     BoxWithConstraints(
         Modifier
             .fillMaxSize()
             .drawWithCache {
+                // Telos already owns the wallpaper/glass backing.
+                if (hostChrome != null) return@drawWithCache onDrawBehind {}
                 // Built once per size and theme, not on every redraw of the screen.
                 val purple =
                     Brush.radialGradient(
@@ -272,7 +276,8 @@ private fun BrandMark(
     large: Boolean,
 ) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Image(
+        val hostBrand = LocalHostChrome.current?.brandIcon
+        if (hostBrand != null) hostBrand(Modifier.size(logoSize)) else Image(
             imageVector = CustomHashTagIcons.Amethyst,
             // The name beside it already says it: a screen reader would read it twice.
             contentDescription = null,
@@ -292,7 +297,8 @@ private fun BrandMark(
 @Composable
 private fun CompactBrandMark() {
     Row(verticalAlignment = Alignment.CenterVertically) {
-        Image(
+        val hostBrand = LocalHostChrome.current?.brandIcon
+        if (hostBrand != null) hostBrand(Modifier.size(40.dp)) else Image(
             imageVector = CustomHashTagIcons.Amethyst,
             // The name beside it already says it: a screen reader would read it twice.
             contentDescription = null,

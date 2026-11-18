@@ -48,8 +48,9 @@ fun EmbeddedAether(
     card: (Modifier, Shape, Color) -> Modifier = { modifier, _, _ -> modifier },
     heading: @Composable (@Composable () -> Unit) -> Unit = { it() },
     label: @Composable (String, Modifier) -> Unit = { text, modifier -> androidx.compose.material3.Text(text, modifier) },
+    brandIcon: (@Composable (Modifier) -> Unit)? = null,
 ) {
-    val chrome = remember(card, heading, label) { HostChrome(card, heading, label) }
+    val chrome = remember(card, heading, label, brandIcon) { HostChrome(card, heading, label, brandIcon) }
     val colors = MaterialTheme.colorScheme
     val typography = MaterialTheme.typography
     val shapes = MaterialTheme.shapes
