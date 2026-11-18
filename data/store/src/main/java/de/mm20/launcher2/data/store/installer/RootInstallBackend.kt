@@ -1,9 +1,9 @@
 package de.mm20.launcher2.data.store.installer
 
 import android.util.Log
+import de.mm20.launcher2.ktx.TelosShellEngine
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import java.io.DataOutputStream
 import java.io.File
 
 /**
@@ -57,13 +57,7 @@ internal class RootInstallBackend : InstallBackend {
 
     private suspend fun runAsRoot(command: String): Boolean = withContext(Dispatchers.IO) {
         try {
-            val process = Runtime.getRuntime().exec("su")
-            DataOutputStream(process.outputStream).use { stdin ->
-                stdin.writeBytes("$command\n")
-                stdin.writeBytes("exit\n")
-                stdin.flush()
-            }
-            process.waitFor() == 0
+            TelosShellEngine.execRootResult(command, timeoutMs = 30_000L).isSuccess
         } catch (e: Exception) {
             Log.w(TAG, "su command failed: $command", e)
             false
