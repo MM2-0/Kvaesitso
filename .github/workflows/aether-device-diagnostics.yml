@@ -1,29 +1,28 @@
-name: Read open dependency alerts before Aether release
+name: Retry Aether emulator infrastructure failure
 on:
   push:
     branches: ['codex/aether-diagnostics']
 permissions:
+  actions: write
   contents: read
-  security-events: read
 jobs:
-  inspect-alerts:
+  retry-client:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - name: Read actionable dependency advisory metadata
+      - name: Retry only the failed real-APK emulator job
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          if gh api --paginate "repos/$GITHUB_REPOSITORY/dependabot/alerts?state=open&per_page=100" --jq '.[] | {severity: .security_advisory.severity, advisory: .security_advisory.ghsa_id, package: .dependency.package.name, manifest: .dependency.manifest_path, vulnerable: .security_vulnerability.vulnerable_version_range, patched: .security_vulnerability.first_patched_version.identifier}' > /tmp/alerts.txt 2>/tmp/alerts-error.txt; then
-            python3 - <<'PY'
+          job=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/44336725713/jobs" --jq '.jobs[] | select(.name == "aether-client-device" and .conclusion == "failure") | .id')
+          echo "::notice::Resolved client API job ID: $job"
+          test -n "$job"
+          if ! gh api --method POST "repos/$GITHUB_REPOSITORY/actions/jobs/$job/rerun" > /tmp/retry-result.txt 2>&1; then
+            python3 - <<'PYCODE'
           from pathlib import Path
-          text = Path('/tmp/alerts.txt').read_text()
-          print('::notice title=Open dependency advisories::' + (text or 'No open alerts').replace('%', '%25').replace('\r', '%0D').replace('\n', '%0A'))
-          PY
-          else
-            python3 - <<'PY'
-          from pathlib import Path
-          text = Path('/tmp/alerts-error.txt').read_text(errors='replace')
-          print('::warning title=Dependency alert access::' + text.replace('%', '%25').replace('\r', '%0D').replace('\n', '%0A'))
-          PY
+          s = Path('/tmp/retry-result.txt').read_text(errors='replace')
+          print('::error title=Emulator retry::' + s.replace('%', '%25').replace('\r', '%0D').replace('\n', '%0A'))
+          PYCODE
+            exit 1
           fi
+          echo "::notice::Retried Aether client job $job after Pixel Launcher emulator ANR"
