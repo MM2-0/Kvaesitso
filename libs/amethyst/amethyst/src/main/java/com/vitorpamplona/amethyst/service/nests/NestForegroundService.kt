@@ -405,7 +405,7 @@ class NestForegroundService : Service() {
             .Builder(this, CHANNEL_ID)
             .setContentTitle(title)
             .setContentText(stringRes(this, R.string.nest_notification_text))
-            .setSmallIcon(R.drawable.amethyst)
+            .setSmallIcon(com.vitorpamplona.amethyst.ui.AetherHostBridge.notificationSmallIcon ?: R.drawable.amethyst)
             .setOngoing(true)
             .setContentIntent(openIntent)
             .addAction(0, stringRes(this, R.string.nest_notification_stop), stopIntent)

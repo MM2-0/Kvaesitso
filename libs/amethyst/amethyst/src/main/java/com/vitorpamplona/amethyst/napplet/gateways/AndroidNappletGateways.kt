@@ -154,7 +154,7 @@ class AndroidNappletGateways(
         val notification =
             NotificationCompat
                 .Builder(context, NOTIFY_CHANNEL_ID)
-                .setSmallIcon(R.drawable.amethyst)
+                .setSmallIcon(com.vitorpamplona.amethyst.ui.AetherHostBridge.notificationSmallIcon ?: R.drawable.amethyst)
                 .setContentTitle(title.ifBlank { loadStringRes(Res.string.napplet_cap_notify) })
                 .setContentText(body)
                 .setAutoCancel(true)

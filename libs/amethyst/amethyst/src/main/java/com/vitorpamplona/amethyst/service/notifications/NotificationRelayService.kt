@@ -503,7 +503,7 @@ class NotificationRelayService : Service() {
                     )
                 }
             }.addAction(0, detailsLabel, detailsPendingIntent)
-            .setSmallIcon(R.drawable.amethyst_service)
+            .setSmallIcon(com.vitorpamplona.amethyst.ui.AetherHostBridge.notificationSmallIcon ?: R.drawable.amethyst_service)
             .setContentIntent(pendingIntent)
             .setOngoing(true)
             .setSilent(true)

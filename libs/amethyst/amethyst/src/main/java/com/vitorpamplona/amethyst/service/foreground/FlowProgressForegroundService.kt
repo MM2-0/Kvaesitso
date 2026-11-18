@@ -336,7 +336,7 @@ abstract class FlowProgressForegroundService<T> : Service() {
         val builder =
             NotificationCompat
                 .Builder(this, channelId)
-                .setSmallIcon(smallIcon)
+                .setSmallIcon(com.vitorpamplona.amethyst.ui.AetherHostBridge.notificationSmallIcon ?: smallIcon)
                 .setContentTitle(content.title)
                 .setContentText(content.text)
                 .setStyle(style)

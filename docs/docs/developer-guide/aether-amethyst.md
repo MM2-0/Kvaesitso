@@ -35,7 +35,9 @@ The Play source set is retained for source provenance, with no Firebase key ship
   floating login cards use opaque tonal containers over the shared root backing.
 - Workers and push callbacks await initialization. Aether notifications use their
   own tag; clearing them does not cancel Telos alarms or downloads. Media playback
-  uses notification ID 7407, distinct from the other Telos players.
+  uses notification ID 7407, distinct from the other Telos players. Client
+  reminder, signer, call, room, upload and Tor notifications also use the host
+  Aether foreground glyph; account avatars and media artwork remain intact.
 
 ## Validation
 

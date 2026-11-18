@@ -155,7 +155,7 @@ object CallNotifier {
         val builder =
             NotificationCompat
                 .Builder(applicationContext, channel.id)
-                .setSmallIcon(R.drawable.amethyst)
+                .setSmallIcon(com.vitorpamplona.amethyst.ui.AetherHostBridge.notificationSmallIcon ?: R.drawable.amethyst)
                 .setContentTitle(loadStringRes(Res.string.call_incoming))
                 .setContentText(callerName)
                 .setLargeIcon(callerBitmap)

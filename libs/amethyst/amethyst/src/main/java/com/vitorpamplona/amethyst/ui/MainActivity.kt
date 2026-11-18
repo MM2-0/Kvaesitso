@@ -73,6 +73,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onNewIntent(intent: android.content.Intent) {
+        super.onNewIntent(intent)
+        AetherHostBridge.redirect(applicationContext, intent)?.let { target ->
+            startActivity(target)
+            finishAndRemoveTask()
+        }
+    }
+
     override fun onResume() {
         super.onResume()
         if (AetherHostBridge.createHostIntent != null) return

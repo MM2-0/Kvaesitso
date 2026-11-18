@@ -108,7 +108,7 @@ object SignerConsentNotifier {
         val notification =
             NotificationCompat
                 .Builder(context, channel.id)
-                .setSmallIcon(R.drawable.amethyst)
+                .setSmallIcon(com.vitorpamplona.amethyst.ui.AetherHostBridge.notificationSmallIcon ?: R.drawable.amethyst)
                 .setContentTitle(loadStringRes(titleRes))
                 .setContentText(loadStringRes(Res.string.nip46_signer_notif_tap))
                 .setContentIntent(pendingIntent)

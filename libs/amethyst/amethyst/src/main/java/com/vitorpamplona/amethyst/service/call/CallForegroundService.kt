@@ -240,7 +240,7 @@ class CallForegroundService : Service() {
             .Builder(this, CHANNEL_ID)
             .setContentTitle(getString(R.string.app_name))
             .setContentText(contentText)
-            .setSmallIcon(R.drawable.amethyst)
+            .setSmallIcon(com.vitorpamplona.amethyst.ui.AetherHostBridge.notificationSmallIcon ?: R.drawable.amethyst)
             .setOngoing(true)
             .setContentIntent(openCallIntent)
             .addAction(R.drawable.ic_call_end, getString(R.string.call_hangup), hangupIntent)

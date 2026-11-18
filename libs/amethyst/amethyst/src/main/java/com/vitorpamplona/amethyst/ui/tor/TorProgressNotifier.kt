@@ -140,7 +140,7 @@ class TorProgressNotifier(
         val builder =
             NotificationCompat
                 .Builder(context, loadStringRes(Res.string.tor_progress_channel_id))
-                .setSmallIcon(R.drawable.amethyst)
+                .setSmallIcon(com.vitorpamplona.amethyst.ui.AetherHostBridge.notificationSmallIcon ?: R.drawable.amethyst)
                 .setContentIntent(openAppIntent())
                 .setCategory(NotificationCompat.CATEGORY_PROGRESS)
                 .setPriority(NotificationCompat.PRIORITY_LOW)

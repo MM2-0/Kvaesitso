@@ -87,7 +87,7 @@ object CalendarReminderNotifier {
         val notification =
             NotificationCompat
                 .Builder(context, channelId)
-                .setSmallIcon(R.drawable.amethyst)
+                .setSmallIcon(com.vitorpamplona.amethyst.ui.AetherHostBridge.notificationSmallIcon ?: R.drawable.amethyst)
                 .setContentTitle(title)
                 .setContentText(body)
                 .setStyle(NotificationCompat.BigTextStyle().bigText(body))
