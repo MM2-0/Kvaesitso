@@ -61,16 +61,20 @@ fun PerformanceSettingsScreen() {
                     title = stringResource(I18nR.string.self_tuning_engine_title),
                     summary = if (forcing) stringResource(I18nR.string.self_tuning_engine_busy) else stringResource(I18nR.string.self_tuning_engine_summary),
                     onClick = {
+                        if (forcing) return@Preference
                         forcing = true
-                        scope.launch {
-                            val success = de.mm20.launcher2.ui.performance.TelosSelfOptimizer.forceOptimizeNow(context)
-                            android.widget.Toast.makeText(
-                                context,
-                                if (success) context.getString(I18nR.string.self_tuning_engine_ok)
-                                else context.getString(I18nR.string.self_tuning_engine_fail),
-                                android.widget.Toast.LENGTH_SHORT,
-                            ).show()
-                            forcing = false
+                        de.mm20.launcher2.ktx.TelosShellEngine.scope.launch(kotlinx.coroutines.NonCancellable) {
+                            try {
+                                val success = de.mm20.launcher2.ui.performance.TelosSelfOptimizer.forceOptimizeNow(context)
+                                android.widget.Toast.makeText(
+                                    context,
+                                    if (success) context.getString(I18nR.string.self_tuning_engine_ok)
+                                    else context.getString(I18nR.string.self_tuning_engine_fail),
+                                    android.widget.Toast.LENGTH_SHORT,
+                                ).show()
+                            } finally {
+                                forcing = false
+                            }
                         }
                     },
                 )

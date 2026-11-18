@@ -26,44 +26,9 @@ object TelosSelfOptimizer {
 
     fun checkAndSelfCompileAsync(context: Context, scope: CoroutineScope) {
         val appContext = context.applicationContext
-        scope.launch(Dispatchers.IO) {
-            checkAndSelfCompileInternal(appContext)
-        }
-    }
-
-    private suspend fun checkAndSelfCompileInternal(context: Context) = withContext(Dispatchers.IO) {
-        val pm = context.packageManager
-        val pkgInfo = runCatching {
-            pm.getPackageInfo(context.packageName, 0)
-        }.getOrNull() ?: return@withContext
-
-        val currentVersionCode = PackageInfoCompat.getLongVersionCode(pkgInfo)
-        val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        val lastOptimized = prefs.getLong(KEY_LAST_OPTIMIZED_VERSION, -1L)
-
-        if (lastOptimized == currentVersionCode) {
-            return@withContext
-        }
-
-        runCatching {
-            de.mm20.launcher2.appmanagement.stealth.TelosPrivilegedDaemon.grantWriteSecureSettings(context)
-        }
-
-        if (!TelosShellEngine.isPrivilegedAvailable(context)) {
-            Log.d(TAG, "Privileged shell unavailable; skipping self-compilation for now")
-            return@withContext
-        }
-
-        Log.i(TAG, "New Telos version detected ($currentVersionCode vs $lastOptimized). Starting background self-compile...")
-        val ownPkg = context.packageName
-        val cmd = "cmd package compile -m speed --secondary-dex -f $ownPkg"
-        val result = TelosShellEngine.execResult(cmd, timeoutMs = 180_000L)
-
-        if (result.isSuccess) {
-            Log.i(TAG, "Telos Launcher successfully self-compiled to speed AOT!")
-            prefs.edit().putLong(KEY_LAST_OPTIMIZED_VERSION, currentVersionCode).apply()
-        } else {
-            Log.w(TAG, "Self-compilation finished with exitCode ${result.exitCode}: ${result.stderr}")
+        scope.launch {
+            runCatching { de.mm20.launcher2.appmanagement.stealth.TelosPrivilegedDaemon.grantWriteSecureSettings(appContext) }
+            de.mm20.launcher2.ui.performance.TelosSelfOptimizer.runBackgroundOptimizations(appContext)
         }
     }
 }

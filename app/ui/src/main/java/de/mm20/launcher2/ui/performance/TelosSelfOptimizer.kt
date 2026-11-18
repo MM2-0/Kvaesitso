@@ -7,13 +7,18 @@ import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
-import rikka.shizuku.Shizuku
+import de.mm20.launcher2.ktx.TelosShellEngine
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
+import java.util.concurrent.atomic.AtomicBoolean
 
 object TelosSelfOptimizer {
 
     private const val TAG = "TelosSelfOptimizer"
     private const val PREFS_NAME = "telos_optimizer_prefs"
     private const val KEY_LAST_AOT_VERSION = "last_aot_compiled_version_code"
+    private val runMutex = Mutex()
+    private val backgroundRunStarted = AtomicBoolean(false)
 
     /**
      * Call this from MainActivity.onCreate() on the main thread.
@@ -32,31 +37,33 @@ object TelosSelfOptimizer {
      * Start the automated background optimization process.
      * Designed to be called roughly 3 seconds after the first frame.
      */
-    suspend fun runBackgroundOptimizations(context: Context) = withContext(Dispatchers.IO) {
-        delay(3000)
-        Log.i(TAG, "Starting TelosSelfOptimizer background tasks")
-
-        if (Shizuku.pingBinder()) {
-            if (Shizuku.checkSelfPermission() == android.content.pm.PackageManager.PERMISSION_GRANTED) {
-                applyShizukuOptimizations(context, force = false)
-            } else {
-                Log.w(TAG, "Shizuku is running but permission not granted. Requesting...")
-                Shizuku.requestPermission(0)
+    suspend fun runBackgroundOptimizations(context: Context) {
+        if (backgroundRunStarted.getAndSet(true)) return
+        withContext(Dispatchers.IO) {
+            delay(3000)
+            Log.i(TAG, "Starting TelosSelfOptimizer background tasks")
+            val appContext = context.applicationContext
+            TelosShellEngine.init(appContext)
+            if (TelosShellEngine.isPrivilegedAvailable(appContext)) {
+                applyShizukuOptimizations(appContext, force = false)
             }
-        } else {
-            Log.w(TAG, "Shizuku binder is not available. Skipping deep optimizations.")
         }
     }
 
     /**
      * Manually force a re-optimization (e.g. from a UI button).
      */
-    suspend fun forceOptimizeNow(context: Context): Boolean = withContext(Dispatchers.IO) {
-        if (!Shizuku.pingBinder() || Shizuku.checkSelfPermission() != android.content.pm.PackageManager.PERMISSION_GRANTED) {
-            Log.w(TAG, "Cannot force optimize: Shizuku unavailable or no permission")
-            return@withContext false
+    suspend fun forceOptimizeNow(context: Context): Boolean {
+        val appContext = context.applicationContext
+        TelosShellEngine.init(appContext)
+        if (!TelosShellEngine.isPrivilegedAvailable(appContext)) {
+            if (rikka.shizuku.Shizuku.pingBinder() && rikka.shizuku.Shizuku.checkSelfPermission() != android.content.pm.PackageManager.PERMISSION_GRANTED) {
+                rikka.shizuku.Shizuku.requestPermission(0)
+            }
+            Log.w(TAG, "Cannot force optimize: Privileged shell unavailable")
+            return false
         }
-        applyShizukuOptimizations(context, force = true)
+        return applyShizukuOptimizations(appContext, force = true)
     }
 
     private suspend fun applyShizukuOptimizations(context: Context, force: Boolean): Boolean {
