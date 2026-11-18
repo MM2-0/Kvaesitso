@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.45.70
+
+- Aether embeds the Amethyst F-Droid client in the Telos APK, with account
+  creation/import, multiple-account switching/removal, settings, feeds, relays,
+  messaging and media. No external Amethyst APK is required.
+- Isolate client credentials from launcher preferences and Android backup; defer
+  initialization, preserve the keyless browser sandbox and forward Nostr links/shares.
+- Inherit Telos appearance and fonts, add Cybertech settings chrome and Aether
+  branding, and keep client notifications separate from alarms and other players.
+- Align embedded parser dependencies and fix duplicate Vue runtimes in the docs build.
+
 ## 1.45.69
 
 - Store Shizuku/root installs stream the APK through a real root shell (not `su -c`) and time out

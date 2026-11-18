@@ -2,6 +2,7 @@ name: Validate embedded Amethyst library
 on:
   push:
     branches: ['codex/aether-amethyst-embedded']
+    paths-ignore: ['docs/**', 'readme.md', 'CHANGELOG.md', 'THIRD_PARTY_NOTICES.md', 'fastlane/**']
   pull_request:
     paths:
       - 'libs/amethyst/**'

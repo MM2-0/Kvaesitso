@@ -1,0 +1,1 @@
+Aether now embeds the Amethyst F-Droid client: multiple accounts, settings, feeds, relays and messaging, without a separate APK. Cybertech chrome, private account storage and separate notifications.

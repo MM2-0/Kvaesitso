@@ -1,8 +1,8 @@
 # Aether
 
-The development version of Aether embeds the Amethyst F-Droid Nostr client
-inside Telos. No separate Amethyst application is required. Published v1.45.69
-still contains the earlier preview; this change is being validated for release.
+Aether in Telos 1.45.70 embeds the Amethyst F-Droid Nostr client
+inside Telos. No separate Amethyst application is required. Earlier Telos versions contain
+the preview rather than the embedded client.
 
 ## Accounts
 

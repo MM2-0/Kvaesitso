@@ -429,14 +429,14 @@ licenses (Apache-2.0 with LLVM exceptions and legacy notices) are reproduced in 
 NDK consolidated notices; this asset is retained to preserve all runtime attributions.
 
 
-## Amethyst — embedded Aether source (integration in progress)
+## Amethyst — embedded Aether client
 
 Source: https://github.com/vitorpamplona/amethyst
 Pinned revision: `75bb07fa3adf4ef5d590bb5379d87f01c139a430`.
 Copyright (c) 2023 Vitor Pamplona; individual source headers retain their
 respective years and notices. MIT license, reproduced in full in
 `libs/amethyst/LICENSE`. The source is adapted into an Android library for
-Aether; the development branch connects it to Aether, but it has not shipped in a release.
+Aether inside the Telos APK (version 1.45.70); no external client APK is required.
 Telos-specific adapters retain their GPL-3.0-or-later headers.
 The native Arti and zxing-cpp source/build instructions and license information
 remain under `libs/amethyst/tools`. The embedded build aligns jsoup to 1.24.1 (MIT) and Jackson to 2.23.0
