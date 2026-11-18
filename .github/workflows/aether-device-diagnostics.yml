@@ -16,13 +16,15 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh api "repos/$GITHUB_REPOSITORY/actions/jobs/134869162715/logs" > /tmp/aether-pr-log.txt
+          job=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/44314675281/jobs" --jq '.jobs[] | select(.name == "open-pull-request") | .id')
+          gh api "repos/$GITHUB_REPOSITORY/actions/jobs/$job/logs" > /tmp/aether-pr-log.txt 2>&1 || true
           python3 - <<'PY'
           from pathlib import Path
           for line in Path('/tmp/aether-pr-log.txt').read_text(errors='replace').splitlines()[-35:]:
               print('::notice title=Aether PR diagnostics::' + line.replace('%', '%25'))
           PY
       - name: Create the review PR if permitted
+        if: always()
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
