@@ -2,6 +2,9 @@
 
 ## 1.45.70
 
+- Fix a cold-start dependency-registration race that could crash Telos before
+  a directly opened app appeared; preserve deferred background initialization.
+
 - Aether embeds the Amethyst F-Droid client in the Telos APK, with account
   creation/import, multiple-account switching/removal, settings, feeds, relays,
   messaging and media. No external Amethyst APK is required.

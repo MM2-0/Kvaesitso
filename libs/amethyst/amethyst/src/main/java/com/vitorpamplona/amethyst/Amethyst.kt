@@ -182,7 +182,12 @@ open class Amethyst : Application() {
         // Keeps the ~650 relay/ingest worker threads a cold start spawns from starving the UI
         // thread out of its frames — worth ~45% off time-to-first-paint on a release build.
         // Override or disable with the `amethyst_worker_nice` global setting.
-        WorkerThreadPriorityGovernor.start(this)
+        // The upstream governor sweeps every process worker forever. In a shared
+        // launcher it would also demote call lookup, messaging and launcher IO.
+        // Only the standalone client owns that process-wide scheduling policy.
+        if (com.vitorpamplona.amethyst.ui.AetherHostBridge.createHostIntent == null) {
+            WorkerThreadPriorityGovernor.start(this)
+        }
 
         // Hydrate the device-local favorite-apps list (main process only; the sandbox never reads it).
         instance.favoriteApps.init()

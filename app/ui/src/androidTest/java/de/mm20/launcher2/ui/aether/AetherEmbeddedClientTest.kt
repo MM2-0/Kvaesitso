@@ -38,7 +38,13 @@ class AetherEmbeddedClientTest {
     private fun awaitNode(label: String, predicate: (AccessibilityNodeInfo) -> Boolean): AccessibilityNodeInfo {
         val until = SystemClock.uptimeMillis() + 60_000
         while (SystemClock.uptimeMillis() < until) {
-            nodes().firstOrNull(predicate)?.let { return it }
+            val current = nodes()
+            current.firstOrNull(predicate)?.let { return it }
+            // The upstream F-Droid first-run flow offers an optional push distributor.
+            // Keep the isolated offline test opted out, through its actual UI.
+            if (current.any { it.text?.toString() == "Push Notification Setup" }) {
+                current.firstOrNull { it.text?.toString() == "Don't show again" }?.let(::click)
+            }
             SystemClock.sleep(300)
         }
         screenshot("failure")

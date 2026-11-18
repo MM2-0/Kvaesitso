@@ -46,6 +46,7 @@ import com.vitorpamplona.amethyst.commons.ui.platform.LocalAppServices
 import com.vitorpamplona.amethyst.commons.ui.richtext.LocalRichTextPlatform
 import com.vitorpamplona.amethyst.commons.ui.screen.DisplaySettings
 import com.vitorpamplona.amethyst.commons.ui.screen.collectDisplaySettings
+import com.vitorpamplona.amethyst.commons.ui.theme.isLight
 import com.vitorpamplona.amethyst.commons.ui.theme.DefaultTypography
 import com.vitorpamplona.amethyst.commons.ui.theme.AmethystMaterialTheme
 import com.vitorpamplona.amethyst.commons.ui.theme.amethystDarkColors
@@ -114,7 +115,7 @@ fun AmethystTheme(
     // MODIFY_DAY_NIGHT_MODE, which this app does not declare, so the call silently no-ops — and it
     // ran on every recomposition of the theme, writing device state from inside composition. The
     // in-app choice is applied through the colour scheme below, which is what actually took effect.
-    val darkTheme = isDarkTheme(prefTheme)
+    val darkTheme = colorsOverride?.let { !it.isLight } ?: isDarkTheme(prefTheme)
     val colors =
         remember(darkTheme, accentColor) {
             if (darkTheme) amethystDarkColors(accentColor) else amethystLightColors(accentColor)

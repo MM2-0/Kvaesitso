@@ -21,8 +21,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-java@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
         with:
           distribution: temurin
           java-version: '21'
@@ -68,7 +68,7 @@ jobs:
               raise SystemExit('No Aether host tests executed')
           print('::notice title=Aether host test totals::' + ', '.join(f'{key}={value}' for key, value in totals.items()))
           PYCODE
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: aether-library-validation
@@ -82,8 +82,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 90
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-java@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
         with:
           distribution: temurin
           java-version: '21'
@@ -95,6 +95,24 @@ jobs:
         with:
           cache-provider: basic
           cache-read-only: false
+      - uses: android-actions/setup-android@v4
+      - name: Install the release NDK before Gradle
+        run: |
+          for attempt in 1 2 3; do
+            if timeout 8m sdkmanager --install 'ndk;27.0.12077973' </dev/null; then exit 0; fi
+            echo "NDK installation attempt $attempt failed"
+            sleep 8
+          done
+          echo '::error::Could not install NDK 27 before the APK build'
+          exit 1
+      - name: Cache APK task outputs independently of the library job
+        uses: actions/cache@v6
+        with:
+          path: ~/.gradle/caches/build-cache-1
+          key: aether-apk-${{ runner.os }}-${{ github.job }}-${{ hashFiles('**/*.gradle*', '**/libs.versions.toml', 'gradle/wrapper/**') }}-${{ github.sha }}
+          restore-keys: |
+            aether-apk-${{ runner.os }}-${{ github.job }}-${{ hashFiles('**/*.gradle*', '**/libs.versions.toml', 'gradle/wrapper/**') }}-
+            aether-apk-${{ runner.os }}-${{ github.job }}-
       - name: Compile the actual Telos APK with Aether embedded
         shell: bash
         run: |
@@ -123,7 +141,7 @@ jobs:
           for line in (selected[-30:] or lines[-30:]):
               print('::error title=Telos Aether compile::' + line.replace('%', '%25').replace('\r', '%0D').replace('\n', '%0A'))
           PYCODE
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: telos-aether-build-validation
@@ -134,8 +152,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 90
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-java@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
         with:
           distribution: temurin
           java-version: '21'
@@ -179,7 +197,21 @@ jobs:
             -Pandroid.testInstrumentationRunnerArguments.class=com.vitorpamplona.amethyst.AetherStorageContextTest
             --no-daemon --max-workers=1 --console=plain -Dorg.gradle.parallel=false
             -Pkotlin.compiler.execution.strategy=in-process '-Dorg.gradle.jvmargs=-Xmx6g -Dfile.encoding=UTF-8'
-      - uses: actions/upload-artifact@v4
+      - name: Verify all storage regressions executed
+        if: always()
+        run: |
+          python3 - <<'PYCODE'
+          from pathlib import Path
+          import xml.etree.ElementTree as ET
+          cases = []
+          for path in Path('libs/amethyst/amethyst/build/outputs/androidTest-results').rglob('TEST-*.xml'):
+              cases.extend(c for c in ET.parse(path).getroot().iter('testcase') if c.get('classname') == 'com.vitorpamplona.amethyst.AetherStorageContextTest')
+          passed = len(cases) == 4 and all(c.find('failure') is None and c.find('error') is None and c.find('skipped') is None for c in cases)
+          level = 'notice' if passed else 'error'
+          print(f'::{level} title=Aether storage device tests::executed={len(cases)}, expected=4, all_passed={passed}')
+          if not passed: raise SystemExit('All four Aether storage regressions must pass without skips')
+          PYCODE
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: aether-storage-device-results
@@ -194,8 +226,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 90
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-java@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
         with:
           distribution: temurin
           java-version: '21'
@@ -207,6 +239,24 @@ jobs:
         with:
           cache-provider: basic
           cache-read-only: false
+      - uses: android-actions/setup-android@v4
+      - name: Install the release NDK before Gradle
+        run: |
+          for attempt in 1 2 3; do
+            if timeout 8m sdkmanager --install 'ndk;27.0.12077973' </dev/null; then exit 0; fi
+            echo "NDK installation attempt $attempt failed"
+            sleep 8
+          done
+          echo '::error::Could not install NDK 27 before the APK build'
+          exit 1
+      - name: Cache APK task outputs independently of the library job
+        uses: actions/cache@v6
+        with:
+          path: ~/.gradle/caches/build-cache-1
+          key: aether-apk-${{ runner.os }}-${{ github.job }}-${{ hashFiles('**/*.gradle*', '**/libs.versions.toml', 'gradle/wrapper/**') }}-${{ github.sha }}
+          restore-keys: |
+            aether-apk-${{ runner.os }}-${{ github.job }}-${{ hashFiles('**/*.gradle*', '**/libs.versions.toml', 'gradle/wrapper/**') }}-
+            aether-apk-${{ runner.os }}-${{ github.job }}-
       - name: Build actual Telos and external UI driver
         run: |
           set -o pipefail
@@ -239,6 +289,8 @@ jobs:
           fi
           git worktree add --detach /tmp/aether-review "$base"
           mkdir -p /tmp/aether-review/docs/screenshots/development/aether
+          # Do not relabel a previous run's failure PNG with the new source revision.
+          rm -f /tmp/aether-review/docs/screenshots/development/aether/aether-*.png
           find /tmp/aether-screenshots -name '*.png' -exec cp {} /tmp/aether-review/docs/screenshots/development/aether/ \;
           printf '%s\n' "$GITHUB_SHA" > /tmp/aether-review/docs/screenshots/development/aether/SOURCE_REVISION
           git -C /tmp/aether-review config user.name github-actions[bot]
@@ -268,14 +320,16 @@ jobs:
                   print('::error title=Aether APK driver build::' + text.replace('%', '%25').replace('\r', '%0D').replace('\n', '%0A'))
               for line in lines:
                   if line.startswith('e: '): print('::error title=Aether UI compile::' + line.replace('%', '%25'))
+          logcats = list(Path('app/ui/build/outputs/androidTest-results').rglob('logcat*.txt'))
           logcat = Path('/tmp/aether-client-logcat.txt')
-          if logcat.exists():
-              errors = [line for line in logcat.read_text(errors='replace').splitlines() if 'AndroidRuntime' in line or 'AetherRuntime' in line]
+          if logcat.exists(): logcats.append(logcat)
+          for logcat in logcats:
+              errors = [line for line in logcat.read_text(errors='replace').splitlines() if 'AndroidRuntime' in line or 'AetherRuntime' in line or 'Abort message:' in line]
               if errors:
                   text = '\n'.join(errors[-80:])[-18000:]
                   print('::error title=Aether runtime details::' + text.replace('%', '%25').replace('\r', '%0D').replace('\n', '%0A'))
           PYCODE
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: aether-client-device-results
@@ -295,7 +349,7 @@ jobs:
       contents: read
       pull-requests: write
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - name: Open review after the integration gates pass
         env:
           GH_TOKEN: ${{ github.token }}

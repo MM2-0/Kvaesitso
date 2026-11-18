@@ -13,12 +13,23 @@ library selected through a composite build. Telos selects the F-Droid distributi
 Google Play-specific Firebase, Cast and Google AI extensions are not included.
 The Play source set is retained for source provenance, with no Firebase key shipped.
 
+## Launcher cold-start regression
+
+Real-APK instrumentation found that asynchronous Koin module registration raced
+with startup consumers: resolving `DesktopModeManager` crashed the process before
+the Aether screen appeared. All definitions are now registered synchronously;
+eager instances remain deferred to a background coroutine. Startup hooks that
+need Koin begin only after registration. The same real-APK login/restart test is
+the regression gate. This does not initialize the Nostr graph at launcher startup.
+
 ## Host boundaries
 
 - `LauncherApplication` defers client initialization until Aether or one of its
   background entry points needs it. Initialization is serialized on IO. The
   keyless `:napplet` sandbox cannot initialize an account or start launcher
-  Koin, preferences and privileged transports.
+  Koin, preferences and privileged transports. The standalone client's
+  process-wide thread-priority polling governor is not started in the host: it
+  would also demote launcher, call-lookup and messaging workers.
 - `EmbeddedAether` renders the upstream app, account manager, feeds, settings,
   relays, messaging, media and signer workflows. Multiple accounts use the
   original session manager; adding, switching and removing accounts stay available.
@@ -33,6 +44,8 @@ The Play source set is retained for source provenance, with no Firebase key ship
   scaling. Explicit client accent colors remain selectable. Settings cards,
   headings and section labels use the host Cybertech components; drawers and
   floating login cards use opaque tonal containers over the shared root backing.
+  The client surface role is opaque for nested dialogs; only page background
+  inherits transparency. Inherited dark/light state follows the host palette.
   Login uses the Aether name and existing Rondo glyph; the imported decorative
   background glow is disabled in the host to preserve the single root backing.
 - Workers and push callbacks await initialization. Aether notifications use their
@@ -48,6 +61,9 @@ passed the combined ARM64 debug APK build, library build and Android storage
 instrumentation. The library host suite reported 1,526 tests, zero failures/errors
 and nine skips. These results apply to revision `896782b45`, before subsequent
 UI/chrome changes; they are not a release or full client runtime certification.
+
+APK jobs retain separate Gradle task-output caches so parallel library cache
+writes cannot discard the much larger launcher compilation results.
 
 `validate-aether.yml` additionally builds the real Telos APK for an x86_64
 emulator solely for validation (release APKs remain ARM-specific). A separate

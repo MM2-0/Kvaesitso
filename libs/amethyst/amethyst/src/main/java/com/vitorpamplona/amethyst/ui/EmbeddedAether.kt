@@ -51,7 +51,10 @@ fun EmbeddedAether(
     brandIcon: (@Composable (Modifier) -> Unit)? = null,
 ) {
     val chrome = remember(card, heading, label, brandIcon) { HostChrome(card, heading, label, brandIcon) }
-    val colors = MaterialTheme.colorScheme
+    val hostColors = MaterialTheme.colorScheme
+    // Client dialogs use Surface's default role. Keep it opaque; only the client's
+    // page background inherits the host's single transparent wallpaper backing.
+    val colors = remember(hostColors) { hostColors.copy(surface = hostColors.surfaceContainer) }
     val typography = MaterialTheme.typography
     val shapes = MaterialTheme.shapes
     AmethystTheme(hostColors = colors, hostTypography = typography, updateWindow = false) {

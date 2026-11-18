@@ -1,1 +1,1 @@
-Aether now embeds the Amethyst F-Droid client: multiple accounts, settings, feeds, relays and messaging, without a separate APK. Cybertech chrome, private account storage and separate notifications.
+Aether now embeds the Amethyst F-Droid client: multiple accounts, settings, feeds, relays and messaging, without a separate APK. Cybertech chrome, private account storage and separate notifications. Fixed a cold-start crash when opening Telos apps directly.

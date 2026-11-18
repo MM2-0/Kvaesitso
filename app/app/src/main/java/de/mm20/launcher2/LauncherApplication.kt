@@ -115,16 +115,6 @@ class LauncherApplication : Amethyst(), CoroutineScope, ImageLoaderFactory {
                 .putExtra(SettingsDeepLinkContract.EXTRA_ROUTE, SettingsDeepLinkContract.ROUTE_AETHER)
         }
 
-
-        // Self-optimize Telos bytecode via ART speed profile in background if updated
-        de.mm20.launcher2.art.TelosSelfOptimizer.checkAndSelfCompileAsync(this, this)
-        de.mm20.launcher2.appmanagement.stealth.TelosDevOptsCloak.start(this)
-
-        launch(Dispatchers.IO) { de.mm20.launcher2.ui.system.restoreSystemAppOps(this@LauncherApplication) }
-        launch(Dispatchers.IO) {
-            runCatching { get<de.mm20.launcher2.appmanagement.battery.BatteryPolicy>().start() }
-        }
-
         if (BuildConfig.BUILD_TYPE == "debug") initDebugMode()
 
         // Crash guard: blame a crash on the media app that was open, so that an app that keeps
@@ -135,7 +125,8 @@ class LauncherApplication : Amethyst(), CoroutineScope, ImageLoaderFactory {
             previousHandler?.uncaughtException(thread, throwable)
         }
 
-        // Delay non-critical Koin modules to Dispatchers.Default for faster App Startup
+        // Register definitions before any Activity, receiver or startup coroutine can
+        // resolve them. Registration is cheap; eager instances are started off Main.
         startKoin {
             androidLogger(if (BuildConfig.DEBUG) Level.ERROR else Level.NONE)
             androidContext(this@LauncherApplication)
@@ -153,59 +144,70 @@ class LauncherApplication : Amethyst(), CoroutineScope, ImageLoaderFactory {
             )
         }
 
+        val koin = org.koin.core.context.GlobalContext.get()
+        koin.loadModules(
+            listOf(
+                accountsModule,
+                applicationsModule,
+                appShortcutsModule,
+                calculatorModule,
+                badgesModule,
+                calendarModule,
+                contactsModule,
+                customAttrsModule,
+                favoritesModule,
+                globalActionsModule,
+                iconsModule,
+                musicModule,
+                notificationsModule,
+                permissionsModule,
+                searchActionsModule,
+                themesModule,
+                unitConverterModule,
+                weatherModule,
+                websitesModule,
+                webAppShortcutsModule,
+                widgetsModule,
+                wikipediaModule,
+                locationsModule,
+                servicesTagsModule,
+                widgetsServiceModule,
+                dataPluginsModule,
+                servicesPluginsModule,
+                backupModule,
+                devicePoseModule,
+                profilesModule,
+                feedModule,
+                freezeModule,
+                wallpapersModule,
+                contextProfilesModule,
+                desktopModeModule,
+                islandOverlayModule,
+                notesModule,
+                telosCalendarModule,
+                webAppsPanelModule,
+                appLockModule,
+                storeModule,
+                dataStoreModule,
+                commsModule,
+                dataCommsModule,
+                downloadsModule,
+                networkModule,
+            ),
+            createEagerInstances = false,
+        )
         launch(Dispatchers.Default) {
-            val koin = org.koin.core.context.GlobalContext.get()
-            koin.loadModules(
-                listOf(
-                    accountsModule,
-                    applicationsModule,
-                    appShortcutsModule,
-                    calculatorModule,
-                    badgesModule,
-                    calendarModule,
-                    contactsModule,
-                    customAttrsModule,
-                    favoritesModule,
-                    globalActionsModule,
-                    iconsModule,
-                    musicModule,
-                    notificationsModule,
-                    permissionsModule,
-                    searchActionsModule,
-                    themesModule,
-                    unitConverterModule,
-                    weatherModule,
-                    websitesModule,
-                    webAppShortcutsModule,
-                    widgetsModule,
-                    wikipediaModule,
-                    locationsModule,
-                    servicesTagsModule,
-                    widgetsServiceModule,
-                    dataPluginsModule,
-                    servicesPluginsModule,
-                    backupModule,
-                    devicePoseModule,
-                    profilesModule,
-                    feedModule,
-                    freezeModule,
-                    wallpapersModule,
-                    contextProfilesModule,
-                    desktopModeModule,
-                    islandOverlayModule,
-                    notesModule,
-                    telosCalendarModule,
-                    webAppsPanelModule,
-                    appLockModule,
-                    storeModule,
-                    dataStoreModule,
-                    commsModule,
-                    dataCommsModule,
-                    downloadsModule,
-                    networkModule,
-                )
-            )
+            koin.createEagerInstances()
             runCatching { de.mm20.launcher2.wallpapers.WallpaperRestorer.restoreAfterUpgrade(this@LauncherApplication) }
+        }
+
+        // Self-optimize Telos bytecode via ART speed profile in background if updated
+        de.mm20.launcher2.art.TelosSelfOptimizer.checkAndSelfCompileAsync(this, this)
+        de.mm20.launcher2.appmanagement.stealth.TelosDevOptsCloak.start(this)
+
+        launch(Dispatchers.IO) { de.mm20.launcher2.ui.system.restoreSystemAppOps(this@LauncherApplication) }
+        launch(Dispatchers.IO) {
+            runCatching { get<de.mm20.launcher2.appmanagement.battery.BatteryPolicy>().start() }
         }
 
         // Reconcile an old call notification after a process crash; Telecom is queried off Main.
