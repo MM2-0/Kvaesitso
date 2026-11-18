@@ -11,16 +11,21 @@ no new production library or replacement design framework is introduced.
 
 ## Execution evidence
 
-### Embedded Aether development (2026-11-18)
+### Embedded Aether (2026-11-18)
 
-Revision `896782b45` passed the actual ARM64 Telos debug APK build, Amethyst library
-suite (1,526 tests, zero failures/errors, nine skips) and Android storage tests in
-[run 44277134771](https://github.com/koukomin/Telos-Launcher/actions/runs/44277134771).
-This establishes compilation and encrypted namespace/notification isolation, not
-full UI or account workflow verification. New real-APK emulator coverage adds
-public-key login, multiple accounts, settings and process restart. The following
-Cybertech chrome changes await those checks and screenshot review; no whole-client
-visual certification or physical Android 17 verification is claimed.
+Application revision `c3d24e2fc` passed the ARM64 debug/R8 release builds, library
+suite (1,526 tests, zero failures/errors, nine skips), all four storage/notification
+device tests and the real-Telos multi-account UI/process-restart scenario in
+[run 44314675281](https://github.com/koukomin/Telos-Launcher/actions/runs/44314675281).
+The separate administrative PR-creation step was rejected by the repository's
+GitHub Actions permissions; the integration jobs themselves passed.
+
+Reviewed captures show the normal/2.0-font account settings, short landscape
+layout, and the two-account selector with the first account active after process
+restart. Sheets are opaque and text stays readable. The loading-frame capture
+is not a reviewed login-form image. Shared wallpaper/glass wrapping is being
+revalidated separately; no full wallpaper/theme/locale matrix, live publishing,
+external-signer or physical Android 17 certification is claimed.
 
 
 ### Άκου automatic entry and Android YouTube link handlers

@@ -22,7 +22,9 @@ relay management, media, wallets and the original client settings. Features that
 need an external service or signer retain their respective requirements. The
 F-Droid distribution does not include proprietary Play-only integrations.
 
-Open **Settings** from the profile menu to manage the client. Appearance follows
+Open **Settings** from the profile menu to manage the client. Search for the
+feature-set setting and select **Complete** to show optional destinations;
+the upstream default is **Simplified**. Appearance follows
 Telos by default, including font scaling, the Aether icon and Cybertech settings chrome. You can
 choose a separate client theme or accent color; **System** restores the inherited
 accent. Background notifications remain opt-in and preserve per-account choices.

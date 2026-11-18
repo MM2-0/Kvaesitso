@@ -43,6 +43,7 @@ jobs:
   build:
     needs: version
     runs-on: ubuntu-latest
+    timeout-minutes: 120
     strategy:
       fail-fast: false
       matrix:
@@ -106,7 +107,12 @@ jobs:
       - name: Build Release APK (${{ matrix.abi }})
         env:
           GRADLE_OPTS: "-Xmx6144m -XX:MaxMetaspaceSize=1536m -XX:+UseG1GC"
-        run: ./gradlew assembleDefaultRelease -Ptelos.abi=${{ matrix.abi }} --no-configuration-cache --stacktrace
+        run: >-
+          ./gradlew :app:app:assembleDefaultRelease -Ptelos.abi=${{ matrix.abi }}
+          --no-configuration-cache --no-daemon --max-workers=1 --stacktrace --console=plain
+          -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process
+          '-Dorg.gradle.jvmargs=-Xmx7g -Dfile.encoding=UTF-8'
+
 
       - name: Verify packaged native ABIs
         env:

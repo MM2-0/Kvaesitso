@@ -44,8 +44,9 @@ the regression gate. This does not initialize the Nostr graph at launcher startu
   scaling. Explicit client accent colors remain selectable. Settings cards,
   headings and section labels use the host Cybertech components; drawers and
   floating login cards use opaque tonal containers over the shared root backing.
-  The client surface role is opaque for nested dialogs; only page background
-  inherits transparency. Inherited dark/light state follows the host palette.
+  `VirtualAppWindow` supplies the same shared wallpaper/glass backing as other
+  Telos apps. The client surface role is opaque for nested dialogs; only page
+  background inherits transparency. Inherited dark/light state follows the host palette.
   Login uses the Aether name and existing Rondo glyph; the imported decorative
   background glow is disabled in the host to preserve the single root backing.
 - Workers and push callbacks await initialization. Aether notifications use their
@@ -56,23 +57,38 @@ the regression gate. This does not initialize the Nostr graph at launcher startu
 
 ## Validation
 
-[Actions run 44277134771](https://github.com/koukomin/Telos-Launcher/actions/runs/44277134771)
-passed the combined ARM64 debug APK build, library build and Android storage
-instrumentation. The library host suite reported 1,526 tests, zero failures/errors
-and nine skips. These results apply to revision `896782b45`, before subsequent
-UI/chrome changes; they are not a release or full client runtime certification.
+[Run 44314675281](https://github.com/koukomin/Telos-Launcher/actions/runs/44314675281)
+validated application revision `c3d24e2fc`:
 
-APK jobs retain separate Gradle task-output caches so parallel library cache
-writes cannot discard the much larger launcher compilation results.
+- Actual ARM64 Telos debug and minified/resource-shrunk release APK builds passed.
+- The library suite executed 1,526 tests: no failures/errors, nine upstream skips.
+- All four Android encrypted-storage, namespace/editor, database-path and
+  notification-isolation regressions passed without skips.
+- The real-Telos external UI driver passed public-key login, adding two accounts,
+  switching to the first, settings navigation and restoring both accounts after
+  force-stop/relaunch. It also captured settings at system font scale 2.0 in
+  portrait and landscape. No real private keys or publication were used.
+- The resolved Dokka security graph passed. Release helper tests and the static
+  Pages build also passed locally; see the Dependabot guide for the unpatched
+  docs-tool advisory and the scoped review of upstream scanner fixtures.
 
-`validate-aether.yml` additionally builds the real Telos APK for an x86_64
-emulator solely for validation (release APKs remain ARM-specific). A separate
-instrumentation process drives public-key-only login, multiple accounts, settings
-and process restart with network disabled, plus large-font portrait/landscape
-settings captures. After all integration gates pass, Actions opens the review PR. Screenshots are exported through
-MediaStore before test APK removal. The public-fixture evidence branch records
-the tested source revision for visual review.
+Screenshots of the account selector before/after restart and settings at normal
+and enlarged fonts were visually reviewed. They show opaque readable sheets,
+Cybertech settings cards and adaptive landscape navigation. The initial capture
+shows the loading transition, so it is not visual evidence of the login form.
+The shared glass wrapper and settled captures are being revalidated on the next
+revision; this record must retain the exact tested source revision.
 
-Production R8, real signer consent, publication, external relay interoperability,
-physical OnePlus/Android 17 behavior and the full visual/font matrix must be
-reported from executed checks, never inferred from compilation.
+The workflow's old PR-creation job failed because GitHub Actions cannot create
+or approve pull requests in this repository. This was separate from all four
+passing integration jobs and is removed from the validation workflow.
+
+APK jobs retain separate Gradle task-output caches so library cache writes do
+not discard launcher compilation outputs. The device APK is x86_64 solely for
+validation; shipping APKs remain ARM-specific. Captures go through MediaStore
+and survive test-APK removal. The evidence branch records the tested revision.
+
+Live relay interoperability, signing/publication, external signers, physical
+OnePlus/Android 17 behavior and the complete theme/font/wallpaper matrix are not
+established by these automated checks. The shipped distribution is the full
+F-Droid client; proprietary Play-only integrations are not included.

@@ -39,7 +39,7 @@ class AetherEmbeddedClientTest {
         val until = SystemClock.uptimeMillis() + 60_000
         while (SystemClock.uptimeMillis() < until) {
             val current = nodes()
-            current.firstOrNull(predicate)?.let { return it }
+            current.firstOrNull { it.isVisibleToUser && predicate(it) }?.let { return it }
             // The upstream F-Droid first-run flow offers an optional push distributor.
             // Keep the isolated offline test opted out, through its actual UI.
             if (current.any { it.text?.toString() == "Push Notification Setup" }) {
@@ -99,6 +99,8 @@ class AetherEmbeddedClientTest {
     }
 
     private fun screenshot(name: String) {
+        // Let the existing account crossfade and host entry animation settle.
+        SystemClock.sleep(400)
         val bitmap = automation.takeScreenshot() ?: return
         val resolver = instrumentation.context.contentResolver
         val uri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, ContentValues().apply {
