@@ -77,6 +77,9 @@ object TelosShellEngine {
         return isShizukuAvailable(context) || isRootAvailable()
     }
 
+    fun isValidPackageName(pkg: String): Boolean =
+        pkg.matches(Regex("^[a-zA-Z0-9._]+$")) && !pkg.contains("..")
+
     /**
      * Executes a shell [command] via Shizuku (preferred) or Root fallback, bounded by [timeoutMs]
      * and gated by the shared 2-permit concurrency semaphore.
@@ -121,6 +124,37 @@ object TelosShellEngine {
                     exitCode = -1,
                     stdout = "",
                     stderr = err.message ?: "Privileged shell execution failed",
+                )
+            }
+        }
+    }
+
+    /**
+     * Strictly executes a shell [command] via Root (`su -c`) through the shared concurrency gate
+     * and bounded stream collector, never falling back to UID 2000 Shizuku.
+     */
+    suspend fun execRootResult(
+        command: String,
+        timeoutMs: Long = 30_000L,
+        maxOutputBytes: Int = DEFAULT_MAX_OUTPUT_BYTES,
+    ): ShellResult = withContext(Dispatchers.IO) {
+        if (command.isBlank() || command.length > MAX_COMMAND_LENGTH) {
+            return@withContext ShellResult(
+                exitCode = -1,
+                stdout = "",
+                stderr = "Invalid or oversized command",
+            )
+        }
+
+        concurrencyGate.withPermit {
+            runCatching {
+                val proc = ProcessBuilder("su", "-c", command).start()
+                executeAndCollect(proc, timeoutMs = timeoutMs, maxOutputBytes = maxOutputBytes)
+            }.getOrElse { err ->
+                ShellResult(
+                    exitCode = -1,
+                    stdout = "",
+                    stderr = err.message ?: "Root shell execution failed",
                 )
             }
         }

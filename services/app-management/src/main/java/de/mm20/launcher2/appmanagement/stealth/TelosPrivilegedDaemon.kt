@@ -46,7 +46,14 @@ object TelosPrivilegedDaemon {
         if (ShizukuProcesses.available()) return Mode.InternalUserService
         val binder = runCatching { Shizuku.pingBinder() }.getOrDefault(false)
         if (binder) return Mode.ShizukuBinder
+        if (TelosShellEngine.isPrivilegedAvailable()) return Mode.Root
         return Mode.None
+    }
+
+    suspend fun resolveMode(context: Context): Mode {
+        val fast = currentMode(context)
+        if (fast != Mode.None) return fast
+        return if (TelosShellEngine.isRootAvailable()) Mode.Root else Mode.None
     }
 
     fun isExternalShizukuInstalled(context: Context): Boolean {

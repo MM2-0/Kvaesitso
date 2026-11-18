@@ -41,7 +41,15 @@ internal static class Program
             if (!File.Exists(adb) || !File.Exists(scrcpy))
                 throw new FileNotFoundException("scrcpy/adb missing. Run fetch-toolchain.ps1", scrcpyDir);
             if (!File.Exists(disk))
-                throw new FileNotFoundException("android-data.qcow2 missing. Run prepare-qcow2.ps1", disk);
+            {
+                var qemuImg = Path.Combine(root, "vendor", "qemu", "qemu-img.exe");
+                if (!File.Exists(qemuImg)) throw new FileNotFoundException("qemu-img.exe missing", qemuImg);
+                Directory.CreateDirectory(Path.GetDirectoryName(disk)!);
+                var p = Process.Start(new ProcessStartInfo(qemuImg, $"create -f qcow2 \"{disk}\" 16G") { CreateNoWindow = true });
+                p?.WaitForExit();
+            }
+            if (!File.Exists(disk))
+                throw new FileNotFoundException("android-data.qcow2 missing.", disk);
 
             var accel = ProbeAccel(qemu);
             var qemuArgs = BuildQemuArgs(disk, iso, kernel, initrd, accel);
@@ -135,6 +143,16 @@ internal static class Program
         var dir = Path.Combine(root, "images");
         var preferred = Path.Combine(dir, "blissos-x86_64.iso");
         if (File.Exists(preferred)) return preferred;
+        Directory.CreateDirectory(dir);
+        var isoFiles = Directory.GetFiles(dir, "*.iso");
+        if (isoFiles.Length == 0)
+        {
+            using var client = new System.Net.Http.HttpClient();
+            var task = client.GetByteArrayAsync("https://downloads.sourceforge.net/project/blissos-x86/Official/BlissOS16/FOSS/Generic/Bliss-v16.9.7-x86_64-OFFICIAL-foss-20241011.iso");
+            var tempFile = preferred + ".partial";
+            File.WriteAllBytes(tempFile, task.Result);
+            File.Move(tempFile, preferred);
+        }
         if (!Directory.Exists(dir)) return null;
         return Directory.GetFiles(dir, "*.iso").FirstOrDefault(p => !p.EndsWith(".bak", StringComparison.OrdinalIgnoreCase));
     }
@@ -280,10 +298,10 @@ internal static class Program
         if (!string.IsNullOrEmpty(env) && File.Exists(env)) apk = env;
         else
         {
-            var hits = Directory.Exists(root)
-                ? Directory.GetFiles(root, "app-default-*.apk", SearchOption.AllDirectories)
-                : Array.Empty<string>();
-            apk = hits.FirstOrDefault();
+            var hits = Directory.Exists(root) ? Directory.GetFiles(root, "*", SearchOption.TopDirectoryOnly) : Array.Empty<string>();
+            apk = hits.FirstOrDefault(f => f.EndsWith("telos-x86_64.apk")) ?? 
+                  hits.FirstOrDefault(f => f.Contains("telos-") && f.EndsWith(".apk")) ?? 
+                  hits.FirstOrDefault(f => f.Contains("app-default-") && f.EndsWith(".apk"));
         }
 
         if (apk == null) return;

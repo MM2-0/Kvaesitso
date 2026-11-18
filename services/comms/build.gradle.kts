@@ -72,6 +72,7 @@ dependencies {
     // only the native library of the CPU type that is built (see -Ptelos.abi in app/app/build.gradle.kts)
     if ("arm64-v8a" in telosAbis) implementation(libs.libtorrent4j.arm64)
     if ("armeabi-v7a" in telosAbis) implementation(libs.libtorrent4j.arm)
+    if ("x86_64" in telosAbis) implementation(libs.libtorrent4j.x8664)
     implementation(libs.bundles.kotlin)
     implementation(libs.androidx.core)
     implementation(libs.androidx.appcompat)
