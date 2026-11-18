@@ -14,11 +14,18 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           python3 - <<'PY'
-          import os, urllib.request, urllib.error
+          import os, urllib.request, urllib.error, urllib.parse
+          class SafeRedirect(urllib.request.HTTPRedirectHandler):
+              def redirect_request(self, req, fp, code, msg, headers, newurl):
+                  redirected = super().redirect_request(req, fp, code, msg, headers, newurl)
+                  if redirected and urllib.parse.urlsplit(req.full_url).netloc != urllib.parse.urlsplit(newurl).netloc:
+                      redirected.remove_header('Authorization')
+                  return redirected
+          opener = urllib.request.build_opener(SafeRedirect())
           url = 'https://api.github.com/repos/' + os.environ['GITHUB_REPOSITORY'] + '/actions/jobs/134928650490/logs'
           req = urllib.request.Request(url, headers={'Authorization': 'Bearer ' + os.environ['GH_TOKEN'], 'Accept': 'application/vnd.github+json'})
           try:
-              data = urllib.request.urlopen(req).read().decode(errors='replace')
+              data = opener.open(req).read().decode(errors='replace')
               lines = [x for x in data.splitlines() if '> Task' in x or 'Downloading ' in x or 'BUILD ' in x or 'FAILURE:' in x or x.startswith('e: ')]
               for line in lines[-20:]:
                   print('::notice title=Current compiler progress::' + line.replace('%', '%25').replace('\r', '%0D').replace('\n', '%0A'))
