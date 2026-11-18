@@ -1,23 +1,22 @@
-name: Stop redundant Aether validation after passing main gates
+name: Inspect final release job map
 on:
   push:
     branches: ['codex/aether-diagnostics']
 permissions:
-  actions: write
+  actions: read
   contents: read
 jobs:
-  stop-redundant-validation:
+  inspect-release:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - name: Confirm passing validation and stop duplicate build
+      - name: Read release jobs
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          conclusion=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/44336725713" --jq .conclusion)
-          test "$conclusion" = success
-          status=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/44340452492" --jq .status)
-          if [ "$status" != completed ]; then
-            gh api --method POST "repos/$GITHUB_REPOSITORY/actions/runs/44340452492/cancel"
-            echo '::notice::Stopped redundant validation; all main Aether gates passed on the same application source'
-          fi
+          gh api --paginate "repos/$GITHUB_REPOSITORY/actions/runs/44347480022/jobs" --jq '.jobs[] | {id, name, status, conclusion, html_url}' > /tmp/release-jobs.txt
+          python3 - <<'PY'
+          from pathlib import Path
+          text = Path('/tmp/release-jobs.txt').read_text()
+          print('::notice title=Release job map::' + text.replace('%', '%25').replace('\r', '%0D').replace('\n', '%0A'))
+          PY
