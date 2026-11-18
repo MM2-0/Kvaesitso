@@ -16,7 +16,7 @@ class TelosPackageInstaller(
     private val options: de.mm20.launcher2.store.options.StoreOptions,
 ) : AppInstaller {
 
-    private val shizuku = ShizukuInstallBackend()
+    private val shizuku = ShizukuInstallBackend(context)
     private val root = RootInstallBackend()
     private val sessionApi = SessionApiInstallBackend(context)
 

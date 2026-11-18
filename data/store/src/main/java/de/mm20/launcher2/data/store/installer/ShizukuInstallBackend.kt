@@ -10,7 +10,7 @@ import java.io.File
 import kotlin.coroutines.resume
 
 /** Uses Android install sessions through the authorized Shizuku process. */
-internal class ShizukuInstallBackend : InstallBackend {
+internal class ShizukuInstallBackend(private val context: android.content.Context) : InstallBackend {
 
     companion object {
         private const val REQUEST_CODE = 9317
@@ -62,6 +62,7 @@ internal class ShizukuInstallBackend : InstallBackend {
                 return@withContext BackendInstallResult.Failed("Shizuku is not authorized")
             }
             try {
+                de.mm20.launcher2.ktx.ShizukuProcesses.init(context.applicationContext)
 
                 installPrivilegedSession(
                     apk = apk,
