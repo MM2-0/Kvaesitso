@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import android.os.Process
 import android.util.Log
 import de.mm20.launcher2.comms.telephony.TelosCallSession
+import de.mm20.launcher2.ktx.TelosShellEngine
 import de.mm20.launcher2.preferences.comms.CommsSettings
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,7 +15,6 @@ import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import rikka.shizuku.Shizuku
-import java.io.DataOutputStream
 import java.io.File
 
 /**
@@ -153,11 +153,9 @@ object RecordingCoordinator : KoinComponent {
         }
     }
 
-    private suspend fun rootReady(): Boolean = withContext(Dispatchers.IO) {
-        runShell(arrayOf("su", "-c", "id"), asRootBinary = true)
-    }
+    private suspend fun rootReady(): Boolean = TelosShellEngine.isRootAvailable()
 
-    private suspend fun grantCaptureViaShizuku(packageName: String) = withContext(Dispatchers.IO) {
+    private suspend fun grantCaptureViaShizuku(packageName: String) {
         val uid = Process.myUid()
         val cmd =
             "appops set --uid $uid $packageName CAPTURE_AUDIO_OUTPUT allow; " +
@@ -165,46 +163,22 @@ object RecordingCoordinator : KoinComponent {
                 "appops set $packageName RECORD_AUDIO allow; " +
                 "pm grant $packageName android.permission.CAPTURE_AUDIO_OUTPUT; " +
                 "cmd appops set $packageName CAPTURE_AUDIO_OUTPUT allow"
-        runShizuku(arrayOf("sh", "-c", cmd))
+        val res = TelosShellEngine.execResult(cmd, timeoutMs = 10_000L)
+        if (!res.isSuccess) {
+            Log.w(TAG, "Shizuku appops failed: ${res.stderr}")
+        }
     }
 
-    private suspend fun grantCaptureViaRoot(packageName: String) = withContext(Dispatchers.IO) {
+    private suspend fun grantCaptureViaRoot(packageName: String) {
         val uid = Process.myUid()
         val cmd =
             "appops set --uid $uid $packageName CAPTURE_AUDIO_OUTPUT allow; " +
                 "appops set $packageName CAPTURE_AUDIO_OUTPUT allow; " +
                 "pm grant $packageName android.permission.CAPTURE_AUDIO_OUTPUT; " +
                 "cmd appops set $packageName CAPTURE_AUDIO_OUTPUT allow"
-        runShell(arrayOf("su", "-c", cmd), asRootBinary = true)
-    }
-
-    private fun runShizuku(command: Array<String>): Boolean {
-        return try {
-
-            val process = de.mm20.launcher2.ktx.ShizukuProcesses.start(command)
-            try { process.waitFor(10, java.util.concurrent.TimeUnit.SECONDS) && process.exitValue() == 0 }
-            finally { process.destroy() }
-        } catch (e: Exception) {
-            Log.w(TAG, "Shizuku appops failed", e)
-            false
-        }
-    }
-
-    private fun runShell(command: Array<String>, asRootBinary: Boolean): Boolean {
-        return try {
-            if (asRootBinary && command.size >= 3 && command[0] == "su") {
-                val process = Runtime.getRuntime().exec("su")
-                DataOutputStream(process.outputStream).use { stdin ->
-                    stdin.writeBytes("${command.drop(2).joinToString(" ")}\n")
-                    stdin.writeBytes("exit\n")
-                    stdin.flush()
-                }
-                return process.waitFor() == 0
-            }
-            Runtime.getRuntime().exec(command).waitFor() == 0
-        } catch (e: Exception) {
-            Log.w(TAG, "shell failed", e)
-            false
+        val res = TelosShellEngine.execRootResult(cmd, timeoutMs = 10_000L)
+        if (!res.isSuccess) {
+            Log.w(TAG, "Root appops failed: ${res.stderr}")
         }
     }
 }
