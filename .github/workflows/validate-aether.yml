@@ -15,7 +15,7 @@ permissions:
   contents: read
 concurrency:
   group: aether-library-${{ github.ref }}
-  cancel-in-progress: false
+  cancel-in-progress: true
 jobs:
   android-library:
     runs-on: ubuntu-latest

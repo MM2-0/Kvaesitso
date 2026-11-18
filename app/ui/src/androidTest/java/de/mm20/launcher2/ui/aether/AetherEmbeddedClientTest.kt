@@ -7,13 +7,14 @@ import android.os.Bundle
 import android.os.SystemClock
 import android.provider.MediaStore
 import android.view.accessibility.AccessibilityNodeInfo
-import androidx.test.filters.SdkSuppress
+import android.os.Build
+import org.junit.Assume.assumeTrue
 import androidx.test.platform.app.InstrumentationRegistry
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
 /** Drives the separately installed production APK, so force-stop really tests process death. */
-@SdkSuppress(minSdkVersion = 29)
+@androidx.annotation.RequiresApi(29)
 class AetherEmbeddedClientTest {
     private val instrumentation = InstrumentationRegistry.getInstrumentation()
     private val automation get() = instrumentation.uiAutomation
@@ -110,6 +111,7 @@ class AetherEmbeddedClientTest {
 
     @Test
     fun embeddedLoginSettingsAndAccountSurviveProcessDeath() {
+        assumeTrue("MediaStore screenshot export requires Android 10", Build.VERSION.SDK_INT >= 29)
         // A public key only: no signing, publication, private accounts or external client APK.
         val originalFont = shell("settings get system font_scale").trim().toFloatOrNull() ?: 1f
         val originalAutoRotate = shell("settings get system accelerometer_rotation").trim().toIntOrNull() ?: 1
