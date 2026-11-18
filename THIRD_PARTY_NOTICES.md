@@ -439,5 +439,9 @@ respective years and notices. MIT license, reproduced in full in
 Aether; the development branch connects it to Aether, but it has not shipped in a release.
 Telos-specific adapters retain their GPL-3.0-or-later headers.
 The native Arti and zxing-cpp source/build instructions and license information
-remain under `libs/amethyst/tools`. Dependency and runtime attribution review
-is required before enabling this library in a production APK.
+remain under `libs/amethyst/tools`. The embedded build aligns jsoup to 1.24.1 (MIT) and Jackson to 2.23.0
+(Apache-2.0), matching the launcher dependency catalog. Quartz is pinned to
+JitPack commit `009e4c8dcb23578638f10f66ebc42c04ebaf0c88`; the Android APK
+selects Tink Android 1.17.0 rather than packaging its duplicate JVM artifact.
+The F-Droid source set is selected; proprietary Play-only integrations are not
+shipped. Original native notices and source/build instructions remain included.

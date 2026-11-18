@@ -107,3 +107,16 @@ existing root resolution pin keeping Bouncy Castle modules at one version. The e
 Jackson/jsoup/FreeMarker security pins are retained. The pairing regression workflow checks
 both ARM native payloads and compiles the actual UI; physical-device evidence is recorded in
 the [pairing audit](./shizuku-pairing.md).
+
+## Embedded Aether build (2026-11-18)
+
+The included Amethyst build has its own dependency catalog. Its direct jsoup
+and Jackson versions are aligned to Telos (1.24.1 and 2.23.0), so independently
+building the library does not fall back to the upstream snapshot's older parser
+versions. The host substitutes Quartz's exact JitPack revision and Tink Android
+to avoid two crypto implementations on the APK classpath. Both build paths need
+validation; an included build does not inherit the host resolution strategy.
+
+The open-alert API returned Forbidden in this cloud session. This is an access
+limitation, not evidence that there are zero open alerts. The known FreeMarker
+alert remains covered by the resolved Dokka graph check and the 2.3.35 pin.
