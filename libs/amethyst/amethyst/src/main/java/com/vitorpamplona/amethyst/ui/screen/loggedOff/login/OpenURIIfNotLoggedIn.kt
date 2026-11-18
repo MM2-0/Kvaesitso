@@ -36,6 +36,7 @@ import com.vitorpamplona.amethyst.commons.resources.Res
 import com.vitorpamplona.amethyst.commons.resources.invalid_nip19_uri_description
 import com.vitorpamplona.amethyst.commons.ui.loadStringRes
 import com.vitorpamplona.amethyst.ui.components.getActivityOrNull
+import com.vitorpamplona.amethyst.ui.AetherHostBridge
 import com.vitorpamplona.quartz.nip19Bech32.Nip19Parser
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -47,13 +48,14 @@ fun OpenURIIfNotLoggedIn(onNewNIP19: suspend (String) -> Unit) {
     val scope = rememberCoroutineScope()
 
     var currentIntentNextPage by remember {
+        val clientIntent = AetherHostBridge.clientIntent(activity.intent)
         val uri =
-            activity.intent
+            clientIntent
                 ?.data
                 ?.toString()
                 ?.ifBlank { null }
 
-        activity.intent.data = null
+        clientIntent.data = null
 
         mutableStateOf(uri)
     }
@@ -91,7 +93,7 @@ fun OpenURIIfNotLoggedIn(onNewNIP19: suspend (String) -> Unit) {
     DisposableEffect(activity) {
         val consumer =
             Consumer<Intent> { intent ->
-                val uri = intent.data?.toString()
+                val uri = AetherHostBridge.clientIntent(intent).data?.toString()
                 if (!uri.isNullOrBlank()) {
                     val newNip19 = Nip19Parser.tryParseAndClean(uri)
                     if (newNip19 != null) {
