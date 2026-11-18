@@ -10,6 +10,7 @@
   messaging and media. No external Amethyst APK is required.
 - Isolate client credentials from launcher preferences and Android backup; defer
   initialization, preserve the keyless browser sandbox and forward Nostr links/shares.
+- Keep internal Telos task identifiers out of the logged-out Nostr link handler.
 - Inherit Telos appearance and fonts, add Cybertech settings chrome and Aether
   branding, and keep client notifications separate from alarms and other players.
 - Align embedded parser dependencies and fix duplicate Vue runtimes in the docs build.

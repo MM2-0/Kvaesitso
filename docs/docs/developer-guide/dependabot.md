@@ -120,6 +120,9 @@ validation; an included build does not inherit the host resolution strategy.
 The open-alert API returned Forbidden in this cloud session. This is an access
 limitation, not evidence that there are zero open alerts. The known FreeMarker
 alert remains covered by the resolved Dokka graph check and the 2.3.35 pin.
+An additional Actions request with `security-events: read` also returned
+`Resource not accessible by integration (HTTP 403)` in
+[run 44343924927](https://github.com/koukomin/Telos-Launcher/actions/runs/44343924927).
 
 The local resolved Dokka security task passed on 2026-11-18: four sensitive
 packages verified across four root resolvers. `npm audit --package-lock-only`

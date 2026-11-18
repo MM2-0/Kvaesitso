@@ -39,6 +39,8 @@ the regression gate. This does not initialize the Nostr graph at launcher startu
   Clearing one account namespace cannot clear another account or launcher settings.
 - Native entry activities redirect into the existing Telos document-task host.
   Nostr links, shares, attachment ClipData and URI grants pass through the bridge.
+  Both logged-in and logged-out navigation filter internal Telos task identity
+  URIs through that bridge, without consuming the host's Recents identity.
   Telos cannot offer itself as an external Nostr Connect signer.
 - The default appearance inherits launcher colors, typography, shapes and font
   scaling. Explicit client accent colors remain selectable. Settings cards,
@@ -57,8 +59,8 @@ the regression gate. This does not initialize the Nostr graph at launcher startu
 
 ## Validation
 
-[Run 44314675281](https://github.com/koukomin/Telos-Launcher/actions/runs/44314675281)
-validated application revision `c3d24e2fc`:
+[Run 44336725713](https://github.com/koukomin/Telos-Launcher/actions/runs/44336725713)
+validated application revision `e8ef99978`:
 
 - Actual ARM64 Telos debug and minified/resource-shrunk release APK builds passed.
 - The library suite executed 1,526 tests: no failures/errors, nine upstream skips.
@@ -72,16 +74,27 @@ validated application revision `c3d24e2fc`:
   Pages build also passed locally; see the Dependabot guide for the unpatched
   docs-tool advisory and the scoped review of upstream scanner fixtures.
 
-Screenshots of the account selector before/after restart and settings at normal
-and enlarged fonts were visually reviewed. They show opaque readable sheets,
-Cybertech settings cards and adaptive landscape navigation. The initial capture
-shows the loading transition, so it is not visual evidence of the login form.
-The shared glass wrapper and settled captures are being revalidated on the next
-revision; this record must retain the exact tested source revision.
+The first device attempt was blocked by a Pixel Launcher ANR dialog in the
+emulator. Retrying the unchanged application revision on a fresh emulator passed.
+The earlier administrative PR-creation job was removed: this repository does not
+permit GitHub Actions to create or approve pull requests.
 
-The workflow's old PR-creation job failed because GitHub Actions cannot create
-or approve pull requests in this repository. This was separate from all four
-passing integration jobs and is removed from the validation workflow.
+### Reviewed captures
+
+These captures come from the tested revision, using public read-only accounts,
+English and the light host theme. Login no longer reports the internal Telos task
+URI as an invalid Nostr link. Settings cards and account sheets remain readable,
+including font scale 2.0 and landscape; both accounts survive process restart.
+They establish this rendering scope, not the full wallpaper/theme/locale matrix.
+
+| Screen | Evidence |
+| --- | --- |
+| Aether login | [Capture](../../screenshots/development/aether/aether-login.png) |
+| Account settings | [Capture](../../screenshots/development/aether/aether-settings.png) |
+| Settings at font scale 2.0 | [Capture](../../screenshots/development/aether/aether-settings-large-font.png) |
+| Font scale 2.0 in landscape | [Capture](../../screenshots/development/aether/aether-settings-large-font-landscape.png) |
+| Two accounts | [Capture](../../screenshots/development/aether/aether-multiple-accounts.png) |
+| Accounts after process restart | [Capture](../../screenshots/development/aether/aether-restored-accounts.png) |
 
 APK jobs retain separate Gradle task-output caches so library cache writes do
 not discard launcher compilation outputs. The device APK is x86_64 solely for
