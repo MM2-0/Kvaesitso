@@ -39,13 +39,20 @@ internal class RootInstallBackend : InstallBackend {
                     preserveEnabled = android.os.Build.VERSION.SDK_INT >= 34,
                     allowDowngrade = allowDowngrade,
                 ) { command, input ->
-                    // All arguments are generated internally (no paths or package names).
-                    runInstallCommand(input, ProcessBuilder("su", "-c", command.joinToString(" ")).start())
+                    runInstallCommand(input, startRootShell(command))
                 }
             } catch (error: Exception) {
                 BackendInstallResult.Failed("Root install failed", error)
             }
         }
+    }
+
+    /** `su -c` does not pass stdin to `pm install-write -`. Keep a shell and write the command first. */
+    private fun startRootShell(command: List<String>): Process {
+        val process = Runtime.getRuntime().exec("su")
+        process.outputStream.write((command.joinToString(" ") + "\n").toByteArray(Charsets.UTF_8))
+        process.outputStream.flush()
+        return process
     }
 
     private suspend fun runAsRoot(command: String): Boolean = withContext(Dispatchers.IO) {

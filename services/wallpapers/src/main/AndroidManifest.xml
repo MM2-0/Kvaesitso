@@ -15,5 +15,10 @@
                 android:name="android.service.wallpaper"
                 android:resource="@xml/video_wallpaper" />
         </service>
+        <activity
+            android:name=".RestoreLiveWallpaperActivity"
+            android:exported="false"
+            android:excludeFromRecents="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
     </application>
 </manifest>

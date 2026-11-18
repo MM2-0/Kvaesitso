@@ -13,6 +13,7 @@ import de.mm20.launcher2.preferences.migrations.Migration8
 import de.mm20.launcher2.preferences.migrations.Migration9
 import de.mm20.launcher2.preferences.migrations.Migration10
 import de.mm20.launcher2.preferences.migrations.Migration11
+import de.mm20.launcher2.preferences.migrations.Migration12
 import de.mm20.launcher2.settings.BaseSettings
 import java.io.File
 
@@ -33,6 +34,7 @@ internal class LauncherDataStore(
         Migration9(),
         Migration10(),
         Migration11(),
+        Migration12(),
     ),
     // Last line of defense: if the file genuinely can't be read despite the serializer's
     // unknown-value tolerance, snapshot it before DataStore overwrites it with the replacement.
