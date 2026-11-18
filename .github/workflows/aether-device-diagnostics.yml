@@ -23,3 +23,27 @@ jobs:
           if vulnerable:raise SystemExit('Added vulnerable components detected')
           PYCODE
           curl --fail --location --head --retry 2 'https://qemu.weilnetz.de/w64/2026/qemu-w64-setup-20260811.exe'
+  windows-vm-preflight:
+    runs-on: windows-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: '224a9b99171cdd00fa2724adb03258e0714ffdc6'
+          persist-credentials: false
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - name: Verify actual Windows publication and packaged toolchain
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          dotnet publish tools/windows-qemu-android/src/TelosAndroidVm/TelosAndroidVm.csproj -c Release -r win-x64 --self-contained -p:PublishSingleFile=true -p:Version=1.45.71 --output "$env:RUNNER_TEMP/vm-publish"
+          if ($LASTEXITCODE -ne 0) { throw 'Windows VM launcher compilation failed' }
+          & tools/windows-qemu-android/fetch-toolchain.ps1 -SkipIso
+          foreach ($tool in @('qemu/qemu-system-x86_64.exe', 'qemu/qemu-img.exe', 'scrcpy/adb.exe', 'scrcpy/scrcpy.exe')) {
+            $binary = Join-Path 'tools/windows-qemu-android/vendor' $tool
+            if (-not (Test-Path -LiteralPath $binary -PathType Leaf)) { throw "Missing packaged tool: $tool" }
+            if ($tool.EndsWith('adb.exe')) { & $binary version } else { & $binary --version }
+            if ($LASTEXITCODE -ne 0) { throw "Packaged tool failed: $tool" }
+          }
