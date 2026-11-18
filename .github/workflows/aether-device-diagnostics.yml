@@ -15,6 +15,14 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           job=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/44336725713/jobs" --jq '.jobs[] | select(.name == "aether-client-device" and .conclusion == "failure") | .id')
+          echo "::notice::Resolved client API job ID: $job"
           test -n "$job"
-          gh api --method POST "repos/$GITHUB_REPOSITORY/actions/jobs/$job/rerun"
+          if ! gh api --method POST "repos/$GITHUB_REPOSITORY/actions/jobs/$job/rerun" > /tmp/retry-result.txt 2>&1; then
+            python3 - <<'PYCODE'
+          from pathlib import Path
+          s = Path('/tmp/retry-result.txt').read_text(errors='replace')
+          print('::error title=Emulator retry::' + s.replace('%', '%25').replace('\r', '%0D').replace('\n', '%0A'))
+          PYCODE
+            exit 1
+          fi
           echo "::notice::Retried Aether client job $job after Pixel Launcher emulator ANR"
