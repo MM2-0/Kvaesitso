@@ -23,6 +23,6 @@
     "source-map-js": "1.2.2",
     "picomatch": "2.3.2",
     "mdast-util-to-hast": "13.2.1",
-    "@vue/server-renderer": "3.5.44"
+    "@vue/server-renderer": "3.5.45"
   }
 }

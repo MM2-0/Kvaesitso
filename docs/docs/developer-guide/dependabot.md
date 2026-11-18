@@ -130,3 +130,9 @@ repository-defined build/watch globs; the published static site does not execute
 picomatch or accept visitor-provided glob expressions. No global major override
 or audit suppression is added. This advisory remains open until a patched
 compatible release is available; eight entries are not eight independent flaws.
+
+The docs SSR renderer is aligned with Vue 3.5.45. A forced 3.5.44 renderer had
+installed a second Vue runtime and produced `vitepress data not properly
+injected` errors despite a zero build exit status. After alignment, the Pages
+build renders successfully without those SSR errors. The lockfile removes the
+duplicate runtime; the unpatched picomatch advisory above remains unchanged.

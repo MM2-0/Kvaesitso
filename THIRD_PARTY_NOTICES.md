@@ -445,3 +445,8 @@ JitPack commit `009e4c8dcb23578638f10f66ebc42c04ebaf0c88`; the Android APK
 selects Tink Android 1.17.0 rather than packaging its duplicate JVM artifact.
 The F-Droid source set is selected; proprietary Play-only integrations are not
 shipped. Original native notices and source/build instructions remain included.
+
+
+Documentation site: Vue and `@vue/server-renderer` are aligned at 3.5.45 (MIT)
+to use a single Vue runtime during static rendering. Existing Vue copyright and
+license notices remain in their distributed packages.
