@@ -66,7 +66,7 @@ object TelosSelfOptimizer {
         return applyShizukuOptimizations(appContext, force = true)
     }
 
-    private suspend fun applyShizukuOptimizations(context: Context, force: Boolean): Boolean {
+    private suspend fun applyShizukuOptimizations(context: Context, force: Boolean): Boolean = runMutex.withLock {
         val packageName = context.packageName
         val pid = Process.myPid()
 
@@ -86,11 +86,20 @@ object TelosSelfOptimizer {
 
             if (force || currentVersionCode != lastCompiledVersion) {
                 Log.i(TAG, "AOT Compiling $packageName (version $currentVersionCode)...")
-                val compileCmd = "cmd package compile -m speed -f $packageName && cmd package bg-dexopt-job $packageName"
-                val result = executeShizukuShell(compileCmd)
-                if (result.exitCode == 0) {
+                val result = TelosShellEngine.execResult(
+                    command = "cmd package compile -m speed -f $packageName",
+                    timeoutMs = 180_000L,
+                )
+                if (result.isSuccess) {
                     prefs.edit().putLong(KEY_LAST_AOT_VERSION, currentVersionCode).apply()
                     Log.i(TAG, "AOT Compilation successful.")
+                    val secondaryResult = TelosShellEngine.execResult(
+                        command = "cmd package compile -m speed -f --secondary-dex $packageName",
+                        timeoutMs = 60_000L,
+                    )
+                    if (!secondaryResult.isSuccess) {
+                        Log.w(TAG, "Secondary-dex AOT compile non-fatal failure: ${secondaryResult.stderr}")
+                    }
                 } else {
                     Log.e(TAG, "AOT Compilation failed: ${result.stderr}")
                     success = false
@@ -115,8 +124,11 @@ object TelosSelfOptimizer {
                 echo -800 > /proc/$pid/oom_score_adj 2>/dev/null || true
             """.trimIndent()
 
-            val result = executeShizukuShell(antiKillCmd)
-            if (result.exitCode == 0) {
+            val result = TelosShellEngine.execResult(
+                command = antiKillCmd,
+                timeoutMs = 15_000L,
+            )
+            if (result.isSuccess) {
                 Log.i(TAG, "Anti-Kill protection applied successfully.")
             } else {
                 Log.e(TAG, "Anti-Kill protection failed: ${result.stderr}")
@@ -126,21 +138,6 @@ object TelosSelfOptimizer {
             Log.e(TAG, "Error applying anti-kill protection", e)
         }
 
-        return success
-    }
-
-    data class ShellResult(val exitCode: Int, val stdout: String, val stderr: String)
-
-    private fun executeShizukuShell(command: String): ShellResult {
-        return try {
-            val process = de.mm20.launcher2.ktx.ShizukuProcesses.start(arrayOf("sh", "-c", command))
-            val stdout = process.inputStream.reader().use { it.readText() }
-            val stderr = process.errorStream.reader().use { it.readText() }
-            val exitCode = process.waitFor()
-            ShellResult(exitCode, stdout, stderr)
-        } catch (e: Exception) {
-            Log.e(TAG, "Failed to execute Shizuku shell: $command", e)
-            ShellResult(-1, "", e.stackTraceToString())
-        }
+        return@withLock success
     }
 }

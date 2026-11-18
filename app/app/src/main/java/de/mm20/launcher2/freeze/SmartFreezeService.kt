@@ -22,6 +22,7 @@ import android.os.IBinder
 import android.os.Process
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import de.mm20.launcher2.ktx.TelosShellEngine
 import rikka.shizuku.Shizuku
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -165,7 +166,8 @@ class SmartFreezeService : Service() {
     }
 
     // === TELOS_PENDING_REVIEW_START: multi_user_freeze ===
-    private fun freezePackage(packageName: String, userId: Int) {
+    private suspend fun freezePackage(packageName: String, userId: Int) {
+        if (!TelosShellEngine.isValidPackageName(packageName)) return
         val isShizukuAvailable = (Shizuku.pingBinder() && 
             (Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED))
 
@@ -178,7 +180,8 @@ class SmartFreezeService : Service() {
         }
     }
 
-    private fun unfreezePackage(packageName: String, userId: Int) {
+    private suspend fun unfreezePackage(packageName: String, userId: Int) {
+        if (!TelosShellEngine.isValidPackageName(packageName)) return
         val isShizukuAvailable = (Shizuku.pingBinder() && 
             (Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED))
 
@@ -192,23 +195,17 @@ class SmartFreezeService : Service() {
     }
     // === TELOS_PENDING_REVIEW_END: multi_user_freeze ===
 
-    private fun executeShellCommandViaShizuku(command: String) {
-        try {
-
-            val process = de.mm20.launcher2.ktx.ShizukuProcesses.start(arrayOf("sh", "-c", command))
-            try { process.waitFor(10, java.util.concurrent.TimeUnit.SECONDS) }
-            finally { process.destroy() }
-        } catch (e: Exception) {
-            Log.e("SmartFreeze", "Shizuku command failed", e)
+    private suspend fun executeShellCommandViaShizuku(command: String) {
+        val result = TelosShellEngine.execResult(command, timeoutMs = 15_000L)
+        if (!result.isSuccess) {
+            Log.e("SmartFreeze", "Shizuku command failed: ${result.stderr}")
         }
     }
 
-    private fun executeShellCommandViaRoot(command: String) {
-        try {
-            val process = Runtime.getRuntime().exec(arrayOf("su", "-c", command))
-            process.waitFor()
-        } catch (e: Exception) {
-            Log.e("SmartFreeze", "Root command failed", e)
+    private suspend fun executeShellCommandViaRoot(command: String) {
+        val result = TelosShellEngine.execRootResult(command, timeoutMs = 15_000L)
+        if (!result.isSuccess) {
+            Log.e("SmartFreeze", "Root command failed: ${result.stderr}")
         }
     }
 

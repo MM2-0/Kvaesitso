@@ -4,14 +4,12 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.telephony.SubscriptionManager
 import android.util.Log
+import de.mm20.launcher2.ktx.TelosShellEngine
 import de.mm20.launcher2.preferences.comms.CommsSettings
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import rikka.shizuku.Shizuku
-import java.io.DataOutputStream
 
 object CellularRadio : KoinComponent {
     private const val TAG = "CellularRadio"
@@ -61,31 +59,20 @@ object CellularRadio : KoinComponent {
         false
     }
 
-    private suspend fun shizuku(cmd: String): Boolean = withContext(Dispatchers.IO) {
-        if (!shizukuReady()) return@withContext false
-        try {
-
-            val process = de.mm20.launcher2.ktx.ShizukuProcesses.start(arrayOf("sh", "-c", cmd))
-            try { process.waitFor(10, java.util.concurrent.TimeUnit.SECONDS) && process.exitValue() == 0 }
-            finally { process.destroy() }
-        } catch (e: Exception) {
-            Log.w(TAG, "Shizuku network cmd failed", e)
-            false
+    private suspend fun shizuku(cmd: String): Boolean {
+        if (!shizukuReady()) return false
+        val res = TelosShellEngine.execResult(cmd, timeoutMs = 10_000L)
+        if (!res.isSuccess) {
+            Log.w(TAG, "Shizuku network cmd failed: ${res.stderr}")
         }
+        return res.isSuccess
     }
 
-    private suspend fun root(cmd: String): Boolean = withContext(Dispatchers.IO) {
-        try {
-            val process = Runtime.getRuntime().exec("su")
-            DataOutputStream(process.outputStream).use { stdin ->
-                stdin.writeBytes("$cmd\nexit\n")
-                stdin.flush()
-            }
-            try { process.waitFor(10, java.util.concurrent.TimeUnit.SECONDS) && process.exitValue() == 0 }
-            finally { process.destroy() }
-        } catch (e: Exception) {
-            Log.w(TAG, "Root network cmd failed", e)
-            false
+    private suspend fun root(cmd: String): Boolean {
+        val res = TelosShellEngine.execRootResult(cmd, timeoutMs = 10_000L)
+        if (!res.isSuccess) {
+            Log.w(TAG, "Root network cmd failed: ${res.stderr}")
         }
+        return res.isSuccess
     }
 }
