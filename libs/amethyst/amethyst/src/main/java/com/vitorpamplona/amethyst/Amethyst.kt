@@ -128,7 +128,7 @@ open class Amethyst : Application() {
      * build [AppModules] — so this is computed once and gates every lifecycle callback that would
      * otherwise touch the unset [instance].
      */
-    private val isNappletSandbox by lazy { isNappletSandboxProcess() }
+    protected val isNappletSandbox by lazy { isNappletSandboxProcess() }
 
     val foregroundRecycleHook = AppForegroundRecycleHook()
 

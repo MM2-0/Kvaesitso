@@ -120,3 +120,13 @@ validation; an included build does not inherit the host resolution strategy.
 The open-alert API returned Forbidden in this cloud session. This is an access
 limitation, not evidence that there are zero open alerts. The known FreeMarker
 alert remains covered by the resolved Dokka graph check and the 2.3.35 pin.
+
+The local resolved Dokka security task passed on 2026-11-18: four sensitive
+packages verified across four root resolvers. `npm audit --package-lock-only`
+reported eight high entries, all propagated from **GHSA-fc5q-39xc-vjpf**
+(picomatch repeated extglob ReDoS, affected through 4.0.7). The npm registry's
+latest version is still 4.0.7 and audit reports no fix. The docs dependencies use
+repository-defined build/watch globs; the published static site does not execute
+picomatch or accept visitor-provided glob expressions. No global major override
+or audit suppression is added. This advisory remains open until a patched
+compatible release is available; eight entries are not eight independent flaws.

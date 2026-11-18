@@ -59,14 +59,8 @@ class NotificationServiceTileService : TileService() {
     private var scope: CoroutineScope? = null
     private var watchJob: Job? = null
 
-    /** True once `Amethyst.instance` (and therefore [LocalPreferences]) is reachable. */
-    private fun preferencesReady(): Boolean =
-        try {
-            Amethyst.instance
-            true
-        } catch (e: Exception) {
-            false
-        }
+    /** No observer can use the graph while its IO initialization is still in flight. */
+    private fun preferencesReady(): Boolean = Amethyst.isInitialized
 
     override fun onStartListening() {
         super.onStartListening()

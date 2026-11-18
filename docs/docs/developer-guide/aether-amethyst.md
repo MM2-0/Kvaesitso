@@ -17,7 +17,8 @@ The Play source set is retained for source provenance, with no Firebase key ship
 
 - `LauncherApplication` defers client initialization until Aether or one of its
   background entry points needs it. Initialization is serialized on IO. The
-  keyless `:napplet` sandbox cannot initialize an account.
+  keyless `:napplet` sandbox cannot initialize an account or start launcher
+  Koin, preferences and privileged transports.
 - `EmbeddedAether` renders the upstream app, account manager, feeds, settings,
   relays, messaging, media and signer workflows. Multiple accounts use the
   original session manager; adding, switching and removing accounts stay available.

@@ -100,6 +100,9 @@ class LauncherApplication : Amethyst(), CoroutineScope, ImageLoaderFactory {
 
     override fun onCreate() {
         super.onCreate()
+        // The embedded client's WebView sandbox must not start launcher services,
+        // Koin, preferences or privileged transports either.
+        if (isNappletSandbox) return
         de.mm20.launcher2.ktx.ShizukuProcesses.init(this)
         de.mm20.launcher2.memory.TelosMemoryTrimmer.init(this)
 
