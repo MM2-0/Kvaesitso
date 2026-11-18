@@ -71,6 +71,7 @@ val ThemeType.resourceId: StringResource
 val AccentColorType.resourceId: StringResource
     get() =
         when (this) {
+            AccentColorType.INHERIT -> Res.string.system
             AccentColorType.PURPLE -> Res.string.accent_color_purple
             AccentColorType.BLUE -> Res.string.accent_color_blue
             AccentColorType.GREEN -> Res.string.accent_color_green

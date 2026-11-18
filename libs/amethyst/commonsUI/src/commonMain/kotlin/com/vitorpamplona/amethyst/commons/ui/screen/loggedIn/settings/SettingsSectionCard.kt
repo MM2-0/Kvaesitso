@@ -39,6 +39,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
+import com.vitorpamplona.amethyst.commons.ui.theme.LocalHostChrome
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -64,7 +65,8 @@ fun SettingsSection(
     content: @Composable ColumnScope.() -> Unit,
 ) {
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        Text(
+        val chrome = LocalHostChrome.current
+        if (chrome != null) chrome.label(stringRes(title), Modifier.padding(horizontal = 4.dp)) else Text(
             text = stringRes(title),
             style = MaterialTheme.typography.titleSmall,
             fontWeight = FontWeight.SemiBold,
@@ -77,8 +79,8 @@ fun SettingsSection(
             modifier = Modifier.padding(horizontal = 4.dp),
         )
         Card(
-            modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(20.dp),
+            modifier = chrome?.card?.invoke(Modifier.fillMaxWidth(), MaterialTheme.shapes.medium, MaterialTheme.colorScheme.surfaceContainer) ?: Modifier.fillMaxWidth(),
+            shape = MaterialTheme.shapes.medium,
             colors =
                 CardDefaults.cardColors(
                     // surfaceContainer (one step up from …Low) so the card separates from the page by

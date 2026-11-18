@@ -29,6 +29,7 @@ import androidx.media3.common.C
 import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.session.DefaultMediaNotificationProvider
 import androidx.media3.session.MediaSession
 import androidx.media3.session.MediaSessionService
 import com.vitorpamplona.amethyst.Amethyst
@@ -124,8 +125,12 @@ class PlaybackService : MediaSessionService() {
         }
     }
 
+    @OptIn(UnstableApi::class)
     override fun onCreate() {
         super.onCreate()
+        val provider = DefaultMediaNotificationProvider.Builder(this).setNotificationId(7407).build()
+        com.vitorpamplona.amethyst.ui.AetherHostBridge.notificationSmallIcon?.let(provider::setSmallIcon)
+        setMediaNotificationProvider(provider)
         Log.d("PlaybackService", "PlaybackService.onCreate")
     }
 
@@ -226,6 +231,9 @@ class PlaybackService : MediaSessionService() {
     // Return a MediaSession to link with the MediaController that is making
     // this request.
     override fun onGetSession(controllerInfo: MediaSession.ControllerInfo): MediaSession? {
+        // Session pools are in-memory. A controller restored after process death cannot
+        // reconnect to a stale session before the embedded runtime has initialized.
+        if (!Amethyst.isInitialized) return null
         val id = controllerInfo.connectionHints.getString("id") ?: return null
         val proxyPort = controllerInfo.connectionHints.getInt("proxyPort")
         val keepPlaying = controllerInfo.connectionHints.getBoolean("keepPlaying", true)

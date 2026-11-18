@@ -58,9 +58,35 @@ class AetherEmbeddedClientTest {
         assertTrue(result, !result.contains("Error:"))
     }
 
+    private fun scrollToText(text: String): AccessibilityNodeInfo {
+        repeat(20) {
+            nodes().firstOrNull { it.text?.toString() == text }?.let { return it }
+            nodes().firstOrNull { it.isScrollable }?.performAction(AccessibilityNodeInfo.ACTION_SCROLL_FORWARD)
+            SystemClock.sleep(250)
+        }
+        return awaitNode(text) { it.text?.toString() == text }
+    }
+
+    private fun openAccounts() {
+        click(awaitNode("account menu") { it.contentDescription?.toString() == "Your Profile Picture" })
+        click(scrollToText("Accounts"))
+        awaitNode("account switcher") { it.text?.toString() == "Select Account" }
+    }
+
+    private fun login(publicKey: String) {
+        val field = awaitNode("login key field") { it.isEditable }
+        assertTrue(field.performAction(AccessibilityNodeInfo.ACTION_SET_TEXT, Bundle().apply {
+            putCharSequence(AccessibilityNodeInfo.ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE, publicKey)
+        }))
+        shell("input keyevent KEYCODE_BACK")
+        nodes().firstOrNull { it.className?.toString() == "android.widget.CheckBox" && !it.isChecked }?.let(::click)
+        click(awaitNode("Login") { it.text?.toString() == "Login" && it.isEnabled })
+        awaitNode("logged-in account") { it.contentDescription?.toString() == "Your Profile Picture" }
+    }
+
     private fun openSettings() {
         click(awaitNode("account menu") { it.contentDescription?.toString() == "Your Profile Picture" })
-        click(awaitNode("Settings") { it.text?.toString() == "Settings" })
+        click(scrollToText("Settings"))
         awaitNode("settings search") { it.text?.toString() == "Search settings" }
     }
 
@@ -89,24 +115,27 @@ class AetherEmbeddedClientTest {
         try {
             shell("pm grant $target android.permission.POST_NOTIFICATIONS")
             openAether()
-            val field = awaitNode("login key field") { it.isEditable }
-            assertTrue(field.performAction(AccessibilityNodeInfo.ACTION_SET_TEXT, Bundle().apply {
-                putCharSequence(AccessibilityNodeInfo.ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE,
-                    "npub10xlxvlhemja6c4dqv22uapctqupfhlxm9h8z3k2e72q4k9hcz7vqpkge6d")
-            }))
-            shell("input keyevent KEYCODE_BACK")
-            nodes().firstOrNull { it.className?.toString() == "android.widget.CheckBox" && !it.isChecked }?.let(::click)
             screenshot("login")
-            click(awaitNode("Login") { it.text?.toString() == "Login" && it.isEnabled })
-            awaitNode("logged-in account") { it.contentDescription?.toString() == "Your Profile Picture" }
+            login("npub10xlxvlhemja6c4dqv22uapctqupfhlxm9h8z3k2e72q4k9hcz7vqpkge6d")
             screenshot("feed")
+            openAccounts()
+            click(awaitNode("add account") { it.text?.toString() == "Add New Account" })
+            login("npub1gcxzte5zlkncx26j68ez60fzkvtkm9e0vrwdcvsjakxf9mu9qewqlfnj5z")
+            openAccounts()
+            awaitNode("first stored account") { it.text?.toString() == "npub10xl…vqpkge6d" }
+            awaitNode("second stored account") { it.text?.toString() == "npub1gcx…wqlfnj5z" }
+            screenshot("multiple-accounts")
+            click(awaitNode("switch to first account") { it.text?.toString() == "npub10xl…vqpkge6d" })
+            shell("input keyevent KEYCODE_BACK")
             openSettings()
             screenshot("settings")
             shell("input keyevent KEYCODE_HOME")
             shell("am force-stop $target")
             openAether()
-            openSettings()
-            screenshot("restored-settings")
+            openAccounts()
+            awaitNode("persisted first account") { it.text?.toString() == "npub10xl…vqpkge6d" }
+            awaitNode("persisted second account") { it.text?.toString() == "npub1gcx…wqlfnj5z" }
+            screenshot("restored-accounts")
         } finally {
             shell("svc wifi enable")
             shell("svc data enable")

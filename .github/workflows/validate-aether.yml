@@ -180,6 +180,8 @@ jobs:
             libs/amethyst/amethyst/build/reports/androidTests/
 
   aether-client-device:
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
     timeout-minutes: 90
     steps:
@@ -216,6 +218,27 @@ jobs:
           disable-animations: true
           emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim
           script: bash tools/validation/aether-client-device.sh
+      - name: Publish public-fixture screenshots for review
+        if: always()
+        shell: bash
+        run: |
+          if ! find /tmp/aether-screenshots -name '*.png' -print -quit 2>/dev/null | grep -q .; then exit 0; fi
+          # Fresh offline emulator, public keys only. No user data or signing keys.
+          base="$GITHUB_SHA"
+          if git fetch origin refs/heads/codex/aether-ui-evidence:refs/remotes/origin/aether-ui-evidence; then
+            base=refs/remotes/origin/aether-ui-evidence
+          fi
+          git worktree add --detach /tmp/aether-review "$base"
+          mkdir -p /tmp/aether-review/docs/screenshots/development/aether
+          find /tmp/aether-screenshots -name '*.png' -exec cp {} /tmp/aether-review/docs/screenshots/development/aether/ \;
+          printf '%s\n' "$GITHUB_SHA" > /tmp/aether-review/docs/screenshots/development/aether/SOURCE_REVISION
+          git -C /tmp/aether-review config user.name github-actions[bot]
+          git -C /tmp/aether-review config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git -C /tmp/aether-review add docs/screenshots/development/aether
+          if ! git -C /tmp/aether-review diff --cached --quiet; then
+            git -C /tmp/aether-review commit -qm 'docs: record offline Aether emulator screenshots [skip ci]'
+            git -C /tmp/aether-review push origin HEAD:refs/heads/codex/aether-ui-evidence
+          fi
       - name: Report client validation details
         if: always()
         run: |

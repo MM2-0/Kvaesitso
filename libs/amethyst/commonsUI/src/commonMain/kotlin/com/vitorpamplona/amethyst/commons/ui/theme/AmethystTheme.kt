@@ -62,7 +62,7 @@ private fun accentPrimary(
     dark: Boolean,
 ): Color =
     when (accent) {
-        AccentColorType.PURPLE -> if (dark) Purple200 else Purple500
+        AccentColorType.INHERIT, AccentColorType.PURPLE -> if (dark) Purple200 else Purple500
         AccentColorType.BLUE -> if (dark) AccentBlueDark else AccentBlueLight
         AccentColorType.GREEN -> if (dark) AccentGreenDark else AccentGreenLight
         AccentColorType.ORANGE -> if (dark) AccentOrangeDark else AccentOrangeLight
@@ -73,7 +73,7 @@ private fun accentPrimary(
 private fun accentSecondary(
     accent: AccentColorType,
     dark: Boolean,
-): Color = if (accent == AccentColorType.PURPLE) Teal200 else accentPrimary(accent, dark)
+): Color = if (accent == AccentColorType.PURPLE || accent == AccentColorType.INHERIT) Teal200 else accentPrimary(accent, dark)
 
 // Representative colour for an accent option, used by the Settings accent-picker swatches — the
 // same primary the theme would apply for the given light/dark mode, so the swatch previews the

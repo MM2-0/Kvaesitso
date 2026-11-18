@@ -132,7 +132,7 @@ Phone settings expose Android’s caller-identification/blocking role on support
 
 Telos Keyboard setup offers both Android input settings and the input-method chooser. The IME installs Compose owners on its window, recreates input views safely, routes taps directly to its keys, uses numeric layouts for numeric editors and honors Search/Done/Send actions. Password/PIN and no-learning editors keep their privacy requirement independently of the manual incognito switch and clear transient word/clipboard state when editors change.
 
-Released Aether builds remain a local preview. The development branch now connects the full Amethyst F-Droid client from `libs/amethyst` to the Aether route inside the Telos APK. Combined APK, Android runtime, account and release validation are in progress; this integration has not shipped yet.
+Released Aether builds remain a local preview. The development branch now connects the full Amethyst F-Droid client from `libs/amethyst` to the Aether route inside the Telos APK. The combined ARM64 debug APK, library suite and Android storage tests have passed. Multiple accounts, settings and Cybertech host chrome are connected; client UI/process-recovery and production release validation are in progress. This integration has not shipped yet.
 
 
 

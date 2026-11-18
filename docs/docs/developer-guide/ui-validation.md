@@ -11,6 +11,18 @@ no new production library or replacement design framework is introduced.
 
 ## Execution evidence
 
+### Embedded Aether development (2026-11-18)
+
+Revision `896782b45` passed the actual ARM64 Telos debug APK build, Amethyst library
+suite (1,526 tests, zero failures/errors, nine skips) and Android storage tests in
+[run 44277134771](https://github.com/koukomin/Telos-Launcher/actions/runs/44277134771).
+This establishes compilation and encrypted namespace/notification isolation, not
+full UI or account workflow verification. New real-APK emulator coverage adds
+public-key login, multiple accounts, settings and process restart. The following
+Cybertech chrome changes await those checks and screenshot review; no whole-client
+visual certification or physical Android 17 verification is claimed.
+
+
 ### Άκου automatic entry and Android YouTube link handlers
 
 The opt-in entry effect waits for preferences and a visible screen, consumes one attempt,

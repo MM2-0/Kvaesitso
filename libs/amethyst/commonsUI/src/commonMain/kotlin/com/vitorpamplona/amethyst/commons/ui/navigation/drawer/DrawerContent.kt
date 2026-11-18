@@ -187,7 +187,7 @@ fun DrawerContent(
 ) {
     ModalDrawerSheet(
         windowInsets = WindowInsets.systemBars.only(WindowInsetsSides.Bottom + WindowInsetsSides.Start),
-        drawerContainerColor = MaterialTheme.colorScheme.background,
+        drawerContainerColor = MaterialTheme.colorScheme.surfaceContainer,
         drawerTonalElevation = 0.dp,
     ) {
         DrawerContentBody(nav, openSheet, accountViewModel)
@@ -215,7 +215,7 @@ fun PermanentDrawerContent(
     // As wide as the shell makes it: the user can drag its edge (see MultiPaneShell).
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colorScheme.background,
+        color = MaterialTheme.colorScheme.surfaceContainer,
         contentColor = MaterialTheme.colorScheme.onBackground,
     ) {
         Column(

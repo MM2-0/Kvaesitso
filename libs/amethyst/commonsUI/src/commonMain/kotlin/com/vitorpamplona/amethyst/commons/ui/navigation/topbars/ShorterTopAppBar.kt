@@ -27,6 +27,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
+import com.vitorpamplona.amethyst.commons.ui.theme.LocalHostChrome
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
@@ -46,7 +47,7 @@ fun ShorterTopAppBar(
     colors: TopAppBarColors = TopAppBarDefaults.topAppBarColors(),
     scrollBehavior: TopAppBarScrollBehavior? = null,
 ) = TopAppBar(
-    title,
+    { LocalHostChrome.current?.heading?.invoke(title) ?: title() },
     modifier,
     navigationIcon,
     actions,

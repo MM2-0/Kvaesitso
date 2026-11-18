@@ -267,7 +267,7 @@ object NotificationUtils {
         val builderPublic =
             NotificationCompat
                 .Builder(applicationContext, channelId)
-                .setSmallIcon(category.smallIcon)
+                .setSmallIcon(com.vitorpamplona.amethyst.ui.AetherHostBridge.notificationSmallIcon ?: category.smallIcon)
                 .setColor(category.color)
                 .setContentTitle(messageTitle)
                 .setContentText(loadStringRes(Res.string.app_notification_private_message))
@@ -279,7 +279,7 @@ object NotificationUtils {
         val builder =
             NotificationCompat
                 .Builder(applicationContext, channelId)
-                .setSmallIcon(category.smallIcon)
+                .setSmallIcon(com.vitorpamplona.amethyst.ui.AetherHostBridge.notificationSmallIcon ?: category.smallIcon)
                 .setColor(category.color)
                 .setContentTitle(messageTitle)
                 .setContentText(messageBody)
@@ -397,7 +397,7 @@ object NotificationUtils {
         val builderPublic =
             NotificationCompat
                 .Builder(applicationContext, channelId)
-                .setSmallIcon(category.smallIcon)
+                .setSmallIcon(com.vitorpamplona.amethyst.ui.AetherHostBridge.notificationSmallIcon ?: category.smallIcon)
                 .setColor(category.color)
                 .setContentTitle(senderName)
                 .setContentText(loadStringRes(Res.string.app_notification_private_message))
@@ -410,7 +410,7 @@ object NotificationUtils {
         val builder =
             NotificationCompat
                 .Builder(applicationContext, channelId)
-                .setSmallIcon(category.smallIcon)
+                .setSmallIcon(com.vitorpamplona.amethyst.ui.AetherHostBridge.notificationSmallIcon ?: category.smallIcon)
                 .setColor(category.color)
                 .setLargeIcon(avatar)
                 .setStyle(messagingStyle)
@@ -714,7 +714,7 @@ object NotificationUtils {
         val summaryBuilder =
             NotificationCompat
                 .Builder(applicationContext, category.channelId(applicationContext))
-                .setSmallIcon(category.smallIcon)
+                .setSmallIcon(com.vitorpamplona.amethyst.ui.AetherHostBridge.notificationSmallIcon ?: category.smallIcon)
                 .setColor(category.color)
                 .setGroup(groupKey)
                 .setGroupSummary(true)

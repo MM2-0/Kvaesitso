@@ -182,7 +182,7 @@ class UiSettingsStore(
                 dontShowOnchainPublicWarning = preferences[UI_DONT_SHOW_ONCHAIN_PUBLIC_WARNING] ?: false,
                 suggestWorkoutsFromHealthConnect =
                     preferences[UI_SUGGEST_WORKOUTS_FROM_HEALTH_CONNECT]?.let { BooleanType.valueOf(it) } ?: BooleanType.ALWAYS,
-                accentColor = preferences[UI_ACCENT_COLOR]?.let { AccentColorType.valueOf(it) } ?: AccentColorType.PURPLE,
+                accentColor = preferences[UI_ACCENT_COLOR]?.let { AccentColorType.valueOf(it) } ?: AccentColorType.INHERIT,
                 fontFamily = preferences[UI_FONT_FAMILY]?.let { FontFamilyType.valueOf(it) } ?: FontFamilyType.SYSTEM,
                 fontSize = preferences[UI_FONT_SIZE]?.let { FontSizeType.valueOf(it) } ?: FontSizeType.NORMAL,
                 composeSignature = preferences[UI_COMPOSE_SIGNATURE] ?: "",

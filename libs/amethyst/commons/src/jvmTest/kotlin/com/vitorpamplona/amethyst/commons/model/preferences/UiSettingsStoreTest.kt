@@ -74,7 +74,7 @@ class UiSettingsStoreTest {
             assertNull(settings.preferredLanguage)
             assertEquals(ConnectivityType.ALWAYS, settings.automaticallyShowImages)
             assertEquals(FeatureSetType.SIMPLIFIED, settings.featureSet)
-            assertEquals(AccentColorType.PURPLE, settings.accentColor)
+            assertEquals(AccentColorType.INHERIT, settings.accentColor)
             assertEquals(FontSizeType.NORMAL, settings.fontSize)
             assertEquals("", settings.composeSignature)
             assertEquals(NoteLayoutType.AUTHOR_COLUMN, settings.noteLayout)

@@ -76,14 +76,21 @@ class NotificationServiceTileService : TileService() {
         scope?.cancel()
 
         refreshTile()
-        if (!preferencesReady()) return
-
         val newScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
         scope = newScope
         // Keep the tile in sync when the master is flipped elsewhere (the Settings
         // toggle) while the shade is open.
         watchJob =
             newScope.launch {
+                try {
+                    Amethyst.initialize(applicationContext)
+                } catch (e: kotlinx.coroutines.CancellationException) {
+                    throw e
+                } catch (e: Exception) {
+                    Log.w(TAG, "Unable to initialize Aether notification settings")
+                    refreshTile()
+                    return@launch
+                }
                 LocalPreferences.notificationServiceEnabledFlow().collectLatest {
                     refreshTile()
                 }
@@ -100,13 +107,17 @@ class NotificationServiceTileService : TileService() {
 
     override fun onClick() {
         super.onClick()
-        if (!preferencesReady()) {
-            Log.w(TAG, "Preferences not ready; ignoring tile click")
+        scope?.launch {
+            try {
+                Amethyst.initialize(applicationContext)
+                LocalPreferences.setNotificationServiceEnabled(!LocalPreferences.isNotificationServiceEnabled())
+            } catch (e: kotlinx.coroutines.CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                Log.w(TAG, "Unable to update Aether notification settings")
+            }
             refreshTile()
-            return
         }
-        LocalPreferences.setNotificationServiceEnabled(!LocalPreferences.isNotificationServiceEnabled())
-        refreshTile()
     }
 
     private fun refreshTile() {

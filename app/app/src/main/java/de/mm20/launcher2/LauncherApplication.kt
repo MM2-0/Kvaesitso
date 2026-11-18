@@ -106,6 +106,7 @@ class LauncherApplication : Amethyst(), CoroutineScope, ImageLoaderFactory {
         // The video player's own process needs none of the launcher
         if (ProcessInfo.init(this)) return
 
+        AetherHostBridge.notificationSmallIcon = de.mm20.launcher2.base.R.drawable.ic_app_aether_fg
         AetherHostBridge.createHostIntent = { context ->
             Intent().setClassName(context, SettingsDeepLinkContract.ACTIVITY_CLASS_NAME)
                 .putExtra(SettingsDeepLinkContract.EXTRA_ROUTE, SettingsDeepLinkContract.ROUTE_AETHER)

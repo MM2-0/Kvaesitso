@@ -51,7 +51,7 @@ data class UiSettings(
     val showProfileFollowersFeed: Boolean = true,
     val dontShowOnchainPublicWarning: Boolean = false,
     val suggestWorkoutsFromHealthConnect: BooleanType = BooleanType.ALWAYS,
-    val accentColor: AccentColorType = AccentColorType.PURPLE,
+    val accentColor: AccentColorType = AccentColorType.INHERIT,
     val fontFamily: FontFamilyType = FontFamilyType.SYSTEM,
     val fontSize: FontSizeType = FontSizeType.NORMAL,
     val composeSignature: String = "",
@@ -157,6 +157,7 @@ enum class AccentColorType(
     ORANGE(3),
     RED(4),
     PINK(5),
+    INHERIT(6),
 }
 
 fun parseAccentColorType(screenCode: Int): AccentColorType =
@@ -167,6 +168,7 @@ fun parseAccentColorType(screenCode: Int): AccentColorType =
         AccentColorType.ORANGE.screenCode -> AccentColorType.ORANGE
         AccentColorType.RED.screenCode -> AccentColorType.RED
         AccentColorType.PINK.screenCode -> AccentColorType.PINK
+        AccentColorType.INHERIT.screenCode -> AccentColorType.INHERIT
         else -> AccentColorType.PURPLE
     }
 

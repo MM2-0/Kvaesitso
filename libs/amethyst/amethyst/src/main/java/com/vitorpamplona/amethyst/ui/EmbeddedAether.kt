@@ -18,6 +18,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.DpSize
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
+import com.vitorpamplona.amethyst.commons.ui.theme.HostChrome
+import com.vitorpamplona.amethyst.commons.ui.theme.LocalHostChrome
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
@@ -40,13 +44,18 @@ private var resumedHosts = 0
 
 /** Full upstream client with deferred startup and Telos appearance defaults. */
 @Composable
-fun EmbeddedAether() {
+fun EmbeddedAether(
+    card: (Modifier, Shape, Color) -> Modifier = { modifier, _, _ -> modifier },
+    heading: @Composable (@Composable () -> Unit) -> Unit = { it() },
+    label: @Composable (String, Modifier) -> Unit = { text, modifier -> androidx.compose.material3.Text(text, modifier) },
+) {
+    val chrome = remember(card, heading, label) { HostChrome(card, heading, label) }
     val colors = MaterialTheme.colorScheme
     val typography = MaterialTheme.typography
     val shapes = MaterialTheme.shapes
     AmethystTheme(hostColors = colors, hostTypography = typography, updateWindow = false) {
         // Keep upstream composition locals while inheriting the Telos user's appearance.
-        CompositionLocalProvider(LocalContentColor provides MaterialTheme.colorScheme.onSurface) {
+        CompositionLocalProvider(LocalHostChrome provides chrome, LocalContentColor provides MaterialTheme.colorScheme.onSurface) {
             MaterialTheme(shapes = shapes) {
                 BoxWithConstraints(Modifier.fillMaxSize()) {
                     val size = remember(maxWidth, maxHeight) { DpSize(maxWidth, maxHeight) }

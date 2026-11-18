@@ -64,7 +64,7 @@ object CardSurfaces {
      */
     val frosted: Color
         @Composable @ReadOnlyComposable
-        get() = color.copy(alpha = if (MaterialTheme.colorScheme.isLight) 0.72f else 0.62f)
+        get() = if (LocalHostChrome.current != null) color else color.copy(alpha = if (MaterialTheme.colorScheme.isLight) 0.72f else 0.62f)
 
     /** The frosted card's edge: light catching it in light, a faint rim in dark. */
     val frostedBorder: BorderStroke

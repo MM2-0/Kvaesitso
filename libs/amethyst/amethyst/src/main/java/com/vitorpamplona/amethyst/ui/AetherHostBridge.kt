@@ -14,6 +14,8 @@ import androidx.core.content.IntentCompat
 object AetherHostBridge {
     const val EXTRA_CLIENT_INTENT = "com.telos.aether.CLIENT_INTENT"
 
+    var notificationSmallIcon: Int? = null
+
     var createHostIntent: ((Context) -> Intent)? = null
 
     fun redirect(context: Context, incoming: Intent): Intent? {

@@ -1,66 +1,56 @@
-# Embedded Amethyst integration status
+# Embedded Amethyst in Aether
 
-This is work in progress. The Aether route in released Telos builds is still
-a local preview. No production integration or feature parity is claimed.
+Aether composes the real Amethyst Android client inside the Telos APK. It does
+not install, launch or require an external Amethyst APK. This integration is on
+the development branch; the latest published v1.45.69 still has the preview.
 
-## Source and build
+## Source and distribution
 
-`libs/amethyst` contains the full Android client and the `commons`,
-`commonsUI`, `nestsClient`, `nappletHost` and test relay (`geode`) modules
-from Amethyst revision `75bb07fa3adf4ef5d590bb5379d87f01c139a430`.
-The Android application is converted to a library with its original resource
-namespace and both upstream distribution source sets. The original MIT
-license and source headers are preserved.
+`libs/amethyst` preserves the MIT-licensed Android client and its `commons`,
+`commonsUI`, `nestsClient`, `nappletHost` and test relay modules at revision
+`75bb07fa3adf4ef5d590bb5379d87f01c139a430`. The application module is an Android
+library selected through a composite build. Telos selects the F-Droid distribution;
+Google Play-specific Firebase, Cast and Google AI extensions are not included.
+The Play source set is retained for source provenance, with no Firebase key shipped.
 
-The library can be configured independently without changing Telos builds:
+## Host boundaries
 
-```sh
-./gradlew -p libs/amethyst :amethyst:assembleFdroidDebug
-```
+- `LauncherApplication` defers client initialization until Aether or one of its
+  background entry points needs it. Initialization is serialized on IO. The
+  keyless `:napplet` sandbox cannot initialize an account.
+- `EmbeddedAether` renders the upstream app, account manager, feeds, settings,
+  relays, messaging, media and signer workflows. Multiple accounts use the
+  original session manager; adding, switching and removing accounts stay available.
+- `AetherStorageContext` places files and databases under `noBackupFilesDir/aether`.
+  Encrypted account preferences retain the original encryption and separate
+  namespaces in `aether_private.xml`, excluded from both Android backup formats.
+  Clearing one account namespace cannot clear another account or launcher settings.
+- Native entry activities redirect into the existing Telos document-task host.
+  Nostr links, shares, attachment ClipData and URI grants pass through the bridge.
+  Telos cannot offer itself as an external Nostr Connect signer.
+- The default appearance inherits launcher colors, typography, shapes and font
+  scaling. Explicit client accent colors remain selectable. Settings cards,
+  headings and section labels use the host Cybertech components; drawers and
+  floating login cards use opaque tonal containers over the shared root backing.
+- Workers and push callbacks await initialization. Aether notifications use their
+  own tag; clearing them does not cancel Telos alarms or downloads. Media playback
+  uses notification ID 7407, distinct from the other Telos players.
 
-`EmbeddedAether` composes the real upstream client and inherits host Material
-colors, typography, shapes and font density. `Amethyst.initializeEmbedded()`
-initializes the runtime on IO and serializes concurrent initialization.
-A host can override `initializeOnCreate` only after the cold-entry paths below
-are handled; the current upstream application startup remains the default.
+## Validation
 
-## Integration and remaining release checks
+[Actions run 44277134771](https://github.com/koukomin/Telos-Launcher/actions/runs/44277134771)
+passed the combined ARM64 debug APK build, library build and Android storage
+instrumentation. The library host suite reported 1,526 tests, zero failures/errors
+and nine skips. These results apply to revision `896782b45`, before subsequent
+UI/chrome changes; they are not a release or full client runtime certification.
 
-- Included build, dependency substitution and F-Droid variant selection are connected; combined APK compilation is under verification.
-- LauncherApplication defers client initialization; Aether opens the real client UI, and main-activity links/shares redirect through the existing Telos document host.
-- Ensure every cold worker, receiver, foreground service and auxiliary activity
-  awaits initialization; preserve the keyless `:napplet` sandbox.
-- Forward upstream main-activity intents through the Telos virtual-app guard,
-  retaining deep links, share attachments and URI grants.
-- Reconcile manifest application attributes, resource names, provider authorities,
-  WorkManager setup, native libraries and duplicate class versions.
-- Complete dependency/license/security review and narrow consumer R8 rules.
-- Verify account creation/import, read-only login, switching/removal, signer
-  consent, settings, relays, feeds, publication, media, notifications and links
-  using actual Android runtime tests; review Cybertech appearance and large fonts.
-- Re-fetch GitHub immediately before merge, integrate newer main changes and
-  validate the combined code before signing a release.
+`validate-aether.yml` additionally builds the real Telos APK for an x86_64
+emulator solely for validation (release APKs remain ARM-specific). A separate
+instrumentation process drives public-key-only login, multiple accounts, settings
+and process restart with network disabled. Screenshots are exported through
+MediaStore before test APK removal. The public-fixture evidence branch records
+the tested source revision for visual review.
 
-Initial GitHub Actions run `43934837665` built the Android library and executed
-1,526 Android host tests: one failed and nine were skipped. The failure was
-`TorArtiNativeIntegrationTest`: the library conversion omitted the upstream
-`java.library.path` setting for the committed Linux JNI binary. That setting is
-restored; a fresh Actions run must verify the correction.
-
-No Telos host, device, account or release validation has passed for this integration.
-
-
-The corrected library run `43937277261` passed the build and host suite.
-The next revision adds an application-private storage context: client files and
-databases live under `noBackupFilesDir/aether`, while legacy preferences and
-Tink keysets use separate namespaces in `aether_private.xml`. Both Android backup
-formats explicitly exclude that file. Android instrumentation tests exercise real
-encrypted preferences, account isolation, editor reuse and SQLite paths. These
-new tests and the combined Telos build have not passed yet.
-
-The cold-start adaptation now initializes workers and push callbacks on IO;
-notifications use their own tag so dismissing them cannot cancel a Telos alarm
-or download. These changes are still under verification. A second compile
-identified a Kotlin DSL name collision (`java` versus `java.util.Properties`);
-using an explicit Properties import resolves configuration locally (`help
---offline` passes).
+Production R8, real signer consent, publication, external relay interoperability,
+physical OnePlus/Android 17 behavior and the full visual/font matrix must be
+reported from executed checks, never inferred from compilation.

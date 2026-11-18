@@ -87,7 +87,7 @@ private fun ReadyAmethystTheme(accountPubKey: HexKey?, hostColors: ColorScheme?,
 
     AmethystTheme(
         theme, accentColor, fontFamily, fontSize, displaySettings,
-        colorsOverride = hostColors.takeIf { theme == ThemeType.SYSTEM && accentColor == AccentColorType.PURPLE },
+        colorsOverride = hostColors.takeIf { theme == ThemeType.SYSTEM && accentColor == AccentColorType.INHERIT },
         baseTypography = hostTypography ?: DefaultTypography,
         updateWindow = updateWindow,
         content = content,
