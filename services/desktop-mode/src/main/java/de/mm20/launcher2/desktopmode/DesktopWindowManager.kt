@@ -2,21 +2,20 @@
 package de.mm20.launcher2.desktopmode
 
 import android.graphics.Rect
-import android.util.Log
-import de.mm20.launcher2.appmanagement.stealth.TelosPrivilegedDaemon
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import de.mm20.launcher2.ktx.TelosShellEngine
 
 class DesktopWindowManager {
 
     suspend fun snapTask(taskId: Int, bounds: Rect): Boolean {
+        if (!TelosShellEngine.isPrivilegedAvailable()) return false
         val command = "cmd activity task resize $taskId ${bounds.left} ${bounds.top} ${bounds.right} ${bounds.bottom}"
-        return TelosPrivilegedDaemon.exec(command).isSuccess
+        return TelosShellEngine.execResult(command, timeoutMs = 10_000L).isSuccess
     }
 
     suspend fun closeTask(taskId: Int): Boolean {
+        if (!TelosShellEngine.isPrivilegedAvailable()) return false
         val command = "cmd activity remove-task $taskId"
-        return TelosPrivilegedDaemon.exec(command).isSuccess
+        return TelosShellEngine.execResult(command, timeoutMs = 10_000L).isSuccess
     }
 }
 // === TELOS_PENDING_REVIEW_END: desktop_window_snapping ===

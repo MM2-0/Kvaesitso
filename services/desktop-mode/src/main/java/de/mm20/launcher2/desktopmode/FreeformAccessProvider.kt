@@ -7,6 +7,7 @@ import android.os.IBinder
 import android.os.Process
 import android.provider.Settings
 import android.util.Log
+import de.mm20.launcher2.ktx.TelosShellEngine
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -36,7 +37,6 @@ internal class FreeformAccessProvider(private val context: Context) {
     companion object {
         private const val REQUEST_CODE = 9317
         private const val TAG = "FreeformAccessProvider"
-        private const val OWN_PACKAGE = "de.mm20.launcher2"
         private const val SETTING_KEY = "enable_freeform_support"
         private const val PERMISSION = "android.permission.WRITE_SECURE_SETTINGS"
     }
@@ -45,7 +45,7 @@ internal class FreeformAccessProvider(private val context: Context) {
         get() = runCatching { Shizuku.getUid() == 0 }.getOrDefault(false)
 
     private val callerPackage: String
-        get() = if (isRoot) OWN_PACKAGE else "com.android.shell"
+        get() = if (isRoot) context.packageName else "com.android.shell"
 
     private val userId: Int
         get() = Process.myUid() / 100000
@@ -121,23 +121,29 @@ internal class FreeformAccessProvider(private val context: Context) {
     }
 
     private suspend fun grantSelfWriteSecureSettings(): Boolean {
-        return hasShizukuPermission() && runCatching {
-            val pm = packageManager() ?: return false
-            if (isAtLeastApiLevel(Build.VERSION_CODES.P)) {
-                HiddenApiBypass.invoke(
-                    pm.javaClass, pm, "grantRuntimePermission",
-                    OWN_PACKAGE, PERMISSION, userId,
-                )
-            } else {
-                pm.javaClass.getMethod(
-                    "grantRuntimePermission",
-                    String::class.java, String::class.java, Int::class.javaPrimitiveType,
-                ).invoke(pm, OWN_PACKAGE, PERMISSION, userId)
-            }
-            true
-        }.onFailure {
-            Log.e(TAG, "Failed to grant $PERMISSION", it)
-        }.getOrDefault(false) && canWriteDirectly()
+        val pkg = context.packageName
+        if (hasShizukuPermission()) {
+            val grantedViaShizuku = runCatching {
+                val pm = packageManager() ?: return@runCatching false
+                if (isAtLeastApiLevel(Build.VERSION_CODES.P)) {
+                    HiddenApiBypass.invoke(
+                        pm.javaClass, pm, "grantRuntimePermission",
+                        pkg, PERMISSION, userId,
+                    )
+                } else {
+                    pm.javaClass.getMethod(
+                        "grantRuntimePermission",
+                        String::class.java, String::class.java, Int::class.javaPrimitiveType,
+                    ).invoke(pm, pkg, PERMISSION, userId)
+                }
+                true
+            }.onFailure {
+                Log.e(TAG, "Failed to grant $PERMISSION via Shizuku", it)
+            }.getOrDefault(false)
+            if (grantedViaShizuku && canWriteDirectly()) return true
+        }
+        TelosShellEngine.execRootResult("pm grant $pkg $PERMISSION", 10_000L)
+        return canWriteDirectly()
     }
 
     private fun packageManager(): Any? {
