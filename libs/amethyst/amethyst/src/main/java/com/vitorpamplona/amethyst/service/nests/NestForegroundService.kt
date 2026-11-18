@@ -108,7 +108,7 @@ class NestForegroundService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-        Amethyst.instance.nestsSession.setActive(true)
+        if (Amethyst.isInitialized) Amethyst.instance.nestsSession.setActive(true)
         createNotificationChannel()
         wakeLock =
             (getSystemService(Context.POWER_SERVICE) as PowerManager)
@@ -331,6 +331,7 @@ class NestForegroundService : Service() {
         // ForegroundServiceDidNotStartInTimeException.
         val mic =
             when {
+                !Amethyst.isInitialized -> false
                 intent == null -> promoted
                 intent.action == ACTION_PROMOTE_TO_MIC -> true
                 else -> false
@@ -347,7 +348,7 @@ class NestForegroundService : Service() {
         // (its ViewModel, the composable that stops this service) died with that process, so there is
         // nothing to keep alive: running on would hold audio focus and a wake lock for a room that no
         // longer exists, with nothing left to stop it.
-        if (intent?.action == ACTION_STOP || intent == null) {
+        if (intent?.action == ACTION_STOP || intent == null || !Amethyst.isInitialized) {
             stopForeground(STOP_FOREGROUND_REMOVE)
             stopSelf()
             return START_NOT_STICKY
@@ -429,7 +430,7 @@ class NestForegroundService : Service() {
     }
 
     override fun onDestroy() {
-        Amethyst.instance.nestsSession.setActive(false)
+        if (Amethyst.isInitialized) Amethyst.instance.nestsSession.setActive(false)
         wakeLock?.takeIf { it.isHeld }?.release()
         wakeLock = null
         abandonAudioFocus()

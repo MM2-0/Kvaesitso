@@ -14,7 +14,7 @@ permissions:
   contents: read
 concurrency:
   group: aether-library-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 jobs:
   android-library:
     runs-on: ubuntu-latest
@@ -102,6 +102,14 @@ jobs:
             --no-daemon --max-workers=1 --console=plain \
             -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process \
             '-Dorg.gradle.jvmargs=-Xmx7g -Dfile.encoding=UTF-8' 2>&1 | tee /tmp/telos-aether-build.log
+      - name: Validate production shrinking and Dokka security graph
+        run: |
+          set -o pipefail
+          ./gradlew :app:app:assembleDefaultRelease -Ptelos.abi=arm64-v8a \
+            --no-daemon --max-workers=1 --console=plain -Dorg.gradle.parallel=false \
+            -Pkotlin.compiler.execution.strategy=in-process '-Dorg.gradle.jvmargs=-Xmx7g -Dfile.encoding=UTF-8' 2>&1 | tee -a /tmp/telos-aether-build.log
+          ./gradlew -I tools/validation/security-dependencies.init.gradle verifyDokkaSecurityDependencies \
+            --no-configuration-cache --no-daemon --max-workers=1 --console=plain
       - name: Report compilation failures
         if: failure()
         run: |

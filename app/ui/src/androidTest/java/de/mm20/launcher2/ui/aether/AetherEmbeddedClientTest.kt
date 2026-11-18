@@ -78,8 +78,9 @@ class AetherEmbeddedClientTest {
         assertTrue(field.performAction(AccessibilityNodeInfo.ACTION_SET_TEXT, Bundle().apply {
             putCharSequence(AccessibilityNodeInfo.ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE, publicKey)
         }))
-        shell("input keyevent KEYCODE_BACK")
-        nodes().firstOrNull { it.className?.toString() == "android.widget.CheckBox" && !it.isChecked }?.let(::click)
+        if (shell("dumpsys input_method").contains("mInputShown=true")) {
+            shell("input keyevent KEYCODE_BACK")
+        }
         click(awaitNode("Login") { it.text?.toString() == "Login" && it.isEnabled })
         awaitNode("logged-in account") { it.contentDescription?.toString() == "Your Profile Picture" }
     }
@@ -126,7 +127,8 @@ class AetherEmbeddedClientTest {
             awaitNode("second stored account") { it.text?.toString() == "npub1gcx…wqlfnj5z" }
             screenshot("multiple-accounts")
             click(awaitNode("switch to first account") { it.text?.toString() == "npub10xl…vqpkge6d" })
-            shell("input keyevent KEYCODE_BACK")
+            // Switching accounts recreates the client shell and dismisses its sheet.
+            awaitNode("switched account") { it.contentDescription?.toString() == "Your Profile Picture" }
             openSettings()
             screenshot("settings")
             shell("input keyevent KEYCODE_HOME")

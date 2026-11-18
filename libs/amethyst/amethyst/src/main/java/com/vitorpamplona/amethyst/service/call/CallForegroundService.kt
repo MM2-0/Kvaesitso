@@ -40,12 +40,13 @@ import com.vitorpamplona.amethyst.commons.nipACWebRtcCalls.CallState
 import com.vitorpamplona.amethyst.commons.service.call.CallSessionBridge
 import com.vitorpamplona.amethyst.ui.call.CallActivity
 import com.vitorpamplona.quartz.utils.Log
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeoutOrNull
 
 private const val TAG = "CallForegroundService"
 
 class CallForegroundService : Service() {
+    private var hangupStarted = false
     companion object {
         const val CHANNEL_ID = "amethyst_call_channel"
         const val NOTIFICATION_ID = 9001
@@ -64,7 +65,7 @@ class CallForegroundService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-        Amethyst.instance.callSession.setActive(true)
+        if (Amethyst.isInitialized) Amethyst.instance.callSession.setActive(true)
         createNotificationChannel()
     }
 
@@ -140,17 +141,7 @@ class CallForegroundService : Service() {
         return START_NOT_STICKY
     }
 
-    /**
-     * Called when the user swipes the app's task away from Recents. The
-     * manifest declares `stopWithTask="false"` so this callback fires
-     * BEFORE the service is killed, giving us a window to publish the
-     * hangup/reject signaling event synchronously.
-     *
-     * `runBlocking` is safe here because `onTaskRemoved` runs on the
-     * main thread with a 5-second ANR window and the network publish
-     * (via Nostr relay WebSocket) completes well within that. We cap
-     * it at 3 seconds as a safety net.
-     */
+    /** The call task's explicit dismissal schedules bounded signalling on application IO. */
     override fun onTaskRemoved(rootIntent: Intent?) {
         val removed = rootIntent?.component?.className
         Log.d(TAG) { "onTaskRemoved root=$removed" }
@@ -169,50 +160,40 @@ class CallForegroundService : Service() {
             return
         }
 
-        publishHangupBlocking()
+        publishHangup()
         stopForeground(STOP_FOREGROUND_REMOVE)
         stopSelf()
         super.onTaskRemoved(rootIntent)
     }
 
     override fun onDestroy() {
-        // If onTaskRemoved already published the hangup, this is a no-op
-        // because CallManager.hangup() transitions to Ended and a second
-        // hangup() from Ended state returns immediately.
-        publishHangupBlocking()
-        Amethyst.instance.callSession.setActive(false)
+        // The application IO job survives service destruction; duplicate callbacks
+        // cannot send the same hangup twice.
+        publishHangup()
+        if (Amethyst.isInitialized) Amethyst.instance.callSession.setActive(false)
         super.onDestroy()
     }
 
-    /**
-     * Synchronously publishes a hangup or reject event if a call is
-     * active. Uses [runBlocking] with a 3-second timeout so we never
-     * block the main thread past the ANR window.
-     */
-    private fun publishHangupBlocking() {
+    /** Finish call signalling without blocking the launcher's main thread. */
+    private fun publishHangup() {
+        if (hangupStarted || !Amethyst.isInitialized) return
         val manager = CallSessionBridge.callManager ?: return
         val state = manager.state.value
-        try {
-            runBlocking {
+        hangupStarted = true
+        Amethyst.instance.applicationIOScope.launch {
+            try {
                 withTimeoutOrNull(3_000L) {
                     when (state) {
-                        is CallState.IncomingCall -> {
-                            manager.rejectCall()
-                        }
-
-                        is CallState.Offering,
-                        is CallState.Connecting,
-                        is CallState.Connected,
-                        -> {
-                            manager.hangup()
-                        }
-
-                        else -> { /* nothing to do */ }
+                        is CallState.IncomingCall -> manager.rejectCall()
+                        is CallState.Offering, is CallState.Connecting, is CallState.Connected -> manager.hangup()
+                        else -> Unit
                     }
                 }
+            } catch (e: kotlinx.coroutines.CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                Log.e(TAG, "Unable to finish call signalling", e)
             }
-        } catch (e: Exception) {
-            Log.e(TAG, "publishHangupBlocking failed", e)
         }
     }
 

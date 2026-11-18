@@ -20,6 +20,8 @@ android {
         resources.merges.add("META-INF/NOTICE.md")
         resources.excludes.add("META-INF/DEPENDENCIES")
         resources.excludes.add("META-INF/INDEX.LIST")
+        // The device driver packages the same full client graph as the launcher APK.
+        resources.excludes.add("google/protobuf/**")
     }
 
     defaultConfig {
