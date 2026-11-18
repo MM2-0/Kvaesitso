@@ -115,8 +115,8 @@ abstract class SharedLauncherActivity(
 
     override fun onCreate(savedInstanceState: Bundle?) {
         de.mm20.launcher2.ui.performance.TelosSelfOptimizer.boostUiThreadPriority()
-        lifecycleScope.launch {
-            de.mm20.launcher2.ui.performance.TelosSelfOptimizer.runBackgroundOptimizations(this@SharedLauncherActivity)
+        de.mm20.launcher2.ktx.TelosShellEngine.scope.launch {
+            de.mm20.launcher2.ui.performance.TelosSelfOptimizer.runBackgroundOptimizations(applicationContext)
         }
         enableEdgeToEdge()
         if (isAtLeastApiLevel(29)) {
