@@ -1,49 +1,47 @@
-name: Retrieve Aether device diagnostics
+name: Inspect Aether PR publishing
 on:
   push:
     branches: ['codex/aether-diagnostics']
   workflow_dispatch:
 permissions:
   actions: read
-  contents: write
+  contents: read
+  pull-requests: write
 jobs:
-  retrieve:
+  inspect:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: actions/download-artifact@v8
-        with:
-          github-token: ${{ github.token }}
-          run-id: 44307611967
-          name: aether-client-device-results
-          path: /tmp/aether-device-results
-      - name: Publish fresh-emulator diagnostics for source review
+      - name: Explain the failed PR step
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
+          gh api "repos/$GITHUB_REPOSITORY/actions/jobs/134869162715/logs" > /tmp/aether-pr-log.txt
           python3 - <<'PY'
           from pathlib import Path
-          root = Path('/tmp/aether-device-results')
-          for path in root.rglob('*'):
-              if path.is_file(): print('::notice title=Aether artifact file::' + str(path.relative_to(root)) + f' ({path.stat().st_size} bytes)')
-          logs = [p for p in root.rglob('*') if p.is_file() and 'logcat' in p.name.lower()]
-          if not logs: raise SystemExit('No device logs found')
-          text = '\n\n'.join('FILE: ' + str(p.relative_to(root)) + '\n' + p.read_text(errors='replace') for p in logs)
-          Path('/tmp/aether-device-full-log.txt').write_text(text)
-          logs = list(root.rglob('aether-client-logcat.txt'))
-          if len(logs) != 1: raise SystemExit(f'Expected one device log, found {len(logs)}')
-          # This run failed before login: fresh emulator, no user accounts or keys.
-          text = logs[0].read_text(errors='replace')
-          Path('/tmp/aether-device-log.txt').write_text(text)
-          selected = [line for line in text.splitlines() if any(tag in line for tag in ['AndroidRuntime', 'ActivityTaskManager', 'ActivityManager', 'AetherRuntime', 'DEBUG', 'libc', 'VirtualApp', 'Telos'])]
-          for line in selected[-100:]:
-              print('::notice title=Aether device diagnostics::' + line.replace('%', '%25'))
+          for line in Path('/tmp/aether-pr-log.txt').read_text(errors='replace').splitlines()[-35:]:
+              print('::notice title=Aether PR diagnostics::' + line.replace('%', '%25'))
           PY
-          git fetch origin refs/heads/codex/aether-ui-evidence:refs/remotes/origin/aether-ui-evidence
-          git worktree add --detach /tmp/aether-diagnostics-review refs/remotes/origin/aether-ui-evidence
-          mkdir -p /tmp/aether-diagnostics-review/docs/screenshots/development/aether
-          cp /tmp/aether-device-log.txt /tmp/aether-diagnostics-review/docs/screenshots/development/aether/DEVICE_LOG_44307611967.txt
-          git -C /tmp/aether-diagnostics-review config user.name github-actions[bot]
-          git -C /tmp/aether-diagnostics-review config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          cp /tmp/aether-device-full-log.txt /tmp/aether-diagnostics-review/docs/screenshots/development/aether/DEVICE_FULL_LOG_44307611967.txt
-          git -C /tmp/aether-diagnostics-review add docs/screenshots/development/aether/DEVICE_LOG_44307611967.txt docs/screenshots/development/aether/DEVICE_FULL_LOG_44307611967.txt
-          git -C /tmp/aether-diagnostics-review commit -qm 'docs: capture fresh-emulator Aether launch diagnostics [skip ci]'
-          git -C /tmp/aether-diagnostics-review push origin HEAD:refs/heads/codex/aether-ui-evidence
+      - name: Create the review PR if permitted
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          number=$(gh pr list --repo "$GITHUB_REPOSITORY" --base main --head codex/aether-amethyst-embedded --state open --json number --jq '.[0].number // empty')
+          if [ -n "$number" ]; then echo "::notice::Aether PR #$number already exists"; exit 0; fi
+          cat > /tmp/aether-pr.md <<'BODY'
+          Replace the Aether preview with the embedded Amethyst F-Droid client, including multiple accounts, settings, feeds, relays, messaging and media. No external Amethyst APK is required. Preserve MIT attribution, isolated encrypted storage, deferred startup, keyless sandbox and Cybertech host appearance.
+
+          Fix the real-APK cold-start Koin registration race. Validation of c3d24e2fc passed ARM64 debug and R8 release builds, 1,526 library tests (nine skips, zero failures), all four storage/notification device tests and real-Telos public-key multi-account login/switch/settings/process-restart testing. Settings screenshots at font 2.0 portrait/landscape were reviewed. Live publication/external signers and physical Android 17 were not exercised.
+
+          Validation: https://github.com/koukomin/Telos-Launcher/actions/runs/44314675281
+          BODY
+          if gh pr create --repo "$GITHUB_REPOSITORY" --base main --head codex/aether-amethyst-embedded --title 'Embed Amethyst in Aether with multiple accounts' --body-file /tmp/aether-pr.md > /tmp/aether-pr-result.txt 2>&1; then
+            cat /tmp/aether-pr-result.txt
+          else
+            python3 - <<'PY'
+          from pathlib import Path
+          text = Path('/tmp/aether-pr-result.txt').read_text(errors='replace')
+          print('::error title=Aether PR creation::' + text.replace('%', '%25').replace('\r', '%0D').replace('\n', '%0A'))
+          PY
+            exit 1
+          fi
