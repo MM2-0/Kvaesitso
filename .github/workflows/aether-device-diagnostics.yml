@@ -1,29 +1,69 @@
-name: Verify dependency review after included-build fixes
+name: Cancel superseded CI runs
 on:
   push:
     branches: ['codex/aether-diagnostics']
 permissions:
+  actions: write
   contents: read
+  pull-requests: read
 jobs:
-  inspect-review:
+  cleanup:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v7
-      - name: Compare patched candidate with stable and held candidate graphs
+      - name: Keep current checks and cancel obsolete work
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          for base in v1.45.69 v1.45.70; do
-            gh api "repos/$GITHUB_REPOSITORY/dependency-graph/compare/$base...6837a466149fd6f695d795abf90116abbd2d5503" > "/tmp/$base.json"
-          done
-          python3 - <<'PYCODE'
-          import json
-          from pathlib import Path
-          for base in ['v1.45.69', 'v1.45.70']:
-              data = json.loads(Path('/tmp/' + base + '.json').read_text())
-              added = [d for d in data if d.get('change_type') == 'added' and d.get('vulnerabilities')]
-              removed = [d for d in data if d.get('change_type') == 'removed' and d.get('vulnerabilities')]
-              print('::notice title=Patched dependency review::' + json.dumps({'base':base, 'changes':len(data), 'added_vulnerable_components':len(added), 'removed_vulnerable_components':len(removed)}))
-              for item in added:
-                  print('::error title=Remaining added advisory::' + json.dumps({k:item.get(k) for k in ('name','version','manifest','vulnerabilities')}).replace('%', '%25')[:3500])
-          PYCODE
+          python3 - <<'PY'
+          import json, os, subprocess
+          repo = os.environ['GITHUB_REPOSITORY']
+          def api(path, method='GET'):
+              result = subprocess.run(['gh','api','--method',method,'repos/'+repo+'/'+path],capture_output=True,text=True,check=True)
+              return json.loads(result.stdout) if result.stdout.strip() else {}
+          def pages(path, key=None):
+              found=[]
+              for page in range(1,11):
+                  data=api(path+('&' if '?' in path else '?')+'per_page=100&page='+str(page))
+                  items=data[key] if key else data
+                  found.extend(items)
+                  if len(items)<100:break
+              return found
+          latest=api('commits/main')['sha']
+          pulls=pages('pulls?state=all')
+          by_number={p['number']:p for p in pulls}
+          runs={}
+          for status in ['in_progress','queued','pending','waiting']:
+              for run in pages('actions/runs?status='+status,'workflow_runs'):runs[run['id']]=run
+          cancelled=[]
+          for run in runs.values():
+              if run['id']==int(os.environ['GITHUB_RUN_ID']):continue
+              reason=None
+              branch=run.get('head_branch','')
+              path=run.get('path','')
+              if path=='.github/workflows/auto-changelog.yml':reason='duplicate release-note generator'
+              elif branch=='v1.45.70':reason='held insecure candidate superseded by the patched 1.45.71 candidate'
+              elif branch in ['codex/aether-diagnostics','codex/aether-ui-evidence'] and path.startswith('dynamic/dependency-graph/'):
+                  reason='dependency submission for maintenance-only branch'
+              elif run['event']=='pull_request':
+                  numbers=[p['number'] for p in run.get('pull_requests',[])]
+                  if not numbers:
+                      numbers=[p['number'] for p in pulls if p['head']['sha']==run['head_sha'] or p.get('merge_commit_sha')==run['head_sha']]
+                  if numbers and all(by_number.get(n,api('pulls/'+str(n)))['state']=='closed' for n in numbers):
+                      reason='pull request is already closed or merged'
+              elif branch=='main' and run['head_sha']!=latest and (run['event']=='push' or path.startswith('dynamic/dependency-graph/')):
+                  comparison=api('compare/'+run['head_sha']+'...'+latest)
+                  if comparison.get('merge_base_commit',{}).get('sha')==run['head_sha']:
+                      reason='older main commit superseded by current main'
+              if reason:
+                  try:
+                      api('actions/runs/'+str(run['id'])+'/cancel','POST')
+                      cancelled.append(run['id'])
+                      print('::notice title=Cancelled obsolete run::'+json.dumps({'id':run['id'],'workflow':run['name'],'reason':reason}))
+                  except subprocess.CalledProcessError as e:
+                      print('::warning title=Cancellation race::'+str(run['id'])+' '+e.stderr.strip().replace('\n',' ')[:700])
+          for workflow in pages('actions/workflows','workflows'):
+              if workflow['path']=='.github/workflows/auto-changelog.yml':
+                  api('actions/workflows/'+str(workflow['id'])+'/disable','PUT')
+          print('::notice title=CI cleanup summary::'+json.dumps({'cancelled':cancelled,'kept_current_main':latest}))
+          PY
