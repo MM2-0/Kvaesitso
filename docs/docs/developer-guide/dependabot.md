@@ -29,9 +29,10 @@ Pin those on `gradle.beforeProject { buildscript.configurations }` in
 onto annotations. Pin app graphs in
 the root `allprojects { configurations.configureEach { resolutionStrategy.eachDependency } }`
 block (Guava `-android` there). Keep one Bouncy Castle version
-(`libs.versions.bouncycastle`, currently 1.86). App `useVersion` calls must use
-that catalog entry. `.github/workflows/dependency-graph.yml` submits the
-resolved Gradle graph so Dependabot can close alerts after the pins land.
+(`libs.versions.bouncycastle`, currently 1.87). App `useVersion` calls must use
+that catalog entry. The managed automatic Gradle submission uploads the resolved
+graph. `.github/workflows/dependency-graph.yml` verifies host and included-build
+security without duplicating that submission.
 
 **Docs (npm).** VitePress pulls vite, esbuild, postcss, nanoid, rollup and Vue.
 Bump `docs/package.json` and set `overrides`, then regenerate

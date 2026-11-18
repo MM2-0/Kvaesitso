@@ -32,7 +32,7 @@ Run these **on Windows** with **JDK 21** and **WiX Toolset 3.14** on `PATH` (`li
 ./gradlew :desktop-linux:packageUberJarForCurrentOS
 ```
 
-CI: `.github/workflows/build-desktop-binaries.yml` (Windows job installs WiX via Chocolatey, uploads `telos-desktop-windows-x64-*-setup.exe`, `*-portable.zip`, and the UberJar). Release uploads the same via `build-release.yml`. Builds are **unsigned** (SmartScreen may warn until a code-signing cert is configured).
+CI: `.github/workflows/build-desktop-binaries.yml` validates Linux/Windows on PRs and manual runs; tag builds retain the unique Linux ARM64 artifact. `build-release.yml` builds and publishes the x64 Linux/Windows release assets, including the Windows setup executable, portable ZIP and UberJar. Builds are **unsigned** (SmartScreen may warn until a code-signing cert is configured).
 
 Main class: `com.telos.desktop.MainKt`. The window is undecorated fullscreen.
 

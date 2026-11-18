@@ -42,7 +42,7 @@ jobs:
       - name: Compile embedded suite and test AppOps transactions, parsers, templates and history
         run: |
           BUILD_STATUS=0
-          bash ./gradlew :libs:appops-next:testDebugUnitTest :services:network:testDebugUnitTest :services:app-management:testDebugUnitTest :app:ui:assembleDefaultDebugAndroidTest --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process -Dorg.gradle.jvmargs=-Xmx3072m --stacktrace > "$RUNNER_TEMP/system-compile.log" 2>&1 || BUILD_STATUS=$?
+          bash ./gradlew :libs:appops-next:testDebugUnitTest :services:network:testDebugUnitTest :services:app-management:testDebugUnitTest :app:ui:assembleDefaultDebugAndroidTest --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process '-Dorg.gradle.jvmargs=-Xmx7g -Dfile.encoding=UTF-8' --stacktrace --no-configuration-cache > "$RUNNER_TEMP/system-compile.log" 2>&1 || BUILD_STATUS=$?
           cat "$RUNNER_TEMP/system-compile.log"
           if [ "$BUILD_STATUS" -ne 0 ]; then
             python3 - <<'PY'
@@ -69,7 +69,7 @@ jobs:
           profile: pixel_7
           disable-animations: true
           emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim
-          script: bash ./gradlew :app:ui:connectedDefaultDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=de.mm20.launcher2.ui.system.FreezeDeskGridTest --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process -Dorg.gradle.jvmargs=-Xmx2048m
+          script: bash ./gradlew :app:ui:connectedDefaultDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=de.mm20.launcher2.ui.system.FreezeDeskGridTest --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process '-Dorg.gradle.jvmargs=-Xmx7g -Dfile.encoding=UTF-8' --no-configuration-cache
       - name: Verify both grid regressions ran
         if: always()
         run: |

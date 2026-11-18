@@ -1,6 +1,7 @@
 name: Validate theme overlays
 on:
   pull_request:
+    types: [opened, synchronize, reopened, closed]
     paths:
       - 'app/ui/src/main/java/de/mm20/launcher2/ui/component/FrostedGlass.kt'
       - 'app/ui/src/main/java/de/mm20/launcher2/ui/component/VirtualAppBlur.kt'
@@ -21,8 +22,9 @@ permissions:
   contents: read
 jobs:
   compile-and-test:
+    if: github.event_name != 'pull_request' || github.event.action != 'closed'
     runs-on: ubuntu-latest
-    timeout-minutes: 35
+    timeout-minutes: 90
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-java@v6
@@ -34,7 +36,7 @@ jobs:
           cache-provider: basic
       - run: chmod +x gradlew
       - name: Compile and test UI
-        run: ./gradlew :core:ktx:testDebugUnitTest :core:preferences:testDebugUnitTest :services:comms:testDebugUnitTest :app:ui:testDefaultDebugUnitTest :app:app:assembleDefaultDebug --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process -Dorg.gradle.jvmargs=-Xmx3072m --stacktrace
+        run: ./gradlew :core:ktx:testDebugUnitTest :core:preferences:testDebugUnitTest :services:comms:testDebugUnitTest :app:ui:testDefaultDebugUnitTest :app:app:assembleDefaultDebug --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process '-Dorg.gradle.jvmargs=-Xmx7g -Dfile.encoding=UTF-8' --stacktrace --no-configuration-cache
       - uses: actions/upload-artifact@v7
         if: always()
         with:

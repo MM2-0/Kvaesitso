@@ -2,6 +2,12 @@
 
 ## 1.45.71
 
+- Include the latest merged root/Shizuku, self-optimization, shell and VM changes.
+- Remove redundant Linux/release-note workflows and duplicate graph submission;
+  cancel obsolete closed-PR/older-main checks while retaining release history.
+- Repair Windows VM archive staging and keep its toolchain/setup files out of
+  the repository-wide ZIP that the previous workflow attempted to publish.
+
 - Apply security constraints inside the independent Amethyst build, including
   plugin classpaths; patch Bouncy Castle, Guava, JDOM, jose4j, HttpClient,
   Commons Lang and OpenTelemetry transitives identified by dependency review.

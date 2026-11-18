@@ -55,7 +55,7 @@ jobs:
           VERSION_NAME_OVERRIDE: 'size-experiment'
         run: |
           chmod +x gradlew
-          ./gradlew :app:app:assembleDefaultRelease -Ptelos.abi=arm64-v8a -Ptelos.keepNames=${{ matrix.keep_names }} --stacktrace
+          ./gradlew :app:app:assembleDefaultRelease -Ptelos.abi=arm64-v8a -Ptelos.keepNames=${{ matrix.keep_names }} --stacktrace --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process '-Dorg.gradle.jvmargs=-Xmx7g -Dfile.encoding=UTF-8' --no-configuration-cache
       - name: Measure APK entries
         env:
           VARIANT: ${{ matrix.variant }}

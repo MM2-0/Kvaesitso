@@ -1543,4 +1543,9 @@ propose future Action updates through CI-tested PRs; fork owners must enable
 Dependabot version updates in repository settings. See the
 [maintenance procedure](docs/docs/developer-guide/releases.md#github-actions-runtime-maintenance).
 
+CI keeps one stable publisher and one dependency-graph writer. Superseded PR/main
+checks are cancelled automatically; unique Linux ARM64, AAB, F-Droid, native and
+emulator checks remain. The duplicate Linux/auto-changelog workflows are removed.
+See [workflow ownership](docs/docs/developer-guide/releases.md#avoiding-duplicate-and-obsolete-runs).
+
 SQLite startup config reads the result of `PRAGMA mmap_size` through a cursor, preventing the `SQLITE_OK` startup crash while preserving existing launcher data. Android instrumentation checks fresh database opening and reopening with retained records.

@@ -1,0 +1,37 @@
+name: Cancel superseded CI
+
+on:
+  push:
+    branches: [main]
+  pull_request_target:
+    branches: [main]
+    types: [closed]
+  workflow_run:
+    workflows: ['Automatic Dependency Submission (Gradle)']
+    types: [requested, in_progress]
+  workflow_dispatch:
+
+concurrency:
+  group: obsolete-ci-maintenance
+  cancel-in-progress: true
+
+permissions:
+  actions: write
+  contents: read
+  pull-requests: read
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      # Always use trusted default-branch code, including for closed fork PRs.
+      # Never check out a PR head or consume its artifacts with this write token.
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          persist-credentials: false
+      - name: Cancel only closed-PR and superseded default-branch work
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 .github/scripts/cancel_obsolete_ci.py

@@ -6,14 +6,21 @@ on:
   push:
     branches: [main]
   pull_request:
+    types: [opened, synchronize, reopened, closed]
     branches: [main]
   schedule:
     - cron: '0 1 * * 0' # Weekly on Sunday at 01:00 UTC
   workflow_dispatch:
 
+concurrency:
+  group: codeql-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   analyze:
+    if: github.event_name != 'pull_request' || github.event.action != 'closed'
     runs-on: ubuntu-latest
+    timeout-minutes: 120
     permissions:
       security-events: write
       actions: read

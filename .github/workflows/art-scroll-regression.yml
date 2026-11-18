@@ -37,7 +37,7 @@ jobs:
       - name: Compile actual UI and regression APK
         run: |
           BUILD_STATUS=0
-          bash ./gradlew :app:ui:assembleDefaultDebugAndroidTest --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process -Dorg.gradle.jvmargs=-Xmx3072m --stacktrace > "$RUNNER_TEMP/art-compile.log" 2>&1 || BUILD_STATUS=$?
+          bash ./gradlew :app:ui:assembleDefaultDebugAndroidTest --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process '-Dorg.gradle.jvmargs=-Xmx7g -Dfile.encoding=UTF-8' --stacktrace --no-configuration-cache > "$RUNNER_TEMP/art-compile.log" 2>&1 || BUILD_STATUS=$?
           cat "$RUNNER_TEMP/art-compile.log"
           if [ "$BUILD_STATUS" -ne 0 ]; then
             python3 - <<'PY'
@@ -64,7 +64,7 @@ jobs:
           profile: pixel_7
           disable-animations: true
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-          script: bash ./gradlew :app:ui:connectedDefaultDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=de.mm20.launcher2.ui.settings.art.ArtOptimizerScrollTest --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process -Dorg.gradle.jvmargs=-Xmx2048m --stacktrace
+          script: bash ./gradlew :app:ui:connectedDefaultDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=de.mm20.launcher2.ui.settings.art.ArtOptimizerScrollTest --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process '-Dorg.gradle.jvmargs=-Xmx7g -Dfile.encoding=UTF-8' --stacktrace --no-configuration-cache
       - name: Require both regression cases to execute successfully
         if: always()
         run: |

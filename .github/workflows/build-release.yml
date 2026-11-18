@@ -2,6 +2,7 @@ name: Release Android and Linux
 
 on:
   pull_request:
+    types: [opened, synchronize, reopened, closed]
     branches: [main]
     paths:
       - '.github/workflows/build-release.yml'
@@ -17,13 +18,14 @@ on:
 
 concurrency:
   group: telos-release-${{ github.event_name == 'pull_request' && github.event.pull_request.number || 'publish' }}
-  cancel-in-progress: false
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 permissions:
   contents: read
 
 jobs:
   version:
+    if: github.event_name != 'pull_request' || github.event.action != 'closed'
     runs-on: ubuntu-latest
     outputs:
       tag: ${{ steps.v.outputs.tag }}
@@ -95,6 +97,7 @@ jobs:
           echo "KS_KEY_PASS=$SIGNING_KEY_PASSWORD" >> "$GITHUB_ENV"
 
       - name: Download SIP native libraries
+        if: matrix.abi != 'x86_64'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -118,17 +121,6 @@ jobs:
         env:
           EXPECTED_ABI: ${{ matrix.abi }}
         run: python3 tools/release-apk-check.py
-
-      - name: Download SIP native libraries
-        if: matrix.abi != 'x86_64'
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          if gh release download sip-libs --pattern sip-libs.tar.gz --dir "$RUNNER_TEMP"; then
-            tar -xzf "$RUNNER_TEMP/sip-libs.tar.gz" -C sip-native
-          else
-            echo "No SIP libraries released yet, building without the SIP engine"
-          fi
 
       - name: Verify Shizuku payloads and 16 KB ELF alignment
         if: matrix.abi != 'x86_64'
@@ -322,22 +314,53 @@ jobs:
     needs: [version, build]
     if: needs.version.outputs.publish == 'true'
     runs-on: windows-latest
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-dotnet@v4
-        with: { dotnet-version: '8.0.x' }
-      - run: dotnet publish tools/windows-qemu-android/src/TelosAndroidVm/TelosAndroidVm.csproj -c Release -r win-x64 --self-contained -p:PublishSingleFile=true
-      - run: | 
-          mkdir vendor/qemu; curl -L https://qemu.weilnetz.de/w64/2026/qemu-w64-setup-20260811.exe -o setup.exe; 7z x setup.exe -ovendor/qemu
-          mkdir vendor/scrcpy; curl -L https://github.com/Genymobile/scrcpy/releases/download/v5.0.1/scrcpy-win64-v5.0.1.zip -o scrcpy.zip; 7z x scrcpy.zip -ovendor/scrcpy
+        with:
+          dotnet-version: '8.0.x'
+      - name: Publish Windows VM launcher
+        shell: pwsh
+        run: |
+          $version = (Get-Content version.properties | Where-Object { $_.StartsWith('versionName=') }).Split('=')[1]
+          dotnet publish tools/windows-qemu-android/src/TelosAndroidVm/TelosAndroidVm.csproj -c Release -r win-x64 --self-contained -p:PublishSingleFile=true "-p:Version=$version" --output "$env:RUNNER_TEMP/vm-publish"
+          if ($LASTEXITCODE -ne 0) { throw 'Windows VM launcher compilation failed' }
       - uses: actions/download-artifact@v8
-        with: { name: telos-x86_64, path: . }
-      - run: | 
-          cp scripts/first-boot-lock.sh .; cp blissos.lock.json .
-          $VERSION_NAME = Get-Content version.properties | Select-String "versionName=" | ForEach-Object { $_.ToString().Split('=')[1] }
-          Compress-Archive -Path * -DestinationPath "telos-android-vm-windows-x64-$VERSION_NAME.zip"
+        with:
+          name: telos-x86_64
+          path: ${{ runner.temp }}/vm-apk
+      - name: Assemble a clean Windows VM bundle
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $stage = Join-Path $env:RUNNER_TEMP 'vm-stage'
+          $output = Join-Path $env:RUNNER_TEMP 'vm-out'
+          New-Item -ItemType Directory -Force -Path $stage, $output, (Join-Path $stage 'scripts') | Out-Null
+          Copy-Item -Recurse -Force "$env:RUNNER_TEMP/vm-publish/*" $stage
+          foreach ($file in @('fetch-toolchain.ps1', 'prepare-qcow2.ps1', 'blissos.lock.json', 'README.md')) {
+            Copy-Item (Join-Path 'tools/windows-qemu-android' $file) $stage
+          }
+          Copy-Item tools/windows-qemu-android/scripts/first-boot-lock.sh (Join-Path $stage 'scripts')
+          Copy-Item LICENSE, THIRD_PARTY_NOTICES.md $stage
+          Copy-Item "$env:RUNNER_TEMP/vm-apk/telos-x86_64.apk" $stage
+          & (Join-Path $stage 'fetch-toolchain.ps1') -SkipIso
+          foreach ($tool in @('vendor/qemu/qemu-system-x86_64.exe', 'vendor/qemu/qemu-img.exe', 'vendor/scrcpy/adb.exe', 'vendor/scrcpy/scrcpy.exe')) {
+            $binary = Join-Path $stage $tool
+            if (-not (Test-Path -LiteralPath $binary -PathType Leaf)) { throw "Missing packaged tool: $tool" }
+            if ($tool.EndsWith('adb.exe')) { & $binary version } else { & $binary --version }
+            if ($LASTEXITCODE -ne 0) { throw "Packaged tool failed its version check: $tool" }
+          }
+          $downloads = Join-Path $stage 'vendor/dl'
+          if (Test-Path $downloads) { Remove-Item -Recurse -Force $downloads }
+          if (Test-Path (Join-Path $stage '.git')) { throw 'Repository metadata must not enter the VM bundle' }
+          $version = (Get-Content version.properties | Where-Object { $_.StartsWith('versionName=') }).Split('=')[1]
+          Compress-Archive -Path (Join-Path $stage '*') -DestinationPath (Join-Path $output "telos-android-vm-windows-x64-$version.zip")
       - uses: actions/upload-artifact@v7
-        with: { name: telos-windows-vm, path: *.zip }
+        with:
+          name: telos-windows-vm
+          path: ${{ runner.temp }}/vm-out/*.zip
+          if-no-files-found: error
 
   release:
     permissions:
@@ -367,6 +390,11 @@ jobs:
           test -n "$(ls release-assets/telos-desktop-windows-x64-*-setup.exe 2>/dev/null | head -1)"
           test -n "$(ls release-assets/telos-x86_64.apk 2>/dev/null | head -1)"
           test -n "$(ls release-assets/telos-android-vm-windows-x64-*.zip 2>/dev/null | head -1)"
+          # Tags must still point at the commit whose binaries were built.
+          REMOTE_COMMIT=$(git ls-remote origin "refs/tags/$TAG" "refs/tags/$TAG^{}" | tail -n 1 | cut -f1)
+          test "$REMOTE_COMMIT" = "$GITHUB_SHA"
+          git fetch origin refs/heads/main
+          git merge-base --is-ancestor "$GITHUB_SHA" FETCH_HEAD
           bash tools/release-notes.sh "$TAG" "$RUNNER_TEMP/notes.md"
           if ! gh release view "$TAG" >/dev/null 2>&1; then
             gh release create "$TAG" --draft --target "$GITHUB_SHA" \

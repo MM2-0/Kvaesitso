@@ -36,4 +36,8 @@ python3 telos_android_vm.py          # Linux / macOS ARM
 
 Windows: `.\fetch-toolchain.ps1`, `.\prepare-qcow2.ps1`, `.\TelosAndroidVm.exe`.
 
+CI uses `fetch-toolchain.ps1 -SkipIso` to bundle QEMU/scrcpy without the guest ISO.
+The archive includes the published launcher, x86_64 Telos APK and setup scripts;
+run the normal setup command to download the guest image before first use.
+
 Optional: `TELOS_APK` for sideload. Drag-and-drop onto scrcpy goes to `/sdcard/Download`.

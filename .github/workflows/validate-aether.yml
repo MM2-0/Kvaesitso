@@ -4,6 +4,7 @@ on:
     branches: ['codex/aether-amethyst-embedded']
     paths-ignore: ['docs/**', 'readme.md', 'CHANGELOG.md', 'THIRD_PARTY_NOTICES.md', 'fastlane/**']
   pull_request:
+    types: [opened, synchronize, reopened, closed]
     paths:
       - 'libs/amethyst/**'
       - 'app/app/**'
@@ -14,10 +15,11 @@ on:
 permissions:
   contents: read
 concurrency:
-  group: aether-library-${{ github.ref }}
+  group: aether-library-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 jobs:
   android-library:
+    if: github.event_name != 'pull_request' || github.event.action != 'closed'
     runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:
@@ -83,6 +85,7 @@ jobs:
             libs/amethyst/amethyst/build/test-results/
 
   telos-apk:
+    if: github.event_name != 'pull_request' || github.event.action != 'closed'
     runs-on: ubuntu-latest
     timeout-minutes: 90
     steps:
@@ -125,6 +128,12 @@ jobs:
             --no-daemon --max-workers=1 --console=plain \
             -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process \
             '-Dorg.gradle.jvmargs=-Xmx7g -Dfile.encoding=UTF-8' 2>&1 | tee /tmp/telos-aether-build.log
+      - name: Test launcher shell, communications and freeze regressions
+        run: |
+          set -o pipefail
+          ./gradlew :core:ktx:testDebugUnitTest :services:comms:testDebugUnitTest :services:app-management:testDebugUnitTest :services:freeze:testDebugUnitTest \
+            --no-configuration-cache --no-daemon --max-workers=1 --console=plain -Dorg.gradle.parallel=false \
+            -Pkotlin.compiler.execution.strategy=in-process '-Dorg.gradle.jvmargs=-Xmx7g -Dfile.encoding=UTF-8' 2>&1 | tee -a /tmp/telos-aether-build.log
       - name: Validate production shrinking and Dokka security graph
         run: |
           set -o pipefail
@@ -153,6 +162,7 @@ jobs:
           path: /tmp/telos-aether-build.log
 
   aether-storage-device:
+    if: github.event_name != 'pull_request' || github.event.action != 'closed'
     runs-on: ubuntu-latest
     timeout-minutes: 90
     steps:
@@ -225,6 +235,7 @@ jobs:
             libs/amethyst/amethyst/build/reports/androidTests/
 
   aether-client-device:
+    if: github.event_name != 'pull_request' || github.event.action != 'closed'
     permissions:
       contents: write
     runs-on: ubuntu-latest

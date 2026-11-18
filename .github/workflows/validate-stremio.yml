@@ -1,6 +1,7 @@
 name: Validate Stremio Fork
 on:
   pull_request:
+    types: [opened, synchronize, reopened, closed]
     paths:
       - 'tools/validation/**'
       - 'services/widgets/**'
@@ -52,7 +53,9 @@ permissions:
   contents: read
 jobs:
   validate:
+    if: github.event_name != 'pull_request' || github.event.action != 'closed'
     runs-on: ubuntu-latest
+    timeout-minutes: 120
     steps:
       - uses: actions/checkout@v7
         with:
@@ -94,11 +97,11 @@ jobs:
       - name: Test Store download and update policies
         run: ./gradlew :services:store:testDebugUnitTest --stacktrace --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process -Dorg.gradle.jvmargs=-Xmx3072m
       - name: Test UI settings, archives, contact recovery, wallpaper contrast and adaptive layouts
-        run: ./gradlew :app:ui:testDefaultDebugUnitTest :app:ui:compileDefaultDebugAndroidTestKotlin --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process -Dorg.gradle.jvmargs=-Xmx3072m --stacktrace
+        run: ./gradlew :app:ui:testDefaultDebugUnitTest :app:ui:compileDefaultDebugAndroidTestKotlin --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process '-Dorg.gradle.jvmargs=-Xmx7g -Dfile.encoding=UTF-8' --stacktrace --no-configuration-cache
       - name: Test streaming APK downloads with a constrained heap
         run: ./gradlew :data:store:testDebugUnitTest --stacktrace --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process -Dorg.gradle.jvmargs=-Xmx3072m
       - name: Build debug APK
-        run: ./gradlew :app:app:assembleDefaultDebug --stacktrace --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process -Dorg.gradle.jvmargs=-Xmx3072m
+        run: ./gradlew :app:app:assembleDefaultDebug --stacktrace --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process '-Dorg.gradle.jvmargs=-Xmx7g -Dfile.encoding=UTF-8' --no-configuration-cache
       - uses: actions/upload-artifact@v7
         with:
           name: telos-stremio-debug
@@ -116,6 +119,7 @@ jobs:
             app/ui/build/test-results/
 
   video-glass-surface:
+    if: github.event_name != 'pull_request' || github.event.action != 'closed'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:

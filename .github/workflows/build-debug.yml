@@ -22,6 +22,7 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 120
     steps:
       - uses: actions/checkout@v7
       - name: Set up JDK 21
@@ -45,7 +46,7 @@ jobs:
             echo "No SIP libraries released yet, building without the SIP engine"
           fi
       - name: Build debug APK
-        run: ./gradlew assembleDefaultDebug --stacktrace
+        run: ./gradlew assembleDefaultDebug --stacktrace --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process '-Dorg.gradle.jvmargs=-Xmx7g -Dfile.encoding=UTF-8' --no-configuration-cache
       - name: Upload APK
         uses: actions/upload-artifact@v7
         with:

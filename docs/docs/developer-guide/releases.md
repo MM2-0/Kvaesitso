@@ -1,4 +1,4 @@
-# Android and Linux releases
+# Android and Desktop releases
 
 `version.properties` is the single source for Android versionName/versionCode,
 Linux package version and JAR Implementation-Version, and the GitHub release tag.
@@ -9,7 +9,7 @@ unified release retains a code above the previously committed 2026110505.
 1. Increase both values in `version.properties` and merge the reviewed PR into main.
 2. Push the matching tag (`v<versionName>`) at that main commit, or dispatch
    **Release Android and Linux** on main. Do not run both for the same version.
-3. `build-release.yml` validates the version, builds both ARM Android release APKs
+3. `build-release.yml` validates the version, builds the ARM64, ARMv7 and x86_64 VM Android release APKs
    using the repository signing key, tests/builds Linux with JDK 21, and collects
    all artifacts before creating a draft. It publishes and marks Latest only
    after every required asset uploads successfully.
@@ -17,7 +17,7 @@ unified release retains a code above the previously committed 2026110505.
 The workflow rejects mismatched/older tags, dispatches from other branches,
 and already-published versions. A failed upload leaves a draft for a retry.
 Missing signing secrets fail the job instead of generating a new signing key.
-PR validation builds both Android ABIs without repository secrets and tests/builds
+PR validation builds the three Android ABIs without repository secrets and tests/builds
 Linux; it cannot publish. The Android profile uses class patterns and explicit
 method descriptors, avoiding the invalid trailing return-type wildcard that
 crashed profgen in previous release builds. Device startup performance is not
@@ -30,7 +30,7 @@ application releases. The separate `sip-libs` prerelease is a native build input
 not an application release. Historical tags/releases are retained.
 
 Download `telos-arm64-v8a.apk` for modern ARM phones or `telos-armeabi-v7a.apk`
-for 32-bit ARM. Linux users need the JAR, launcher script, and Java 21 or newer;
+for 32-bit ARM. The existing x86_64 VM build is `telos-x86_64.apk`. Linux users need the JAR, launcher script, and Java 21 or newer;
 Linux session scripts are supplied in `telos-linux-session.tar.gz`.
 
 Full Linux validation also checks archive paths: absolute paths and traversal
@@ -82,8 +82,10 @@ that schedule; see [Dependabot](/docs/developer-guide/dependabot).
 On forks, enable **Settings > Advanced Security > Dependabot version updates**
 once; committing a config alone does not activate version updates on a fork.
 
-The Gradle dependency-graph workflow submits the resolved plugin and project
-classpaths to GitHub so Dependabot alerts follow patched versions.
+GitHub's managed **Automatic Dependency Submission (Gradle)** is the single
+dependency graph writer. `dependency-graph.yml` now verifies resolved dependency
+security in the host and included build, without submitting a second snapshot.
+It runs for dependency/build-definition changes and remains manually dispatchable.
 
 The runtime compatibility workflow exercises Java, Node, Python, Go, Gradle,
 cache, artifact upload/download and Pages artifact packaging, and builds the docs.
@@ -94,6 +96,41 @@ commercial enhanced caching component introduced in v6.
 Upstream references: [setup-java](https://github.com/actions/setup-java),
 [Gradle Actions](https://github.com/gradle/actions), and
 [Dependabot Actions updates](https://docs.github.com/en/code-security/how-tos/secure-your-supply-chain/secure-your-dependencies/auto-update-actions).
+
+## Avoiding duplicate and obsolete runs
+
+`build-release.yml` is the single stable publisher. The unused auto-changelog
+workflow and duplicate Linux desktop workflow were removed. Release notes are
+created by `tools/release-notes.sh`. The retained desktop workflow keeps Linux
+ARM64 artifacts on tags; x64 Linux and Windows release artifacts come from the
+publisher. Desktop pull-request/manual checks still cover both Linux
+architectures and Windows, including the former Linux session-script checks.
+
+Heavy PR workflows group concurrency by PR number. Closing or merging a PR
+cancels its older checks through a skipped `closed` run. Publication stays
+serialized and is never cancelled by a PR update. Before upload, the publisher
+checks that the remote tag still names the built commit and that current main
+contains it.
+
+`cancel-obsolete-ci.yml` also cancels checks for already closed PRs and older
+ancestor commits on the default branch, including managed dependency-submission
+backlogs. It reads trusted default-branch code, never a PR head or its artifacts.
+Current main, release tags, manual runs, scheduled runs and unknown/diverged
+history are preserved. Historical logs and verification evidence are retained.
+Run the selection regression checks with
+`python3 tools/validation/test_ci_run_selection.py`.
+
+Full Android compilations use one in-process compiler with a bounded heap so
+the two Kotlin versions cannot each start an additional large compiler daemon.
+The nightly JDK matches the required JDK 21. Unique APK, AAB, F-Droid, emulator,
+CodeQL and native checks remain separate.
+
+The Windows VM archive is staged from published launcher output, its toolchain,
+setup scripts and the x86_64 APK. It excludes repository metadata and installer
+caches. Required executables must pass version checks before packaging. The ISO
+is downloaded separately during user setup; `-SkipIso` keeps the release archive
+from bundling the multi-gigabyte guest image. A Windows build/packaging result
+does not certify an actual BlissOS guest boot on a physical host.
 
 ## SQLite startup regression
 

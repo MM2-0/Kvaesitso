@@ -24,7 +24,7 @@ jobs:
         with:
           cache-provider: basic
       - name: Compile UI, run unit regressions, build physical-device harness
-        run: ./gradlew :services:app-management:testDebugUnitTest :services:app-management:assembleDebugAndroidTest :app:ui:compileDefaultDebugKotlin --console=plain --max-workers=4
+        run: ./gradlew :services:app-management:testDebugUnitTest :services:app-management:assembleDebugAndroidTest :app:ui:compileDefaultDebugKotlin --console=plain --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process '-Dorg.gradle.jvmargs=-Xmx7g -Dfile.encoding=UTF-8' --no-configuration-cache
       - name: Verify ARM payloads and ARM64 16 KB ELF alignment
         run: python3 tools/release-shizuku-native-check.py --require-both services/app-management/build/outputs/apk/androidTest/debug/*.apk
       - uses: actions/upload-artifact@v7

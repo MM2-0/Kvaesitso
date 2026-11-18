@@ -2,7 +2,7 @@
 # Uploads ready-to-run UberJars. Windows also builds a jpackage Exe installer
 # (WiX 3.x) and a portable app-image zip that contains telos-desktop.exe + JRE.
 
-name: Build Telos Desktop Binaries
+name: Desktop checks and Linux ARM64 artifacts
 
 on:
   push:
@@ -14,23 +14,28 @@ on:
       - 'desktop-linux/**'
       - 'ui-kmp/**'
       - '.github/workflows/build-desktop-binaries.yml'
-      - 'version.properties'
   pull_request:
+    types: [opened, synchronize, reopened, closed]
     paths:
       - 'desktop-linux/**'
       - 'ui-kmp/**'
       - '.github/workflows/build-desktop-binaries.yml'
   workflow_dispatch:
 
+concurrency:
+  group: desktop-ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: read
 
 jobs:
   linux-jar:
+    if: github.event_name != 'pull_request' || github.event.action != 'closed'
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, ubuntu-24.04-arm]
+        os: ${{ startsWith(github.ref, 'refs/tags/v') && fromJSON('["ubuntu-24.04-arm"]') || fromJSON('["ubuntu-latest","ubuntu-24.04-arm"]') }}
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v7
@@ -46,6 +51,10 @@ jobs:
         run: |
           chmod +x gradlew desktop-linux/session/telos-session desktop-linux/session/labwc/autostart
           sh -n desktop-linux/session/telos-session
+          sh -n desktop-linux/session/labwc/autostart
+          test -f desktop-linux/session/labwc/rc.xml
+          test -f desktop-linux/session/niri/config.kdl
+          test -f desktop-linux/session/telos.desktop
           ./gradlew :ui-kmp:test :desktop-linux:test --no-configuration-cache --stacktrace
       - name: Package Linux UberJar
         if: github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/tags/v') || github.event_name == 'pull_request'
@@ -76,6 +85,7 @@ jobs:
           if-no-files-found: error
 
   windows-jar:
+    if: (!startsWith(github.ref, 'refs/tags/v')) && (github.event_name != 'pull_request' || github.event.action != 'closed')
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v7

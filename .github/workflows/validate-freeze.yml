@@ -3,6 +3,7 @@ on:
   push:
     branches: ['codex/autofreeze-recents-live-fonts']
   pull_request:
+    types: [opened, synchronize, reopened, closed]
     paths:
       - 'services/freeze/**'
       - 'services/icons/**'
@@ -24,6 +25,7 @@ permissions:
   contents: read
 jobs:
   freeze-fonts-continuity:
+    if: github.event_name != 'pull_request' || github.event.action != 'closed'
     runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:
@@ -43,7 +45,7 @@ jobs:
       - name: Compile UI and test freeze policies and task continuity
         run: |
           BUILD_STATUS=0
-          bash ./gradlew :services:freeze:testDebugUnitTest :services:comms:testDebugUnitTest :core:preferences:testDebugUnitTest :app:ui:testDefaultDebugUnitTest :app:ui:assembleDefaultDebugAndroidTest --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process -Dorg.gradle.jvmargs=-Xmx3072m --stacktrace > "$RUNNER_TEMP/system-compile.log" 2>&1 || BUILD_STATUS=$?
+          bash ./gradlew :services:freeze:testDebugUnitTest :services:comms:testDebugUnitTest :core:preferences:testDebugUnitTest :app:ui:testDefaultDebugUnitTest :app:ui:assembleDefaultDebugAndroidTest --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process '-Dorg.gradle.jvmargs=-Xmx7g -Dfile.encoding=UTF-8' --stacktrace --no-configuration-cache > "$RUNNER_TEMP/system-compile.log" 2>&1 || BUILD_STATUS=$?
           cat "$RUNNER_TEMP/system-compile.log"
           if [ "$BUILD_STATUS" -ne 0 ]; then
             python3 - <<'PY'
@@ -89,7 +91,7 @@ jobs:
           profile: pixel_7
           disable-animations: true
           emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim
-          script: bash ./gradlew :app:ui:connectedDefaultDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=de.mm20.launcher2.ui.freeze.AutoFreezeImportDialogTest,de.mm20.launcher2.ui.freeze.RecentsBridgeTest,de.mm20.launcher2.ui.component.PerAppFontDragTest,de.mm20.launcher2.ui.component.HardwareIconRenderingTest,de.mm20.launcher2.ui.component.KeyboardTouchTest,de.mm20.launcher2.ui.component.KeyboardImeTest --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process -Dorg.gradle.jvmargs=-Xmx2048m
+          script: bash ./gradlew :app:ui:connectedDefaultDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=de.mm20.launcher2.ui.freeze.AutoFreezeImportDialogTest,de.mm20.launcher2.ui.freeze.RecentsBridgeTest,de.mm20.launcher2.ui.component.PerAppFontDragTest,de.mm20.launcher2.ui.component.HardwareIconRenderingTest,de.mm20.launcher2.ui.component.KeyboardTouchTest,de.mm20.launcher2.ui.component.KeyboardImeTest --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process '-Dorg.gradle.jvmargs=-Xmx7g -Dfile.encoding=UTF-8' --no-configuration-cache
       - name: Verify every freeze and live-font device regression ran
         if: always()
         run: |

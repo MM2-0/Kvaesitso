@@ -1,4 +1,5 @@
 #Requires -Version 5.1
+param([switch]$SkipIso)
 $ErrorActionPreference = "Stop"
 $Root = Split-Path -Parent $MyInvocation.MyCommand.Path
 $Vendor = Join-Path $Root "vendor"
@@ -16,11 +17,10 @@ function Get-File($Url, $Dest) {
     Move-Item -Force "$Dest.partial" $Dest
 }
 
-Get-File $QemuUrl (Join-Path $Vendor "dl\qemu-w64-setup.exe")
-Get-File $ScrcpyUrl (Join-Path $Vendor "dl\scrcpy-win64.zip")
 
 $scrcpyExe = Join-Path $Vendor "scrcpy\scrcpy.exe"
 if (-not (Test-Path $scrcpyExe)) {
+    Get-File $ScrcpyUrl (Join-Path $Vendor "dl\scrcpy-win64.zip")
     $unpack = Join-Path $Vendor "dl\scrcpy-unpack"
     Expand-Archive -Force -Path (Join-Path $Vendor "dl\scrcpy-win64.zip") -DestinationPath $unpack
     $found = Get-ChildItem $unpack -Recurse -Filter scrcpy.exe | Select-Object -First 1
@@ -29,6 +29,7 @@ if (-not (Test-Path $scrcpyExe)) {
 
 $qemuExe = Join-Path $Vendor "qemu\qemu-system-x86_64.exe"
 if (-not (Test-Path $qemuExe)) {
+    Get-File $QemuUrl (Join-Path $Vendor "dl\qemu-w64-setup.exe")
     $setup = Join-Path $Vendor "dl\qemu-w64-setup.exe"
     $unpack = Join-Path $Vendor "dl\qemu-unpack"
     New-Item -ItemType Directory -Force -Path $unpack | Out-Null
@@ -46,10 +47,13 @@ if (-not (Test-Path $qemuExe)) {
 }
 
 $iso = Join-Path $Images "blissos-x86_64.iso"
-if (-not (Test-Path $iso)) {
+if (-not $SkipIso -and -not (Test-Path $iso)) {
     Write-Host "GET BlissOS ISO (~2.3 GiB)"
     Invoke-WebRequest -Uri $IsoUrl -OutFile "$iso.partial"
     Move-Item -Force "$iso.partial" $iso
 }
 
+foreach ($required in @($qemuExe, (Join-Path $Vendor "qemu\qemu-img.exe"), $scrcpyExe, (Join-Path $Vendor "scrcpy\adb.exe"))) {
+    if (-not (Test-Path -LiteralPath $required -PathType Leaf)) { throw "Toolchain download/extraction did not provide $required" }
+}
 Write-Host "Done. Run prepare-qcow2.ps1 then TelosAndroidVm.exe"
