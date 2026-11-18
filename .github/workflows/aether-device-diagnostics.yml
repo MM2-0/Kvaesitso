@@ -1,21 +1,29 @@
-name: Hold release for confirmed dependency advisories
+name: Verify dependency review after included-build fixes
 on:
   push:
     branches: ['codex/aether-diagnostics']
 permissions:
-  actions: write
   contents: read
 jobs:
-  hold-release:
+  inspect-review:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - name: Stop unfinished tag builds while confirmed advisories are fixed
+      - name: Compare patched candidate with stable and held candidate graphs
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          for run in 44347480022 44347480247 44347482239; do
-            status=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$run" --jq .status)
-            if [ "$status" != completed ]; then gh api --method POST "repos/$GITHUB_REPOSITORY/actions/runs/$run/cancel"; fi
+          for base in v1.45.69 v1.45.70; do
+            gh api "repos/$GITHUB_REPOSITORY/dependency-graph/compare/$base...6837a466149fd6f695d795abf90116abbd2d5503" > "/tmp/$base.json"
           done
-          echo '::notice::Held unpublished release for confirmed included-build dependency advisories'
+          python3 - <<'PYCODE'
+          import json
+          from pathlib import Path
+          for base in ['v1.45.69', 'v1.45.70']:
+              data = json.loads(Path('/tmp/' + base + '.json').read_text())
+              added = [d for d in data if d.get('change_type') == 'added' and d.get('vulnerabilities')]
+              removed = [d for d in data if d.get('change_type') == 'removed' and d.get('vulnerabilities')]
+              print('::notice title=Patched dependency review::' + json.dumps({'base':base, 'changes':len(data), 'added_vulnerable_components':len(added), 'removed_vulnerable_components':len(removed)}))
+              for item in added:
+                  print('::error title=Remaining added advisory::' + json.dumps({k:item.get(k) for k in ('name','version','manifest','vulnerabilities')}).replace('%', '%25')[:3500])
+          PYCODE
