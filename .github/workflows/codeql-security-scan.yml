@@ -59,7 +59,9 @@ jobs:
         env:
           GRADLE_OPTS: "-Dorg.gradle.jvmargs=-Xmx6g -XX:+UseG1GC"
         run: >-
-          ./gradlew compileDefaultDebugSources --no-daemon --no-build-cache
+          ./gradlew compileDefaultDebugSources --no-daemon --no-build-cache --no-configuration-cache \
+            --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process \
+            '-Dorg.gradle.jvmargs=-Xmx7g -Dfile.encoding=UTF-8'
           --no-configuration-cache --rerun-tasks -Pkotlin.incremental=false
 
       - name: Perform CodeQL Analysis

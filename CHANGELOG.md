@@ -1,6 +1,12 @@
 # Changelog
 
-## 1.45.70
+## 1.45.71
+
+- Apply security constraints inside the independent Amethyst build, including
+  plugin classpaths; patch Bouncy Castle, Guava, JDOM, jose4j, HttpClient,
+  Commons Lang and OpenTelemetry transitives identified by dependency review.
+- Check resolved plugin and Android runtime graphs against advisory minima and
+  use bounded compiler resources in auxiliary Android/CodeQL workflows.
 
 - Fix a cold-start dependency-registration race that could crash Telos before
   a directly opened app appeared; preserve deferred background initialization.
@@ -14,6 +20,11 @@
 - Inherit Telos appearance and fonts, add Cybertech settings chrome and Aether
   branding, and keep client notifications separate from alarms and other players.
 - Align embedded parser dependencies and fix duplicate Vue runtimes in the docs build.
+
+## 1.45.70 (unpublished candidate)
+
+- Publication held after dependency review found vulnerable transitives in the
+  included Amethyst build. The corrected release is 1.45.71.
 
 ## 1.45.69
 

@@ -14,7 +14,7 @@ permissions:
 jobs:
   build-aab:
     runs-on: ubuntu-latest
-    timeout-minutes: 40
+    timeout-minutes: 120
     steps:
       - uses: actions/checkout@v7
 
@@ -44,10 +44,14 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build Android App Bundle (.aab)
-        timeout-minutes: 30
+        timeout-minutes: 110
         env:
           GRADLE_OPTS: "-Xmx6144m -XX:MaxMetaspaceSize=1536m -XX:+UseG1GC"
-        run: ./gradlew :app:app:bundleDefaultRelease --no-configuration-cache --no-daemon --stacktrace
+        run: >-
+          ./gradlew :app:app:bundleDefaultRelease --no-configuration-cache --no-daemon
+          --max-workers=1 --stacktrace -Dorg.gradle.parallel=false
+          -Pkotlin.compiler.execution.strategy=in-process
+          '-Dorg.gradle.jvmargs=-Xmx7g -Dfile.encoding=UTF-8'
 
       - name: Upload App Bundle Artifact
         uses: actions/upload-artifact@v7

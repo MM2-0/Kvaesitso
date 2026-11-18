@@ -31,6 +31,9 @@ allprojects {
                     useVersion(libs.versions.jacksonDataformatYaml.get())
                 requested.group == "org.jsoup" && requested.name == "jsoup" ->
                     useVersion(libs.versions.jsoup.get())
+                requested.group == "io.opentelemetry" &&
+                    requested.name in setOf("opentelemetry-api", "opentelemetry-context") ->
+                    useVersion(libs.versions.opentelemetry.get())
                 requested.group == "org.bitbucket.b_c" && requested.name == "jose4j" ->
                     useVersion(libs.versions.jose4j.get())
                 requested.group == "org.jdom" && requested.name == "jdom2" ->

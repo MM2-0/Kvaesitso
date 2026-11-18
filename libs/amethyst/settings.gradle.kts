@@ -18,6 +18,44 @@ pluginManagement {
     }
 }
 
+// Included builds have independent project and plugin classpaths. The host's
+// constraints cannot protect this build or its standalone validation tasks.
+val telosSecurityPins = mapOf(
+    "org.freemarker:freemarker" to "2.3.35",
+    "org.jsoup:jsoup" to "1.24.1",
+    "org.jdom:jdom2" to "2.0.6.1",
+    "org.bitbucket.b_c:jose4j" to "0.9.7",
+    "org.apache.httpcomponents:httpclient" to "4.5.14",
+    "org.apache.commons:commons-lang3" to "3.22.0",
+    "com.fasterxml.jackson.core:jackson-core" to "2.23.0",
+    "com.fasterxml.jackson.core:jackson-databind" to "2.23.0",
+    "com.fasterxml.jackson.core:jackson-annotations" to "2.23",
+    "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml" to "2.23.0",
+    "io.opentelemetry:opentelemetry-api" to "1.68.0",
+    "io.opentelemetry:opentelemetry-context" to "1.68.0",
+)
+gradle.beforeProject {
+    val targetProject = this
+    fun org.gradle.api.artifacts.Configuration.secureTelosClasspath() {
+        val applicationClasspath = name.endsWith("RuntimeClasspath") || name.endsWith("CompileClasspath")
+        resolutionStrategy.eachDependency {
+            when {
+                requested.group == "org.bouncycastle" -> useVersion("1.87")
+                requested.group == "com.google.guava" && requested.name == "guava" -> {
+                    val androidClasspath = applicationClasspath && (
+                        targetProject.plugins.hasPlugin("com.android.library") ||
+                            targetProject.plugins.hasPlugin("com.android.kotlin.multiplatform.library")
+                        )
+                    useVersion(if (androidClasspath) "33.8.0-android" else "33.8.0-jre")
+                }
+                else -> telosSecurityPins["${requested.group}:${requested.name}"]?.let { useVersion(it) }
+            }
+        }
+    }
+    buildscript.configurations.configureEach { secureTelosClasspath() }
+    configurations.configureEach { secureTelosClasspath() }
+}
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     // The groups only JitPack builds (straight from GitHub). Google and Maven Central never have

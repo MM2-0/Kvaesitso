@@ -34,10 +34,14 @@ jobs:
         shell: bash
         run: |
           set -o pipefail
-          ./gradlew -p libs/amethyst :amethyst:assembleFdroidDebug :amethyst:testFdroidDebugUnitTest \
-            --no-daemon --max-workers=1 --console=plain \
+          ./gradlew -p libs/amethyst -I "$PWD/tools/validation/security-dependencies.init.gradle" verifyBuildSecurityDependencies \
+            --no-configuration-cache --no-daemon --max-workers=1 --console=plain \
             -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process \
             '-Dorg.gradle.jvmargs=-Xmx6g -Dfile.encoding=UTF-8' 2>&1 | tee /tmp/aether-build.log
+          ./gradlew -p libs/amethyst :amethyst:assembleFdroidDebug :amethyst:testFdroidDebugUnitTest \
+            --no-configuration-cache --no-daemon --max-workers=1 --console=plain \
+            -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process \
+            '-Dorg.gradle.jvmargs=-Xmx6g -Dfile.encoding=UTF-8' 2>&1 | tee -a /tmp/aether-build.log
       - name: Publish concise failure details
         if: failure()
         shell: bash
@@ -127,7 +131,7 @@ jobs:
           ./gradlew :app:app:assembleDefaultRelease -Ptelos.abi=arm64-v8a \
             --no-daemon --max-workers=1 --console=plain -Dorg.gradle.parallel=false \
             -Pkotlin.compiler.execution.strategy=in-process '-Dorg.gradle.jvmargs=-Xmx7g -Dfile.encoding=UTF-8' 2>&1 | tee -a /tmp/telos-aether-build.log
-          ./gradlew -I tools/validation/security-dependencies.init.gradle verifyDokkaSecurityDependencies \
+          ./gradlew -I tools/validation/security-dependencies.init.gradle verifyDokkaSecurityDependencies verifyBuildSecurityDependencies \
             --no-configuration-cache --no-daemon --max-workers=1 --console=plain
       - name: Report compilation failures
         if: failure()

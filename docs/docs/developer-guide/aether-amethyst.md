@@ -2,7 +2,7 @@
 
 Aether composes the real Amethyst Android client inside the Telos APK. It does
 not install, launch or require an external Amethyst APK. The integration is included
-in version 1.45.70. Earlier published versions contain the local preview.
+in version 1.45.71. Earlier published versions contain the local preview.
 
 ## Source and distribution
 
@@ -56,6 +56,23 @@ the regression gate. This does not initialize the Nostr graph at launcher startu
   uses notification ID 7407, distinct from the other Telos players. Client
   reminder, signer, call, room, upload and Tor notifications also use the host
   Aether foreground glyph; account avatars and media artwork remain intact.
+
+## Included-build dependency security
+
+The 1.45.70 tag is an unpublished validation candidate. Its publication was held
+when [dependency review](https://github.com/koukomin/Telos-Launcher/actions/runs/44351458402)
+identified vulnerable transitives in the included build, despite the launcher's
+existing constraints. Version 1.45.71 applies matching security constraints to
+both plugin and project classpaths in Amethyst's own settings. The pins cover
+Bouncy Castle 1.87, Guava 33.8.0, JDOM 2.0.6.1, jose4j 0.9.7, HttpClient 4.5.14,
+Commons Lang 3.22.0 and OpenTelemetry API/context 1.68.0. Guava keeps its Android
+artifact on Android compile/runtime classpaths and its JRE artifact for tools.
+
+`verifyBuildSecurityDependencies` resolves real buildscript and Android runtime
+graphs in both builds and compares affected components against advisory minima.
+These security changes are being revalidated; the rendering evidence below
+records the earlier tested application revision, not a claim of completed
+security validation for the follow-up.
 
 ## Validation
 

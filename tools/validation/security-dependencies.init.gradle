@@ -3,6 +3,89 @@ import org.gradle.api.artifacts.result.UnresolvedDependencyResult
 
 // Run with --no-configuration-cache: this verification resolves the root's
 // actual Dokka graphs at execution time, under the root project's lock.
+gradle.allprojects { target ->
+    target.tasks.register('verifyBuildSecurityDependencies') {
+        group = 'verification'
+        description = 'Check actual plugin and Android dependency graphs, including standalone Amethyst.'
+        doLast {
+            // Advisory minima, not copies of the selected dependency versions.
+            def minima = [
+                'org.bouncycastle:bcprov-jdk18on': '1.85',
+                'org.bouncycastle:bcpkix-jdk18on': '1.85',
+                'org.bouncycastle:bcutil-jdk18on': '1.85',
+                'com.google.guava:guava': '33.7.2',
+                'org.jdom:jdom2': '2.0.6.1',
+                'org.bitbucket.b_c:jose4j': '0.9.6',
+                'org.apache.httpcomponents:httpclient': '4.5.13',
+                'org.apache.commons:commons-lang3': '3.18.0',
+                'io.opentelemetry:opentelemetry-api': '1.67.0',
+                'org.freemarker:freemarker': '2.3.35',
+            ]
+            def belowMinimum = { String actual, String minimum ->
+                def normalized = actual.replaceFirst(/-(android|jre)$/, '')
+                if (!(normalized ==~ /[0-9]+(\.[0-9]+)+/)) {
+                    throw new GradleException("Review security dependency version: ${actual}")
+                }
+                def a = normalized.tokenize('.').collect { it as int }
+                def b = minimum.tokenize('.').collect { it as int }
+                for (int i = 0; i < Math.max(a.size(), b.size()); i++) {
+                    int left = i < a.size() ? a[i] : 0
+                    int right = i < b.size() ? b[i] : 0
+                    if (left != right) return left < right
+                }
+                return false
+            }
+            def graphs = [:]
+            target.buildscript.configurations.findAll { it.canBeResolved && it.name == 'classpath' }.each {
+                graphs["${target.path}:buildscript:${it.name}"] = it
+            }
+            boolean includedClient = target.rootProject.name == 'TelosAmethyst'
+            boolean ownsRuntime = target.path == (includedClient ? ':amethyst' : ':app:app')
+            def runtimeName = includedClient ? 'fdroidDebugRuntimeClasspath' : 'defaultDebugRuntimeClasspath'
+            if (ownsRuntime) {
+                def runtime = target.configurations.findByName(runtimeName)
+                if (runtime == null || !runtime.canBeResolved) {
+                    throw new GradleException("Required Android runtime graph missing: ${target.path}:${runtimeName}")
+                }
+                graphs["${target.path}:${runtimeName}"] = runtime
+            }
+            def seen = [] as Set
+            def failures = [] as Set
+            graphs.each { name, configuration ->
+                def result = configuration.incoming.resolutionResult
+                result.allDependencies.each { dependency ->
+                    if (dependency instanceof UnresolvedDependencyResult) {
+                        failures.add("${name}: unresolved ${dependency.attempted.displayName}")
+                    }
+                }
+                result.allComponents.each { component ->
+                    if (component.id instanceof ModuleComponentIdentifier) {
+                        def dependency = "${component.id.group}:${component.id.module}".toString()
+                        if (minima.containsKey(dependency)) {
+                            seen.add("${dependency}:${component.id.version}")
+                            if (belowMinimum(component.id.version, minima[dependency])) {
+                                failures.add("${name}: ${dependency}:${component.id.version} must be >= ${minima[dependency]}")
+                            }
+                        }
+                    }
+                }
+            }
+            if (seen.empty && (target == target.rootProject || ownsRuntime)) {
+                failures.add('No advisory-sensitive dependencies were checked; review graph coverage.')
+            }
+            if (!failures.empty) {
+                throw new GradleException('Build dependency security verification failed:\n' + failures.sort().join('\n'))
+            }
+            if (!seen.empty) println "Verified ${graphs.size()} build/runtime graphs in ${target.path}:\n" + seen.sort().join('\n')
+        }
+    }
+}
+// Resolve each configuration under its owning project's execution lock.
+gradle.projectsEvaluated {
+    gradle.rootProject.tasks.named('verifyBuildSecurityDependencies') {
+        dependsOn(gradle.rootProject.subprojects.collect { it.tasks.named('verifyBuildSecurityDependencies') })
+    }
+}
 gradle.rootProject { target ->
     target.tasks.register('verifyDokkaSecurityDependencies') {
         group = 'verification'

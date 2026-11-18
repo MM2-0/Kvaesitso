@@ -450,3 +450,8 @@ shipped. Original native notices and source/build instructions remain included.
 Documentation site: Vue and `@vue/server-renderer` are aligned at 3.5.45 (MIT)
 to use a single Vue runtime during static rendering. Existing Vue copyright and
 license notices remain in their distributed packages.
+
+The included Amethyst build also applies the launcher's patched transitive
+versions to its own plugin and project classpaths. OpenTelemetry Java API and
+context are aligned at 1.68.0 (Apache-2.0); this is dependency convergence, not a
+new telemetry configuration. Existing third-party notices remain preserved.

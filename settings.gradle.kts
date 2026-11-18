@@ -34,7 +34,7 @@ dependencyResolutionManagement {
 }
 
 // Dependabot maps plugin-classpath transitives to this file. Pin CVE-patched
-// versions here. jackson-annotations has no 2.22.4 artifact — use 2.22.
+// versions here. jackson-annotations uses the matching two-component version.
 val telosPluginCvePins = listOf(
     "com.google.guava:guava:33.8.0-jre",
     "org.jsoup:jsoup:1.24.1",
@@ -46,6 +46,8 @@ val telosPluginCvePins = listOf(
     "org.apache.httpcomponents:httpclient:4.5.14",
     "org.bitbucket.b_c:jose4j:0.9.7",
     "org.apache.commons:commons-lang3:3.22.0",
+    "io.opentelemetry:opentelemetry-api:1.68.0",
+    "io.opentelemetry:opentelemetry-context:1.68.0",
     "com.fasterxml.jackson.core:jackson-core:2.23.0",
     "com.fasterxml.jackson.core:jackson-databind:2.23.0",
     "com.fasterxml.jackson.core:jackson-annotations:2.23",
@@ -65,7 +67,7 @@ gradle.beforeProject {
                     requested.group == "org.freemarker" && requested.name == "freemarker" ->
                         useVersion("2.3.35")
                     requested.group == "org.bouncycastle" ->
-                        useVersion("1.86")
+                        useVersion("1.87")
                     requested.group == "org.jdom" && requested.name == "jdom2" ->
                         useVersion("2.0.6.1")
                     requested.group == "org.apache.httpcomponents" && requested.name == "httpclient" ->
@@ -73,16 +75,19 @@ gradle.beforeProject {
                     requested.group == "org.bitbucket.b_c" && requested.name == "jose4j" ->
                         useVersion("0.9.7")
                     requested.group == "org.apache.commons" && requested.name == "commons-lang3" ->
-                        useVersion("3.21.0")
+                        useVersion("3.22.0")
+                    requested.group == "io.opentelemetry" &&
+                        requested.name in setOf("opentelemetry-api", "opentelemetry-context") ->
+                        useVersion("1.68.0")
                     requested.group == "com.fasterxml.jackson.core" &&
                         requested.name in setOf("jackson-core", "jackson-databind") ->
-                        useVersion("2.22.4")
+                        useVersion("2.23.0")
                     requested.group == "com.fasterxml.jackson.core" &&
                         requested.name == "jackson-annotations" ->
-                        useVersion("2.22")
+                        useVersion("2.23")
                     requested.group == "com.fasterxml.jackson.dataformat" &&
                         requested.name == "jackson-dataformat-yaml" ->
-                        useVersion("2.22.4")
+                        useVersion("2.23.0")
                 }
             }
         }

@@ -154,3 +154,32 @@ This does not claim that any upstream API identifier was rotated or revoked.
 After regenerating the deduplicated Vue lockfile, the final npm audit reports
 five high entries propagated from the same unpatched picomatch advisory, down
 from eight in the initial graph. No advisory is suppressed.
+
+
+### Included-build advisory follow-up (1.45.71)
+
+Although the private alert-list endpoint remains unavailable, the contents-read
+SBOM and dependency-review APIs succeeded through Actions. The submitted graph
+confirmed FreeMarker **2.3.35**, so alert #57's package is patched. Comparing
+v1.45.69 with the unpublished v1.45.70 candidate exposed older transitives in
+Amethyst's independent Gradle build:
+
+| Component | Observed versions | Selected patched version |
+| --- | --- | --- |
+| Bouncy Castle bcprov-jdk18on | 1.80.2 | 1.87 |
+| Guava | 33.4.0-jre / 33.3.1-android | 33.8.0, with the appropriate suffix |
+| JDOM 2 | 2.0.6 | 2.0.6.1 |
+| jose4j | 0.9.5 | 0.9.7 |
+| HttpClient | 4.5.6 | 4.5.14 |
+| Commons Lang | 3.16.0 / 3.17.0 | 3.22.0 |
+| OpenTelemetry API | 1.41.0 | 1.68.0 |
+
+Bouncy Castle's GHSA-9pwp-9qqc-pr26 / GHSA-qp49-qgx5-5m26 require at least
+1.85, Guava GHSA-xxph-c9ww-hj94 requires 33.7.2, and OpenTelemetry
+GHSA-rcgg-9c38-7xpx / GHSA-ccrj-gw8r-854m require 1.62.0 / 1.67.0.
+Amethyst's settings now constrain both buildscript and project configurations;
+the host settings also align OpenTelemetry API/context and remove stale fallback
+versions. `verifyBuildSecurityDependencies` checks actual plugin and Android
+runtime resolution in both builds. Fresh graph/compile/test validation is
+pending; no alert has been dismissed and no claim that the alert list is empty
+is made. The picomatch advisory discussed above is a separate docs-tool issue.

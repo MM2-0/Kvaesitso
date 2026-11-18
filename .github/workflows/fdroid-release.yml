@@ -12,23 +12,38 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 120
     steps:
       - uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
-      - name: Set up JDK 17
+      - name: Set up JDK 21
         uses: actions/setup-java@v6
         with:
           java-version: '21'
           distribution: 'temurin'
-          cache: gradle
+      - uses: gradle/actions/setup-gradle@v6
+        with:
+          cache-provider: basic
+      - uses: android-actions/setup-android@v4
+      - name: Install release NDK before Gradle
+        run: |
+          for attempt in 1 2 3; do
+            if timeout 8m sdkmanager --install 'ndk;27.0.12077973' </dev/null; then exit 0; fi
+            sleep 8
+          done
+          exit 1
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
       - name: Build F-Droid Release APK
-        run: ./gradlew :app:app:assembleFdroidRelease --no-configuration-cache --stacktrace
+        run: >-
+          ./gradlew :app:app:assembleFdroidRelease --no-configuration-cache --no-daemon
+          --max-workers=1 --stacktrace -Dorg.gradle.parallel=false
+          -Pkotlin.compiler.execution.strategy=in-process
+          '-Dorg.gradle.jvmargs=-Xmx7g -Dfile.encoding=UTF-8'
 
       - name: Collect Release APKs
         run: |
