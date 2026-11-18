@@ -1,0 +1,42 @@
+name: Retrieve Aether device diagnostics
+on:
+  push:
+    branches: ['codex/aether-diagnostics']
+  workflow_dispatch:
+permissions:
+  actions: read
+  contents: write
+jobs:
+  retrieve:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/download-artifact@v8
+        with:
+          github-token: ${{ github.token }}
+          run-id: 44307611967
+          name: aether-client-device-results
+          path: /tmp/aether-device-results
+      - name: Publish fresh-emulator diagnostics for source review
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          root = Path('/tmp/aether-device-results')
+          logs = list(root.rglob('aether-client-logcat.txt'))
+          if len(logs) != 1: raise SystemExit(f'Expected one device log, found {len(logs)}')
+          # This run failed before login: fresh emulator, no user accounts or keys.
+          text = logs[0].read_text(errors='replace')
+          Path('/tmp/aether-device-log.txt').write_text(text)
+          selected = [line for line in text.splitlines() if any(tag in line for tag in ['AndroidRuntime', 'ActivityTaskManager', 'ActivityManager', 'AetherRuntime', 'DEBUG', 'libc', 'VirtualApp', 'Telos'])]
+          for line in selected[-100:]:
+              print('::notice title=Aether device diagnostics::' + line.replace('%', '%25'))
+          PY
+          git fetch origin refs/heads/codex/aether-ui-evidence:refs/remotes/origin/aether-ui-evidence
+          git worktree add --detach /tmp/aether-diagnostics-review refs/remotes/origin/aether-ui-evidence
+          mkdir -p /tmp/aether-diagnostics-review/docs/screenshots/development/aether
+          cp /tmp/aether-device-log.txt /tmp/aether-diagnostics-review/docs/screenshots/development/aether/DEVICE_LOG_44307611967.txt
+          git -C /tmp/aether-diagnostics-review config user.name github-actions[bot]
+          git -C /tmp/aether-diagnostics-review config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git -C /tmp/aether-diagnostics-review add docs/screenshots/development/aether/DEVICE_LOG_44307611967.txt
+          git -C /tmp/aether-diagnostics-review commit -qm 'docs: capture fresh-emulator Aether launch diagnostics [skip ci]'
+          git -C /tmp/aether-diagnostics-review push origin HEAD:refs/heads/codex/aether-ui-evidence
