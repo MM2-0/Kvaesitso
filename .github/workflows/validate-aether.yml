@@ -261,8 +261,18 @@ jobs:
                   print('::error title=Aether UI failure::' + text.replace('%', '%25').replace('\r', '%0D').replace('\n', '%0A'))
           log = Path('/tmp/aether-client.log')
           if log.exists():
-              for line in log.read_text(errors='replace').splitlines():
+              lines = log.read_text(errors='replace').splitlines()
+              if any('BUILD FAILED' in line for line in lines):
+                  text = '\n'.join(lines[-85:])[-18000:]
+                  print('::error title=Aether APK driver build::' + text.replace('%', '%25').replace('\r', '%0D').replace('\n', '%0A'))
+              for line in lines:
                   if line.startswith('e: '): print('::error title=Aether UI compile::' + line.replace('%', '%25'))
+          logcat = Path('/tmp/aether-client-logcat.txt')
+          if logcat.exists():
+              errors = [line for line in logcat.read_text(errors='replace').splitlines() if 'AndroidRuntime' in line or 'AetherRuntime' in line]
+              if errors:
+                  text = '\n'.join(errors[-80:])[-18000:]
+                  print('::error title=Aether runtime details::' + text.replace('%', '%25').replace('\r', '%0D').replace('\n', '%0A'))
           PYCODE
       - uses: actions/upload-artifact@v4
         if: always()

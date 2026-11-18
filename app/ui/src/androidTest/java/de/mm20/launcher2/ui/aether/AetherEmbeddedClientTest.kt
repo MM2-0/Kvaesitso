@@ -119,6 +119,7 @@ class AetherEmbeddedClientTest {
         try {
             shell("pm grant $target android.permission.POST_NOTIFICATIONS")
             openAether()
+            awaitNode("initial login form") { it.isEditable }
             screenshot("login")
             login("npub10xlxvlhemja6c4dqv22uapctqupfhlxm9h8z3k2e72q4k9hcz7vqpkge6d")
             screenshot("feed")
