@@ -47,7 +47,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        abi: [arm64-v8a, armeabi-v7a]
+        abi: [arm64-v8a, armeabi-v7a, x86_64]
     steps:
       - uses: actions/checkout@v7
 
@@ -119,7 +119,19 @@ jobs:
           EXPECTED_ABI: ${{ matrix.abi }}
         run: python3 tools/release-apk-check.py
 
+      - name: Download SIP native libraries
+        if: matrix.abi != 'x86_64'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release download sip-libs --pattern sip-libs.tar.gz --dir "$RUNNER_TEMP"; then
+            tar -xzf "$RUNNER_TEMP/sip-libs.tar.gz" -C sip-native
+          else
+            echo "No SIP libraries released yet, building without the SIP engine"
+          fi
+
       - name: Verify Shizuku payloads and 16 KB ELF alignment
+        if: matrix.abi != 'x86_64'
         run: python3 tools/release-shizuku-native-check.py
 
       - name: Align and Sign APK with v1/v2/v3/v4 & 16KB Page Alignment
@@ -306,10 +318,31 @@ jobs:
           path: win-out/*
           if-no-files-found: error
 
+  windows-vm:
+    needs: [version, build]
+    if: needs.version.outputs.publish == 'true'
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-dotnet@v4
+        with: { dotnet-version: '8.0.x' }
+      - run: dotnet publish tools/windows-qemu-android/src/TelosAndroidVm/TelosAndroidVm.csproj -c Release -r win-x64 --self-contained -p:PublishSingleFile=true
+      - run: | 
+          mkdir vendor/qemu; curl -L https://qemu.weilnetz.de/w64/2026/qemu-w64-setup-20260811.exe -o setup.exe; 7z x setup.exe -ovendor/qemu
+          mkdir vendor/scrcpy; curl -L https://github.com/Genymobile/scrcpy/releases/download/v5.0.1/scrcpy-win64-v5.0.1.zip -o scrcpy.zip; 7z x scrcpy.zip -ovendor/scrcpy
+      - uses: actions/download-artifact@v8
+        with: { name: telos-x86_64, path: . }
+      - run: | 
+          cp scripts/first-boot-lock.sh .; cp blissos.lock.json .
+          $VERSION_NAME = Get-Content version.properties | Select-String "versionName=" | ForEach-Object { $_.ToString().Split('=')[1] }
+          Compress-Archive -Path * -DestinationPath "telos-android-vm-windows-x64-$VERSION_NAME.zip"
+      - uses: actions/upload-artifact@v7
+        with: { name: telos-windows-vm, path: *.zip }
+
   release:
     permissions:
       contents: write
-    needs: [version, build, linux, windows]
+    needs: [version, build, linux, windows, windows-vm]
     if: needs.version.outputs.publish == 'true'
     runs-on: ubuntu-latest
     env:
@@ -332,6 +365,8 @@ jobs:
           done
           test -n "$(ls release-assets/telos-desktop-windows-x64-*.jar 2>/dev/null | head -1)"
           test -n "$(ls release-assets/telos-desktop-windows-x64-*-setup.exe 2>/dev/null | head -1)"
+          test -n "$(ls release-assets/telos-x86_64.apk 2>/dev/null | head -1)"
+          test -n "$(ls release-assets/telos-android-vm-windows-x64-*.zip 2>/dev/null | head -1)"
           bash tools/release-notes.sh "$TAG" "$RUNNER_TEMP/notes.md"
           if ! gh release view "$TAG" >/dev/null 2>&1; then
             gh release create "$TAG" --draft --target "$GITHUB_SHA" \
