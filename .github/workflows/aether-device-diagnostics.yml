@@ -1,49 +1,20 @@
-name: Inspect Aether PR publishing
+name: Retry Aether emulator infrastructure failure
 on:
   push:
     branches: ['codex/aether-diagnostics']
-  workflow_dispatch:
 permissions:
-  actions: read
+  actions: write
   contents: read
-  pull-requests: write
 jobs:
-  inspect:
+  retry-client:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - name: Explain the failed PR step
+      - name: Retry only the failed real-APK emulator job
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          job=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/44314675281/jobs" --jq '.jobs[] | select(.name == "open-pull-request") | .id')
-          gh api "repos/$GITHUB_REPOSITORY/actions/jobs/$job/logs" > /tmp/aether-pr-log.txt 2>&1 || true
-          python3 - <<'PY'
-          from pathlib import Path
-          for line in Path('/tmp/aether-pr-log.txt').read_text(errors='replace').splitlines()[-35:]:
-              print('::notice title=Aether PR diagnostics::' + line.replace('%', '%25'))
-          PY
-      - name: Create the review PR if permitted
-        if: always()
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          number=$(gh pr list --repo "$GITHUB_REPOSITORY" --base main --head codex/aether-amethyst-embedded --state open --json number --jq '.[0].number // empty')
-          if [ -n "$number" ]; then echo "::notice::Aether PR #$number already exists"; exit 0; fi
-          cat > /tmp/aether-pr.md <<'BODY'
-          Replace the Aether preview with the embedded Amethyst F-Droid client, including multiple accounts, settings, feeds, relays, messaging and media. No external Amethyst APK is required. Preserve MIT attribution, isolated encrypted storage, deferred startup, keyless sandbox and Cybertech host appearance.
-
-          Fix the real-APK cold-start Koin registration race. Validation of c3d24e2fc passed ARM64 debug and R8 release builds, 1,526 library tests (nine skips, zero failures), all four storage/notification device tests and real-Telos public-key multi-account login/switch/settings/process-restart testing. Settings screenshots at font 2.0 portrait/landscape were reviewed. Live publication/external signers and physical Android 17 were not exercised.
-
-          Validation: https://github.com/koukomin/Telos-Launcher/actions/runs/44314675281
-          BODY
-          if gh pr create --repo "$GITHUB_REPOSITORY" --base main --head codex/aether-amethyst-embedded --title 'Embed Amethyst in Aether with multiple accounts' --body-file /tmp/aether-pr.md > /tmp/aether-pr-result.txt 2>&1; then
-            cat /tmp/aether-pr-result.txt
-          else
-            python3 - <<'PY'
-          from pathlib import Path
-          text = Path('/tmp/aether-pr-result.txt').read_text(errors='replace')
-          print('::error title=Aether PR creation::' + text.replace('%', '%25').replace('\r', '%0D').replace('\n', '%0A'))
-          PY
-            exit 1
-          fi
+          job=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/44336725713/jobs" --jq '.jobs[] | select(.name == "aether-client-device" and .conclusion == "failure") | .id')
+          test -n "$job"
+          gh api --method POST "repos/$GITHUB_REPOSITORY/actions/jobs/$job/rerun"
+          echo "::notice::Retried Aether client job $job after Pixel Launcher emulator ANR"
