@@ -45,7 +45,7 @@ fun nostrConnectSignerApps(
     // count as a signer here and then refuse the address.
     return packageManager
         .queryIntentActivities(viewIntent(uri), PackageManager.MATCH_DEFAULT_ONLY)
-        .filter { !it.activityInfo.packageName.startsWith(AMETHYST_PACKAGE_PREFIX) }
+        .filter { it.activityInfo.packageName != context.packageName && !it.activityInfo.packageName.startsWith(AMETHYST_PACKAGE_PREFIX) }
         .distinctBy { it.activityInfo.packageName }
         .map { NostrConnectApp(id = it.activityInfo.packageName, label = it.loadLabel(packageManager).toString()) }
 }
@@ -63,7 +63,7 @@ fun openNostrConnectInSigner(
 ): Boolean {
     if (!uri.startsWith("nostrconnect://")) return false
     val target =
-        packageName?.takeIf { !it.startsWith(AMETHYST_PACKAGE_PREFIX) }
+        packageName?.takeIf { it != context.packageName && !it.startsWith(AMETHYST_PACKAGE_PREFIX) }
             ?: nostrConnectSignerApps(context, uri).singleOrNull()?.id
             ?: return false
 
