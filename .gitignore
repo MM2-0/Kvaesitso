@@ -341,3 +341,7 @@ tools/windows-qemu-android/.dotnet-sdk/
 # Αρχεία καταγραφής & προσωρινά
 *.log
 /build/
+
+# Firebase client files (keys belong in a local overlay, not git)
+google-services.json
+**/google-services.json

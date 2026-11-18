@@ -28,7 +28,7 @@ import java.util.UUID
 @Serializable(with = LauncherSettingsDataKSerializer::class)
 @ConsistentCopyVisibility
 data class LauncherSettingsData internal constructor(
-    val schemaVersion: Int = 10,
+    val schemaVersion: Int = 12,
 
     val ui: UiGroup = UiGroup(),
     val wallpaper: WallpaperGroup = WallpaperGroup(),
@@ -346,9 +346,9 @@ data class SearchResultsGroup(
     val rankingWeightFactor: WeightFactor = WeightFactor.Default,
     val hiddenItemsShowButton: Boolean = false,
     /** Telos Radio: show the favorite stations that match the query as search results */
-    val radioStationsInSearch: Boolean = false,
+    val radioStationsInSearch: Boolean = true,
     /** Telos Media TV: show favorite, custom and recent TV channels that match the query as search results */
-    val tvChannelsInSearch: Boolean = false,
+    val tvChannelsInSearch: Boolean = true,
     val searchAndroidSettings: Boolean = true,
     val searchTelosSettings: Boolean = true,
     val searchTelosAppSettings: Boolean = true,

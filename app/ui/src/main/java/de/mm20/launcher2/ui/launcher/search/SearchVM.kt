@@ -288,7 +288,9 @@ class SearchVM : ViewModel(), KoinComponent {
                     radioRepository.observeFavorites(),
                 ) { enabled, disabled, favorites ->
                     if (enabled && "telos_radio_app://radio" !in disabled) {
-                        de.mm20.launcher2.comms.search.TelosSearch.filter(favorites, query) { listOf(it.name) }.take(5)
+                        de.mm20.launcher2.comms.search.TelosSearch.filter(favorites, query) {
+                            listOf(it.name, it.homepage, it.streamContent)
+                        }.take(8)
                     } else emptyList()
                 }.collectLatest { radioResults.updateItems(it) }
             }
@@ -316,7 +318,7 @@ class SearchVM : ViewModel(), KoinComponent {
                         ) { favorites, custom, recents ->
                             val pool = (favorites + custom + recents).distinctBy { it.id }
                             de.mm20.launcher2.comms.search.TelosSearch
-                                .filter(pool, query) { listOf(it.name) + it.altNames }.take(5)
+                                .filter(pool, query) { listOf(it.name) + it.altNames }.take(8)
                         }.collectLatest { tvResults.updateItems(it) }
                     }
             }

@@ -33,10 +33,18 @@ internal suspend fun runInstallCommand(apk: File?, process: Process): InstallCom
             // pm can reject an option before consuming stdin; still collect its diagnosis.
             writeFailed = true
         }
-        val exit = process.waitFor()
+        val finished = process.waitFor(3, java.util.concurrent.TimeUnit.MINUTES)
+        val exit = if (finished) process.exitValue() else {
+            process.destroyForcibly()
+            -1
+        }
         val stdout = output.await()
         val stderr = errors.await()
-        InstallCommandResult(if (writeFailed && exit == 0) -1 else exit, (stdout + stderr).take(8192))
+        val combined = (stdout + stderr).take(8192)
+        InstallCommandResult(
+            if (!finished) -1 else if (writeFailed && exit == 0) -1 else exit,
+            if (!finished) "install timed out\n$combined" else combined,
+        )
     } finally {
         // Remote Shizuku streams may still contain the result after waitFor returns.
         // Closing the process before readers finish can discard Success or throw Stream closed.

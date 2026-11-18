@@ -40,7 +40,7 @@ object WallpaperRestorer {
         }.getOrDefault(service.hasVideoWallpaper())
         if (service.hasVideoWallpaper() && !service.isVideoWallpaperActive() && wanted) {
             if (!tryBindLiveWallpaper(app)) {
-                notifyRestore(app, service)
+                notifyRestore(app)
             }
             return@withContext
         }
@@ -64,7 +64,7 @@ object WallpaperRestorer {
         return shell?.exitCode == 0 && WallpapersService(context).isVideoWallpaperActive()
     }
 
-    private fun notifyRestore(context: Context, service: WallpapersService) {
+    private fun notifyRestore(context: Context) {
         val nm = context.getSystemService(NotificationManager::class.java) ?: return
         if (Build.VERSION.SDK_INT >= 26) {
             nm.createNotificationChannel(
@@ -74,7 +74,8 @@ object WallpaperRestorer {
         val pending = PendingIntent.getActivity(
             context,
             NOTIFY_ID,
-            service.getActivationIntent().addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK),
+            android.content.Intent(context, RestoreLiveWallpaperActivity::class.java)
+                .addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK),
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
         )
         val notification = NotificationCompat.Builder(context, CHANNEL)

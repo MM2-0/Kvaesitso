@@ -22,8 +22,8 @@ All search settings live in **Settings > Search**. Some sources open their own s
 | Files | Local files, Nextcloud, ownCloud and file plugins | Storage permission (local) or an account (cloud) | Cloud only | Local on |
 | Places | OpenStreetMap places near you, plus place plugins | Location permission | Yes | On |
 | Websites | A preview card for a URL you type | Network | Yes | On |
-| TV channels | Your favorite, custom and recently watched Telos TV channels whose name matches (up to 5, Greek and Greeklish aware); a tap plays the channel and opens Telos Media on the TV space. Nothing is downloaded by search, and TV and Radio rows carry a "TV" or "Radio" chip with an icon so same-name results can be told apart | Local | Yes | Off |
-| Radio stations | Your favorite Telos Radio stations whose name matches (up to 5); a tap plays the stream at once, a second tap pauses it; same-name stations are all shown with logo and host. Needs Telos Radio to be installed | Local | Yes | Off |
+| TV channels | Your favorite, custom and recently watched Telos TV channels whose name matches (up to 8, Greek and Greeklish aware); a tap plays the channel and opens Telos Media on the TV space. Nothing is downloaded by search, and TV and Radio rows carry a "TV" or "Radio" chip with an icon so same-name results can be told apart | Local | Yes | On |
+| Radio stations | Your favorite Telos Radio stations whose name matches (up to 8); a tap plays the stream at once, a second tap pauses it; same-name stations are all shown with logo and host. Needs Telos Radio to be installed | Local | Yes | On |
 | Wikipedia | Articles | Network | Yes | On |
 | Calculator | The result of an expression | Nothing | No | On |
 | Unit converter | Units and currencies | Nothing (currencies download rates) | Rates only | On |

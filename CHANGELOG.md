@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.45.69
+
+- Store Shizuku/root installs stream the APK through a real root shell (not `su -c`) and time out
+  instead of hanging.
+- Launcher search shows favorite radio stations and TV channels (on by default).
+- Wallpaper restore notifications use an explicit activity; secret scanning CI and gitignore for
+  google-services.json.
+
+## 1.45.68
+
+- AAB CI preinstalls NDK 27 and times out hung Gradle instead of sitting for 40+ minutes.
+
 ## 1.45.67
 
 - Fix System Battery tab compile (`PreferenceCategory` content) so release APKs build.
