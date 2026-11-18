@@ -1,4 +1,4 @@
-name: Inspect final release job map
+name: Inspect Android bundle build interruption
 on:
   push:
     branches: ['codex/aether-diagnostics']
@@ -6,17 +6,17 @@ permissions:
   actions: read
   contents: read
 jobs:
-  inspect-release:
+  inspect-aab:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
-      - name: Read release jobs
+      - name: Retrieve completed bundle job logs
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh api --paginate "repos/$GITHUB_REPOSITORY/actions/runs/44347480022/jobs" --jq '.jobs[] | {id, name, status, conclusion, html_url}' > /tmp/release-jobs.txt
+          curl --fail --silent --show-error --location --header "Authorization: Bearer $GH_TOKEN" "https://api.github.com/repos/$GITHUB_REPOSITORY/actions/jobs/134953701217/logs" --output /tmp/aab.log
           python3 - <<'PY'
           from pathlib import Path
-          text = Path('/tmp/release-jobs.txt').read_text()
-          print('::notice title=Release job map::' + text.replace('%', '%25').replace('\r', '%0D').replace('\n', '%0A'))
+          lines = Path('/tmp/aab.log').read_text(errors='replace').splitlines()
+          text = '\n'.join(lines[-110:])[-24000:]
+          print('::notice title=Bundle interruption details::' + text.replace('%', '%25').replace('\r', '%0D').replace('\n', '%0A'))
           PY
