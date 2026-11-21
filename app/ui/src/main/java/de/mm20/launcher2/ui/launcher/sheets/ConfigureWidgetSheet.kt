@@ -393,34 +393,40 @@ fun ColumnScope.ConfigureFavoritesWidget(
                         Text(stringResource(R.string.select_tag))
                     }
                     DropdownMenuPopup(
-                        modifier = Modifier
-                            .verticalScroll(rememberScrollState())
-                            .padding(vertical = 8.dp),
+                        modifier = Modifier.padding(vertical = 8.dp),
                         expanded = showAddMenu,
                         onDismissRequest = { showAddMenu = false }) {
                         if (availableTags.isNotEmpty()) {
-                            DropdownMenuGroup(
-                                shapes = MenuDefaults.groupShape(0, 2),
-                            ) {
-                                for ((i, tag) in availableTags.withIndex()) {
-                                    DropdownMenuItem(
-                                        shape = if (availableTags.size == 1) MenuDefaults.standaloneItemShape
-                                        else when (i) {
-                                            0 -> MenuDefaults.leadingItemShape
-                                            availableTags.lastIndex -> MenuDefaults.trailingItemShape
-                                            else -> MenuDefaults.middleItemShape
-                                        },
-                                        leadingIcon = {
-                                            Icon(
-                                                painterResource(R.drawable.tag_24px),
-                                                null
-                                            )
-                                        },
-                                        text = { Text(tag) },
-                                        onClick = {
-                                            tagList = (tagList + tag).toImmutableList()
-                                            showAddMenu = false
-                                        })
+                            // Scroll inside the group instead of scrolling the whole popup:
+                            // the group clips to a non-uniform rounded shape, and Compose's
+                            // hit test for such clips fails for touch points more than
+                            // ~8192 px below the top of the clipped area. A group that
+                            // contains all tags would ignore taps on items further down.
+                            Box(modifier = Modifier.weight(1f, fill = false)) {
+                                DropdownMenuGroup(
+                                    modifier = Modifier.verticalScroll(rememberScrollState()),
+                                    shapes = MenuDefaults.groupShape(0, 2),
+                                ) {
+                                    for ((i, tag) in availableTags.withIndex()) {
+                                        DropdownMenuItem(
+                                            shape = if (availableTags.size == 1) MenuDefaults.standaloneItemShape
+                                            else when (i) {
+                                                0 -> MenuDefaults.leadingItemShape
+                                                availableTags.lastIndex -> MenuDefaults.trailingItemShape
+                                                else -> MenuDefaults.middleItemShape
+                                            },
+                                            leadingIcon = {
+                                                Icon(
+                                                    painterResource(R.drawable.tag_24px),
+                                                    null
+                                                )
+                                            },
+                                            text = { Text(tag) },
+                                            onClick = {
+                                                tagList = (tagList + tag).toImmutableList()
+                                                showAddMenu = false
+                                            })
+                                    }
                                 }
                             }
                             Spacer(
