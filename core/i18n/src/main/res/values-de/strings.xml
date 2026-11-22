@@ -24,6 +24,8 @@
     <string name="menu_favorites_unpin">Aus Favoriten entfernen</string>
     <string name="menu_back">Zurück</string>
     <string name="menu_app_info">App-Info</string>
+    <string name="menu_app_lock">App-Sperre</string>
+    <string name="menu_remove_app_lock">App-Sperre entfernen</string>
     <!-- Launch an app -->
     <string name="menu_launch">Starten</string>
     <string name="menu_customize">Anpassen</string>
