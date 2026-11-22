@@ -41,6 +41,10 @@ export const UserGuideSidebar: DefaultTheme.SidebarItem[] = [
         text: 'Themed Icons',
         link: '/docs/user-guide/customization/themed-icons',
       },
+      {
+        text: 'Import and Export Themes',
+        link: '/docs/user-guide/customization/themes',
+      },
     ],
   },
   {

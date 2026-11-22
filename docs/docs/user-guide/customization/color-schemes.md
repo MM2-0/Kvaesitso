@@ -79,3 +79,7 @@ of each section.
 For each scheme color, you can either select a custom color, or you can derive a color from a key color.
 To derive a color from a key color, select <span class="material-symbols-rounded">palette</span> **Palette**, and then select the key color
 to derive from. You can then adjust the tone of the derived color by dragging the **T** slider.
+
+## Share color schemes
+
+Custom color schemes can be exported and shared as part of a theme file. See [Import and Export Themes](themes).
