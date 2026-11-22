@@ -940,4 +940,6 @@
     <string name="favorites_skip_rows">Zeilen überspringen</string>
     <string name="action_fix">Beheben</string>
     <string name="missing_permission_local_network">%1$s darf aktuell keine Geräte im lokalen Netzwerk finden.</string>
+    <string name="menu_app_lock">App-Sperre</string>
+    <string name="menu_remove_app_lock">App-Sperre entfernen</string>
 </resources>
