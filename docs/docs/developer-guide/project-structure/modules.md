@@ -49,6 +49,7 @@ started this project so future refactorings are to be expected. This is the curr
     - `:widgets`: CRUD operations to store and retrieve widgets in/from the database
     - `:wikipedia`: Implements Wikipedia search
 - `:core`
+    - `:applock`: App lock APIs
     - `:base`: Interface definitions for the most commonly used data types. Commonly used data
       classes, helper functions and utilities.
     - `:compat`: Compatibility helpers for old Android versions

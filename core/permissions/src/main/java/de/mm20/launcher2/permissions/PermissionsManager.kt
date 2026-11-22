@@ -7,11 +7,9 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.LauncherApps
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.provider.Settings
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.getSystemService
@@ -22,6 +20,7 @@ import de.mm20.launcher2.ktx.tryStartActivity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import androidx.core.net.toUri
+import de.mm20.launcher2.ktx.isAtLeastFullApiLevel
 
 interface PermissionsManager {
     fun requestPermission(context: AppCompatActivity, permissionGroup: PermissionGroup)
@@ -70,6 +69,7 @@ enum class PermissionGroup {
     ManageProfiles,
     Call,
     LocalNetwork,
+    LockApps,
 }
 
 internal class PermissionsManagerImpl(
@@ -100,6 +100,9 @@ internal class PermissionsManagerImpl(
     )
     private val manageProfilesPermissionState = MutableStateFlow(
         checkPermissionOnce(PermissionGroup.ManageProfiles)
+    )
+    private val lockAppsPermissionState = MutableStateFlow(
+        checkPermissionOnce(PermissionGroup.LockApps)
     )
     private val callPermissionState = MutableStateFlow(
         checkPermissionOnce(PermissionGroup.Call)
@@ -168,6 +171,7 @@ internal class PermissionsManagerImpl(
             }
 
             PermissionGroup.ManageProfiles,
+            PermissionGroup.LockApps,
             PermissionGroup.AppShortcuts -> {
                 if (isAtLeastApiLevel(29)) {
                     val roleManager = context.getSystemService<RoleManager>()
@@ -248,6 +252,12 @@ internal class PermissionsManagerImpl(
                 } else false
             }
 
+            PermissionGroup.LockApps -> {
+                if (isAtLeastFullApiLevel(Build.VERSION_CODES_FULL.CINNAMON_BUN_2)) {
+                    context.checkPermission(Manifest.permission.LOCK_APPS)
+                } else false
+            }
+
             PermissionGroup.Accessibility -> {
                 accessibilityPermissionState.value
             }
@@ -273,6 +283,7 @@ internal class PermissionsManagerImpl(
             PermissionGroup.Accessibility -> accessibilityPermissionState
             PermissionGroup.ManageProfiles -> manageProfilesPermissionState
             PermissionGroup.Call -> callPermissionState
+            PermissionGroup.LockApps -> lockAppsPermissionState
             PermissionGroup.LocalNetwork -> localNetworkPermissionState
         }
     }
@@ -296,6 +307,7 @@ internal class PermissionsManagerImpl(
             PermissionGroup.ManageProfiles -> manageProfilesPermissionState.value = granted
             PermissionGroup.Call -> callPermissionState.value = granted
             PermissionGroup.LocalNetwork -> localNetworkPermissionState.value = granted
+            PermissionGroup.LockApps -> lockAppsPermissionState.value = granted
         }
     }
 

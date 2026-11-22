@@ -123,6 +123,7 @@ dependencies {
     implementation(project(":services:accounts"))
     implementation(project(":data:applications"))
     implementation(project(":data:appshortcuts"))
+    implementation(project(":core:applock"))
     implementation(project(":services:backup"))
     implementation(project(":services:badges"))
     implementation(project(":core:base"))

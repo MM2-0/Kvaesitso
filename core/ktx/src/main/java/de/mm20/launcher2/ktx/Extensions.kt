@@ -25,6 +25,10 @@ fun isAtLeastApiLevel(apiLevel: Int): Boolean {
     return Build.VERSION.SDK_INT >= apiLevel
 }
 
+fun isAtLeastFullApiLevel(apiLevel: Int): Boolean {
+    return Build.VERSION.SDK_INT_FULL >= apiLevel
+}
+
 inline fun <reified T> Any?.castTo(): T {
     @Suppress("UNCHECKED_CAST")
     return this as T

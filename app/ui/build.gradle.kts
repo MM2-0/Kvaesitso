@@ -120,6 +120,7 @@ dependencies {
     implementation(project(":core:compat"))
     implementation(project(":core:ktx"))
     implementation(project(":core:profiles"))
+    implementation(project(":core:applock"))
     implementation(project(":services:icons"))
     implementation(project(":services:music"))
     implementation(project(":services:tags"))

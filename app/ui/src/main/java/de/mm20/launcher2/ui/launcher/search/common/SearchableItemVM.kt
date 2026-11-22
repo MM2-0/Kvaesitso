@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.ui.unit.IntRect
 import androidx.core.app.ActivityOptionsCompat
 import de.mm20.launcher2.applications.AppRepository
+import de.mm20.launcher2.applock.AppLockManager
+import de.mm20.launcher2.applock.AppLockState
 import de.mm20.launcher2.appshortcuts.AppShortcutRepository
 import de.mm20.launcher2.badges.BadgeService
 import de.mm20.launcher2.devicepose.DevicePoseProvider
@@ -56,6 +58,7 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
     private val permissionsManager: PermissionsManager by inject()
     private val locationSearchSettings: LocationSearchSettings by inject()
     private val contactSearchSettings: ContactSearchSettings by inject()
+    private val appLockManager: AppLockManager by inject()
 
     val isUpToDate = MutableStateFlow(true)
 
@@ -255,5 +258,15 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
 
     fun reportUsage(searchable: SavableSearchable) {
         favoritesService.reportLaunch(searchable)
+    }
+
+    val appLockState = searchable.flatMapLatest {
+        if (it is Application) appLockManager.getAppLockState(it)
+        else flowOf(AppLockState.Unsupported)
+    }
+
+    fun setAppLockState(context: Context, searchable: SavableSearchable, enabled: Boolean) {
+        if (searchable !is Application) return
+        appLockManager.setAppLockEnabled(context, searchable, enabled)
     }
 }

@@ -25,6 +25,7 @@ include(":core:i18n")
 include(":data:database")
 include(":core:permissions")
 include(":core:shared")
+include(":core:applock")
 
 include(":data:appshortcuts")
 include(":data:customattrs")

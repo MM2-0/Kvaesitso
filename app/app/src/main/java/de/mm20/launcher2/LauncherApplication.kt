@@ -7,6 +7,7 @@ import coil.decode.SvgDecoder
 import de.mm20.launcher2.accounts.accountsModule
 import de.mm20.launcher2.applications.applicationsModule
 import de.mm20.launcher2.appshortcuts.appShortcutsModule
+import de.mm20.launcher2.applock.appLockModule
 import de.mm20.launcher2.backup.backupModule
 import de.mm20.launcher2.badges.badgesModule
 import de.mm20.launcher2.calculator.calculatorModule
@@ -66,6 +67,7 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
                     accountsModule,
                     applicationsModule,
                     appShortcutsModule,
+                    appLockModule,
                     baseModule,
                     calculatorModule,
                     badgesModule,

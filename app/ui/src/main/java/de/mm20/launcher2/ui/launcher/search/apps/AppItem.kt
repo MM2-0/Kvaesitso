@@ -49,9 +49,12 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.IntRect
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.lerp
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
+import de.mm20.launcher2.applock.AppLockState
 import de.mm20.launcher2.crashreporter.CrashReporter
+import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.ktx.sendWithBackgroundPermission
 import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.ui.R
@@ -66,8 +69,8 @@ import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
 import de.mm20.launcher2.ui.launcher.search.listItemViewModel
 import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
-import de.mm20.launcher2.ui.locals.LocalShowAppDetails
 import de.mm20.launcher2.ui.locals.LocalGridSettings
+import de.mm20.launcher2.ui.locals.LocalShowAppDetails
 import kotlinx.coroutines.launch
 
 @Composable
@@ -252,7 +255,10 @@ fun AppItem(
                                                         viewModel.clearNotification(not)
                                                     }
                                                 ) {
-                                                    Icon(painterResource(R.drawable.close_24px), null)
+                                                    Icon(
+                                                        painterResource(R.drawable.close_24px),
+                                                        null
+                                                    )
                                                 }
                                             }
                                         }
@@ -477,6 +483,23 @@ fun AppItem(
                         toolbarActions.add(shareAction)
                     }
 
+                    if (isAtLeastApiLevel(37)) {
+                        val lockState by viewModel.appLockState
+                            .collectAsStateWithLifecycle(AppLockState.Unsupported)
+
+                        if (lockState.isSupported) {
+                            toolbarActions.add(
+                                DefaultToolbarAction(
+                                    label = if (lockState.isEnabled) stringResource(R.string.menu_remove_app_lock) else stringResource(R.string.menu_app_lock),
+                                    icon = if (lockState.isEnabled) R.drawable.no_encryption_24px else R.drawable.lock_24px,
+                                ) {
+                                    viewModel.setAppLockState(context, app, !lockState.isEnabled)
+
+                                }
+                            )
+                        }
+                    }
+
                     if (app.canUninstall) {
                         toolbarActions.add(
                             DefaultToolbarAction(
@@ -527,7 +550,11 @@ fun AppItem(
                             ),
                     )
                     if (!LocalGridSettings.current.showListIcons && badge != null) {
-                        Badge(badge = badge!!, size = 16.dp, modifier = Modifier.padding(start = 8.dp))
+                        Badge(
+                            badge = badge!!,
+                            size = 16.dp,
+                            modifier = Modifier.padding(start = 8.dp)
+                        )
                     }
                 }
             }

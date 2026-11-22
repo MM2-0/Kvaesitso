@@ -24,6 +24,8 @@
     <string name="menu_favorites_unpin">Unpin</string>
     <string name="menu_back">Back</string>
     <string name="menu_app_info">App info</string>
+    <string name="menu_app_lock">App lock</string>
+    <string name="menu_remove_app_lock">Remove app lock</string>
     <!-- Launch an app -->
     <string name="menu_launch">Launch</string>
     <string name="menu_customize">Customize</string>
