@@ -24,6 +24,8 @@
     <string name="menu_favorites_unpin">Rimuovi</string>
     <string name="menu_back">Indietro</string>
     <string name="menu_app_info">Info app</string>
+    <string name="menu_app_lock">Blocco app</string>
+    <string name="menu_remove_app_lock">Rimuovi blocco app</string>
     <!-- Launch an app -->
     <string name="menu_launch">Avvia</string>
     <string name="menu_customize">Personalizza</string>
