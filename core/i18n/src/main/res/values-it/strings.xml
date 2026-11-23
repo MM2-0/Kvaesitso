@@ -952,4 +952,6 @@
     <string name="preference_measurement_system_metric_scientific">Metrico (scientifico)</string>
     <string name="action_fix">Fisso</string>
     <string name="file_meta_date">Data: %1$s</string>
+    <string name="menu_remove_app_lock">Rimuovi blocco app</string>
+    <string name="menu_app_lock">Blocco app</string>
 </resources>
