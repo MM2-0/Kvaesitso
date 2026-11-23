@@ -649,6 +649,7 @@
     <string name="preference_search_wikipedia">Wikipedia</string>
     <string name="preference_search_wikipedia_summary">Search the free encyclopedia</string>
     <string name="preference_search_websites">Websites</string>
+    <string name="search_nearby_places">Search nearby places</string>
     <string name="preference_search_locations">Places</string>
     <string name="preference_search_locations_radius">Search radius</string>
     <string name="preference_search_websites_summary">Show a preview of a website if the search query is a URL</string>

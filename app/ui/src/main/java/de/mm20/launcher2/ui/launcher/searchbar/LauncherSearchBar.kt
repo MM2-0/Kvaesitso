@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActionScope
 import androidx.compose.material3.Badge
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.IconToggleButton
 import androidx.compose.material3.MaterialTheme
@@ -65,6 +66,7 @@ fun LauncherSearchBar(
     }
 
     val value by searchVM.searchQuery
+    val canSubmitPlaceSearch = isSearchOpen && searchVM.canSubmitPlaceSearch
 
     Box(modifier = modifier) {
         SearchBar(
@@ -78,6 +80,14 @@ fun LauncherSearchBar(
             reverse = bottomSearchBar,
             darkColors = darkColors,
             menu = {
+                if (canSubmitPlaceSearch) {
+                    IconButton(onClick = searchVM::submitPlaceSearch) {
+                        Icon(
+                            painter = painterResource(R.drawable.location_on_24px),
+                            contentDescription = stringResource(R.string.search_nearby_places),
+                        )
+                    }
+                }
                 AnimatedVisibility(
                     hiddenItemsButtonEnabled && isSearchOpen && hiddenItems.isNotEmpty(),
                     enter = scaleIn(tween(100)),
@@ -146,7 +156,10 @@ fun LauncherSearchBar(
             focusRequester = focusRequester,
             onFocus = { onFocusChange(true) },
             onUnfocus = { onFocusChange(false) },
-            onKeyboardActionGo = onKeyboardActionGo
+            onKeyboardActionGo = onKeyboardActionGo,
+            onKeyboardActionSearch = if (onKeyboardActionGo == null && canSubmitPlaceSearch) {
+                { searchVM.submitPlaceSearch() }
+            } else null,
         )
     }
 }

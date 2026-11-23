@@ -30,6 +30,7 @@ interface SearchService {
         query: String,
         filters: SearchFilters,
         initialResults: SearchResults? = null,
+        allowPlaceNetwork: Boolean = filters.allowNetwork,
     ): Flow<SearchResults>
 
     fun getAllApps(): Flow<AllAppsResults>
@@ -55,6 +56,7 @@ internal class SearchServiceImpl(
         query: String,
         filters: SearchFilters,
         initialResults: SearchResults?,
+        allowPlaceNetwork: Boolean,
     ): Flow<SearchResults> = flow {
         supervisorScope {
             val results = MutableStateFlow(
@@ -233,7 +235,7 @@ internal class SearchServiceImpl(
             }
             if (filters.places) {
                 launch {
-                    locationRepository.search(query, filters.allowNetwork)
+                    locationRepository.search(query, filters.allowNetwork && allowPlaceNetwork)
                         .combine(customAttrResults) { locations, customAttrs ->
                             if (customAttrs.locations != null) locations + customAttrs.locations
                             else locations
