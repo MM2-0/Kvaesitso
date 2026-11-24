@@ -24,6 +24,8 @@
     <string name="menu_favorites_unpin">取消釘選</string>
     <string name="menu_back">返回</string>
     <string name="menu_app_info">應用程式資訊</string>
+    <string name="menu_app_lock">鎖定應用程式</string>
+    <string name="menu_remove_app_lock">解除鎖定應用程式</string>
     <!-- Launch an app -->
     <string name="menu_launch">啟動</string>
     <string name="menu_customize">自定義</string>
@@ -39,6 +41,7 @@
     <string name="action_clear">清除</string>
     <string name="action_install">安裝</string>
     <string name="action_quit">離開</string>
+    <string name="action_fix">修復</string>
     <!-- Delete something (a file or a web search shortcut) -->
     <string name="menu_delete">刪除</string>
     <string name="menu_remove">移除</string>
@@ -106,6 +109,7 @@
     <string name="file_meta_duration">時長：%1$s</string>
     <!-- File metadata, year of audio tracks -->
     <string name="file_meta_year">年份：%1$s</string>
+    <string name="file_meta_date">日期：%1$s</string>
     <!-- File size -->
     <string name="file_meta_size">大小：%1$s</string>
     <!-- File path -->
@@ -408,6 +412,7 @@
     <string name="missing_permission_appshortcuts_search">將 %1$s 設為預設主畫面應用程式以搜尋應用程式捷徑。</string>
     <!-- Missing permission app shortcuts permission, used when creating a shortcut in the edit favorites sheet -->
     <string name="missing_permission_appshortcuts_create">將 %1$s 設為預設主畫面應用程式以建立捷徑。</string>
+    <string name="missing_permission_local_network">尚未允許 %1$s 在區域網路上尋找裝置。</string>
     <!-- Grant a permission, shown in permission banners -->
     <string name="grant_permission">授權</string>
     <!-- Appearance preference title -->
@@ -724,6 +729,7 @@
     <string name="favorites_empty_tag">此標籤裡沒有項目</string>
     <string name="frequently_used_show_in_favorites">顯示在我的最愛</string>
     <string name="frequently_used_rows">行數</string>
+    <string name="favorites_skip_rows">跳過行數</string>
     <string name="preference_screen_search_actions">快捷操作</string>
     <string name="preference_search_search_actions_summary">設定快捷操作與搜尋欄捷徑</string>
     <string name="search_action_call">撥號</string>
@@ -1066,6 +1072,7 @@
     <string name="preference_form_of_address_masc">地址格式</string>
     <string name="preference_measurement_system">度量衡系統</string>
     <string name="preference_measurement_system_metric">公制</string>
+    <string name="preference_measurement_system_metric_scientific">公制（科學記號）</string>
     <string name="preference_measurement_system_uk">英制單位</string>
     <string name="preference_measurement_system_us">美制單位</string>
     <string name="preference_transliteration">字母轉寫偏好</string>
