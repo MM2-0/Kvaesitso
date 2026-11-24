@@ -917,4 +917,11 @@
     <string name="search_action_private_space_unlock">解鎖私人空間</string>
     <string name="preference_currencies">貨幣</string>
     <string name="preference_add_currency">新增貨幣</string>
+    <string name="menu_app_lock">鎖定應用程式</string>
+    <string name="menu_remove_app_lock">解除鎖定應用程式</string>
+    <string name="action_fix">修復</string>
+    <string name="file_meta_date">日期：%1$s</string>
+    <string name="missing_permission_local_network">尚未允許 %1$s 在區域網路上尋找裝置。</string>
+    <string name="favorites_skip_rows">跳過行數</string>
+    <string name="preference_measurement_system_metric_scientific">公制（科學記號）</string>
 </resources>
