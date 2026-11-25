@@ -939,4 +939,6 @@
     <string name="action_fix">Javítás</string>
     <string name="missing_permission_local_network">A(z) %1$s jelenleg nem kereshet eszközöket a helyi hálózaton.</string>
     <string name="file_meta_date">Dátum: %1$s</string>
+    <string name="menu_app_lock">Alkalmazászár</string>
+    <string name="menu_remove_app_lock">Alkalmazászár eltávolítása</string>
 </resources>
