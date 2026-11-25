@@ -24,6 +24,8 @@
     <string name="menu_favorites_unpin">Kitűzés megszüntetése</string>
     <string name="menu_back">Vissza</string>
     <string name="menu_app_info">Alkalmazásadatok</string>
+    <string name="menu_app_lock">Alkalmazászár</string>
+    <string name="menu_remove_app_lock">Alkalmazászár eltávolítása</string>
     <!-- Launch an app -->
     <string name="menu_launch">Futtatás</string>
     <string name="menu_customize">Testreszabás</string>
