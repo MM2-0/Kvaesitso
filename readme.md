@@ -11,6 +11,13 @@ Kvaesitso is a search focused, free and open source launcher for Android.
 Kvaesitso can be installed on Android devices running Android 8.0 or higher, but a Google Pixel
 device running Android 11 or higher is recommended for the best experience.
 
+> [!IMPORTANT]
+> Kvaesitso is not signed with a verified developer's key. You need to allow apps from unverified
+> developers in order to install it.
+>
+> See [https://support.google.com/android/answer/17588095](https://support.google.com/android/answer/17588095)
+
+
 ### Using an F-Droid client and MM20's repo
 
 The preferred way of installation is using the [F-Droid](https://f-droid.org) application. That way
