@@ -24,6 +24,8 @@
     <string name="menu_favorites_unpin">Odepnout</string>
     <string name="menu_back">Zpět</string>
     <string name="menu_app_info">Informace o aplikaci</string>
+    <string name="menu_app_lock">Zámek aplikace</string>
+    <string name="menu_remove_app_lock">Odstranit zámek aplikace</string>
     <!-- Launch an app -->
     <string name="menu_launch">Spustit</string>
     <string name="menu_customize">Přizpůsobit</string>
