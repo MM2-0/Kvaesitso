@@ -46,6 +46,15 @@ class ClockWidgetSettings internal constructor(
         }
     }
 
+    val dateApp: Flow<String?>
+        get() = launcherDataStore.data.map { it.clockWidgetDateAppKey }.distinctUntilChanged()
+
+    fun setDateApp(key: String?) {
+        launcherDataStore.update {
+            it.copy(clockWidgetDateAppKey = key)
+        }
+    }
+
     fun setMusicPart(musicPart: Boolean) {
         launcherDataStore.update {
             it.copy(clockWidgetMusicPart = musicPart)
