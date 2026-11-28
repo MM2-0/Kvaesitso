@@ -62,7 +62,8 @@ fun SearchBar(
     readOnly: Boolean = false,
     menu: @Composable RowScope.() -> Unit = {},
     actions: @Composable ColumnScope.() -> Unit = {},
-    onKeyboardActionGo: (KeyboardActionScope.() -> Unit)? = null
+    onKeyboardActionGo: (KeyboardActionScope.() -> Unit)? = null,
+    onKeyboardActionSearch: (KeyboardActionScope.() -> Unit)? = null
 ) {
 
     val transition = updateTransition(level, label = "Searchbar")
@@ -183,12 +184,13 @@ fun SearchBar(
                             onValueChange = onValueChange,
                             cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
                             keyboardOptions = KeyboardOptions(
-                                imeAction = ImeAction.Go,
+                                imeAction = if (onKeyboardActionSearch != null) ImeAction.Search else ImeAction.Go,
                                 autoCorrectEnabled = false,
                                 capitalization = KeyboardCapitalization.None,
                             ),
                             keyboardActions = KeyboardActions(
                                 onGo = onKeyboardActionGo,
+                                onSearch = onKeyboardActionSearch,
                             ),
                             readOnly = readOnly,
                         )

@@ -167,8 +167,22 @@ class SearchVM : ViewModel(), KoinComponent {
         search("")
     }
 
+    val canSubmitPlaceSearch: Boolean
+        get() = searchQuery.value.trim().length > 1 && filters.value.places && filters.value.allowNetwork
+
+    fun submitPlaceSearch() {
+        if (canSubmitPlaceSearch) {
+            search(searchQuery.value, forceRestart = true, submitPlaces = true)
+        }
+    }
+
     private var searchJob: Job? = null
+
     fun search(query: String, forceRestart: Boolean = false) {
+        search(query, forceRestart, submitPlaces = false)
+    }
+
+    private fun search(query: String, forceRestart: Boolean, submitPlaces: Boolean) {
         if (searchQuery.value == query && !forceRestart) return
         if (searchQuery.value != query) {
             showFilters.value = false
@@ -204,6 +218,9 @@ class SearchVM : ViewModel(), KoinComponent {
         } catch (_: CancellationException) {
         }
         hideFavorites.value = query.isNotEmpty()
+        if (!submitPlaces) {
+            previousResults = previousResults?.copy(locations = emptyList())
+        }
 
         searchJob = viewModelScope.launch {
             if (query.isEmpty()) {
@@ -258,7 +275,8 @@ class SearchVM : ViewModel(), KoinComponent {
                 searchService.search(
                     query,
                     filters = filters,
-                    previousResults,
+                    initialResults = previousResults,
+                    allowPlaceNetwork = submitPlaces,
                 )
                     .combine(hiddenItemKeys) { results, hiddenKeys -> results to hiddenKeys }
                     .collectLatest { (results, hiddenKeys) ->

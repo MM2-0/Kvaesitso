@@ -11,7 +11,6 @@ import de.mm20.launcher2.search.data.UnitConverter
 import de.mm20.launcher2.searchactions.SearchActionService
 import de.mm20.launcher2.searchactions.actions.SearchAction
 import de.mm20.launcher2.unitconverter.UnitConverterRepository
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -31,6 +30,7 @@ interface SearchService {
         query: String,
         filters: SearchFilters,
         initialResults: SearchResults? = null,
+        allowPlaceNetwork: Boolean = filters.allowNetwork,
     ): Flow<SearchResults>
 
     fun getAllApps(): Flow<AllAppsResults>
@@ -56,6 +56,7 @@ internal class SearchServiceImpl(
         query: String,
         filters: SearchFilters,
         initialResults: SearchResults?,
+        allowPlaceNetwork: Boolean,
     ): Flow<SearchResults> = flow {
         supervisorScope {
             val results = MutableStateFlow(
@@ -219,7 +220,6 @@ internal class SearchServiceImpl(
             }
             if (filters.articles) {
                 launch {
-                    delay(750)
                     articleRepository.search(query, filters.allowNetwork)
                         .combine(customAttrResults) { articles, customAttrs ->
                             if (customAttrs.wikipedia != null) articles + customAttrs.wikipedia
@@ -235,8 +235,7 @@ internal class SearchServiceImpl(
             }
             if (filters.places) {
                 launch {
-                    delay(250)
-                    locationRepository.search(query, filters.allowNetwork)
+                    locationRepository.search(query, filters.allowNetwork && allowPlaceNetwork)
                         .combine(customAttrResults) { locations, customAttrs ->
                             if (customAttrs.locations != null) locations + customAttrs.locations
                             else locations
