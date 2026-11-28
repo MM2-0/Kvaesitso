@@ -263,7 +263,9 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM, paddingValues: Padding
                                 expanded = true,
                                 onDismissRequest = { contextMenuItemKey = null }) {
                                 DropdownMenuGroup(
-                                    shapes = MenuDefaults.groupShapes()
+                                    shapes = MenuDefaults.groupShapes(),
+                                    modifier = Modifier
+                                        .verticalScroll(rememberScrollState()),
                                 ) {
                                     DropdownMenuItem(
                                         shape = MenuDefaults.standaloneItemShape,
@@ -496,32 +498,37 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM, paddingValues: Padding
                                     )
                                 }
                                 DropdownMenuPopup(
-                                    modifier = Modifier.verticalScroll(rememberScrollState()),
                                     expanded = showAddMenu,
                                     onDismissRequest = { showAddMenu = false }) {
                                     if (availableTags.isNotEmpty()) {
-                                        DropdownMenuGroup(
-                                            shapes = MenuDefaults.groupShape(0, 2),
-                                        ) {
-                                            for ((i, tag) in availableTags.withIndex()) {
-                                                DropdownMenuItem(
-                                                    shape = if (availableTags.size == 1) MenuDefaults.standaloneItemShape
-                                                    else when (i) {
-                                                        0 -> MenuDefaults.leadingItemShape
-                                                        availableTags.lastIndex -> MenuDefaults.trailingItemShape
-                                                        else -> MenuDefaults.middleItemShape
-                                                    },
-                                                    leadingIcon = {
-                                                        Icon(
-                                                            painterResource(R.drawable.tag_24px),
-                                                            null
-                                                        )
-                                                    },
-                                                    text = { Text(tag.tag) },
-                                                    onClick = {
-                                                        viewModel.pinTag(tag)
-                                                        showAddMenu = false
-                                                    })
+                                        Box(modifier = Modifier.weight(1f, fill = false)) {
+                                            DropdownMenuGroup(
+                                                shapes = MenuDefaults.groupShape(0, 2),
+                                                modifier = Modifier.verticalScroll(
+                                                    rememberScrollState()
+                                                ),
+                                            ) {
+                                                for ((i, tag) in availableTags.withIndex()) {
+                                                    DropdownMenuItem(
+                                                        shape = if (availableTags.size == 1) MenuDefaults.standaloneItemShape
+                                                        else when (i) {
+                                                            0 -> MenuDefaults.leadingItemShape
+                                                            availableTags.lastIndex -> MenuDefaults.trailingItemShape
+                                                            else -> MenuDefaults.middleItemShape
+                                                        },
+                                                        leadingIcon = {
+                                                            Icon(
+                                                                painterResource(R.drawable.tag_20px),
+                                                                null,
+                                                                modifier = Modifier.size(MenuDefaults.LeadingIconSize),
+                                                            )
+                                                        },
+                                                        text = { Text(tag.tag) },
+                                                        onClick = {
+                                                            viewModel.pinTag(tag)
+                                                            showAddMenu = false
+                                                        })
+                                                }
                                             }
                                         }
                                     }
@@ -537,7 +544,7 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM, paddingValues: Padding
                                         DropdownMenuItem(
                                             shape = MenuDefaults.standaloneItemShape,
                                             leadingIcon = {
-                                                Icon(painterResource(R.drawable.add_24px), null)
+                                                Icon(painterResource(R.drawable.add_20px), null, modifier = Modifier.size(MenuDefaults.LeadingIconSize))
                                             },
                                             text = {
                                                 Text(

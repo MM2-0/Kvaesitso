@@ -16,6 +16,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenuGroup
 import androidx.compose.material3.DropdownMenuItem
@@ -205,7 +207,8 @@ fun CurrencySettingsScreen() {
                                         onDismissRequest = { showMenu = false },
                                     ) {
                                         DropdownMenuGroup(
-                                            shapes = MenuDefaults.groupShapes()
+                                            shapes = MenuDefaults.groupShapes(),
+                                            modifier = Modifier.verticalScroll(rememberScrollState()),
                                         ) {
                                             DropdownMenuItem(
                                                 text = { Text(stringResource(R.string.menu_remove)) },

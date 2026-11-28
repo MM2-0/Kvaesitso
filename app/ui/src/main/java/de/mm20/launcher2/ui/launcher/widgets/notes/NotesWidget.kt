@@ -267,6 +267,7 @@ fun NotesWidget(
                         onDismissRequest = { showMenu = false }) {
                         DropdownMenuGroup(
                             shapes = MenuDefaults.groupShapes(),
+                            modifier = Modifier.verticalScroll(rememberScrollState()),
                         ) {
                             DropdownMenuItem(
                                 shape = MenuDefaults.leadingItemShape,

@@ -30,7 +30,9 @@ import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.requiredHeightIn
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.DropdownMenuGroup
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.DropdownMenuPopup
@@ -454,6 +456,7 @@ fun CustomActions(
             ) {
                 DropdownMenuGroup(
                     shapes = MenuDefaults.groupShapes(),
+                    modifier = Modifier.verticalScroll(rememberScrollState()),
                 ) {
                     for (i in slots - 1 until actions.customActions.size) {
                         val action = actions.customActions[i]

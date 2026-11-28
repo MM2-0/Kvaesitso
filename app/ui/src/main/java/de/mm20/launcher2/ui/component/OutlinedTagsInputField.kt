@@ -192,14 +192,13 @@ fun OutlinedTagsInputField(
                         if (completions.isNotEmpty()) {
                             Box {
                                 DropdownMenuPopup(
-                                    modifier = Modifier
-                                        .verticalScroll(rememberScrollState()),
                                     expanded = true,
                                     onDismissRequest = { completions = emptyList() },
                                     properties = PopupProperties(focusable = false)
                                 ) {
                                     DropdownMenuGroup(
-                                        modifier = Modifier.fillMaxWidth(),
+                                        modifier = Modifier.fillMaxWidth()
+                                            .verticalScroll(rememberScrollState()),
                                         shapes = MenuDefaults.groupShapes()
                                     ) {
                                         for ((i, completion) in completions.withIndex()) {

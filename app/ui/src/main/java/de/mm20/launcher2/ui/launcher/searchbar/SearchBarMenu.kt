@@ -10,6 +10,8 @@ import androidx.compose.animation.graphics.vector.AnimatedImageVector
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.DropdownMenuGroup
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.DropdownMenuPopup
@@ -67,6 +69,7 @@ fun RowScope.SearchBarMenu(
                 shapes = MenuDefaults.groupShapes(),
                 modifier = Modifier
                     .fillMaxWidth()
+                    .verticalScroll(rememberScrollState())
                     .align(Alignment.Start)
             ) {
                 DropdownMenuItem(

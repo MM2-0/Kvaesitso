@@ -4,7 +4,6 @@ import android.content.Context
 import android.icu.text.DateFormat
 import android.icu.util.Calendar
 import android.icu.util.ULocale
-import android.text.format.DateUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.fadeIn
@@ -22,7 +21,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.DropdownMenuGroup
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.DropdownMenuPopup
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -113,20 +111,25 @@ fun CalendarWidget(
                     )
                 }
                 DropdownMenuPopup(
-                    modifier = Modifier
-                        .verticalScroll(rememberScrollState()),
                     expanded = showDropdown,
                     onDismissRequest = { showDropdown = false }) {
                     val availableDates = viewModel.availableDates
                     DropdownMenuGroup(
-                        shapes = MenuDefaults.groupShapes()
+                        shapes = MenuDefaults.groupShapes(),
+                        modifier = Modifier.verticalScroll(rememberScrollState())
                     ) {
                         for ((i, date) in availableDates.withIndex()) {
                             SelectableDropdownMenuItem(
                                 shapes = MenuDefaults.itemShape(i, availableDates.size),
                                 selected = date == selectedDate,
                                 text = {
-                                    Text(formatDay(context, date, LocalCalendarSystems.current[0]!!))
+                                    Text(
+                                        formatDay(
+                                            context,
+                                            date,
+                                            LocalCalendarSystems.current[0]!!
+                                        )
+                                    )
                                 },
                                 selectedLeadingIcon = {
                                     Icon(

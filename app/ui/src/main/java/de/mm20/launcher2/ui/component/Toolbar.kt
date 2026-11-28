@@ -68,12 +68,11 @@ fun Icons(actions: List<ToolbarAction>, slots: Int) {
                     DropdownMenuPopup(
                         expanded = showMenu,
                         onDismissRequest = { showMenu = false },
-                        modifier = Modifier
-                            .verticalScroll(rememberScrollState()),
                     ) {
                         DropdownMenuGroup(
                             shapes = MenuDefaults.groupShapes(),
                             modifier = Modifier.animateContentSize()
+                                .verticalScroll(rememberScrollState()),
                         ) {
                             OverflowMenuItems(items = actions.subList(slots - 1, actions.size)) {
                                 showMenu = false
@@ -118,7 +117,8 @@ fun Icons(actions: List<ToolbarAction>, slots: Int) {
                                     modifier = Modifier.animateContentSize()
                                 ) {
                                     DropdownMenuGroup(
-                                        shapes = MenuDefaults.groupShapes()
+                                        shapes = MenuDefaults.groupShapes(),
+                                        modifier = Modifier.verticalScroll(rememberScrollState())
                                     ) {
                                         OverflowMenuItems(items = action.children) {
                                             showMenu = false

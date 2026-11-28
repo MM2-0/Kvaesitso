@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenuGroup
 import androidx.compose.material3.DropdownMenuItem
@@ -194,7 +196,8 @@ fun ExportThemeSettingsScreen() {
                             expanded = showDropdown,
                             onDismissRequest = { showDropdown = false }) {
                             DropdownMenuGroup(
-                                shapes = MenuDefaults.groupShapes()
+                                shapes = MenuDefaults.groupShapes(),
+                                modifier = Modifier.verticalScroll(rememberScrollState()),
                             ) {
                                 DropdownMenuItem(
                                     shape = MenuDefaults.standaloneItemShape,

@@ -26,6 +26,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CheckableDropdownMenuItem
 import androidx.compose.material3.DropdownMenu
@@ -163,7 +165,8 @@ fun WatchFaceSelector(
                                 onDismissRequest = { showStyleSettings = false }) {
                                 if (selected is ClockWidgetStyle.Digital1) {
                                     DropdownMenuGroup(
-                                        shapes = MenuDefaults.groupShapes()
+                                        shapes = MenuDefaults.groupShapes(),
+                                        modifier = Modifier.verticalScroll(rememberScrollState()),
                                     ) {
                                         CheckableDropdownMenuItem(
                                             checked = selected.outlined,
@@ -430,10 +433,11 @@ fun WatchFaceSelector(
                         )
                         DropdownMenuPopup(
                             expanded = showStyleDropdown,
-                            onDismissRequest = { showStyleDropdown = false }
+                            onDismissRequest = { showStyleDropdown = false },
                         ) {
                             DropdownMenuGroup(
-                                shapes = MenuDefaults.groupShapes()
+                                shapes = MenuDefaults.groupShapes(),
+                                modifier = Modifier.verticalScroll(rememberScrollState()),
                             ) {
                                 for (style in styles.withIndex()) {
                                     SelectableDropdownMenuItem(

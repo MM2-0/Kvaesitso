@@ -547,7 +547,8 @@ fun ConfigureClockWidgetSheet(
                         expanded = showDropdown,
                         onDismissRequest = { showDropdown = false }) {
                         DropdownMenuGroup(
-                            shapes = MenuDefaults.groupShapes()
+                            shapes = MenuDefaults.groupShapes(),
+                            modifier = Modifier.verticalScroll(rememberScrollState()),
                         ) {
                             SelectableDropdownMenuItem(
                                 shapes = MenuDefaults.itemShape(0, 3),

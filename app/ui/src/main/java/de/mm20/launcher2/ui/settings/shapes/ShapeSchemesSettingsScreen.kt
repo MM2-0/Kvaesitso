@@ -5,8 +5,10 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenuGroup
@@ -84,6 +86,7 @@ fun ShapeSchemesSettingsScreen() {
                                 ) {
                                     DropdownMenuGroup(
                                         shapes = MenuDefaults.groupShapes(),
+                                        modifier = Modifier.verticalScroll(rememberScrollState()),
                                     ) {
                                         DropdownMenuItem(
                                             shape = MenuDefaults.standaloneItemShape,
@@ -135,6 +138,7 @@ fun ShapeSchemesSettingsScreen() {
                                     ) {
                                         DropdownMenuGroup(
                                             shapes = MenuDefaults.groupShapes(),
+                                            modifier = Modifier.verticalScroll(rememberScrollState()),
                                         ) {
                                             DropdownMenuItem(
                                                 shape = MenuDefaults.leadingItemShape,

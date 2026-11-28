@@ -188,13 +188,13 @@ fun IconPicker(
                         )
                     }
                     DropdownMenuPopup(
-                        modifier = Modifier
-                            .verticalScroll(rememberScrollState()),
                         expanded = showIconPackFilter,
                         onDismissRequest = { showIconPackFilter = false }
                     ) {
                         DropdownMenuGroup(
-                            shapes = MenuDefaults.groupShapes()
+                            shapes = MenuDefaults.groupShapes(),
+                            modifier = Modifier
+                                .verticalScroll(rememberScrollState()),
                         ) {
                             SelectableDropdownMenuItem(
                                 selected = filterIconPack == null,

@@ -686,7 +686,8 @@ fun CustomizeAppSearch(viewModel: EditSearchActionSheetVM) {
                     expanded = showAppDropdown,
                     onDismissRequest = { showAppDropdown = false }) {
                     DropdownMenuGroup(
-                        shapes = MenuDefaults.groupShapes()
+                        shapes = MenuDefaults.groupShapes(),
+                        modifier = Modifier.verticalScroll(rememberScrollState()),
                     ) {
                         for ((i, app) in availableSearchApps.withIndex()) {
                             DropdownMenuItem(
@@ -1311,7 +1312,8 @@ private fun IntentExtrasEditor(viewModel: EditSearchActionSheetVM) {
                         expanded = showTypeDropdown,
                         onDismissRequest = { showTypeDropdown = false }) {
                         DropdownMenuGroup(
-                            shapes = MenuDefaults.groupShapes()
+                            shapes = MenuDefaults.groupShapes(),
+                            modifier = Modifier.verticalScroll(rememberScrollState()),
                         ) {
                             DropdownMenuItem(
                                 shape = MenuDefaults.leadingItemShape,
