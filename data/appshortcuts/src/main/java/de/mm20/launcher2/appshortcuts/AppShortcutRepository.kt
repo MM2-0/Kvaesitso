@@ -8,6 +8,7 @@ import android.os.Handler
 import android.os.Looper
 import android.os.Process
 import android.os.UserHandle
+import android.util.Log
 import androidx.core.content.getSystemService
 import de.mm20.launcher2.ktx.getSerialNumber
 import de.mm20.launcher2.permissions.PermissionGroup
@@ -81,11 +82,7 @@ internal class AppShortcutRepositoryImpl(
                 .setQueryFlags(
                     buildQueryFlags(manifest, dynamic, pinned, cached)
                 )
-            val shortcuts = try {
-                launcherApps.getShortcuts(query, user)
-            } catch (e: IllegalStateException) {
-                emptyList()
-            }
+            val shortcuts = getShortcutsOrEmpty(launcherApps, query, user)
             val appShortcuts = mutableListOf<LauncherShortcut>()
             appShortcuts.addAll(
                 shortcuts
@@ -225,7 +222,11 @@ internal class AppShortcutRepositoryImpl(
                     LauncherApps.ShortcutQuery.FLAG_MATCH_CACHED or
                     LauncherApps.ShortcutQuery.FLAG_MATCH_PINNED_BY_ANY_LAUNCHER
         )
-        val result = launcherApps.getShortcuts(shortcutQuery, Process.myUserHandle()) ?: emptyList()
+        val result = getShortcutsOrEmpty(
+            launcherApps,
+            shortcutQuery,
+            Process.myUserHandle(),
+        )
         val normalized = result.mapNotNull {
             if ("${it.`package`}:${it.userHandle.getSerialNumber(context)}" in blocklist) return@mapNotNull null
             NormalizedShortcut(
@@ -237,8 +238,22 @@ internal class AppShortcutRepositoryImpl(
             )
         }
         normalized
+    }.shareIn(scope, SharingStarted.Eagerly, replay = 1)
+
+    private fun getShortcutsOrEmpty(
+        launcherApps: LauncherApps,
+        query: LauncherApps.ShortcutQuery,
+        user: UserHandle,
+    ): List<ShortcutInfo> {
+        return try {
+            launcherApps.getShortcuts(query, user) ?: emptyList()
+        } catch (e: IllegalStateException) {
+            emptyList()
+        } catch (e: SecurityException) {
+            Log.w("AppShortcutRepository", "LauncherApps denied shortcut query", e)
+            emptyList()
+        }
     }
-        .shareIn(scope, SharingStarted.Eagerly, replay = 1)
 
     override suspend fun getShortcutsConfigActivities(): List<AppShortcutConfigActivity> {
         val launcherApps = context.getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
