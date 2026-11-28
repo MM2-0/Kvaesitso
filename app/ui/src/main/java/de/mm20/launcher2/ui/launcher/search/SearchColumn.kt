@@ -58,6 +58,7 @@ import de.mm20.launcher2.ui.launcher.search.website.WebsiteResults
 import de.mm20.launcher2.ui.launcher.search.wikipedia.ArticleResults
 import de.mm20.launcher2.ui.launcher.sheets.HiddenItemsSheet
 import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
+import de.mm20.launcher2.ui.layout.scaledGridColumnCount
 import de.mm20.launcher2.ui.locals.LocalGridSettings
 import de.mm20.launcher2.ui.theme.transparency.transparency
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -74,7 +75,7 @@ fun SearchColumn(
     onHideKeyboard: () -> Unit = {},
 ) {
 
-    val columns = LocalGridSettings.current.columnCount
+    val columns = scaledGridColumnCount()
     val showList = LocalGridSettings.current.showList
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
