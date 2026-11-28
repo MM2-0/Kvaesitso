@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.first
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import kotlin.coroutines.coroutineContext
+import kotlin.time.Duration.Companion.milliseconds
 
 class WeatherLocationSearchDialogVM: ViewModel(), KoinComponent {
     private val weatherSettings: WeatherSettings by inject()
@@ -29,7 +30,7 @@ class WeatherLocationSearchDialogVM: ViewModel(), KoinComponent {
         withContext(coroutineContext) {
             debounceSearchJob = launch {
                 isSearchingLocation.value = true
-                delay(1000)
+                delay(1000.milliseconds)
                 locationResults.value = repository.searchLocations(query).first()
                 isSearchingLocation.value = false
             }
